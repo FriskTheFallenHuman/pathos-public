@@ -1,0 +1,6 @@
+{
+	"general/flashlight1.tga"
+	"general/flashlight.tga"
+	"general/flashlight2.tga"
+	"general/flashlight_purewhite.tga" noborder noclamp
+}

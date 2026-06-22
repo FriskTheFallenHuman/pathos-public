@@ -1,8 +1,0 @@
-$texture
-{
-	$int_width 256
-	$int_height 256
-	$alphatest
-	$material concrete
-	$texture diffuse world/pathos/{rn_crows1.dds
-}

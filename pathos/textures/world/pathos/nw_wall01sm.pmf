@@ -1,7 +1,0 @@
-$texture
-{
-	$int_width 128
-	$int_height 128
-	$material wood
-	$texture diffuse world/pathos/nw_wall01sm.dds
-}

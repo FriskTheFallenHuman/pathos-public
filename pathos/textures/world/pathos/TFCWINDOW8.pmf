@@ -1,8 +1,0 @@
-$texture
-{
-	$int_width 96
-	$int_height 96
-	$container pathos.wad
-	$material glass
-	$texture diffuse tfcwindow8
-}

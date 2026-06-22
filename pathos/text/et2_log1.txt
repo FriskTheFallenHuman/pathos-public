@@ -1,4 +1,0 @@
-$title "Dummy Document 1"
-{
-This is a generic text document for testing the Game UI text window.
-}

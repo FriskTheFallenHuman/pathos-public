@@ -1,8 +1,0 @@
-$title "Dummy Document 2"
-$titletextschema "testdiarytitle"
-$textschema "testdiarytext"
-$color 255 255 255 200
-$titlecolor 255 255 255 255
-{
-This is a generic text document for testing the Game UI text window with a custom font set and font colors.
-}
