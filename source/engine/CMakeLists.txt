@@ -67,6 +67,15 @@ file(GLOB SERVER_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/server/*.h)
 target_sources(${PROJECT_NAME} PRIVATE ${SERVER_HEADERS})
 source_group("Engine\\Server" FILES ${SERVER_HEADERS})
 
+
+file(GLOB BSP_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/bsp/*.cpp)
+target_sources(${PROJECT_NAME} PRIVATE ${BSP_SOURCES})
+source_group("Engine\\BSP" FILES ${BSP_SOURCES})
+
+file(GLOB BSP_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/bsp/*.h)
+target_sources(${PROJECT_NAME} PRIVATE ${BSP_HEADERS})
+source_group("Engine\\BSP" FILES ${BSP_HEADERS})
+
 file(GLOB CLIENT_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/client/*.cpp)
 target_sources(${PROJECT_NAME} PRIVATE ${CLIENT_SOURCES})
 source_group("Engine\\Client" FILES ${CLIENT_SOURCES})
@@ -96,6 +105,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/common
     ${CMAKE_SOURCE_DIR}/shared
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/bsp
     ${CMAKE_CURRENT_SOURCE_DIR}/client
     ${CMAKE_CURRENT_SOURCE_DIR}/server
     ${CMAKE_CURRENT_SOURCE_DIR}/renderer
