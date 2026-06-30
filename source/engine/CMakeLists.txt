@@ -1,23 +1,23 @@
 project(pathos_engine LANGUAGES CXX C)
 
-add_executable(pathos_engine)
+add_executable(${PROJECT_NAME})
 
 file(GLOB ENGINE_COMMON_CSOURCES ${CMAKE_SOURCE_DIR}/common/*.c)
 target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_COMMON_CSOURCES})
-source_group("Common" FILES ${ENGINE_COMMON_CSOURCES})
+source_group("Engine\\Common" FILES ${ENGINE_COMMON_CSOURCES})
 
 file(GLOB ENGINE_COMMON_SOURCES ${CMAKE_SOURCE_DIR}/common/*.cpp)
 target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_COMMON_SOURCES})
-source_group("Common" FILES ${ENGINE_COMMON_SOURCES})
+source_group("Engine\\Common" FILES ${ENGINE_COMMON_SOURCES})
 
 file(GLOB ENGINE_COMMON_HEADERS ${CMAKE_SOURCE_DIR}/common/*.h)
 target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_COMMON_HEADERS})
-source_group("Common" FILES ${ENGINE_COMMON_HEADERS})
+source_group("Engine\\Common" FILES ${ENGINE_COMMON_HEADERS})
 
 if(WIN32)
 file(GLOB RES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resource/*.rc ${CMAKE_CURRENT_SOURCE_DIR}/resource/*.ico ${CMAKE_CURRENT_SOURCE_DIR}/resource/*.h)
 target_sources(${PROJECT_NAME} PRIVATE ${RES_SOURCES})
-source_group("RC" FILES ${RES_SOURCES})
+source_group("Engine\\RC" FILES ${RES_SOURCES})
 endif()
 
 file(GLOB RYG_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/rygsdxtc/*.cpp)
@@ -94,11 +94,11 @@ source_group("Engine" FILES ${ENGINE_HEADERS})
 
 file(GLOB ENGINE_SHARED_SOURCES ${CMAKE_SOURCE_DIR}/shared/*.cpp)
 target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_SHARED_SOURCES})
-source_group("Shared" FILES ${ENGINE_SHARED_SOURCES})
+source_group("Engine\\Shared" FILES ${ENGINE_SHARED_SOURCES})
 
 file(GLOB ENGINE_SHARED_HEADERS ${CMAKE_SOURCE_DIR}/shared/*.h)
 target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_SHARED_HEADERS})
-source_group("Shared" FILES ${ENGINE_SHARED_HEADERS})
+source_group("Engine\\Shared" FILES ${ENGINE_SHARED_HEADERS})
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${PLATFORM_DEFINES} $<$<CONFIG:Debug>:_CONSOLE;NETWORKING;DONT_USE_VAO>)
 target_include_directories(${PROJECT_NAME} PRIVATE

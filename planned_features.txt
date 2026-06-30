@@ -1,3 +1,12 @@
+To-Do:
+- 2026 June 14th:
+  - Add Quake 1/2/3 BSP support.
+    - Use Quake 3 BSP for an extended version like PBSPV2.
+    - This may requiered a fork of q3map2.
+  - Support For Quake 1 .mdl
+  - Support for Quake 2 .md2
+  - Support For Quake 3 .md3
+
 Pending:
   
 Completed:
