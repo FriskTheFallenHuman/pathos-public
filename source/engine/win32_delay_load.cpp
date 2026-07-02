@@ -21,11 +21,6 @@ Other libraries (like OpenAL) are handled by SDL itself so it's unnecessary to a
 ===============================================
 */
 
-#define WIN32_LEAN_AND_MEAN
-#define NOGDI
-#define NOMINMAX
-#include <Windows.h>
-
 #include <delayimp.h>
 
 // Base path for libraries based on the architecture

@@ -26,6 +26,8 @@ All Rights Reserved.
 #include "r_vbo.h"
 #include "texturemanager.h"
 
+#include "stb_truetype.h"
+
 // Font set base directory
 const Char CText::FONT_DIRECTORY[] = "fonts";
 
@@ -38,7 +40,6 @@ CText gText;
 //
 //=============================================
 CText::CText ( void ):
-	m_pLibrary(nullptr),
 	m_pBoundFontSet(nullptr),
 	m_pCurrentSetInfo(nullptr),
 	m_isActive(false),
@@ -67,12 +68,6 @@ CText::~CText ( void )
 //=============================================
 bool CText::Init ( void )
 { 
-	if(FT_Init_FreeType(&m_pLibrary))
-	{
-		Con_EPrintf("Failed to initialize font library.\n");
-		return false;
-	}
-
 	return true;
 }
 
@@ -82,12 +77,6 @@ bool CText::Init ( void )
 //=============================================
 void CText::Shutdown ( void )
 { 
-	if(m_pLibrary)
-	{
-		FT_Done_FreeType(m_pLibrary);
-		m_pLibrary = nullptr;
-	}
-
 	ClearGL();
 
 	if(!m_fontSetsArray.empty())
@@ -243,20 +232,11 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 	}
 
 	// Load the font set
-	FT_Face pface = nullptr;
-	if(FT_New_Memory_Face(m_pLibrary, pdata, size, 0, &pface))
+	stbtt_fontinfo fontInfo;
+	if(!stbtt_InitFont(&fontInfo, pdata, 0))
 	{
-		Con_EPrintf("Failed to load font '%s'.\n", pstrFilename);
+		Con_EPrintf("Failed to initialize font '%s' with stb_truetype.\n", pstrFilename);
 		FL_FreeFile(pdata);
-		return nullptr;
-	}
-
-	// Set pixel sizes
-	if(FT_Set_Pixel_Sizes(pface, 0, fontsize))
-	{
-		Con_EPrintf("Font size %i is not available for '%s'.\n", size, pstrFilename);
-		FL_FreeFile(pdata);
-		FT_Done_Face(pface);
 		return nullptr;
 	}
 
@@ -293,7 +273,7 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 	memset(ptexturedata, 0, sizeof(byte)*imagedatasize);
 
 	// Render normal glyph set
-	if(!RenderGlyphs(pnew, pglinfo, pnew->glyphs, pface, sizex, yoffset, basesizey, sizey, glyphsize, padding, 0, false, ptexturedata, 0))
+	if(!RenderGlyphs(pnew, pglinfo, pnew->glyphs, &fontInfo, fontsize, sizex, yoffset, basesizey, sizey, glyphsize, padding, 0, false, ptexturedata, 0))
 	{
 		if(!pset)
 			delete pnew;
@@ -301,8 +281,8 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 		if(pglinfo)
 			delete pglinfo;
 
+		delete[] ptexturedata;
 		Con_Printf("Could not load font set '%s'.\n", pstrFilename);
-		FT_Done_Face(pface);
 		FL_FreeFile(pdata);
 		return nullptr;
 	}
@@ -315,7 +295,7 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 		yoffset += basesizey;
 		byte *poutlinedata = ptexturedata + (sizex*basesizey*4);
 
-		if(!RenderGlyphs(pnew, pglinfo, pnew->glyphs_outline, pface, sizex, yoffset, basesizey, sizey, glyphsize, padding, pglinfo->index_offset_outline, true, poutlinedata, outlineradius))
+		if(!RenderGlyphs(pnew, pglinfo, pnew->glyphs_outline, &fontInfo, fontsize, sizex, yoffset, basesizey, sizey, glyphsize, padding, pglinfo->index_offset_outline, true, poutlinedata, outlineradius))
 		{
 			if(!pset)
 				delete pnew;
@@ -323,8 +303,8 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 			if(pglinfo)
 				delete pglinfo;
 
+			delete[] ptexturedata;
 			Con_Printf("Could not load font set '%s'.\n", pstrFilename);
-			FT_Done_Face(pface);
 			FL_FreeFile(pdata);
 			return nullptr;
 		}
@@ -355,7 +335,6 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 	if(poutlinecolor)
 		pnew->outlinecolor = (*poutlinecolor);
 
-	FT_Done_Face(pface);
 	FL_FreeFile(pdata);
 
 	if(!pset)
@@ -368,80 +347,111 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 // @brief Renders glyphs for a font set
 //
 //=============================================
-bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyph_t* pglyphs, FT_Face pface, Uint32 sizex, Uint32 yoffset, Uint32 basesizey, Uint32 sizey, Uint32 glyphsize, Uint32 padding, Uint32 bufferoffset, bool outline, byte* poutbuffer, Uint32 outlineradius )
+bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyph_t* pglyphs, const stbtt_fontinfo* pfont, Int32 fontsize, Uint32 sizex, Uint32 yoffset, Uint32 basesizey, Uint32 sizey, Uint32 glyphsize, Uint32 padding, Uint32 bufferoffset, bool outline, byte* poutbuffer, Uint32 outlineradius )
 {
 	// Allocate buffer to store data into
 	byte *pglyphbuffer[NUM_GLYPHS] = { nullptr };
 
-	FT_Stroker pstroker = nullptr;
-	if(outline)
-	{
-		FT_Stroker_New(m_pLibrary, &pstroker);
-		FT_Stroker_Set(pstroker, outlineradius * 64, FT_STROKER_LINECAP_ROUND, FT_STROKER_LINEJOIN_ROUND, 0);
-	}
+	float scale = stbtt_ScaleForPixelHeight(pfont, static_cast<float>(fontsize));
 	
 	// Get data from the .ttf
 	bool result = true;
 	for(Uint32 i = 32; i < NUM_GLYPHS; i++)
 	{
-		FT_UInt glyphindex = FT_Get_Char_Index(pface, i);
-		if(FT_Load_Glyph(pface, glyphindex, FT_LOAD_DEFAULT))
+		int x0 = 0, y0 = 0, x1 = 0, y1 = 0;
+		stbtt_GetCodepointBitmapBox(pfont, i, scale, scale, &x0, &y0, &x1, &y1);
+
+		// If outline is requested, expand the bounding box boundaries to accommodate the thickness
+		if (outline)
 		{
-			result = false;
-			break;
+			x0 -= static_cast<int>(outlineradius);
+			y0 -= static_cast<int>(outlineradius);
+			x1 += static_cast<int>(outlineradius);
+			y1 += static_cast<int>(outlineradius);
 		}
 
-		FT_Glyph glyph;
-		if(FT_Get_Glyph(pface->glyph, &glyph))
-		{
-			result = false;
-			break;
-		}
-
-		if(outline && pstroker)
-		{
-			if(FT_Glyph_StrokeBorder(&glyph, pstroker, false, true))
-			{
-				result = false;
-				break;
-			}
-		}
-
-		if(FT_Glyph_To_Bitmap(&glyph, FT_RENDER_MODE_NORMAL, nullptr, true))
-		{
-			result = false;
-			break;
-		}
-
-		FT_BitmapGlyph bitmapglyph = reinterpret_cast<FT_BitmapGlyph>(glyph);
-
-		// Fill in data from the glyph
 		font_glyph_t *pglyph = &pglyphs[i];
-		pglyph->width = bitmapglyph->bitmap.width;
-		pglyph->height = bitmapglyph->bitmap.rows;
-		pglyph->bitmap_left = bitmapglyph->left;
-		pglyph->bitmap_top = bitmapglyph->top;
-		pglyph->advancex = (glyph->advance.x >> 16);
-		pglyph->advancey = (glyph->advance.y >> 16);
-		pglyph->pitch = bitmapglyph->bitmap.pitch;
+		pglyph->width = static_cast<Uint16>(x1 - x0);
+		pglyph->height = static_cast<Uint16>(y1 - y0);
+		pglyph->bitmap_left = x0;
+		pglyph->bitmap_top = -y0; // FreeType top orientation inversion
+
+		int advancex = 0, leftSideBearing = 0;
+		stbtt_GetCodepointHMetrics(pfont, i, &advancex, &leftSideBearing);
+		pglyph->advancex = static_cast<Int32>(advancex * scale);
+		pglyph->advancey = 0;
+		pglyph->pitch = pglyph->width;
 
 		if(pglyph->height > pset->maxheight)
 			pset->maxheight = pglyph->height;
 
-		Uint32 gliphdatasize = pglyph->height*pglyph->pitch;
-		pglyphbuffer[i] = new byte[gliphdatasize];
-		memcpy(pglyphbuffer[i], bitmapglyph->bitmap.buffer, sizeof(byte)*gliphdatasize);
+		int raw_w = pglyph->width;
+		int raw_h = pglyph->height;
 
-		FT_Glyph pfontglyph = nullptr;
-		if(FT_Get_Glyph(pface->glyph, &pfontglyph))
+		if (outline)
 		{
-			result = false;
-			break;
+			raw_w -= (static_cast<int>(outlineradius) * 2);
+			raw_h -= (static_cast<int>(outlineradius) * 2);
 		}
 
-		FT_BBox pbbox;
-		FT_Glyph_Get_CBox(pfontglyph, FT_GLYPH_BBOX_TRUNCATE, &pbbox);
-		pglyph->ymin = pbbox.xMin;
+		byte* raw_buf = nullptr;
+		if (raw_w > 0 && raw_h > 0)
+		{
+			raw_buf = new byte[raw_w * raw_h];
+			memset(raw_buf, 0, raw_w * raw_h);
+			stbtt_MakeCodepointBitmap(pfont, raw_buf, raw_w, raw_h, raw_w, scale, scale, i);
+		}
+
+		Uint32 glyphdatasize = pglyph->width * pglyph->height;
+		pglyphbuffer[i] = new byte[glyphdatasize];
+		memset(pglyphbuffer[i], 0, glyphdatasize);
+
+		if (outline)
+		{
+			// Software dilation pass to mimic vector outlines
+			for (int oy = 0; oy < (int)pglyph->height; oy++)
+			{
+				for (int ox = 0; ox < (int)pglyph->width; ox++)
+				{
+					int max_val = 0;
+					for (int dy = -static_cast<int>(outlineradius); dy <= static_cast<int>(outlineradius); dy++)
+					{
+						for (int dx = -static_cast<int>(outlineradius); dx <= static_cast<int>(outlineradius); dx++)
+						{
+							if (dx*dx + dy*dy > static_cast<int>(outlineradius * outlineradius))
+								continue;
+
+							int rx = ox - static_cast<int>(outlineradius) + dx;
+							int ry = oy - static_cast<int>(outlineradius) + dy;
+
+							if (rx >= 0 && rx < raw_w && ry >= 0 && ry < raw_h && raw_buf)
+							{
+								int val = raw_buf[ry * raw_w + rx];
+								if (val > max_val)
+									max_val = val;
+							}
+						}
+					}
+					pglyphbuffer[i][oy * pglyph->width + ox] = static_cast<byte>(max_val);
+				}
+			}
+		}
+		else
+		{
+			if (pglyph->width > 0 && pglyph->height > 0 && raw_buf)
+			{
+				memcpy(pglyphbuffer[i], raw_buf, glyphdatasize);
+			}
+		}
+
+		if (raw_buf)
+		{
+			delete[] raw_buf;
+		}
+
+		int ix0 = 0, iy0 = 0, ix1 = 0, iy1 = 0;
+		stbtt_GetCodepointBox(pfont, i, &ix0, &iy0, &ix1, &iy1);
+		pglyph->ymin = ix0; // Preserve unscaled bounds mapping match
 
 		// Get row and column
 		Int32 column = (i-32)%(sizex/glyphsize);
@@ -456,9 +466,6 @@ bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyp
 		pglyph->texcoords[2][1] = (row*glyphsize+pglyph->height+(padding/2.0f)+yoffset)/static_cast<Float>(sizey);
 		pglyph->texcoords[3][0] = (column*glyphsize+(padding/2.0f))/static_cast<Float>(sizex);
 		pglyph->texcoords[3][1] = (row*glyphsize+pglyph->height+(padding/2.0f)+yoffset)/static_cast<Float>(sizey);
-
-		FT_Done_Glyph(glyph);
-		FT_Done_Glyph(pfontglyph);
 	}
 
 	if(!result)
@@ -486,10 +493,10 @@ bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyp
 
 			if (glyph_index > 32 && glyph_index < NUM_GLYPHS) 
 			{
-				Uint32 x_loc = x % glyphsize - padding / 2;
-				Uint32 y_loc = y % glyphsize - padding / 2;
+				Int32 x_loc = static_cast<Int32>(x % glyphsize) - static_cast<Int32>(padding / 2);
+				Int32 y_loc = static_cast<Int32>(y % glyphsize) - static_cast<Int32>(padding / 2);
 
-				if (x_loc < 0 || y_loc < 0 || x_loc >= pglyphs[glyph_index].width || y_loc >= pglyphs[glyph_index].height) 
+				if (x_loc < 0 || y_loc < 0 || x_loc >= static_cast<Int32>(pglyphs[glyph_index].width) || y_loc >= static_cast<Int32>(pglyphs[glyph_index].height)) 
 				{
 					poutbuffer[bufferindex++] = 255;
 					poutbuffer[bufferindex++] = 255;
@@ -588,8 +595,6 @@ bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyp
 
 	psetinfo->pvbo->Append(pbuffer, NUM_GLYPHS*6*sizeof(font_vertex_t), nullptr, 0);
 	delete[] pbuffer;
-
-	FT_Stroker_Done(pstroker);
 
 	return true;
 }

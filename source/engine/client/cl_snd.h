@@ -25,7 +25,9 @@ All Rights Reserved.
 #include "tempentity.h"
 #include "snd_shared.h"
 #include "sentencesfile.h"
-#include "ogg_common.h"
+#include "common.h"
+
+struct stb_vorbis;
 
 #ifndef ALC_SOFT_HRTF
 #define ALC_SOFT_HRTF 1
@@ -47,6 +49,23 @@ All Rights Reserved.
 Int32 Sentences_PrecacheSound( const Char* pstrFilename );
 // GetDuration function for sentences file
 Float Sentences_GetSoundDuration( const Char* pstrFilename, Uint32 pitch );
+
+struct snd_oggcache_t
+{
+	snd_oggcache_t():
+		level(RS_LEVEL_UNDEFINED),
+		pfileptr(nullptr),
+		filesize(0)
+		{}
+
+	CString filepath;
+
+	rs_level_t level;
+
+	byte* pfileptr;
+
+	Uint32 filesize;
+};
 
 /*
 =================================
@@ -205,8 +224,9 @@ public:
 			channel(0),
 			paused(false),
 			pfile(nullptr),
-			stream(OggVorbis_File()),
-			info(nullptr),
+			stream(nullptr),
+			channels(0),
+			samplerate(0),
 			format(0),
 			starttime(0),
 			fadeinduration(0),
@@ -228,8 +248,10 @@ public:
 		ALuint buffers[2];
 		snd_oggcache_t *pfile;
 
-		OggVorbis_File stream;
-		vorbis_info	*info;
+		stb_vorbis* stream;
+
+		Int32 channels;
+		Int32 samplerate;
 
 		ALenum format;
 
@@ -498,9 +520,6 @@ private:
 
 	// OpenAL module
 	void* m_hOpenALDLL;
-
-	// Ogg vorbis callback functions
-	ov_callbacks m_oggCallbacks;
 
 	// Cache of precached sounds
 	CLinkedList<snd_cache_t*> m_cachedSoundsList;

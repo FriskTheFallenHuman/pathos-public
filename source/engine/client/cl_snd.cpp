@@ -37,6 +37,11 @@ All Rights Reserved.
 #include "r_main.h"
 #include "window.h"
 
+#define STB_VORBIS_NO_STDIO
+#define STB_VORBIS_NO_PUSHDATA_API // we're using the pulldata API
+#define STB_VORBIS_HEADER_ONLY
+#include "stb_vorbis.h"
+
 // OpenAL library path
 static const Char OPENAL_LIBRARY_PATH[] = "OpenAL32.dll";
 
@@ -224,12 +229,6 @@ CSoundEngine::CSoundEngine( void ):
 	m_idealReverb(0),
 	m_pSentencesFile(nullptr)
 {
-	// Reset these also
-	m_oggCallbacks.close_func = nullptr;
-	m_oggCallbacks.read_func = nullptr;
-	m_oggCallbacks.seek_func = nullptr;
-	m_oggCallbacks.tell_func = nullptr;
-
 	// Allocate arrays
 	m_playingSoundsArray.resize(MAX_PLAYING_SOUNDS);
 	m_activeSoundsArray.resize(MAX_ACTIVE_SOUNDS);
@@ -345,12 +344,6 @@ bool CSoundEngine::Init( void )
 	alGenAuxiliaryEffectSlots(1, &m_effectSlot);
 	alAuxiliaryEffectSloti(m_effectSlot, AL_EFFECTSLOT_EFFECT, m_reverbEffect);
 	alAuxiliaryEffectSlotf(m_effectSlot, AL_EFFECTSLOT_GAIN, 1.0);
-
-	// Set up callback structure
-	m_oggCallbacks.read_func = AR_readOgg;
-	m_oggCallbacks.seek_func = AR_seekOgg;
-	m_oggCallbacks.close_func = AR_closeOgg;
-	m_oggCallbacks.tell_func = AR_tellOgg;
 
 	PrintStats();
 
@@ -1824,55 +1817,37 @@ Int32 CSoundEngine::GetSyncOffset( const snd_cache_t *pcache, Uint32 index )
 //=============================================
 CSoundEngine::stream_result_t CSoundEngine::Stream( ALuint buffer, snd_music_t& track )
 {
-	static Char data[BUFFER_SIZE];
-	Int32 size = 0;
-	Int32 section;
+	static short data[BUFFER_SIZE/sizeof(short)];
+	const Int32 maxshorts = BUFFER_SIZE/sizeof(short);
+	Int32 sizeshorts = 0;
 
-	while(size < BUFFER_SIZE)
+	while(sizeshorts < maxshorts)
 	{
-		Int32 result = ov_read(&track.stream, data+size, BUFFER_SIZE-size, 0, 2, 1, &section);
-		if(result < 0)
-		{
-			switch(result)
-			{
-			case OV_EBADLINK:
-				Con_EPrintf("%s - Error streaming '%s'. Corrupt or invalid data encountered.\n", __FUNCTION__, track.pfile->filepath.c_str());
-				break;
-			case OV_EINVAL:
-				Con_EPrintf("%s - Error streaming '%s'. Invalid or corrupt file.\n", __FUNCTION__, track.pfile->filepath.c_str());
-				break;
-			case OV_HOLE:
-				Con_EPrintf("%s - Error streaming '%s'. Stream was interrupted.\n", __FUNCTION__, track.pfile->filepath.c_str());
-				break;
-			default:
-				Con_EPrintf("%s - Uknown error while streaming '%s'. Stream was interrupted.\n", __FUNCTION__, track.pfile->filepath.c_str());
-				break;
-			}
+		Int32 samples = stb_vorbis_get_samples_short_interleaved(track.stream, track.channels, data+sizeshorts, maxshorts-sizeshorts);
+		if(samples <= 0)
+			break;
 
+		// Streaming was successful, so keep at it
+		sizeshorts += samples*track.channels;
+	}
+
+	if(!sizeshorts)
+	{
+		// stb_vorbis reports VORBIS__no_error on a clean EOF; anything else means
+		// decoding actually broke down mid-stream
+		Int32 error = stb_vorbis_get_error(track.stream);
+		if(error != VORBIS__no_error)
+		{
+			Con_EPrintf("%s - Error streaming '%s'. stb_vorbis error %d.\n", __FUNCTION__, track.pfile->filepath.c_str(), error);
 			return STREAM_ERROR;
 		}
-		else if(result > 0)
-		{
-			// Streaming was successful, so keep at it
-			size += result;
-		}
-		else
-		{
-			// Reached stream end
-			break;
-		}
-	}
 
-	if(!size)
-	{
-		// Reached EOF
+		// Reached stream end
 		return STREAM_EOF;
 	}
-	else
-	{
-		alBufferData(buffer, track.format, data, size, track.info->rate);
-		return STREAM_OK;
-	}
+
+	alBufferData(buffer, track.format, data, sizeshorts*sizeof(short), track.samplerate);
+	return STREAM_OK;
 }
 
 //=============================================
@@ -2467,7 +2442,7 @@ void CSoundEngine::UpdateMusicPlayback( const ref_params_t* pparams, Float flmul
 			alSourceStop(ptrack->source);
 			alDeleteSources(1, &ptrack->source);
 			alDeleteBuffers(2, ptrack->buffers);
-			ov_clear(&ptrack->stream);
+			stb_vorbis_close(ptrack->stream);
 			delete ptrack;
 
 			m_musicTracksList.remove(m_musicTracksList.get_link());
@@ -2502,8 +2477,12 @@ bool CSoundEngine::UpdateMusicTrackPlayback ( snd_music_t& track, const ref_para
 	if(!track.source)
 	{
 		track.starttime = (track.flags & OGG_FL_MENU) ? ens.time : cls.cl_time;
-		track.info = ov_info(&track.stream, -1);
-		if(track.info->channels == 1)
+
+		stb_vorbis_info vorbisinfo = stb_vorbis_get_info(track.stream);
+		track.channels = vorbisinfo.channels;
+		track.samplerate = vorbisinfo.sample_rate;
+
+		if(track.channels == 1)
 			track.format = AL_FORMAT_MONO16;
 		else
 			track.format = AL_FORMAT_STEREO16;
@@ -2632,7 +2611,7 @@ bool CSoundEngine::UpdateMusicTrackPlayback ( snd_music_t& track, const ref_para
 				if(track.flags & OGG_FL_LOOP)
 				{
 					// Reset seek to beginning
-					ov_raw_seek(&track.stream, 0);
+					stb_vorbis_seek_start(track.stream);
 
 					streamResult = Stream(track.buffers[0], track);
 					if(streamResult != STREAM_OK)
@@ -2913,7 +2892,7 @@ void CSoundEngine::PlayOgg( const Char *sample, Int32 channel, Float timeOffset,
 			alSourceStop(ptrack->source);
 			alDeleteSources(1, &ptrack->source);
 			alDeleteBuffers(2, ptrack->buffers);
-			ov_clear(&ptrack->stream);
+			stb_vorbis_close(ptrack->stream);
 			delete ptrack;
 
 			m_musicTracksList.remove(m_musicTracksList.get_link());
@@ -2937,9 +2916,6 @@ void CSoundEngine::PlayOgg( const Char *sample, Int32 channel, Float timeOffset,
 	if(!pfile)
 		return;
 
-	// Make sure this gets reset
-	pfile->pcurptr = pfile->pfileptr;
-
 	// Add new track to list
 	snd_music_t* ptrack = new snd_music_t;
 	ptrack->filename = sample;
@@ -2947,24 +2923,31 @@ void CSoundEngine::PlayOgg( const Char *sample, Int32 channel, Float timeOffset,
 	ptrack->flags = flags;
 	ptrack->fadeinduration = fadeInTime;
 	ptrack->channel = channel;
-	
-	if(ov_open_callbacks(pfile, &ptrack->stream, nullptr, 0, m_oggCallbacks) < 0)
+
+	Int32 openerror = VORBIS__no_error;
+	ptrack->stream = stb_vorbis_open_memory(pfile->pfileptr, (Int32)pfile->filesize, &openerror, nullptr);
+	if(!ptrack->stream)
 	{
-		Con_Printf("%s - Decode error on music track '%s'.\n", __FUNCTION__, sample);
+		Con_Printf("%s - Decode error on music track '%s'. stb_vorbis error %d.\n", __FUNCTION__, sample, openerror);
 		delete ptrack;
 		return;
 	}
 
+	stb_vorbis_info vorbisinfo = stb_vorbis_get_info(ptrack->stream);
+	ptrack->channels = vorbisinfo.channels;
+	ptrack->samplerate = vorbisinfo.sample_rate;
+
 	// If we have a time offset, seek the position
 	if(timeOffset > 0)
 	{
-		Double duration = ov_time_total(&ptrack->stream, -1);
+		Uint32 totalsamples = stb_vorbis_stream_length_in_samples(ptrack->stream);
+		Double duration = (vorbisinfo.sample_rate > 0) ? (Double)totalsamples / (Double)vorbisinfo.sample_rate : 0;
 
 		// Make sure seek works
-		if(duration == OV_EINVAL)
+		if(duration <= 0)
 		{
 			Con_Printf("%s - Decode error on music track '%s'.\n", __FUNCTION__, sample);
-			ov_clear(&ptrack->stream);
+			stb_vorbis_close(ptrack->stream);
 			delete ptrack;
 			return;
 		}
@@ -2978,16 +2961,17 @@ void CSoundEngine::PlayOgg( const Char *sample, Int32 channel, Float timeOffset,
 		if(_timeOffset > duration)
 		{
 			Con_Printf("%s - Bad time offset %f on file '%s' with duration %.2f.\n", __FUNCTION__, _timeOffset, sample, duration);
-			ov_clear(&ptrack->stream);
+			stb_vorbis_close(ptrack->stream);
 			delete ptrack;
 			return;
 		}
 
 		// Seek the offset position
-		if(ov_time_seek(&ptrack->stream, _timeOffset) < 0)
+		Uint32 seeksample = (Uint32)(_timeOffset * vorbisinfo.sample_rate);
+		if(!stb_vorbis_seek(ptrack->stream, seeksample))
 		{
 			Con_Printf("%s - Bad seek on file '%s' with offset %.2f.\n", __FUNCTION__, sample, _timeOffset);
-			ov_clear(&ptrack->stream);
+			stb_vorbis_close(ptrack->stream);
 			delete ptrack;
 			return;
 		}
@@ -3048,7 +3032,7 @@ void CSoundEngine::StopOggFade( const Char *sample, Int32 channel, Float fadeTim
 		alSourceStop(ptrack->source);
 		alDeleteSources(1, &ptrack->source);
 		alDeleteBuffers(2, ptrack->buffers);
-		ov_clear(&ptrack->stream);
+		stb_vorbis_close(ptrack->stream);
 		
 		m_musicTracksList.remove(ptrack);
 		delete ptrack;
@@ -3082,7 +3066,7 @@ void CSoundEngine::StopOgg( Int32 channel, bool menuAlso )
 			alSourceStop(ptrack->source);
 			alDeleteSources(1, &ptrack->source);
 			alDeleteBuffers(2, ptrack->buffers);
-			ov_clear(&ptrack->stream);
+			stb_vorbis_close(ptrack->stream);
 			delete ptrack;
 
 			m_musicTracksList.remove(m_musicTracksList.get_link());
@@ -3194,7 +3178,6 @@ snd_oggcache_t* CSoundEngine::PrecacheOgg( const Char *sample, rs_level_t level 
 
 	pNew->level = level;
 	pNew->filepath = sample;
-	pNew->pcurptr = pNew->pfileptr;
 	pNew->filesize = fileSize;
 
 	return pNew;

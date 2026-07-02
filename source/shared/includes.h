@@ -10,20 +10,31 @@ All Rights Reserved.
 #ifndef INCLUDES_H
 #define INCLUDES_H
 
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#define NOGDI
+#define NOMINMAX
+#include <Windows.h>
+#endif
+
 #ifndef NO_SDL
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <SDL_opengl_glext.h>
+#include <SDL_video.h>
+#include <SDL_endian.h>
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+	#define STB_VORBIS_BIG_ENDIAN
+#endif
 #endif
 
-#include <stdlib.h>
+#include <ctime>
+#include <cstdio>
+#include <cstdlib>
 #include <cassert>
-#include <string.h>
+#include <cstring>
 #include <exception>
-
-#include <stdlib.h>
 #include <tchar.h>
-#include <stdio.h>
 
 #include "datatypes.h"
 #include "common.h"

@@ -10,8 +10,6 @@ All Rights Reserved.
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <SDL_video.h>
-
 /*
 =================================
 -Class: CWindow

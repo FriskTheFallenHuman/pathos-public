@@ -7,10 +7,6 @@ All Rights Reserved.
 ===============================================
 */
 
-// Required on Windows because SDL2 redirects "main" (and all Windows variants)
-// to its own before coming back here.
-#include <SDL.h>
-
 #ifdef USE_VLD
 #include <vld.h>
 #endif

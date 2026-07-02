@@ -67,49 +67,6 @@ find_or_fetch(OpenAL
     GIT_REPOSITORY https://github.com/kcat/openal-soft.git
     GIT_TAG 1.25.2)
 
-# Freetype
-find_or_fetch(Freetype
-    GIT_REPOSITORY https://github.com/freetype/freetype.git
-    GIT_TAG VER-2-14-3)
-
-if(NOT TARGET Freetype::Freetype)
-    add_library(Freetype::Freetype ALIAS freetype)
-endif()
-
-include_directories(${freetype_SOURCE_DIR}/include/freetype ${freetype_BINARY_DIR}/include)
-
-# Ogg
-SET_FORCED_OPTION(INSTALL_DOCS OFF)
-SET_FORCED_OPTION(BUILD_TESTING OFF)
-if(CYGWIN)
-    set(OGG_INCLUDE_DIR "/usr/include" CACHE PATH "" FORCE)
-endif()
-
-find_or_fetch(Ogg
-    GIT_REPOSITORY https://github.com/xiph/ogg.git
-    GIT_TAG v1.3.5)
-
-if(NOT TARGET Ogg::ogg)
-    add_library(Ogg::ogg ALIAS ogg)
-endif()
-
-
-# Vorbis
-if(MSVC)
-    set(OGG_INCLUDE_DIR "${Ogg_SOURCE_DIR}/include;${Ogg_BINARY_DIR}/include" CACHE PATH "" FORCE)
-    set(OGG_LIBRARY ogg CACHE STRING "" FORCE)
-endif()
-
-find_or_fetch(Vorbis
-    GIT_REPOSITORY https://github.com/xiph/vorbis.git
-    GIT_TAG v1.3.7)
-
-if(NOT TARGET Vorbis::vorbis)
-    add_library(Vorbis::vorbis ALIAS vorbis)
-    add_library(Vorbis::vorbisenc ALIAS vorbisenc)
-    add_library(Vorbis::vorbisfile ALIAS vorbisfile)
-endif()
-
 # Enet
 message(STATUS "Fetching ENet")
 FetchContent_Declare(ENet

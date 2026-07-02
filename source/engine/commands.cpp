@@ -7,8 +7,6 @@ All Rights Reserved.
 ===============================================
 */
 
-#include <SDL.h>
-
 #include "includes.h"
 #include "commands.h"
 #include "common.h"

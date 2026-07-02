@@ -43,14 +43,14 @@ All Rights Reserved.
 #include "snd_shared.h"
 #include "enginefuncs.h"
 #include "r_main.h"
-#include "ogg_common.h"
 #include "sv_msg.h"
 #include "sys_print.h"
 #include "mcdformat.h"
 
-#ifdef WIN32
-#include <detours.h>
-#endif
+#define STB_VORBIS_NO_STDIO
+#define STB_VORBIS_NO_PUSHDATA_API // we're using the pulldata API
+#define STB_VORBIS_HEADER_ONLY
+#include "stb_vorbis.h"
 
 // Datatype for GameDLLInit function in the game dll
 typedef bool (*pfnGameDLLInit_t)( Uint32 version, gdll_funcs_t& dllFuncs, const gdll_engfuncs_t& engFuncs, const trace_interface_t& traceFuncs, const file_interface_t& fileFuncs, gamevars_t& gamevars );
@@ -2436,38 +2436,24 @@ Float SV_GetOGGFileDuration( const Char* pstrfilename )
 	memcpy(pdata, pfile, sizeof(byte)*fileSize);
 	FL_FreeFile(pfile);
 
-	snd_oggcache_t* pogg = new snd_oggcache_t();
-	pogg->pfileptr = pdata;
-	pogg->filepath = pstrfilename;
-	pogg->pcurptr = pogg->pfileptr;
-	pogg->filesize = fileSize;
-
-	// Ogg vorbis callback functions
-	ov_callbacks oggCallbacks;
-	oggCallbacks.read_func = AR_readOgg;
-	oggCallbacks.seek_func = AR_seekOgg;
-	oggCallbacks.close_func = AR_closeOgg;
-	oggCallbacks.tell_func = AR_tellOgg;
-
-	OggVorbis_File stream = OggVorbis_File();
-	Int32 openResult = ov_open_callbacks(pogg, &stream, nullptr, 0, oggCallbacks);
-	if(openResult < 0)
+	Int32 openError = VORBIS__no_error;
+	stb_vorbis* stream = stb_vorbis_open_memory(pdata, (Int32)fileSize, &openError, nullptr);
+	if(!stream)
 	{
-		Con_Printf("[flags=onlyonce_game]%s - Could not open '%s' for streaming.\n", __FUNCTION__, pstrfilename);
+		Con_Printf("[flags=onlyonce_game]%s - Could not open '%s' for streaming. stb_vorbis error %d.\n", __FUNCTION__, pstrfilename, openError);
 		delete[] pdata;
-		delete pogg;
 		return 0;
 	}
 
-	Double result = ov_time_total(&stream, -1);
+	stb_vorbis_info vorbisinfo = stb_vorbis_get_info(stream);
+	Uint32 totalsamples = stb_vorbis_stream_length_in_samples(stream);
+	Double result = (vorbisinfo.sample_rate > 0) ? (Double)totalsamples / (Double)vorbisinfo.sample_rate : 0;
 
 	// Release data
-	ov_clear(&stream);
-
+	stb_vorbis_close(stream);
 	delete[] pdata;
-	delete pogg;
 
-	if(result == OV_EINVAL)
+	if(result <= 0)
 	{
 		Con_Printf("%s - Failed to get length for ogg file '%s'.\n", __FUNCTION__, pstrfilename);
 		return 0;

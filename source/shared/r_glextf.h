@@ -10,8 +10,6 @@ All Rights Reserved.
 #ifndef R_GLEXTF_H
 #define R_GLEXTF_H
 
-#include <SDL_opengl_glext.h>
-
 /*
 ====================
 CGLExtF
@@ -27,7 +25,7 @@ public:
 	// Retrieves all function pointers
 	bool GetFunctions( void );
 	// Retrieves a single function's pointer
-	PROC GetFunction( const Char* pstrName, bool setFailureCode = true );
+	void* GetFunction( const Char* pstrName, bool setFailureCode = true );
 
 	// Returns the error string
 	const Char* GetError( void ) const { return m_errorString.c_str(); }

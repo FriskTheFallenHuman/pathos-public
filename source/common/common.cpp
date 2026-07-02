@@ -7,13 +7,6 @@ All Rights Reserved.
 ===============================================
 */
 
-#ifdef WIN32
-#include <Windows.h>
-#endif
-
-#include <time.h>
-#include <SDL.h>
-
 #include "includes.h"
 #include "logfile.h"
 #include "entitydata.h"

@@ -120,9 +120,9 @@ CGLExtF::~CGLExtF ( void )
 // @param pstrName Function name
 // @return TRUE if all functions were loaded, FALSE otherwise
 //=============================================
-PROC CGLExtF::GetFunction( const Char* pstrName, bool setFailureCode )
+void* CGLExtF::GetFunction( const Char* pstrName, bool setFailureCode )
 {
-	PROC pfn = wglGetProcAddress(pstrName);
+	void* pfn = SDL_GL_GetProcAddress(pstrName);
 	if(setFailureCode && !pfn)
 	{
 		if(m_errorString.empty())

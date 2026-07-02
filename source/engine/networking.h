@@ -10,7 +10,6 @@ All Rights Reserved.
 #ifndef NETWORKING_H
 #define NETWORKING_H
 
-#include <SDL.h>
 #include <enet/enet.h>
 
 #include "net_shared.h"

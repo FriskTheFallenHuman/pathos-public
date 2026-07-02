@@ -116,11 +116,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
     SDL2::SDL2
     SDL2::SDL2main
-    Ogg::ogg
-    Vorbis::vorbis
-    Vorbis::vorbisfile
     OpenAL::OpenAL
-    Freetype::Freetype
     ENet::enet
     ${OPENGL_LIBRARIES})
 

@@ -11,14 +11,11 @@ All Rights Reserved.
 #ifndef R_TEXT_H
 #define R_TEXT_H
 
-// FreeType Headers
-#include <ft2build.h>
-#include FT_FREETYPE_H
-#include <ftglyph.h> // needed for bounding box bit
 #include "fontset.h"
-#include <ftstroke.h>
 
 #include "r_glsl.h"
+
+struct stbtt_fontinfo;
 
 struct fontsetglinfo_t
 {
@@ -168,13 +165,11 @@ private:
 	// Tells if the string should be newlined
 	bool ShouldNewline( Int32 offsx, Int32 x, const font_set_t *pfont, const Char *pstring );
 	// Renders glyphs for a font set
-	bool RenderGlyphs( font_set_t* pset, fontsetglinfo_t* psetinfo, font_glyph_t* pglyphs, FT_Face pface, Uint32 sizex, Uint32 yoffset, Uint32 basesizey, Uint32 sizey, Uint32 glyphsize, Uint32 iPadding, Uint32 bufferoffset, bool outline, byte* poutbuffer, Uint32 outlineradius );
+	bool RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyph_t* pglyphs, const stbtt_fontinfo* pfont, Int32 fontsize, Uint32 sizex, Uint32 yoffset, Uint32 basesizey, Uint32 sizey, Uint32 glyphsize, Uint32 padding, Uint32 bufferoffset, bool outline, byte* poutbuffer, Uint32 outlineradius );
 	// Draws simple string characters
 	void DrawSimpleStringChars( const Char* pstrString, const font_glyph_t* pglyphs, Int32 x, Int32 y, Int32 r, Int32 g, Int32 b, Int32 a, Int32 maxlenght, bool outline, Int32* padvancex = nullptr, Int32* padvancey = nullptr );
 
 private:
-	// Freetype library pointer
-	FT_Library m_pLibrary;
 
 	// Array of loaded fontsets
 	CArray<font_set_t*> m_fontSetsArray;

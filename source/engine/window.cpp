@@ -7,8 +7,6 @@ All Rights Reserved.
 ===============================================
 */
 
-#include <SDL.h>
-
 #include "includes.h"
 #include "window.h"
 #include "system.h"
@@ -93,7 +91,7 @@ bool CWindow::GetOpenGLInfo(Int32& maxMSAA, bool& fboSupported)
 	}
 
 	// Now check the extensions
-	PFNGLGETSTRINGIPROC glGetStringi = reinterpret_cast<PFNGLGETSTRINGIPROC>(wglGetProcAddress("glGetStringi"));
+	PFNGLGETSTRINGIPROC glGetStringi = reinterpret_cast<PFNGLGETSTRINGIPROC>(SDL_GL_GetProcAddress("glGetStringi"));
 	if (!glGetStringi)
 	{
 		SDL_DestroyWindow(pTempWindow);
