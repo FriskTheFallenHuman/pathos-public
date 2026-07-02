@@ -63,7 +63,7 @@ ui_schemeinfo_t* CUISchemaManager::LoadSchemaFile( const Char* pstrFilename )
 
 	// Load in the file
 	CString scriptPath;
-	scriptPath << "scripts/ui/schemas/" << pstrFilename;
+	scriptPath << "resources/schemas/" << pstrFilename;
 
 	Uint32 fileSize = 0;
 	const Char* pfile = reinterpret_cast<const Char*>(m_fileInterface.pfnLoadFile(scriptPath.c_str(), &fileSize));
@@ -73,148 +73,141 @@ ui_schemeinfo_t* CUISchemaManager::LoadSchemaFile( const Char* pstrFilename )
 		return nullptr;
 	}
 
+	CString jsonStr(reinterpret_cast<const Char*>(pfile));
+	m_fileInterface.pfnFreeFile(pfile);
+
+	// Parse JSON
+	parse_options opts;
+	opts.throw_exception = false;
+	opts.strict = false;
+
+	TJValue* root = TJ::parse(jsonStr.c_str(), opts);
+	if(!root)
+	{
+		m_errorString << "Failed to parse JSON in '" << scriptPath.c_str() << "'";
+		return nullptr;
+	}
+
+	if(!root->is_array())
+	{
+		m_errorString << "Root must be an array in '" << scriptPath.c_str() << "'";
+		delete root;
+		return nullptr;
+	}
+
+	const TJValueArray* rootArr = static_cast<const TJValueArray*>(root);
+
 	// Allocate new object
 	ui_schemeinfo_t* pNew = new ui_schemeinfo_t;
 	pNew->schemeName = pstrFilename;
 
-	// Parse the contents
-	CString token;
-	CString line;
-
-	const Char* pstr = pfile;
-	while(pstr && *pstr && (pstr - pfile) < fileSize)
+	for(unsigned int i = 0; i < rootArr->get_number_of_items(); ++i)
 	{
-		// Read in the first token
-		CString objName;
-		pstr = Common::Parse(pstr, objName);
-		if(!pstr || objName.empty())
-			break;
+		const TJValue* item = rootArr->at(i);
+		if(!item->is_object())
+		{
+			m_errorString << "Each item in array must be an object in '" << scriptPath.c_str() << "'";
+			delete root;
+			delete pNew;
+			return nullptr;
+		}
 
-		// Scheme object we'll be processing
+		const TJValueObject* obj = static_cast<const TJValueObject*>(item);
+
+		const TJCHAR* typeStr = obj->try_get_string("type");
+		if(!typeStr)
+		{
+			m_errorString << "Missing 'type' in object at index " << i << " in '" << scriptPath.c_str() << "'";
+			delete root;
+			delete pNew;
+			return nullptr;
+		}
+
 		ui_schemeobject_t newObject;
-		newObject.typeName = objName;
+		newObject.typeName = typeStr;
 
-		// Next token should be an opening bracket
-		pstr = Common::Parse(pstr, token);
-		if(!pstr || token.empty())
+		// Helper lambdas
+		auto readString = [&](const char* key) -> CString
 		{
-			m_errorString << "Unexpected EOF on '" << scriptPath.c_str() << "'";
-			m_fileInterface.pfnFreeFile(pfile);
-
-			delete pNew;
-			return nullptr;
-		}
-
-		// Make sure the script is valid
-		if(qstrcmp(token, "{"))
-		{
-			m_errorString << "{ token expected '" << scriptPath.c_str() << "', got '" << token.c_str() << "' instead.";
-			m_fileInterface.pfnFreeFile(pfile);
-
-			delete pNew;
-			return nullptr;
-		}
-
-		// Read in the fields, line by line
-		while(pstr && *pstr && (pstr - pfile) < fileSize)
-		{
-			// Skip whitespaces
-			while(*pstr && SDL_isspace(*pstr))
-				pstr++;
-
-			// Read in the entire line
-			pstr = Common::ReadLine(pstr, line);
-			if(line.empty())
-				continue;
-
-			// Read in the first token
-			const Char* pstrl = Common::Parse(line.c_str(), token);
-			if(token.empty())
+			if(obj->has_key(key))
 			{
-				m_errorString << "Unexpected EOF on '" << scriptPath.c_str() << "'";
-				m_fileInterface.pfnFreeFile(pfile);
+				const TJValue* val = obj->try_get_value(key);
+				if(val && val->is_string())
+				{
+					return CString(val->get_string());
+				}
+			}
+			return CString();
+		};
 
-				delete pNew;
-				return nullptr;
+		auto readInt = [&](const char* key, int& out) -> bool
+		{
+			if(obj->has_key(key))
+			{
+				const TJValue* val = obj->try_get_value(key);
+				if(val && val->is_number())
+				{
+					out = static_cast<int>(val->get_number());
+					return true;
+				}
+			}
+			return false;
+		};
+
+		int width = 0, height = 0;
+		readInt("width", width);
+		readInt("height", height);
+
+		CString defaultTex = readString("default");
+		CString focusTex = readString("focus");
+		CString clickTex = readString("clicked");
+		CString disabledTex = readString("disabled");
+
+		// Helper to load a texture and set width/height if not set
+		auto loadTexture = [&](const CString& filename, en_texture_t*& outTex)
+		{
+			if(filename.empty())
+			{
+				return;
 			}
 
-			// Exit the loop
-			if(!qstrcmp(token, "}"))
-				break;
+			// If it's a texture resource, load it in
+			CString texturePath;
+			texturePath << "ui/" << filename;
+
+			// Load it in
+			en_texture_t* ptex = m_pfnLoadTexture(texturePath.c_str(), RS_WINDOW_LEVEL, TX_FL_NOMIPMAPS, nullptr);
+			if(!ptex)
+			{
+				ptex = m_pfnGetDummyTexture();
+			}
+			outTex = ptex;
 			
-			if(!pstrl)
+			if(!width)
 			{
-				m_errorString << "Unexpected EOF on '" << scriptPath.c_str() << "'";
-				m_fileInterface.pfnFreeFile(pfile);
-
-				delete pNew;
-				return nullptr;
+				width = ptex->width;
 			}
-
-			// Read in the value
-			CString value;
-			pstrl = Common::Parse(pstrl, value);
-			if(value.empty())
+			if(!height)
 			{
-				m_errorString << "Unexpected EOF on '" << scriptPath.c_str() << "'";
-				m_fileInterface.pfnFreeFile(pfile);
-
-				delete pNew;
-				return nullptr;
+				height = ptex->height;
 			}
+		};
 
-			// Determine field type
-			CString textureName;
-			if(!qstrcmp(token, "$default") 
-				|| !qstrcmp(token, "$focus")
-				|| !qstrcmp(token, "$clicked")
-				|| !qstrcmp(token, "$disabled"))
-			{
-				// If it's a texture resource, load it in
-				CString texturePath;
-				texturePath << "ui/" << value;
+		loadTexture(defaultTex, newObject.defaultTexture);
+		loadTexture(focusTex, newObject.focusTexture);
+		loadTexture(clickTex, newObject.clickTexture);
+		loadTexture(disabledTex, newObject.disabledTexture);
 
-				// Load it in
-				en_texture_t* ptexture = m_pfnLoadTexture(texturePath.c_str(), RS_WINDOW_LEVEL, TX_FL_NOMIPMAPS, nullptr);
-				if(!ptexture)
-					ptexture = m_pfnGetDummyTexture();
-
-				// Assign it to the right place
-				if(!qstrcmp(token, "$default"))
-					newObject.defaultTexture = ptexture;
-				else if(!qstrcmp(token, "$focus"))
-					newObject.focusTexture = ptexture;
-				else if(!qstrcmp(token, "$clicked"))
-					newObject.clickTexture = ptexture;
-				else if(!qstrcmp(token, "$disabled"))
-					newObject.disabledTexture = ptexture;
-
-				if(!newObject.width)
-					newObject.width = ptexture->width;
-				if(!newObject.height)
-					newObject.height = ptexture->height;
-			}
-			else if(!qstrcmp(token, "$width"))
-				newObject.width = SDL_atoi(value.c_str());
-			else if(!qstrcmp(token, "$height"))
-				newObject.height = SDL_atoi(value.c_str());
-			else
-			{
-				CString str;
-				str << "Unknown field '" << token.c_str() << "' in '" << scriptPath.c_str() << "'";
-				m_warningStringArray.push_back(str);
-				break;
-			}
-		}
+		newObject.width = width;
+		newObject.height = height;
 
 		// Add it to the object
 		pNew->tabObjects.push_back(newObject);
 	}
 
+	delete root;
 	// Add this scheme object to the array
 	m_tabSchemeArray.push_back(pNew);
-	m_fileInterface.pfnFreeFile(pfile);
-
 	return pNew;
 }
 

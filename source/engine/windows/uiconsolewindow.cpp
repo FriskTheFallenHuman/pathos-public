@@ -38,7 +38,7 @@ static constexpr Uint32 CONSOLE_RELATIVE_SCREEN_WIDTH = 1920;
 static constexpr Uint32 CONSOLE_RELATIVE_SCREEN_HEIGHT = 1080;
 
 // Window description file
-const Char CUIConsoleWindow::WINDOW_DESC_FILE[] = "consolewindow.txt";
+const Char CUIConsoleWindow::WINDOW_DESC_FILE[] = "consolewindow.json";
 // Window description file
 const Char CUIConsoleWindow::WINDOW_OBJ_NAME[] = "ConsoleWindow";
 // Execute button object name

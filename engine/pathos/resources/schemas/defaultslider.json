@@ -1,0 +1,14 @@
+[
+	{
+		"type": "Left",
+		"default": "sliderLeft.tga"
+	},
+	{
+		"type": "Right",
+		"default": "sliderRight.tga"
+	},
+	{
+		"type": "Body",
+		"default": "sliderBody.tga"
+	}
+]

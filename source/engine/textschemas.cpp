@@ -18,7 +18,7 @@ All Rights Reserved.
 #include "window.h"
 
 // Path to the folder containing the schemas
-const Char CTextSchemas::SCHEMA_FOLDER_PATH[] = "/scripts/textschemas/";
+const Char CTextSchemas::SCHEMA_FOLDER_PATH[] = "/resources/textschemas/";
 
 CTextSchemas gTextSchemas;
 
@@ -170,7 +170,7 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 {
 	// Build the path and load the file
 	CString path;
-	path << SCHEMA_FOLDER_PATH << schemaFileName << ".txt";
+	path << SCHEMA_FOLDER_PATH << schemaFileName << ".json";
 
 	const byte* pfile = FL_LoadFile(path.c_str(), nullptr);
 	if(!pfile)
@@ -179,306 +179,259 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 		return nullptr;
 	}
 
+	// Convert file content to string
+	CString jsonStr(reinterpret_cast<const Char*>(pfile));
+	FL_FreeFile(pfile);
+
+	// Parse JSON
+	parse_options opts;
+	opts.throw_exception = false;  // we handle errors manually
+	opts.strict = false; // relax
+
+	TJValue* root = TJ::parse(jsonStr.c_str(), opts);
+	if(!root)
+	{
+		Con_EPrintf("%s - Failed to parse JSON in '%s'.\n", __FUNCTION__, path.c_str());
+		return nullptr;
+	}
+
+	if(!root->is_object())
+	{
+		Con_EPrintf("%s - Root must be an object in '%s'.\n", __FUNCTION__, path.c_str());
+		delete root;
+		return nullptr;
+	}
+
+	const TJValueObject* obj = static_cast<const TJValueObject*>(root);
+
+	// Check $schema field
+	if(!obj->has_key("$schema") || !obj->try_get_value("$schema")->is_string())
+	{
+		Con_EPrintf("%s - Missing or invalid '$schema' field in '%s'.\n", __FUNCTION__, path.c_str());
+		delete root;
+		return nullptr;
+	}
+
+	const TJCHAR* schemaType = obj->try_get_value("$schema")->get_string();
+	if(qstrcmp(schemaType, "TextSchema") != 0)
+	{
+		Con_EPrintf("%s - '$schema' must be 'TextSchema' in '%s'.\n", __FUNCTION__, path.c_str());
+		delete root;
+		return nullptr;
+	}
+
 	textschema_t schema;
 	schema.filename = schemaFileName;
 
-	CString token;
-
-	// First token should be $schema
-	const Char* pstr = reinterpret_cast<const Char*>(pfile);
-	pstr = Common::Parse(pstr, token);
-	if(qstrcmp(token, "$schema"))
+	// internalname
+	if(!obj->has_key("internalname") || !obj->try_get_value("internalname")->is_string())
 	{
-		Con_EPrintf("%s - Expected '$schema', got '%s' instead while reading '%s'.\n", __FUNCTION__, token.c_str(), path.c_str());
-		FL_FreeFile(pfile);
+		Con_EPrintf("%s - Missing or invalid 'internalname' in '%s'.\n", __FUNCTION__, path.c_str());
+		delete root;
 		return nullptr;
 	}
+	schema.internalname = obj->try_get_value("internalname")->get_string();
 
-	if(!pstr)
+	// Helper lambda to parse a color array (RGBA)
+	auto parseColor = [&](const TJCHAR* key, color32_t& outColor) -> bool
 	{
-		Con_EPrintf("%s - Expected closing '}', got EOL instead while reading '%s'.\n", __FUNCTION__, path.c_str());
-		FL_FreeFile(pfile);
-		return nullptr;
-	}
-
-	// Next needs to be the schema name
-	pstr = Common::Parse(pstr, token);
-	if(!pstr)
-	{
-		Con_EPrintf("%s - Expected closing '}', got EOL instead while reading '%s'.\n", __FUNCTION__, path.c_str());
-		FL_FreeFile(pfile);
-		return nullptr;
-	}
-
-	schema.internalname = token;
-
-	// Next needs to be an opening bracket
-	pstr = Common::Parse(pstr, token);
-	if(qstrcmp(token, "{"))
-	{
-		Con_EPrintf("%s - Expected '{', got '%s' instead while reading '%s'.\n", __FUNCTION__, token.c_str(), path.c_str());
-		FL_FreeFile(pfile);
-		return nullptr;
-	}
-
-	if(!pstr)
-	{
-		Con_EPrintf("%s - Expected closing '}', got EOL instead while reading '%s'.\n", __FUNCTION__, path.c_str());
-		FL_FreeFile(pfile);
-		return nullptr;
-	}
-
-	while(true)
-	{
-		// Grab the first token
-		pstr = Common::Parse(pstr, token);
-		if(!qstrcmp(token, "}"))
-			break;
-
-		// Make sure it's not EOL
-		if(!pstr)
+		if(!obj->has_key(key))
 		{
-			Con_EPrintf("%s - Expected closing '}', got EOL instead while reading '%s'.\n", __FUNCTION__, path.c_str());
-			FL_FreeFile(pfile);
-			return nullptr;
+			return true;
 		}
 
-		CString optionname = token;
-		if(!qstrcmp(optionname, "$fontcolor")
-			|| !qstrcmp(optionname, "$outlinecolor"))
+		const TJValue* val = obj->try_get_value(key);
+		if(!val->is_array())
 		{
-			// Parse the color component, it needs to be in quotes
-			CString colortoken;
-			pstr = Common::Parse(pstr, colortoken);
+			Con_EPrintf("%s - '%s' must be an array in '%s'.\n", __FUNCTION__, key, path.c_str());
+			return false;
+		}
 
-			// Color parsed
-			color32_t color;
-			// Parse the individual options
-			const Char* ptokenstr = colortoken.c_str();
+		const TJValueArray* arr = static_cast<const TJValueArray*>(val);
+		if(arr->get_number_of_items() != 4)
+		{
+			Con_EPrintf("%s - '%s' must have exactly 4 elements in '%s'.\n", __FUNCTION__, key, path.c_str());
+			return false;
+		}
 
-			Uint32 i = 0;
-			while(ptokenstr)
+		for(unsigned int i = 0; i < 4; ++i)
+		{
+			const TJValue* elem = arr->at(i);
+			if(!elem->is_number())
 			{
-				ptokenstr = Common::Parse(ptokenstr, token);
-				if(!ptokenstr && i < 3)
-				{
-					Con_EPrintf("%s - Only %d color values in '%s', 4 expected while reading '%s' from '%s'.\nMake sure the color values are encased in quotes.\n", 
-						__FUNCTION__, (i+1), optionname.c_str(), path.c_str());
-					break;
-				}
-
-				if(!Common::IsNumber(token.c_str()))
-				{
-					Con_EPrintf("%s - Color component '%s' is not a valid number in '%s' for option '%s'.\n", 
-						__FUNCTION__, token.c_str(), path.c_str(), optionname.c_str());
-					break;
-				}
-
-				Int32 value = SDL_atoi(token.c_str());
-				if(value > 255 || value < 0)
-				{
-					Con_EPrintf("%s - Color component '%s' is not a valid number in '%s' for option '%s'.\n", 
-						__FUNCTION__, token.c_str(), path.c_str(), optionname.c_str());
-					break;
-				}
-
-				switch(i)
-				{
-				case 0: color.r = value; break;
-				case 1: color.g = value; break;
-				case 2: color.b = value; break;
-				case 3: color.a = value; break;
-				}
-
-				i++;
+				Con_EPrintf("%s - '%s' element %d is not a number in '%s'.\n", __FUNCTION__, key, i, path.c_str());
+				return false;
 			}
 
-			if(i != 4)
+			long long valNum = elem->get_number();
+			if(valNum < 0 || valNum > 255)
 			{
-				Con_EPrintf("%s - Error parsing '%s' instead while reading '%s'.\n", __FUNCTION__, optionname.c_str(), path.c_str());
-				FL_FreeFile(pfile);
-				return nullptr;
+				Con_EPrintf("%s - '%s' element %d out of range (0‑255) in '%s'.\n", __FUNCTION__, key, i, path.c_str());
+				return false;
 			}
 
-			if(!qstrcmp(optionname, "$fontcolor"))
-				schema.color = color;
+			switch (i)
+			{
+				case 0: outColor.r = static_cast<byte>(valNum); break;
+				case 1: outColor.g = static_cast<byte>(valNum); break;
+				case 2: outColor.b = static_cast<byte>(valNum); break;
+				case 3: outColor.a = static_cast<byte>(valNum); break;
+			}
+		}
+		return true;
+	};
+
+	// Parse colors
+	if(!parseColor("fontcolor", schema.color))
+	{
+		delete root;
+		return nullptr;
+	}
+
+	if(!parseColor("outlinecolor", schema.outlinecolor))
+	{
+		delete root;
+		return nullptr;
+	}
+
+	// fontset
+	if (obj->has_key("fontset"))
+	{
+		const TJValue* val = obj->try_get_value("fontset");
+		if(!val->is_string())
+		{
+			Con_EPrintf("%s - 'fontset' must be a string in '%s'.\n", __FUNCTION__, path.c_str());
+			delete root; return nullptr;
+		}
+		schema.fontsetname = val->get_string();
+	}
+
+	// fontsize
+	if(obj->has_key("fontsize"))
+	{
+		const TJValue* val = obj->try_get_value("fontsize");
+		if(!val->is_number())
+		{
+			Con_EPrintf("%s - 'fontsize' must be a number in '%s'.\n", __FUNCTION__, path.c_str());
+			delete root; return nullptr;
+		}
+
+		long long fontSize = val->get_number();
+		if(fontSize < 4 || fontSize > 256)
+		{
+			Con_EPrintf("%s - 'fontsize' out of range (4‑256) in '%s'.\n", __FUNCTION__, path.c_str());
+			delete root; return nullptr;
+		}
+		schema.fontsize = static_cast<Uint32>(fontSize);
+	}
+
+	// outlineradius (optional)
+	if(obj->has_key("outlineradius"))
+	{
+		const TJValue* val = obj->try_get_value("outlineradius");
+		if(!val->is_number())
+		{
+			Con_EPrintf("%s - 'outlineradius' must be a number in '%s'.\n", __FUNCTION__, path.c_str());
+			delete root; return nullptr;
+		}
+
+		long long radius = val->get_number();
+		if(radius < 0 || radius > 4)
+		{
+			Con_EPrintf("%s - 'outlineradius' out of range (0‑4) in '%s'.\n", __FUNCTION__, path.c_str());
+			delete root; return nullptr;
+		}
+		schema.outlineradius = static_cast<Uint32>(radius);
+	}
+
+	// resolutions
+	if(obj->has_key("resolutions"))
+	{
+		const TJValue* resVal = obj->try_get_value("resolutions");
+		if(!resVal->is_array())
+		{
+			Con_EPrintf("%s - 'resolutions' must be an array in '%s'.\n", __FUNCTION__, path.c_str());
+			delete root; return nullptr;
+		}
+
+		const TJValueArray* resArr = static_cast<const TJValueArray*>(resVal);
+		for(unsigned int i = 0; i < resArr->get_number_of_items(); ++i)
+		{
+			const TJValue* item = resArr->at(i);
+			if(!item->is_object())
+			{
+				Con_EPrintf("%s - Each resolution must be an object in '%s'.\n", __FUNCTION__, path.c_str());
+				delete root; return nullptr;
+			}
+			const TJValueObject* resObj = static_cast<const TJValueObject*>(item);
+
+			text_reschema_t resInfo;
+
+			// screenheight
+			if(!resObj->has_key("screenheight") || !resObj->try_get_value("screenheight")->is_number())
+			{
+				Con_EPrintf("%s - Missing or invalid 'screenheight' in resolution %u in '%s'.\n", __FUNCTION__, i, path.c_str());
+				delete root; return nullptr;
+			}
+
+			long long screenH = resObj->try_get_value("screenheight")->get_number();
+			if(screenH < 480)
+			{
+				Con_EPrintf("%s - 'screenheight' too low in resolution %u in '%s'.\n", __FUNCTION__, i, path.c_str());
+				delete root; return nullptr;
+			}
+			resInfo.screenheight = static_cast<Uint32>(screenH);
+
+			// fontsize
+			if(resObj->has_key("fontsize"))
+			{
+				const TJValue* fsize = resObj->try_get_value("fontsize");
+				if(!fsize->is_number())
+				{
+					Con_EPrintf("%s - 'fontsize' must be a number in resolution %u in '%s'.\n", __FUNCTION__, i, path.c_str());
+					delete root; return nullptr;
+				}
+
+				long long val = fsize->get_number();
+				if(val < 4 || val > 256)
+				{
+					Con_EPrintf("%s - 'fontsize' out of range in resolution %u in '%s'.\n", __FUNCTION__, i, path.c_str());
+					delete root; return nullptr;
+				}
+				resInfo.fontsize = static_cast<Uint32>(val);
+			}
 			else
-				schema.outlinecolor = color;
-		}
-		else if(!qstrcmp(optionname, "$fontset"))
-		{
-			// Parse the name of the font set
-			pstr = Common::Parse(pstr, token);
-			if(!pstr)
 			{
-				Con_EPrintf("%s - Unexpected EOL instead while reading '%s'.\n", __FUNCTION__, path.c_str());
-				FL_FreeFile(pfile);
-				return nullptr;
+				resInfo.fontsize = schema.fontsize; // fallback to global
 			}
 
-			schema.fontsetname = token;
-		}
-		else if(!qstrcmp(optionname, "$fontsize")
-			|| !qstrcmp(optionname, "$outlineradius"))
-		{
-			// Parse the value token
-			pstr = Common::Parse(pstr, token);
-			if(!pstr)
+			// outlineradius
+			if(resObj->has_key("outlineradius"))
 			{
-				Con_EPrintf("%s - Unexpected EOL instead while reading %s '%s'.\n", __FUNCTION__, optionname.c_str(), path.c_str());
-				FL_FreeFile(pfile);
-				return nullptr;
-			}
-
-			if(!Common::IsNumber(token.c_str()))
-			{
-				Con_EPrintf("%s - Option '%s' value '%s' is not a number in '%s'.\n", __FUNCTION__, optionname.c_str(), token.c_str(), path.c_str());
-				FL_FreeFile(pfile);
-				return nullptr;
-			}
-
-			Uint32 value = SDL_atoi(token.c_str());
-			if(!qstrcmp(optionname, "$fontsize"))
-			{
-				if(value < 4 || value > 256) // Arbitrary
+				const TJValue* rad = resObj->try_get_value("outlineradius");
+				if(!rad->is_number())
 				{
-					Con_EPrintf("%s - Resolution option '%s' value '%s' is not a valid value in '%s'.\n", __FUNCTION__, optionname.c_str(), token.c_str(), path.c_str());
-					FL_FreeFile(pfile);
-					return nullptr;
+					Con_EPrintf("%s - 'outlineradius' must be a number in resolution %u in '%s'.\n", __FUNCTION__, i, path.c_str());
+					delete root; return nullptr;
 				}
 
-				schema.fontsize = value;
-			}
-			else if(!qstrcmp(optionname, "$outlineradius"))
-			{
-				if(value < 0 || value > 4) // Arbitrary
+				long long val = rad->get_number();
+				if(val < 0 || val > 4)
 				{
-					Con_EPrintf("%s - Option '%s' value '%s' is not a valid value in '%s'.\n", __FUNCTION__, optionname.c_str(), token.c_str(), path.c_str());
-					FL_FreeFile(pfile);
-					return nullptr;
+					Con_EPrintf("%s - 'outlineradius' out of range in resolution %u in '%s'.\n", __FUNCTION__, i, path.c_str());
+					delete root; return nullptr;
 				}
-
-				schema.outlineradius = value;
+				resInfo.outlineradius = static_cast<Uint32>(val);
 			}
-		}
-		else if(!qstrcmp(optionname, "$resolution"))
-		{
-			// Parse the value token
-			pstr = Common::Parse(pstr, token);
-			if(!pstr)
+			else
 			{
-				Con_EPrintf("%s - Unexpected EOL instead while reading '%s' '%s'.\n", __FUNCTION__, optionname.c_str(), path.c_str());
-				FL_FreeFile(pfile);
-				return nullptr;
+				resInfo.outlineradius = schema.outlineradius;
 			}
 
-			if(!Common::IsNumber(token.c_str()))
-			{
-				Con_EPrintf("%s - Option '%s' resolution value '%s' is not a number in '%s'.\n", __FUNCTION__, optionname.c_str(), token.c_str(), path.c_str());
-				FL_FreeFile(pfile);
-				return nullptr;
-			}
-
-			Uint32 resolutionValue = SDL_atoi(token.c_str());
-			if(resolutionValue < CWindow::MIN_SCREEN_HEIGHT)
-			{
-				Con_EPrintf("%s - Option '%s' resolution value '%s' is lower than the minimum resolution %d in '%s'.\n", __FUNCTION__, optionname.c_str(), token.c_str(), CWindow::MIN_SCREEN_HEIGHT, path.c_str());
-				FL_FreeFile(pfile);
-				return nullptr;
-			}
-
-			// Parse the next token, it needs to be a bracket
-			pstr = Common::Parse(pstr, token);
-			if(qstrcmp(token, "{"))
-			{
-				Con_EPrintf("%s - Expected '{', got '%s' instead while reading resolution %d in '%s'.\n", __FUNCTION__, token.c_str(), resolutionValue, path.c_str());
-				FL_FreeFile(pfile);
-				return nullptr;
-			}
-
-			if(!pstr)
-			{
-				Con_EPrintf("%s - Expected closing '}', got EOL instead while reading resolution %d in '%s'.\n", __FUNCTION__, resolutionValue, path.c_str());
-				FL_FreeFile(pfile);
-				return nullptr;
-			}
-
-			// Read the options in
-			text_reschema_t resinfo;
-			resinfo.screenheight = resolutionValue;
-
-			while(true)
-			{
-				pstr = Common::Parse(pstr, token);
-				if(!qstrcmp(token, "}"))
-					break;
-
-				// Make sure it's not EOL
-				if(!pstr)
-				{
-					Con_EPrintf("%s - Expected closing '}', got EOL instead while reading resolution %d in '%s'.\n", __FUNCTION__, resolutionValue, path.c_str());
-					FL_FreeFile(pfile);
-					return nullptr;
-				}
-
-				CString resoptionname = token;
-				if(!qstrcmp(resoptionname, "$fontsize")
-					|| !qstrcmp(resoptionname, "$outlineradius"))
-				{
-					// Parse the value token
-					pstr = Common::Parse(pstr, token);
-					if(!pstr)
-					{
-						Con_EPrintf("%s - Unexpected EOL instead while reading %s '%s'.\n", __FUNCTION__, resoptionname.c_str(), path.c_str());
-						FL_FreeFile(pfile);
-						return nullptr;
-					}
-
-					if(!Common::IsNumber(token.c_str()))
-					{
-						Con_EPrintf("%s - Option '%s' value '%s' for resolution %d is not a number in '%s'.\n", __FUNCTION__, resoptionname.c_str(), token.c_str(), resolutionValue, path.c_str());
-						FL_FreeFile(pfile);
-						return nullptr;
-					}
-
-					Uint32 value = SDL_atoi(token.c_str());
-					if(!qstrcmp(resoptionname, "$fontsize"))
-					{
-						if(value < 4 || value > 256) // Arbitrary
-						{
-							Con_EPrintf("%s - Resolution option '%s' value '%s' is not a valid value in '%s'.\n", __FUNCTION__, resoptionname.c_str(), token.c_str(), path.c_str());
-							FL_FreeFile(pfile);
-							return nullptr;
-						}
-
-						resinfo.fontsize = value;
-					}
-					else if(!qstrcmp(resoptionname, "$outlineradius"))
-					{
-						if(value < 0 || value > 4) // Arbitrary
-						{
-							Con_EPrintf("%s - Option '%s' value '%s' is not a valid value in '%s'.\n", __FUNCTION__, resoptionname.c_str(), token.c_str(), path.c_str());
-							FL_FreeFile(pfile);
-							return nullptr;
-						}
-
-						resinfo.outlineradius = value;
-					}
-				}
-			}
-
-			schema.resolutions.push_back(resinfo);
-		}
-		else
-		{
-			// Inform about broken crap
-			Con_Printf("%s - Unknown option '%s' in '%s'.\n", __FUNCTION__, token.c_str(), path.c_str());
+			schema.resolutions.push_back(resInfo);
 		}
 	}
 
-	// Release the file
-	FL_FreeFile(pfile);
-
-	// Return the element added
+	delete root;
 	return &m_schemasList.add(schema)->_val;
 }

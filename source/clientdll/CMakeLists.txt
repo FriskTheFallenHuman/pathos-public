@@ -46,6 +46,8 @@ set(CLIENT_COMMON_HEADERS
     ${CMAKE_SOURCE_DIR}/common/msgreader.h
     ${CMAKE_SOURCE_DIR}/common/msgreader_inline.hpp
     ${CMAKE_SOURCE_DIR}/common/r_common.h
+    ${CMAKE_SOURCE_DIR}/common/TinyJSON.cpp
+    ${CMAKE_SOURCE_DIR}/common/TinyJSON.h
     ${CMAKE_SOURCE_DIR}/common/vector.h
     ${CMAKE_SOURCE_DIR}/common/vector_inline.hpp)
 target_sources(${PROJECT_NAME} PRIVATE ${CLIENT_COMMON_HEADERS})

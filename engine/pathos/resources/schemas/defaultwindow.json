@@ -1,0 +1,51 @@
+[
+	{
+		"type": "Bottom",
+		"default": "tabStdBottom.tga"
+	},
+	{
+		"type": "BottomLeft",
+		"default": "tabStdBottomLeft.tga"
+	},
+	{
+		"type": "BottomRight",
+		"default": "tabStdBottomRight.tga"
+	},
+	{
+		"type": "Left",
+		"default": "tabStdRight.tga"
+	},
+	{
+		"type": "Right",
+		"default": "tabStdLeft.tga"
+	},
+	{
+		"type": "Top",
+		"default": "tabStdTop.tga"
+	},
+	{
+		"type": "TopLeft",
+		"default": "tabStdTopLeft.tga"
+	},
+	{
+		"type": "TopRight",
+		"default": "tabStdTopRight.tga"
+	},
+	{
+		"type": "TopInnerLeft",
+		"default": "tabStdTopInnerLeft.tga"
+	},
+	{
+		"type": "TopInnerRight",
+		"default": "tabStdTopInnerRight.tga"
+	},
+	{
+		"type": "Body",
+		"default": "tabStdBody.tga"
+	},
+	{
+		"type": "CloseIcon",
+		"default": "window_close_default.tga",
+		"focus": "window_close_hover.tga"
+	}
+]

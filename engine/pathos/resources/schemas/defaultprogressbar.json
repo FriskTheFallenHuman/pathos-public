@@ -1,0 +1,38 @@
+[
+	{
+		"type": "Bottom",
+		"default": "progressTabBottom.tga"
+	},
+	{
+		"type": "BottomLeft",
+		"default": "progressTabBottomLeft.tga"
+	},
+	{
+		"type": "BottomRight",
+		"default": "progressTabBottomRight.tga"
+	},
+	{
+		"type": "Left",
+		"default": "progressTabRight.tga"
+	},
+	{
+		"type": "Right",
+		"default": "progressTabLeft.tga"
+	},
+	{
+		"type": "Top",
+		"default": "progressTabTop.tga"
+	},
+	{
+		"type": "TopLeft",
+		"default": "progressTabTopLeft.tga"
+	},
+	{
+		"type": "TopRight",
+		"default": "progressTabTopRight.tga"
+	},
+	{
+		"type": "Body",
+		"default": "progressTabBody.tga"
+	}
+]

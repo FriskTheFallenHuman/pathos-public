@@ -1203,9 +1203,9 @@ bool CUIWindow::init( const Char* pstrSchemaName )
 
 		// Create the button
 		CUIButton* pCloseButton = new CUIButton((UIEL_FL_ALIGN_T|UIEL_FL_ALIGN_R), pCloseBtnObj, pAction, pCloseBtnObj->width, pCloseBtnObj->height, 5, 5);
-		if(!pCloseButton->init("defaultbutton.txt"))
+		if(!pCloseButton->init("defaultbutton.json"))
 		{
-			g_engineFuncs.pfnCon_EPrintf("Failed to initialize schema 'defaultbutton.txt' for button.\n");
+			g_engineFuncs.pfnCon_EPrintf("Failed to initialize schema 'defaultbutton.json' for button.\n");
 			return false;
 		}
 
@@ -1807,9 +1807,9 @@ bool CUITextTab::init( const Char* pstrSchemaName )
 	m_pScroller = new CUIScroller(flags, UIEL_SCROLL_V, m_pFont->fontsize, 0, m_height, 0, 0);
 	m_pScroller->setParent(this);
 
-	if(!m_pScroller->init("defaultscroller.txt"))
+	if(!m_pScroller->init("defaultscroller.json"))
 	{
-		g_engineFuncs.pfnCon_EPrintf("Failed to initialize scroller with schema file 'defaultscoller.txt'.\n");
+		g_engineFuncs.pfnCon_EPrintf("Failed to initialize scroller with schema file 'defaultscoller.json'.\n");
 		return false;
 	}
 
@@ -3169,9 +3169,9 @@ CUITabBody* CUITabList::createTab( const Char* pstrName )
 
 	// Create the label
 	CUITabLabel* pTabLabel = new CUITabLabel(UIEL_FL_NONE, pstrName, m_pFont, pCallbackEvent, labelOriginX, originY);
-	if(!pTabLabel->init("defaultwindow.txt"))
+	if(!pTabLabel->init("defaultwindow.json"))
 	{
-		g_engineFuncs.pfnCon_EPrintf("Failed to set schema 'defaultbutton.txt' for CUITabLabel object %s.\n", pstrName);
+		g_engineFuncs.pfnCon_EPrintf("Failed to set schema 'defaultbutton.json' for CUITabLabel object %s.\n", pstrName);
 		delete pTabLabel;
 		return nullptr;
 	}
@@ -3186,9 +3186,9 @@ CUITabBody* CUITabList::createTab( const Char* pstrName )
 
 	// Create the tab body
 	CUITabBody* pTabBody = new CUITabBody(UIEL_FL_NONE, pTabLabel, bodyWidth, bodyHeight, originX, originY);
-	if(!pTabBody->init("defaultwindow.txt"))
+	if(!pTabBody->init("defaultwindow.json"))
 	{
-		g_engineFuncs.pfnCon_EPrintf("Failed to set schema 'defaultbutton.txt' for the CUITabBody %s.\n", pstrName);
+		g_engineFuncs.pfnCon_EPrintf("Failed to set schema 'defaultbutton.json' for the CUITabBody %s.\n", pstrName);
 		delete pTabLabel;
 		return nullptr;
 	}
@@ -3284,9 +3284,9 @@ bool CUIScrollableSurface::init( const Char* pstrSchemaName )
 	m_pScroller = new CUIScroller(flags, UIEL_SCROLL_V, 16, 0, m_height, 0, 0);
 	m_pScroller->setParent(this);
 
-	if(!m_pScroller->init("defaultscroller.txt"))
+	if(!m_pScroller->init("defaultscroller.json"))
 	{
-		g_engineFuncs.pfnCon_EPrintf("Failed to initialize CUIScroller with schema file 'defaultscoller.txt' for 'CUIScrollableSurface'.\n");
+		g_engineFuncs.pfnCon_EPrintf("Failed to initialize CUIScroller with schema file 'defaultscoller.json' for 'CUIScrollableSurface'.\n");
 		return false;
 	}
 
@@ -3662,7 +3662,7 @@ bool CUIList::init( const Char* pstrSchemaName )
 		m_pHeader = new CUIListHeader(UIEL_FL_NONE, m_pListFont, m_nbColumns, headerWidth, m_rowHeight);
 		m_pHeader->setParent(this);
 
-		if(!m_pHeader->init("defaultwindow.txt"))
+		if(!m_pHeader->init("defaultwindow.json"))
 		{
 			g_engineFuncs.pfnCon_EPrintf("Failed to initialize CUIListHeader for CUIScrollableSurface.\n");
 			return false;
@@ -4199,7 +4199,7 @@ bool CUIDropDownList::init( const Char* pstrSchemaName )
 	CUIDropDownButtonEvent* pDropDownBtnEvent = new CUIDropDownButtonEvent(this);
 	CUIButton* pDropButton = new CUIButton((UIEL_FL_ALIGN_CV|UIEL_FL_ALIGN_R), pObject, pDropDownBtnEvent, 24, m_height, 0, 0);
 	pDropButton->setParent(this);
-	if(!pDropButton->init("defaultbutton.txt"))
+	if(!pDropButton->init("defaultbutton.json"))
 	{
 		g_engineFuncs.pfnCon_EPrintf("Failed to initialize 'CUIButton' for 'CUIDropDownList'.\n");
 		return false;
@@ -4208,7 +4208,7 @@ bool CUIDropDownList::init( const Char* pstrSchemaName )
 	// Create the dropdown list
 	m_pDropdownList = new CUIList((UIEL_FL_NO_HEADER|UIEL_FL_HOVER_HIGHLIGHT), m_pFont, m_height, 1, m_width, m_height*4, 0, m_height);
 	m_pDropdownList->setParent(this);
-	if(!m_pDropdownList->init("indentedwindow.txt"))
+	if(!m_pDropdownList->init("indentedwindow.json"))
 	{
 		g_engineFuncs.pfnCon_EPrintf("Failed to initialize 'CUIList' for 'CUIDropDownList'.\n");
 		return false;
@@ -4700,7 +4700,7 @@ bool CUISlider::init( const Char* pstrSchemaName )
 	m_pSliderButton = new CUIDragButton(UIEL_FL_ALIGN_CV, UIEL_SCROLL_H, pAction, buttonWidth, buttonHeight, 0, 0);
 	m_pSliderButton->setParent(this);
 
-	if(!m_pSliderButton->init("defaultbutton.txt"))
+	if(!m_pSliderButton->init("defaultbutton.json"))
 	{
 		g_engineFuncs.pfnCon_EPrintf("Failed to initialize slider object 'CUISliderButton'.\n");
 		return false;

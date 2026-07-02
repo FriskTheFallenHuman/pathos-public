@@ -29,7 +29,7 @@ All Rights Reserved.
 #include "stb_truetype.h"
 
 // Font set base directory
-const Char CText::FONT_DIRECTORY[] = "fonts";
+const Char CText::FONT_DIRECTORY[] = "resources/fonts";
 
 //
 // Class definition

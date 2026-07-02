@@ -1,0 +1,59 @@
+{
+	"objects": [
+		{
+			"type": "window",
+			"name": "ExitWindow",
+			"schema": "defaultwindow.json",
+			"title": "Quit Game",
+			"width": 400,
+			"height": 160,
+			"insetx": 10,
+			"insety": 10,
+			"alpha": 230,
+			"dragger": true,
+			"resizable": false,
+			"flags": ["fixed_height"]
+		},
+		{
+			"type": "button",
+			"name": "CancelButton",
+			"schema": "defaultbutton.json",
+			"text": "Cancel",
+			"width": 96,
+			"height": 32,
+			"flags": ["align_bottom"]
+		},
+		{
+			"type": "button",
+			"name": "SaveAndQuitButton",
+			"schema": "defaultbutton.json",
+			"text": "Save and Quit",
+			"width": 128,
+			"height": 32,
+			"flags": ["align_bottom", "align_center_horizontal"]
+		},
+		{
+			"type": "button",
+			"name": "QuitButton",
+			"schema": "defaultbutton.json",
+			"text": "Quit",
+			"width": 96,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "text",
+			"name": "QuitText",
+			"text": "Are you sure you want to quit?",
+			"flags": ["align_center_horizontal"],
+			"originy": 42
+		},
+		{
+			"type": "text",
+			"name": "InGameQuitText",
+			"text": "Quit without saving?",
+			"flags": ["align_center_horizontal"],
+			"originy": 42
+		}
+	]
+}

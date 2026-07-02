@@ -33,7 +33,7 @@ All Rights Reserved.
 CUIDownloadWindow* CUIDownloadWindow::m_pInstance = nullptr;
 
 // Window description file
-const Char CUIDownloadWindow::WINDOW_DESC_FILE[] = "downloadwindow.txt";
+const Char CUIDownloadWindow::WINDOW_DESC_FILE[] = "downloadwindow.json";
 // Window description file
 const Char CUIDownloadWindow::WINDOW_OBJ_NAME[] = "DownloadWindow";
 // Cancel button object name

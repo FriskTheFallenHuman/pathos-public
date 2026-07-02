@@ -1,0 +1,63 @@
+{
+	"objects": [
+		{
+			"type": "window",
+			"name": "DownloadWindow",
+			"schema": "defaultwindow.json",
+			"title": "Download progress",
+			"width": 600,
+			"height": 250,
+			"insetx": 10,
+			"insety": 10,
+			"alpha": 230,
+			"dragger": true,
+			"resizable": false,
+			"flags": ["fixed_height"]
+		},
+		{
+			"type": "button",
+			"name": "CancelButton",
+			"schema": "defaultbutton.json",
+			"text": "Cancel",
+			"width": 96,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "text",
+			"name": "FileDownloadLabel",
+			"text": "Downloading: ",
+			"originx": 16,
+			"originy": 42,
+			"flags": ["align_left"]
+		},
+		{
+			"type": "tab",
+			"name": "FileDownloadProgressBar",
+			"schema": "defaultprogressbar.json",
+			"originx": 16,
+			"originy": 64,
+			"width": 550,
+			"height": 32,
+			"flags": ["align_left"]
+		},
+		{
+			"type": "text",
+			"name": "TotalProgressLabel",
+			"text": "Download progress",
+			"flags": ["align_left"],
+			"originx": 16,
+			"originy": 124
+		},
+		{
+			"type": "tab",
+			"name": "TotalProgressBar",
+			"schema": "defaultprogressbar.json",
+			"originx": 16,
+			"originy": 146,
+			"width": 550,
+			"height": 32,
+			"flags": ["align_left"]
+		}
+	]
+}

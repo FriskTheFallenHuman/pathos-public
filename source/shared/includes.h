@@ -46,6 +46,8 @@ All Rights Reserved.
 #include "vector.h"
 #include "cbuffer.h"
 #include "hashlist.h"
+#include "TinyJSON.h"
 
 using namespace std;
+using namespace TinyJSON;
 #endif

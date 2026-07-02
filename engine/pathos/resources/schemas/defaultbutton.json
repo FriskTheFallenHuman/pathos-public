@@ -1,0 +1,56 @@
+[
+	{
+		"type": "Bottom",
+		"default": "btnStdBottom.tga",
+		"clicked": "btnClickedBottom.tga",
+		"disabled": "btnDisabledBottom.tga"
+	},
+	{
+		"type": "BottomLeft",
+		"default": "btnStdBottomLeft.tga",
+		"clicked": "btnClickedBottomLeft.tga",
+		"disabled": "btnDisabledBottomLeft.tga"
+	},
+	{
+		"type": "BottomRight",
+		"default": "btnStdBottomRight.tga",
+		"clicked": "btnClickedBottomRight.tga",
+		"disabled": "btnDisabledBottomRight.tga"
+	},
+	{
+		"type": "Left",
+		"default": "btnStdLeft.tga",
+		"clicked": "btnClickedLeft.tga",
+		"disabled": "btnDisabledLeft.tga"
+	},
+	{
+		"type": "Right",
+		"default": "btnStdRight.tga",
+		"clicked": "btnClickedRight.tga",
+		"disabled": "btnDisabledRight.tga"
+	},
+	{
+		"type": "Top",
+		"default": "btnStdTop.tga",
+		"clicked": "btnClickedTop.tga",
+		"disabled": "btnDisabledTop.tga"
+	},
+	{
+		"type": "TopLeft",
+		"default": "btnStdTopLeft.tga",
+		"clicked": "btnClickedTopLeft.tga",
+		"disabled": "btnDisabledTopLeft.tga"
+	},
+	{
+		"type": "TopRight",
+		"default": "btnStdTopRight.tga",
+		"clicked": "btnClickedTopRight.tga",
+		"disabled": "btnDisabledTopRight.tga"
+	},
+	{
+		"type": "Body",
+		"default": "btnStdBody.tga",
+		"clicked": "btnClickedBody.tga",
+		"disabled": "btnDisabledBody.tga"
+	}
+]

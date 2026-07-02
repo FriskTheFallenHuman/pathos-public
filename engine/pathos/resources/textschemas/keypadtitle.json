@@ -1,0 +1,19 @@
+{
+	"$schema": "TextSchema",
+	"internalname": "HUDText",
+	"fontcolor": [255, 255, 255, 255],
+	"outlinecolor": [0, 0, 0, 255],
+	"fontset": "timesnewroman.ttf",
+	"resolutions": [
+		{
+			"screenheight": 1080,
+			"fontsize": 36,
+			"outlineradius": 2
+		},
+		{
+			"screenheight": 1024,
+			"fontsize": 24,
+			"outlineradius": 1
+		}
+	]
+}

@@ -38,7 +38,7 @@ static constexpr Int32 NEW_SAVE_INDEX = -1;
 CUISaveLoadWindow* CUISaveLoadWindow::m_pInstance = nullptr;
 
 // Window description file
-const Char CUISaveLoadWindow::WINDOW_DESC_FILE[] = "saveloadwindow.txt";
+const Char CUISaveLoadWindow::WINDOW_DESC_FILE[] = "saveloadwindow.json";
 // Window description file
 const Char CUISaveLoadWindow::WINDOW_OBJ_NAME[] = "SaveLoadWindow";
 // Save list object name
@@ -194,7 +194,8 @@ void CUISaveLoadWindow::AddSaveFileInfo( const CString& filePath, FILETIME& file
 	}
 	
 	TIME_ZONE_INFORMATION tzInfo;
-	if(!GetTimeZoneInformation(&tzInfo))
+	DWORD tzResult = GetTimeZoneInformation(&tzInfo);
+	if (tzResult == TIME_ZONE_ID_INVALID)
 	{
 		Con_EPrintf("Failed to get time zone info for '%s'. Error code returned is %d.\n", filePath.c_str(), GetLastError());
 		return;

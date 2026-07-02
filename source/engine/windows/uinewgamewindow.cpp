@@ -34,7 +34,7 @@ All Rights Reserved.
 CUINewGameWindow* CUINewGameWindow::m_pInstance = nullptr;
 
 // Window description file
-const Char CUINewGameWindow::WINDOW_DESC_FILE[] = "newgamewindow.txt";
+const Char CUINewGameWindow::WINDOW_DESC_FILE[] = "newgamewindow.json";
 // Window description file
 const Char CUINewGameWindow::WINDOW_OBJ_NAME[] = "NewGameWindow";
 // Cancel button object name

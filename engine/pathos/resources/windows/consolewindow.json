@@ -1,0 +1,50 @@
+{
+	"objects": [
+		{
+			"type": "window",
+			"name": "ConsoleWindow",
+			"schema": "defaultwindow.json",
+			"title": "Console",
+			"width": 820,
+			"height": 610,
+			"insetx": 10,
+			"insety": 10,
+			"titleinsetx": 8,
+			"titleinsety": 8,
+			"alpha": 230,
+			"dragger": true,
+			"resizable": true
+		},
+		{
+			"type": "button",
+			"name": "ExecuteButton",
+			"schema": "defaultbutton.json",
+			"width": 85,
+			"height": 32,
+			"text": "Execute",
+			"alpha": 100,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "tab",
+			"name": "InputTab",
+			"schema": "indentedwindow.json",
+			"flags": ["align_bottom", "fixed_height"],
+			"width": 705,
+			"height": 32,
+			"alpha": 100,
+			"textinset": 4
+		},
+		{
+			"type": "tab",
+			"name": "HistoryTab",
+			"schema": "indentedwindow.json",
+			"flags": ["fixed_ypos", "scroller_reverse"],
+			"width": 800,
+			"height": 528,
+			"alpha": 100,
+			"originy": 20,
+			"textinset": 4
+		}
+	]
+}

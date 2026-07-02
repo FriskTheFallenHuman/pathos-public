@@ -1,0 +1,10 @@
+[
+	{
+		"type": "CheckBoxOutline",
+		"default": "checkBoxOutline.tga"
+	},
+	{
+		"type": "CheckBoxFlag",
+		"default": "checkBoxFlag.tga"
+	}
+]

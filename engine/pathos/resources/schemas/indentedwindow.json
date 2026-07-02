@@ -1,0 +1,48 @@
+[
+	{
+		"type": "Bottom",
+		"default": "textTabBottom.tga"
+	},
+	{
+		"type": "BottomLeft",
+		"default": "textTabBottomLeft.tga"
+	},
+	{
+		"type": "BottomRight",
+		"default": "textTabBottomRight.tga"
+	},
+	{
+		"type": "Left",
+		"default": "textTabRight.tga"
+	},
+	{
+		"type": "Right",
+		"default": "textTabLeft.tga"
+	},
+	{
+		"type": "Top",
+		"default": "textTabTop.tga"
+	},
+	{
+		"type": "TopLeft",
+		"default": "textTabTopLeft.tga"
+	},
+	{
+		"type": "TopRight",
+		"default": "textTabTopRight.tga"
+	},
+	{
+		"type": "Body",
+		"default": "textTabBody.tga"
+	},
+	{
+		"type": "CloseIcon",
+		"default": "window_close_default.tga",
+		"focus": "window_close_hover.tga"
+	},
+	{
+		"type": "ArrowDown",
+		"default": "arrowDownStd.tga",
+		"focus": "arrowDownFocus.tga"
+	}
+]

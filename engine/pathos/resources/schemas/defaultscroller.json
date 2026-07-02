@@ -1,0 +1,71 @@
+[
+	{
+		"type": "Bottom",
+		"default": "btnStdBottom.tga",
+		"clicked": "btnClickedBottom.tga"
+	},
+	{
+		"type": "BottomLeft",
+		"default": "btnStdBottomLeft.tga",
+		"clicked": "btnClickedBottomLeft.tga"
+	},
+	{
+		"type": "BottomRight",
+		"default": "btnStdBottomRight.tga",
+		"clicked": "btnClickedBottomRight.tga"
+	},
+	{
+		"type": "Left",
+		"default": "btnStdLeft.tga",
+		"clicked": "btnClickedLeft.tga"
+	},
+	{
+		"type": "Right",
+		"default": "btnStdRight.tga",
+		"clicked": "btnClickedRight.tga"
+	},
+	{
+		"type": "Top",
+		"default": "btnStdTop.tga",
+		"clicked": "btnClickedTop.tga"
+	},
+	{
+		"type": "TopLeft",
+		"default": "btnStdTopLeft.tga",
+		"clicked": "btnClickedTopLeft.tga"
+	},
+	{
+		"type": "TopRight",
+		"default": "btnStdTopRight.tga",
+		"clicked": "btnClickedTopRight.tga"
+	},
+	{
+		"type": "Body",
+		"default": "btnStdBody.tga",
+		"clicked": "btnClickedBody.tga"
+	},
+	{
+		"type": "ScrollerBase",
+		"default": "textTabBody.tga"
+	},
+	{
+		"type": "ArrowDown",
+		"default": "arrowDownStd.tga",
+		"focus": "arrowDownFocus.tga"
+	},
+	{
+		"type": "ArrowUp",
+		"default": "arrowUpStd.tga",
+		"focus": "arrowUpFocus.tga"
+	},
+	{
+		"type": "ArrowRight",
+		"default": "arrowRightStd.tga",
+		"focus": "arrowRightFocus.tga"
+	},
+	{
+		"type": "ArrowLeft",
+		"default": "arrowLeftStd.tga",
+		"focus": "arrowLeftFocus.tga"
+	}
+]

@@ -34,7 +34,7 @@ All Rights Reserved.
 #include "cl_snd.h"
 
 // Window description file
-const Char CUISettingsWindow::WINDOW_DESC_FILE[] = "settingswindow.txt";
+const Char CUISettingsWindow::WINDOW_DESC_FILE[] = "settingswindow.json";
 // Window description file
 const Char CUISettingsWindow::WINDOW_OBJ_NAME[] = "SettingsWindow";
 // Apply button object name

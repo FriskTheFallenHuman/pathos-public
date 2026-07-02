@@ -669,7 +669,7 @@ ui_windowdescription_t* CUIManager::LoadWindowDescriptionFile( const Char* pstrW
 
 	// Load in the file
 	CString scriptPath;
-	scriptPath << "scripts/ui/windows/" << pstrFilename;
+	scriptPath << "resources/windows/" << pstrFilename;
 
 	Uint32 fileSize = 0;
 	const Char* pfile = reinterpret_cast<const Char*>(FL_LoadFile(scriptPath.c_str(), &fileSize));
@@ -679,222 +679,300 @@ ui_windowdescription_t* CUIManager::LoadWindowDescriptionFile( const Char* pstrW
 		return nullptr;
 	}
 
+	// Convert file content to string
+	CString jsonStr(reinterpret_cast<const Char*>(pfile));
+	FL_FreeFile(pfile);
+
+	// Parse JSON
+	parse_options opts;
+	opts.throw_exception = false;  // we handle errors manually
+	opts.strict = false; // relax
+
+	TJValue* root = TJ::parse(jsonStr.c_str(), opts);
+	if(!root)
+	{
+		Con_EPrintf("%s - Failed to parse JSON in '%s'.\n", __FUNCTION__, scriptPath.c_str());
+		delete root;
+		return nullptr;
+	}
+
+	if(!root->is_object())
+	{
+		Con_EPrintf("%s - Root must be an object in '%s'.\n", __FUNCTION__, scriptPath.c_str());
+		delete root;
+		return nullptr;
+	}
+
+	const TJValueObject* obj = static_cast<const TJValueObject*>(root);
+	const TJValue* objects = obj->try_get_value("objects");
+
+	if(!objects || !objects->is_array())
+	{
+		Con_EPrintf("%s - Missing or invalid 'objects' array in '%s'.\n", __FUNCTION__, scriptPath.c_str());
+		delete root;
+		return nullptr;
+	}
+
+	const TJValueArray* array = static_cast<const TJValueArray*>(objects);
+
 	// Allocate new object
 	ui_windowdescription_t* pNewWindowDesc = new ui_windowdescription_t;
 	pNewWindowDesc->windowName = pstrWindowName;
 
-	// Parse the contents
-	CString token;
-	CString line;
-
-	const Char* pstr = pfile;
-	while(pstr && *pstr && (pstr - pfile) < fileSize)
+	for( unsigned int i = 0; i < array->get_number_of_items(); ++i )
 	{
-		// Read in the object name
-		CString objType;
-		pstr = Common::Parse(pstr, objType);
-		if(!pstr || objType.empty())
-			break;
-
-		ui_object_type_t type = UI_OBJECT_UNDEFINED;
-		if(!qstrcmp(objType, "window"))
-			type = UI_OBJECT_WINDOW;
-		else if(!qstrcmp(objType, "button"))
-			type = UI_OBJECT_BUTTON;
-		else if(!qstrcmp(objType, "text"))
-			type = UI_OBJECT_TEXT;
-		else if(!qstrcmp(objType, "tab"))
-			type = UI_OBJECT_TAB;
-		else if(!qstrcmp(objType, "list"))
-			type = UI_OBJECT_LIST;
-		else if(!qstrcmp(objType, "tickbox"))
-			type = UI_OBJECT_TICKBOX;
-		else if(!qstrcmp(objType, "slider"))
-			type = UI_OBJECT_SLIDER;
-		else
+		const TJValue* item = array->at(i);
+		if (!item || !item->is_object())
 		{
-			Con_EPrintf("Unknown object type '%s' in '%s'.\n", objType.c_str(), scriptPath.c_str());
-			FL_FreeFile(pfile);
+			Con_EPrintf("%s - Invalid object at index %u in '%s'.\n", __FUNCTION__, i, scriptPath.c_str());
+			continue;
+		}
 
+
+		const TJValueObject* itemObj = static_cast<const TJValueObject*>(item);
+
+		const TJCHAR* typeStr = itemObj->try_get_string("type");
+		if (!typeStr)
+		{
+			Con_EPrintf("%s - Missing 'type' for object at index %u in '%s'.\n", __FUNCTION__, i, scriptPath.c_str());
+			delete root;
 			delete pNewWindowDesc;
 			return nullptr;
 		}
 
-		// Read in the object name
-		CString objName;
-		pstr = Common::Parse(pstr, objName);
-		if(!pstr || objName.empty())
-			break;
-
-		// Read the bracket token
-		pstr = Common::Parse(pstr, token);
-		if(!pstr || token.empty())
+		// read the name
+		const TJCHAR* nameStr = itemObj->try_get_string("name");
+		if (!nameStr)
 		{
-			Con_EPrintf("Unexpected EOF on %s.\n", scriptPath.c_str());
-			FL_FreeFile(pfile);
-
+			Con_EPrintf("%s - Missing 'name' for object at index %u in '%s'.\n", __FUNCTION__, i, scriptPath.c_str());
+			delete root;
 			delete pNewWindowDesc;
 			return nullptr;
 		}
 
-		// Make sure the format is correct
-		if(qstrcmp(token, "{"))
-		{
-			Con_EPrintf("Expected '{', got %s in %s.\n", token.c_str(), scriptPath.c_str());
-			FL_FreeFile(pfile);
+		CString objStr(typeStr);
+		CString objName(nameStr);
 
+		// Lambda to map type string to enum
+		auto GetObjectTypeFromString = [](const CString& typeStr) -> ui_object_type_t {
+			if(typeStr == "window")
+			{
+				return UI_OBJECT_WINDOW;
+			}
+			if(typeStr == "button")
+			{
+				return UI_OBJECT_BUTTON;
+			}
+			if(typeStr == "text")
+			{
+				return UI_OBJECT_TEXT;
+			}
+			if(typeStr == "tab")
+			{
+				return UI_OBJECT_TAB;
+			}
+			if(typeStr == "list")
+			{
+				return UI_OBJECT_LIST;
+			}
+			if(typeStr == "tickbox")
+			{
+				return UI_OBJECT_TICKBOX;
+			}
+			if(typeStr == "slider")
+			{
+				return UI_OBJECT_SLIDER;
+			}
+			return UI_OBJECT_UNDEFINED;
+		};
+
+		ui_object_type_t type = GetObjectTypeFromString(objStr);
+		if (type == UI_OBJECT_UNDEFINED)
+		{
+			Con_EPrintf("Unknown object type '%s' in '%s'.\n", objStr.c_str(), scriptPath.c_str());
+			delete root;
 			delete pNewWindowDesc;
 			return nullptr;
 		}
-		
+
 		// Create the new object
-		CString textschema;
 		ui_objectinfo_t newObject;
 		newObject.objectName = objName;
 		newObject.type = type;
 
-		// Read in the parameters
-		while(true)
+		// Helper lambdas with correct types
+		auto readString = [&](const char* key) -> CString {
+			if (itemObj->has_key(key)) {
+				const TJValue* val = itemObj->try_get_value(key);
+				if (val && val->is_string()) {
+					return CString(val->get_string());
+				}
+			}
+			return CString();
+		};
+
+		// Read numbers into int, then assign to Uint32
+		auto readInt = [&](const char* key, Uint32& out) -> bool {
+			if (itemObj->has_key(key)) {
+				const TJValue* val = itemObj->try_get_value(key);
+				if (val && val->is_number()) {
+					out = static_cast<Uint32>(val->get_number());
+					return true;
+				}
+			}
+			return false;
+		};
+
+		auto readFloat = [&](const char* key, float& out) -> bool {
+			if (itemObj->has_key(key)) {
+				const TJValue* val = itemObj->try_get_value(key);
+				if (val && val->is_number()) {
+					out = static_cast<float>(val->get_float());
+					return true;
+				}
+			}
+			return false;
+		};
+
+		auto readBool = [&](const char* key, bool& out) -> bool {
+			if (itemObj->has_key(key)) {
+				const TJValue* val = itemObj->try_get_value(key);
+				if (val && (val->is_true() || val->is_false())) {
+					out = val->get_boolean();
+					return true;
+				}
+			}
+			return false;
+		};
+
+		Uint32 tempInt;
+		if(readInt("width", tempInt))
 		{
-			// Skip whitespaces
-			while(*pstr && SDL_isspace(*pstr))
-				pstr++;
+			newObject.width = tempInt;
+		}
+		if(readInt("height", tempInt))
+		{
+			newObject.height = tempInt;
+		}
 
-			// Read in the entire line
-			pstr = Common::ReadLine(pstr, line);
-			if(line.empty())
-				continue;
+		newObject.text = readString("text");
+		newObject.schema = readString("schema");
 
-			// Read in the first token
-			const Char* pstrl = Common::Parse(line.c_str(), token);
-			if(token.empty())
+		Float tempFloat;
+		if(readFloat("alpha", tempFloat))
+		{
+			newObject.alpha = tempFloat;
+		}
+
+		if(readInt("insetx", tempInt))
+		{
+			newObject.insetx = tempInt;
+		}
+		if(readInt("insety", tempInt))
+		{
+			newObject.insety = tempInt;
+		}
+		if(readInt("originx", tempInt))
+		{
+			newObject.originx = tempInt;
+		}
+		if(readInt("originy", tempInt))
+		{
+			newObject.originy = tempInt;
+		}
+		if(readInt("titleinsetx", tempInt))
+		{
+			newObject.title_insetx = tempInt;
+		}
+		if(readInt("titleinsety", tempInt))
+		{
+			newObject.title_insety = tempInt;
+		}
+		if(readInt("textinset", tempInt))
+		{
+			newObject.text_inset = tempInt;
+		}
+		if(readInt("rowheight", tempInt))
+		{
+			newObject.listrowheight = tempInt;
+		}
+
+		newObject.title = readString("title");
+
+		bool tempBool;
+		if(readBool("dragger", tempBool))
+		{
+			newObject.dragger = tempBool;
+		}
+		if(readBool("resizable", tempBool))
+		{
+			newObject.resizable = tempBool;
+		}
+
+		CString textschema = readString("textschema");
+		if(readFloat("minvalue", tempFloat))
+		{
+			newObject.minvalue = tempFloat;
+		}
+		if(readFloat("maxvalue", tempFloat))
+		{
+			newObject.maxvalue = tempFloat;
+		}
+		if(readFloat("markerdistance", tempFloat))
+		{
+			newObject.markerdistance = tempFloat;
+		}
+
+		newObject.flags = 0;
+		if(itemObj->has_key("flags"))
+		{
+			const TJValue* flagsVal = itemObj->try_get_value("flags");
+			if(flagsVal && flagsVal->is_array())
 			{
-				Con_EPrintf("Unexpected EOF on %s.\n", scriptPath.c_str());
-				FL_FreeFile(pfile);
-
-				delete pNewWindowDesc;
-				return nullptr;
-			}
-
-			// Exit the loop
-			if(!qstrcmp(token, "}"))
-				break;
-			
-			if(!pstrl)
-			{
-				Con_EPrintf("Unexpected EOF on %s.\n", scriptPath.c_str());
-				FL_FreeFile(pfile);
-
-				delete pNewWindowDesc;
-				return nullptr;
-			}
-
-			// $flags is handled specially
-			if(qstrcmp(token, "$flags"))
-			{
-				// Read in the value
-				CString value;
-				pstrl = Common::Parse(pstrl, value);
-				if(value.empty())
+				const TJValueArray* flagsArr = static_cast<const TJValueArray*>(flagsVal);
+				for(unsigned int f = 0; f < flagsArr->get_number_of_items(); ++f)
 				{
-					Con_EPrintf("Unexpected EOF on %s.\n", scriptPath.c_str());
-					FL_FreeFile(pfile);
-
-					delete pNewWindowDesc;
-					return nullptr;
-				}
-
-				if(!qstrcmp(token, "$width"))
-					newObject.width = SDL_atoi(value.c_str());
-				else if(!qstrcmp(token, "$height"))
-					newObject.height = SDL_atoi(value.c_str());
-				else if(!qstrcmp(token, "$text"))
-					newObject.text = value;
-				else if(!qstrcmp(token, "$schema"))
-					newObject.schema = value;
-				else if(!qstrcmp(token, "$alpha"))
-					newObject.alpha = SDL_atof(value.c_str());
-				else if(!qstrcmp(token, "$insetx"))
-					newObject.insetx = SDL_atoi(value.c_str());
-				else if(!qstrcmp(token, "$insety"))
-					newObject.insety = SDL_atoi(value.c_str());
-				else if(!qstrcmp(token, "$originx"))
-					newObject.originx = SDL_atoi(value.c_str());
-				else if(!qstrcmp(token, "$originy"))
-					newObject.originy = SDL_atoi(value.c_str());
-				else if(!qstrcmp(token, "$titleinsetx"))
-					newObject.title_insetx = SDL_atoi(value.c_str());
-				else if(!qstrcmp(token, "$titleinsety"))
-					newObject.title_insety = SDL_atoi(value.c_str());
-				else if(!qstrcmp(token, "$textinset"))
-					newObject.text_inset = SDL_atoi(value.c_str());
-				else if(!qstrcmp(token, "$rowheight"))
-					newObject.listrowheight = SDL_atoi(value.c_str());
-				else if(!qstrcmp(token, "$title"))
-					newObject.title = value;
-				else if(!qstrcmp(token, "$dragger"))
-					newObject.dragger = (!qstrcmp(value.c_str(), "true") ? true : false);
-				else if(!qstrcmp(token, "$resizable"))
-					newObject.resizable = (!qstrcmp(value.c_str(), "true") ? true : false);
-				else if(!qstrcmp(token, "$textschema"))
-					textschema = value;
-				else if(!qstrcmp(token, "$minvalue"))
-					newObject.minvalue = SDL_atof(value.c_str());
-				else if(!qstrcmp(token, "$maxvalue"))
-					newObject.maxvalue = SDL_atof(value.c_str());
-				else if(!qstrcmp(token, "$markerdistance"))
-					newObject.markerdistance = SDL_atof(value.c_str());
-				else
-				{
-					Con_Printf("Unknown field %s in %s.\n", token.c_str(), scriptPath.c_str());
-					continue;
-				}
-			}
-			else
-			{
-				newObject.flags = CUIObject::UIEL_FL_NONE;
-
-				while(pstrl)
-				{
-					CString flag;
-					pstrl = Common::Parse(pstrl, flag);
-					
-					if(!qstrcmp(flag, "fixed_width"))
-						newObject.flags |= CUIObject::UIEL_FL_FIXED_W;
-					else if(!qstrcmp(flag, "fixed_height"))
-						newObject.flags |= CUIObject::UIEL_FL_FIXED_H;
-					else if(!qstrcmp(flag, "align_left"))
-						newObject.flags |= CUIObject::UIEL_FL_ALIGN_L;
-					else if(!qstrcmp(flag, "align_right"))
-						newObject.flags |= CUIObject::UIEL_FL_ALIGN_R;
-					else if(!qstrcmp(flag, "align_top"))
-						newObject.flags |= CUIObject::UIEL_FL_ALIGN_T;
-					else if(!qstrcmp(flag, "align_bottom"))
-						newObject.flags |= CUIObject::UIEL_FL_ALIGN_B;
-					else if(!qstrcmp(flag, "align_center_horizontal"))
-						newObject.flags |= CUIObject::UIEL_FL_ALIGN_CH;
-					else if(!qstrcmp(flag, "align_center_vertical"))
-						newObject.flags |= CUIObject::UIEL_FL_ALIGN_CV;
-					else if(!qstrcmp(flag, "wrap_word"))
-						newObject.flags |= CUIObject::UIEL_FL_WRAP_WORD;
-					else if(!qstrcmp(flag, "fixed_xpos"))
-						newObject.flags |= CUIObject::UIEL_FL_FIXED_XPOS;
-					else if(!qstrcmp(flag, "fixed_ypos"))
-						newObject.flags |= CUIObject::UIEL_FL_FIXED_YPOS;
-					else if(!qstrcmp(flag, "ontop"))
-						newObject.flags |= CUIObject::UIEL_FL_ONTOP;
-					else if(!qstrcmp(flag, "scroller_reverse"))
-						newObject.flags |= CUIObject::UIEL_FL_SCR_REVERSE;
-					else if(!qstrcmp(flag, "expand_width"))
-						newObject.flags |= CUIObject::UIEL_FL_EXPAND_W;
-					else if(!qstrcmp(flag, "expand_height"))
-						newObject.flags |= CUIObject::UIEL_FL_EXPAND_H;
-					else if(!qstrcmp(flag, "noheader"))
-						newObject.flags |= CUIObject::UIEL_FL_NO_HEADER;
-					else if(!qstrcmp(flag, "hover_highlight"))
-						newObject.flags |= CUIObject::UIEL_FL_HOVER_HIGHLIGHT;
-					else
-						Con_EPrintf("Unknown flag '%s' in '%s', discarding.\n", flag.c_str(), scriptPath.c_str());
+					const TJValue* flagVal = flagsArr->at(f);
+					if(flagVal && flagVal->is_string())
+					{
+						CString flagStr(flagVal->get_string());
+						if(flagStr == "fixed_width")
+							newObject.flags |= CUIObject::UIEL_FL_FIXED_W;
+						else if(flagStr == "fixed_height")
+							newObject.flags |= CUIObject::UIEL_FL_FIXED_H;
+						else if(flagStr == "align_left")
+							newObject.flags |= CUIObject::UIEL_FL_ALIGN_L;
+						else if(flagStr == "align_right")
+							newObject.flags |= CUIObject::UIEL_FL_ALIGN_R;
+						else if(flagStr == "align_top")
+							newObject.flags |= CUIObject::UIEL_FL_ALIGN_T;
+						else if(flagStr == "align_bottom")
+							newObject.flags |= CUIObject::UIEL_FL_ALIGN_B;
+						else if(flagStr == "align_center_horizontal")
+							newObject.flags |= CUIObject::UIEL_FL_ALIGN_CH;
+						else if(flagStr == "align_center_vertical")
+							newObject.flags |= CUIObject::UIEL_FL_ALIGN_CV;
+						else if(flagStr == "wrap_word")
+							newObject.flags |= CUIObject::UIEL_FL_WRAP_WORD;
+						else if(flagStr == "fixed_xpos")
+							newObject.flags |= CUIObject::UIEL_FL_FIXED_XPOS;
+						else if(flagStr == "fixed_ypos")
+							newObject.flags |= CUIObject::UIEL_FL_FIXED_YPOS;
+						else if(flagStr == "ontop")
+							newObject.flags |= CUIObject::UIEL_FL_ONTOP;
+						else if(flagStr == "scroller_reverse")
+							newObject.flags |= CUIObject::UIEL_FL_SCR_REVERSE;
+						else if(flagStr == "expand_width")
+							newObject.flags |= CUIObject::UIEL_FL_EXPAND_W;
+						else if(flagStr == "expand_height")
+							newObject.flags |= CUIObject::UIEL_FL_EXPAND_H;
+						else if(flagStr == "noheader")
+							newObject.flags |= CUIObject::UIEL_FL_NO_HEADER;
+						else if(flagStr == "hover_highlight")
+							newObject.flags |= CUIObject::UIEL_FL_HOVER_HIGHLIGHT;
+						else
+							Con_EPrintf("Unknown flag '%s' in '%s', discarding.\n", flagStr.c_str(), scriptPath.c_str());
+					}
 				}
 			}
 		}
@@ -966,7 +1044,7 @@ ui_windowdescription_t* CUIManager::LoadWindowDescriptionFile( const Char* pstrW
 	// Add it to the list
 	m_windowDescriptionArray.push_back(pNewWindowDesc);
 
-	FL_FreeFile(pfile);
+	delete root;
 	return pNewWindowDesc;
 }
 

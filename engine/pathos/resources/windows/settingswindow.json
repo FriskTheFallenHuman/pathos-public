@@ -1,0 +1,650 @@
+{
+	"objects": [
+		{
+			"type": "window",
+			"name": "SettingsWindow",
+			"schema": "defaultwindow.json",
+			"title": "Settings",
+			"width": 630,
+			"height": 500,
+			"insetx": 10,
+			"insety": 10,
+			"titleinsetx": 8,
+			"titleinsety": 6,
+			"alpha": 230,
+			"dragger": true,
+			"resizable": true,
+			"flags": ["fixed_height"]
+		},
+		{
+			"type": "button",
+			"name": "ApplyButton",
+			"schema": "defaultbutton.json",
+			"text": "Apply",
+			"width": 96,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "button",
+			"name": "CancelButton",
+			"schema": "defaultbutton.json",
+			"text": "Cancel",
+			"originx": 106,
+			"width": 96,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "tab",
+			"name": "SettingsTab",
+			"schema": "indentedwindow.json",
+			"originy": 30,
+			"width": 610,
+			"height": 408,
+			"insetx": 10,
+			"insety": 10
+		},
+		{
+			"type": "list",
+			"name": "BindsTabList",
+			"schema": "indentedwindow.json",
+			"width": 585,
+			"height": 316,
+			"rowheight": 32
+		},
+		{
+			"type": "button",
+			"name": "Bind_ClearButton",
+			"schema": "defaultbutton.json",
+			"text": "Clear key",
+			"width": 96,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "button",
+			"name": "Bind_BindButton",
+			"schema": "defaultbutton.json",
+			"text": "Bind key",
+			"originx": 106,
+			"width": 96,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "button",
+			"name": "Bind_RestoreDefaults",
+			"schema": "defaultbutton.json",
+			"text": "Restore defaults",
+			"originx": 212,
+			"width": 150,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "text",
+			"name": "DisplayDeviceLabel",
+			"text": "Display Device",
+			"originx": 32,
+			"originy": 32,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "list",
+			"name": "DisplayDeviceList",
+			"schema": "indentedwindow.json",
+			"width": 225,
+			"height": 32,
+			"originx": 32,
+			"originy": 56,
+			"rowheight": 32,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "text",
+			"name": "DisplayResolutionLabel",
+			"text": "Resolution",
+			"originx": 32,
+			"originy": 98
+		},
+		{
+			"type": "list",
+			"name": "DisplayResolutionList",
+			"schema": "indentedwindow.json",
+			"width": 225,
+			"height": 32,
+			"originx": 32,
+			"originy": 124,
+			"rowheight": 32,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "text",
+			"name": "WindowModeLabel",
+			"text": "Window mode",
+			"originx": 32,
+			"originy": 166
+		},
+		{
+			"type": "list",
+			"name": "WindowModeList",
+			"schema": "indentedwindow.json",
+			"width": 225,
+			"height": 32,
+			"originx": 32,
+			"originy": 190,
+			"rowheight": 32,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "text",
+			"name": "GammaLabel",
+			"text": "Gamma",
+			"flags": ["align_bottom", "align_left"],
+			"originx": 92,
+			"originy": 32
+		},
+		{
+			"type": "slider",
+			"name": "GammaSlider",
+			"schema": "defaultslider.json",
+			"flags": ["align_bottom", "align_left"],
+			"width": 225,
+			"height": 32,
+			"originx": 182,
+			"originy": 26,
+			"minvalue": 0.5,
+			"maxvalue": 4.0,
+			"markerdistance": 8.0
+		},
+		{
+			"type": "text",
+			"name": "AnisotropyLabel",
+			"text": "Texture Filtering",
+			"originx": 330,
+			"originy": 32,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "list",
+			"name": "AnisotropyList",
+			"schema": "indentedwindow.json",
+			"width": 225,
+			"height": 32,
+			"originx": 330,
+			"originy": 56,
+			"rowheight": 32,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "text",
+			"name": "AntiAliasLabel",
+			"text": "Anti-Aliasing",
+			"originx": 330,
+			"originy": 98,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "list",
+			"name": "AntiAliasList",
+			"schema": "indentedwindow.json",
+			"width": 225,
+			"height": 32,
+			"originx": 330,
+			"originy": 124,
+			"rowheight": 32,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "text",
+			"name": "VerticalSyncLabel",
+			"text": "Vertical Sync",
+			"originx": 330,
+			"originy": 166,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "list",
+			"name": "VerticalSyncList",
+			"schema": "indentedwindow.json",
+			"width": 225,
+			"height": 32,
+			"originx": 330,
+			"originy": 190,
+			"rowheight": 32,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "text",
+			"name": "FramebufferObjectsLabel",
+			"text": "Framebuffer Objects",
+			"originx": 32,
+			"originy": 232,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "list",
+			"name": "FramebufferObjectsList",
+			"schema": "indentedwindow.json",
+			"width": 225,
+			"height": 32,
+			"originx": 32,
+			"originy": 256,
+			"rowheight": 32,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "list",
+			"name": "AdvancedTabList",
+			"schema": "indentedwindow.json",
+			"height": 346,
+			"width": 585,
+			"rowheight": 32
+		},
+		{
+			"type": "text",
+			"name": "ScrollSurfaceOptionLabel",
+			"schema": "indentedwindow.json",
+			"flags": ["align_center_vertical"],
+			"originx": 8
+		},
+		{
+			"type": "list",
+			"name": "ScrollSurfaceOptionList",
+			"schema": "indentedwindow.json",
+			"flags": ["align_center_vertical"],
+			"height": 24,
+			"width": 256,
+			"rowheight": 28
+		},
+		{
+			"type": "tab",
+			"name": "ScrollSurfaceOptionTab",
+			"schema": "indentedwindow.json",
+			"flags": ["align_center_vertical"],
+			"height": 24,
+			"width": 256
+		},
+		{
+			"type": "tickbox",
+			"name": "ReverseMouseTickBox",
+			"schema": "defaultcheckbox.json",
+			"originx": 8,
+			"originy": 8,
+			"width": 32,
+			"height": 32,
+			"textinset": 8,
+			"text": "Reverse mouse"
+		},
+		{
+			"type": "text",
+			"name": "ReverseMouseLabel",
+			"text": "Reverse mouse input on up-down axis",
+			"originx": 220,
+			"originy": 16
+		},
+		{
+			"type": "tickbox",
+			"name": "FilterMouseTickBox",
+			"schema": "defaultcheckbox.json",
+			"originx": 8,
+			"originy": 40,
+			"width": 32,
+			"height": 32,
+			"textinset": 8,
+			"text": "Mouse filter"
+		},
+		{
+			"type": "text",
+			"name": "FilterMouseLabel",
+			"text": "Smooth out mouse movement",
+			"originx": 220,
+			"originy": 48
+		},
+		{
+			"type": "tickbox",
+			"name": "AutoAimTickBox",
+			"schema": "defaultcheckbox.json",
+			"originx": 8,
+			"originy": 72,
+			"width": 32,
+			"height": 32,
+			"textinset": 8,
+			"text": "Auto-Aim"
+		},
+		{
+			"type": "text",
+			"name": "AutoAimLabel",
+			"text": "Aim at enemies automatically",
+			"originx": 220,
+			"originy": 80
+		},
+		{
+			"type": "tickbox",
+			"name": "RawInputTickBox",
+			"schema": "defaultcheckbox.json",
+			"originx": 8,
+			"originy": 104,
+			"width": 32,
+			"height": 32,
+			"textinset": 8,
+			"text": "Raw mouse input"
+		},
+		{
+			"type": "text",
+			"name": "RawInputLabel",
+			"text": "Use raw input data for mouse",
+			"originx": 220,
+			"originy": 112
+		},
+		{
+			"type": "text",
+			"name": "MouseSensitivityLabel",
+			"flags": ["align_left", "align_bottom"],
+			"text": "Mouse sensitivity",
+			"originx": 16,
+			"originy": 80
+		},
+		{
+			"type": "tab",
+			"name": "MouseSensitivityTab",
+			"schema": "indentedwindow.json",
+			"flags": ["align_right", "align_bottom"],
+			"width": 48,
+			"height": 32,
+			"originx": 64,
+			"originy": 32
+		},
+		{
+			"type": "text",
+			"name": "MouseSensitivityText",
+			"originx": 10,
+			"originy": 8
+		},
+		{
+			"type": "slider",
+			"name": "MouseSensitivitySlider",
+			"schema": "defaultslider.json",
+			"flags": ["align_bottom", "align_left"],
+			"width": 400,
+			"height": 32,
+			"originx": 16,
+			"originy": 32,
+			"minvalue": 0.1,
+			"maxvalue": 10,
+			"markerdistance": 2.0
+		},
+		{
+			"type": "text",
+			"name": "MouseFilterFramesLabel",
+			"flags": ["align_left", "align_bottom"],
+			"text": "Mouse filter frames",
+			"originx": 16,
+			"originy": 180
+		},
+		{
+			"type": "tab",
+			"name": "MouseFilterFramesTab",
+			"schema": "indentedwindow.json",
+			"flags": ["align_right", "align_bottom"],
+			"width": 48,
+			"height": 32,
+			"originx": 64,
+			"originy": 132
+		},
+		{
+			"type": "text",
+			"name": "MouseFilterFramesText",
+			"originx": 14,
+			"originy": 8
+		},
+		{
+			"type": "slider",
+			"name": "MouseFilterFramesSlider",
+			"schema": "defaultslider.json",
+			"flags": ["align_bottom", "align_left"],
+			"width": 400,
+			"height": 32,
+			"originx": 16,
+			"originy": 132,
+			"minvalue": 2,
+			"maxvalue": 8,
+			"markerdistance": 5
+		},
+		{
+			"type": "text",
+			"name": "MasterVolumeLabel",
+			"text": "Master Volume",
+			"originx": 10,
+			"originy": 18
+		},
+		{
+			"type": "slider",
+			"name": "MasterVolumeSlider",
+			"schema": "defaultslider.json",
+			"flags": ["align_top", "align_left"],
+			"width": 400,
+			"height": 32,
+			"originx": 16,
+			"originy": 32,
+			"minvalue": 0.0,
+			"maxvalue": 1.0,
+			"markerdistance": 20.0
+		},
+		{
+			"type": "text",
+			"name": "GameVolumeLabel",
+			"text": "Game Volume",
+			"originx": 10,
+			"originy": 84
+		},
+		{
+			"type": "slider",
+			"name": "GameVolumeSlider",
+			"schema": "defaultslider.json",
+			"flags": ["align_top", "align_left"],
+			"width": 400,
+			"height": 32,
+			"originx": 16,
+			"originy": 100,
+			"minvalue": 0.0,
+			"maxvalue": 1.0,
+			"markerdistance": 20.0
+		},
+		{
+			"type": "text",
+			"name": "MusicVolumeLabel",
+			"text": "Music Volume",
+			"originx": 10,
+			"originy": 152
+		},
+		{
+			"type": "slider",
+			"name": "MusicVolumeSlider",
+			"schema": "defaultslider.json",
+			"flags": ["align_top", "align_left"],
+			"width": 400,
+			"height": 32,
+			"originx": 16,
+			"originy": 166,
+			"minvalue": 0.0,
+			"maxvalue": 1.0,
+			"markerdistance": 20.0
+		},
+		{
+			"type": "tickbox",
+			"name": "SoundOcclusionTickBox",
+			"schema": "defaultcheckbox.json",
+			"originx": 8,
+			"originy": 220,
+			"width": 32,
+			"height": 32,
+			"textinset": 8,
+			"text": "Occlusion"
+		},
+		{
+			"type": "text",
+			"name": "SoundOcclusionLabel",
+			"text": "Toggle occlusion dimming on sounds",
+			"originx": 220,
+			"originy": 228
+		},
+		{
+			"type": "tickbox",
+			"name": "HRTFTickBox",
+			"schema": "defaultcheckbox.json",
+			"originx": 8,
+			"originy": 252,
+			"width": 32,
+			"height": 32,
+			"textinset": 8,
+			"text": "HRTF"
+		},
+		{
+			"type": "text",
+			"name": "HRTFLabel",
+			"text": "Toggle Head-related transfer functions",
+			"originx": 220,
+			"originy": 260
+		},
+		{
+			"type": "tickbox",
+			"name": "SubtitlesTickBox",
+			"schema": "defaultcheckbox.json",
+			"originx": 8,
+			"originy": 284,
+			"width": 32,
+			"height": 32,
+			"textinset": 8,
+			"text": "Subtitles"
+		},
+		{
+			"type": "text",
+			"name": "SubtitlesLabel",
+			"text": "Toggle subtitles",
+			"originx": 220,
+			"originy": 292
+		},
+		{
+			"type": "text",
+			"name": "ViewBobLabel",
+			"flags": ["align_left", "align_top"],
+			"text": "View bob",
+			"originx": 16,
+			"originy": 16
+		},
+		{
+			"type": "tab",
+			"name": "ViewBobTab",
+			"schema": "indentedwindow.json",
+			"flags": ["align_right", "align_top"],
+			"width": 48,
+			"height": 32,
+			"originx": 64,
+			"originy": 32
+		},
+		{
+			"type": "text",
+			"name": "ViewBobText",
+			"originx": 10,
+			"originy": 8
+		},
+		{
+			"type": "slider",
+			"name": "ViewBobSlider",
+			"schema": "defaultslider.json",
+			"flags": ["align_top", "align_left"],
+			"width": 400,
+			"height": 32,
+			"originx": 16,
+			"originy": 32,
+			"minvalue": 0.01,
+			"maxvalue": 2,
+			"markerdistance": 10
+		},
+		{
+			"type": "text",
+			"name": "ViewRollLabel",
+			"flags": ["align_left", "align_top"],
+			"text": "View roll",
+			"originx": 16,
+			"originy": 90
+		},
+		{
+			"type": "tab",
+			"name": "ViewRollTab",
+			"schema": "indentedwindow.json",
+			"flags": ["align_right", "align_top"],
+			"width": 48,
+			"height": 32,
+			"originx": 64,
+			"originy": 110
+		},
+		{
+			"type": "text",
+			"name": "ViewRollText",
+			"originx": 10,
+			"originy": 8
+		},
+		{
+			"type": "slider",
+			"name": "ViewRollSlider",
+			"schema": "defaultslider.json",
+			"flags": ["align_top", "align_left"],
+			"width": 400,
+			"height": 32,
+			"originx": 16,
+			"originy": 110,
+			"minvalue": 0,
+			"maxvalue": 6,
+			"markerdistance": 5
+		},
+		{
+			"type": "text",
+			"name": "FOVLabel",
+			"flags": ["align_left", "align_top"],
+			"text": "Field of View",
+			"originx": 16,
+			"originy": 166
+		},
+		{
+			"type": "tab",
+			"name": "FOVTab",
+			"schema": "indentedwindow.json",
+			"flags": ["align_right", "align_top"],
+			"width": 48,
+			"height": 32,
+			"originx": 64,
+			"originy": 186
+		},
+		{
+			"type": "text",
+			"name": "FOVText",
+			"originx": 10,
+			"originy": 8
+		},
+		{
+			"type": "slider",
+			"name": "FOVSlider",
+			"schema": "defaultslider.json",
+			"flags": ["align_top", "align_left"],
+			"width": 400,
+			"height": 32,
+			"originx": 16,
+			"originy": 186,
+			"minvalue": 60,
+			"maxvalue": 100,
+			"markerdistance": 0.5
+		},
+		{
+			"type": "list",
+			"name": "GameplayTabList",
+			"schema": "indentedwindow.json",
+			"originy": 240,
+			"height": 125,
+			"width": 585,
+			"rowheight": 32
+		}
+	]
+}

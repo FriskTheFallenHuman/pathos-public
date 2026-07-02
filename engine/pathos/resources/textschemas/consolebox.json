@@ -1,0 +1,19 @@
+{
+	"$schema": "TextSchema",
+	"internalname": "GameDefaultFont",
+	"fontcolor": [255, 255, 255, 255],
+	"outlinecolor": [0, 0, 0, 255],
+	"fontset": "calibri.ttf",
+	"resolutions": [
+		{
+			"screenheight": 1080,
+			"fontsize": 20,
+			"outlineradius": 1
+		},
+		{
+			"screenheight": 768,
+			"fontsize": 8,
+			"outlineradius": 1
+		}
+	]
+}

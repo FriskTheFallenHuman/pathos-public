@@ -1,0 +1,60 @@
+{
+	"objects": [
+		{
+			"type": "window",
+			"name": "NewGameWindow",
+			"schema": "defaultwindow.json",
+			"title": "New Game",
+			"width": 500,
+			"height": 260,
+			"insetx": 10,
+			"insety": 10,
+			"alpha": 230,
+			"dragger": true,
+			"resizable": false,
+			"flags": ["fixed_height"]
+		},
+		{
+			"type": "button",
+			"name": "CancelButton",
+			"schema": "defaultbutton.json",
+			"text": "Cancel",
+			"width": 96,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "button",
+			"name": "NewGameEasyButton",
+			"schema": "defaultbutton.json",
+			"text": "Easy",
+			"originx": 16,
+			"originy": 64,
+			"width": 96,
+			"height": 32,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "button",
+			"name": "NewGameNormalButton",
+			"schema": "defaultbutton.json",
+			"text": "Normal",
+			"originx": 16,
+			"originy": 112,
+			"width": 96,
+			"height": 32,
+			"flags": ["align_top", "align_left"]
+		},
+		{
+			"type": "button",
+			"name": "NewGameHardButton",
+			"schema": "defaultbutton.json",
+			"text": "Hard",
+			"originx": 16,
+			"originy": 160,
+			"width": 96,
+			"height": 32,
+			"flags": ["align_top", "align_left"]
+		}
+	]
+}

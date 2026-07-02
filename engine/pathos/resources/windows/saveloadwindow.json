@@ -1,0 +1,69 @@
+{
+	"objects": [
+		{
+			"type": "window",
+			"name": "SaveLoadWindow",
+			"schema": "defaultwindow.json",
+			"title": "Save/Load Game",
+			"width": 1100,
+			"height": 500,
+			"insetx": 10,
+			"insety": 10,
+			"titleinsetx": 8,
+			"titleinsety": 6,
+			"alpha": 230,
+			"dragger": true,
+			"resizable": true
+		},
+		{
+			"type": "button",
+			"name": "CancelButton",
+			"schema": "defaultbutton.json",
+			"text": "Cancel",
+			"width": 112,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "button",
+			"name": "LoadGameButton",
+			"schema": "defaultbutton.json",
+			"text": "Load Game",
+			"originx": 122,
+			"width": 112,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "button",
+			"name": "SaveGameButton",
+			"schema": "defaultbutton.json",
+			"text": "Save Game",
+			"originx": 244,
+			"width": 112,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "button",
+			"name": "DeleteSaveButton",
+			"schema": "defaultbutton.json",
+			"text": "Delete Save",
+			"originx": 488,
+			"width": 112,
+			"height": 32,
+			"flags": ["align_bottom", "align_right"]
+		},
+		{
+			"type": "list",
+			"name": "SaveList",
+			"schema": "indentedwindow.json",
+			"textschema": "savelist",
+			"originy": 32,
+			"width": 1080,
+			"height": 408,
+			"rowheight": 32,
+			"textinset": 8
+		}
+	]
+}

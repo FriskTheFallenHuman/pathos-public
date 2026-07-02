@@ -32,7 +32,7 @@ All Rights Reserved.
 CUIExitWindow* CUIExitWindow::m_pInstance = nullptr;
 
 // Window description file
-const Char CUIExitWindow::WINDOW_DESC_FILE[] = "exitwindow.txt";
+const Char CUIExitWindow::WINDOW_DESC_FILE[] = "exitwindow.json";
 // Window description file
 const Char CUIExitWindow::WINDOW_OBJ_NAME[] = "ExitWindow";
 // Cancel button object name
