@@ -1,0 +1,22 @@
+{
+	"shape": "box",
+	"system_size": 200.0,
+	"playerplane_max_height": 500.0,
+	"fade_in_time": 5.0,
+	"lifetime": -1.0,
+	"primary_color": [255, 255, 255],
+	"scale": 0.6,
+	"scale_variation": 0.4,
+	"max_particles": -1.0,
+	"particle_frequency": 100.0,
+	"collision": "create_system",
+	"collision_flags": ["precise"],
+	"gravity": 0.02,
+	"create": "snow_ground.json",
+	"chance_to_create": 3,
+	"rendermode": "additive",
+	"alpha": 1.0,
+	"alignment": "tiled",
+	"texture": "snowflake",
+	"_type": "system"
+}

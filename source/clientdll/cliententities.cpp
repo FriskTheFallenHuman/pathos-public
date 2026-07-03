@@ -20,7 +20,7 @@ All Rights Reserved.
 #include "viewmodel.h"
 
 // Spark effect particle script
-static const Char SPARK_EFFECT_SCRIPT_FILE[] = "spark_cluster.txt";
+static const Char SPARK_EFFECT_SCRIPT_FILE[] = "spark_cluster.json";
 
 //=============================================
 // @brief

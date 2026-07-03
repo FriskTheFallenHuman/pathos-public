@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["engine_railgun_heat.json", "engine_railgun_heat_smoke.json"]
+}

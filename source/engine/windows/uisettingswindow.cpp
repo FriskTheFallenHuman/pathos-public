@@ -86,15 +86,13 @@ const Char CUISettingsWindow::VIDEOTAB_GAMMA_SLIDER_OBJ_NAME[] = "GammaSlider";
 // Advance tab list object name
 const Char CUISettingsWindow::ADVANCED_TAB_LIST_OBJ_NAME[] = "AdvancedTabList";
 // Advanced tab options list file
-const Char CUISettingsWindow::ADVANCED_DESC_FILE[] = "advanced.txt";
+const Char CUISettingsWindow::ADVANCED_DESC_FILE[] = "advanced_default.scr";
 // Advanced tab options list file
 const Char CUISettingsWindow::SCROLLSURFACE_OPTION_LABEL_OBJ_NAME[] = "ScrollSurfaceOptionLabel";
 // Advanced tab options list file
 const Char CUISettingsWindow::SCROLLSURFACE_OPTION_LIST_OBJ_NAME[] = "ScrollSurfaceOptionList";
 // Advanced tab options list file
 const Char CUISettingsWindow::SCROLLSURFACE_OPTION_TAB_OBJ_NAME[] = "ScrollSurfaceOptionTab";
-// Default bind file filename
-const Char CUISettingsWindow::DEFAULT_BINDS_FILENAME[] = "default.cfg";
 // "Reverse Mouse" tickbox object name
 const Char CUISettingsWindow::MOUSE_TAB_REVERSE_MOUSE_BOX_OBJ_NAME[] = "ReverseMouseTickBox";
 // "Reverse Mouse" label object name
@@ -178,10 +176,10 @@ const Char CUISettingsWindow::GAMEPLAY_TAB_FOV_TEXT_OBJ_NAME[] = "FOVText";
 // Gameplay tab list object name
 const Char CUISettingsWindow::GAMEPLAY_TAB_LIST_OBJ_NAME[] = "GameplayTabList";
 // Advanced tab options list file
-const Char CUISettingsWindow::GAMEPLAY_DESC_FILE[] = "gameplay.txt";
+const Char CUISettingsWindow::GAMEPLAY_DESC_FILE[] = "gameplay_default.scr";
 
 // Binds file path
-const Char CUISettingsWindow::BINDS_FILE_PATH[] = "scripts/keys/binds.txt";
+const Char CUISettingsWindow::BINDS_FILE_PATH[] = "scripts/kb_act.lst";
 
 // Current instance of the window
 CUISettingsWindow* CUISettingsWindow::m_pInstance = nullptr;
@@ -3024,7 +3022,7 @@ void CUISettingsWindow::SelectVerticalSyncSetting( Int32 msaaSetting )
 void CUISettingsWindow::RestoreDefaultBinds( void )
 {
 	CString cmd;
-	cmd << "exec " << DEFAULT_BINDS_FILENAME;
+	cmd << "exec " << CConfig::DEFAULT_BINDS_FILENAME;
 
 	gCommands.AddCommand(cmd.c_str());
 

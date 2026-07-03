@@ -40,7 +40,7 @@ All Rights Reserved.
 #include "trace_shared.h"
 
 //
-// Note: Credits go to Valve, because some of the 
+// Note: Credits go to Valve, because some of the
 // tracer math was referenced from the Source SDK
 // (I am really not good at more complex math)
 //
@@ -86,7 +86,7 @@ CParticleEngine::~CParticleEngine( void )
 //====================================
 //
 //====================================
-bool CParticleEngine::Init( void ) 
+bool CParticleEngine::Init( void )
 {
 	m_pCvarDrawParticles = gConsole.CreateCVar( CVAR_FLOAT, FL_CV_CLIENT, "r_particles", "1", "Toggles particle rendering." );
 	m_pCvarParticleDebug = gConsole.CreateCVar( CVAR_FLOAT, FL_CV_CLIENT, "r_particles_debug", "0", "Toggle particle debug info printing." );
@@ -100,7 +100,7 @@ bool CParticleEngine::Init( void )
 //====================================
 //
 //====================================
-void CParticleEngine::Shutdown( void ) 
+void CParticleEngine::Shutdown( void )
 {
 	if(m_pVertexes)
 	{
@@ -115,7 +115,7 @@ void CParticleEngine::Shutdown( void )
 //====================================
 //
 //====================================
-bool CParticleEngine::InitGL( void ) 
+bool CParticleEngine::InitGL( void )
 {
 	if(!m_pShader)
 	{
@@ -255,7 +255,7 @@ bool CParticleEngine::InitGL( void )
 //====================================
 //
 //====================================
-void CParticleEngine::ClearGL( void ) 
+void CParticleEngine::ClearGL( void )
 {
 	if(m_pShader)
 	{
@@ -273,7 +273,7 @@ void CParticleEngine::ClearGL( void )
 //====================================
 //
 //====================================
-bool CParticleEngine::InitGame( void ) 
+bool CParticleEngine::InitGame( void )
 {
 	// Create first allocation of particles
 	AllocParticles();
@@ -284,7 +284,7 @@ bool CParticleEngine::InitGame( void )
 //====================================
 //
 //====================================
-void CParticleEngine::ClearGame( void ) 
+void CParticleEngine::ClearGame( void )
 {
 	if(!m_particleSystemsList.empty())
 	{
@@ -325,7 +325,7 @@ void CParticleEngine::ClearGame( void )
 //====================================
 //
 //====================================
-particle_system_t *CParticleEngine::AllocSystem( void ) 
+particle_system_t *CParticleEngine::AllocSystem( void )
 {
 	// Allocate memory
 	particle_system_t *psystem = new particle_system_t;
@@ -340,7 +340,7 @@ particle_system_t *CParticleEngine::AllocSystem( void )
 //====================================
 //
 //====================================
-__forceinline cl_particle_t *CParticleEngine::AllocParticle( particle_system_t *psystem ) 
+__forceinline cl_particle_t *CParticleEngine::AllocParticle( particle_system_t *psystem )
 {
 	if(!m_pFreeParticles)
 		AllocParticles();
@@ -364,7 +364,7 @@ __forceinline cl_particle_t *CParticleEngine::AllocParticle( particle_system_t *
 //====================================
 //
 //====================================
-void CParticleEngine::CreateCluster( const Char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, cl_entity_t *pentity, entindex_t entindex, Uint32 attachment, Int32 boneindex, Int32 attachflags ) 
+void CParticleEngine::CreateCluster( const Char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, cl_entity_t *pentity, entindex_t entindex, Uint32 attachment, Int32 boneindex, Int32 attachflags )
 {
 	const script_cache_t* pFile = PrecacheScript(PART_SCRIPT_CLUSTER, szPath, nullptr);
 	if(!pFile)
@@ -380,7 +380,7 @@ void CParticleEngine::CreateCluster( const Char *szPath, const Vector& origin, c
 //====================================
 //
 //====================================
-particle_system_t *CParticleEngine::CreateSystem( const Char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, particle_system_t *parent, cl_entity_t *entity, entindex_t entindex, Uint32 attachment, Int32 boneindex, Int32 attachflags ) 
+particle_system_t *CParticleEngine::CreateSystem( const Char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, particle_system_t *parent, cl_entity_t *entity, entindex_t entindex, Uint32 attachment, Int32 boneindex, Int32 attachflags )
 {
 	if(!qstrlen(szPath))
 		return nullptr;
@@ -505,627 +505,444 @@ particle_system_t *CParticleEngine::CreateSystem( const Char *szPath, const Vect
 //====================================
 //
 //====================================
-bool CParticleEngine::ReadField( script_definition_t* pdefinition, const Char* pstrField, const Char* pstrNextRead )
+bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstrData )
 {
-	Char token[MAX_PARSE_LENGTH];
-	token[0] = '\0';
+	// Parse JSON
+	parse_options opts;
+	opts.throw_exception = false;
+	opts.strict = false;
 
-	if(!qstrcmp(pstrField, "$shape"))
+	TJValue* root = TJ::parse(pstrData, opts);
+	if(!root || !root->is_object())
 	{
-		if(!pstrNextRead)
-		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		// Read in token
-		Common::Parse(pstrNextRead, token);
-
-		if(!qstrcmp(token, "point") || !qstrcmp(token, "default"))
-			pdefinition->shapetype = shape_point;
-		else if(!qstrcmp(token, "box"))
-			pdefinition->shapetype = shape_box;
-		else if(!qstrcmp(token, "playerplane"))
-			pdefinition->shapetype = shape_playerplane;
-		else
-		{
-			Con_Printf("%s - Invalid value '%s' for field '%s'.\n", __FUNCTION__, token, pstrField);
-			return false;
-		}
-
-		return true;
+		Con_Printf("%s - Failed to parse JSON for script '%s'.\n", __FUNCTION__, pCache->name.c_str());
+		return false;
 	}
-	else if(!qstrcmp(pstrField, "$flags"))
+
+	const TJValueObject* obj = static_cast<const TJValueObject*>(root);
+
+	pCache->pdefinition = new script_definition_t;
+	script_definition_t* pdef = pCache->pdefinition;
+	pdef->scriptpath = pCache->name;
+	pdef->mainalpha = 1.0;
+
+	// Helper lambdas
+	auto readString = [&](const char* key) -> CString
 	{
-		if(!pstrNextRead)
+		if(obj->has_key(key))
 		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
+			const TJValue* val = obj->try_get_value(key);
+			if(val && val->is_string())
+				return CString(val->get_string());
 		}
+		return CString();
+	};
 
-		const Char* pstr = pstrNextRead;
-		while(pstr)
+	auto readFloat = [&](const char* key, Float& out) -> bool
+	{
+		if(obj->has_key(key))
 		{
-			pstr = Common::Parse(pstr, token);
+			const TJValue* val = obj->try_get_value(key);
+			if(val && val->is_number())
+			{
+				out = static_cast<Float>(val->get_float());
+				return true;
+			}
+		}
+		return false;
+	};
 
-			if(!qstrcmp(token, "random_direction"))
-				pdefinition->flags |= SYSTEM_FL_RANDOM_DIR;
-			else if(!qstrcmp(token, "globs"))
-				pdefinition->flags |= SYSTEM_FL_GLOBS;
-			else if(!qstrcmp(token, "softoff"))
-				pdefinition->flags |= SYSTEM_FL_SOFTOFF;
+	auto readInt32 = [&](const char* key, Int32& out) -> bool
+	{
+		if(obj->has_key(key))
+		{
+			const TJValue* val = obj->try_get_value(key);
+			if(val && val->is_number())
+			{
+				out = static_cast<Int32>(val->get_number());
+				return true;
+			}
+		}
+		return false;
+	};
+
+	auto readInt16 = [&](const char* key, Int16& out) -> bool
+	{
+		Int32 val;
+		if(readInt32(key, val))
+		{
+			out = static_cast<Int16>(val);
+			return true;
+		}
+		return false;
+	};
+
+	auto readUint16 = [&](const char* key, Uint16& out) -> bool
+	{
+		Int32 val;
+		if(readInt32(key, val))
+		{
+			out = static_cast<Uint16>(val);
+			return true;
+		}
+		return false;
+	};
+
+	auto readColor = [&](const char* key, Vector& out) -> bool
+	{
+		if(obj->has_key(key))
+		{
+			const TJValue* val = obj->try_get_value(key);
+			if(val && val->is_array())
+			{
+				const TJValueArray* arr = static_cast<const TJValueArray*>(val);
+				if(arr->get_number_of_items() >= 3)
+				{
+					out.x = static_cast<Float>(arr->at(0)->get_number()) / 255.0f;
+					out.y = static_cast<Float>(arr->at(1)->get_number()) / 255.0f;
+					out.z = static_cast<Float>(arr->at(2)->get_number()) / 255.0f;
+					return true;
+				}
+			}
+		}
+		return false;
+	};
+
+	auto readStringArray = [&](const char* key, CArray<CString>& out) -> bool
+	{
+		if(obj->has_key(key))
+		{
+			const TJValue* val = obj->try_get_value(key);
+			if(val && val->is_array())
+			{
+				const TJValueArray* arr = static_cast<const TJValueArray*>(val);
+				for(unsigned int i = 0; i < arr->get_number_of_items(); ++i)
+				{
+					const TJValue* item = arr->at(i);
+					if(item && item->is_string())
+						out.push_back(CString(item->get_string()));
+				}
+				return !out.empty();
+			}
+		}
+		return false;
+	};
+
+	// Flags
+	CString shapeStr = readString("shape");
+	if(!shapeStr.empty())
+	{
+		if(shapeStr == "point" || shapeStr == "default")
+			pdef->shapetype = shape_point;
+		else if(shapeStr == "box")
+			pdef->shapetype = shape_box;
+		else if(shapeStr == "playerplane")
+			pdef->shapetype = shape_playerplane;
+		else
+			Con_Printf("%s - Invalid value '%s' for 'shape' in script '%s'.\n", __FUNCTION__, shapeStr.c_str(), pCache->name.c_str());
+	}
+
+	CString windTypeStr = readString("wind_type");
+	if(!windTypeStr.empty())
+	{
+		if(windTypeStr == "linear")
+			pdef->windtype = wind_linear;
+		else if(windTypeStr == "sine")
+			pdef->windtype = wind_sine;
+		else if(windTypeStr == "none")
+			pdef->windtype = wind_none;
+		else
+			Con_Printf("%s - Invalid value '%s' for 'wind_type' in script '%s'.\n", __FUNCTION__, windTypeStr.c_str(), pCache->name.c_str());
+	}
+
+	CString alignStr = readString("alignment");
+	if(!alignStr.empty())
+	{
+		if(alignStr == "tiled" || alignStr == "default")
+			pdef->alignment = align_tiled;
+		else if(alignStr == "parallel")
+			pdef->alignment = align_parallel;
+		else if(alignStr == "to_normal")
+			pdef->alignment = align_normal;
+		else if(alignStr == "tracer")
+			pdef->alignment = align_tracer;
+		else
+			Con_Printf("%s - Invalid value '%s' for 'alignment' in script '%s'.\n", __FUNCTION__, alignStr.c_str(), pCache->name.c_str());
+	}
+
+	CString renderModeStr = readString("rendermode");
+	if(!renderModeStr.empty())
+	{
+		if(renderModeStr == "additive" || renderModeStr == "default")
+			pdef->rendermode = render_additive;
+		else if(renderModeStr == "alphablend")
+			pdef->rendermode = render_alpha;
+		else if(renderModeStr == "refractive")
+			pdef->rendermode = render_distort;
+		else if(renderModeStr == "alphatest")
+			pdef->rendermode = render_alphatest;
+		else
+			Con_Printf("%s - Invalid value '%s' for 'rendermode' in script '%s'.\n", __FUNCTION__, renderModeStr.c_str(), pCache->name.c_str());
+	}
+
+	CString collisionStr = readString("collision");
+	if(!collisionStr.empty())
+	{
+		if(collisionStr == "none" || collisionStr == "default")
+			pdef->collision = collide_none;
+		else if(collisionStr == "die")
+			pdef->collision = collide_die;
+		else if(collisionStr == "bounce")
+			pdef->collision = collide_bounce;
+		else if(collisionStr == "decal")
+			pdef->collision = collide_decal;
+		else if(collisionStr == "stuck")
+			pdef->collision = collide_stuck;
+		else if(collisionStr == "create_system")
+			pdef->collision = collide_new_system;
+		else
+			Con_Printf("%s - Invalid value '%s' for 'collision' in script '%s'.\n", __FUNCTION__, collisionStr.c_str(), pCache->name.c_str());
+	}
+
+	CArray<CString> flagList;
+	if(readStringArray("flags", flagList))
+	{
+		pdef->flags = 0;
+		for(Uint32 i = 0; i < flagList.size(); ++i)
+		{
+			const CString& f = flagList[i];
+			if(f == "random_direction")
+				pdef->flags |= SYSTEM_FL_RANDOM_DIR;
+			else if(f == "globs")
+				pdef->flags |= SYSTEM_FL_GLOBS;
+			else if(f == "softoff")
+				pdef->flags |= SYSTEM_FL_SOFTOFF;
 			else
-				Con_Printf("%s - Unrecognized flag '%s' for field '%s'.\n", __FUNCTION__, token, pstrField);
+				Con_Printf("%s - Unrecognized flag '%s' for 'flags' in script '%s'.\n", __FUNCTION__, f.c_str(), pCache->name.c_str());
 		}
-
-		return true;
 	}
-	else if(!qstrcmp(pstrField, "$primary_color")
-		|| !qstrcmp(pstrField, "$secondary_color"))
+
+	CArray<CString> renderFlagList;
+	if(readStringArray("render_flags", renderFlagList))
 	{
-		if(!pstrNextRead)
+		pdef->render_flags = 0;
+		for(Uint32 i = 0; i < renderFlagList.size(); ++i)
 		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		Vector color;
-		// Parse R color element
-		const Char* pstr = Common::Parse(pstrNextRead, token);
-		if(!pstr)
-		{
-			Con_Printf("%s - Incomplete definition for field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		color.x = SDL_atof(token) / 255.0f;
-
-		// Parse G color element
-		pstr = Common::Parse(pstr, token);
-		if(!pstr)
-		{
-			Con_Printf("%s - Incomplete definition for field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		color.y = SDL_atof(token) / 255.0f;
-
-		// Parse B color element
-		pstr = Common::Parse(pstr, token);
-
-		color.z = SDL_atof(token) / 255.0f;
-
-		if(!qstrcmp(pstrField, "$primary_color"))
-			pdefinition->primarycolor = color;
-		else
-			pdefinition->secondarycolor = color;
-
-		return true;
-	}
-	else if(!qstrcmp(pstrField, "$lighting"))
-	{
-		if(!pstrNextRead)
-		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		const Char* pstr = pstrNextRead;
-		while(pstr)
-		{
-			pstr = Common::Parse(pstr, token);
-
-			if(!qstrcmp(token, "normal"))
-				pdefinition->lighting_flags |= PARTICLE_LIGHTCHECK_NORMAL;
-			else if(!qstrcmp(token, "mix_primary_color"))
-				pdefinition->lighting_flags |= PARTICLE_LIGHTCHECK_MIXP;
-			else if(!qstrcmp(token, "use_intensity"))
-				pdefinition->lighting_flags |= PARTICLE_LIGHTCHECK_INTENSITY;
-			else if(!qstrcmp(token, "only_once"))
-				pdefinition->lighting_flags |= PARTICLE_LIGHTCHECK_ONLYONCE;
-			else if(!qstrcmp(token, "none"))
-				pdefinition->lighting_flags = PARTICLE_LIGHTCHECK_NONE;
-			else if(!qstrcmp(token, "nodynlights"))
-				pdefinition->lighting_flags |= PARTICLE_LIGHTCHECK_NO_DYNLIGHTS;
-			else if(!qstrcmp(token, "secondary_color"))
-				pdefinition->lighting_flags |= PARTICLE_LIGHTCHECK_SCOLOR;
-			else if(!qstrcmp(token, "mix_secondary_color"))
-				pdefinition->lighting_flags |= PARTICLE_LIGHTCHECK_MIXS;
+			const CString& f = renderFlagList[i];
+			if(f == "overbright")
+				pdef->render_flags |= RENDER_FL_OVERBRIGHT;
+			else if(f == "skybox")
+				pdef->render_flags |= RENDER_FL_SKYBOX;
+			else if(f == "nocull")
+				pdef->render_flags |= RENDER_FL_NOCULL;
+			else if(f == "nofog")
+				pdef->render_flags |= RENDER_FL_NOFOG;
 			else
-				Con_Printf("%s - Unrecognized flag '%s' for field '%s'.\n", __FUNCTION__, token, pstrField);
+				Con_Printf("%s - Unrecognized flag '%s' for 'render_flags' in script '%s'.\n", __FUNCTION__, f.c_str(), pCache->name.c_str());
 		}
-
-		return true;
 	}
-	else if(!qstrcmp(pstrField, "$collision"))
+
+	CArray<CString> lightingFlagList;
+	if(readStringArray("lighting", lightingFlagList))
 	{
-		if(!pstrNextRead)
+		pdef->lighting_flags = PARTICLE_LIGHTCHECK_NONE;
+		for(Uint32 i = 0; i < lightingFlagList.size(); ++i)
 		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		// Read in token
-		Common::Parse(pstrNextRead, token);
-
-		if(!qstrcmp(token, "none") || !qstrcmp(token, "default"))
-			pdefinition->collision = collide_none;
-		else if(!qstrcmp(token, "die"))
-			pdefinition->collision = collide_die;
-		else if(!qstrcmp(token, "bounce"))
-			pdefinition->collision = collide_bounce;
-		else if(!qstrcmp(token, "decal"))
-			pdefinition->collision = collide_decal;
-		else if(!qstrcmp(token, "stuck"))
-			pdefinition->collision = collide_stuck;
-		else if(!qstrcmp(token, "create_system"))
-			pdefinition->collision = collide_new_system;
-		else
-		{
-			Con_Printf("%s - Invalid value '%s' for field '%s'.\n", __FUNCTION__, token, pstrField);
-			return false;
-		}
-
-		return true;
-	}
-	else if(!qstrcmp(pstrField, "$collision_flags"))
-	{
-		if(!pstrNextRead)
-		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		const Char* pstr = pstrNextRead;
-		while(pstr)
-		{
-			pstr = Common::Parse(pstr, token);
-
-			if(!qstrcmp(token, "collide_brushmodels"))
-				pdefinition->collision_flags |= COLLISION_FL_BMODELS;
-			else if(!qstrcmp(token, "collide_water"))
-				pdefinition->collision_flags |= COLLISION_FL_WATER;
+			const CString& f = lightingFlagList[i];
+			if(f == "normal")
+				pdef->lighting_flags |= PARTICLE_LIGHTCHECK_NORMAL;
+			else if(f == "mix_primary_color")
+				pdef->lighting_flags |= PARTICLE_LIGHTCHECK_MIXP;
+			else if(f == "use_intensity")
+				pdef->lighting_flags |= PARTICLE_LIGHTCHECK_INTENSITY;
+			else if(f == "only_once")
+				pdef->lighting_flags |= PARTICLE_LIGHTCHECK_ONLYONCE;
+			else if(f == "none")
+				pdef->lighting_flags = PARTICLE_LIGHTCHECK_NONE;
+			else if(f == "nodynlights")
+				pdef->lighting_flags |= PARTICLE_LIGHTCHECK_NO_DYNLIGHTS;
+			else if(f == "secondary_color")
+				pdef->lighting_flags |= PARTICLE_LIGHTCHECK_SCOLOR;
+			else if(f == "mix_secondary_color")
+				pdef->lighting_flags |= PARTICLE_LIGHTCHECK_MIXS;
 			else
-				Con_Printf("%s - Unrecognized flag '%s' for field '%s'.\n", __FUNCTION__, token, pstrField);
+				Con_Printf("%s - Unrecognized flag '%s' for 'lighting' in script '%s'.\n", __FUNCTION__, f.c_str(), pCache->name.c_str());
 		}
-
-		return true;
 	}
-	else if(!qstrcmp(pstrField, "$rendermode"))
+
+	CArray<CString> collFlagList;
+	if(readStringArray("collision_flags", collFlagList))
 	{
-		if(!pstrNextRead)
+		pdef->collision_flags = 0;
+		for(Uint32 i = 0; i < collFlagList.size(); ++i)
 		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		// Read in token
-		Common::Parse(pstrNextRead, token);
-
-		if(!qstrcmp(token, "additive") || !qstrcmp(token, "default"))
-			pdefinition->rendermode = render_additive;
-		else if(!qstrcmp(token, "alphablend"))
-			pdefinition->rendermode = render_alpha;
-		else if(!qstrcmp(token, "refractive"))
-			pdefinition->rendermode = render_distort;
-		else if(!qstrcmp(token, "alphatest"))
-			pdefinition->rendermode = render_alphatest;
-		else
-		{
-			Con_Printf("%s - Invalid value '%s' for field '%s'.\n", __FUNCTION__, token, pstrField);
-			return false;
-		}
-
-		return true;
-	}
-	else if(!qstrcmp(pstrField, "$alignment"))
-	{
-		if(!pstrNextRead)
-		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		// Read in token
-		Common::Parse(pstrNextRead, token);
-
-		if(!qstrcmp(token, "tiled") || !qstrcmp(token, "default"))
-			pdefinition->alignment = align_tiled;
-		else if(!qstrcmp(token, "parallel"))
-			pdefinition->alignment = align_parallel;
-		else if(!qstrcmp(token, "to_normal"))
-			pdefinition->alignment = align_normal;
-		else if(!qstrcmp(token, "tracer"))
-			pdefinition->alignment = align_tracer;
-		else
-		{
-			Con_Printf("%s - Invalid value '%s' for field '%s'.\n", __FUNCTION__, token, pstrField);
-			return false;
-		}
-
-		return true;
-	}
-	else if(!qstrcmp(pstrField, "$render_flags"))
-	{
-		if(!pstrNextRead)
-		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		const Char* pstr = pstrNextRead;
-		while(pstr)
-		{
-			pstr = Common::Parse(pstr, token);
-
-			if(!qstrcmp(token, "overbright"))
-				pdefinition->render_flags |= RENDER_FL_OVERBRIGHT;
-			else if(!qstrcmp(token, "skybox"))
-				pdefinition->render_flags |= RENDER_FL_SKYBOX;
-			else if(!qstrcmp(token, "nocull"))
-				pdefinition->render_flags |= RENDER_FL_NOCULL;
-			else if(!qstrcmp(token, "nofog"))
-				pdefinition->render_flags |= RENDER_FL_NOFOG;
+			const CString& f = collFlagList[i];
+			if(f == "collide_brushmodels")
+				pdef->collision_flags |= COLLISION_FL_BMODELS;
+			else if(f == "collide_water")
+				pdef->collision_flags |= COLLISION_FL_WATER;
 			else
-				Con_Printf("%s - Unrecognized flag '%s' for field '%s'.\n", __FUNCTION__, token, pstrField);
+				Con_Printf("%s - Unrecognized flag '%s' for 'collision_flags' in script '%s'.\n", __FUNCTION__, f.c_str(), pCache->name.c_str());
 		}
-
-		return true;
 	}
-	else if(!qstrcmp(pstrField, "$wind_type"))
+
+	CArray<CString> attachFlagList;
+	if(readStringArray("attachment_flags", attachFlagList))
 	{
-		if(!pstrNextRead)
+		pdef->attachflags = 0;
+		for(Uint32 i = 0; i < attachFlagList.size(); ++i)
 		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
+			const CString& f = attachFlagList[i];
+			if(f == "to_parent")
+				pdef->attachflags |= PARTICLE_ATTACH_TO_PARENT;
+			else if(f == "relative")
+				pdef->attachflags |= PARTICLE_ATTACH_RELATIVE;
+			else if(f == "to_attachment")
+				pdef->attachflags |= PARTICLE_ATTACH_TO_ATTACHMENT;
+			else if(f == "attachment_vector")
+				pdef->attachflags |= PARTICLE_ATTACH_ATTACHMENT_VECTOR;
+			else if(f == "to_bone")
+				pdef->attachflags |= PARTICLE_ATTACH_TO_BONE;
+			else
+				Con_Printf("%s - Unrecognized flag '%s' for 'attachment_flags' in script '%s'.\n", __FUNCTION__, f.c_str(), pCache->name.c_str());
+		}
+	}
+
+	readInt16("globsize", pdef->globsize);
+	readInt16("num_glob_particles", pdef->numglobparticles);
+	readFloat("min_velocity", pdef->minvel);
+	readFloat("max_velocity", pdef->maxvel);
+	readFloat("max_offset", pdef->maxofs);
+	readFloat("fade_in_time", pdef->fadeintime);
+	readFloat("fade_out_delay", pdef->fadeoutdelay);
+	readFloat("velocity_damping", pdef->velocitydamp);
+	readFloat("stuck_death_time", pdef->stuckdie);
+	readFloat("tracer_distance", pdef->tracerdist);
+	readFloat("playerplane_max_height", pdef->maxheight);
+	readFloat("wind_x_velocity", pdef->windx);
+	readFloat("wind_y_velocity", pdef->windy);
+	readFloat("wind_velocity_variance", pdef->windvar);
+	readFloat("wind_sine_variance_speed_multiplier", pdef->windmult);
+	readFloat("wind_sine_min_variance", pdef->minwindmult);
+	readFloat("wind_sine_variance", pdef->windmultvar);
+	readFloat("lifetime", pdef->maxlife);
+	readFloat("lifetime_variation", pdef->maxlifevar);
+	readFloat("system_size", pdef->systemsize);
+	readFloat("color_transition_delay", pdef->transitiondelay);
+	readFloat("color_transition_duration", pdef->transitiontime);
+	readFloat("color_transition_variance", pdef->transitionvar);
+	readFloat("rotate_z_variation", pdef->rotationvar);
+	readFloat("rotate_z_speed", pdef->rotationvel);
+	readFloat("rotate_z_dampening", pdef->rotationdamp);
+	readFloat("rotate_z_dampening_delay", pdef->rotationdampdelay);
+	readFloat("rotate_x_variation", pdef->rotxvar);
+	readFloat("rotate_x_speed", pdef->rotxvel);
+	readFloat("rotate_x_dampening", pdef->rotxdamp);
+	readFloat("rotate_x_dampening_delay", pdef->rotxdampdelay);
+	readFloat("rotate_y_variation", pdef->rotyvar);
+	readFloat("rotate_y_speed", pdef->rotyvel);
+	readFloat("rotate_y_dampening", pdef->rotydamp);
+	readFloat("rotate_y_dampening_delay", pdef->rotydampdelay);
+	readFloat("scale", pdef->scale);
+	readFloat("scale_variation", pdef->scalevar);
+	readFloat("scale_damping_delay", pdef->scaledampdelay);
+	readFloat("scale_damping", pdef->scaledampfactor);
+	readFloat("velocity_damping_delay", pdef->veldampdelay);
+	readFloat("gravity", pdef->gravity);
+	readFloat("particle_frequency", pdef->particlefreq);
+	readFloat("impact_velocity_dampening", pdef->impactdamp);
+	readFloat("alpha", pdef->mainalpha);
+	readFloat("min_light_value", pdef->minlight);
+	readFloat("max_light_value", pdef->maxlight);
+	readUint16("particles_on_spawn", pdef->startparticles);
+	readInt16("max_particles", pdef->maxparticles);
+	readUint16("particle_frequency_variation", pdef->maxparticlevar);
+	readInt16("chance_to_create", pdef->spawnchance);
+	readFloat("soft_turnoff_duration", pdef->softofftime);
+	readInt16("fade_far_distance", pdef->fadedistfar);
+	readInt16("fade_near_distance", pdef->fadedistnear);
+	readInt16("num_frames", pdef->numframes);
+	readInt16("frame_width", pdef->framesizex);
+	readInt16("frame_height", pdef->framesizey);
+	readInt16("framerate", pdef->framerate);
+	readFloat("decal_lifetime", pdef->decallife);
+	readFloat("decal_fade_time", pdef->decalfade);
+	readFloat("decal_growth_time", pdef->decalgrowthtime);
+	readColor("primary_color", pdef->primarycolor);
+	readColor("secondary_color", pdef->secondarycolor);
+	pdef->create = readString("create");
+	pdef->deathcreate = readString("create_on_death");
+	pdef->watercreate = readString("create_on_water_impact");
+
+	// Textures
+	CString textureName = readString("texture");
+	if(!textureName.empty())
+	{
+		CString texturePath;
+		texturePath << PARTICLE_TEXTURES_PATH << textureName << ".dds";
+		pdef->ptexture = CTextureManager::GetInstance()->LoadTexture(texturePath.c_str(), RS_GAME_LEVEL);
+		if(!pdef->ptexture)
+		{
+			Con_Printf("%s - Failed to load texture '%s' for particle script '%s'.\n", __FUNCTION__, texturePath.c_str(), pCache->name.c_str());
+			delete root;
 			return false;
 		}
-
-		// Read in token
-		Common::Parse(pstrNextRead, token);
-
-		if(!qstrcmp(token, "linear"))
-			pdefinition->windtype = wind_linear;
-		else if(!qstrcmp(token, "sine"))
-			pdefinition->windtype = wind_sine;
-		else if(!qstrcmp(token, "none"))
-			pdefinition->windtype = wind_none;
 		else
 		{
-			Con_Printf("%s - Invalid value '%s' for field '%s'.\n", __FUNCTION__, token, pstrField);
-			return false;
+			glBindTexture(GL_TEXTURE_2D, pdef->ptexture->palloc->gl_index);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glBindTexture(GL_TEXTURE_2D, 0);
 		}
-
-		return true;
-	}
-	else if(!qstrcmp(pstrField, "$attachment_flags"))
-	{
-		if(!pstrNextRead)
-		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		const Char* pstr = pstrNextRead;
-		while(pstr)
-		{
-			pstr = Common::Parse(pstr, token);
-
-			if(!qstrcmp(token, "to_parent"))
-				pdefinition->attachflags |= PARTICLE_ATTACH_TO_PARENT;
-			else if(!qstrcmp(token, "relative"))
-				pdefinition->attachflags |= PARTICLE_ATTACH_RELATIVE;
-			else if(!qstrcmp(token, "to_attachment"))
-				pdefinition->attachflags |= PARTICLE_ATTACH_TO_ATTACHMENT;
-			else if(!qstrcmp(token, "attachment_vector"))
-				pdefinition->attachflags |= PARTICLE_ATTACH_ATTACHMENT_VECTOR;
-			else if(!qstrcmp(token, "to_bone"))
-				pdefinition->attachflags |= PARTICLE_ATTACH_TO_BONE;
-			else if(!qstrcmp(token, "none"))
-				pdefinition->attachflags = PARTICLE_ATTACH_NONE;
-			else
-				Con_Printf("%s - Unrecognized flag '%s' for field '%s'.\n", __FUNCTION__, token, pstrField);
-		}
-
-		return true;
 	}
 	else
 	{
-		if(!pstrNextRead)
-		{
-			Con_Printf("%s - Incomplete field '%s'.\n", __FUNCTION__, pstrField);
-			return false;
-		}
-
-		// Read in token
-		Common::Parse(pstrNextRead, token);
-
-		// All fields from here on are single-token fields
-		if(!qstrcmp(pstrField, "$min_velocity"))
-			pdefinition->minvel = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$max_velocity"))
-			pdefinition->maxvel = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$max_offset"))
-			pdefinition->maxofs = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$fade_in_time"))
-			pdefinition->fadeintime = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$fade_out_delay"))
-			pdefinition->fadeoutdelay = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$alpha"))
-			pdefinition->mainalpha = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$velocity_damping"))
-			pdefinition->velocitydamp = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$velocity_damping_delay"))
-			pdefinition->veldampdelay = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$lifetime"))
-			pdefinition->maxlife = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$lifetime_variation"))
-			pdefinition->maxlifevar = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$color_transition_delay"))
-			pdefinition->transitiondelay = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$color_transition_duration"))
-			pdefinition->transitiontime = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$color_transition_variance"))
-			pdefinition->transitionvar = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$scale"))
-			pdefinition->scale = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$scale_variation"))
-			pdefinition->scalevar = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$scale_damping_delay"))
-			pdefinition->scaledampdelay = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$scale_damping"))
-			pdefinition->scaledampfactor = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$gravity"))
-			pdefinition->gravity = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$system_size"))
-			pdefinition->systemsize = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$max_particles"))
-			pdefinition->maxparticles = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$particle_frequency"))
-			pdefinition->particlefreq = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$particles_on_spawn"))
-			pdefinition->startparticles = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$particle_frequency_variation"))
-			pdefinition->maxparticlevar = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$impact_velocity_dampening"))
-			pdefinition->impactdamp = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_z_variation"))
-			pdefinition->rotationvar = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_z_speed"))
-			pdefinition->rotationvel = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_z_dampening"))
-			pdefinition->rotationdamp = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_z_dampening_delay"))
-			pdefinition->rotationdampdelay = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_x_variation"))
-			pdefinition->rotxvar = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_x_speed"))
-			pdefinition->rotxvel = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_x_dampening"))
-			pdefinition->rotxdamp = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_x_dampening_delay"))
-			pdefinition->rotxdampdelay = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_y_variation"))
-			pdefinition->rotyvar = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_y_speed"))
-			pdefinition->rotyvel = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_y_dampening"))
-			pdefinition->rotydamp = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$rotate_y_dampening_delay"))
-			pdefinition->rotydampdelay = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$create"))
-			pdefinition->create = token;
-		else if(!qstrcmp(pstrField, "$create_on_death"))
-			pdefinition->deathcreate = token;
-		else if(!qstrcmp(pstrField, "$create_on_water_impact"))
-			pdefinition->watercreate = token;
-		else if(!qstrcmp(pstrField, "$wind_x_velocity"))
-			pdefinition->windx = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$wind_y_velocity"))
-			pdefinition->windy = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$wind_velocity_variance"))
-			pdefinition->windvar = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$wind_sine_variance_speed_multiplier"))
-			pdefinition->windmult = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$wind_sine_min_variance"))
-			pdefinition->minwindmult = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$wind_sine_variance"))
-			pdefinition->windmultvar = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$stuck_death_time"))
-			pdefinition->stuckdie = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$playerplane_max_height"))
-			pdefinition->maxheight = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$tracer_distance"))
-			pdefinition->tracerdist = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$fade_near_distance"))
-			pdefinition->fadedistnear = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$fade_far_distance"))
-			pdefinition->fadedistfar = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$num_frames"))
-			pdefinition->numframes = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$frame_width"))
-			pdefinition->framesizex = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$frame_height"))
-			pdefinition->framesizey = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$framerate"))
-			pdefinition->framerate = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$chance_to_create"))
-			pdefinition->spawnchance = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$min_light_value"))
-			pdefinition->minlight = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$max_light_value"))
-			pdefinition->maxlight = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$glob_size"))
-			pdefinition->globsize = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$num_glob_particles"))
-			pdefinition->numglobparticles = SDL_atoi(token);
-		else if(!qstrcmp(pstrField, "$soft_turnoff_duration"))
-			pdefinition->softofftime = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$decal_lifetime"))
-			pdefinition->decallife = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$decal_fade_time"))
-			pdefinition->decalfade = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$decal_growth_time"))
-			pdefinition->decalgrowthtime = SDL_atof(token);
-		else if(!qstrcmp(pstrField, "$texture"))
-		{
-			CString texturepath;
-			texturepath << PARTICLE_TEXTURES_PATH << token << ".dds";
-
-			pdefinition->ptexture = CTextureManager::GetInstance()->LoadTexture(texturepath.c_str(), RS_GAME_LEVEL);
-			if(!pdefinition->ptexture)
-			{
-				// Load failed
-				return false;
-			}
-			else
-			{
-				glBindTexture(GL_TEXTURE_2D, pdefinition->ptexture->palloc->gl_index);
-				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-				glBindTexture(GL_TEXTURE_2D, 0);
-			}
-		}
-		else
-		{
-			Con_Printf("%s - Unrecognized field '%s' in '%s'\n", __FUNCTION__, pstrField, pstrField);
-		}
-
-		return true;
-	}
-}
-
-//====================================
-//
-//====================================
-bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstrData )
-{
-	pCache->pdefinition = new script_definition_t;
-
-	// Fill in default values
-	pCache->pdefinition->scriptpath = pCache->name;
-	pCache->pdefinition->mainalpha = 1.0;
-
-	// Holds the currently read line
-	static Char line[MAX_LINE_LENGTH];
-	// Token we've read
-	static Char token[MAX_PARSE_LENGTH];
-
-	// First token must be "$particlescript"
-	const Char *pstr = Common::Parse(pstrData, token);
-	if(!pstr)
-	{
-		Con_Printf("%s - Particle script '%s' is incomplete after '%s'.\n", 
-			__FUNCTION__, pCache->name.c_str(), token);
-		return nullptr;
-	}
-
-	if(qstrcmp(token, "$particlescript"))
-	{
-		Con_Printf("%s - Expected '$particlescript' token at beginning of script '%s', got '%s' instead.\n", 
-			__FUNCTION__, pCache->name.c_str(), token);
-		return nullptr;
-	}
-
-	// Second token must be '{'
-	pstr = Common::Parse(pstr, token);
-	if(!pstr)
-	{
-		Con_Printf("%s - Particle script '%s' is incomplete after '%s'.\n", 
-			__FUNCTION__, pCache->name.c_str(), token);
-		return nullptr;
-	}
-
-	if(qstrcmp(token, "{"))
-	{
-		Con_Printf("%s - Expected '{' token at beginning of script '%s', got '%s' instead.\n", 
-			__FUNCTION__, pCache->name.c_str(), token);
-		return nullptr;
-	}
-
-	// Skip ahead to next non-space
-	while(SDL_isspace(*pstr))
-		pstr++;
-
-	// Begin reading the lines one by one
-	while(true)
-	{
-		if(!pstr)
-		{
-			Con_Printf("%s - Particle script '%s' is incomplete, missing '}' closing bracket.\n", 
-				__FUNCTION__, pCache->name.c_str());
-			return nullptr;
-		}
-
-		// Read this line
-		pstr = Common::ReadLine(pstr, line);
-
-		// Skip if line is empty
-		if(!qstrlen(line))
-			continue;
-
-		// Read first token
-		const Char* plstr = line;
-
-		// Skip whitespaces
-		while(*plstr != '\0' && SDL_isspace(*plstr))
-			plstr++;
-		
-		// Check if we still have data
-		if(*plstr == '\0')
-			continue;
-
-		// Skip any comments
-		if(!qstrncmp(plstr, "//", 2))
-			continue;
-
-		// Parse first token
-		plstr = Common::Parse(plstr, token);
-		if(!qstrcmp(token, "}")) // Stop if reached end
-			break;
-
-		// Token must always have '$' at beginning
-		if(token[0] != '$')
-		{
-			Con_Printf("%s - Invalid field definition for '%s' in script '%s', fields must begin with '$'.\n", 
-				__FUNCTION__, token, pCache->name.c_str());
-			continue;
-		}
-
-		// Read in the field
-		if(!ReadField(pCache->pdefinition, token, plstr))
-		{
-			Con_Printf("%s - Error reading field '%s' in script '%s'.\n", 
-				__FUNCTION__, token, pCache->name.c_str());
-			continue;
-		}
+		pdef->ptexture = CTextureManager::GetInstance()->GetDummyTexture();
 	}
 
 	// Disable light checking on distortion particles
-	script_definition_t* pdefinition = pCache->pdefinition;
-	if(pdefinition->rendermode == render_distort 
-		&& pdefinition->lighting_flags != PARTICLE_LIGHTCHECK_NONE)
+	if(pdef->rendermode == render_distort && pdef->lighting_flags != PARTICLE_LIGHTCHECK_NONE)
 	{
-		pdefinition->lighting_flags = PARTICLE_LIGHTCHECK_NONE;
-		pdefinition->primarycolor = Vector(1, 1, 1);
+		pdef->lighting_flags = PARTICLE_LIGHTCHECK_NONE;
+		pdef->primarycolor = Vector(1, 1, 1);
 	}
 
-	// Avoid invalid states
-	if(pdefinition->maxparticles != -1 && pdefinition->maxparticles < 0)
+	if(pdef->maxparticles != -1 && pdef->maxparticles < 0)
 	{
-		Con_Printf("%s - Invalid value '%d' for '$max_particles' in script '%s'.\n", __FUNCTION__,
-			pdefinition->maxparticles, pCache->name.c_str());
+		Con_Printf("%s - Invalid value '%d' for 'max_particles' in script '%s'.\n", __FUNCTION__, pdef->maxparticles, pCache->name.c_str());
+		delete root;
+		return false;
+	}
+	if(pdef->particlefreq < 0)
+	{
+		Con_Printf("%s - Invalid value '%f' for 'particle_frequency' in script '%s'.\n", __FUNCTION__, pdef->particlefreq, pCache->name.c_str());
+		delete root;
 		return false;
 	}
 
-	// Avoid invalid state for particle frequency
-	if(pdefinition->particlefreq < 0)
+	CArray<CString> loadList;
+	bool result = true;
+	if(!pdef->create.empty() && (pdef->collision == collide_new_system || pdef->tracerdist > 0))
 	{
-		Con_Printf("%s - Invalid value '%f' for '$particle_frequency' in script '%s'.\n", __FUNCTION__,
-			pdefinition->particlefreq, pCache->name.c_str());
-		return false;
+		result = (PrecacheScript(PART_SCRIPT_SYSTEM, pdef->create.c_str(), &loadList) != nullptr);
+		if(!result)
+			Con_Printf("%s - Failed to load collision create script '%s'.\n", __FUNCTION__, pdef->create.c_str());
+	}
+	if(result && !pdef->watercreate.empty() && (pdef->collision_flags & COLLISION_FL_WATER))
+	{
+		result = (PrecacheScript(PART_SCRIPT_SYSTEM, pdef->watercreate.c_str(), &loadList) != nullptr);
+		if(!result)
+			Con_Printf("%s - Failed to load water collision create script '%s'.\n", __FUNCTION__, pdef->watercreate.c_str());
+	}
+	if(result && !pdef->deathcreate.empty())
+	{
+		result = (PrecacheScript(PART_SCRIPT_SYSTEM, pdef->deathcreate.c_str(), &loadList) != nullptr);
+		if(!result)
+			Con_Printf("%s - Failed to load death create script '%s'.\n", __FUNCTION__, pdef->deathcreate.c_str());
 	}
 
-	return true;
+	delete root;
+	return result;
 }
 
 //====================================
@@ -1133,129 +950,82 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 //====================================
 bool CParticleEngine::LoadClusterScript( script_cache_t* pCache, const Char* pstrData )
 {
-	// Holds the currently read line
-	static Char line[MAX_LINE_LENGTH];
-	// Token we've read
-	static Char token[MAX_PARSE_LENGTH];
+	parse_options opts;
+	opts.throw_exception = false;
+	opts.strict = false;
 
-	// First token must be "$clusterscript"
-	const Char *pstr = Common::Parse(pstrData, token);
-	if(!pstr)
+	TJValue* root = TJ::parse(pstrData, opts);
+	if(!root || !root->is_object())
 	{
-		Con_Printf("%s - Particle script '%s' is incomplete after '%s'.\n", 
-			__FUNCTION__, pCache->name.c_str(), token);
-		return nullptr;
+		Con_Printf("%s - Failed to parse JSON for cluster script '%s'.\n", __FUNCTION__, pCache->name.c_str());
+		return false;
 	}
 
-	if(qstrcmp(token, "$clusterscript"))
-	{
-		Con_Printf("%s - Expected '$clusterscript' token at beginning of script '%s', got '%s' instead.\n", 
-			__FUNCTION__, pCache->name.c_str(), token);
-		return nullptr;
+	const TJValueObject* obj = static_cast<const TJValueObject*>(root);
+
+	const TJValue* scriptsVal = nullptr;
+	if(obj->has_key("scripts"))
+		scriptsVal = obj->try_get_value("scripts");
+	else if(obj->has_key("script"))
+		scriptsVal = obj->try_get_value("script");
+	else {
+		Con_Printf("%s - Cluster script '%s' missing 'script' or 'scripts' key.\n", __FUNCTION__, pCache->name.c_str());
+		delete root;
+		return false;
 	}
 
-	// Second token must be '{'
-	pstr = Common::Parse(pstr, token);
-	if(!pstr)
+	if(!scriptsVal)
 	{
-		Con_Printf("%s - Particle script '%s' is incomplete after '%s'.\n", 
-			__FUNCTION__, pCache->name.c_str(), token);
-		return nullptr;
+		delete root;
+		return false;
 	}
 
-	if(qstrcmp(token, "{"))
+	auto processScriptName = [&](const CString& scriptName)
 	{
-		Con_Printf("%s - Expected '{' token at beginning of script '%s', got '%s' instead.\n", 
-			__FUNCTION__, pCache->name.c_str(), token);
-		return nullptr;
+		const script_cache_t* sub = PrecacheScript(PART_SCRIPT_SYSTEM, scriptName.c_str(), nullptr);
+		if(sub)
+			pCache->clusterscripts.push_back(scriptName);
+		else
+			Con_Printf("%s - Failed to load sub‑script '%s' for cluster '%s'.\n", __FUNCTION__, scriptName.c_str(), pCache->name.c_str());
+	};
+
+	if(scriptsVal->is_array())
+	{
+		const TJValueArray* arr = static_cast<const TJValueArray*>(scriptsVal);
+		for (unsigned int i = 0; i < arr->get_number_of_items(); ++i)
+		{
+			const TJValue* item = arr->at(i);
+			if(item && item->is_string())
+			{
+				CString scriptName(item->get_string());
+				processScriptName(scriptName);
+			}
+			else
+			{
+				Con_Printf("%s - Array element %u is not a string in cluster '%s'.\n", __FUNCTION__, i, pCache->name.c_str());
+			}
+		}
+	}
+	else if(scriptsVal->is_string())
+	{
+		CString scriptName(scriptsVal->get_string());
+		processScriptName(scriptName);
+	}
+	else
+	{
+		Con_Printf("%s - 'script' key in cluster '%s' is neither an array nor a string.\n", __FUNCTION__, pCache->name.c_str());
+		delete root;
+		return false;
 	}
 
-	// Skip ahead to next non-space
-	while(SDL_isspace(*pstr))
-		pstr++;
-
-	// Begin reading the lines one by one
-	while(true)
-	{
-		if(!pstr)
-		{
-			Con_Printf("%s - Particle script '%s' is incomplete, missing '}' closing bracket.\n", 
-				__FUNCTION__, pCache->name.c_str());
-			return nullptr;
-		}
-
-		// Read this line
-		pstr = Common::ReadLine(pstr, line);
-
-		// Skip if line is empty
-		if(!qstrlen(line))
-			continue;
-
-		// Read first token
-		const Char* plstr = line;
-
-		// Skip whitespaces
-		while(*plstr != '\0' && SDL_isspace(*plstr))
-			plstr++;
-		
-		// Check if we still have data
-		if(*plstr == '\0')
-			continue;
-		
-		// Skip any comments
-		if(!qstrncmp(token, "//", 2))
-			continue;
-
-		// Parse first token
-		plstr = Common::Parse(plstr, token);
-		if(!qstrcmp(token, "}")) // Stop if reached end
-			break;
-
-		if(!plstr)
-		{
-			Con_Printf("%s - Incomplete cluster script definition for '%s'.\n", __FUNCTION__, token);
-			continue;
-		}
-
-		// Token must always have '$' at beginning
-		if(token[0] != '$')
-		{
-			Con_Printf("%s - Invalid field definition for '%s' in script '%s', fields must begin with '$'.\n", 
-				__FUNCTION__, token, pCache->name.c_str());
-			continue;
-		}
-
-		if(qstrcmp(token, "$script"))
-		{
-			Con_Printf("%s - Expected '%script' token in '%s', got '%s' instead.\n", 
-				__FUNCTION__, pCache->name.c_str(), token);
-			continue;
-		}
-
-		// Read script name
-		Common::Parse(plstr, token);
-
-		// Read file and add to cache
-		CArray<CString> loadList;
-		const script_cache_t* pScript = PrecacheScript(PART_SCRIPT_SYSTEM, token, &loadList);
-		if(!pScript)
-		{
-			Con_Printf("%s - Failed to load particle script '%s' for cluster script '%s'.\n",
-				__FUNCTION__, token, pCache->name.c_str());
-			continue;
-		}
-		
-		// Add it to the list
-		pCache->clusterscripts.push_back(token);
-	}
-
-	return pCache->clusterscripts.empty() ? false : true;
+	delete root;
+	return !pCache->clusterscripts.empty();
 }
 
 //====================================
 //
 //====================================
-const script_cache_t *CParticleEngine::PrecacheScript( Int32 type, const Char *name, CArray<CString>* pLoadList ) 
+const script_cache_t *CParticleEngine::PrecacheScript( Int32 type, const Char *name, CArray<CString>* pLoadList )
 {
 	if(type != PART_SCRIPT_SYSTEM && type != PART_SCRIPT_CLUSTER)
 	{
@@ -1355,7 +1125,7 @@ const script_cache_t *CParticleEngine::PrecacheScript( Int32 type, const Char *n
 //====================================
 //
 //====================================
-void CParticleEngine::EnvironmentCreateFirst( particle_system_t *psystem ) 
+void CParticleEngine::EnvironmentCreateFirst( particle_system_t *psystem )
 {
 	cl_entity_t* pplayer = CL_GetLocalPlayer();
 	if(!pplayer)
@@ -1374,7 +1144,7 @@ void CParticleEngine::EnvironmentCreateFirst( particle_system_t *psystem )
 	{
 		vorigin[0] = vplayer[0] + Common::RandomLong(-pdefinition->systemsize, pdefinition->systemsize);
 		vorigin[1] = vplayer[1] + Common::RandomLong(-pdefinition->systemsize, pdefinition->systemsize);
-		
+
 		if(pdefinition->maxheight)
 		{
 			vorigin[2] = vplayer[2] + pdefinition->maxheight;
@@ -1402,7 +1172,7 @@ void CParticleEngine::EnvironmentCreateFirst( particle_system_t *psystem )
 //====================================
 //
 //====================================
-cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Float *pflorigin, Float *pflnormal ) 
+cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Float *pflorigin, Float *pflnormal )
 {
 	static trace_t tr;
 	Vector vbaseorigin, realorigin;
@@ -1429,7 +1199,7 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 			if(pdefinition->maxheight)
 			{
 				offset[2] = pplayer->curstate.origin[2] + pdefinition->maxheight;
-				if(offset[2] > psystem->skyheight) 
+				if(offset[2] > psystem->skyheight)
 					offset[2] = psystem->skyheight;
 			}
 			else
@@ -1447,7 +1217,7 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 			// the height of the player's origin(aka center)
 			Float fraction = (offset.Length2D()/pdefinition->systemsize);
 			fraction = clamp(fraction, 0.0, 1.0);
-			
+
 			// The degree of parabolic shift depends on distance from center(player)
 			offset[2] = (1.0 - fraction) * (offset[2] - pplayer->curstate.origin[2]);
 			Vector parabolicposition = pplayer->curstate.origin + offset;
@@ -1503,7 +1273,7 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 
 		// Transform origin back to relative space
 		realorigin = vbaseorigin;
-		if(psystem->parententity 
+		if(psystem->parententity
 			&& (psystem->attachflags & PARTICLE_ATTACH_TO_PARENT)
 			&& (psystem->attachflags & PARTICLE_ATTACH_RELATIVE))
 			TransformRelativeVector(vbaseorigin, psystem, vbaseorigin, true, true);
@@ -1553,14 +1323,14 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 				vforward[j] = Common::RandomFloat(-1, 1);
 		}
 		else if((psystem->attachflags & PARTICLE_ATTACH_TO_PARENT)
-			&& (psystem->attachflags & PARTICLE_ATTACH_ATTACHMENT_VECTOR) 
+			&& (psystem->attachflags & PARTICLE_ATTACH_ATTACHMENT_VECTOR)
 			&& psystem->parententity)
 		{
 			cl_entity_t *pParent = psystem->parententity;
 			Vector attach1 = pParent->getAttachment(psystem->attachment);
 			Vector attach2 = pParent->getAttachment(psystem->attachment+1);
 		}
-		else if((psystem->attachflags & PARTICLE_ATTACH_TO_PARENT) 
+		else if((psystem->attachflags & PARTICLE_ATTACH_TO_PARENT)
 			&& (psystem->attachflags & PARTICLE_ATTACH_TO_BONE)
 			&& psystem->parententity)
 		{
@@ -1597,7 +1367,7 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 		Math::GetUpRight(vforward, vup, vright);
 
 		Math::VectorScale(vforward, Common::RandomFloat(pdefinition->minvel, pdefinition->maxvel), pparticle->velocity);
-		
+
 		if(pdefinition->maxofs > 0)
 		{
 			// Apply any directional offsets
@@ -1606,7 +1376,7 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 		}
 
 		// Rotate velocity back to base vector
-		if(psystem->parententity 
+		if(psystem->parententity
 			&& (psystem->attachflags & PARTICLE_ATTACH_TO_PARENT)
 			&& (psystem->attachflags & PARTICLE_ATTACH_RELATIVE))
 			TransformRelativeVector(pparticle->velocity, psystem, pparticle->velocity, false, true);
@@ -1615,7 +1385,7 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 			pparticle->life = pdefinition->maxlife;
 		else
 			pparticle->life = rns.time + pdefinition->maxlife + Common::RandomFloat(-pdefinition->maxlifevar, pdefinition->maxlifevar);
-	
+
 		pparticle->scale = pdefinition->scale + Common::RandomFloat(-pdefinition->scalevar, pdefinition->scalevar);
 
 		if(pdefinition->rotationvel != 0)
@@ -1644,7 +1414,7 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 
 		if(pdefinition->scaledampdelay)
 			pparticle->scaledampdelay = rns.time + pdefinition->scaledampdelay + Common::RandomFloat(-pdefinition->scalevar, pdefinition->scalevar);
-	
+
 		if(pdefinition->transitiondelay && pdefinition->transitiontime)
 		{
 			pparticle->secondarydelay = rns.time + pdefinition->transitiondelay + Common::RandomFloat(-pdefinition->transitionvar, pdefinition->transitionvar);
@@ -1757,7 +1527,7 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 //====================================
 //
 //====================================
-void CParticleEngine::Update( void ) 
+void CParticleEngine::Update( void )
 {
 	if(!m_msgCache.empty())
 	{
@@ -1776,17 +1546,17 @@ void CParticleEngine::Update( void )
 
 			if(pcache->msgtype == PART_MSG_REMOVE)
 			{
-				RemoveSystem(pcache->entindex, pcache->id, pcache->keepcached); 
+				RemoveSystem(pcache->entindex, pcache->id, pcache->keepcached);
 			}
 			else
 			{
 				switch(pcache->scripttype)
 				{
-				case PART_SCRIPT_CLUSTER: 
-					CreateCluster(pcache->file.c_str(), pcache->origin, pcache->direction, pcache->id, pentity, pcache->entindex, pcache->attachment, pcache->boneindex, pcache->attachflags); 
+				case PART_SCRIPT_CLUSTER:
+					CreateCluster(pcache->file.c_str(), pcache->origin, pcache->direction, pcache->id, pentity, pcache->entindex, pcache->attachment, pcache->boneindex, pcache->attachflags);
 					break;
-				case PART_SCRIPT_SYSTEM: 
-					CreateSystem(pcache->file.c_str(), pcache->origin, pcache->direction, pcache->id, nullptr, pentity, pcache->entindex, pcache->attachment, pcache->boneindex, pcache->attachflags); 
+				case PART_SCRIPT_SYSTEM:
+					CreateSystem(pcache->file.c_str(), pcache->origin, pcache->direction, pcache->id, nullptr, pentity, pcache->entindex, pcache->attachment, pcache->boneindex, pcache->attachflags);
 					break;
 				}
 			}
@@ -1799,7 +1569,7 @@ void CParticleEngine::Update( void )
 
 	if(m_pCvarParticleDebug->GetValue() > 0)
 	{
-		Con_Printf("Created Particles: %i, Freed Particles %i, Active Particles: %i\nCreated Systems: %i, Freed Systems: %i, Active Systems: %i\n\n", 
+		Con_Printf("Created Particles: %i, Freed Particles %i, Active Particles: %i\nCreated Systems: %i, Freed Systems: %i, Active Systems: %i\n\n",
 			m_iNumCreatedParticles, m_iNumFreedParticles,m_iNumCreatedParticles-m_iNumFreedParticles, m_iNumCreatedSystems, m_iNumFreedSystems, m_iNumCreatedSystems-m_iNumFreedSystems);
 	}
 
@@ -1873,7 +1643,7 @@ void CParticleEngine::Update( void )
 //====================================
 //
 //====================================
-void CParticleEngine::UpdateSystems( void ) 
+void CParticleEngine::UpdateSystems( void )
 {
 	// Handle parented ones first
 	m_particleSystemsList.begin();
@@ -1962,7 +1732,7 @@ void CParticleEngine::UpdateSystems( void )
 			// Mark system as having spawned
 			psystem->spawned = true;
 		}
-		
+
 		if(!psystem->particlefreq)
 		{
 			m_particleSystemsList.next();
@@ -2064,7 +1834,7 @@ void CParticleEngine::UpdateSystems( void )
 			m_particleSystemsList.next();
 			continue;
 		}
-		
+
 		// Has related particles
 		if(psystem->pparticleheader || !psystem->spawned)
 		{
@@ -2114,7 +1884,7 @@ void CParticleEngine::TransformRelativeVector( const Vector& basevector, particl
 		Vector attach2 = psystem->parententity->getAttachment(psystem->attachment+1);
 		Vector forward = (attach2-attach1).Normalize();
 		Vector angles = Math::VectorToAngles(forward);
-		
+
 		if(iscoordinate)
 		{
 			if(inverse)
@@ -2163,7 +1933,7 @@ void CParticleEngine::TransformRelativeVector( const Vector& basevector, particl
 //====================================
 //
 //====================================
-Vector CParticleEngine::LightForParticle( cl_particle_t *pparticle ) 
+Vector CParticleEngine::LightForParticle( cl_particle_t *pparticle )
 {
 	Vector vorigin;
 	Vector color;
@@ -2176,7 +1946,7 @@ Vector CParticleEngine::LightForParticle( cl_particle_t *pparticle )
 
 	Math::VectorCopy(pparticle->origin, vorigin);
 
-	if((pparticle->psystem->attachflags & PARTICLE_ATTACH_TO_PARENT)  
+	if((pparticle->psystem->attachflags & PARTICLE_ATTACH_TO_PARENT)
 		&& (pparticle->psystem->attachflags & PARTICLE_ATTACH_RELATIVE)
 		&& pparticle->psystem->parententity)
 	{
@@ -2223,7 +1993,7 @@ Vector CParticleEngine::LightForParticle( cl_particle_t *pparticle )
 //====================================
 //
 //====================================
-__forceinline Int32 CParticleEngine::CheckWater( const Vector& origin ) 
+__forceinline Int32 CParticleEngine::CheckWater( const Vector& origin )
 {
 	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
 	{
@@ -2243,7 +2013,7 @@ __forceinline Int32 CParticleEngine::CheckWater( const Vector& origin )
 //====================================
 Int32 CParticleEngine::PointContentsParticle( const Vector& position )
 {
-	Int32 contents = TR_HullPointContents(&ens.pworld->hulls[0], 0, position);	
+	Int32 contents = TR_HullPointContents(&ens.pworld->hulls[0], 0, position);
 	if(contents != CONTENTS_EMPTY)
 		return contents;
 
@@ -2306,7 +2076,7 @@ Int32 CParticleEngine::PointContentsParticle( const Vector& position )
 //====================================
 //
 //====================================
-bool CParticleEngine::CheckCollision( Vector& vecOrigin, Vector& vecVelocity, particle_system_t* psystem, cl_particle_t *pparticle ) 
+bool CParticleEngine::CheckCollision( Vector& vecOrigin, Vector& vecVelocity, particle_system_t* psystem, cl_particle_t *pparticle )
 {
 	// Pointer to script definition
 	const script_definition_t* pdefinition = psystem->pdefinition;
@@ -2329,7 +2099,7 @@ bool CParticleEngine::CheckCollision( Vector& vecOrigin, Vector& vecVelocity, pa
 		Float impactZCoordinate = pEntity->curstate.origin.z + pEntity->pmodel->maxs.z + 0.1;
 		// Calculate fraction based on this
 		Float distanceFraction = (SDL_fabs(impactZCoordinate - vecOrigin.z)) / (SDL_fabs(testPosition.z - vecOrigin.z));
-		
+
 		Math::VectorScale(vecOrigin, (1.0 - distanceFraction), tr.endpos);
 		Math::VectorMA(tr.endpos, distanceFraction, testPosition, tr.endpos);
 
@@ -2452,7 +2222,7 @@ bool CParticleEngine::CheckCollision( Vector& vecOrigin, Vector& vecVelocity, pa
 //====================================
 //
 //====================================
-void CParticleEngine::GetBoneTransformedPosition( const Vector& baseposition, cl_entity_t* pentity, Int32 boneindex, Vector& outposition, bool reverse ) 
+void CParticleEngine::GetBoneTransformedPosition( const Vector& baseposition, cl_entity_t* pentity, Int32 boneindex, Vector& outposition, bool reverse )
 {
 	Vector position = baseposition;
 	if(!pentity->pmodel || pentity->pmodel->type != MOD_VBM)
@@ -2479,13 +2249,13 @@ void CParticleEngine::GetBoneRotatedVector( const Vector& basevector, cl_entity_
 	if(!pentity->pmodel || pentity->pmodel->type != MOD_VBM)
 		return;
 
-	gVBMRenderer.RotateVectorByBoneMatrix(pentity, boneindex, outvector, reverse); 
+	gVBMRenderer.RotateVectorByBoneMatrix(pentity, boneindex, outvector, reverse);
 }
 
 //====================================
 //
 //====================================
-bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle ) 
+bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 {
 	Vector vvelocity;
 	Vector vbaseorigin;
@@ -2499,7 +2269,7 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 	Math::VectorCopy(pparticle->velocity, vvelocity);
 	Math::VectorCopy(pparticle->origin, vbaseorigin);
 
-	if((pparticle->psystem->attachflags & PARTICLE_ATTACH_TO_PARENT)  
+	if((pparticle->psystem->attachflags & PARTICLE_ATTACH_TO_PARENT)
 		&& (pparticle->psystem->attachflags & PARTICLE_ATTACH_RELATIVE)
 		&& pparticle->psystem->parententity)
 	{
@@ -2567,7 +2337,7 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 		}
 
 		pparticle->rotation += pparticle->rotationvel*rns.frametime;
-	
+
 		if(pparticle->rotation < 0)
 			pparticle->rotation += 360;
 		if(pparticle->rotation > 360)
@@ -2582,7 +2352,7 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 		}
 
 		pparticle->rotx += pparticle->rotxvel*rns.frametime;
-	
+
 		if(pparticle->rotx < 0)
 			pparticle->rotx += 360;
 		if(pparticle->rotx > 360)
@@ -2597,7 +2367,7 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 		}
 
 		pparticle->roty += pparticle->rotyvel*rns.frametime;
-	
+
 		if(pparticle->roty < 0)
 			pparticle->roty += 360;
 		if(pparticle->roty > 360)
@@ -2632,7 +2402,7 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 
 	//
 	// Subtract back if necessary
-	if((psystem->attachflags & PARTICLE_ATTACH_TO_PARENT) 
+	if((psystem->attachflags & PARTICLE_ATTACH_TO_PARENT)
 		&& (psystem->attachflags & PARTICLE_ATTACH_RELATIVE)
 		&& psystem->parententity)
 	{
@@ -2686,7 +2456,7 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 	{
 		Float dist = (vbaseorigin - Vector(rns.view.params.v_origin)).Length();
 		Float alpha = 1.0-((pdefinition->fadedistfar - dist)/(pdefinition->fadedistfar-pdefinition->fadedistnear));
-	
+
 		if( alpha < 0 ) alpha = 0;
 		if( alpha > 1 ) alpha = 1;
 
@@ -2704,7 +2474,7 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 
 	//
 	// See if we need to blend colors
-	// 
+	//
 	if (!(pdefinition->lighting_flags & PARTICLE_LIGHTCHECK_NORMAL) && pdefinition->transitiontime > 0)
 	{
 		if ((pparticle->secondarydelay < rns.time) && (rns.time < (pparticle->secondarydelay + pparticle->secondarytime)))
@@ -2945,14 +2715,14 @@ __forceinline bool CParticleEngine::ClipTracer( const Vector &start, const Vecto
 {
 	Float dist1 = -start[2];
 	Float dist2 = dist1 - delta[2];
-	
+
 	// Clipped, skip this tracer
 	if ( dist1 <= 0 && dist2 <= 0 )
 		return true;
 
 	clippedStart = start;
 	clippedDelta = delta;
-	
+
 	// Needs to be clipped
 	if ( dist1 <= 0 || dist2 <= 0 )
 	{
@@ -2976,7 +2746,7 @@ __forceinline bool CParticleEngine::ClipTracer( const Vector &start, const Vecto
 //====================================
 //
 //====================================
-void CParticleEngine::BatchParticle( cl_particle_t *pparticle, Float flup, Float flright, const Float *pfltranspose ) 
+void CParticleEngine::BatchParticle( cl_particle_t *pparticle, Float flup, Float flright, const Float *pfltranspose )
 {
 	// make these static, might save on performance
 	Vector start, delta, clippedStart, clippedDelta;
@@ -2985,11 +2755,11 @@ void CParticleEngine::BatchParticle( cl_particle_t *pparticle, Float flup, Float
 	Vector vorigin, vangles, normal, vpoint;
 	Vector vmins, vmaxs;
 
-	Float sqLength;		
+	Float sqLength;
 
 	Math::VectorCopy(pparticle->origin, vorigin);
 
-	if((pparticle->psystem->attachflags & PARTICLE_ATTACH_TO_PARENT) 
+	if((pparticle->psystem->attachflags & PARTICLE_ATTACH_TO_PARENT)
 		&& (pparticle->psystem->attachflags & PARTICLE_ATTACH_RELATIVE)
 		&& pparticle->psystem->parententity )
 	{
@@ -3098,7 +2868,7 @@ void CParticleEngine::BatchParticle( cl_particle_t *pparticle, Float flup, Float
 
 		// Figure out direction in camera space of the normal
 		Math::CrossProduct( clippedDelta, clippedStart, normal );
-						  
+
 		// don't draw if they are parallel
 		sqLength = Math::DotProduct( normal, normal );
 		if (sqLength < 1e-3)
@@ -3117,7 +2887,7 @@ void CParticleEngine::BatchParticle( cl_particle_t *pparticle, Float flup, Float
 		BatchVertex(pparticle, tracerverts[1],  alpha, 1);
 		BatchVertex(pparticle, tracerverts[3],  alpha, 2);
 		BatchVertex(pparticle, tracerverts[2],  alpha, 3);
-	}	
+	}
 	else
 	{
 		vpoint = vorigin + m_vRUp * flup * pparticle->scale;
@@ -3146,7 +2916,7 @@ void CParticleEngine::BatchParticle( cl_particle_t *pparticle, Float flup, Float
 //====================================
 //
 //====================================
-bool CParticleEngine::DrawParticles( prt_render_pass_e pass ) 
+bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 {
 	if(pass == PARTICLES_VIEWMODEL && !rns.mainframe)
 		return true;
@@ -3171,7 +2941,7 @@ bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 
 		if(pass == PARTICLES_SKY)
 		{
-			if(!psystem->pparticleheader 
+			if(!psystem->pparticleheader
 				|| !(pdefinition->render_flags & RENDER_FL_SKYBOX))
 			{
 				m_particleSystemsList.next();
@@ -3180,7 +2950,7 @@ bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 		}
 		else if(pass == PARTICLES_VIEWMODEL)
 		{
-			if(!psystem->pparticleheader 
+			if(!psystem->pparticleheader
 				|| psystem->parententity != cls.dllfuncs.pfnGetViewModel())
 			{
 				m_particleSystemsList.next();
@@ -3189,8 +2959,8 @@ bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 		}
 		else
 		{
-			if(!psystem->pparticleheader 
-				|| (pdefinition->render_flags & RENDER_FL_SKYBOX) 
+			if(!psystem->pparticleheader
+				|| (pdefinition->render_flags & RENDER_FL_SKYBOX)
 				|| psystem->parententity == cls.dllfuncs.pfnGetViewModel())
 			{
 				m_particleSystemsList.next();
@@ -3629,7 +3399,7 @@ bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 			rns.view.projection.PushMatrix();
 			rns.view.projection.LoadIdentity();
 			rns.view.projection.Ortho(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO, 0.1, 100);
-			
+
 			m_pShader->SetUniformMatrix4fv(m_attribs.u_projection, rns.view.projection.GetMatrix());
 			m_pShader->SetUniformMatrix4fv(m_attribs.u_modelview, rns.view.modelview.GetMatrix());
 
@@ -3745,11 +3515,11 @@ void CParticleEngine::ReleaseSystem( particle_system_t* psystem )
 //====================================
 //
 //====================================
-void CParticleEngine::RemoveSystem( entindex_t entindex, Int32 iId, bool keepcache ) 
+void CParticleEngine::RemoveSystem( entindex_t entindex, Int32 iId, bool keepcache )
 {
 	if(m_particleSystemsList.empty())
 		return;
-		
+
 	if(!iId)
 		return;
 
@@ -3818,7 +3588,7 @@ void CParticleEngine::RemoveSystem( entindex_t entindex, Int32 iId, bool keepcac
 //====================================
 //
 //====================================
-__forceinline void CParticleEngine::RemoveParticle( cl_particle_t *particle ) 
+__forceinline void CParticleEngine::RemoveParticle( cl_particle_t *particle )
 {
 	if(particle->prev) particle->prev->next = particle->next;
 	else particle->psystem->pparticleheader = particle->next;
@@ -3937,7 +3707,7 @@ void CParticleEngine::ReleaseParticles( void )
 			delete m_particleBlocksArray[i];
 
 		m_particleBlocksArray.clear();
-	}	
+	}
 
 	if(m_pFreeParticles)
 		m_pFreeParticles = nullptr;
@@ -3992,32 +3762,32 @@ void CParticleEngine::CreateVBO( void )
 	m_screenRectangleBase = m_particleAllocCount*4;
 	Uint32 base = m_screenRectangleBase;
 
-	m_pVertexes[base].origin[0] = 0; m_pVertexes[base].origin[1] = 1; 
+	m_pVertexes[base].origin[0] = 0; m_pVertexes[base].origin[1] = 1;
 	m_pVertexes[base].origin[2] = -1; m_pVertexes[base].origin[3] = 1;
 	m_pVertexes[base].texcoord[0] = 0; m_pVertexes[base].texcoord[1] = 0;
 	base++;
 
-	m_pVertexes[base].origin[0] = 0; m_pVertexes[base].origin[1] = 0; 
+	m_pVertexes[base].origin[0] = 0; m_pVertexes[base].origin[1] = 0;
 	m_pVertexes[base].origin[2] = -1; m_pVertexes[base].origin[3] = 1;
 	m_pVertexes[base].texcoord[0] = 0; m_pVertexes[base].texcoord[1] = 1.0f;
 	base++;
 
-	m_pVertexes[base].origin[0] = 1; m_pVertexes[base].origin[1] = 0; 
+	m_pVertexes[base].origin[0] = 1; m_pVertexes[base].origin[1] = 0;
 	m_pVertexes[base].origin[2] = -1; m_pVertexes[base].origin[3] = 1;
 	m_pVertexes[base].texcoord[0] = 1.0f; m_pVertexes[base].texcoord[1] = 1.0f;
 	base++;
 
-	m_pVertexes[base].origin[0] = 0; m_pVertexes[base].origin[1] = 1; 
+	m_pVertexes[base].origin[0] = 0; m_pVertexes[base].origin[1] = 1;
 	m_pVertexes[base].origin[2] = -1; m_pVertexes[base].origin[3] = 1;
 	m_pVertexes[base].texcoord[0] = 0; m_pVertexes[base].texcoord[1] = 0;
 	base++;
 
-	m_pVertexes[base].origin[0] = 1; m_pVertexes[base].origin[1] = 0; 
+	m_pVertexes[base].origin[0] = 1; m_pVertexes[base].origin[1] = 0;
 	m_pVertexes[base].origin[2] = -1; m_pVertexes[base].origin[3] = 1;
 	m_pVertexes[base].texcoord[0] = 1.0f; m_pVertexes[base].texcoord[1] = 1.0f;
 	base++;
 
-	m_pVertexes[base].origin[0] = 1; m_pVertexes[base].origin[1] = 1; 
+	m_pVertexes[base].origin[0] = 1; m_pVertexes[base].origin[1] = 1;
 	m_pVertexes[base].origin[2] = -1; m_pVertexes[base].origin[3] = 1;
 	m_pVertexes[base].texcoord[0] = 1.0f; m_pVertexes[base].texcoord[1] = 0;
 

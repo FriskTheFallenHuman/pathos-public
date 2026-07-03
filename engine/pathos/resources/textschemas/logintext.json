@@ -3,7 +3,7 @@
 	"internalname": "HUDText",
 	"fontcolor": [255, 255, 255, 255],
 	"outlinecolor": [0, 0, 0, 255],
-	"fontset": "arial.ttf",
+	"fontset": "FantasqueSansMono-Regular.ttf",
 	"resolutions": [
 		{
 			"screenheight": 1080,

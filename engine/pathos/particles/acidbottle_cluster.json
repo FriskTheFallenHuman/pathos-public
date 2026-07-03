@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["acidbottle_clouds.json", "acidbottle_glass_flecks1.json", "acidbottle_glass_flecks2.json", "acidbottle_glass_flecks3.json", "acidbottle_splashes1.json", "acidbottle_splashes2.json", "acidbottle_droplets.json"]
+}

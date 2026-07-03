@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["bm_blood_drops1.json", "bm_blood_drops2.json", "bm_blood_drops3.json", "bm_blood_core.json"]
+}

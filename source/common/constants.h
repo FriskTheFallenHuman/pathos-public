@@ -191,14 +191,14 @@ static const Char BULLETS_MODEL_FILENAME[] = "models/bullets.mdl";
 static const Char SHELLCASINGS_MODEL_FILENAME[] = "models/shellcasings.mdl";
 
 // Particle script base path
-static const Char PARTICLE_SCRIPT_PATH[] = "/scripts/particles/";
+static const Char PARTICLE_SCRIPT_PATH[] = "particles/";
 
 // Simple muzzleflash script name
-static const Char MUZZLEFLASH_PARTICLE_SCRIPT_SIMPLE[] = "engine_muzzleflash_cluster_simple.txt";
+static const Char MUZZLEFLASH_PARTICLE_SCRIPT_SIMPLE[] = "engine_muzzleflash_cluster_simple.json";
 // Regular muzzleflash particle effect for handguns
-static const Char MUZZLEFLASH_PARTICLE_SCRIPT_BASENAME[] = "engine_muzzleflash_cluster_%s.txt";
+static const Char MUZZLEFLASH_PARTICLE_SCRIPT_BASENAME[] = "engine_muzzleflash_cluster_%s.json";
 // Muzzleflash smoke particle effect
-static const Char MUZZLE_PARTICLE_SMOKE[] = "engine_muzzle_smoke.txt";
+static const Char MUZZLE_PARTICLE_SMOKE[] = "engine_muzzle_smoke.json";
 
 // Debris sound file path
 static const Char DEBRIS_SOUND_BASE_DIR[] = "debris";

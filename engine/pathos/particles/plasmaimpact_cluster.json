@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["engine_plasma_core.json", "engine_plasma_sparks.json", "engine_plasma_billows.json", "engine_plasma_heat.json"]
+}

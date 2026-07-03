@@ -1,0 +1,18 @@
+{
+	"shape": "point",
+	"fade_out_delay": 0.4,
+	"lifetime": 0.35,
+	"primary_color": [255, 255, 230],
+	"scale": 18.0,
+	"scale_variation": 5.0,
+	"particles_on_spawn": 1,
+	"rendermode": "additive",
+	"alpha": 1.0,
+	"alignment": "parallel",
+	"texture": "rainsplash",
+	"frame_width": 64,
+	"frame_height": 64,
+	"num_frames": 14,
+	"framerate": 40,
+	"_type": "system"
+}

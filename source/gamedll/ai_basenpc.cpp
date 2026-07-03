@@ -1848,7 +1848,7 @@ void CBaseNPC::DecapitateNPC( bool spawnGib, Int32 bodyGroup, Int32 bodyNumber )
 		boneOrigin = GetEyePosition(false, true);
 	}
 
-	Util::CreateParticles("blood_effects_decap.txt", boneOrigin, Vector(0, 0, 1), PART_SCRIPT_CLUSTER);
+	Util::CreateParticles("blood_effects_decap.json", boneOrigin, Vector(0, 0, 1), PART_SCRIPT_CLUSTER);
 }
 
 //=============================================
@@ -2462,9 +2462,9 @@ void CBaseNPC::NPCUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t 
 void CBaseNPC::SpawnGibbedParticles( void )
 {
 	if(m_deathFlags & NPC_DF_EXPLODE)
-		Util::CreateParticles("engine_gib_explode_cluster.txt", GetCenter(), ZERO_VECTOR, PART_SCRIPT_CLUSTER);
+		Util::CreateParticles("engine_gib_explode_cluster.json", GetCenter(), ZERO_VECTOR, PART_SCRIPT_CLUSTER);
 	else
-		Util::CreateParticles("engine_gib_cluster.txt", GetCenter(), ZERO_VECTOR, PART_SCRIPT_CLUSTER);
+		Util::CreateParticles("engine_gib_cluster.json", GetCenter(), ZERO_VECTOR, PART_SCRIPT_CLUSTER);
 }
 
 //=============================================
@@ -2540,14 +2540,14 @@ void CBaseNPC::OnGibSpawnCallback( CBaseEntity* pGib )
 		Vector direction = -pGib->GetVelocity();
 		direction.Normalize();
 
-		Util::CreateParticles("plasmaimpact_cluster.txt", pGib->GetOrigin(), direction, PART_SCRIPT_CLUSTER, pGib->GetEdict(), 0, pGib->GetEntityIndex(), NO_POSITION, PARTICLE_ATTACH_TO_PARENT);
+		Util::CreateParticles("plasmaimpact_cluster.json", pGib->GetOrigin(), direction, PART_SCRIPT_CLUSTER, pGib->GetEdict(), 0, pGib->GetEntityIndex(), NO_POSITION, PARTICLE_ATTACH_TO_PARENT);
 		
 		Int32 lightystyle = (Common::RandomLong(0, 1) == 1) ? LS_FLICKER_A : LS_FLICKER_B;
 		Util::CreateDynamicLight(pGib->GetOrigin(), 128, 255, 50, 0, 7, 64, 5, (FL_DLIGHT_NOSHADOWS|FL_DLIGHT_FOLLOW_ENTITY|FL_DLIGHT_USE_LIGHTSTYLES), pGib->GetEntityIndex(), NO_POSITION, lightystyle);
 	}
 	else if(m_deathDamageBits & DMG_EXPLOSION && Common::RandomLong(0, 1) == 1)
 	{
-		Util::CreateParticles("engine_gib_flames_cluster.txt", pGib->GetOrigin(), Vector(0, 0, 1), PART_SCRIPT_CLUSTER, pGib->GetEdict(), 0, pGib->GetEntityIndex(), NO_POSITION, PARTICLE_ATTACH_TO_PARENT);
+		Util::CreateParticles("engine_gib_flames_cluster.json", pGib->GetOrigin(), Vector(0, 0, 1), PART_SCRIPT_CLUSTER, pGib->GetEdict(), 0, pGib->GetEntityIndex(), NO_POSITION, PARTICLE_ATTACH_TO_PARENT);
 
 		Int32 lightystyle = (Common::RandomLong(0, 1) == 1) ? LS_FLICKER_A : LS_FLICKER_B;
 		Util::CreateDynamicLight(pGib->GetOrigin(), 128, 255, 192, 64, 10, 64, 6, (FL_DLIGHT_NOSHADOWS|FL_DLIGHT_FOLLOW_ENTITY|FL_DLIGHT_USE_LIGHTSTYLES), pGib->GetEntityIndex(), NO_POSITION, lightystyle);

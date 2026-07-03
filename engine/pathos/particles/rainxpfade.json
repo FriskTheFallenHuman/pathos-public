@@ -1,0 +1,20 @@
+{
+	"shape": "playerplane",
+	"system_size": 400.0,
+	"playerplane_max_height": 400.0,
+	"fade_in_time": 1.0,
+	"lifetime": 2.0,
+	"primary_color": [255, 255, 255],
+	"scale": 6.0,
+	"scale_variation": 2.0,
+	"max_particles": -1.0,
+	"particle_frequency": 600.0,
+	"collision": "die",
+	"collision_flags": ["collide_water", "precise"],
+	"gravity": 0.6,
+	"rendermode": "additive",
+	"alpha": 1.0,
+	"alignment": "parallel",
+	"texture": "rain",
+	"_type": "system"
+}

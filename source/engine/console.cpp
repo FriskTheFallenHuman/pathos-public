@@ -53,9 +53,9 @@ const Uint32 CConsole::MAX_DEBUG_PRINTS = 10;
 const Float CConsole::DEBUG_PRINT_LIFETIME = 15;
 
 // Print box reference width
-const Uint32 CConsole::PRINT_BOX_REF_X_OFFSET = 20;
+const Uint32 CConsole::PRINT_BOX_REF_X_OFFSET = 10;
 // Print box reference width
-const Uint32 CConsole::PRINT_BOX_REF_Y_OFFSET = 60;
+const Uint32 CConsole::PRINT_BOX_REF_Y_OFFSET = 10;
 // Print box text inset
 const Uint32 CConsole::PRINT_BOX_INSET = 5;
 
@@ -65,7 +65,7 @@ const Uint32 CConsole::CONSOLE_REF_RESOLUTION_WIDTH = 1920;
 const Uint32 CConsole::CONSOLE_REF_RESOLUTION_HEIGHT = 1080;
 
 // Print box reference width
-const Uint32 CConsole::PRINT_BOX_REF_WIDTH = 800;
+const Uint32 CConsole::PRINT_BOX_REF_WIDTH = 1895;
 // Print box reference width
 const Uint32 CConsole::PRINT_BOX_REF_HEIGHT = 200;
 // Print box reference bar thickness
@@ -73,8 +73,6 @@ const Uint32 CConsole::PRINT_BOX_REF_BAR_THICKNESS = 5;
 
 // Print box bar color
 const color32_t CConsole::PRINT_BOX_BAR_COLOR = color32_t(150, 0, 0, 100);
-// Print box background color
-const color32_t CConsole::PRINT_BOX_BACKGROUND_COLOR = color32_t(0, 0, 0, 50);
 
 // Text schema name for console text box
 const Char CConsole::TEXTBOX_TEXTSCHEMA_NAME[] = "consolebox";
@@ -444,80 +442,13 @@ bool CConsole::Draw( void )
 	pDraw->Color4f(static_cast<Float>(PRINT_BOX_BAR_COLOR.r)/255.0f,
 		static_cast<Float>(PRINT_BOX_BAR_COLOR.g)/255.0f,
 		static_cast<Float>(PRINT_BOX_BAR_COLOR.b)/255.0f,
-		static_cast<Float>(PRINT_BOX_BAR_COLOR.a)/255.0f);
+		0.0f);
 
-	// Draw top bar
+	// Draw the invisible box
 	Float xCoord = boxXOrigin;
 	Float yCoord = boxYOrigin;
 	Float objWidth = boxWidth;
 	Float objHeight = barThickness;
-
-	pDraw->Begin(CBasicDraw::DRAW_TRIANGLES);
-	pDraw->Vertex3f(xCoord, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord, yCoord+objHeight, -1.0);
-
-	pDraw->Vertex3f(xCoord, yCoord+objHeight, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord+objHeight, -1.0);
-	pDraw->End();
-
-	// Draw left bar
-	xCoord = boxXOrigin;
-	yCoord = boxYOrigin + barThickness;
-
-	objWidth = barThickness;
-	objHeight = boxHeight - barThickness*3;
-
-	pDraw->Begin(CBasicDraw::DRAW_TRIANGLES);
-	pDraw->Vertex3f(xCoord, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord, yCoord+objHeight, -1.0);
-
-	pDraw->Vertex3f(xCoord, yCoord+objHeight, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord+objHeight, -1.0);
-	pDraw->End();
-
-	// Draw bottom bar
-	xCoord = boxXOrigin;
-	yCoord = boxYOrigin + boxHeight - barThickness*2;
-
-	objWidth = boxWidth;
-	objHeight = barThickness;
-
-	pDraw->Begin(CBasicDraw::DRAW_TRIANGLES);
-	pDraw->Vertex3f(xCoord, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord, yCoord+objHeight, -1.0);
-
-	pDraw->Vertex3f(xCoord, yCoord+objHeight, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord+objHeight, -1.0);
-	pDraw->End();
-
-	// Draw right bar
-	xCoord = boxXOrigin + boxWidth - barThickness;
-	yCoord = boxYOrigin + barThickness;
-
-	objWidth = barThickness;
-	objHeight = boxHeight - barThickness*3;
-
-	pDraw->Begin(CBasicDraw::DRAW_TRIANGLES);
-	pDraw->Vertex3f(xCoord, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord, yCoord+objHeight, -1.0);
-
-	pDraw->Vertex3f(xCoord, yCoord+objHeight, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord, -1.0);
-	pDraw->Vertex3f(xCoord+objWidth, yCoord+objHeight, -1.0);
-	pDraw->End();
-
-	// Draw background
-	pDraw->Color4f(static_cast<Float>(PRINT_BOX_BACKGROUND_COLOR.r)/255.0f,
-		static_cast<Float>(PRINT_BOX_BACKGROUND_COLOR.g)/255.0f,
-		static_cast<Float>(PRINT_BOX_BACKGROUND_COLOR.b)/255.0f,
-		static_cast<Float>(PRINT_BOX_BACKGROUND_COLOR.a)/255.0f);
 
 	xCoord = boxXOrigin + barThickness;
 	yCoord = boxYOrigin + barThickness;

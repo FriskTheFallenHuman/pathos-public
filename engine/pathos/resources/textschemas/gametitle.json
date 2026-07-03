@@ -3,7 +3,7 @@
 	"internalname": "GameTitle",
 	"fontcolor": [255, 255, 255, 255],
 	"outlinecolor": [0, 0, 0, 255],
-	"fontset": "albertus.ttf",
+	"fontset": "InterDisplay-Bold.ttf",
 	"fontsize": 72,
 	"outlineradius": 2
 }

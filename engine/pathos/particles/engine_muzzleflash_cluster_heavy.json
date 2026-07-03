@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["engine_muzzleflash1.json", "engine_muzzleflash2_large.json", "engine_muzzleflash3.json", "engine_muzzleflash4.json", "engine_muzzleflash_smoke_short.json"]
+}

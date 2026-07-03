@@ -748,14 +748,14 @@ namespace Util
 			if(isplayer)
 			{
 				// Player has specific script
-				scriptname = "blood_effects_cluster_player.txt";
+				scriptname = "blood_effects_cluster_player.json";
 			}
 			else
 			{
 				if(pEntity->IsAlive())
-					scriptname = "blood_effects_cluster_living.txt";
+					scriptname = "blood_effects_cluster_living.json";
 				else
-					scriptname = "blood_effects_cluster.txt";
+					scriptname = "blood_effects_cluster.json";
 			}
 
 			Util::CreateParticles(scriptname.c_str(), tr.endpos, tr.plane.normal, PART_SCRIPT_CLUSTER, pEntity->GetEdict(), 0, 0, boneindex, attachflags);
@@ -770,7 +770,7 @@ namespace Util
 		if(color == BLOOD_NONE)
 			return;
 
-		CString scriptname = isplayer ? "blood_effects_cluster_player.txt" : "blood_effects_cluster.txt";
+		CString scriptname = isplayer ? "blood_effects_cluster_player.json" : "blood_effects_cluster.json";
 		Util::CreateParticles(scriptname.c_str(), origin, direction, PART_SCRIPT_CLUSTER);
 	}
 
@@ -946,7 +946,7 @@ namespace Util
 	//=============================================
 	void Ricochet( const Vector &position, const Vector &direction, bool metalsound )
 	{
-		Util::CreateParticles("cluster_impact_ricochet.txt", position, direction, PART_SCRIPT_CLUSTER);
+		Util::CreateParticles("cluster_impact_ricochet.json", position, direction, PART_SCRIPT_CLUSTER);
 
 		if(!metalsound)
 			Util::PlayRandomAmbientSound(position, "impact/ricochet%d.wav", 3);
@@ -1218,7 +1218,7 @@ namespace Util
 						diff += 0.1;
 					}
 		
-					Util::CreateParticles("water_impact_cluster.txt", vCur, Vector(0, 0, 1), PART_SCRIPT_CLUSTER);
+					Util::CreateParticles("water_impact_cluster.json", vCur, Vector(0, 0, 1), PART_SCRIPT_CLUSTER);
 				}
 			}
 		}
@@ -2019,7 +2019,7 @@ namespace Util
 	//=============================================
 	void CreateSparks( const Vector& origin )
 	{
-		Util::CreateParticles("spark_cluster.txt", origin, ZERO_VECTOR, PART_SCRIPT_CLUSTER);
+		Util::CreateParticles("spark_cluster.json", origin, ZERO_VECTOR, PART_SCRIPT_CLUSTER);
 		Util::CreateDynamicLight(origin, 3*Common::RandomFloat(1, 3), 255, 180, 100, Common::RandomFloat(0.1, 0.2), -3*Common::RandomLong(13, 18), 0, FL_DLIGHT_NOSHADOWS);
 	}
 

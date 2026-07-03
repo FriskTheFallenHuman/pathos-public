@@ -1,0 +1,18 @@
+{
+	"shape": "point",
+	"min_velocity": 1600.0,
+	"max_velocity": 2000.0,
+	"lifetime": -1.0,
+	"primary_color": [255, 128, 64],
+	"scale": 10.0,
+	"particles_on_spawn": 3,
+	"collision": "die",
+	"collision_flags": ["precise", "collide_brushmodels"],
+	"impact_velocity_dampening": 0.6,
+	"rendermode": "additive",
+	"alpha": 1.0,
+	"alignment": "tracer",
+	"texture": "spark1",
+	"render_flags": ["nocull"],
+	"_type": "system"
+}

@@ -1,0 +1,23 @@
+{
+	"shape": "box",
+	"system_size": 200.0,
+	"fade_in_time": 4.0,
+	"lifetime": 40.0,
+	"fade_out_delay": 39.0,
+	"flags": ["random_direction"],
+	"primary_color": [203, 88, 66],
+	"scale": 180.0,
+	"scale_variation": 20.0,
+	"max_particles": -1.0,
+	"particle_frequency": 1.0,
+	"rendermode": "additive",
+	"alpha": 0.6,
+	"alignment": "tiled",
+	"texture": "intro_clouds",
+	"wind_x_velocity": 6.0,
+	"wind_type": "linear",
+	"frame_width": 512,
+	"frame_height": 256,
+	"num_frames": 4,
+	"_type": "system"
+}

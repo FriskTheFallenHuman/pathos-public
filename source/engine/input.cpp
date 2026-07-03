@@ -59,7 +59,7 @@ const CString CInput::MOUSE_WHEEL_NAMES[] = {
 };
 
 // Path to keynames file
-const Char CInput::KEYNAMES_FILE_PATH[] = "scripts/keys/keynames.txt";
+const Char CInput::KEYNAMES_FILE_PATH[] = "scripts/kb_keys.lst";
 
 //=============================================
 // @brief Constructor

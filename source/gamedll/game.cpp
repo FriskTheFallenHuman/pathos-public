@@ -383,34 +383,34 @@ void PrecacheGenericResources( void )
 	Util::PrecacheFixedNbSounds("debris/shotshell%d.wav", 3);
 	Util::PrecacheFixedNbSounds("debris/wood_clatter%d.wav", 3);
 
-	gd_engfuncs.pfnPrecacheParticleScript("bullet_tracer.txt", PART_SCRIPT_SYSTEM);
+	gd_engfuncs.pfnPrecacheParticleScript("bullet_tracer.json", PART_SCRIPT_SYSTEM);
 
 	gd_engfuncs.pfnPrecacheParticleScript(MUZZLEFLASH_PARTICLE_SCRIPT_SIMPLE, PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("explosion_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("explosion_underwater_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("spark_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("engine_gib_flames_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("engine_gib_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("engine_gib_small_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("engine_gib_explode_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("engine_plasma_trails.txt", PART_SCRIPT_SYSTEM);
+	gd_engfuncs.pfnPrecacheParticleScript("explosion_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("explosion_underwater_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("spark_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("engine_gib_flames_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("engine_gib_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("engine_gib_small_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("engine_gib_explode_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("engine_plasma_trails.json", PART_SCRIPT_SYSTEM);
 	gd_engfuncs.pfnPrecacheParticleScript(MUZZLE_PARTICLE_SMOKE, PART_SCRIPT_SYSTEM);
-	gd_engfuncs.pfnPrecacheParticleScript("blood_effects_cluster_player.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("blood_effects_decap.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("blood_effects_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("blood_effects_cluster_living.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("engine_explosion_smoke.txt", PART_SCRIPT_SYSTEM);
+	gd_engfuncs.pfnPrecacheParticleScript("blood_effects_cluster_player.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("blood_effects_decap.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("blood_effects_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("blood_effects_cluster_living.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("engine_explosion_smoke.json", PART_SCRIPT_SYSTEM);
 
-	gd_engfuncs.pfnPrecacheParticleScript("wood_impact_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("water_impact_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("snow_impact_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("gravel_impact_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("glass_impact_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("dirt_impact_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("concrete_impact_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("cluster_impact_metal.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("carpet_impact_cluster.txt", PART_SCRIPT_CLUSTER);
-	gd_engfuncs.pfnPrecacheParticleScript("cluster_impact_ricochet.txt", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("wood_impact_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("water_impact_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("snow_impact_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("gravel_impact_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("glass_impact_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("dirt_impact_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("concrete_impact_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("cluster_impact_metal.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("carpet_impact_cluster.json", PART_SCRIPT_CLUSTER);
+	gd_engfuncs.pfnPrecacheParticleScript("cluster_impact_ricochet.json", PART_SCRIPT_CLUSTER);
 
 	// Precache frequently used groups
 	gd_engfuncs.pfnPrecacheDecalGroup("scorch");

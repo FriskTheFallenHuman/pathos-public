@@ -108,8 +108,8 @@ void CItemMotorBike::Precache( void )
 	gd_engfuncs.pfnPrecacheSound("bike/bike_skid.wav");
 	gd_engfuncs.pfnPrecacheSound("bike/bike_start.wav");
 
-	gd_engfuncs.pfnPrecacheParticleScript("torchfire.txt", PART_SCRIPT_SYSTEM);
-	gd_engfuncs.pfnPrecacheParticleScript("torchsmoke.txt", PART_SCRIPT_SYSTEM);
+	gd_engfuncs.pfnPrecacheParticleScript("torchfire.json", PART_SCRIPT_SYSTEM);
+	gd_engfuncs.pfnPrecacheParticleScript("torchsmoke.json", PART_SCRIPT_SYSTEM);
 
 	Util::PrecacheEntity("env_dlight");
 }
@@ -136,8 +136,8 @@ void CItemMotorBike::UseBike( CBaseEntity* pActivator, CBaseEntity* pCaller, use
 		Util::EmitEntitySound( this, "bike/bike_burning.wav", SND_CHAN_ITEM);
 
 		Vector origin = m_pState->origin+Vector(0, 0, 8);
-		Util::CreateParticles("torchfire.txt", origin, Vector(0, 0, 1), PART_SCRIPT_SYSTEM);
-		Util::CreateParticles("torchsmoke.txt", origin, Vector(0, 0, 1), PART_SCRIPT_SYSTEM);
+		Util::CreateParticles("torchfire.json", origin, Vector(0, 0, 1), PART_SCRIPT_SYSTEM);
+		Util::CreateParticles("torchsmoke.json", origin, Vector(0, 0, 1), PART_SCRIPT_SYSTEM);
 
 		CEnvDLight::SpawnLight(m_pState->origin+Vector(0, 0, 16), Vector(250, 192, 20), 300);
 		m_isTrashed = TRUE;
@@ -218,8 +218,8 @@ bool CItemMotorBike::Restore( void )
 		Util::EmitEntitySound( this, "bike/bike_burning.wav", SND_CHAN_ITEM);
 
 		Vector origin = m_pState->origin+Vector(0, 0, 8);
-		Util::CreateParticles("torchfire.txt", origin, Vector(0, 0, 1), PART_SCRIPT_SYSTEM);
-		Util::CreateParticles("torchsmoke.txt", origin, Vector(0, 0, 1), PART_SCRIPT_SYSTEM);
+		Util::CreateParticles("torchfire.json", origin, Vector(0, 0, 1), PART_SCRIPT_SYSTEM);
+		Util::CreateParticles("torchsmoke.json", origin, Vector(0, 0, 1), PART_SCRIPT_SYSTEM);
 	}
 
 	return true;

@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["engine_decap_blood_drops1.json", "engine_gib_blood_drops2_small.json", "engine_decap_core.json"]
+}

@@ -3,7 +3,7 @@
 	"internalname": "GameDefaultFont",
 	"fontcolor": [255, 255, 255, 255],
 	"outlinecolor": [0, 0, 0, 255],
-	"fontset": "calibri.ttf",
+	"fontset": "Lilex-Medium.ttf",
 	"resolutions": [
 		{
 			"screenheight": 1080,
@@ -12,7 +12,7 @@
 		},
 		{
 			"screenheight": 768,
-			"fontsize": 8,
+			"fontsize": 14,
 			"outlineradius": 1
 		}
 	]

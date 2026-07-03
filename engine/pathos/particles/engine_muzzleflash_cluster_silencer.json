@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["engine_muzzleflash_silencer1.json", "engine_muzzleflash_silencer2.json", "engine_muzzleflash_smoke.json"]
+}

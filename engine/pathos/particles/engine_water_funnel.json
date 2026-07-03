@@ -1,0 +1,15 @@
+{
+	"shape": "point",
+	"fade_out_delay": 0.4,
+	"lifetime": 0.5,
+	"primary_color": [100, 100, 148],
+	"scale": 90.0,
+	"scale_damping": 180.0,
+	"particles_on_spawn": 1,
+	"rendermode": "additive",
+	"alpha": 0.8,
+	"alignment": "parallel",
+	"texture": "splash3",
+	"render_flags": ["nocull"],
+	"_type": "system"
+}

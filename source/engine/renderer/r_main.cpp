@@ -5926,7 +5926,7 @@ void Cmd_ShowListMaterial( void )
 void Cmd_LoadAllParticleScripts( void )
 {
 	CString searchpath;
-	searchpath << ens.gamedir << PARTICLE_SCRIPT_PATH << "*.txt";
+	searchpath << ens.gamedir << PARTICLE_SCRIPT_PATH << "*.json";
 
 	// Parse directory for files
 	HANDLE dir;
@@ -5939,7 +5939,7 @@ void Cmd_LoadAllParticleScripts( void )
 
 	while (true) 
 	{
-		if (qstrcmp(file_data.cFileName, ".") != 0 && qstrcmp(file_data.cFileName, "..") != 0 && qstrstr(file_data.cFileName, ".txt"))
+		if (qstrcmp(file_data.cFileName, ".") != 0 && qstrcmp(file_data.cFileName, "..") != 0 && qstrstr(file_data.cFileName, ".json"))
 		{
 			CString path;
 			path << PARTICLE_SCRIPT_PATH << file_data.cFileName;

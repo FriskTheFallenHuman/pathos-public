@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["engine_gib_flames_core.json", "engine_gib_flame_billows.json"]
+}

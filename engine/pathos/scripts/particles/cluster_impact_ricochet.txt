@@ -1,6 +1,0 @@
-$clusterscript
-{
-	$script impact_ricochet_core.txt
-	$script impact_ricochet_sparks.txt
-	$script impact_ricochet_cloud.txt
-}

@@ -514,8 +514,6 @@ public:
 	static const Char SCROLLSURFACE_OPTION_LIST_OBJ_NAME[];
 	// Scrollable options surface tab object
 	static const Char SCROLLSURFACE_OPTION_TAB_OBJ_NAME[];
-	// Default bind file filename
-	static const Char DEFAULT_BINDS_FILENAME[];
 
 	// "Reverse Mouse" tickbox object name
 	static const Char MOUSE_TAB_REVERSE_MOUSE_BOX_OBJ_NAME[];

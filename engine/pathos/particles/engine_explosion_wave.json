@@ -1,0 +1,14 @@
+{
+	"shape": "point",
+	"fade_out_delay": 0.05,
+	"lifetime": 0.5,
+	"scale": 7.0,
+	"scale_damping": -2005.0,
+	"particles_on_spawn": 1,
+	"rendermode": "refractive",
+	"alpha": 0.6,
+	"alignment": "tiled",
+	"texture": "shockwave",
+	"render_flags": ["nocull"],
+	"_type": "system"
+}

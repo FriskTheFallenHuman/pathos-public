@@ -1,0 +1,23 @@
+{
+	"shape": "point",
+	"min_velocity": 75.0,
+	"max_velocity": 150.0,
+	"max_offset": 70.0,
+	"fade_out_delay": 0.5,
+	"lifetime": 1.5,
+	"lifetime_variation": 0.8,
+	"primary_color": [255, 32, 32],
+	"scale": 2.0,
+	"scale_variation": 1.0,
+	"max_particles": 25,
+	"particle_frequency": 100.0,
+	"collision": "bounce",
+	"gravity": 0.7,
+	"impact_velocity_dampening": 0.6,
+	"rendermode": "additive",
+	"alpha": 1.0,
+	"alignment": "tracer",
+	"texture": "spark1",
+	"render_flags": ["nocull"],
+	"_type": "system"
+}

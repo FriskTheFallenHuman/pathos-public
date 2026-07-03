@@ -1,6 +1,0 @@
-$clusterscript
-{
-	$script engine_decap_blood_drops1.txt
-	$script engine_gib_blood_drops2_small.txt
-	$script engine_decap_core.txt
-}

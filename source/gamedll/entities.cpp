@@ -373,7 +373,7 @@ void DispatchCrossedWater( edict_t* pedict, bool entering )
 		break;
 	}
 
-	Util::CreateParticles("water_impact_cluster.txt", pedict->state.origin, Vector(0, 0, 1), PART_SCRIPT_CLUSTER);
+	Util::CreateParticles("water_impact_cluster.json", pedict->state.origin, Vector(0, 0, 1), PART_SCRIPT_CLUSTER);
 }
 
 //=============================================

@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["impact_ricochet_core.json", "impact_ricochet_sparks.json", "impact_ricochet_cloud.json"]
+}

@@ -1,0 +1,22 @@
+{
+	"shape": "point",
+	"min_velocity": 20.0,
+	"max_velocity": 30.0,
+	"max_offset": 15.0,
+	"fade_in_time": 0.05,
+	"fade_out_delay": 0.3,
+	"lifetime": 0.5,
+	"primary_color": [150, 150, 150],
+	"scale": 0.6,
+	"scale_variation": 0.4,
+	"scale_damping": 4.0,
+	"particles_on_spawn": 1,
+	"gravity": 0.05,
+	"rendermode": "additive",
+	"alpha": 0.8,
+	"alignment": "tiled",
+	"texture": "muzzleflash",
+	"render_flags": ["overbright"],
+	"rotate_z_speed": 1.0,
+	"_type": "system"
+}

@@ -203,7 +203,7 @@ void CNPCSentry::SentryDeath( void )
 	EyeOff();
 
 	if(m_damageTime + Common::RandomFloat(0, 2) > g_pGameVars->time)
-		Util::CreateParticles("turretsmoke.txt", m_pState->origin, Vector(0, 0, 1), PART_SCRIPT_SYSTEM, GetEdict(), 0, m_pState->entindex, NO_POSITION, PARTICLE_ATTACH_TO_ATTACHMENT);
+		Util::CreateParticles("turretsmoke.json", m_pState->origin, Vector(0, 0, 1), PART_SCRIPT_SYSTEM, GetEdict(), 0, m_pState->entindex, NO_POSITION, PARTICLE_ATTACH_TO_ATTACHMENT);
 
 	if(m_damageTime + Common::RandomFloat(0, 8) > g_pGameVars->time)
 	{

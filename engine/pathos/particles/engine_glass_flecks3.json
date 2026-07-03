@@ -1,0 +1,23 @@
+{
+	"shape": "point",
+	"min_velocity": 50.0,
+	"max_velocity": 230.0,
+	"max_offset": 120.0,
+	"fade_out_delay": 4.0,
+	"lifetime": 5.0,
+	"lifetime_variation": 1.0,
+	"scale": 0.9,
+	"scale_variation": 0.7,
+	"particles_on_spawn": 3,
+	"lighting": ["normal"],
+	"collision": "bounce",
+	"gravity": 1.32,
+	"impact_velocity_dampening": 0.3,
+	"rendermode": "additive",
+	"alpha": 1.0,
+	"alignment": "tiled",
+	"texture": "fleck_glass3",
+	"render_flags": ["nocull"],
+	"rotate_z_speed": 80.0,
+	"_type": "system"
+}

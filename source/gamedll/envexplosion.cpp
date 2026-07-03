@@ -181,7 +181,7 @@ void CEnvExplosion::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usem
 
 	// Spawn fireball if needed
 	if(!HasSpawnFlag(FL_NO_FIREBALL))
-		Util::CreateParticles("explosion_cluster.txt", explosionPosition, explosionDir, PART_SCRIPT_CLUSTER);
+		Util::CreateParticles("explosion_cluster.json", explosionPosition, explosionDir, PART_SCRIPT_CLUSTER);
 
 	if(!HasSpawnFlag(FL_NO_SPARKS))
 	{
@@ -211,7 +211,7 @@ void CEnvExplosion::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usem
 void CEnvExplosion::SmokeThink( void )
 {
 	// Spawn smoke at origin
-	Util::CreateParticles("engine_explosion_smoke.txt", m_pState->origin, ZERO_VECTOR, PART_SCRIPT_SYSTEM);
+	Util::CreateParticles("engine_explosion_smoke.json", m_pState->origin, ZERO_VECTOR, PART_SCRIPT_SYSTEM);
 
 	// Remove entity if not repeatable
 	if(!HasSpawnFlag(FL_REPEATABLE))

@@ -19,6 +19,8 @@ All Rights Reserved.
 // The idea to build up the config like this came from Thor Engine,
 // the original project I had for a custom engine.
 
+// Default bind file filename
+const Char CConfig::DEFAULT_BINDS_FILENAME[] = "default.cfg";
 // System config filename
 const Char CConfig::SYSTEM_CONFIG_FILENAME[] = "system.cfg";
 // System config filename

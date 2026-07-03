@@ -69,10 +69,8 @@ public:
 	// Print box reference bar thickness
 	static const Uint32 PRINT_BOX_REF_BAR_THICKNESS;
 
-	// Print box bar color
+	// Print box color
 	static const color32_t PRINT_BOX_BAR_COLOR;
-	// Print box background color
-	static const color32_t PRINT_BOX_BACKGROUND_COLOR;
 
 	// Text schema name for console text box
 	static const Char TEXTBOX_TEXTSCHEMA_NAME[];

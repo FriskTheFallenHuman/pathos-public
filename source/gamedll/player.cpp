@@ -2077,7 +2077,7 @@ void CPlayerEntity::WaterMove( void )
 				Vector forward, up;
 				Math::AngleVectors(m_pState->viewangles, &forward, nullptr, &up);
 				Vector splashOrigin = m_pState->origin + m_pState->view_offset + forward*8;
-				Util::CreateParticles("water_impact_cluster.txt", splashOrigin, up, PART_SCRIPT_CLUSTER);
+				Util::CreateParticles("water_impact_cluster.json", splashOrigin, up, PART_SCRIPT_CLUSTER);
 			}
 
 			// Shut up voice channel

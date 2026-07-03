@@ -43,7 +43,7 @@ const Char CTurretNPC::TURRET_METAL_IMPACT_SOUND_PATTERN[] = "impact/metal_impac
 // Number of Metal impact sounds
 const Uint32 CTurretNPC::TURRET_NB_METAL_IMPACT_SOUNDS = 4;
 // Metal impact particle script
-const Char CTurretNPC::TURRET_METAL_IMPACT_PARTICLE_SCRIPT[] = "cluster_impact_metal.txt";
+const Char CTurretNPC::TURRET_METAL_IMPACT_PARTICLE_SCRIPT[] = "cluster_impact_metal.json";
 // Impact decal name
 const Char CTurretNPC::TURRET_IMPACT_DECAL_NAME[] = "shot_metal";
 // Maximum firing range of turret
@@ -616,7 +616,7 @@ void CTurretNPC::TurretDeathThink( void )
 
 	// Spawn smoke if we died recently
 	if(m_damageTime + Common::RandomFloat(0, 2) > g_pGameVars->time)
-		Util::CreateParticles("engine_explosion_smoke.txt", m_pState->origin, ZERO_VECTOR, PART_SCRIPT_SYSTEM);
+		Util::CreateParticles("engine_explosion_smoke.json", m_pState->origin, ZERO_VECTOR, PART_SCRIPT_SYSTEM);
 
 	if(m_damageTime + Common::RandomFloat(0, 5) > g_pGameVars->time)
 	{

@@ -1,0 +1,22 @@
+{
+	"shape": "box",
+	"system_size": 1000.0,
+	"fade_in_time": 1.0,
+	"lifetime": 0.5,
+	"primary_color": [200, 200, 200],
+	"scale": 6.0,
+	"scale_variation": 2.0,
+	"max_particles": -1.0,
+	"particle_frequency": 200.0,
+	"collision_flags": ["collide_water", "precise"],
+	"gravity": 1.0,
+	"create": "rain_splashes1.json",
+	"create_on_water_impact": "ripples.json",
+	"chance_to_create": 3,
+	"rendermode": "additive",
+	"alpha": 1.0,
+	"alignment": "tracer",
+	"texture": "rain",
+	"render_flags": ["skybox"],
+	"_type": "system"
+}

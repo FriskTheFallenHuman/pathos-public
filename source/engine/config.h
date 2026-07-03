@@ -78,6 +78,8 @@ struct conf_group_t
 class CConfig
 {
 public:
+	// Default bind file filename
+	static const Char DEFAULT_BINDS_FILENAME[];
 	// System config filename
 	static const Char SYSTEM_CONFIG_FILENAME[];
 	// System config filename

@@ -21,7 +21,7 @@
 		"impact/concrete_impact_bullet4.wav"
 	}
 	decalgroup "shot"
-	particlescript "concrete_impact_cluster.txt"
+	particlescript "concrete_impact_cluster.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 0 0 0 0 0
@@ -51,7 +51,7 @@
 		"impact/metal_impact_bullet4.wav"
 	}
 	decalgroup "shot_metal"
-	particlescript "cluster_impact_metal.txt"
+	particlescript "cluster_impact_metal.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 0 0 0 0 0
@@ -81,7 +81,7 @@
 		"impact/sand_impact_bullet4.wav"
 	}
 	decalgroup "shot"
-	particlescript "dirt_impact_cluster.txt"
+	particlescript "dirt_impact_cluster.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 0 0 0 0 0
@@ -111,7 +111,7 @@
 		"impact/vent_impact_bullet4.wav"
 	}
 	decalgroup "shot_metal"
-	particlescript "cluster_impact_metal.txt"
+	particlescript "cluster_impact_metal.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 16 1 2 0.6 2
@@ -141,7 +141,7 @@
 		"impact/metal_impact_bullet4.wav"
 	}
 	decalgroup "shot_metal"
-	particlescript "cluster_impact_metal.txt"
+	particlescript "cluster_impact_metal.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 24 1 2 0.6 2
@@ -171,7 +171,7 @@
 		"impact/tile_impact_bullet4.wav"
 	}
 	decalgroup "shot"
-	particlescript "concrete_impact_cluster.txt"
+	particlescript "concrete_impact_cluster.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 0 0 0 0 0
@@ -201,7 +201,7 @@
 		"impact/sand_impact_bullet4.wav"
 	}
 	decalgroup "shot"
-	particlescript "snow_impact_cluster.txt"
+	particlescript "snow_impact_cluster.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 16 2 1 1.0 0
@@ -231,7 +231,7 @@
 		"impact/wood_impact_bullet4.wav"
 	}
 	decalgroup "shot_wood"
-	particlescript "wood_impact_cluster.txt"
+	particlescript "wood_impact_cluster.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 16 1 2 0.6 2
@@ -259,7 +259,7 @@
 		"impact/bullet_hit_flesh2.wav"
 	}
 	decalgroup "shot_alien"
-	particlescript "blood_effects_cluster.txt"
+	particlescript "blood_effects_cluster.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 16 1 2 0.6 2
@@ -289,7 +289,7 @@
 		"impact/sand_impact_bullet4.wav"
 	}
 	decalgroup "shot"
-	particlescript "carpet_impact_cluster.txt"
+	particlescript "carpet_impact_cluster.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 16 1 2 0.6 2
@@ -319,7 +319,7 @@
 		"impact/sand_impact_bullet4.wav"
 	}
 	decalgroup "shot"
-	particlescript "gravel_impact_cluster.txt"
+	particlescript "gravel_impact_cluster.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 0 0 0 0 0
@@ -351,7 +351,7 @@
 		"misc/spark6.wav"
 	}
 	decalgroup "shot"
-	particlescript "cluster_impact_metal.txt"
+	particlescript "cluster_impact_metal.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 16 1 2 0.6 2
@@ -381,7 +381,7 @@
 		"impact/glass_impact_bullet4.wav"
 	}
 	decalgroup "shot_glass"
-	particlescript "glass_impact_cluster.txt"
+	particlescript "glass_impact_cluster.json"
 	scripttype cluster
 	penetration {
 		BULLET_PLAYER_GLOCK 16 2 1 1.0 0

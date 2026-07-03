@@ -1,0 +1,21 @@
+{
+	"shape": "playerplane",
+	"system_size": 600.0,
+	"playerplane_max_height": 600.0,
+	"fade_in_time": 1.0,
+	"lifetime": -1.0,
+	"primary_color": [255, 255, 255],
+	"scale": 0.6,
+	"scale_variation": 0.4,
+	"max_particles": -1.0,
+	"particle_frequency": 1500.0,
+	"lighting": ["use_intensity", "only_once"],
+	"collision": "die",
+	"gravity": 0.004,
+	"rendermode": "additive",
+	"alpha": 0.6,
+	"alignment": "tiled",
+	"texture": "snowflake",
+	"min_light_value": 0.8,
+	"_type": "system"
+}

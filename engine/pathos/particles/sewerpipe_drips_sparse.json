@@ -1,0 +1,21 @@
+{
+	"shape": "box",
+	"system_size": 15.0,
+	"fade_in_time": 0.5,
+	"lifetime": -1.0,
+	"primary_color": [80, 80, 50],
+	"scale": 35.0,
+	"scale_variation": 4.0,
+	"max_particles": -1.0,
+	"particle_frequency": 10.0,
+	"collision": "create_system",
+	"collision_flags": ["collide_water"],
+	"gravity": 1.0,
+	"create": "sewer_splashes1.json",
+	"create_on_water_impact": "ripples_sewer.json",
+	"rendermode": "additive",
+	"alpha": 1.0,
+	"alignment": "parallel",
+	"texture": "rain",
+	"_type": "system"
+}

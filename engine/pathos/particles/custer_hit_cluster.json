@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"script": "custer_hit_core.json"
+}

@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["spark_core.json", "spark_tracers.json", "spark_cloud.json"]
+}

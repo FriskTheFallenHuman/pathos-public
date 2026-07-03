@@ -438,7 +438,7 @@ bool CGLSLShader::CompileFromCSD( void )
 {
 	// Generate hash so we can verify
 	CString scriptFilePath;
-	scriptFilePath << "scripts/shaders/" << m_shaderFile;
+	scriptFilePath << "shaders/" << m_shaderFile;
 
 	Uint32 scriptFileSize = 0;
 	const byte* pScriptFile = m_fileInterface.pfnLoadFile(scriptFilePath.c_str(), &scriptFileSize);
@@ -461,7 +461,7 @@ bool CGLSLShader::CompileFromCSD( void )
 	if(!m_rootDirectory.empty())
 		csdFilePath << m_rootDirectory << PATH_SLASH_CHAR;
 
-	csdFilePath << "scripts/shaders/" << basename << ".csd";
+	csdFilePath << "shaders/" << basename << ".csd";
 
 	// Open the file for reading
 	Uint32 csdFileSize = 0;
@@ -473,7 +473,7 @@ bool CGLSLShader::CompileFromCSD( void )
 	if(!m_rootDirectory.empty())
 		bssFilePath << m_rootDirectory << PATH_SLASH_CHAR;
 
-	bssFilePath << "scripts/shaders/" << m_shaderFile;
+	bssFilePath << "shaders/" << m_shaderFile;
 
 	// Retreive date for BSS file
 	file_dateinfo_t bssdate, csddate;
@@ -614,7 +614,7 @@ bool CGLSLShader::LoadFromBSD( void )
 	if(!m_rootDirectory.empty())
 		bsdFilePath << m_rootDirectory << PATH_SLASH_CHAR;
 
-	bsdFilePath << "scripts/shaders/";
+	bsdFilePath << "shaders/";
 		
 #ifdef _64BUILD
 	bsdFilePath << "binary_x64/";
@@ -634,7 +634,7 @@ bool CGLSLShader::LoadFromBSD( void )
 	if(!m_rootDirectory.empty())
 		bssFilePath << m_rootDirectory << PATH_SLASH_CHAR;
 
-	bssFilePath << "scripts/shaders/" << m_shaderFile;
+	bssFilePath << "shaders/" << m_shaderFile;
 
 	// Retreive date for BSS file
 	file_dateinfo_t bssdate, bsddate;
@@ -896,7 +896,7 @@ bool CGLSLShader::CompileCSDShaderData( void )
 
 		// Save binary data to disk
 		CString folderPath;
-		folderPath << "scripts/shaders/";
+		folderPath << "shaders/";
 
 #ifdef _64BUILD
 		folderPath << "binary_x64/";
@@ -1050,7 +1050,7 @@ bool CGLSLShader :: CompileFromScript( void )
 	if(!m_rootDirectory.empty())
 		filePath << m_rootDirectory << PATH_SLASH_CHAR;
 
-	filePath << "scripts/shaders/" << m_shaderFile;
+	filePath << "shaders/" << m_shaderFile;
 
 	Uint32 isize = 0;
 	const Char *pfile = reinterpret_cast<const Char*>(m_fileInterface.pfnLoadFile(filePath.c_str(), &isize));
@@ -1863,7 +1863,7 @@ bool CGLSLShader::ConstructBranches ( const Char* pSrc, Uint32 fileSize )
 	Common::Basename(m_shaderFile.c_str(), basename);
 
 	CString filePath;
-	filePath << "scripts/shaders/" << basename << ".csd";
+	filePath << "shaders/" << basename << ".csd";
 
 	if(!m_fileInterface.pfnWriteFile(reinterpret_cast<byte*>(pheader), csdBuffer.getdatasize(), filePath.c_str(), false))
 	{

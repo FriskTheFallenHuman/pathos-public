@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["impact_metal_core.json", "impact_metal_sparks.json", "impact_metal_cloud.json"]
+}

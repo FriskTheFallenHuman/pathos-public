@@ -1,0 +1,4 @@
+{
+	"_type": "cluster",
+	"scripts": ["engine_gib_core_small.json", "engine_gib_cloud_small.json", "engine_gib_blood_drops1_small.json", "engine_gib_blood_drops2_small.json"]
+}

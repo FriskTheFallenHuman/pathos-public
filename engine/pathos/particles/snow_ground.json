@@ -1,0 +1,17 @@
+{
+	"shape": "point",
+	"fade_out_delay": 1.0,
+	"lifetime": 2.0,
+	"primary_color": [128, 128, 128],
+	"scale": 0.8,
+	"scale_variation": 0.3,
+	"particles_on_spawn": 1,
+	"lighting": ["use_intensity"],
+	"rendermode": "additive",
+	"alpha": 0.6,
+	"alignment": "to_normal",
+	"texture": "snowflake",
+	"render_flags": ["overbright", "nocull"],
+	"min_light_value": 0.4,
+	"_type": "system"
+}
