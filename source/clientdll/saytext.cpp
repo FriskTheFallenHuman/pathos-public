@@ -85,7 +85,7 @@ bool CSayText::InitGL( void )
 
 	m_pFont = cl_engfuncs.pfnGetResolutionSchemaFontSet(TEXTSCHEME_FILENAME, screenHeight);
 	if(!m_pFont)
-		m_pFont = cl_renderfuncs.pfnLoadFontSet("timesnewroman.ttf", 24);
+		m_pFont = cl_renderfuncs.pfnLoadFontSet("VictorMono-Regular.ttf", 24);
 
 	if(!m_pFont)
 		return false;

@@ -23,7 +23,6 @@ All Rights Reserved.
 #include "r_main.h"
 #include "r_text.h"
 #include "r_common.h"
-#include "r_menuparticles.h"
 
 #include "uielements.h"
 #include "uimanager.h"
@@ -214,7 +213,7 @@ bool CMenu::Init( void )
 	if(!m_pButtonFont)
 	{
 		Int32 idealFontSize = static_cast<Uint32>(R_GetRelativeY(MENU_BUTTON_FONTSIZE, MENU_BASE_HEIGHT, gWindow.GetHeight()));
-		m_pButtonFont = gText.LoadFont("albertus.ttf", idealFontSize, true, nullptr, 2);
+		m_pButtonFont = gText.LoadFont("Lilex-Medium.ttf", idealFontSize, true, nullptr, 2);
 	}
 
 	if(!m_pButtonFont)
@@ -387,13 +386,8 @@ CMenu::rendercode_t CMenu::Draw( void )
 	CBasicDraw* pDraw = CBasicDraw::GetInstance();
 
 	// Draw the main background
-	if(!DrawMenuBackground(pDraw))
+	if(!DrawMenuBackground(pDraw) && ens.gamestate != GAME_RUNNING)
 		return RC_BASICDRAW_FAIL;
-
-	// Draw menu particles
-	pDraw->Disable();
-	if(!gMenuParticles.Draw())
-		return RC_MENUPARTICLES_FAIL;
 
 	// Re-enable basic draw
 	if(!pDraw->Enable())
@@ -411,6 +405,9 @@ CMenu::rendercode_t CMenu::Draw( void )
 bool CMenu::DrawMenuBackground( CBasicDraw* pDraw )
 {
 	assert(pDraw->IsActive());
+
+	if(ens.gamestate == GAME_RUNNING)
+		return false;
 
 	// Set matrices
 	rns.view.modelview.LoadIdentity();
@@ -1032,9 +1029,6 @@ void CMenu::ShowMenu( void )
 	// Ensure that this is set
 	gConsole.UpdateTextHistory();
 
-	// Begin spawning menu particles
-	gMenuParticles.StartParticles();
-
 	// Pause music playback
 	ResumeMenuMusic();
 }
@@ -1069,9 +1063,6 @@ void CMenu::HideMenu( void )
 	// Un-pause the game if we're exiting the menu
 	if(ens.gamestate == GAME_RUNNING && svs.maxclients <= 1 && !svs.pauseovveride)
 		Sys_SetPaused(false, false);
-
-	// Kill all menu particles
-	gMenuParticles.KillParticles();
 
 	// Resume music playback
 	PauseMenuMusic();

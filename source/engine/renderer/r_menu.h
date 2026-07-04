@@ -69,7 +69,6 @@ public:
 	{
 		RC_OK = 0,
 		RC_BASICDRAW_FAIL,
-		RC_MENUPARTICLES_FAIL,
 		RC_TEXT_FAIL
 	};
 

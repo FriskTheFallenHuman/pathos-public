@@ -174,8 +174,6 @@ struct render_objects_t
 {
 	render_objects_t():
 		numvisents(0),
-		ploadinglogo(nullptr),
-		ppausedlogo(nullptr),
 		nummodellights(0)
 	{
 		for(Uint32 i = 0; i < MAX_RENDER_ENTITIES; i++)
@@ -191,11 +189,6 @@ struct render_objects_t
 	cl_entity_t* pvisents[MAX_RENDER_ENTITIES];
 	// Number of visible entities
 	Uint32 numvisents;
-
-	// Loading text logo
-	en_texture_t* ploadinglogo;
-	// Paused text logo
-	en_texture_t* ppausedlogo;
 
 	// Array of projective textures
 	CArray<en_texture_t*> projective_textures;

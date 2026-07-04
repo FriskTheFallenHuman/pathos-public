@@ -36,7 +36,6 @@ state variables and functionality.
 #include "uimanager.h"
 #include "uielements.h"
 #include "r_menu.h"
-#include "r_menuparticles.h"
 #include "console.h"
 
 #include "edict.h"
@@ -826,9 +825,6 @@ void Sys_PreThink( void )
 {
 	// Perform menu think functions
 	gMenu.Think();
-
-	// Perform menu particle think functions
-	gMenuParticles.Think();
 
 	// Perform UI think functions
 	gUIManager.Think();

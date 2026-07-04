@@ -29,7 +29,6 @@ All Rights Reserved.
 #include "uielements.h"
 #include "input.h"
 #include "r_menu.h"
-#include "r_menuparticles.h"
 #include "commands.h"
 
 #include "edict.h"

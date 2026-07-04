@@ -21,7 +21,6 @@ All Rights Reserved.
 #include "r_main.h"
 #include "r_basicdraw.h"
 #include "r_menu.h"
-#include "r_menuparticles.h"
 #include "r_common.h"
 #include "input.h"
 
@@ -78,6 +77,7 @@ All Rights Reserved.
 #include "stb_dxt.h"
 #include "bsp_shared.h"
 #include "file.h"
+#include "textschemas.h"
 
 // Global cvars
 CCVar* g_pCvarBumpMaps = nullptr;
@@ -469,22 +469,6 @@ void R_LoadTextures( void )
 {
 	CTextureManager* pTextureManager = CTextureManager::GetInstance();
 
-	// Load the loading text logo
-	if(!rns.objects.ploadinglogo)
-	{
-		rns.objects.ploadinglogo = pTextureManager->LoadTexture("menu/loading_text.tga", RS_WINDOW_LEVEL, TX_FL_NOMIPMAPS);
-		if(!rns.objects.ploadinglogo)
-			rns.objects.ploadinglogo = pTextureManager->GetDummyTexture();
-	}
-
-	// Load the loading text logo
-	if(!rns.objects.ppausedlogo)
-	{
-		rns.objects.ppausedlogo = pTextureManager->LoadTexture("menu/paused_text.tga", RS_WINDOW_LEVEL, TX_FL_NOMIPMAPS);
-		if(!rns.objects.ppausedlogo)
-			rns.objects.ppausedlogo = pTextureManager->GetDummyTexture();
-	}
-
 	// Load caustics textures
 	if(!R_LoadTextureListFile(CAUSTICS_TEXTURE_FILE_PATH, rns.objects.caustics_textures, RS_WINDOW_LEVEL, nullptr, false))
 	{
@@ -590,10 +574,6 @@ bool R_InitGL( void )
 	// Draw the menu loading screen
 	VID_BeginLoading(false);
 
-	// Initialize menu particles
-	if(!gMenuParticles.Init())
-		return false;
-
 	// Initialize classes
 	if(!gSkyRenderer.InitGL())
 		return false;
@@ -684,7 +664,6 @@ void R_ShutdownGL( void )
 
 	// Clear classes
 	gMenu.ClearGL();
-	gMenuParticles.ClearGL();
 	gSkyRenderer.ClearGL();
 	gBSPRenderer.ClearGL();
 	gDynamicLights.ClearGL();
@@ -1895,63 +1874,32 @@ void R_AddEntities( void )
 //====================================
 //
 //====================================
-bool R_DrawLogo( en_texture_t* ptexture, Int32 basewidth, Int32 baseheight )
+bool R_DrawLogo( Int32 basewidth, Int32 baseheight )
 {
-	assert(rns.objects.ploadinglogo != nullptr);
+	Uint32 textWidth = 0;
+	Uint32 textHeight = 0;
 
-	// Set matrices
-	rns.view.modelview.LoadIdentity();
-	rns.view.modelview.Scale(1.0/ static_cast<Float>(gWindow.GetWidth()), 1.0/ static_cast<Float>(gWindow.GetHeight()), 1.0);
-
-	rns.view.projection.LoadIdentity();
-	rns.view.projection.Ortho(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO, 0.1f, 100);
-
-	CBasicDraw* pDraw = CBasicDraw::GetInstance();
-	pDraw->SetModelview(rns.view.modelview.GetMatrix());
-	pDraw->SetProjection(rns.view.projection.GetMatrix());
-
-	// Determine position/size
-	Int32 logoWidth = R_GetRelativeX(basewidth, CMenu::MENU_BASE_WIDTH, gWindow.GetWidth());
-	Int32 logoHeight = R_GetRelativeX(baseheight, CMenu::MENU_BASE_WIDTH, gWindow.GetWidth());
-
-	Int32 logoOriginX = gWindow.GetCenterX() - logoWidth/2;
-	Int32 logoOriginY = gWindow.GetCenterY() - logoHeight/2;
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	if(!pDraw->DisableRectangleTexture() || !pDraw->EnableTexture())
+	const font_set_t* pfontset = gTextSchemas.GetResolutionSchemaFontSet("gametitle", gWindow.GetHeight());
+	if(!pfontset)
 	{
-		Sys_ErrorPopup("Shader error: %s.\n", pDraw->GetShaderError());
+		Int32 idealFontSize = static_cast<Uint32>(R_GetRelativeY(CMenu::MENU_BUTTON_FONTSIZE, CMenu::MENU_BASE_HEIGHT, gWindow.GetHeight()));
+		pfontset = gText.LoadFont("InterDisplay-Bold.ttf", idealFontSize, true, nullptr, 2);
+	}
+
+	gText.GetStringSize(pfontset, "Loading...", &textWidth, &textHeight);
+
+	// Set the position off from the logo a bit
+	Int32 xpos = gWindow.GetWidth() / 2 - textWidth / 2;
+	Uint32 logoHeight = R_GetRelativeX(LOAD_TEXT_BASE_HEIGHT, CMenu::MENU_BASE_WIDTH, gWindow.GetWidth());
+	Int32 ypos = gWindow.GetHeight() / 2 - R_GetRelativeX(logoHeight, CMenu::MENU_BASE_WIDTH, gWindow.GetWidth()) / 8.0f + pfontset->fontsize;
+
+	// Draw the string
+	if(!R_DrawString(color32_t(255, 255, 255, 255), xpos, ypos, "Loading...", pfontset))
+	{
+		Sys_ErrorPopup("Shader error: %s.", gText.GetShaderError());
 		return false;
 	}
 
-	pDraw->Color4f(GL_ONE, GL_ONE, GL_ONE, GL_ONE);
-	
-	// Draw the background
-	R_Bind2DTexture(GL_TEXTURE0_ARB, ptexture->palloc->gl_index);
-
-	pDraw->Begin(CBasicDraw::DRAW_TRIANGLES);
-	pDraw->TexCoord2f(0.0, 0.0);
-	pDraw->Vertex3f(logoOriginX, logoOriginY, -1.0);
-
-	pDraw->TexCoord2f(1.0, 0.0);
-	pDraw->Vertex3f(logoOriginX+logoWidth, logoOriginY, -1.0);
-
-	pDraw->TexCoord2f(0.0, 1.0);
-	pDraw->Vertex3f(logoOriginX, logoOriginY+logoHeight, -1.0);
-
-	pDraw->TexCoord2f(0.0, 1.0);
-	pDraw->Vertex3f(logoOriginX, logoOriginY+logoHeight, -1.0);
-
-	pDraw->TexCoord2f(1.0, 0.0);
-	pDraw->Vertex3f(logoOriginX+logoWidth, logoOriginY, -1.0);
-
-	pDraw->TexCoord2f(1.0, 1.0);
-	pDraw->Vertex3f(logoOriginX+logoWidth, logoOriginY+logoHeight, -1.0);
-	pDraw->End();
-
-	glDisable(GL_BLEND);
 	return true;
 }
 
@@ -2775,9 +2723,6 @@ bool R_DrawInterface( void )
 		case CMenu::RC_BASICDRAW_FAIL:
 			pstrError = pDraw->GetShaderError();
 			break;
-		case CMenu::RC_MENUPARTICLES_FAIL:
-			pstrError = gMenuParticles.GetShaderError();
-			break;
 		case CMenu::RC_TEXT_FAIL:
 			pstrError = gText.GetShaderError();
 			break;
@@ -2872,7 +2817,7 @@ bool R_DrawLoadingScreen( const Char* pstrText )
 		return false;
 
 	// Draw the loading text logo
-	if(!R_DrawLogo(rns.objects.ploadinglogo, LOAD_TEXT_BASE_WIDTH, LOAD_TEXT_BASE_HEIGHT))
+	if(!R_DrawLogo(LOAD_TEXT_BASE_WIDTH, LOAD_TEXT_BASE_HEIGHT))
 		return false;
 
 	pDraw->Disable();
@@ -2949,7 +2894,7 @@ bool R_DrawPausedLogo( void )
 	}
 
 	// Draw the loading text logo
-	if(!R_DrawLogo(rns.objects.ppausedlogo, LOAD_TEXT_BASE_WIDTH, LOAD_TEXT_BASE_HEIGHT))
+	if(!R_DrawLogo(LOAD_TEXT_BASE_WIDTH, LOAD_TEXT_BASE_HEIGHT))
 		return false;
 
 	pDraw->Disable();
@@ -2969,7 +2914,7 @@ bool R_DrawShownMaterial( void )
 		return true;
 
 	// Draw the loading text logo
-	if(!R_DrawLogo(g_pMaterialShown->ptextures[MT_TX_DIFFUSE], g_pMaterialShown->int_width, g_pMaterialShown->int_height))
+	if(!R_DrawLogo(g_pMaterialShown->int_width, g_pMaterialShown->int_height))
 		return false;
 
 	return true;
