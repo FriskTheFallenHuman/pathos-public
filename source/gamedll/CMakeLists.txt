@@ -78,7 +78,7 @@ source_group("Shared" FILES ${GAME_SHARED_HEADERS})
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${PLATFORM_DEFINES} GAMEDLL GAMEDLL_EXPORTS)
 target_include_directories(${PROJECT_NAME} PRIVATE {CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/common ${CMAKE_SOURCE_DIR}/shared)
-target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2)
+target_link_libraries(${PROJECT_NAME} PRIVATE libs SDL2::SDL2)
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "game_x64")

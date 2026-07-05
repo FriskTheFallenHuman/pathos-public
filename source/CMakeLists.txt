@@ -107,6 +107,7 @@ endif()
 
 find_package(OpenGL REQUIRED)
 
+add_subdirectory(libs)
 add_subdirectory(engine)
 add_subdirectory(clientdll)
 add_subdirectory(gamedll)

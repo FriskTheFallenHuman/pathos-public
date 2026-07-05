@@ -2,10 +2,6 @@ project(pathos_engine LANGUAGES CXX C)
 
 add_executable(${PROJECT_NAME})
 
-file(GLOB ENGINE_COMMON_CSOURCES ${CMAKE_SOURCE_DIR}/common/*.c)
-target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_COMMON_CSOURCES})
-source_group("Engine\\Common" FILES ${ENGINE_COMMON_CSOURCES})
-
 file(GLOB ENGINE_COMMON_SOURCES ${CMAKE_SOURCE_DIR}/common/*.cpp)
 target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_COMMON_SOURCES})
 source_group("Engine\\Common" FILES ${ENGINE_COMMON_SOURCES})
@@ -19,14 +15,6 @@ file(GLOB RES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resource/*.rc ${CMAKE_CURRENT_
 target_sources(${PROJECT_NAME} PRIVATE ${RES_SOURCES})
 source_group("Engine\\RC" FILES ${RES_SOURCES})
 endif()
-
-file(GLOB RYG_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/rygsdxtc/*.cpp)
-target_sources(${PROJECT_NAME} PRIVATE ${RYG_SOURCES})
-source_group("Engine\\RYGSDXTc" FILES ${RYG_SOURCES})
-
-file(GLOB RYG_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/rygsdxtc/*.h)
-target_sources(${PROJECT_NAME} PRIVATE ${RYG_HEADERS})
-source_group("Engine\\RYGSDXTc" FILES ${RYG_HEADERS})
 
 file(GLOB WINDOW_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/windows/*.cpp)
 target_sources(${PROJECT_NAME} PRIVATE ${WINDOW_SOURCES})
@@ -110,10 +98,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/server
     ${CMAKE_CURRENT_SOURCE_DIR}/renderer
     ${CMAKE_CURRENT_SOURCE_DIR}/ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/windows
-    ${CMAKE_CURRENT_SOURCE_DIR}/rygsdxtc)
+    ${CMAKE_CURRENT_SOURCE_DIR}/windows)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
+    libs
     SDL2::SDL2
     SDL2::SDL2main
     OpenAL::OpenAL

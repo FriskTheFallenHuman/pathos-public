@@ -46,8 +46,6 @@ set(CLIENT_COMMON_HEADERS
     ${CMAKE_SOURCE_DIR}/common/msgreader.h
     ${CMAKE_SOURCE_DIR}/common/msgreader_inline.hpp
     ${CMAKE_SOURCE_DIR}/common/r_common.h
-    ${CMAKE_SOURCE_DIR}/common/TinyJSON.cpp
-    ${CMAKE_SOURCE_DIR}/common/TinyJSON.h
     ${CMAKE_SOURCE_DIR}/common/vector.h
     ${CMAKE_SOURCE_DIR}/common/vector_inline.hpp)
 target_sources(${PROJECT_NAME} PRIVATE ${CLIENT_COMMON_HEADERS})
@@ -103,7 +101,7 @@ source_group("Shared" FILES ${CLIENT_SHARED_HEADERS})
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${PLATFORM_DEFINES} CLIENT CLIENT_EXPORTS)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/common ${CMAKE_SOURCE_DIR}/shared)
-target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 OpenGL::GL)
+target_link_libraries(${PROJECT_NAME} PRIVATE libs SDL2::SDL2 OpenGL::GL)
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "client_x64")
