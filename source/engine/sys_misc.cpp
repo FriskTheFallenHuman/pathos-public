@@ -26,6 +26,9 @@ All Rights Reserved.
 #include "config.h"
 #include "textschemas.h"
 
+#undef clamp
+#include "toml.hpp"
+
 // I had a hard time deciding whether to keep liblist.gam or create something else
 
 // Default font schema name
@@ -60,134 +63,161 @@ bool Sys_LoadDefaultFont( const Char* pstr )
 //=============================================
 bool Sys_LoadGameInfo( CArray<CString>* argsArray )
 {
-	const byte* pfile = FL_LoadFile(GAMEINFO_FILENAME);
+	Uint32 fileSize = 0;
+	const byte* pfile = FL_LoadFile(GAMEINFO_FILENAME, &fileSize);
 	if(!pfile)
 	{
 		Sys_ErrorPopup("Failed to load %s.\n", GAMEINFO_FILENAME);
 		return false;
 	}
 
-	// Parse the fields
-	CString token;
-	CString value;
-	CString line;
-	const Char *pstr = reinterpret_cast<const Char*>(pfile);
-	while(pstr)
+	const char* pFileStr = reinterpret_cast<const char*>(pfile);
+
+	try
 	{
-		// Read line by line
-		pstr = Common::ReadLine(pstr, line);
-		if(line.empty())
-			continue;
+		const toml::value data = toml::parse_str(pFileStr);
 
-		if(!qstrncmp(line, "//", 2))
-			continue;
-
-		// Read in the field name
-		const Char* ppstr = Common::Parse(line.c_str(), token);
-		if(!ppstr)
+		// Helper lambdas
+		auto getString = [&](const std::string& key, const std::string& fallback = "") -> std::string
 		{
-			Con_EPrintf("%s - Missing value token in %s.\n", __FUNCTION__, GAMEINFO_FILENAME);
-			break;
+			if(data.contains(key) && data.at(key).is_string())
+			{
+				return toml::find<std::string>(data, key);
+			}
+
+			return fallback;
+		};
+
+		auto getInt = [&](const std::string& key, Int32 default_val, Int32 min, Int32 max) -> Int32
+		{
+			if(data.contains(key) && data.at(key).is_integer())
+			{
+				Int32 val = toml::find<Int32>(data, key);
+				if (val >= min && val <= max)
+					return val;
+
+				Con_Printf("Value for '%s' (%d) out of range [%d..%d]; using default %d\n", key.c_str(), val, min, max, default_val);
+			}
+			return default_val;
+		};
+
+		if(data.contains("Name") && data.at("Name").is_table())
+		{
+			const auto& name = data.at("Name");
+			if(name.contains("Game") && name.at("Game").is_string())
+			{
+				ens.gametitle = toml::find<std::string>(name, "Game").c_str();
+			}
+
+			if(ens.gametitle.empty())
+			{
+				Sys_ErrorPopup("Missing or invalid 'title' in %s\n", GAMEINFO_FILENAME);
+				FL_FreeFile(pfile);
+				return false;
+			}
+
+			if(name.contains("Title") && name.at("Title").is_string())
+			{
+				ens.gamemainmenutitle = toml::find<std::string>(name, "Title").c_str();
+			}
+
+			if(name.contains("GameLogo") && name.at("GameLogo").is_boolean())
+			{
+				ens.gamelogo = toml::find<bool>(name, "GameLogo");
+			}
 		}
 
-		if(!qstrcmp(token, "$launchargs"))
+		if(data.contains("Metadata") && data.at("Metadata").is_table())
 		{
-			while(ppstr)
+			const auto& metadata = data.at("Metadata");
+			if(metadata.contains("Icon") && metadata.at("Icon").is_string())
 			{
-				// Arguments might be in quotes
-				CString argtoken;
-				ppstr = Common::Parse(ppstr, value);
+				ens.gameicon = toml::find<std::string>(metadata, "Icon").c_str();
+			}
+		}
 
-				const Char* _ppstr = value.c_str();
-				while(_ppstr)
+		if(data.contains("Options") && data.at("Options").is_table())
+		{
+			const auto& options = data.at("Options");
+			if(options.contains("StartMap") && options.at("StartMap").is_string())
+			{
+				ens.startmap = toml::find<std::string>(options, "StartMap").c_str();
+			}
+
+			if(ens.startmap.empty())
+			{
+				Sys_ErrorPopup("Missing or invalid 'startmap' in %s\n", GAMEINFO_FILENAME);
+				FL_FreeFile(pfile);
+				return false;
+			}
+
+			if(ens.arg_max_edicts == 0)
+			{
+				if(options.contains("MaxEdicts") && options.at("MaxEdicts").is_integer())
 				{
-					_ppstr = Common::Parse(_ppstr, argtoken);
-					if(argtoken.empty())
-						break;
+					Int32 maxEdicts = toml::find<Int32>(options, "MaxEdicts");
+					if(maxEdicts >= 1 && maxEdicts <= MAX_SERVER_ENTITIES)
+						ens.arg_max_edicts = maxEdicts;
+					else
+						Con_Printf("MaxEdicts value %d invalid; must be 1..%d\n", 
+								   maxEdicts, MAX_SERVER_ENTITIES);
+				}
+				else
+				{
+					ens.arg_max_edicts = MAX_SERVER_ENTITIES;
+				}
+			}
 
-					argsArray->push_back(argtoken);
+			if(options.contains("CommandLine") && options.at("CommandLine").is_array())
+			{
+				const auto& arr = options.at("CommandLine").as_array();
+				for(const auto& elem : arr)
+				{
+					if(elem.is_string())
+					{
+						std::string arg = elem.as_string();
+						argsArray->push_back(arg.c_str());
+					}
+					else
+					{
+						Con_Printf("CommandLine contains non‑string element; skipping\n");
+					}
 				}
 			}
 		}
-		else
+
+		if(data.contains("Display") && data.at("Display").is_table())
 		{
-			// Read the value in
-			ppstr = Common::Parse(ppstr, value);
-
-			// Match it with a field name
-			if(!qstrcmp(token, "$title"))
+			const auto& display = data.at("Display");
+			if(display.contains("StencilBits") && display.at("StencilBits").is_integer())
 			{
-				// Set game title
-				ens.gametitle = value;
-			}
-			else if(!qstrcmp(token, "$startmap"))
-			{
-				// Set start map
-				ens.startmap = value;
-			}
-			else if(!qstrcmp(token, "$stencilbits"))
-			{
-				if(!Common::IsNumber(value))
-				{
-					Con_Printf("%s - %s value '%s' is not a valid number", __FUNCTION__, token.c_str(), value.c_str());
-					continue;
-				}
-
-				if(qstrcmp(value, "0") && qstrcmp(value, "1"))
-				{
-					Con_Printf("%s - %s value is not valid, only 0 or 1 allowed.", __FUNCTION__, token.c_str(), value.c_str());
-					continue;
-				}
-
-				gConfig.SetValue("Display", "StencilBits", value.c_str());
-			}
-			else if(!qstrcmp(token, "$max_edicts"))
-			{
-				if(!Common::IsNumber(value))
-				{
-					Con_Printf("%s - %s value '%s' is not a valid number", __FUNCTION__, token.c_str(), value.c_str());
-					continue;
-				}
-
-				if(ens.arg_max_edicts != 0)
-				{
-					Con_Printf("%s - %s setting ignored, as the '-num_edicts' launch argument was set.\n", __FUNCTION__, token.c_str());
-					continue;
-				}
-
-				Int32 integervalue = SDL_atoi(value.c_str());
-				if(integervalue <= 0 || integervalue > MAX_SERVER_ENTITIES)
-				{
-					Con_Printf("%s - %s setting %d invalid, only 0 to %d allowed.\n", __FUNCTION__, token.c_str(), MAX_SERVER_ENTITIES);
-					continue;
-				}
-
-				ens.arg_max_edicts = integervalue;
-			}
-			else
-			{
-				Con_Printf("%s - Unknown field %s in %s.\n", __FUNCTION__, token.c_str(), GAMEINFO_FILENAME);
+				Int32 depthBits = toml::find<Int32>(display, "StencilBits");
+				gConfig.SetValue("Display", "StencilBits", depthBits);
 			}
 		}
+
+		// Free the file
+		FL_FreeFile(pfile);
+		return true;
 	}
-	
-	// Free the file
-	FL_FreeFile(pfile);
-
-	// Verify that the required values were set
-	if(ens.gametitle.empty())
+	catch(const toml::syntax_error& e)
 	{
-		Sys_ErrorPopup("$title not set in %s.\n", GAMEINFO_FILENAME);
+		Sys_ErrorPopup("TOML syntax error in %s:\n%s\n", GAMEINFO_FILENAME, e.what());
+		FL_FreeFile(pfile);
 		return false;
 	}
-
-	if(ens.startmap.empty())
+	catch(const toml::type_error& e)
 	{
-		Sys_ErrorPopup("$startmap not set in %s.\n", GAMEINFO_FILENAME);
+		Sys_ErrorPopup("Type error in %s:\n%s\n", GAMEINFO_FILENAME, e.what());
+		FL_FreeFile(pfile);
 		return false;
 	}
-
-	return true;
+	catch(const std::exception& e)
+	{
+		Sys_ErrorPopup("Unexpected error reading %s:\n%s\n", GAMEINFO_FILENAME, e.what());
+		FL_FreeFile(pfile);
+		return false;
+	}
 }
 
 //=============================================

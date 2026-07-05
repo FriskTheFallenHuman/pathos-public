@@ -15,7 +15,7 @@ All Rights Reserved.
 class CCVar;
 
 // Gameinfo file name
-static const Char GAMEINFO_FILENAME[] = "gameinfo.cfg";
+static const Char GAMEINFO_FILENAME[] = "gameinfo.toml";
 
 // Timescale cvar
 extern CCVar* g_pCvarTimeScale;

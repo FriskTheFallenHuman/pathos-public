@@ -14,6 +14,9 @@ All Rights Reserved.
 #include "enginestate.h"
 #include "input.h"
 #include "texturemanager.h"
+#include "file.h"
+
+#include "stb_image.h"
 
 // Default is 60 frames per sec
 #define DEFAULT_REFRESH_RATE 60
@@ -27,6 +30,59 @@ const Uint32 CWindow::MAX_MSAA_VALUE = 8;
 
 //CWindow class definition
 CWindow gWindow;
+
+//=============================================
+// Class:
+// Function:
+//=============================================
+static void SetWindowIconFromFile(SDL_Window* pWindow, const char* pstrFilePath)
+{
+    Uint32 fileSize = 0;
+    const byte* pFileData = FL_LoadFile(pstrFilePath, &fileSize);
+    if(!pFileData)
+    {
+        Con_Printf("Failed to load icon '%s'\n", pstrFilePath);
+        return;
+    }
+
+    int width, height, channels;
+    unsigned char* pPixelData = stbi_load_from_memory(
+        reinterpret_cast<const stbi_uc*>(pFileData),
+        static_cast<int>(fileSize),
+        &width, &height, &channels, 4);
+
+    FL_FreeFile(pFileData);
+
+    if(!pPixelData)
+    {
+        Con_Printf("Failed to decode icon '%s': %s\n", pstrFilePath, stbi_failure_reason());
+        return;
+    }
+
+    SDL_Surface* pSurface = SDL_CreateRGBSurfaceFrom(
+        pPixelData,
+        width,
+        height,
+        32,                     // bits per pixel
+        width * 4,              // pitch (bytes per row)
+        0x000000FF,             // R mask
+        0x0000FF00,             // G mask
+        0x00FF0000,             // B mask
+        0xFF000000              // A mask
+    );
+
+    if(!pSurface)
+    {
+        Con_Printf("Failed to create SDL surface: %s\n", SDL_GetError());
+        stbi_image_free(pPixelData);
+        return;
+    }
+
+    SDL_SetWindowIcon(pWindow, pSurface);
+
+    SDL_FreeSurface(pSurface);
+    stbi_image_free(pPixelData);
+}
 
 //=============================================
 // Class: CWindow
@@ -339,6 +395,12 @@ bool CWindow::Init( void )
 	{
 		Con_EPrintf("Failed to create GL context. SDL: %s.", pstrError);
 		return false;
+	}
+
+	// Set the game icon if we have one
+	if(!ens.gameicon.empty())
+	{
+		SetWindowIconFromFile(m_pSDLWindow, ens.gameicon.c_str());
 	}
 
 	if(msaaSettingValue != 0)

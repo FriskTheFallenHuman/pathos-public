@@ -1,0 +1,35 @@
+# Pathos Engine Game File
+
+# Name
+# Keys that affect the menu and window title. 
+#   Game <string> - The name of the mod in ASCII. Displayed in Steam and used as the window title. Only displayed in the main menu if Title isn’t specified.
+#   Title <string> - A Unicode string displayed in the main menu of your mod.
+#   GameLogo - Rather than displaying the Title text on the main menu, display the content in …\resource\GameLogo.json.
+
+# Options
+# Keys that affect what tabs and options that show up in the Options panel.
+#   Type <string> - Affects which tabs appear in which order in the Options panel, the value will either be Singleplayer_Only or Multiplayer_Only. Omit this key if your mod has both SP and MP modes.
+#   NoDifficulty - Hides the difficulty selection menu on new game (this happens automatically if your mod is Multiplayer_Only.)
+#   CommandLine - List of launch options to start the mod with. Syntax is -launchoption "value", with one entry per line. Remember to open and close the subkey with [ and ].
+#   StartMap <string> - The map to load when starting a new game. This is only used if the mod is Singleplayer_Only.
+#   MaxEdicts <int> - The maximum number of entities that can exist in the game at once. This is only used if the mod is Singleplayer_Only.
+
+# Metadata
+# Keys that affect how the mod is displayed in Steam and other launchers.
+# Icon <string> - The path to the icon for the mod, relative to the mod’s root directory.
+
+[Name]
+    Game = "Pathos Engine"
+    Title = "Pathos Engine"
+    #GameLogo = true
+
+[Metadata]
+    icon = "resources/myicon.png"
+
+[Options]
+    StartMap = "entitytest1"
+    #MaxEdicts = 2048
+    #CommandLine = ["-fullscreen", "-noverbose"]
+
+[Display]
+    StencilBits = 0

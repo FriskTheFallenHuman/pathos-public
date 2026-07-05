@@ -145,6 +145,12 @@ struct engine_state_t
 
 	// Game title
 	CString gametitle;
+	// Game menu title
+	CString gamemainmenutitle;
+	// Game logo
+	bool	gamelogo;
+	// Game icon
+	CString gameicon;
 	// Start map
 	CString startmap;
 	// Game directory

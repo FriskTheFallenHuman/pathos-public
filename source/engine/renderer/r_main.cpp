@@ -1879,10 +1879,10 @@ bool R_DrawLogo( Int32 basewidth, Int32 baseheight )
 	Uint32 textWidth = 0;
 	Uint32 textHeight = 0;
 
-	const font_set_t* pfontset = gTextSchemas.GetResolutionSchemaFontSet("gametitle", gWindow.GetHeight());
+	const font_set_t* pfontset = gTextSchemas.GetResolutionSchemaFontSet(CMenu::MENU_TITLE_TEXT_SCHEMA, gWindow.GetHeight());
 	if(!pfontset)
 	{
-		Int32 idealFontSize = static_cast<Uint32>(R_GetRelativeY(CMenu::MENU_BUTTON_FONTSIZE, CMenu::MENU_BASE_HEIGHT, gWindow.GetHeight()));
+		Int32 idealFontSize = static_cast<Uint32>(R_GetRelativeY(CMenu::MENU_TITLE_FONTSIZE, CMenu::MENU_BASE_HEIGHT, gWindow.GetHeight()));
 		pfontset = gText.LoadFont("InterDisplay-Bold.ttf", idealFontSize, true, nullptr, 2);
 	}
 

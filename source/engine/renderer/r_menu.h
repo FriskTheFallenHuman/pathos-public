@@ -34,6 +34,7 @@ public:
 	static const Int32 MENU_BUTTONS_GAP;
 
 	static const Int32 MENU_BUTTON_FONTSIZE;
+	static const Int32 MENU_TITLE_FONTSIZE;
 
 	static const Int32 MENU_BASE_WIDTH;
 	static const Int32 MENU_BASE_HEIGHT;
@@ -47,6 +48,7 @@ public:
 	static const Char MENU_MUSIC_FILE_INGAME[];
 
 	static const Char MENU_BUTTON_TEXT_SCHEMA[];
+	static const Char MENU_TITLE_TEXT_SCHEMA[];
 
 public:
 	// Menu button actions

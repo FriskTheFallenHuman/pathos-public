@@ -1,0 +1,9 @@
+{
+	"$schema": "TextSchema",
+	"internalname": "MenuTitle",
+	"fontcolor": [255, 255, 255, 255],
+	"outlinecolor": [0, 0, 0, 255],
+	"fontset": "InterDisplay-Bold.ttf",
+	"fontsize": 88,
+	"outlineradius": 1
+}

@@ -71,6 +71,7 @@ const Int32 CMenu::MENU_BASE_WIDTH = 1024;
 const Int32 CMenu::MENU_BASE_HEIGHT = 768;
 
 // Menu font size relative to 1024x768 resolution
+const Int32 CMenu::MENU_TITLE_FONTSIZE = 48;
 const Int32 CMenu::MENU_BUTTON_FONTSIZE = 36;
 
 // Blend time for background texture
@@ -86,6 +87,9 @@ const Char CMenu::MENU_MUSIC_FILE_INGAME[] = "music/menumusic_game.ogg";
 
 // Menu button font schema
 const Char CMenu::MENU_BUTTON_TEXT_SCHEMA[] = "menubuttons";
+
+// Menu title font schema
+const Char CMenu::MENU_TITLE_TEXT_SCHEMA[] = "menutitle";
 
 // Menu object
 CMenu gMenu;
@@ -197,7 +201,7 @@ bool CMenu::Init( void )
 	}
 
 	// Load the title texture
-	if(!m_pTitleLogoTexture)
+	if(!m_pTitleLogoTexture && ens.gamelogo)
 	{
 		m_pTitleLogoTexture = pTextureManager->LoadTexture("menu/title_logo.tga", RS_WINDOW_LEVEL, TX_FL_NOMIPMAPS);
 
@@ -214,6 +218,14 @@ bool CMenu::Init( void )
 	{
 		Int32 idealFontSize = static_cast<Uint32>(R_GetRelativeY(MENU_BUTTON_FONTSIZE, MENU_BASE_HEIGHT, gWindow.GetHeight()));
 		m_pButtonFont = gText.LoadFont("Lilex-Medium.ttf", idealFontSize, true, nullptr, 2);
+	}
+
+	// Determine title font to use
+	m_pTitleFont = gTextSchemas.GetResolutionSchemaFontSet(MENU_TITLE_TEXT_SCHEMA, gWindow.GetHeight());
+	if(!m_pTitleFont)
+	{
+		Int32 idealFontSize = static_cast<Uint32>(R_GetRelativeY(MENU_TITLE_FONTSIZE, MENU_BASE_HEIGHT, gWindow.GetHeight()));
+		m_pTitleFont = gText.LoadFont("Lilex-Medium.ttf", idealFontSize, true, nullptr, 2);
 	}
 
 	if(!m_pButtonFont)
@@ -631,41 +643,57 @@ CMenu::rendercode_t CMenu::DrawMenuElements( CBasicDraw* pDraw )
 
 	pDraw->Color4f(GL_ONE, GL_ONE, GL_ONE, GL_ONE);
 
-	// Draw the title logo
-	R_Bind2DTexture(GL_TEXTURE0_ARB, m_pTitleLogoTexture->palloc->gl_index);
 
-	// Determine origin
-	Float titleX = R_GetRelativeX(MENU_TITLE_XPOS, MENU_BASE_WIDTH, gWindow.GetWidth());
-	Float titleY = R_GetRelativeY(MENU_TITLE_YPOS, MENU_BASE_HEIGHT, gWindow.GetHeight());
+	// Draw the title logo/text
+	if( ens.gamelogo )
+	{
+		R_Bind2DTexture(GL_TEXTURE0_ARB, m_pTitleLogoTexture->palloc->gl_index);
 
-	// Determine size
-	Float idealWidth = R_GetRelativeX(m_pTitleLogoTexture->width, MENU_BASE_WIDTH, gWindow.GetWidth());
-	Float idealHeight = R_GetRelativeX(m_pTitleLogoTexture->height, MENU_BASE_WIDTH, gWindow.GetWidth());
+		// Determine origin
+		Float titleX = R_GetRelativeX(MENU_TITLE_XPOS, MENU_BASE_WIDTH, gWindow.GetWidth());
+		Float titleY = R_GetRelativeY(MENU_TITLE_YPOS, MENU_BASE_HEIGHT, gWindow.GetHeight());
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		// Determine size
+		Float idealWidth = R_GetRelativeX(m_pTitleLogoTexture->width, MENU_BASE_WIDTH, gWindow.GetWidth());
+		Float idealHeight = R_GetRelativeX(m_pTitleLogoTexture->height, MENU_BASE_WIDTH, gWindow.GetWidth());
 
-	R_ValidateShader(pDraw);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	pDraw->Begin(CBasicDraw::DRAW_TRIANGLES);
-	pDraw->TexCoord2f(0.0, 0.0);
-	pDraw->Vertex3f(titleX, titleY, -1.0);
+		R_ValidateShader(pDraw);
 
-	pDraw->TexCoord2f(1.0, 0.0);
-	pDraw->Vertex3f(titleX+idealWidth, titleY, -1.0);
+		pDraw->Begin(CBasicDraw::DRAW_TRIANGLES);
+		pDraw->TexCoord2f(0.0, 0.0);
+		pDraw->Vertex3f(titleX, titleY, -1.0);
 
-	pDraw->TexCoord2f(0.0, 1.0);
-	pDraw->Vertex3f(titleX, titleY+idealHeight, -1.0);
+		pDraw->TexCoord2f(1.0, 0.0);
+		pDraw->Vertex3f(titleX+idealWidth, titleY, -1.0);
 
-	pDraw->TexCoord2f(1.0, 0.0);
-	pDraw->Vertex3f(titleX+idealWidth, titleY, -1.0);
+		pDraw->TexCoord2f(0.0, 1.0);
+		pDraw->Vertex3f(titleX, titleY+idealHeight, -1.0);
 
-	pDraw->TexCoord2f(0.0, 1.0);
-	pDraw->Vertex3f(titleX, titleY+idealHeight, -1.0);
+		pDraw->TexCoord2f(1.0, 0.0);
+		pDraw->Vertex3f(titleX+idealWidth, titleY, -1.0);
 
-	pDraw->TexCoord2f(1.0, 1.0);
-	pDraw->Vertex3f(titleX+idealWidth, titleY+idealHeight, -1.0);
-	pDraw->End();
+		pDraw->TexCoord2f(0.0, 1.0);
+		pDraw->Vertex3f(titleX, titleY+idealHeight, -1.0);
+
+		pDraw->TexCoord2f(1.0, 1.0);
+		pDraw->Vertex3f(titleX+idealWidth, titleY+idealHeight, -1.0);
+		pDraw->End();
+	}
+	else
+	{
+		// Determine origin
+		Float titleX = R_GetRelativeX(MENU_TITLE_XPOS, MENU_BASE_WIDTH, gWindow.GetWidth()) + 35;
+		Float titleY = R_GetRelativeY(MENU_TITLE_YPOS, MENU_BASE_HEIGHT, gWindow.GetHeight()) + 180;
+
+		// Draw the string
+		if(!R_DrawString(color32_t(255, 255, 255, 255), titleX, titleY, ens.gamemainmenutitle.c_str(), m_pTitleFont))
+		{
+			Sys_ErrorPopup("Shader error: %s.", gText.GetShaderError());
+		}	
+	}
 
 	glDisable(GL_BLEND);
 
