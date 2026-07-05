@@ -7,8 +7,6 @@ All Rights Reserved.
 ===============================================
 */
 
-#include <ctime>
-
 #include "includes.h"
 #include "system.h"
 #include "window.h"
@@ -1876,6 +1874,25 @@ void R_AddEntities( void )
 //====================================
 bool R_DrawLogo( Int32 basewidth, Int32 baseheight )
 {
+	// Set matrices
+	rns.view.modelview.LoadIdentity();
+	rns.view.modelview.Scale(1.0/ static_cast<Float>(gWindow.GetWidth()), 1.0/ static_cast<Float>(gWindow.GetHeight()), 1.0);
+
+	rns.view.projection.LoadIdentity();
+	rns.view.projection.Ortho(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO, 0.1f, 100);
+
+	CBasicDraw* pDraw = CBasicDraw::GetInstance();
+	pDraw->SetModelview(rns.view.modelview.GetMatrix());
+	pDraw->SetProjection(rns.view.projection.GetMatrix());
+
+	if(!pDraw->EnableTexture() || !pDraw->DisableRectangleTexture())
+		return false;
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	pDraw->Color4f(GL_ONE, GL_ONE, GL_ONE, GL_ONE);
+
 	Uint32 textWidth = 0;
 	Uint32 textHeight = 0;
 
@@ -1899,6 +1916,8 @@ bool R_DrawLogo( Int32 basewidth, Int32 baseheight )
 		Sys_ErrorPopup("Shader error: %s.", gText.GetShaderError());
 		return false;
 	}
+
+	glDisable(GL_BLEND);
 
 	return true;
 }

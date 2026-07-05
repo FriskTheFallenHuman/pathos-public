@@ -643,7 +643,6 @@ CMenu::rendercode_t CMenu::DrawMenuElements( CBasicDraw* pDraw )
 
 	pDraw->Color4f(GL_ONE, GL_ONE, GL_ONE, GL_ONE);
 
-
 	// Draw the title logo/text
 	if( ens.gamelogo )
 	{
@@ -692,7 +691,7 @@ CMenu::rendercode_t CMenu::DrawMenuElements( CBasicDraw* pDraw )
 		if(!R_DrawString(color32_t(255, 255, 255, 255), titleX, titleY, ens.gamemainmenutitle.c_str(), m_pTitleFont))
 		{
 			Sys_ErrorPopup("Shader error: %s.", gText.GetShaderError());
-		}	
+		}
 	}
 
 	glDisable(GL_BLEND);
