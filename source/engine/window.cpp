@@ -41,7 +41,7 @@ static void SetWindowIconFromFile(SDL_Window* pWindow, const char* pstrFilePath)
     const byte* pFileData = FL_LoadFile(pstrFilePath, &fileSize);
     if(!pFileData)
     {
-        Con_Printf("Failed to load icon '%s'\n", pstrFilePath);
+        Con_WPrintf("Failed to load icon '%s'\n", pstrFilePath);
         return;
     }
 
@@ -55,7 +55,7 @@ static void SetWindowIconFromFile(SDL_Window* pWindow, const char* pstrFilePath)
 
     if(!pPixelData)
     {
-        Con_Printf("Failed to decode icon '%s': %s\n", pstrFilePath, stbi_failure_reason());
+        Con_WPrintf("Failed to decode icon '%s': %s\n", pstrFilePath, stbi_failure_reason());
         return;
     }
 
@@ -73,7 +73,7 @@ static void SetWindowIconFromFile(SDL_Window* pWindow, const char* pstrFilePath)
 
     if(!pSurface)
     {
-        Con_Printf("Failed to create SDL surface: %s\n", SDL_GetError());
+        Con_WPrintf("Failed to create SDL surface: %s\n", SDL_GetError());
         stbi_image_free(pPixelData);
         return;
     }

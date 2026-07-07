@@ -94,7 +94,7 @@ bool CLegacyParticles::Init( void )
 	m_pCvarGravity = gConsole.GetCVar("sv_gravity");
 	if(!m_pCvarGravity)
 	{
-		Con_Printf("%s - Failed to get cvar 'sv_gravity'.\n", __FUNCTION__);
+		Con_WPrintf("Failed to get cvar 'sv_gravity'.\n");
 		return false;
 	}
 
@@ -103,7 +103,7 @@ bool CLegacyParticles::Init( void )
 	const byte* ppalfile = FL_LoadFile(PALETTE_FILEPATH, &filesize);
 	if(!ppalfile)
 	{
-		Con_Printf("%s - Failed to load '%s'.\n", __FUNCTION__, PALETTE_FILEPATH);
+		Con_WPrintf("Failed to load '%s'.\n", PALETTE_FILEPATH);
 		return false;
 	}
 

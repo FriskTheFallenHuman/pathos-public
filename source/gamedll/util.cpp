@@ -460,10 +460,10 @@ namespace Util
 		if(pentity->fields.targetname != NO_STRING_VALUE)
 		{
 			const Char* pstrtargetname = gd_engfuncs.pfnGetString(pentity->fields.targetname);
-			gd_engfuncs.pfnCon_Printf("Warning! - Empty %s(%s) at %.0f %.0f %.0f.\n", pstrclassname, pstrtargetname, origin.x, origin.y, origin.z);
+			gd_engfuncs.pfnCon_WPrintf("Empty %s(%s) at %.0f %.0f %.0f.\n", pstrclassname, pstrtargetname, origin.x, origin.y, origin.z);
 		}
 		else
-			gd_engfuncs.pfnCon_Printf("Warning! - Empty %s at %.0f %.0f %.0f.\n", pstrclassname, origin.x, origin.y, origin.z);
+			gd_engfuncs.pfnCon_WPrintf("Empty %s at %.0f %.0f %.0f.\n", pstrclassname, origin.x, origin.y, origin.z);
 	}
 
 	//=============================================
@@ -2376,7 +2376,7 @@ namespace Util
 
 		if(!g_pFlexManager->LoadAssociationScript(npctype, pstrscriptname))
 		{
-			gd_engfuncs.pfnCon_Printf("%s - Failed to load association script '%s'.\n", __FUNCTION__, pstrscriptname);
+			gd_engfuncs.pfnCon_WPrintf("Failed to load association script '%s'.\n", pstrscriptname);
 			return;
 		}
 

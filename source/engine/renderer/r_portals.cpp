@@ -444,7 +444,7 @@ void CPortalManager::AllocNewPortal( cl_entity_t* pentity )
 
 	if(!CreatePortalTexture(pportal))
 	{
-		Con_Printf("Failed to create texture for portal.\n");
+		Con_WPrintf("Failed to create texture for portal.\n");
 		pportal->ptexture = nullptr;
 	}
 }

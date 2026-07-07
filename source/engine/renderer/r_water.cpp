@@ -1242,7 +1242,7 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 		// Create render-to-texture objects
 		if(!CreateRenderToTexture(pwater))
 		{
-			Con_Printf("%s - Failed to create render-to-texture for water entity.\n", __FUNCTION__);
+			Con_WPrintf("Failed to create render-to-texture for water entity.\n");
 			pwater->preflectfbo = nullptr;
 			pwater->prefractfbo = nullptr;
 			pwater->prefract_texture = nullptr;

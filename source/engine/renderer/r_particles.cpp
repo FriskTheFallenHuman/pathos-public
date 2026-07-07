@@ -394,14 +394,14 @@ particle_system_t *CParticleEngine::CreateSystem( const Char *szPath, const Vect
 	const script_cache_t* pcache = PrecacheScript(PART_SCRIPT_SYSTEM, szPath, nullptr);
 	if(!pcache)
 	{
-		Con_Printf("%s - Failed to spawn particle system.\n", __FUNCTION__);
+		Con_WPrintf("%s - Failed to spawn particle system.\n", __FUNCTION__);
 		return nullptr;
 	}
 
 	particle_system_t *psystem = AllocSystem();
 	if(!psystem)
 	{
-		Con_Printf("%s - Warning: Exceeded max number of particle systems.\n", __FUNCTION__);
+		Con_WPrintf("%s - Exceeded max number of particle systems.\n", __FUNCTION__);
 		return nullptr;
 	}
 
@@ -515,7 +515,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 	TJValue* root = TJ::parse(pstrData, opts);
 	if(!root || !root->is_object())
 	{
-		Con_Printf("%s - Failed to parse JSON for script '%s'.\n", __FUNCTION__, pCache->name.c_str());
+		Con_WPrintf("Failed to parse JSON for script '%s'.\n", pCache->name.c_str());
 		return false;
 	}
 
@@ -639,7 +639,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 		else if(shapeStr == "playerplane")
 			pdef->shapetype = shape_playerplane;
 		else
-			Con_Printf("%s - Invalid value '%s' for 'shape' in script '%s'.\n", __FUNCTION__, shapeStr.c_str(), pCache->name.c_str());
+			Con_WPrintf("Invalid value '%s' for 'shape' in script '%s'.\n", shapeStr.c_str(), pCache->name.c_str());
 	}
 
 	CString windTypeStr = readString("wind_type");
@@ -652,7 +652,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 		else if(windTypeStr == "none")
 			pdef->windtype = wind_none;
 		else
-			Con_Printf("%s - Invalid value '%s' for 'wind_type' in script '%s'.\n", __FUNCTION__, windTypeStr.c_str(), pCache->name.c_str());
+			Con_WPrintf("Invalid value '%s' for 'wind_type' in script '%s'.\n", windTypeStr.c_str(), pCache->name.c_str());
 	}
 
 	CString alignStr = readString("alignment");
@@ -667,7 +667,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 		else if(alignStr == "tracer")
 			pdef->alignment = align_tracer;
 		else
-			Con_Printf("%s - Invalid value '%s' for 'alignment' in script '%s'.\n", __FUNCTION__, alignStr.c_str(), pCache->name.c_str());
+			Con_WPrintf("Invalid value '%s' for 'alignment' in script '%s'.\n", alignStr.c_str(), pCache->name.c_str());
 	}
 
 	CString renderModeStr = readString("rendermode");
@@ -682,7 +682,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 		else if(renderModeStr == "alphatest")
 			pdef->rendermode = render_alphatest;
 		else
-			Con_Printf("%s - Invalid value '%s' for 'rendermode' in script '%s'.\n", __FUNCTION__, renderModeStr.c_str(), pCache->name.c_str());
+			Con_WPrintf("Invalid value '%s' for 'rendermode' in script '%s'.\n", renderModeStr.c_str(), pCache->name.c_str());
 	}
 
 	CString collisionStr = readString("collision");
@@ -701,7 +701,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 		else if(collisionStr == "create_system")
 			pdef->collision = collide_new_system;
 		else
-			Con_Printf("%s - Invalid value '%s' for 'collision' in script '%s'.\n", __FUNCTION__, collisionStr.c_str(), pCache->name.c_str());
+			Con_WPrintf("Invalid value '%s' for 'collision' in script '%s'.\n", collisionStr.c_str(), pCache->name.c_str());
 	}
 
 	CArray<CString> flagList;
@@ -718,7 +718,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 			else if(f == "softoff")
 				pdef->flags |= SYSTEM_FL_SOFTOFF;
 			else
-				Con_Printf("%s - Unrecognized flag '%s' for 'flags' in script '%s'.\n", __FUNCTION__, f.c_str(), pCache->name.c_str());
+				Con_WPrintf("Unrecognized flag '%s' for 'flags' in script '%s'.\n", f.c_str(), pCache->name.c_str());
 		}
 	}
 
@@ -738,7 +738,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 			else if(f == "nofog")
 				pdef->render_flags |= RENDER_FL_NOFOG;
 			else
-				Con_Printf("%s - Unrecognized flag '%s' for 'render_flags' in script '%s'.\n", __FUNCTION__, f.c_str(), pCache->name.c_str());
+				Con_WPrintf("Unrecognized flag '%s' for 'render_flags' in script '%s'.\n", f.c_str(), pCache->name.c_str());
 		}
 	}
 
@@ -766,7 +766,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 			else if(f == "mix_secondary_color")
 				pdef->lighting_flags |= PARTICLE_LIGHTCHECK_MIXS;
 			else
-				Con_Printf("%s - Unrecognized flag '%s' for 'lighting' in script '%s'.\n", __FUNCTION__, f.c_str(), pCache->name.c_str());
+				Con_WPrintf("Unrecognized flag '%s' for 'lighting' in script '%s'.\n", f.c_str(), pCache->name.c_str());
 		}
 	}
 
@@ -782,7 +782,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 			else if(f == "collide_water")
 				pdef->collision_flags |= COLLISION_FL_WATER;
 			else
-				Con_Printf("%s - Unrecognized flag '%s' for 'collision_flags' in script '%s'.\n", __FUNCTION__, f.c_str(), pCache->name.c_str());
+				Con_WPrintf("Unrecognized flag '%s' for 'collision_flags' in script '%s'.\n", f.c_str(), pCache->name.c_str());
 		}
 	}
 
@@ -804,7 +804,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 			else if(f == "to_bone")
 				pdef->attachflags |= PARTICLE_ATTACH_TO_BONE;
 			else
-				Con_Printf("%s - Unrecognized flag '%s' for 'attachment_flags' in script '%s'.\n", __FUNCTION__, f.c_str(), pCache->name.c_str());
+				Con_WPrintf("Unrecognized flag '%s' for 'attachment_flags' in script '%s'.\n", f.c_str(), pCache->name.c_str());
 		}
 	}
 
@@ -883,7 +883,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 		pdef->ptexture = CTextureManager::GetInstance()->LoadTexture(texturePath.c_str(), RS_GAME_LEVEL);
 		if(!pdef->ptexture)
 		{
-			Con_Printf("%s - Failed to load texture '%s' for particle script '%s'.\n", __FUNCTION__, texturePath.c_str(), pCache->name.c_str());
+			Con_WPrintf("Couldn't load texture '%s' for particle script '%s'.\n", texturePath.c_str(), pCache->name.c_str());
 			delete root;
 			return false;
 		}
@@ -909,13 +909,13 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 
 	if(pdef->maxparticles != -1 && pdef->maxparticles < 0)
 	{
-		Con_Printf("%s - Invalid value '%d' for 'max_particles' in script '%s'.\n", __FUNCTION__, pdef->maxparticles, pCache->name.c_str());
+		Con_WPrintf("Invalid value '%d' for 'max_particles' in script '%s'.\n", pdef->maxparticles, pCache->name.c_str());
 		delete root;
 		return false;
 	}
 	if(pdef->particlefreq < 0)
 	{
-		Con_Printf("%s - Invalid value '%f' for 'particle_frequency' in script '%s'.\n", __FUNCTION__, pdef->particlefreq, pCache->name.c_str());
+		Con_WPrintf("Invalid value '%f' for 'particle_frequency' in script '%s'.\n", pdef->particlefreq, pCache->name.c_str());
 		delete root;
 		return false;
 	}
@@ -926,19 +926,19 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 	{
 		result = (PrecacheScript(PART_SCRIPT_SYSTEM, pdef->create.c_str(), &loadList) != nullptr);
 		if(!result)
-			Con_Printf("%s - Failed to load collision create script '%s'.\n", __FUNCTION__, pdef->create.c_str());
+			Con_WPrintf("Failed to load collision create script '%s'.\n", pdef->create.c_str());
 	}
 	if(result && !pdef->watercreate.empty() && (pdef->collision_flags & COLLISION_FL_WATER))
 	{
 		result = (PrecacheScript(PART_SCRIPT_SYSTEM, pdef->watercreate.c_str(), &loadList) != nullptr);
 		if(!result)
-			Con_Printf("%s - Failed to load water collision create script '%s'.\n", __FUNCTION__, pdef->watercreate.c_str());
+			Con_WPrintf("Failed to load water collision create script '%s'.\n", pdef->watercreate.c_str());
 	}
 	if(result && !pdef->deathcreate.empty())
 	{
 		result = (PrecacheScript(PART_SCRIPT_SYSTEM, pdef->deathcreate.c_str(), &loadList) != nullptr);
 		if(!result)
-			Con_Printf("%s - Failed to load death create script '%s'.\n", __FUNCTION__, pdef->deathcreate.c_str());
+			Con_WPrintf("Failed to load death create script '%s'.\n", pdef->deathcreate.c_str());
 	}
 
 	delete root;
@@ -969,7 +969,7 @@ bool CParticleEngine::LoadClusterScript( script_cache_t* pCache, const Char* pst
 	else if(obj->has_key("script"))
 		scriptsVal = obj->try_get_value("script");
 	else {
-		Con_Printf("%s - Cluster script '%s' missing 'script' or 'scripts' key.\n", __FUNCTION__, pCache->name.c_str());
+		Con_WPrintf("Cluster script '%s' missing 'script' or 'scripts' key.\n", pCache->name.c_str());
 		delete root;
 		return false;
 	}
@@ -986,7 +986,7 @@ bool CParticleEngine::LoadClusterScript( script_cache_t* pCache, const Char* pst
 		if(sub)
 			pCache->clusterscripts.push_back(scriptName);
 		else
-			Con_Printf("%s - Failed to load sub‑script '%s' for cluster '%s'.\n", __FUNCTION__, scriptName.c_str(), pCache->name.c_str());
+			Con_WPrintf("Couldn't load sub‑script '%s' for cluster '%s'.\n", scriptName.c_str(), pCache->name.c_str());
 	};
 
 	if(scriptsVal->is_array())
@@ -1002,7 +1002,7 @@ bool CParticleEngine::LoadClusterScript( script_cache_t* pCache, const Char* pst
 			}
 			else
 			{
-				Con_Printf("%s - Array element %u is not a string in cluster '%s'.\n", __FUNCTION__, i, pCache->name.c_str());
+				Con_WPrintf("Array element %u is not a string in cluster '%s'.\n", i, pCache->name.c_str());
 			}
 		}
 	}
@@ -1013,7 +1013,7 @@ bool CParticleEngine::LoadClusterScript( script_cache_t* pCache, const Char* pst
 	}
 	else
 	{
-		Con_Printf("%s - 'script' key in cluster '%s' is neither an array nor a string.\n", __FUNCTION__, pCache->name.c_str());
+		Con_WPrintf("'%s' key in cluster '%s' is neither an array nor a string.\n", scriptsVal->get_string(), pCache->name.c_str());
 		delete root;
 		return false;
 	}
@@ -1029,7 +1029,7 @@ const script_cache_t *CParticleEngine::PrecacheScript( Int32 type, const Char *n
 {
 	if(type != PART_SCRIPT_SYSTEM && type != PART_SCRIPT_CLUSTER)
 	{
-		Con_Printf("%s - Unknown script type %d for particle script '%s'.\n", __FUNCTION__, type, name);
+		Con_WPrintf("Unknown script type %d for particle script '%s'.\n", type, name);
 		return nullptr;
 	}
 
@@ -1056,12 +1056,12 @@ const script_cache_t *CParticleEngine::PrecacheScript( Int32 type, const Char *n
 	}
 
 	if(rns.isgameready)
-		Con_Printf("%s - Late precache of '%s'.\n", __FUNCTION__, filepath.c_str());
+		Con_WPrintf("Late precache of '%s'.\n", filepath.c_str());
 
 	const Char *pFile = reinterpret_cast<const Char *>(FL_LoadFile(filepath.c_str()));
 	if(!pFile)
 	{
-		Con_Printf("%s - Could not load script '%s'.\n", __FUNCTION__, filepath.c_str());
+		Con_WPrintf("Could not load script '%s'.\n", filepath.c_str());
 		return nullptr;
 	}
 
@@ -1088,7 +1088,7 @@ const script_cache_t *CParticleEngine::PrecacheScript( Int32 type, const Char *n
 			{
 				result = (PrecacheScript(PART_SCRIPT_SYSTEM, pcache->pdefinition->create.c_str(), &loadList) != nullptr) ? true : false;
 				if(!result)
-					Con_Printf("%s - Failed to load collision create script '%s'.\n", __FUNCTION__, pcache->pdefinition->create.c_str());
+					Con_WPrintf("Failed to load collision create script '%s'.\n", pcache->pdefinition->create.c_str());
 			}
 
 			if(result && !pcache->pdefinition->watercreate.empty()
@@ -1096,14 +1096,14 @@ const script_cache_t *CParticleEngine::PrecacheScript( Int32 type, const Char *n
 			{
 				result = (PrecacheScript(PART_SCRIPT_SYSTEM, pcache->pdefinition->watercreate.c_str(), &loadList) != nullptr) ? true : false;
 				if(!result)
-					Con_Printf("%s - Failed to load water collision create script '%s'.\n", __FUNCTION__, pcache->pdefinition->watercreate.c_str());
+					Con_WPrintf("Failed to load water collision create script '%s'.\n", pcache->pdefinition->watercreate.c_str());
 			}
 
 			if(result && !pcache->pdefinition->deathcreate.empty())
 			{
 				result = (PrecacheScript(PART_SCRIPT_SYSTEM, pcache->pdefinition->deathcreate.c_str(), &loadList) != nullptr) ? true : false;
 				if(!result)
-					Con_Printf("%s - Failed to load death create script '%s'.\n", __FUNCTION__, pcache->pdefinition->deathcreate.c_str());
+					Con_WPrintf("Failed to load death create script '%s'.\n", pcache->pdefinition->deathcreate.c_str());
 			}
 		}
 		break;

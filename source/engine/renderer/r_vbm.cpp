@@ -634,7 +634,7 @@ bool CVBMRenderer::InitGame( void )
 	m_pGlintTexture = pTextureManager->LoadTexture(EYEGLINT_TEXTURE_PATH, RS_GAME_LEVEL);
 	if(!m_pGlintTexture)
 	{
-		Con_Printf("%s - Failed to load '%s'.\n", __FUNCTION__, EYEGLINT_TEXTURE_PATH);
+		Con_WPrintf(" Failed to load '%s'.\n", EYEGLINT_TEXTURE_PATH);
 		m_pGlintTexture = pTextureManager->GetDummyTexture();
 	}
 
@@ -1533,7 +1533,7 @@ bool CVBMRenderer::DrawModel( Int32 flags, cl_entity_t* pentity )
 	// Make sure model is handled
 	if(!SetModel())
 	{
-		Con_Printf("%s - Failed to get model by index %d.\n", __FUNCTION__, m_pCurrentEntity->curstate.modelindex);
+		Con_WPrintf("Failed to get model by index %d.\n", m_pCurrentEntity->curstate.modelindex);
 		return true;
 	}
 
@@ -1857,7 +1857,7 @@ void CVBMRenderer::BuildVBOs( void )
 	m_decalVertexCacheSize = m_pCvarDecalCacheSize->GetValue();
 	if(m_decalVertexCacheSize < MIN_VBMDECAL_VERTEXES)
 	{
-		Con_Printf("Warning: value '%d' too low on cvar '%s', resetting to %d.\n", m_decalVertexCacheSize, m_pCvarDecalCacheSize->GetName(), static_cast<Int32>(MIN_VBMDECAL_VERTEXES));
+		Con_WPrintf("value '%d' too low on cvar '%s', resetting to %d.\n", m_decalVertexCacheSize, m_pCvarDecalCacheSize->GetName(), static_cast<Int32>(MIN_VBMDECAL_VERTEXES));
 		gConsole.CVarSetFloatValue(m_pCvarDecalCacheSize->GetName(), MIN_VBMDECAL_VERTEXES);
 		m_decalVertexCacheSize = MIN_VBMDECAL_VERTEXES;
 	}
@@ -5250,7 +5250,7 @@ void CVBMRenderer::CreateDecal( const Vector& position, const Vector& normal, de
 	m_pCacheModel = gModelCache.GetModelByIndex(pEntity->curstate.modelindex);
 	if(!m_pCacheModel || !m_pCacheModel->pcachedata)
 	{
-		Con_Printf("%s - Failed to get model by index %d.\n", __FUNCTION__, pEntity->curstate.modelindex);
+		Con_WPrintf("Failed to get model by index %d.\n", pEntity->curstate.modelindex);
 		return;
 	}
 
@@ -6238,7 +6238,7 @@ void CVBMRenderer::UpdateAttachments( cl_entity_t *pEntity )
 	m_pCacheModel = gModelCache.GetModelByIndex(pEntity->curstate.modelindex);
 	if(!m_pCacheModel || !m_pCacheModel->pcachedata)
 	{
-		Con_Printf("%s - Failed to get model by index %d.\n", __FUNCTION__, pEntity->curstate.modelindex);
+		Con_WPrintf("Failed to get model by index %d.\n", pEntity->curstate.modelindex);
 		return;
 	}
 
@@ -6274,7 +6274,7 @@ bool CVBMRenderer::GetBonePosition( cl_entity_t *pEntity, const Char *szname, Ve
 	m_pCacheModel = gModelCache.GetModelByIndex(pEntity->curstate.modelindex);
 	if(!m_pCacheModel || !m_pCacheModel->pcachedata)
 	{
-		Con_Printf("%s - Failed to get model by index %d.\n", __FUNCTION__, pEntity->curstate.modelindex);
+		Con_WPrintf("Failed to get model by index %d.\n", pEntity->curstate.modelindex);
 		return false;
 	}
 
@@ -6320,7 +6320,7 @@ void CVBMRenderer::TransformVectorByBoneMatrix( cl_entity_t *pEntity, Int32 bone
 	m_pCacheModel = gModelCache.GetModelByIndex(pEntity->curstate.modelindex);
 	if(!m_pCacheModel || !m_pCacheModel->pcachedata)
 	{
-		Con_Printf("%s - Failed to get model by index %d.\n", __FUNCTION__, pEntity->curstate.modelindex);
+		Con_WPrintf("Failed to get model by index %d.\n", pEntity->curstate.modelindex);
 		return;
 	}
 
@@ -6373,7 +6373,7 @@ void CVBMRenderer::RotateVectorByBoneMatrix( cl_entity_t *pEntity, Int32 boneind
 	m_pCacheModel = gModelCache.GetModelByIndex(pEntity->curstate.modelindex);
 	if(!m_pCacheModel || !m_pCacheModel->pcachedata)
 	{
-		Con_Printf("%s - Failed to get model by index %d.\n", __FUNCTION__, pEntity->curstate.modelindex);
+		Con_WPrintf("Failed to get model by index %d.\n", pEntity->curstate.modelindex);
 		return;
 	}
 
@@ -6950,7 +6950,7 @@ bool CVBMRenderer::DrawModelVSM( cl_entity_t *pEntity, cl_dlight_t *dl )
 	// Make sure model is handled
 	if(!SetModel())
 	{
-		Con_Printf("%s - Failed to get model by index %d.\n", __FUNCTION__, m_pCurrentEntity->curstate.modelindex);
+		Con_WPrintf("Failed to get model by index %d.\n", m_pCurrentEntity->curstate.modelindex);
 		return true;
 	}
 
@@ -7168,7 +7168,7 @@ bool CVBMRenderer::DrawAura( cl_entity_t *pEntity, const Vector& color, Float al
 	// Make sure model is handled
 	if(!SetModel())
 	{
-		Con_Printf("%s - Failed to get model by index %d.\n", __FUNCTION__, m_pCurrentEntity->curstate.modelindex);
+		Con_WPrintf("Failed to get model by index %d.\n", m_pCurrentEntity->curstate.modelindex);
 		return true;
 	}
 
@@ -8278,7 +8278,7 @@ bool CVBMRenderer::SetupEntityVertexLightVBO( cl_entity_t* pentity, Int32 vlight
 	cache_model_t* pmodel = gModelCache.GetModelByIndex(pentity->curstate.modelindex);
 	if(!pmodel)
 	{
-		Con_Printf("%s - Failed to get model with index %d.\n", __FUNCTION__, m_pCurrentEntity->curstate.modelindex);
+		Con_WPrintf("Failed to get model with index %d.\n", m_pCurrentEntity->curstate.modelindex);
 		return false;
 	}
 
@@ -8329,7 +8329,7 @@ bool CVBMRenderer::BuildVertexLightVBO( vlight_vbo_t* pvlightvbo )
 	cache_model_t* pworld = gModelCache.GetModelByIndex(1);
 	if(!pworld)
 	{
-		Con_Printf("%s - Failed to get world model.\n", __FUNCTION__);
+		Con_WPrintf("Failed to get world model.\n");
 		return false;
 	}
 
@@ -8339,7 +8339,7 @@ bool CVBMRenderer::BuildVertexLightVBO( vlight_vbo_t* pvlightvbo )
 		|| !pworldbrushmodel->pvertexlightdata[VERTEX_LIGHTING_AMBIENT]
 		|| !pworldbrushmodel->pvertexlightdata[VERTEX_LIGHTING_DIFFUSE])
 	{
-		Con_Printf("%s - BSP has none, or incomplete vertex lighting data.\n", __FUNCTION__);
+		Con_WPrintf("BSP has none, or incomplete vertex lighting data.\n");
 		return false;
 	}
 

@@ -60,7 +60,7 @@ bool CTempEntityManager::Init( void )
 	m_pCvarGravity = gConsole.GetCVar("sv_gravity");
 	if(!m_pCvarGravity)
 	{
-		Con_Printf("%s - Failed to get cvar 'sv_gravity'.\n", __FUNCTION__);
+		Con_WPrintf("Failed to get cvar 'sv_gravity'.\n");
 		return false;
 	}
 

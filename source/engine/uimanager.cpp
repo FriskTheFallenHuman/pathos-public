@@ -77,6 +77,7 @@ void CUIManager::Init( void )
 	uiFuncs.pfnCon_Printf = Con_Printf;
 	uiFuncs.pfnCon_DPrintf = Con_DPrintf;
 	uiFuncs.pfnCon_VPrintf = Con_VPrintf;
+	uiFuncs.pfnCon_WPrintf = Con_WPrintf;
 	uiFuncs.pfnCon_EPrintf = Con_EPrintf;
 	uiFuncs.pfnGetMousePosition = CL_GetMousePosition;
 	uiFuncs.pfnUILoadSchemaFile = CL_UILoadSchemaFile;

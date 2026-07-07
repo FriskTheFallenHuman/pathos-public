@@ -223,13 +223,13 @@ bool InitDecalList( void )
 	const Char* pfile = reinterpret_cast<const Char*>(gd_filefuncs.pfnLoadFile(DECAL_LIST_FILE_PATH, &filesize));
 	if(!pfile)
 	{
-		gd_engfuncs.pfnCon_Printf("%s - Could not load decal list file '%s'.\n", __FUNCTION__, DECAL_LIST_FILE_PATH);
+		gd_engfuncs.pfnCon_WPrintf("Could not load decal list file '%s'.\n", DECAL_LIST_FILE_PATH);
 		return false;
 	}
 
 	if(!gDecalList.LoadDecalList(pfile, filesize))
 	{
-		gd_engfuncs.pfnCon_Printf("%s - Failed to load decal list: %s.\n", __FUNCTION__, DECAL_LIST_FILE_PATH);
+		gd_engfuncs.pfnCon_WPrintf("Failed to load decal list: %s.\n", DECAL_LIST_FILE_PATH);
 		gd_filefuncs.pfnFreeFile(pfile);
 		return false;
 	}
@@ -307,7 +307,7 @@ void StopMusic( void )
 	edict_t* pClientEdict = gd_engfuncs.pfnGetInvokerPlayer();
 	if(!pClientEdict)
 	{
-		gd_engfuncs.pfnCon_Printf("%s - Failed to get invoker client.\n", __FUNCTION__);
+		gd_engfuncs.pfnCon_WPrintf("Failed to get invoker client.\n");
 		return;
 	}
 

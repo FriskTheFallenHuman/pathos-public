@@ -104,6 +104,7 @@ static gdll_engfuncs_t GAMEDLL_ENGINE_FUNCTIONS =
 	Con_Printf,							//pfnCon_Printf
 	Con_DPrintf,						//pfnCon_DPrintf
 	Con_VPrintf,						//pfnCon_VPrintf
+	Con_WPrintf,						//pfnCon_WPrintf
 	Con_EPrintf,						//pfnCon_EPrintf
 	SV_ClientPrintf,					//pfnClientPrintf
 	SV_GetNumEdicts,					//pfnGetNbEdicts
@@ -365,7 +366,7 @@ edict_t* SV_FindSpawnSpot( void )
 		edict_t* pstartentity = svs.dllfuncs.pfnFindEntityByString(nullptr, "classname", "info_player_start");
 		if(!pstartentity)
 		{
-			Con_Printf("Warning: No info_player_start entity in level.\n");
+			Con_WPrintf("No info_player_start entity in level.\n");
 			return nullptr;
 		}
 
@@ -392,7 +393,7 @@ edict_t* SV_FindSpawnSpot( void )
 		pspawn = svs.dllfuncs.pfnFindEntityByString(svs.plastspawnentity, "classname", spawnEntity.c_str());
 		if(!pspawn)
 		{
-			Con_Printf("Warning: No %s entity in level.\n", spawnEntity.c_str());
+			Con_WPrintf("No %s entity in level.\n", spawnEntity.c_str());
 			return nullptr;
 		}
 	}
@@ -514,7 +515,7 @@ void SV_LinkModelTextureMaterials( void )
 			}
 			else
 			{
-				Con_Printf("%s - Failed to find material file for texture '%s' for model '%s'.\n", __FUNCTION__, texbasename.c_str(), pmodel->name.c_str());
+				Con_WPrintf("Failed to find material file for texture '%s' for model '%s'.\n", texbasename.c_str(), pmodel->name.c_str());
 			}
 		}
 
@@ -549,7 +550,7 @@ void SV_LinkModelTextureMaterials( void )
 				}
 				else
 				{
-					Con_Printf("%s - Failed to find material file for texture '%s' for model '%s'.\n", __FUNCTION__, texbasename.c_str(), pmodel->name.c_str());
+					Con_WPrintf("Failed to find material file for texture '%s' for model '%s'.\n", texbasename.c_str(), pmodel->name.c_str());
 				}
 			}
 		}
@@ -665,12 +666,12 @@ void SV_MaxPlayersCvarCallBack( CCVar* pCVar )
 	Int32 maxPlayers = pCVar->GetValue();
 	if(maxPlayers >= MAX_PLAYERS)
 	{
-		Con_Printf("Warning: %s - Only 32 max players allowed.\n", __FUNCTION__, g_psv_maxplayers->GetName());
+		Con_WPrintf("%s - Only 32 max players allowed.\n", __FUNCTION__, g_psv_maxplayers->GetName());
 		gConsole.CVarSetFloatValue(g_psv_maxplayers->GetName(), MAX_PLAYERS);
 	}
 	else if(maxPlayers < 1)
 	{
-		Con_Printf("Warning: %s - Invalid value %d.\n", __FUNCTION__, g_psv_maxplayers->GetName(), maxPlayers);
+		Con_WPrintf("%s - Invalid value %d.\n", __FUNCTION__, g_psv_maxplayers->GetName(), maxPlayers);
 		gConsole.CVarSetFloatValue(g_psv_maxplayers->GetName(), 1);
 	}
 }

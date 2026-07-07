@@ -52,6 +52,8 @@ public:
 	void DPrintf( const Char *pstring );
 	// Print verbose
 	void VPrintf( const Char *pstring );
+	// Print warning
+	void WPrintf( const Char *pstring );
 	// Print error
 	void EPrintf( const Char *pstring );
 
@@ -77,6 +79,8 @@ extern void Con_Printf( const Char *fmt, ... );
 extern void Con_DPrintf( const Char *fmt, ... );
 // Print verbose
 extern void Con_VPrintf( const Char *fmt, ... );
+// Print warning
+extern void Con_WPrintf( const Char *fmt, ... );
 // Print error
 extern void Con_EPrintf( const Char *fmt, ... );
 #endif //SYS_PRINT_H

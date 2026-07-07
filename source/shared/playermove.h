@@ -48,6 +48,7 @@ struct pm_interface_t
 	void					(*pfnCon_Printf)( const Char *fmt, ... );
 	void					(*pfnCon_DPrintf)( const Char *fmt, ... );
 	void					(*pfnCon_VPrintf)( const Char *fmt, ... );
+	void					(*pfnCon_WPrintf)( const Char *fmt, ... );
 	void					(*pfnCon_EPrintf)( const Char *fmt, ... );
 
 	Double					(*pfnGetTime)( void );

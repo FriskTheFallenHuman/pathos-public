@@ -380,7 +380,7 @@ bool R_LoadTextureListFile( const Char* pstrTextureListFile, CArray<en_texture_t
 	const byte* pfile = FL_LoadFile(pstrTextureListFile, &filesize);
 	if(!pfile)
 	{
-		Con_Printf("%s - Failed to load '%s'.\n", __FUNCTION__, pstrTextureListFile);
+		Con_WPrintf("Failed to load '%s'.\n", pstrTextureListFile);
 		return false;
 	}
 
@@ -389,7 +389,7 @@ bool R_LoadTextureListFile( const Char* pstrTextureListFile, CArray<en_texture_t
 	const Char* pstr = Common::Parse(reinterpret_cast<const Char*>(pfile), token);
 	if(qstrcmp(token, "{"))
 	{
-		Con_Printf("%s - Expected '{', got '%s' instead in '%s'.\n", __FUNCTION__, token, pstrTextureListFile);
+		Con_WPrintf("%s - Expected '{', got '%s' instead in '%s'.\n", __FUNCTION__, token, pstrTextureListFile);
 		FL_FreeFile(pfile);
 		return false;
 	}
@@ -3369,7 +3369,7 @@ void R_LoadSprite( cache_model_t* pmodel )
 			pframe->ptexture = pTextureManager->LoadPallettedTexture(name.c_str(), RS_GAME_LEVEL, pframe->pdata, ppalette, pframe->width, pframe->height, TX_FL_NONE);
 			if(!pframe->ptexture)
 			{
-				Con_Printf("%s - Failed to load frame %d for sprite %s.\n", __FUNCTION__, frameindex, pmodel->name.c_str());
+				Con_WPrintf("Failed to load frame %d for sprite %s.\n", frameindex, pmodel->name.c_str());
 				pframe->ptexture = pTextureManager->GetDummyTexture();
 			}
 		}
@@ -3389,7 +3389,7 @@ void R_LoadSprite( cache_model_t* pmodel )
 				pframe->ptexture = pTextureManager->LoadPallettedTexture(name.c_str(), RS_GAME_LEVEL, pframe->pdata, ppalette, pframe->width, pframe->height, TX_FL_NONE);
 				if(!pframe->ptexture)
 				{
-					Con_Printf("%s - Failed to load frame %d for sprite %s.\n", __FUNCTION__, frameindex, pmodel->name.c_str());
+					Con_WPrintf("Failed to load frame %d for sprite %s.\n", frameindex, pmodel->name.c_str());
 					pframe->ptexture = pTextureManager->GetDummyTexture();
 				}
 			}
@@ -3938,9 +3938,9 @@ void Cmd_LoadModel( void )
 
 	cache_model_t* pmodel = gModelCache.LoadModel(strModel.c_str());
 	if(!pmodel)
-		Con_Printf("%s - Failed to load '%s'.\n", __FUNCTION__, strModel.c_str());
+		Con_WPrintf("Failed to load '%s'.\n", strModel.c_str());
 	else
-		Con_Printf("%s - Loaded '%s'.\n", __FUNCTION__, strModel.c_str());
+		Con_Printf("Loaded '%s'.\n", strModel.c_str());
 }
 
 //====================================
@@ -4003,7 +4003,7 @@ void Cmd_LoadTGA( void )
 	if(TGA_Write(pdata, 4, width, height, output.c_str(), FL_GetInterface(), Con_Printf, nullptr, nullptr, true))
 		Con_Printf("Wrote %s.\n", output.c_str());
 	else
-		Con_Printf("Failed to write %s.\n", output.c_str());
+		Con_WPrintf("Failed to write %s.\n", output.c_str());
 
 	delete[] pdata;
 }

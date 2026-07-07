@@ -78,13 +78,13 @@ bool CDecalManager::InitGame( void )
 	const Char* pfile = reinterpret_cast<const Char*>(FL_LoadFile(DECAL_LIST_FILE_PATH, &filesize));
 	if(!pfile)
 	{
-		Con_Printf("%s - Could not load decal list file '%s'.\n", __FUNCTION__, DECAL_LIST_FILE_PATH);
+		Con_WPrintf("Could not load decal list file '%s'.\n", DECAL_LIST_FILE_PATH);
 		return false;
 	}
 
 	if(!m_decalList.LoadDecalList(pfile, filesize))
 	{
-		Con_Printf("%s - Failed to load decal list: %s.\n", __FUNCTION__, DECAL_LIST_FILE_PATH);
+		Con_WPrintf("Failed to load decal list: %s.\n", DECAL_LIST_FILE_PATH);
 		FL_FreeFile(pfile);
 		return false;
 	}

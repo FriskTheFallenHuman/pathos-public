@@ -754,6 +754,7 @@ extern "C" bool DLLEXPORT GameDLL_Init( Uint32 version, gdll_funcs_t& dllFuncs, 
 		engFuncs.pfnCon_Printf,						//pfnCon_Printf
 		engFuncs.pfnCon_DPrintf,					//pfnCon_DPrintf
 		engFuncs.pfnCon_VPrintf,					//pfnCon_VPrintf
+		engFuncs.pfnCon_WPrintf,					//pfnCon_WPrintf
 		engFuncs.pfnCon_EPrintf,					//pfnCon_EPrintf
 		GetTime,									//pfnGetTime
 		engFuncs.pfnGetModelType,					//pfnGetModelType

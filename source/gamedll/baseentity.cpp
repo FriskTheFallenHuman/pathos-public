@@ -187,7 +187,7 @@ CBaseEntity* CBaseEntity::CreateEntity( const Char* pstrClassName, const Vector&
 	edict_t* pedict = gd_engfuncs.pfnCreateEntity(pstrClassName);
 	if(!pedict)
 	{
-		gd_engfuncs.pfnCon_Printf("%s - Failed to create entity '%s'.\n", __FUNCTION__, pstrClassName);
+		gd_engfuncs.pfnCon_WPrintf("Couldn't create entity class '%s'.\n", pstrClassName);
 		return nullptr;
 	}
 
@@ -211,7 +211,7 @@ CBaseEntity* CBaseEntity::CreateEntity( const Char* pstrClassName, CBaseEntity* 
 	edict_t* pedict = gd_engfuncs.pfnCreateEntity(pstrClassName);
 	if(!pedict)
 	{
-		gd_engfuncs.pfnCon_Printf("%s - Failed to create entity '%s'.\n", __FUNCTION__, pstrClassName);
+		gd_engfuncs.pfnCon_WPrintf("Couldn't create entity class '%s'.\n", pstrClassName);
 		return nullptr;
 	}
 

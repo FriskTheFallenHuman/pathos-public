@@ -120,7 +120,7 @@ void CTriggerZoom::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemo
 
 	if(!pEntity || !pEntity->IsPlayer())
 	{
-		gd_engfuncs.pfnCon_Printf("%s - Failed to get player.\n", gd_engfuncs.pfnGetString(m_pFields->classname));
+		gd_engfuncs.pfnCon_WPrintf("Failed to get player.\n", gd_engfuncs.pfnGetString(m_pFields->classname));
 		return;
 	}
 

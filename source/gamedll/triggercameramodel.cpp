@@ -370,7 +370,7 @@ CTriggerCameraModel* CTriggerCameraModel::CreateCameraModel( const CBaseEntity* 
 	edict_t* pedict = gd_engfuncs.pfnCreateEntity("trigger_cameramodel");
 	if(!pedict)
 	{
-		gd_engfuncs.pfnCon_Printf("%s - Failed to create entity 'trigger_cameramodel'.\n", __FUNCTION__);
+		gd_engfuncs.pfnCon_WPrintf("Failed to create entity 'trigger_cameramodel'.\n");
 		return nullptr;
 	}
 

@@ -98,14 +98,14 @@ CEnvSpotlight* CEnvSpotlight::SpawnSpotlight( const Vector& origin, const Vector
 	edict_t* pedict = gd_engfuncs.pfnCreateEntity("env_spotlight");
 	if(!pedict)
 	{
-		gd_engfuncs.pfnCon_Printf("Failed to create env_spotlight entity.\n");
+		gd_engfuncs.pfnCon_WPrintf("Failed to create env_spotlight entity.\n");
 		return nullptr;
 	}
 
 	CEnvSpotlight* pspotlight = reinterpret_cast<CEnvSpotlight*>(CBaseEntity::GetClass(pedict));
 	if(!pspotlight)
 	{
-		gd_engfuncs.pfnCon_Printf("Failed to create env_spotlight entity.\n");
+		gd_engfuncs.pfnCon_WPrintf("Failed to create env_spotlight entity.\n");
 		return nullptr;
 	}
 

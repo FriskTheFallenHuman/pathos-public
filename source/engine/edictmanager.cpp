@@ -211,7 +211,7 @@ bool CEdictManager::LoadEntities( const Char* pstrEntdata )
 		// Initialize private data
 		if(!SV_InitPrivateData(pedict, entity.classname.c_str()))
 		{
-			Con_Printf("[flags=onlyonce_game]Failed to allocate private data for entity '%s'.\n", entity.classname.c_str());
+			Con_WPrintf("[flags=onlyonce_game]Failed to allocate private data for entity '%s'.\n", entity.classname.c_str());
 			FreeEdict(pedict, EDICT_REMOVED_AT_INIT);
 			continue;
 		}
@@ -255,7 +255,7 @@ edict_t* CEdictManager::CreateEntity( const Char* pstrClassname )
 	// Initialize private data
 	if(!SV_InitPrivateData(pedict, pstrClassname))
 	{
-		Con_Printf("Failed to initialize entity '%s'.\n", pstrClassname);
+		Con_WPrintf("Couldn't find entity class '%s'.\n", pstrClassname);
 		FreeEdict(pedict, EDICT_REMOVED_AT_INIT);
 		return nullptr;
 	}
@@ -285,7 +285,7 @@ edict_t* CEdictManager::CreatePlayerEntity( Uint32 player_index )
 	// Initialize private data
 	if(!SV_InitPrivateData(pedict, "player"))
 	{
-		Con_Printf("Failed to initialize player entity.\n");
+		Con_WPrintf("Failed to initialize player entity.\n");
 		FreeEdict(pedict, EDICT_REMOVED_AT_INIT);
 		return nullptr;
 	}

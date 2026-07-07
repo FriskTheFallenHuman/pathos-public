@@ -979,7 +979,7 @@ bool CPlayerEntity::Restore( void )
 
 		track.duration = gd_engfuncs.pfnGetSoundDuration(pstrFilename, PITCH_NORM);
 		if(!track.duration)
-			gd_engfuncs.pfnCon_Printf("Failed to get duration for ogg file '%s'.\n", pstrFilename);
+			gd_engfuncs.pfnCon_WPrintf("Failed to get duration for ogg file '%s'.\n", pstrFilename);
 
 		if(!track.duration || !(track.flags & OGG_FL_LOOP) 
 			&& track.duration < (g_pGameVars->time - track.begintime))
@@ -6553,14 +6553,14 @@ void CPlayerEntity::PlayMusic( const Char* pstrFilename, Int32 channel, Float fa
 
 	if(!ptrack)
 	{
-		gd_engfuncs.pfnCon_Printf("Failed to find free slot for '%s' on channel %d.\n", pstrFilename, channel);
+		gd_engfuncs.pfnCon_WPrintf("Failed to find free slot for '%s' on channel %d.\n", pstrFilename, channel);
 		return;
 	}
 
 	ptrack->duration = gd_engfuncs.pfnGetSoundDuration(pstrFilename, PITCH_NORM);
 	if(!ptrack->duration)
 	{
-		gd_engfuncs.pfnCon_Printf("Failed to get duration for ogg file '%s'.\n", pstrFilename);
+		gd_engfuncs.pfnCon_WPrintf("Failed to get duration for ogg file '%s'.\n", pstrFilename);
 		return;
 	}
 

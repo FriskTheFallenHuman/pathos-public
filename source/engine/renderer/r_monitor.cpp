@@ -509,7 +509,7 @@ void CMonitorManager::AllocNewMonitor( cl_entity_t* pentity )
 	// Make sure the resolution is correct
 	if(pentity->curstate.skin >= NB_MONITOR_RESOLUTIONS || pentity->curstate.skin < 0)
 	{
-		Con_Printf("Invalid resolution set for monitor entity.\n");
+		Con_WPrintf("Invalid resolution set for monitor entity.\n");
 		pentity->curstate.skin = 0;
 	}
 
@@ -518,7 +518,7 @@ void CMonitorManager::AllocNewMonitor( cl_entity_t* pentity )
 
 	if(!CreateMonitorTextures(pmonitor))
 	{
-		Con_Printf("Failed to create textures for monitor.\n");
+		Con_WPrintf("Failed to create textures for monitor.\n");
 		pmonitor->ptexture = nullptr;
 		pmonitor->pfbo = nullptr;
 	}

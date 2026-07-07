@@ -10,6 +10,14 @@ All Rights Reserved.
 #ifndef INCLUDES_H
 #define INCLUDES_H
 
+#include <ctime>
+#include <cstdio>
+#include <cstdlib>
+#include <cassert>
+#include <cstring>
+#include <exception>
+#include <tchar.h>
+
 #ifdef WIN32
 #define WIN32_LEAN_AND_MEAN
 #define NOGDI
@@ -28,13 +36,11 @@ All Rights Reserved.
 #endif
 #endif
 
-#include <ctime>
-#include <cstdio>
-#include <cstdlib>
-#include <cassert>
-#include <cstring>
-#include <exception>
-#include <tchar.h>
+#include "imgui.h"
+#ifndef NO_SDL
+#include "imgui_impl_sdl2.h"
+#endif
+#include "imgui_impl_opengl3.h"
 
 #include "datatypes.h"
 #include "common.h"

@@ -79,6 +79,7 @@ static cldll_engfuncs_t CLIENTDLL_ENGINE_FUNCTION_TABLE =
 	Con_Printf,						//pfnCon_Printf
 	Con_DPrintf,					//pfnCon_DPrintf
 	Con_VPrintf,					//pfnCon_VPrintf
+	Con_WPrintf,					//pfnCon_WPrintf
 	Con_EPrintf,					//pfnCon_EPrintf
 	Sys_ErrorPopup,					//pfnErrorPopup
 	Engine_CreateCommand,			//pfnCreateCommand
@@ -1186,7 +1187,7 @@ void CL_PrecacheFlexScript( enum flextypes_t npctype, const Char* pstrscript )
 	}
 
 	if(!pFlexManager->LoadAssociationScript(npctype, pstrscript))
-		Con_Printf("%s - Failed to load script: %s.\n", __FUNCTION__, pFlexManager->GetError());
+		Con_WPrintf("Failed to load script: %s.\n", __FUNCTION__, pFlexManager->GetError());
 }
 
 //=============================================
@@ -1306,7 +1307,7 @@ void CL_LinkMapTextureMaterials( CArray<CString>& wadList )
 			cls.mapmaterialfilesnamemap.insert(std::pair<CString, Uint32>(newmat.maptexturename.c_str(), insertindex));
 		}
 		else
-			Con_Printf("%s - Failed to find material file for world texture '%s'.\n", __FUNCTION__, ens.pworld->ptextures[i].name.c_str());
+			Con_WPrintf("Couldn't find material file for world texture '%s'.\n", ens.pworld->ptextures[i].name.c_str());
 	}
 }
 
@@ -1358,7 +1359,7 @@ void CL_LinkModelTextureMaterials( void )
 			}
 			else
 			{
-				Con_Printf("%s - Failed to find material file for texture '%s' for model '%s'.\n", __FUNCTION__, texbasename.c_str(), pmodel->name.c_str());
+				Con_WPrintf("Couldn't find material file for texture '%s' for model '%s'.\n", texbasename.c_str(), pmodel->name.c_str());
 			}
 		}
 	}

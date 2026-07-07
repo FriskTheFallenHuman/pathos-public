@@ -480,7 +480,7 @@ void CCubemapManager::BuildCubemapList( const entitydata_t* pEntities, Uint32 nu
 		// Make sure it's correct
 		if(cubemapSize >= NUM_CUBEMAP_SIZES)
 		{
-			Con_Printf("Warning: Invalid size %d for cubemap at %f %f %f\n", cubemapSize, origin[0], origin[1], origin[2]);
+			Con_WPrintf("Invalid size %d for cubemap at %f %f %f\n", cubemapSize, origin[0], origin[1], origin[2]);
 			cubemapSize = 0;
 		}
 
@@ -807,7 +807,7 @@ void CCubemapManager::SaveCubemapFile( void )
 	const byte *pwritedata = reinterpret_cast<const byte*>(fileBuffer.getbufferdata());
 	if(!FL_WriteFile(pwritedata, fileBuffer.getdatasize(), filename.c_str()))
 	{
-		Con_Printf("Error: Failed to open %s for writing.\n", filename.c_str());
+		Con_EPrintf("Failed to open %s for writing.\n", filename.c_str());
 		return;
 	}
 }

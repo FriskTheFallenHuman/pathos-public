@@ -81,14 +81,14 @@ void SV_CheckVelocity( edict_t* pedict )
 		// Check velocity
 		if(pedict->state.velocity.IsNAN(i))
 		{
-			Con_Printf("Warning: Got a NaN velocity on %s.\n", SV_GetString(pedict->fields.classname));
+			Con_WPrintf("Got a NaN velocity on %s.\n", SV_GetString(pedict->fields.classname));
 			pedict->state.velocity[i] = 0;
 		}
 
 		// Check origin
 		if(pedict->state.origin.IsNAN(i))
 		{
-			Con_Printf("Warning: Got a NaN origin on %s.\n", SV_GetString(pedict->fields.classname));
+			Con_WPrintf("Got a NaN origin on %s.\n", SV_GetString(pedict->fields.classname));
 			pedict->state.origin[i] = 0;
 		}
 
@@ -96,12 +96,12 @@ void SV_CheckVelocity( edict_t* pedict )
 		Float maxvelocity = g_psv_maxvelocity->GetValue();
 		if(pedict->state.velocity[i] > maxvelocity)
 		{
-			Con_Printf("Warning: Velocity %f too high on %s.\n", pedict->state.velocity[i], SV_GetString(pedict->fields.classname));
+			Con_WPrintf("Velocity %f too high on %s.\n", pedict->state.velocity[i], SV_GetString(pedict->fields.classname));
 			pedict->state.origin[i] = maxvelocity;
 		}
 		else if(pedict->state.velocity[i] < -maxvelocity)
 		{
-			Con_Printf("Warning: Velocity %f too low on %s.\n", pedict->state.velocity[i], SV_GetString(pedict->fields.classname));
+			Con_WPrintf("Velocity %f too low on %s.\n", pedict->state.velocity[i], SV_GetString(pedict->fields.classname));
 			pedict->state.origin[i] = -maxvelocity;
 		}
 	}

@@ -101,7 +101,7 @@ bool CWADTextureResource::Init( const Char* pstrBSPName, const CArray<CString>& 
 	const byte* pfile = FL_LoadFile(pstrBSPName, &filesize);
 	if(!pfile)
 	{
-		Con_Printf("%s - Failed to load '%s'.\n", __FUNCTION__, pstrBSPName);
+		Con_WPrintf("Failed to load '%s'.\n", pstrBSPName);
 		return false;
 	}
 
@@ -381,7 +381,7 @@ bool CWADTextureResource::LoadMaterialTypeCodeAssociations( void )
 	const byte* pfile = FL_LoadFile(MATERIAL_TYPES_FILE_PATH, &filesize);
 	if(!pfile)
 	{
-		Con_Printf("%s - Failed to load '%s'.\n", __FUNCTION__, MATERIAL_TYPES_FILE_PATH);
+		Con_WPrintf("Failed to load '%s'.\n", MATERIAL_TYPES_FILE_PATH);
 		return false;
 	}
 
@@ -441,7 +441,7 @@ bool CWADTextureResource::LoadMaterialTextureAssociations( void )
 	const byte* pfile = FL_LoadFile(TEXTURE_MATERIAL_ASSOCIATION_FILE_PATH, &filesize);
 	if(!pfile)
 	{
-		Con_Printf("%s - Failed to load '%s'.\n", __FUNCTION__, TEXTURE_MATERIAL_ASSOCIATION_FILE_PATH);
+		Con_WPrintf("Failed to load '%s'.\n", TEXTURE_MATERIAL_ASSOCIATION_FILE_PATH);
 		return false;
 	}
 
@@ -617,7 +617,7 @@ void CWADTextureResource::CreateMaterialScript( const dmiptex_t* ptexture, const
 	// Make sure folder exists
 	if(!FL_CreateDirectory(folderpath.c_str()))
 	{
-		Con_Printf("%s - Failed to create directory '%s'.\n", __FUNCTION__, folderpath.c_str());
+		Con_WPrintf("Failed to create directory '%s'.\n", folderpath.c_str());
 		return;
 	}
 
@@ -628,7 +628,7 @@ void CWADTextureResource::CreateMaterialScript( const dmiptex_t* ptexture, const
 
 	const byte* pwritedata = reinterpret_cast<const byte*>(data.c_str());
 	if(!FL_WriteFile(pwritedata, data.length(), filepath.c_str()))
-		Con_Printf("%s - Failed to write '%s'.\n", __FUNCTION__, filepath.c_str());
+		Con_WPrintf("Failed to write '%s'.\n", filepath.c_str());
 }
 
 //=============================================
@@ -716,7 +716,7 @@ bool WAD_LoadDetailTextureAssociations( CArray<detailtexture_t*>& detailtextures
 	const byte* pfile = FL_LoadFile(DETAIL_TEXTURE_ASSOCIATION_FILE_PATH, &filesize);
 	if(!pfile)
 	{
-		Con_Printf("%s - Failed to load '%s'.\n", __FUNCTION__, DETAIL_TEXTURE_ASSOCIATION_FILE_PATH);
+		Con_WPrintf("Failed to load '%s'.\n", DETAIL_TEXTURE_ASSOCIATION_FILE_PATH);
 		return false;
 	}
 

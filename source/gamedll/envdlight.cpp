@@ -303,14 +303,14 @@ CEnvDLight* CEnvDLight::SpawnLight( const Vector& origin, const Vector& color, U
 	edict_t* pedict = gd_engfuncs.pfnCreateEntity("env_dlight");
 	if(!pedict)
 	{
-		gd_engfuncs.pfnCon_Printf("Failed to create env_dlight entity.\n");
+		gd_engfuncs.pfnCon_WPrintf("Failed to create env_dlight entity.\n");
 		return nullptr;
 	}
 
 	CEnvDLight* pdlight = reinterpret_cast<CEnvDLight*>(CBaseEntity::GetClass(pedict));
 	if(!pdlight)
 	{
-		gd_engfuncs.pfnCon_Printf("Failed to create env_dlight entity.\n");
+		gd_engfuncs.pfnCon_WPrintf("Failed to create env_dlight entity.\n");
 		return nullptr;
 	}
 

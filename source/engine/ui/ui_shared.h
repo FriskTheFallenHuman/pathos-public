@@ -164,6 +164,7 @@ struct ui_engine_interface_t
 		pfnCon_Printf(nullptr),
 		pfnCon_DPrintf(nullptr),
 		pfnCon_VPrintf(nullptr),
+		pfnCon_WPrintf(nullptr),
 		pfnCon_EPrintf(nullptr),
 		pfnGetMousePosition(nullptr),
 		pfnUILoadSchemaFile(nullptr),
@@ -206,6 +207,7 @@ struct ui_engine_interface_t
 	void				(*pfnCon_Printf)( const Char *fmt, ... );
 	void				(*pfnCon_DPrintf)( const Char *fmt, ... );
 	void				(*pfnCon_VPrintf)( const Char *fmt, ... );
+	void				(*pfnCon_WPrintf)( const Char *fmt, ... );
 	void				(*pfnCon_EPrintf)( const Char *fmt, ... );
 
 	// Returns the mouse position

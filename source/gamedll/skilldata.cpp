@@ -47,7 +47,7 @@ bool CSkillData::Init( void )
 	m_pSkillCvar = gd_engfuncs.pfnGetCVarPointer("sv_skill");
 	if(!m_pSkillCvar)
 	{
-		gd_engfuncs.pfnCon_Printf("%s - Failed to get cvar 'sv_skill'.\n", __FUNCTION__);
+		gd_engfuncs.pfnCon_WPrintf("Failed to get cvar 'sv_skill'.\n");
 		return false;
 	}
 

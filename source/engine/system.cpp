@@ -494,7 +494,7 @@ bool Sys_CheckGameDir( const CArray<CString>* argsArray )
 		{
 			if(i == (argsArray->size()-1))
 			{
-				Con_Printf("Warning: Missing argument for %s.\n", strArg.c_str());
+				Con_WPrintf("Missing argument for %s.\n", strArg.c_str());
 				continue;
 			}
 
@@ -552,7 +552,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 	// Create the log file if needed
 	if(i != argsArray->size())
 	{
-		Con_Printf("Warning: [color r255]Logging enabled, performance may be impacted by disk write operations.\n");
+		Con_WPrintf("[color r255]Logging enabled, performance may be impacted by disk write operations.\n");
 
 		ens.plogfile = new CLogFile("engine.log", Con_Printf, ENGINE_FILE_FUNCTIONS, clearPreviousLogs);
 		if(!ens.plogfile->Init())
@@ -582,7 +582,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 	// Create the log file if needed
 	if(i != argsArray->size())
 	{
-		Con_Printf("Warning: [color r255]File I/O logging enabled, performance may be impacted by disk write operations.\n");
+		Con_WPrintf("[color r255]File I/O logging enabled, performance may be impacted by disk write operations.\n");
 
 		ens.pfileiologfile = new CLogFile("fileio.log", Con_Printf, ENGINE_FILE_FUNCTIONS, clearPreviousLogs);
 		if(!ens.pfileiologfile->Init())
@@ -611,7 +611,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 	// Create the log file if needed
 	if(i != argsArray->size())
 	{
-		Con_Printf("Warning: [color r255]OpenGL logging set, performance may be impacted by disk write operations.\n");
+		Con_WPrintf("[color r255]OpenGL logging set, performance may be impacted by disk write operations.\n");
 
 		ens.pgllogfile = new CLogFile("opengl.log", Con_Printf, ENGINE_FILE_FUNCTIONS, clearPreviousLogs);
 		if(!ens.pgllogfile->Init())
@@ -644,7 +644,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 			{
 				if(i == (argsArray->size()-1))
 				{
-					Con_Printf("Warning: Missing argument for %s.\n", strArg.c_str());
+					Con_WPrintf("Missing argument for %s.\n", strArg.c_str());
 					continue;
 				}
 
@@ -652,7 +652,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 				strArg = (*argsArray)[++i];
 				if(!Common::IsNumber(strArg))
 				{
-					Con_Printf("Warning: Argument '%s' for %s needs to be a valid number.\n", strArg.c_str(), argNameInner.c_str());
+					Con_WPrintf("Argument '%s' for %s needs to be a valid number.\n", strArg.c_str(), argNameInner.c_str());
 					continue;
 				}
 
@@ -662,7 +662,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 			{		
 				if(i == (argsArray->size()-1))
 				{
-					Con_Printf("Warning: Missing argument for %s.\n", strArg.c_str());
+					Con_WPrintf("Missing argument for %s.\n", strArg.c_str());
 					continue;
 				}
 
@@ -670,7 +670,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 				strArg = (*argsArray)[++i];
 				if(!Common::IsNumber(strArg))
 				{
-					Con_Printf("Warning: Argument '%s' for %s needs to be a valid number.\n", strArg.c_str(), argNameInner.c_str());
+					Con_WPrintf("Argument '%s' for %s needs to be a valid number.\n", strArg.c_str(), argNameInner.c_str());
 					continue;
 				}
 
@@ -680,7 +680,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 			{
 				if(i == (argsArray->size()-1))
 				{
-					Con_Printf("Warning: Missing argument for %s.\n", strArg.c_str());
+					Con_WPrintf("Missing argument for %s.\n", strArg.c_str());
 					continue;
 				}
 
@@ -688,7 +688,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 				strArg = (*argsArray)[++i];
 				if(!Common::IsNumber(strArg))
 				{
-					Con_Printf("Warning: Argument '%s' for %s needs to be a valid number.\n", strArg.c_str(), argNameInner.c_str());
+					Con_WPrintf("Argument '%s' for %s needs to be a valid number.\n", strArg.c_str(), argNameInner.c_str());
 					continue;
 				}
 
@@ -711,7 +711,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 			{
 				if(i == (argsArray->size()-1))
 				{
-					Con_Printf("Warning: Missing argument for %s.\n", strArg.c_str());
+					Con_WPrintf("Missing argument for %s.\n", strArg.c_str());
 					continue;
 				}
 
@@ -726,7 +726,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 				else if(strArg == "2")
 					dMode = DEV_MODE_VERBOSE;
 				else
-					Con_Printf("Warning: Wrong dev level(%s) set for %s.\n", strArg.c_str(), argNameInner.c_str());
+					Con_WPrintf("Wrong dev level(%s) set for %s.\n", strArg.c_str(), argNameInner.c_str());
 
 				gConsole.CVarSetFloatValue(g_pCvarDeveloper->GetName(), dMode);
 			}
@@ -734,7 +734,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 			{
 				if(i == (argsArray->size()-1))
 				{
-					Con_Printf("Warning: Missing argument for %s.\n", strArg.c_str());
+					Con_WPrintf("Missing argument for %s.\n", strArg.c_str());
 					continue;
 				}
 
@@ -744,7 +744,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 				ens.visbuffersize = SDL_atoi(strArg.c_str());
 				if(ens.visbuffersize < DEFAULT_VISBUFFER_SIZE)
 				{
-					Con_Printf("Warning: Invalid buffer size %d set for '%s'.\n", argNameInner.c_str());
+					Con_WPrintf("Invalid buffer size %d set for '%s'.\n", argNameInner.c_str());
 					ens.visbuffersize = DEFAULT_VISBUFFER_SIZE;
 				}
 			}
@@ -766,7 +766,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 			{
 				if(i == (argsArray->size()-1))
 				{
-					Con_Printf("Warning: Missing argument for %s.\n", strArg.c_str());
+					Con_WPrintf("Missing argument for %s.\n", strArg.c_str());
 					continue;
 				}
 
@@ -806,7 +806,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 	if(screenWidth != 0 && screenHeight == 0 
 		|| screenWidth == 0 && screenHeight != 0)
 	{
-		Con_Printf("Warning: Both width and height need to be set, disregarding arguments.\n");
+		Con_WPrintf("Both width and height need to be set, disregarding arguments.\n");
 	}
 	else
 	{

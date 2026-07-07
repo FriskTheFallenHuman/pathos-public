@@ -1804,21 +1804,21 @@ bool GetTransitioningEntities( const byte* pPVS, const Vector* pTransitionMins, 
 	CBaseEntity* pPlayer = Util::GetHostPlayer();
 	if(!pPlayer || !pPlayer->IsPlayer())
 	{
-		gd_engfuncs.pfnCon_Printf("%s - Failed to get player.\n", __FUNCTION__);
+		gd_engfuncs.pfnCon_WPrintf("Failed to get player.\n");
 		return false;
 	}
 
 	const edict_t* playeredict = pPlayer->GetEdict();
 	if(!Common::CheckVisibility(playeredict->leafnums, playeredict->numleaves, pPVS))
 	{
-		gd_engfuncs.pfnCon_Printf("%s - Player is not inside the PVS of landmark '%s'.\n", __FUNCTION__, pstrLandmarkName);
+		gd_engfuncs.pfnCon_WPrintf("Player is not inside the PVS of landmark '%s'.\n", pstrLandmarkName);
 		return false;
 	}
 
 	// Make sure it touches the trigger_transition
 	if(pTransitionMins && pTransitionMaxs && Math::CheckMinsMaxs((*pTransitionMins), (*pTransitionMaxs), playeredict->state.absmin, playeredict->state.absmax))
 	{
-		gd_engfuncs.pfnCon_Printf("%s - Player is not inside trigger_transition entity '%s'.\n", __FUNCTION__, pstrLandmarkName);
+		gd_engfuncs.pfnCon_WPrintf("Player is not inside trigger_transition entity '%s'.\n", pstrLandmarkName);
 		return false;
 	}
 
@@ -1850,7 +1850,7 @@ bool GetTransitioningEntities( const byte* pPVS, const Vector* pTransitionMins, 
 
 		if(numEntities == maxEntities)
 		{
-			gd_engfuncs.pfnCon_Printf("%s - Exceeded maxEntities.\n", __FUNCTION__);
+			gd_engfuncs.pfnCon_WPrintf("Exceeded maxEntities.\n");
 			break;
 		}
 

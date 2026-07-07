@@ -23,16 +23,16 @@ static std::mutex g_conPrintfMutex;
 static std::mutex g_conDPrintfMutex;
 // For thread safety VPrintf
 static std::mutex g_conVPrintfMutex;
+// For thread safety WPrintf
+static std::mutex g_conWPrintfMutex;
 // For thread safety EPrintf
 static std::mutex g_conEPrintfMutex;
 
 // To protect against infinite loops
 static bool g_conPrintfSemaphore = false;
-// To protect against infinite loops
 static bool g_conDPrintfSemaphore = false;
-// To protect against infinite loops
 static bool g_conVPrintfSemaphore = false;
-// To protect against infinite loops
+static bool g_conWPrintfSemaphore = false;
 static bool g_conEPrintfSemaphore = false;
 
 //====================================
@@ -105,7 +105,7 @@ void CSysPrintInterface::Printf( const Char *pstring )
 void CSysPrintInterface::DPrintf( const Char *pstring )
 {
 	CString msg;
-	msg << "DEBUG: " << pstring;
+	msg << "[color r255]DEBUG:[/color] " << pstring;
 
 	Int32 flags = PRINT_FL_NONE;
 	CheckForFlags(msg, flags);
@@ -137,7 +137,7 @@ void CSysPrintInterface::DPrintf( const Char *pstring )
 void CSysPrintInterface::VPrintf( const Char *pstring )
 {
 	CString msg;
-	msg << "VERBOSE: " << pstring;
+	msg << "[color b255]VERBOSE:[/color] " << pstring;
 
 	Int32 flags = PRINT_FL_NONE;
 	CheckForFlags(msg, flags);
@@ -162,6 +162,35 @@ void CSysPrintInterface::VPrintf( const Char *pstring )
 }
 
 //=============================================
+// @brief Formats a string and prints it to the console as an warning
+//
+// @param pstring String to be printed
+//=============================================
+void CSysPrintInterface::WPrintf( const Char *pstring )
+{
+	CString msg;
+	msg << "[color r255 g255]WARNING:[/color] " << pstring;
+
+	Int32 flags = PRINT_FL_NONE;
+	CheckForFlags(msg, flags);
+	if(!ShouldPrintMessage(msg.c_str(), flags))
+		return;
+
+	if(ens.plogfile)
+		ens.plogfile->Write(msg.c_str());
+
+	gConsole.AddTextHistory(msg.c_str());
+
+	// Redraw if loading
+	if(ens.isloading && rns.basicsinitialized)
+		VID_DrawLoadingScreen();
+
+#ifdef _CONSOLE
+	printf(msg.c_str());
+#endif
+}
+
+//=============================================
 // @brief Formats a string and prints it to the console as an error
 //
 // @param pstring String to be printed
@@ -169,7 +198,7 @@ void CSysPrintInterface::VPrintf( const Char *pstring )
 void CSysPrintInterface::EPrintf( const Char *pstring )
 {
 	CString msg;
-	msg << "ERROR: " << pstring;
+	msg << "[color r255]ERROR:[/color] " << pstring;
 
 	Int32 flags = PRINT_FL_NONE;
 	CheckForFlags(msg, flags);
@@ -419,6 +448,32 @@ void Con_VPrintf( const Char *fmt, ... )
 
 	g_conVPrintfSemaphore = false;
 	g_conVPrintfMutex.unlock();
+}
+
+//====================================
+//
+//====================================
+void Con_WPrintf( const Char *fmt, ... )
+{
+	if(g_conWPrintfSemaphore)
+		return;
+
+	g_conWPrintfSemaphore = true;
+	g_conWPrintfMutex.lock();
+
+	// compile the string result
+	va_list	vArgPtr;
+	static Char cMsg[PRINT_MSG_BUFFER_SIZE];
+	
+	va_start(vArgPtr,fmt);
+	vsprintf_s(cMsg, fmt, vArgPtr);
+	va_end(vArgPtr);
+
+	// Send to print interface to complete
+	gPrintInterface.WPrintf(cMsg);
+
+	g_conWPrintfSemaphore = false;
+	g_conWPrintfMutex.unlock();
 }
 
 //====================================

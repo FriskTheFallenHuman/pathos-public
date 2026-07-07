@@ -643,7 +643,7 @@ void SV_SingleClipMoveToEntityPoint( edict_t* pentity, const Vector& start, cons
 Int32 SV_PointContents( const Vector& position, Int32* truecontents, bool particleBlockers )
 {
 	if(particleBlockers)
-		Con_Printf("%s - Warning: The particleBlockers flag only has an effect on the client side.\n", __FUNCTION__);
+		Con_WPrintf("%s - The particleBlockers flag only has an effect on the client side.\n", __FUNCTION__);
 
 	Int32 contents = TR_HullPointContents(&ens.pworld->hulls[0], 0, position);
 	if(truecontents)

@@ -98,7 +98,7 @@ void Cmd_ListMaps()
 	HANDLE hFind = FindFirstFile(searchPath.c_str(), &fileData);
 	if (hFind == INVALID_HANDLE_VALUE) 
 	{
-		Con_Printf("Error: Failed to parse '%s' for level list.\n", searchPath.c_str());
+		Con_WPrintf("Failed to parse '%s' for level list.\n", searchPath.c_str());
 		return;
 	}
 
@@ -154,7 +154,7 @@ void Cmd_PlayerPosition(void)
 	cl_entity_t* pplayer = CL_GetLocalPlayer();
 	if(!pplayer)
 	{
-		Con_Printf("Failed to get local player.\n");
+		Con_WPrintf("Failed to get local player.\n");
 		return;
 	}
 
@@ -512,7 +512,7 @@ void Cmd_Snapshot( void )
 	// Create screenshots directory
 	if(!FL_CreateDirectory("screenshots"))
 	{
-		Con_Printf("Failed to create screenshots directory.\n");
+		Con_WPrintf("Failed to create screenshots directory.\n");
 		return;
 	}
 
@@ -595,7 +595,7 @@ void Cmd_Snapshot( void )
 		if(result)
 			Con_Printf("Wrote '%s'.\n", finaloutputname.c_str());
 		else
-			Con_Printf("Failed to write '%s'.\n", finaloutputname.c_str());		
+			Con_WPrintf("Failed to write '%s'.\n", finaloutputname.c_str());		
 	}
 
 	delete[] pfinaldata;

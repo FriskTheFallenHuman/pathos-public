@@ -189,7 +189,7 @@ void CNormalSmoothing::ManageVertex( const Vector& origin, const Vector& normal,
 	vertexnode_t* pnode = RecursiveAddVertex(m_vertexNodesArray[0], origin, normal, index);
 	if(!pnode)
 	{
-		Con_Printf("%s - Failed to add vertex %d to a group.\n", __FUNCTION__, index);
+		Con_WPrintf("Failed to add vertex %d to a group.\n", index);
 		return;
 	}
 

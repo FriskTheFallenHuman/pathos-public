@@ -249,7 +249,7 @@ Vector CL_GetBonePosition( entindex_t entindex, const Char* pstrbonename )
 	Vector boneposition;
 	if(!gVBMRenderer.GetBonePosition(pentity, pstrbonename, boneposition))
 	{
-		Con_Printf("%s - Failed to get bone '%s' for entity %d.\n", __FUNCTION__, pstrbonename, static_cast<Int32>(entindex));
+		Con_WPrintf("Failed to get bone '%s' for entity %d.\n", pstrbonename, static_cast<Int32>(entindex));
 		return ZERO_VECTOR;
 	}
 

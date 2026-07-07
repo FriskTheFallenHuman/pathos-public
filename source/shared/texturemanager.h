@@ -179,7 +179,7 @@ private:
 	const file_interface_t m_fileFuncs;
 	// Console print function
 	pfnPrintf_t m_printFunction;
-	// Console print function
+	// Console print error function
 	pfnPrintf_t m_printErrorFunction;
 	// GL ext functions class
 	const CGLExtF& m_glExtF;

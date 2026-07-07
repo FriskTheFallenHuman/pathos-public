@@ -229,7 +229,7 @@ void CLightStyleManager::ApplyLightStyle( cl_dlight_t* dl, Vector& color )
 
 	if(dl->lightstyle < 1 || dl->lightstyle >= m_lightStyleValues.size())
 	{
-		Con_Printf("Warning: Dynamic light at %.0f %.0f %.0f with invalid style index %d.\n", dl->origin.x, dl->origin.y, dl->origin.z, dl->lightstyle);
+		Con_WPrintf("Dynamic light at %.0f %.0f %.0f with invalid style index %d.\n", dl->origin.x, dl->origin.y, dl->origin.z, dl->lightstyle);
 		return;
 	}
 

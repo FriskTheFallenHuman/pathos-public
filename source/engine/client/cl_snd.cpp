@@ -259,7 +259,7 @@ bool CSoundEngine::Init( void )
 		{
 			CString str;
 			str << "Failed to load " << OPENAL_LIBRARY_PATH;
-			MessageBox(nullptr, str.c_str(), "Error", MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
+			Sys_ErrorPopup( str.c_str() );
 			return false;
 		}
 	}
@@ -1395,7 +1395,7 @@ bool CSoundEngine::GetSoundCache( const Char *sample, Int32 svindex, snd_cache_t
 				}
 
 				// Houston, we have a problem
-				Con_Printf("%s -Failed to cache server sound with index %d\n", __FUNCTION__, svindex );
+				Con_WPrintf("Failed to cache server sound with index %d\n", svindex );
 				return false;
 			}
 			else
@@ -1689,7 +1689,7 @@ void CSoundEngine::PlaySound( const Char *sample, const Vector* pOrigin, Int32 f
 	}
 
 	if((psound->flags & SND_FL_RADIUS) && psound->radius < 64)
-		Con_Printf("Warning: Sound %s with small radius %.0f at %.0f %.0f %.0f.\n", 
+		Con_WPrintf("Sound %s with small radius %.0f at %.0f %.0f %.0f.\n", 
 		psound->pcache->name.c_str(), psound->radius, 
 		psound->origin.x, psound->origin.y, psound->origin.z);
 

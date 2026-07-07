@@ -191,13 +191,13 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 	TJValue* root = TJ::parse(jsonStr.c_str(), opts);
 	if(!root)
 	{
-		Con_EPrintf("%s - Failed to parse JSON in '%s'.\n", __FUNCTION__, path.c_str());
+		Con_WPrintf("Failed to parse JSON in '%s'.\n", path.c_str());
 		return nullptr;
 	}
 
 	if(!root->is_object())
 	{
-		Con_EPrintf("%s - Root must be an object in '%s'.\n", __FUNCTION__, path.c_str());
+		Con_WPrintf("Root must be an object in '%s'.\n", path.c_str());
 		delete root;
 		return nullptr;
 	}
@@ -207,7 +207,7 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 	// Check $schema field
 	if(!obj->has_key("$schema") || !obj->try_get_value("$schema")->is_string())
 	{
-		Con_EPrintf("%s - Missing or invalid '$schema' field in '%s'.\n", __FUNCTION__, path.c_str());
+		Con_WPrintf("Missing or invalid '$schema' field in '%s'.\n", path.c_str());
 		delete root;
 		return nullptr;
 	}
@@ -215,7 +215,7 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 	const TJCHAR* schemaType = obj->try_get_value("$schema")->get_string();
 	if(qstrcmp(schemaType, "TextSchema") != 0)
 	{
-		Con_EPrintf("%s - '$schema' must be 'TextSchema' in '%s'.\n", __FUNCTION__, path.c_str());
+		Con_WPrintf("'$schema' must be 'TextSchema' in '%s'.\n", path.c_str());
 		delete root;
 		return nullptr;
 	}
@@ -226,7 +226,7 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 	// internalname
 	if(!obj->has_key("internalname") || !obj->try_get_value("internalname")->is_string())
 	{
-		Con_EPrintf("%s - Missing or invalid 'internalname' in '%s'.\n", __FUNCTION__, path.c_str());
+		Con_WPrintf("Missing or invalid 'internalname' in '%s'.\n", path.c_str());
 		delete root;
 		return nullptr;
 	}
