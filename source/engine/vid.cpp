@@ -504,6 +504,9 @@ void VID_Shutdown( void )
 	// IMPORTANT: Only free GL resources, don't free resource data!
 	// This is because we might only be changing resolutions, or window mode
 	// and we want to know what we've loaded, so we can reload it
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplSDL2_Shutdown();
+    ImGui::DestroyContext();
 
 	// Release renderer classes too
 	R_ShutdownGL();
@@ -639,12 +642,6 @@ void VID_Draw( void )
 	// on with the boolean
 	rns.validateshaders = (g_pCvarGLSLValidate->GetValue() < 1) ? false : true;
 
-	// For time graph
-	Double time1;
-	
-	if(g_pCvarTimeGraph->GetValue() >= 1.0f)
-		time1 = Sys_FloatTime();
-
 	glViewport(0, 0, rns.screenwidth, rns.screenheight);
 	glClearColor(GL_ZERO, GL_ZERO, GL_ZERO, GL_ZERO);
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -694,17 +691,6 @@ void VID_Draw( void )
 		}
 	}
 
-	// Print counters
-	if(!R_PrintCounters())
-	{
-		CBasicDraw* pDraw = CBasicDraw::GetInstance();
-		Sys_ErrorPopup("Shader error: %s.\n", pDraw->GetShaderError());
-		Con_Printf("%s - Fatal error while drawing counters.\n", __FUNCTION__);
-		CL_Disconnect();
-		ens.exit = true;
-		return;
-	}
-
 	// Draw console debug prints
 	if(!gConsole.Draw())
 	{
@@ -716,33 +702,13 @@ void VID_Draw( void )
 		return;
 	}
 
-	// For time graph
-	if(g_pCvarTimeGraph->GetValue() >= 1)
+	// Draw any imgui elements
+	if(!R_DrawImGui())
 	{
-		Double time2 = Sys_FloatTime();
-		if(!R_DrawTimeGraph(time1, time2))
-		{
-			CBasicDraw* pDraw = CBasicDraw::GetInstance();
-			Sys_ErrorPopup("Shader error: %s.\n", pDraw->GetShaderError());
-			Con_Printf("%s - Fatal error while drawing time graph.\n", __FUNCTION__);
-			CL_Disconnect();
-			ens.exit = true;
-			return;
-		}
-	}
-
-	// Draw FPS graph
-	if(g_pCvarFPSGraph->GetValue() >= 1)
-	{
-		if(!R_DrawFPSGraph())
-		{
-			CBasicDraw* pDraw = CBasicDraw::GetInstance();
-			Sys_ErrorPopup("Shader error: %s.\n", pDraw->GetShaderError());
-			Con_Printf("%s - Fatal error while drawing console history.\n", __FUNCTION__);
-			CL_Disconnect();
-			ens.exit = true;
-			return;
-		}
+		Con_Printf("%s - Fatal error while drawing ImGui elements.\n", __FUNCTION__);
+		CL_Disconnect();
+		ens.exit = true;
+		return;
 	}
 
 	// Load any pending shaders
@@ -798,6 +764,16 @@ void VID_DrawLoadingScreen( const Char* pstrText )
 	{
 		Con_Printf("%s - Fatal error while drawing console history.\n", __FUNCTION__);
 		ens.exit = true;
+	}
+
+	// Draw any imgui elements
+	if(!R_DrawImGui())
+	{
+		// Don't warn nor quit, this is false on first boot
+		// But ImGui Context is created once the main menu is loaded
+		// So we don't want to spam the console with something we know is false.
+		//Con_Printf("%s - Fatal error while drawing ImGui elements.\n", __FUNCTION__);
+		//ens.exit = true;
 	}
 
 	// Swap the OGL buffer

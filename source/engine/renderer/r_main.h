@@ -499,6 +499,7 @@ extern bool R_Draw( const ref_params_t& params );
 extern bool R_DrawLoadingScreen( const Char* pstrText = nullptr );
 extern bool R_DrawPausedLogo( void );
 extern bool R_DrawHUD( bool hudOnly = false, bool noFilmGrain = false );
+extern bool R_DrawImGui( void );
 extern bool R_DrawShownMaterial( void );
 
 extern bool R_Init( void );
@@ -527,14 +528,13 @@ extern inline void R_ValidateShader( CGLSLShader* pShader );
 extern inline void R_ValidateShader( CBasicDraw* pDraw );
 
 extern bool R_LoadTextureListFile( const Char* pstrTextureListFile, CArray<en_texture_t*>& texArray, rs_level_t level, const GLint* pborder, bool clamp );
-
-extern bool R_PrintCounters( void );
 extern void R_ResetFrameStates( void );
 
 extern bool R_DrawString( color32_t color, Int32 x, Int32 y, const Char* pstrString, const font_set_t* pfont );
 extern bool R_DrawStringBox( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int16 insetx, Int16 insety, bool reverse, color32_t color, Int32 x, Int32 y, const Char* pstrString, const font_set_t* pfont, Uint32 lineoffset, Uint32 minlineheight, Uint32 xoffset );
-extern bool R_DrawTimeGraph( Double& time1, Double& time2 );
-extern bool R_DrawFPSGraph( void );
+extern void R_DrawStats( void );
+extern void R_DrawTimeGraph( void );
+extern void R_DrawFPSGraph( void );
 
 extern bool R_BeginTextRendering( const font_set_t* pfontset );
 extern void R_FinishTextRendering( void );

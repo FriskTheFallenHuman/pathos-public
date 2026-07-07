@@ -204,7 +204,7 @@ bool R_Init( void )
 	g_pCvarGLSLValidate = gConsole.CreateCVar( CVAR_FLOAT, (FL_CV_CLIENT), "r_glsl_validate", "0", "Toggle shader validation debug functionality." );
 	g_pCvarSkipFrames = gConsole.CreateCVar( CVAR_FLOAT, (FL_CV_CLIENT|FL_CV_SAVE), "r_skipframes", "2", "Number of frames to skip after game initialization." );
 	g_pCvarGraphHeight = gConsole.CreateCVar( CVAR_FLOAT, (FL_CV_CLIENT|FL_CV_SAVE), "r_graphheight", "15", "Height of the time graph." );
-	g_pCvarTimeGraph = gConsole.CreateCVar( CVAR_FLOAT, FL_CV_CLIENT, "r_timegraph", "0", "Show render performance timegraph." );
+	g_pCvarTimeGraph = gConsole.CreateCVar( CVAR_FLOAT, (FL_CV_CLIENT | FL_CV_SAVE), "r_timegraph", "0", "Show render performance timegraph." );
 	g_pCvarOcclusionQueries = gConsole.CreateCVar(CVAR_FLOAT, FL_CV_CLIENT, "r_glowocclusion", "1", "Toggles the use of occlusion queries for glows." );
 	g_pCvarTraceGlow = gConsole.CreateCVar(CVAR_FLOAT, (FL_CV_CLIENT|FL_CV_SAVE), "r_traceglow", "0", "Enable/disable performance intensive trace tests." );
 	g_pCvarBatchDynamicLights = gConsole.CreateCVar( CVAR_FLOAT, (FL_CV_CLIENT|FL_CV_SAVE), "r_lightbatches", "0", "Controls whether light rendering is batched based on proximity and type of light." );
@@ -216,7 +216,7 @@ bool R_Init( void )
 	g_pCvarLightmapPadding = gConsole.CreateCVar( CVAR_FLOAT, (FL_CV_CLIENT|FL_CV_SAVE), "r_lightmap_padding", "2", "Controls padding of lightmap data to avoid edge aliasing.", R_LightmapPaddingCvarCallBack);
 	g_pCvarBicubicLightmaps = gConsole.CreateCVar(CVAR_FLOAT, (FL_CV_CLIENT | FL_CV_SAVE), "r_lightmap_bicubic", "1", "Toggle bicubic lightmap filtering.");
 
-	g_pCvarFPSGraph = gConsole.CreateCVar( CVAR_FLOAT, FL_CV_CLIENT, "r_fpsgraph", "0", "Show render FPS timegraph." );
+	g_pCvarFPSGraph = gConsole.CreateCVar( CVAR_FLOAT, (FL_CV_CLIENT | FL_CV_SAVE), "r_fpsgraph", "0", "Show render FPS timegraph." );
 
 	gCommands.CreateCommand("r_exportald", Cmd_ExportALD, "Exports current lightmap info as nightstage light info");
 	gCommands.CreateCommand("r_detail_auto", Cmd_DetailAuto, "Generates detail texture entries for world textures without");
@@ -483,6 +483,42 @@ void R_LoadTextures( void )
 	}
 }
 
+
+//====================================
+// Linearly interpolate from @c a to @c b by fraction @c t.
+// @f[
+//    lerp(t; a, b) = t b + (1 - t) a
+// @f]
+//====================================
+template<typename _Float>
+constexpr std::enable_if_t<std::is_floating_point_v<_Float>, _Float>
+lerp(_Float __a, _Float __b, _Float __t)
+{
+	if (std::isnan(__a) || std::isnan(__b) || std::isnan(__t))
+return std::numeric_limits<_Float>::quiet_NaN();
+	else if ((__a <= _Float{0} && __b >= _Float{0})
+	|| (__a >= _Float{0} && __b <= _Float{0}))
+// ab <= 0 but product could overflow.
+#ifndef FMA
+return __t * __b + (_Float{1} - __t) * __a;
+#else
+return std::fma(__t, __b, (_Float{1} - __t) * __a);
+#endif
+	else if (__t == _Float{1})
+return __b;
+	else
+{ // monotonic near t == 1.
+#ifndef FMA
+	const auto __x = __a + __t * (__b - __a);
+#else
+	const auto __x = std::fma(__t, __b - __a, __a);
+#endif
+	return (__t > _Float{1}) == (__b > __a)
+		? std::max(__b, __x)
+		: std::min(__b, __x);
+}
+}
+
 //====================================
 //
 //====================================
@@ -644,6 +680,168 @@ bool R_InitGL( void )
 		BSP_SetSamplingLightData(*ens.pworld);
 		BSP_ReleaseLightmapData(*ens.pworld);
 	}
+
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+	//io.ConfigViewportsNoAutoMerge = true;
+	//io.ConfigViewportsNoTaskBarIcon = true;
+
+	// Load Fonts
+	// - If fonts are not explicitly loaded, Dear ImGui will select an embedded font: either AddFontDefaultVector() or AddFontDefaultBitmap().
+	//   This selection is based on (style.FontSizeBase * style.FontScaleMain * style.FontScaleDpi) reaching a small threshold.
+	// - You can load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
+	// - If a file cannot be loaded, AddFont functions will return a nullptr. Please handle those errors in your code (e.g. use an assertion, display an error and quit).
+	// - Read 'docs/FONTS.md' for more instructions and details.
+	// - Use '#define IMGUI_ENABLE_FREETYPE' in your imconfig file to use FreeType for higher quality font rendering.
+	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
+	// - Our Emscripten build process allows embedding fonts to be accessible at runtime from the "fonts/" folder. See Makefile.emscripten for details.
+	Uint32 fontFileSize = 0;
+	const byte* pFontData = FL_LoadFile("resources/fonts/InterDisplay-Bold.ttf", &fontFileSize);
+	if(pFontData && fontFileSize > 0)
+	{
+		// IM_ALLOC so ImGui can IM_FREE it when the atlas is destroyed
+		void* pImBuf = IM_ALLOC(fontFileSize);
+		memcpy(pImBuf, pFontData, fontFileSize);
+		FL_FreeFile(pFontData);
+
+		Float fontSize = static_cast<Float>(R_GetRelativeY(14, CMenu::MENU_BASE_HEIGHT, gWindow.GetHeight()));
+		io.Fonts->AddFontFromMemoryTTF(pImBuf, static_cast<Int32>(fontFileSize), fontSize);
+	}
+	else
+	{
+		Con_Printf("R_InitGL - Could not load font for ImGui, using default.\n");
+		io.Fonts->AddFontDefault();
+		if(pFontData)
+			FL_FreeFile(pFontData);
+	}
+
+	CString iniPath;
+	iniPath << ens.gamedir << PATH_SLASH_CHAR << "imgui.ini";
+
+	static CString s_imguiIniPath = iniPath;
+	io.IniFilename = s_imguiIniPath.c_str();
+
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsLight();
+
+	// Setup styl
+	ImGuiStyle& style = ImGui::GetStyle();
+
+	{
+		auto& style{ ImGui::GetStyle() };
+		// Borders
+		style.WindowBorderSize = 3.0f;
+
+		// Rounding
+		style.FrameRounding = 3.0f;
+		style.PopupRounding = 3.0f;
+		style.ScrollbarRounding = 3.0f;
+		style.GrabRounding = 3.0f;
+
+		// Docking
+		style.DockingSeparatorSize = 3.0f;
+	}
+
+	{
+		auto ToRGBA = [](uint32_t argb)
+		{
+			ImVec4 color{};
+			color.x = ((argb >> 16) & 0xFF) / 255.0f;
+			color.y = ((argb >> 8) & 0xFF) / 255.0f;
+			color.z = (argb & 0xFF) / 255.0f;
+			color.w = ((argb >> 24) & 0xFF) / 255.0f;
+			return color;
+		};
+
+		auto Lerp = [](const ImVec4& a, const ImVec4& b, float t)
+		{
+			return ImVec4{
+				lerp(a.x, b.x, t),
+				lerp(a.y, b.y, t),
+				lerp(a.z, b.z, t),
+				lerp(a.w, b.w, t)
+			};
+		};
+
+		auto colors{ style.Colors };
+		colors[ImGuiCol_Text] = ToRGBA(0xFFABB2BF);
+		colors[ImGuiCol_TextDisabled] = ToRGBA(0xFF565656);
+		colors[ImGuiCol_WindowBg] = ToRGBA(0xFF282C34);
+		colors[ImGuiCol_ChildBg] = ToRGBA(0xFF21252B);
+		colors[ImGuiCol_PopupBg] = ToRGBA(0xFF2E323A);
+		colors[ImGuiCol_Border] = ToRGBA(0xFF2E323A);
+		colors[ImGuiCol_BorderShadow] = ToRGBA(0x00000000);
+		colors[ImGuiCol_FrameBg] = colors[ImGuiCol_ChildBg];
+		colors[ImGuiCol_FrameBgHovered] = ToRGBA(0xFF484C52);
+		colors[ImGuiCol_FrameBgActive] = ToRGBA(0xFF54575D);
+		colors[ImGuiCol_TitleBg] = colors[ImGuiCol_WindowBg];
+		colors[ImGuiCol_TitleBgActive] = colors[ImGuiCol_FrameBgActive];
+		colors[ImGuiCol_TitleBgCollapsed] = ToRGBA(0x8221252B);
+		colors[ImGuiCol_MenuBarBg] = colors[ImGuiCol_ChildBg];
+		colors[ImGuiCol_ScrollbarBg] = colors[ImGuiCol_PopupBg];
+		colors[ImGuiCol_ScrollbarGrab] = ToRGBA(0xFF3E4249);
+		colors[ImGuiCol_ScrollbarGrabHovered] = ToRGBA(0xFF484C52);
+		colors[ImGuiCol_ScrollbarGrabActive] = ToRGBA(0xFF54575D);
+		colors[ImGuiCol_CheckMark] = colors[ImGuiCol_Text];
+		colors[ImGuiCol_SliderGrab] = ToRGBA(0xFF353941);
+		colors[ImGuiCol_SliderGrabActive] = ToRGBA(0xFF7A7A7A);
+		colors[ImGuiCol_Button] = colors[ImGuiCol_SliderGrab];
+		colors[ImGuiCol_ButtonHovered] = colors[ImGuiCol_FrameBgActive];
+		colors[ImGuiCol_ButtonActive] = colors[ImGuiCol_ScrollbarGrabActive];
+		colors[ImGuiCol_Header] = colors[ImGuiCol_ChildBg];
+		colors[ImGuiCol_HeaderHovered] = ToRGBA(0xFF353941);
+		colors[ImGuiCol_HeaderActive] = colors[ImGuiCol_FrameBgActive];
+		colors[ImGuiCol_Separator] = colors[ImGuiCol_FrameBgActive];
+		colors[ImGuiCol_SeparatorHovered] = ToRGBA(0xFF3E4452);
+		colors[ImGuiCol_SeparatorActive] = colors[ImGuiCol_SeparatorHovered];
+		colors[ImGuiCol_ResizeGrip] = colors[ImGuiCol_Separator];
+		colors[ImGuiCol_ResizeGripHovered] = colors[ImGuiCol_SeparatorHovered];
+		colors[ImGuiCol_ResizeGripActive] = colors[ImGuiCol_SeparatorActive];
+		colors[ImGuiCol_InputTextCursor] = ToRGBA(0xFF528BFF);
+		colors[ImGuiCol_TabHovered] = colors[ImGuiCol_HeaderHovered];
+		colors[ImGuiCol_Tab] = colors[ImGuiCol_FrameBgActive];
+		colors[ImGuiCol_TabSelected] = colors[ImGuiCol_HeaderHovered];
+		colors[ImGuiCol_TabSelectedOverline] = colors[ImGuiCol_HeaderActive];
+		colors[ImGuiCol_TabDimmed] = Lerp(colors[ImGuiCol_Tab], colors[ImGuiCol_TitleBg], 0.80f);
+		colors[ImGuiCol_TabDimmedSelected] = Lerp(colors[ImGuiCol_TabSelected], colors[ImGuiCol_TitleBg], 0.40f);
+		colors[ImGuiCol_TabDimmedSelectedOverline] = ImVec4{ 0.50f, 0.50f, 0.50f, 0.00f };
+		colors[ImGuiCol_DockingPreview] = colors[ImGuiCol_ChildBg];
+		colors[ImGuiCol_DockingEmptyBg] = colors[ImGuiCol_WindowBg];
+		colors[ImGuiCol_PlotLines] = ImVec4{ 0.61f, 0.61f, 0.61f, 1.00f };
+		colors[ImGuiCol_PlotLinesHovered] = ImVec4{ 1.00f, 0.43f, 0.35f, 1.00f };
+		colors[ImGuiCol_PlotHistogram] = ImVec4{ 0.90f, 0.70f, 0.00f, 1.00f };
+		colors[ImGuiCol_PlotHistogramHovered] = ImVec4{ 1.00f, 0.60f, 0.00f, 1.00f };
+		colors[ImGuiCol_TableHeaderBg] = colors[ImGuiCol_ChildBg];
+		colors[ImGuiCol_TableBorderStrong] = colors[ImGuiCol_SliderGrab];
+		colors[ImGuiCol_TableBorderLight] = colors[ImGuiCol_FrameBgActive];
+		colors[ImGuiCol_TableRowBg] = ImVec4{ 0.00f, 0.00f, 0.00f, 0.00f };
+		colors[ImGuiCol_TableRowBgAlt] = ImVec4{ 1.00f, 1.00f, 1.00f, 0.06f };
+		colors[ImGuiCol_TextLink] = ToRGBA(0xFF3F94CE);
+		colors[ImGuiCol_TextSelectedBg] = ToRGBA(0xFF243140);
+		colors[ImGuiCol_TreeLines] = colors[ImGuiCol_Text];
+		colors[ImGuiCol_DragDropTarget] = colors[ImGuiCol_Text];
+		colors[ImGuiCol_NavCursor] = colors[ImGuiCol_TextLink];
+		colors[ImGuiCol_NavWindowingHighlight] = colors[ImGuiCol_Text];
+		colors[ImGuiCol_NavWindowingDimBg] = ImVec4{ 0.80f, 0.80f, 0.80f, 0.20f };
+		colors[ImGuiCol_ModalWindowDimBg] = ToRGBA(0xC821252B);
+	};
+
+	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		style.WindowRounding = 0.0f;
+		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+	}
+
+	// Setup Platform/Renderer backends
+	ImGui_ImplSDL2_InitForOpenGL(gWindow.GetWindow(), gWindow.GetGLContext());
+	ImGui_ImplOpenGL3_Init("#version 130");
 
 	// Create query objects
 	R_InitQueryObjects();
@@ -2332,391 +2530,90 @@ bool R_DrawScene( void )
 //====================================
 //
 //====================================
-void R_DrawLineGraph( CBasicDraw* pDraw, Int32 x, Int32 y, Int32 h, Int32 s )
+void R_DrawTimeGraph( void )
 {
-	Vector color;
-	if(h == 10000)
-		color = Vector(255, 192, 64);
-	else if(h == 9999)
-		color = Vector(255, 0, 0);
-	else if(h == 9998)
-		color = Vector(0, 0, 255);
-	else
-		color = Vector(255, 0, 128);
+	// Anchor top-right, no title bar, no resize
+	const ImGuiWindowFlags timeFlags =
+		ImGuiWindowFlags_NoDecoration   |
+		ImGuiWindowFlags_AlwaysAutoResize|
+		ImGuiWindowFlags_NoSavedSettings |
+		ImGuiWindowFlags_NoFocusOnAppearing|
+		ImGuiWindowFlags_NoNav           |
+		ImGuiWindowFlags_NoMove;
 
-	Math::VectorScale(color, 1.0f/255.0f, color);
+	float screenWidth = static_cast<float>(gWindow.GetWidth());
+	ImGui::SetNextWindowPos(
+		ImVec2(screenWidth - 15.0f, 94.0f), 
+		ImGuiCond_Always, 
+		ImVec2(1.0f, 0.0f));
 
-	Int32 _h = h;
-	if(_h > s)
-		_h = s;
-
-	// Set color
-	pDraw->Color4fv(color);
-
-	pDraw->Begin(CBasicDraw::DRAW_LINES);
-	pDraw->Vertex3f(x, y-_h, -1);
-	pDraw->Vertex3f(x, y, -1);
-	pDraw->End();
-}
-
-
-//====================================
-//
-//====================================
-bool R_DrawTimeGraph( Double& time1, Double& time2 )
-{
-	static Int32 timex = 0;
-	static byte timings[MAX_TIMINGS];
-
-	// All UI elements use the simple draw interface
-	CBasicDraw* pDraw = CBasicDraw::GetInstance();
-	if(!pDraw->Enable())
+	if(ImGui::Begin("##timegraph", nullptr, timeFlags))
 	{
-		Sys_ErrorPopup("Shader error: %s.\n", pDraw->GetShaderError());
-		return false;
+		static Double lastFrameStart = 0;
+		static Float  timeHistory[MAX_TIMINGS] = {};
+		static Int32  timeHead = 0;
+
+		Double now = Sys_FloatTime();
+		Float  ms  = static_cast<Float>((now - lastFrameStart) * 1000.0);
+		lastFrameStart = now;
+
+		timeHistory[timeHead] = ms;
+		timeHead = (timeHead + 1) % MAX_TIMINGS;
+
+		Char overlayBuf[32];
+		SDL_snprintf(overlayBuf, sizeof(overlayBuf), "%.2f ms", ms);
+		ImGui::PlotLines("##timegraph",
+			timeHistory, MAX_TIMINGS, timeHead,
+			overlayBuf, 0.0f, 50.0f,
+			ImVec2(static_cast<Float>(g_pCvarFPSGraphWidth->GetValue()), (g_pCvarGraphHeight->GetValue() * 2)));
 	}
-
-	if(!pDraw->DisableTexture())
-	{
-		Sys_ErrorPopup("Shader error: %s.\n", pDraw->GetShaderError());
-		return false;
-	}
-
-	rns.view.modelview.PushMatrix();
-	rns.view.modelview.LoadIdentity();
-	rns.view.modelview.Scale(1.0/ static_cast<Float>(gWindow.GetWidth()), 1.0/ static_cast<Float>(gWindow.GetHeight()), 1.0);
-
-	rns.view.projection.PushMatrix();
-	rns.view.projection.LoadIdentity();
-	rns.view.projection.Ortho(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO, 0.1f, 100);
-
-	pDraw->SetModelview(rns.view.modelview.GetMatrix());
-	pDraw->SetProjection(rns.view.projection.GetMatrix());
-
-	// Remember past timing
-	Int32 a = (time2 - time1) / 0.001f;
-	timings[timex] = a;
-	a = timex;
-
-	// Set x coordinate
-	Int32 x;
-	if(rns.screenwidth < MAX_TIMINGS)
-		x = rns.screenwidth - 1;
-	else
-		x = rns.screenwidth - (rns.screenwidth - MAX_TIMINGS)/2;
-
-	Int32 s = g_pCvarGraphHeight->GetValue();
-	Int32 y = rns.screenheight-16;
-
-	if(g_pCvarFPSGraph->GetValue() >= 1)
-	{
-		Float fpsGraphHeightCvarValue = g_pCvarFPSGraphHeight->GetValue();
-		if(fpsGraphHeightCvarValue < 32)
-			fpsGraphHeightCvarValue = 32;
-		else if(fpsGraphHeightCvarValue > 256)
-			fpsGraphHeightCvarValue = 256;
-
-		y -= (fpsGraphHeightCvarValue+16);
-	}
-
-	glLineWidth(1.0);
-
-	// Draw the graph bars
-	pDraw->Color4f(1.0, 1.0, 1.0, 1.0);
-	pDraw->Begin(CBasicDraw::DRAW_LINES);
-	pDraw->Vertex3f(x+1, y-s, -1);
-	pDraw->Vertex3f(x+1, y, -1);
-	pDraw->Vertex3f(x-MAX_TIMINGS-1, y, -1);
-	pDraw->Vertex3f(x+1, y, -1);
-	pDraw->Vertex3f(x-MAX_TIMINGS, y-s, -1);
-	pDraw->Vertex3f(x-MAX_TIMINGS, y, -1);
-	pDraw->End();
-
-	do
-	{
-		R_DrawLineGraph(pDraw, x, y-1, timings[a], s);
-		if(x == 0)
-			break;
-
-		x--;
-		a--;
-
-		if(a == -1)
-			a = (MAX_TIMINGS-1);
-	}
-	while(a != timex);
-
-	// Set timex
-	timex = (timex+1) % MAX_TIMINGS;
-
-	rns.view.modelview.PopMatrix();
-	rns.view.projection.PopMatrix();
-
-	pDraw->Disable();
-	return true;
+	ImGui::End();
 }
 
 //====================================
 //
 //====================================
-bool R_DrawFPSGraph( void )
+void R_DrawFPSGraph( void )
 {
-	static Uint32 nbTimings = 0;
-	static Float fpsHistory[MAX_TIMINGS];
-	static byte spikeDots[MAX_TIMINGS];
+	// Anchor top-right, no title bar, no resize
+	const ImGuiWindowFlags fpsFlags =
+		ImGuiWindowFlags_NoDecoration   |
+		ImGuiWindowFlags_AlwaysAutoResize|
+		ImGuiWindowFlags_NoSavedSettings |
+		ImGuiWindowFlags_NoFocusOnAppearing|
+		ImGuiWindowFlags_NoNav           |
+		ImGuiWindowFlags_NoMove;
 
-	// All UI elements use the simple draw interface
-	CBasicDraw* pDraw = CBasicDraw::GetInstance();
-	if(!pDraw->Enable())
+	float screenWidth = static_cast<float>(gWindow.GetWidth());
+	ImGui::SetNextWindowPos(
+		ImVec2(screenWidth - 15.0f, 8.0f), 
+		ImGuiCond_Always, 
+		ImVec2(1.0f, 0.0f));
+
+	if(ImGui::Begin("##fpsgraph", nullptr, fpsFlags))
 	{
-		Sys_ErrorPopup("Shader error: %s.\n", pDraw->GetShaderError());
-		return false;
+		static Float fpsHistory[MAX_TIMINGS] = {};
+		static Int32 fpsHead = 0;
+
+		static Double lastFPSTime = 0;
+		Double now  = Sys_FloatTime();
+		Double dt   = now - lastFPSTime;
+		lastFPSTime = now;
+
+		Float fps = (dt > 0.0 && dt < 1.0) ? static_cast<Float>(1.0 / dt) : 0.0f;
+		fpsHistory[fpsHead] = fps;
+		fpsHead = (fpsHead + 1) % MAX_TIMINGS;
+
+		Char overlayBuf[32];
+		SDL_snprintf(overlayBuf, sizeof(overlayBuf), "%.0f fps", fps);
+		ImGui::PlotHistogram("##fpsgraph",
+			fpsHistory, MAX_TIMINGS, fpsHead,
+			overlayBuf, 0.0f,
+			static_cast<Float>(g_pCvarFPSGraphHeight->GetValue()),
+			ImVec2(static_cast<Float>(g_pCvarFPSGraphWidth->GetValue()),
+				   static_cast<Float>(g_pCvarFPSGraphHeight->GetValue())));
 	}
-
-	if(!pDraw->DisableTexture())
-	{
-		Sys_ErrorPopup("Shader error: %s.\n", pDraw->GetShaderError());
-		return false;
-	}
-
-	rns.view.modelview.PushMatrix();
-	rns.view.modelview.LoadIdentity();
-	rns.view.modelview.Scale(1.0/ static_cast<Float>(gWindow.GetWidth()), 1.0/ static_cast<Float>(gWindow.GetHeight()), 1.0);
-
-	rns.view.projection.PushMatrix();
-	rns.view.projection.LoadIdentity();
-	rns.view.projection.Ortho(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO, 0.1f, 100);
-
-	pDraw->SetModelview(rns.view.modelview.GetMatrix());
-	pDraw->SetProjection(rns.view.projection.GetMatrix());
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	// Calculate FPS
-	static Double lasttime = 0;
-	Double curtime = Sys_FloatTime();
-	Double frametime = curtime - lasttime;
-	lasttime = curtime;
-
-	if(frametime > 1.0)
-		frametime = 0;
-
-	// Reference FPS is 60 fps
-	const Uint32 referenceFPS = 60;
-	Uint32 fpsCount = 1.0f / frametime;
-	if(fpsCount > referenceFPS)
-		fpsCount = referenceFPS;
-
-	byte spikeValue = 0;
-	if(nbTimings > 0)
-	{
-		Float prevFPS = fpsHistory[nbTimings-1];
-		if(SDL_abs(fpsCount - prevFPS) > 5)
-		{
-			if(fpsCount - prevFPS > 0)
-				spikeValue = 1;
-			else
-				spikeValue = 2;
-		}
-	}
-
-	// Remember past timing
-	if(nbTimings < MAX_TIMINGS)
-	{
-		if(nbTimings > 0 || fpsCount)
-		{
-			fpsHistory[nbTimings] = fpsCount;
-			spikeDots[nbTimings] = spikeValue;
-			nbTimings++;
-		}
-	}
-	else
-	{
-		// Shift to accomodate new
-		for(Uint32 i = 1; i < MAX_TIMINGS; i++)
-		{
-			fpsHistory[i-1] = fpsHistory[i];
-			spikeDots[i-1] = spikeDots[i];
-		}
-
-		// Add new at very end
-		fpsHistory[MAX_TIMINGS-1] = fpsCount;
-		spikeDots[MAX_TIMINGS-1] = spikeValue;
-	}
-
-	Uint32 barThickness = 2;
-	Float graphWidthCvarValue = g_pCvarFPSGraphWidth->GetValue();
-	if(graphWidthCvarValue < 32)
-		graphWidthCvarValue = 32;
-
-	Uint32 graphWidth = graphWidthCvarValue;
-	if(graphWidth % barThickness != 0)
-		graphWidth += 1;
-
-	Uint32 maxTotalWidth = (MAX_TIMINGS * barThickness + 2 * barThickness);
-	if(graphWidth > maxTotalWidth)
-		graphWidth = maxTotalWidth;
-
-	if(rns.screenwidth < graphWidth)
-		graphWidth = rns.screenwidth - (2 * barThickness);
-
-	// Set x and y coordinates
-	Float graphHeightCvarValue = g_pCvarFPSGraphHeight->GetValue();
-	if(graphHeightCvarValue < 32)
-		graphHeightCvarValue = 32;
-	else if(graphHeightCvarValue > 256)
-		graphHeightCvarValue = 256;
-
-	Int32 graphHeight = graphHeightCvarValue + barThickness * 2;
-	Int32 x = (rns.screenwidth / 2) - (graphWidth / 2);
-	Int32 y = rns.screenheight - 16 - graphHeight;
-
-	Float innerWidth = graphWidth - barThickness * 2;
-	Float innerHeight = graphHeight - barThickness * 2;
-
-	// Draw the graph bars
-	pDraw->Begin(CBasicDraw::DRAW_TRIANGLES);
-	pDraw->Color4f(0.5, 0.5, 0.5, 0.5);
-
-	// Draw left bar
-	pDraw->Vertex3f(x, y, -1);
-	pDraw->Vertex3f(x+barThickness, y, -1);
-	pDraw->Vertex3f(x, y+innerHeight+barThickness, -1);
-
-	pDraw->Vertex3f(x, y+innerHeight+barThickness, -1);
-	pDraw->Vertex3f(x+barThickness, y, -1);
-	pDraw->Vertex3f(x+barThickness, y+innerHeight+barThickness, -1);
-
-	// Draw top bar
-	Float x1 = x + barThickness;
-	
-	pDraw->Vertex3f(x1, y, -1);
-	pDraw->Vertex3f(x1+innerWidth, y, -1);
-	pDraw->Vertex3f(x1, y+barThickness, -1);
-
-	pDraw->Vertex3f(x1, y+barThickness, -1);
-	pDraw->Vertex3f(x1+innerWidth, y, -1);
-	pDraw->Vertex3f(x1+innerWidth, y+barThickness, -1);
-
-	// Draw bottom bar
-	Float y1 = y + innerHeight;
-	pDraw->Vertex3f(x1, y1, -1);
-	pDraw->Vertex3f(x1+innerWidth, y1, -1);
-	pDraw->Vertex3f(x1, y1+barThickness, -1);
-
-	pDraw->Vertex3f(x1, y1+barThickness, -1);
-	pDraw->Vertex3f(x1+innerWidth, y1, -1);
-	pDraw->Vertex3f(x1+innerWidth, y1+barThickness, -1);
-
-	// Draw right bar
-	x1 += innerWidth;
-	pDraw->Vertex3f(x1, y, -1);
-	pDraw->Vertex3f(x1+barThickness, y, -1);
-	pDraw->Vertex3f(x1, y+innerHeight+barThickness, -1);
-
-	pDraw->Vertex3f(x1, y+innerHeight+barThickness, -1);
-	pDraw->Vertex3f(x1+barThickness, y, -1);
-	pDraw->Vertex3f(x1+barThickness, y+innerHeight+barThickness, -1);
-
-	pDraw->End();
-
-	// Draw the dots in the middle
-	Float dotSpacing = 8;
-	x1 = x + barThickness + dotSpacing;
-	y1 = y + innerHeight / 2.0f;
-
-	glPointSize(1);
-	
-	pDraw->Begin(CBasicDraw::DRAW_POINTS);
-	pDraw->Color4f(0.4, 0.4, 0.4, 0.75);
-	
-	while(x1 < (x + barThickness + innerWidth))
-	{
-		pDraw->Vertex3f(x1, y1, -1);
-		x1 += dotSpacing;
-	}
-
-	pDraw->End();
-
-	Vector highColor = Vector(0.3, 0.75, 0.68);
-	Vector lowColor = Vector(0.0, 0.0, 1.0);
-
-	Float lineThickness = 2.0;
-	glLineWidth(lineThickness);
-
-	// Now draw the individual lines
-	x1 = x + barThickness;
-	y1 = y + barThickness + lineThickness * 0.5;
-	innerHeight -= barThickness;
-	innerHeight -= lineThickness * 0.5;
-
-	Uint32 i;
-	Uint32 maxWidthTimings = (graphWidth-barThickness*2) / barThickness;
-	if(nbTimings > maxWidthTimings)
-		i = nbTimings - maxWidthTimings + 1;
-	else
-		i = 1;
-
-	for(; i < nbTimings; i++)
-	{
-		// Calculate first value
-		Float fpsValue1 = fpsHistory[i-1];
-		Float fpsValue1Frac = fpsValue1 / static_cast<Float>(referenceFPS);
-		fpsValue1Frac = clamp(fpsValue1Frac, 0.0, 1.0);
-
-		Vector value1Color = highColor * fpsValue1Frac + lowColor * (1.0 - fpsValue1Frac);
-		Float value1YCoord = y1 + (1.0 - fpsValue1Frac) * innerHeight;
-
-		// Calculate second value
-		Float fpsValue2 = fpsHistory[i];
-		Float fpsValue2Frac = fpsValue2 / static_cast<Float>(referenceFPS);
-		fpsValue2Frac = clamp(fpsValue2Frac, 0.0, 1.0);
-
-		Vector value2Color = highColor * fpsValue2Frac + lowColor * (1.0 - fpsValue2Frac);
-		Float value2YCoord = y1 + (1.0 - fpsValue2Frac) * innerHeight;
-
-		// Draw the lines
-		pDraw->Begin(CBasicDraw::DRAW_LINES);
-		pDraw->Color4f(value1Color.x, value1Color.y, value1Color.z, 0.75);
-		pDraw->Vertex3f(x1, value1YCoord, -1);
-		x1 += barThickness;
-
-		pDraw->Color4f(value2Color.x, value2Color.y, value2Color.z, 0.75);
-		pDraw->Vertex3f(x1, value2YCoord, -1);
-
-		if(i == (MAX_TIMINGS-1) || i == (nbTimings-1))
-		{
-			pDraw->Vertex3f(x1, value2YCoord, -1);
-			pDraw->Vertex3f(x1, y1 + innerHeight, -1);
-		}
-		pDraw->End();
-
-		// Draw spike dot if we had any
-		if(spikeDots[i])
-		{
-			Float dotYCoord = y + barThickness + innerHeight / 2.0f;
-			pDraw->Begin(CBasicDraw::DRAW_POINTS);
-			if(spikeDots[i] == 2)
-				pDraw->Color4f(1.0, 0.0, 0.0, 1.0);
-			else
-				pDraw->Color4f(0.0, 1.0, 0.0, 1.0);
-
-			pDraw->Vertex3f(x1, dotYCoord, -1);
-			pDraw->End();
-		}
-	}
-
-	glLineWidth(1.0);
-	glPointSize(1.0);
-
-	glDisable(GL_BLEND);
-
-	rns.view.modelview.PopMatrix();
-	rns.view.projection.PopMatrix();
-
-	pDraw->Disable();
-	return true;
+	ImGui::End();
 }
 
 //====================================
@@ -2804,6 +2701,44 @@ bool R_DrawHUD( bool hudOnly, bool noFilmGrain )
 	// Call client to draw it's overlay stuff
 	if(!cls.dllfuncs.pfnDrawHUD(hudOnly))
 		return false;
+
+	return true;
+}
+
+//====================================
+//
+//====================================
+bool R_DrawImGui( void )
+{
+	// Usually true, but check just in case.
+	if(ImGui::GetCurrentContext() == nullptr)
+		return false;
+
+	// Start the Dear ImGui frame
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+
+	bool showTimeGraph = g_pCvarTimeGraph->GetValue() >= 1.0f;
+	if( showTimeGraph )
+	{
+		R_DrawTimeGraph();
+	}
+
+	bool showFPSGraph  = g_pCvarFPSGraph->GetValue()  >= 1.0f;
+	if( showFPSGraph )
+	{
+		R_DrawFPSGraph();
+	}
+
+	bool showStatsWindow = g_pCvarStats->GetValue() >= 1.0f;
+	if( showStatsWindow )
+	{
+		R_DrawStats();
+	}
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	return true;
 }
@@ -3229,46 +3164,33 @@ bool R_DrawCharacter( Int32 x, Int32 y, Char character, Uint32 r, Uint32 g, Uint
 //====================================
 //
 //====================================
-bool R_PrintCounters( void )
+void R_DrawStats( void )
 {
-	if( g_pCvarStats->GetValue() <= 0 )
-		return true;
+	// Anchor top-left, no title bar, no resize
+	const ImGuiWindowFlags statsFlags =
+		ImGuiWindowFlags_NoDecoration   |
+		ImGuiWindowFlags_AlwaysAutoResize|
+		ImGuiWindowFlags_NoSavedSettings |
+		ImGuiWindowFlags_NoFocusOnAppearing|
+		ImGuiWindowFlags_NoNav           |
+		ImGuiWindowFlags_NoMove;
 
-	static Double lasttime = 0;
-	Double curtime = Sys_FloatTime();
-	if(!lasttime)
+	ImGui::SetNextWindowPos(
+		ImVec2(10.0f, 8.0f),
+		ImGuiCond_Always,
+		ImVec2(0.0f, 0.0f));
+
+	if(ImGui::Begin("##statsgraph", nullptr, statsFlags))
 	{
-		lasttime = curtime;
-		return true;
+		CString strPrint;
+		strPrint << static_cast<Int32>(rns.counters.brushpolies) << " wpolys ("
+				 << static_cast<Int32>(rns.counters.batches) << " batches), "
+				 << static_cast<Int32>(rns.counters.modelpolies) << " vbm polys, "
+				 << static_cast<Int32>(rns.counters.particles) << " particles";
+
+		ImGui::TextUnformatted(strPrint.c_str());
 	}
-
-	Double frametime = curtime-lasttime;
-	lasttime = curtime;
-
-	// prevent divide by zero
-	if(frametime <= 0) frametime = 1;
-	if(frametime > 1) frametime = 1;
-
-	Uint32 fps = 1/frametime;
-	CString strPrint;
-	strPrint << static_cast<Int32>(rns.counters.brushpolies) << " wpolys(" << static_cast<Int32>(rns.counters.batches) << " batches), "
-		<< static_cast<Int32>(rns.counters.modelpolies) << " vbm polys, " 
-		<< static_cast<Int32>(rns.counters.particles) << " particles, " 
-		<< static_cast<Int32>(fps) << " fps\n";
-
-	glDepthMask(GL_FALSE);
-	glDisable(GL_DEPTH_TEST);
-
-	if(!R_DrawString(color32_t(255, 255, 255, 255), 15, 25, strPrint.c_str(), nullptr))
-	{
-		Sys_ErrorPopup("Shader error: %s.", gText.GetShaderError());
-		return false;
-	}
-
-	glDepthMask(GL_TRUE);
-	glEnable(GL_DEPTH_TEST);
-	
-	return true;
+	ImGui::End();
 }
 
 //====================================

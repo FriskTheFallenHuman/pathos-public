@@ -81,6 +81,7 @@ public:
 	Int32 GetCenterY( void ) const;
 
 	SDL_Window* GetWindow() { return m_pSDLWindow; }
+	SDL_GLContext GetGLContext() { return m_sdlContext; }
 
 	Int32 GetNbResolutions( Int32 deviceIndex ) const;
 	void GetResolutionInfo( Int32 deviceIndex, Int32 index, Uint32& width, Uint32& height ) const;

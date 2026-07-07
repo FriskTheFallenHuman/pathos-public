@@ -1063,6 +1063,7 @@ void Sys_PollEvents( void )
 	SDL_Event mainEvent;
 	while(SDL_PollEvent(&mainEvent) != 0)
 	{
+		ImGui_ImplSDL2_ProcessEvent(&mainEvent);
 		if(mainEvent.type == SDL_WINDOWEVENT)
 		{
 			switch(mainEvent.window.event)
@@ -1100,27 +1101,13 @@ void Sys_PollEvents( void )
 //=============================================
 Int32 Sys_Main( CArray<CString>* argsArray )
 {
-	// Avoid launching multiple instances
-	HANDLE hMutex = CreateMutex(nullptr, FALSE, "PathosEngineInstanceMutex");
-
-	if(nullptr != hMutex)
-		GetLastError();
-
-	DWORD mutexResult = WaitForSingleObject(hMutex, 0);
-	if(mutexResult != WAIT_OBJECT_0 && mutexResult != WAIT_ABANDONED)
-	{
-		Sys_ErrorPopup("Only one instance of this game can be running at a time.");
-		Con_EPrintf("Error during system initialization.\n");
-		ReleaseMutex(hMutex);
-		CloseHandle(hMutex);
-		return -1;
-	}
+#ifdef _WIN32
+    ::SetProcessDPIAware();
+#endif
 
 	if(!Sys_Init( argsArray ))
 	{
 		Con_EPrintf("Error during system initialization.\n");
-		ReleaseMutex(hMutex);
-		CloseHandle(hMutex);
 		return -1;
 	}
 
@@ -1152,9 +1139,6 @@ Int32 Sys_Main( CArray<CString>* argsArray )
 	}
 
 	Sys_Shutdown();
-
-	ReleaseMutex(hMutex);
-	CloseHandle(hMutex);
 
 	return 0;
 }
