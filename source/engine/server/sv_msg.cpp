@@ -854,7 +854,7 @@ Int32 SV_PrecacheSound( const Char* pstrFilepath )
 		filepath << SOUND_FOLDER_BASE_PATH << pstrFilepath;
 		if(!FL_FileExists(filepath.c_str()))
 		{
-			Con_Printf("[flags=onlyonce_game]%s - File '%s' does not exist.\n", __FUNCTION__, filepath.c_str());
+			Con_WPrintf("[flags=onlyonce_game]Couldn't open wav file '%s' does not exist.\n", filepath.c_str());
 			return NO_PRECACHE;
 		}
 
@@ -870,7 +870,7 @@ Int32 SV_PrecacheSound( const Char* pstrFilepath )
 		}
 		else
 		{
-			Con_Printf("[flags=onlyonce_game]%s - %s is not a valid sound file.\n", __FUNCTION__, filepath.c_str());
+			Con_WPrintf("[flags=onlyonce_game]%s is not a valid sound file.\n", filepath.c_str());
 			return NO_PRECACHE;
 		}
 	}
@@ -915,7 +915,7 @@ bool SV_PrecacheParticleScript( const Char* pstrfilepath, part_script_type_t typ
 	filepath << PARTICLE_SCRIPT_PATH << pstrfilepath;
 	if(!FL_FileExists(filepath.c_str()))
 	{
-		Con_Printf("[flags=onlyonce_game]%s - File '%s' does not exist.\n", __FUNCTION__, filepath.c_str());
+		Con_WPrintf("[flags=onlyonce_game]Couldn't open particle script '%s' does not exist.\n", filepath.c_str());
 		return false;
 	}
 

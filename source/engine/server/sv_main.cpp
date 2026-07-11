@@ -2477,13 +2477,13 @@ Float SV_GetWAVFileDuration( const Char* pstrfilename )
 	const byte* pfile = FL_LoadFile(filepath.c_str(), &filesize);
 	if(!pfile)
 	{
-		Con_Printf("[flags=onlyonce_game]%s - Failed to open '%s'.\n", __FUNCTION__, pstrfilename);
+		Con_WPrintf("[flags=onlyonce_game]Couldn't open wav file '%s'.\n", pstrfilename);
 		return 0;
 	}
 
 	if(qstrncmp(reinterpret_cast<const Char*>(pfile), "RIFF", 4))
 	{
-		Con_Printf("[flags=onlyonce_game]%s - '%s' is not a valid WAV file.\n", __FUNCTION__, pstrfilename);
+		Con_WPrintf("[flags=onlyonce_game]'%s' is not a valid WAV file.\n", pstrfilename);
 		FL_FreeFile(pfile);
 		return 0;
 	}

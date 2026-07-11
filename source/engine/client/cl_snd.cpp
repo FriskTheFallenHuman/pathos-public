@@ -1207,13 +1207,13 @@ bool CSoundEngine::LoadSoundData( const Char *sample, snd_cache_t* pcache, Int32
 		newMissing.sv_index = serverindex;
 		m_missingArray.push_back(newMissing);
 
-		Con_Printf("%s - Could not precache: %s.\n", __FUNCTION__, sample);
+		Con_WPrintf("Failed to precache: %s.\n", sample);
 		return nullptr;
 	}
 
 	if(strncmp(reinterpret_cast<const Char *>(pfile), "RIFF", 4))
 	{
-		Con_Printf("%s - %s is not a valid .WAV file!\n", __FUNCTION__, sample);
+		Con_WPrintf("%s is not a valid .WAV file!\n", sample);
 		FL_FreeFile(pfile);
 		return nullptr;
 	}

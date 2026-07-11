@@ -86,7 +86,7 @@ const Char CUISettingsWindow::VIDEOTAB_GAMMA_SLIDER_OBJ_NAME[] = "GammaSlider";
 // Advance tab list object name
 const Char CUISettingsWindow::ADVANCED_TAB_LIST_OBJ_NAME[] = "AdvancedTabList";
 // Advanced tab options list file
-const Char CUISettingsWindow::ADVANCED_DESC_FILE[] = "advanced_default.scr";
+const Char CUISettingsWindow::ADVANCED_DESC_FILE[] = "scripts/advanced_default.scr";
 // Advanced tab options list file
 const Char CUISettingsWindow::SCROLLSURFACE_OPTION_LABEL_OBJ_NAME[] = "ScrollSurfaceOptionLabel";
 // Advanced tab options list file
@@ -176,7 +176,7 @@ const Char CUISettingsWindow::GAMEPLAY_TAB_FOV_TEXT_OBJ_NAME[] = "FOVText";
 // Gameplay tab list object name
 const Char CUISettingsWindow::GAMEPLAY_TAB_LIST_OBJ_NAME[] = "GameplayTabList";
 // Advanced tab options list file
-const Char CUISettingsWindow::GAMEPLAY_DESC_FILE[] = "gameplay_default.scr";
+const Char CUISettingsWindow::GAMEPLAY_DESC_FILE[] = "scripts/gameplay_default.scr";
 
 // Binds file path
 const Char CUISettingsWindow::BINDS_FILE_PATH[] = "scripts/kb_act.lst";
