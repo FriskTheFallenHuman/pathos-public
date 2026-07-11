@@ -678,7 +678,7 @@ void VID_Draw( void )
 		ens.exit = true;
 		return;
 	}
-
+	
 	// Draw paused logo if needed
 	if(cls.paused && ens.gamestate != GAME_LOADING && !gMenu.IsActive())
 	{
@@ -719,7 +719,7 @@ void VID_Draw( void )
 		ens.exit = true;
 		return;
 	}
-
+	
 	// Swap the OGL buffer
 	gWindow.SwapWindow();
 
