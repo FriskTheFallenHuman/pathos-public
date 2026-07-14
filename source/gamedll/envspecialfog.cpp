@@ -74,7 +74,7 @@ void CEnvSpecialFog::DeclareSaveFields( void )
 // @brief
 //
 //=============================================
-void CEnvSpecialFog::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSpecialFog::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pEntity;

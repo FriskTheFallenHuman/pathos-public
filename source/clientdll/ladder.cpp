@@ -27,21 +27,21 @@ All Rights Reserved.
 CLadder gLadder;
 
 // Max angle deviation
-const Float CLadder::LADDER_V_MAX_ADD = 30;
+const float CLadder::LADDER_V_MAX_ADD = 30;
 // Max add on X
-const Float CLadder::LADDER_MAX_ADD_X = 20;
+const float CLadder::LADDER_MAX_ADD_X = 20;
 // Max add on Y
-const Float CLadder::LADDER_MAX_ADD_Y = 30;
+const float CLadder::LADDER_MAX_ADD_Y = 30;
 // Min add on Y
-const Float CLadder::LADDER_MIN_ADD_Y = 10;
+const float CLadder::LADDER_MIN_ADD_Y = 10;
 // Mouse move timeout
-const Double CLadder::LADDER_MOUSEMOVE_TIMEOUT = 5;
+const double CLadder::LADDER_MOUSEMOVE_TIMEOUT = 5;
 // Mouse move timeout blend time
-const Double CLadder::LADDER_MOUSEMOVE_TIMEOUT_BLEND = 1;
+const double CLadder::LADDER_MOUSEMOVE_TIMEOUT_BLEND = 1;
 // Model name for view entity
-const Char CLadder::LADDER_VIEWMODEL_NAME[] = "models/v_sequences.mdl";
+const char CLadder::LADDER_VIEWMODEL_NAME[] = "models/v_sequences.mdl";
 // Array of sequence names to look up
-const Char* CLadder::LADDER_SEQUENCE_NAMES[] = {
+const char* CLadder::LADDER_SEQUENCE_NAMES[] = {
 	"idle",
 	"ladder_down_lup",
 	"ladder_down_rup",
@@ -254,7 +254,7 @@ void CLadder::Think( void )
 				Math::VectorAdd(m_svOrigin, pplayer->curstate.view_offset, m_viewBlendOrigin);
 				Math::VectorCopy(m_svAngles, m_viewBlendAngles);
 
-				for(Uint32 i = 0; i < 3; i++)
+				for(UInt32 i = 0; i < 3; i++)
 				{
 					if(SDL_fabs(m_viewBlendAngles[i]) == 360.0f)
 						m_viewBlendAngles[i] = 0;
@@ -357,8 +357,8 @@ void CLadder::Think( void )
 
 			if(m_viewEntBlend)
 			{
-				Double time = clamp((m_time - m_viewEntBlendBeginTime), 0,  m_viewEntBlendDelta);
-				Float fldelta = Common::SplineFraction( time, (1.0/m_viewEntBlendDelta) );
+				double time = Clamp((m_time - m_viewEntBlendBeginTime), 0,  m_viewEntBlendDelta);
+				float fldelta = Common::SplineFraction( time, (1.0/m_viewEntBlendDelta) );
 				m_viewEntity.curstate.origin = (1.0-fldelta)*pplayer->curstate.origin+fldelta*m_viewEntBlendOrigin;
 			}
 		}
@@ -367,8 +367,8 @@ void CLadder::Think( void )
 	// degrade the view add value
 	if(m_lastMouseMove != -1 && (m_lastMouseMove+LADDER_MOUSEMOVE_TIMEOUT) <= m_time)
 	{
-		Float time = clamp((m_time-(m_lastMouseMove+LADDER_MOUSEMOVE_TIMEOUT)), 0, LADDER_MOUSEMOVE_TIMEOUT_BLEND);
-		Float flfrac = Common::SplineFraction( time, (1.0/LADDER_MOUSEMOVE_TIMEOUT_BLEND) );
+		float time = Clamp((m_time-(m_lastMouseMove+LADDER_MOUSEMOVE_TIMEOUT)), 0, LADDER_MOUSEMOVE_TIMEOUT_BLEND);
+		float flfrac = Common::SplineFraction( time, (1.0/LADDER_MOUSEMOVE_TIMEOUT_BLEND) );
 
 		if(flfrac >= 1.0)
 		{
@@ -414,16 +414,16 @@ void CLadder::CalcRefDef( ref_params_t& params )
 			Math::VectorCopy(params.v_origin, m_viewBlendOrigin);
 			Math::VectorCopy(params.v_angles, m_viewBlendAngles);
 
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 			{
 				if(SDL_fabs(m_viewBlendAngles[i]) == 360.0f)
 					m_viewBlendAngles[i] = 0;
 			}
 		}
 		
-		Float time = clamp((params.time - m_viewBlendBeginTime), 0, m_viewBlendDelta);
-		Float fldelta = Common::SplineFraction( time, (1.0/m_viewBlendDelta) );
-		fldelta = clamp(fldelta, 0.0, 1.0);
+		float time = Clamp((params.time - m_viewBlendBeginTime), 0, m_viewBlendDelta);
+		float fldelta = Common::SplineFraction( time, (1.0/m_viewBlendDelta) );
+		fldelta = Clamp(fldelta, 0.0, 1.0);
 
 		if(m_activeLadderState == LADDER_STATE_ENTERING)
 		{
@@ -431,9 +431,9 @@ void CLadder::CalcRefDef( ref_params_t& params )
 			Math::VectorScale(tmp, fldelta, v_origin);
 			Math::VectorMA(v_origin, (1.0-fldelta), m_viewBlendOrigin, v_origin);
 
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 			{
-				Float diff = Math::AngleDiff(v_angles[i], m_viewBlendAngles[i]);
+				float diff = Math::AngleDiff(v_angles[i], m_viewBlendAngles[i]);
 				v_angles[i] = m_viewBlendAngles[i]+diff*(fldelta);
 			}
 		}
@@ -443,9 +443,9 @@ void CLadder::CalcRefDef( ref_params_t& params )
 			Math::VectorScale(m_viewBlendOrigin, fldelta, v_origin);
 			Math::VectorMA(v_origin, (1.0-fldelta), tmp, v_origin);
 
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 			{
-				Float diff = Math::AngleDiff(v_angles[i], m_viewBlendAngles[i]);
+				float diff = Math::AngleDiff(v_angles[i], m_viewBlendAngles[i]);
 				v_angles[i] = diff*(1.0-fldelta)+m_viewBlendAngles[i];
 			}
 		}
@@ -492,7 +492,7 @@ bool CLadder::IsActive( void ) const
 // @brief
 //
 //=============================================
-void CLadder::ProcessMessage( const byte* pdata, Uint32 msgsize )
+void CLadder::ProcessMessage( const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
@@ -548,7 +548,7 @@ void CLadder::ProcessMessage( const byte* pdata, Uint32 msgsize )
 // @brief
 //
 //=============================================
-void CLadder::SetSequence( const Char* psequence )
+void CLadder::SetSequence( const char* psequence )
 {
 	if(!m_viewEntity.pmodel || !m_viewEntity.pmodel->pcachedata)
 	{
@@ -566,7 +566,7 @@ void CLadder::SetSequence( const Char* psequence )
 		return;
 	}
 
-	for(Uint32 i = 0; i < MAX_BLENDING; i++)
+	for(UInt32 i = 0; i < MAX_BLENDING; i++)
 		m_viewEntity.latched.prevseqblending[i] = m_viewEntity.curstate.blending[i];
 
 	m_viewEntity.latched.sequence = m_viewEntity.curstate.sequence;
@@ -609,7 +609,7 @@ void CLadder::PlayStepSound( void )
 // @brief
 //
 //=============================================
-void CLadder::MouseMove( Float mousex, Float mousey )
+void CLadder::MouseMove( float mousex, float mousey )
 {
 	if(m_activeLadderState == LADDER_STATE_LEAVING || m_activeLadderState == LADDER_STATE_ENTERING)
 		return;
@@ -660,7 +660,7 @@ void CLadder::GetViewInfo( Vector& origin, Vector& angles )
 bool CLadder::DrawLadder( cl_entity_t *pLadder )
 {
 	// Remember body
-	Uint64 savedBody = pLadder->curstate.body;
+	UInt64 savedBody = pLadder->curstate.body;
 
 	// Remember origin
 	Vector savedOrigin;
@@ -687,8 +687,8 @@ bool CLadder::DrawLadder( cl_entity_t *pLadder )
 	pLadder->curstate.body = 0; // Remove top part
 
 	// Draw segments
-	Uint32 numsegments = pLadder->curstate.numsegments;
-	for(Uint32 i = 0; i < numsegments; i++)
+	UInt32 numsegments = pLadder->curstate.numsegments;
+	for(UInt32 i = 0; i < numsegments; i++)
 	{
 		// Subtract piece height
 		pLadder->curstate.origin.z -= LADDER_PIECE_HEIGHT;
@@ -715,7 +715,7 @@ bool CLadder::DrawLadder( cl_entity_t *pLadder )
 bool CLadder::DrawLadderVSM( cl_entity_t *pLadder, cl_dlight_t *dl )
 {
 	// Use a dummy to render
-	Uint64 savedBody = pLadder->curstate.body;
+	UInt64 savedBody = pLadder->curstate.body;
 
 	// Remember origin
 	Vector savedOrigin;
@@ -733,8 +733,8 @@ bool CLadder::DrawLadderVSM( cl_entity_t *pLadder, cl_dlight_t *dl )
 	pLadder->curstate.body = 0; // Remove top part
 
 	// Draw segments
-	Uint32 numsegments = pLadder->curstate.numsegments;
-	for(Uint32 i = 0; i < numsegments; i++)
+	UInt32 numsegments = pLadder->curstate.numsegments;
+	for(UInt32 i = 0; i < numsegments; i++)
 	{
 		// Subtract ladder piece height
 		pLadder->curstate.origin.z -= LADDER_PIECE_HEIGHT;
@@ -763,8 +763,8 @@ bool CLadder::Draw( void )
 	if(m_pCvarDrawEntities->GetValue() < 1)
 		return true;
 
-	Uint32 nbvisentities = cl_renderfuncs.pfnGetNumRenderEntities();
-	for(Uint32 i = 0; i < nbvisentities; i++)
+	UInt32 nbvisentities = cl_renderfuncs.pfnGetNumRenderEntities();
+	for(UInt32 i = 0; i < nbvisentities; i++)
 	{
 		cl_entity_t* pentity = cl_renderfuncs.pfnGetRenderEntityByIndex(i);
 		if(!pentity)
@@ -816,8 +816,8 @@ bool CLadder::DrawVSM( cl_dlight_t *dl ) const
 	if(m_pCvarDrawEntities->GetValue() < 1)
 		return true;
 
-	Uint32 nbvisentities = cl_renderfuncs.pfnGetNumRenderEntities();
-	for(Uint32 i = 0; i < nbvisentities; i++)
+	UInt32 nbvisentities = cl_renderfuncs.pfnGetNumRenderEntities();
+	for(UInt32 i = 0; i < nbvisentities; i++)
 	{
 		cl_entity_t* pentity = cl_renderfuncs.pfnGetRenderEntityByIndex(i);
 		if(!pentity)

@@ -32,7 +32,7 @@ struct svphysics_t
 	// Array of saved entity states
 	CArray<saved_move_t> savedmovingentities;
 	// Number of saved entities
-	Uint32 numsavedmovingents;
+	UInt32 numsavedmovingents;
 
 	// Touch link semaphore for safety
 	bool touchlinksemaphore;

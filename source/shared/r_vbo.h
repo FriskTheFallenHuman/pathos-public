@@ -17,7 +17,7 @@ class CGLExtF;
 // For setting the offset in the datatype
 #define OFFSET(type, variable) ((const void*)&(((type*)nullptr)->variable))
 // For calls to glDrawElements
-#define BUFFER_OFFSET(i) ((Uint32 *)nullptr + (i))
+#define BUFFER_OFFSET(i) ((UInt32 *)nullptr + (i))
 
 // Maximum GLSL attributes
 #define MAX_ATTRIBS 32
@@ -36,8 +36,8 @@ struct attrib_t
 	const void *ptr;
 	bool active;
 
-	Uint32 size;
-	Uint32 stride;
+	UInt32 size;
+	UInt32 stride;
 };
 
 //====================
@@ -50,24 +50,24 @@ public:
 	friend class CGLSLShader;
 
 public:
-	CVBO( const CGLExtF& glExtF, const void *pvbodata, Uint32 ivbodatasize, const void *pibodata, Uint32 iibodatasize, bool keepcache = false, bool usevao = true );
+	CVBO( const CGLExtF& glExtF, const void *pvbodata, UInt32 ivbodatasize, const void *pibodata, UInt32 iibodatasize, bool keepcache = false, bool usevao = true );
 	CVBO ( const CGLExtF& glExtF, bool bvbo, bool bibo, bool usevao = true );
 	~CVBO( void );
 	void Clear( void );
 
-	void SetAttribPointer( Int32 index, Uint32 size, Uint32 type, Uint32 stride, const void *pointer );
+	void SetAttribPointer( Int32 index, UInt32 size, UInt32 type, UInt32 stride, const void *pointer );
 	void DisableAttribPointer( Int32 index );
 
-	void VBOSubBufferData( Uint32 offset, const void *pdata, Uint32 size );
-	void IBOSubBufferData( Uint32 offset, const void *pdata, Uint32 size );
+	void VBOSubBufferData( UInt32 offset, const void *pdata, UInt32 size );
+	void IBOSubBufferData( UInt32 offset, const void *pdata, UInt32 size );
 
 	void ClearGL( void );
 	void RebindGL( void );
 
-	Uint32 GetVBOSize( void ) const { return m_iVBOSize; }
-	Uint32 GetIBOSize( void ) const { return m_iIBOSize; }
+	UInt32 GetVBOSize( void ) const { return m_iVBOSize; }
+	UInt32 GetIBOSize( void ) const { return m_iIBOSize; }
 
-	bool Append( const void *pvbodata, Uint32 ivbodatasize, const void *pibodata, Uint32 iibodatasize );
+	bool Append( const void *pvbodata, UInt32 ivbodatasize, const void *pibodata, UInt32 iibodatasize );
 	void DeleteCaches( void );
 
 	bool IsValid( void ) const { return m_isValid; }
@@ -92,10 +92,10 @@ public:
 	GLuint GetVAOIndex( void ) const { return m_uiVAOIndex; }
 
 	const void* GetVBOData( void ) const { return m_pVBOData; }
-	const Uint32 GetVBODataSize( void ) const { return m_iVBOSize; }
+	const UInt32 GetVBODataSize( void ) const { return m_iVBOSize; }
 
 	const void* GetIBOData( void ) const { return m_pIBOData; }
-	const Uint32 GetIBODataSize( void ) const { return m_iIBOSize; }
+	const UInt32 GetIBODataSize( void ) const { return m_iIBOSize; }
 
 private:
 	GLuint	m_uiVBOIndex;
@@ -111,10 +111,10 @@ private:
 	bool	m_useVAO;
 
 	void *m_pVBOData;
-	Uint32 m_iVBOSize;
+	UInt32 m_iVBOSize;
 
 	void *m_pIBOData;
-	Uint32 m_iIBOSize;
+	UInt32 m_iIBOSize;
 
 	attrib_t m_pAttribPointers[MAX_ATTRIBS];
 

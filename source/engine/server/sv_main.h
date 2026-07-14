@@ -10,10 +10,6 @@ All Rights Reserved.
 #ifndef SV_MAIN_H
 #define SV_MAIN_H
 
-#include <string>
-#include <unordered_map>
-#include <map>
-
 #include "gdll_interface.h"
 #include "sv_shared.h"
 #include "usercmd.h"
@@ -37,15 +33,15 @@ static constexpr Int32 MAX_AREA_NODES = 32;
 static constexpr Int32 MAX_TOUCHENTS = 64;
 
 // Usercmd buffer allocation size
-static constexpr Uint32 USERCMD_ALLOC_SIZE = 64;
+static constexpr UInt32 USERCMD_ALLOC_SIZE = 64;
 
 // Server dll path
 #ifdef _64BUILD
-static const Char SERVER_DLL_PATH[] = "dlls/game_x64.dll";
-static const Char SERVER_DLL_NAME[] = "game_x64.dll";
+static const char SERVER_DLL_PATH[] = "dlls/game_x64.dll";
+static const char SERVER_DLL_NAME[] = "game_x64.dll";
 #else
-static const Char SERVER_DLL_PATH[] = "dlls/game_x86.dll";
-static const Char SERVER_DLL_NAME[] = "game_x86.dll";
+static const char SERVER_DLL_PATH[] = "dlls/game_x86.dll";
+static const char SERVER_DLL_NAME[] = "game_x86.dll";
 #endif
 
 class Vector;
@@ -59,9 +55,9 @@ typedef void (*pfnPrivateData_t)( edict_t* pedict );
 // Datatype for decal cache key
 typedef std::pair<CString, decalcache_type_t> DecalCacheMapKey_t;
 // Datatype for cache name->index mappings
-typedef std::map<DecalCacheMapKey_t, Uint32> DecalCacheNameIndexMap_t;
+typedef std::map<DecalCacheMapKey_t, UInt32> DecalCacheNameIndexMap_t;
 // Datatype for cache name->index mappings
-typedef std::unordered_map<CString, Uint32> CacheNameIndexMap_t;
+typedef std::unordered_map<CString, UInt32> CacheNameIndexMap_t;
 
 enum sv_state_t
 {
@@ -95,10 +91,10 @@ struct sv_entitypacket_t
 		numentities(0),
 		cl_packetindex(0)
 	{
-		for(Uint32 i = 0; i < MAX_VISIBLE_ENTITIES; i++)
+		for(UInt32 i = 0; i < MAX_VISIBLE_ENTITIES; i++)
 			entities[i] = entity_state_t();
 
-		for(Uint32 i = 0; i < cl_entitystates.size(); i++)
+		for(UInt32 i = 0; i < cl_entitystates.size(); i++)
 			cl_entitystates[i] = entity_state_t();
 	}
 
@@ -106,10 +102,10 @@ struct sv_entitypacket_t
 	CArray<bool> cl_wasinpacket;
 
 	entity_state_t entities[MAX_VISIBLE_ENTITIES];
-	Uint32 numentities;
+	UInt32 numentities;
 
 	// client index in packet
-	Uint32 cl_packetindex;
+	UInt32 cl_packetindex;
 };
 
 struct areanode_t
@@ -125,7 +121,7 @@ struct areanode_t
 
 	Int32 index;
 	Int32 axis;
-	Float dist;
+	float dist;
 
 	struct areanode_t *pchildren[2];
 
@@ -142,7 +138,7 @@ struct sv_upload_t
 	// File path
 	CString filepath;
 	// File id on client
-	Uint32 fileid;
+	UInt32 fileid;
 
 	// File chunks
 	CLinkedList<filechunk_t*> chunkslist;
@@ -179,7 +175,7 @@ struct sv_levelchangeinfo_t
 	// List of entities to transfer
 	Int32 transitionentitylist[MAX_TRANSITIONING_ENTITIES];
 	// Number of entities in list
-	Uint32 numtransitionentities;
+	UInt32 numtransitionentities;
 
 	// List of transitioning decals
 	CLinkedList<saveddecal_t> transitiondecallist;
@@ -202,11 +198,11 @@ struct sv_client_t
 		};
 
 	// Client's index
-	Uint32 index;
+	UInt32 index;
 	// Pointer to player entity
 	edict_t* pedict;
 	// Time player joined
-	Double jointime;
+	double jointime;
 
 	// Packet of entities
 	sv_entitypacket_t packet;
@@ -214,10 +210,10 @@ struct sv_client_t
 	// Array of usercmds
 	CArray<usercmd_t> usercmdarray;
 	// Number of usercmds
-	Uint32 numusercmd;
+	UInt32 numusercmd;
 
 	// Last acknowledged usercmd
-	Uint64 lastusercmdidx;
+	UInt64 lastusercmdidx;
 
 	// Tells if client is active
 	bool active;
@@ -280,7 +276,7 @@ struct sv_sound_t
 	Int32 sv_index;
 
 	// sound file length
-	Float duration;
+	float duration;
 };
 
 struct sv_model_t
@@ -306,7 +302,7 @@ struct sv_particlecache_t
 };
 
 // Datatype for uermsg read function on server(needs edict ptr)
-typedef bool (*pfnSVUserMsg_t)( edict_t* pclient, const Char* pstrName, const byte* pdata, Uint32 msgsize );
+typedef bool (*pfnSVUserMsg_t)( edict_t* pclient, const char* pstrName, const Byte* pdata, UInt32 msgsize );
 
 struct sv_usermsgfunction_t
 {
@@ -318,7 +314,7 @@ struct sv_usermsgfunction_t
 	// Message name
 	CString name;
 	// Server-side ID
-	Uint32 id;
+	UInt32 id;
 
 	// pointer to function
 	pfnSVUserMsg_t pfnReadMsg;
@@ -357,9 +353,9 @@ struct stringbuffer_t
 	// Buffer holding the strings
 	CArray<const CString*> buffer;
 	// Number of strings in buffer
-	Uint32 numstrings;
+	UInt32 numstrings;
 	// Name->position map
-	std::unordered_map<CString, Uint32> stringposmap;
+	std::unordered_map<CString, UInt32> stringposmap;
 };
 
 struct saveddecal_t
@@ -376,7 +372,7 @@ struct saveddecal_t
 	CString decaltexture;
 
 	edict_t* pedict;
-	Uint32 identifier;
+	UInt32 identifier;
 
 	Int32 flags;
 };
@@ -408,9 +404,9 @@ struct serverstate_t
 		lastpvschecktime(0),
 		lastpvscheckclient(-1)
 	{
-		for(Uint32 i = 0; i < MAX_MAP_HULLS; i++)
+		for(UInt32 i = 0; i < MAX_MAP_HULLS; i++)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 			{
 				player_mins[i][j] = 0;
 				player_maxs[i][j] = 0;
@@ -437,12 +433,12 @@ struct serverstate_t
 	CString prevmapname;
 
 	// Time since game was spawned
-	Double time;
+	double time;
 	// Server frametime
-	Double frametime;
+	double frametime;
 
 	// max clients
-	Uint32 maxclients;
+	UInt32 maxclients;
 	// client info array
 	sv_client_t clients[MAX_CLIENTS];
 	// host client ptr
@@ -455,11 +451,11 @@ struct serverstate_t
 	Vector player_maxs[MAX_MAP_HULLS];
 
 	// player idx currently managed by pmove
-	Uint32 pmoveplayerindex;
+	UInt32 pmoveplayerindex;
 	// entities touched by player in pmove
 	trace_t pmovetraces[MAX_TOUCHENTS];
 	// number of entities touched by player in pmove
-	Uint32 numpmovetraces;
+	UInt32 numpmovetraces;
 
 	// Game DLL handle
 	void* pdllhandle;
@@ -471,7 +467,7 @@ struct serverstate_t
 	// Array of area nodes
 	CArray<areanode_t> areanodes;
 	// Number of area nodes used
-	Uint32 numareanodes;
+	UInt32 numareanodes;
 
 	// view entity
 	edict_t* pviewentity;
@@ -536,11 +532,11 @@ struct serverstate_t
 	bool saverestore;
 
 	// VIS buffer
-	byte* pvisbuffer;
+	Byte* pvisbuffer;
 	// PAS buffer
-	byte* ppasbuffer;
+	Byte* ppasbuffer;
 	// PVS checkbuffer
-	byte* pvischeckbuffer;
+	Byte* pvischeckbuffer;
 
 	// Error sprite
 	cache_model_t* perrorsprite;
@@ -554,10 +550,10 @@ struct serverstate_t
 	CLinkedList<saveddecal_t> saveddecalslist;
 
 	// Load begin time
-	Double loadbegintime;
+	double loadbegintime;
 
 	// Last pvs check time
-	Double lastpvschecktime;
+	double lastpvschecktime;
 	// Last PVS check client
 	entindex_t lastpvscheckclient;
 };
@@ -587,71 +583,71 @@ extern CCVar* g_psv_holdtoduck;
 
 extern bool SV_Init( void );
 extern void SV_Shutdown( void );
-extern bool SV_SpawnGame( const Char* pstrLevelName, const Char* pstrSaveFile = nullptr, const Char* pstrTransitionSave = nullptr, bool clearLoadingScreen = true );
+extern bool SV_SpawnGame( const char* pstrLevelName, const char* pstrSaveFile = nullptr, const char* pstrTransitionSave = nullptr, bool clearLoadingScreen = true );
 extern void SV_ClearGame( bool clearloadingscreen = true, bool clearconnections = true );
 extern void SV_Frame( void );
 extern void SV_Physics( void );
 extern bool SV_InitGame( void );
 
 extern void SV_GetPlayerHulls( void );
-extern void SV_DropClient( sv_client_t& cl, const Char* pstrReason );
+extern void SV_DropClient( sv_client_t& cl, const char* pstrReason );
 extern void SV_ClearClient( sv_client_t& client );
-extern void SV_PrepareClient( Uint32 client_index );
+extern void SV_PrepareClient( UInt32 client_index );
 extern void SV_ClientDisconnected( sv_client_t& cl );
-extern void SV_EstablishedClientConnection( Uint32 client_index );
-extern bool SV_VerifyClient( sv_client_t& cl, const Char* pstrPlayerName );
+extern void SV_EstablishedClientConnection( UInt32 client_index );
+extern bool SV_VerifyClient( sv_client_t& cl, const char* pstrPlayerName );
 extern bool SV_SpawnClient( sv_client_t& cl );
 extern sv_client_t* SV_GetHostClient( void );
 extern edict_t* SV_FindSpawnSpot( void );
 
-extern Int32 SV_PrecacheModel( const Char* pstrFilepath );
-extern Int32 SV_PrecacheSound( const Char* pstrFilepath );
+extern Int32 SV_PrecacheModel( const char* pstrFilepath );
+extern Int32 SV_PrecacheSound( const char* pstrFilepath );
 
-extern byte* SV_SetPAS( const Vector& origin );
-extern byte* SV_SetPVS( const Vector& origin );
+extern Byte* SV_SetPAS( const Vector& origin );
+extern Byte* SV_SetPVS( const Vector& origin );
 
 extern void SV_SetGroupMask( Int32 mask, Int32 op );
-extern void* SV_FunctionFromName( const Char* pstrName );
-extern const Char* SV_NameForFunction( const void* functionPtr );
-extern void SV_AddEnforcedConsistencyFile( const Char* pstrFilename );
+extern void* SV_FunctionFromName( const char* pstrName );
+extern const char* SV_NameForFunction( const void* functionPtr );
+extern void SV_AddEnforcedConsistencyFile( const char* pstrFilename );
 
 extern bool SV_IsHostClient( entindex_t entindex );
 extern bool SV_IsWorldSpawn( entindex_t entindex );
 
-extern const Char* SV_TraceTexture( Int32 groundentity, const Vector& start, const Vector& end );
-extern const en_material_t* SV_GetMapTextureMaterial( const Char* pstrtexturename );
-extern const en_material_t* SV_GetModelTextureMaterial( Int32 modelindex, const Char* pstrtexturename );
+extern const char* SV_TraceTexture( Int32 groundentity, const Vector& start, const Vector& end );
+extern const en_material_t* SV_GetMapTextureMaterial( const char* pstrtexturename );
+extern const en_material_t* SV_GetModelTextureMaterial( Int32 modelindex, const char* pstrtexturename );
 
-extern const Char* SV_GetString( string_t stringindex );
-extern Uint32 SV_AllocString( const Char* pString );
+extern const char* SV_GetString( string_t stringindex );
+extern UInt32 SV_AllocString( const char* pString );
 
-extern void SV_ServerCommand( const Char* pstrCmd );
-extern void SV_ClientCommand( edict_t* pclient, const Char* pstrCmd );
+extern void SV_ServerCommand( const char* pstrCmd );
+extern void SV_ClientCommand( edict_t* pclient, const char* pstrCmd );
 
-extern bool SV_GetBonePositionByName( edict_t* pedict, const Char* pstrbonename, Vector& position );
-extern bool SV_GetBonePositionByIndex( edict_t* pedict, Uint32 boneindex, Vector& position );
-extern bool SV_GetAttachment( edict_t* pedict, Uint32 index, Vector& position );
+extern bool SV_GetBonePositionByName( edict_t* pedict, const char* pstrbonename, Vector& position );
+extern bool SV_GetBonePositionByIndex( edict_t* pedict, UInt32 boneindex, Vector& position );
+extern bool SV_GetAttachment( edict_t* pedict, UInt32 index, Vector& position );
 
-extern void SV_PrecacheGeneric( const Char* pstrresourcename );
+extern void SV_PrecacheGeneric( const char* pstrresourcename );
 
-extern Float SV_GetSoundDuration( const Char* pstrfilename, Uint32 pitch );
-extern Float SV_GetWAVFileDuration( const Char* pstrfilename );
-extern Float SV_GetOGGFileDuration( const Char* pstrfilename );
-extern Uint64 SV_GetModelFrameCount( Int32 modelindex );
+extern float SV_GetSoundDuration( const char* pstrfilename, UInt32 pitch );
+extern float SV_GetWAVFileDuration( const char* pstrfilename );
+extern float SV_GetOGGFileDuration( const char* pstrfilename );
+extern UInt64 SV_GetModelFrameCount( Int32 modelindex );
 
-extern void SV_AddLevelConnection( const Char* pstrLevelName, const Char* pstrOtherLevelName, const Char* pstrLandmarkName, const Char* pstrMapSaveFileName );
-extern void SV_BeginLevelChange( const Char* pstrOtherLevelName, const Char* pstrLandmarkName, const Vector& landmarkPosition );
-extern void SV_GetTransitionList( const Int32** pEntityList, Uint32& numEntities );
-extern void SV_PerformLevelChange( const Char* pstrlevelname, const Char* pstrlandmarkname );
-extern void SV_SetLevelSavefile( const Char* pstrLevelName, const Char* pstrSaveFileName );
+extern void SV_AddLevelConnection( const char* pstrLevelName, const char* pstrOtherLevelName, const char* pstrLandmarkName, const char* pstrMapSaveFileName );
+extern void SV_BeginLevelChange( const char* pstrOtherLevelName, const char* pstrLandmarkName, const Vector& landmarkPosition );
+extern void SV_GetTransitionList( const Int32** pEntityList, UInt32& numEntities );
+extern void SV_PerformLevelChange( const char* pstrlevelname, const char* pstrlandmarkname );
+extern void SV_SetLevelSavefile( const char* pstrLevelName, const char* pstrSaveFileName );
 extern void SV_ClearLevelChange( void );
 extern void SV_ClearConnections( void );
 
 extern void SV_RestoreSavedDecals( void );
-extern void SV_AddSavedDecal( const Vector& origin, const Vector& normal, entindex_t entityindex, const Char* pstrDecalTexture, Int32 decalflags );
+extern void SV_AddSavedDecal( const Vector& origin, const Vector& normal, entindex_t entityindex, const char* pstrDecalTexture, Int32 decalflags );
 
 extern edict_t* SV_FindClientInPVS( const edict_t* pedict );
 
 extern void SV_MaxPlayersCvarCallBack( CCVar* pCVar );
-extern void SV_EndGame( const Char* pstrEndGameCode );
+extern void SV_EndGame( const char* pstrEndGameCode );
 #endif

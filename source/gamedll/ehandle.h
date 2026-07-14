@@ -55,6 +55,6 @@ private:
 	// Pointer to edict
 	edict_t* m_pEdict;
 	// Edict identifier
-	Uint32 m_identifier;
+	UInt32 m_identifier;
 };
 #endif //EHANDLE_H

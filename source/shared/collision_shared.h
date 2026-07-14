@@ -19,4 +19,4 @@ namespace CollisionShared
 	// Test if an AABB traceline intersects a bounding box
 	bool IntersectBBoxSweptAABB( const Vector& start, const Vector& end, const Vector& boxmins, const Vector& boxmaxs, const Vector& extents );
 };
-#endif COLLISION_SHARED_H
+#endif // COLLISION_SHARED_H

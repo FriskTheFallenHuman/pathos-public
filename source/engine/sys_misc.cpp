@@ -32,14 +32,14 @@ All Rights Reserved.
 // I had a hard time deciding whether to keep liblist.gam or create something else
 
 // Default font schema name
-static const Char DEFAULT_FONT_SCHEMA_NAME[] = "DefaultFont";
+static const char DEFAULT_FONT_SCHEMA_NAME[] = "DefaultFont";
 
 //=============================================
 // @brief Returns the optimal frame limit
 //
 // @return The frame limit to be used for frame capping
 //=============================================
-bool Sys_LoadDefaultFont( const Char* pstr )
+bool Sys_LoadDefaultFont( const char* pstr )
 {
 	const font_set_t* pDefaultSet = gTextSchemas.GetSchemaFontSet(DEFAULT_FONT_SCHEMA_NAME);
 	if(!pDefaultSet)
@@ -63,8 +63,8 @@ bool Sys_LoadDefaultFont( const Char* pstr )
 //=============================================
 bool Sys_LoadGameInfo( CArray<CString>* argsArray )
 {
-	Uint32 fileSize = 0;
-	const byte* pfile = FL_LoadFile(GAMEINFO_FILENAME, &fileSize);
+	UInt32 fileSize = 0;
+	const Byte* pfile = FL_LoadFile(GAMEINFO_FILENAME, &fileSize);
 	if(!pfile)
 	{
 		Sys_ErrorPopup("Failed to load %s.\n", GAMEINFO_FILENAME);
@@ -225,7 +225,7 @@ bool Sys_LoadGameInfo( CArray<CString>* argsArray )
 //
 // @return Launch args count
 //=============================================
-Uint32 Sys_LaunchArgc( void )
+UInt32 Sys_LaunchArgc( void )
 {
 	return ens.launchargs.size();
 }
@@ -235,7 +235,7 @@ Uint32 Sys_LaunchArgc( void )
 //
 // @return Launch args count
 //=============================================
-const Char* Sys_LaunchArgv( Uint32 index )
+const char* Sys_LaunchArgv( UInt32 index )
 {
 	assert(index < ens.launchargs.size());
 	return ens.launchargs[index].c_str();
@@ -246,12 +246,12 @@ const Char* Sys_LaunchArgv( Uint32 index )
 //
 // @return Launch args count
 //=============================================
-Int32 Sys_CheckLaunchArgs( const Char* pstrArg )
+Int32 Sys_CheckLaunchArgs( const char* pstrArg )
 {
 	if(ens.launchargs.empty())
 		return NO_POSITION;
 
-	for(Uint32 i = 0; i < ens.launchargs.size(); i++)
+	for(UInt32 i = 0; i < ens.launchargs.size(); i++)
 	{
 		if(!qstrcmp(pstrArg, ens.launchargs[i]))
 			return i;
@@ -284,7 +284,7 @@ bool Sys_IsGameControlActive( void )
 //
 // @return
 //=============================================
-void Sys_AddTempFile( const Char* pstrFilepath, rs_level_t level )
+void Sys_AddTempFile( const char* pstrFilepath, rs_level_t level )
 {
 	ens.tempfileslist.begin();
 	while(!ens.tempfileslist.end())

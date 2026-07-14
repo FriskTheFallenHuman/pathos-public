@@ -18,11 +18,11 @@ const Int32 CFuncTrackTrain::START_MAX_PITCH = 200;
 // Train starting pitch
 const Int32 CFuncTrackTrain::TRAIN_MAX_SPEED = 1000;
 // Default speed
-const Float CFuncTrackTrain::DEFAULT_SPEED = 100;
+const float CFuncTrackTrain::DEFAULT_SPEED = 100;
 // Number of train default move sounds
-const Uint32 CFuncTrackTrain::NB_DEFAULT_MOVE_SOUNDS = 7;
+const UInt32 CFuncTrackTrain::NB_DEFAULT_MOVE_SOUNDS = 7;
 // Default train move sounds
-const Char* CFuncTrackTrain::DEFAULT_MOVE_SOUNDS[NB_DEFAULT_MOVE_SOUNDS] = 
+const char* CFuncTrackTrain::DEFAULT_MOVE_SOUNDS[NB_DEFAULT_MOVE_SOUNDS] = 
 {
 	"plats/ttrain1.wav",
 	"plats/ttrain2.wav",
@@ -33,9 +33,9 @@ const Char* CFuncTrackTrain::DEFAULT_MOVE_SOUNDS[NB_DEFAULT_MOVE_SOUNDS] =
 	"plats/ttrain7.wav"
 };
 // Default train stop sound
-const Char CFuncTrackTrain::DEFAULT_STOP_SOUND[] = "plats/ttrain_brake1.wav";
+const char CFuncTrackTrain::DEFAULT_STOP_SOUND[] = "plats/ttrain_brake1.wav";
 // Start train stop sound
-const Char CFuncTrackTrain::DEFAULT_START_SOUND[] = "plats/ttrain_start1.wav";
+const char CFuncTrackTrain::DEFAULT_START_SOUND[] = "plats/ttrain_start1.wav";
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(func_tracktrain, CFuncTrackTrain);
@@ -172,7 +172,7 @@ void CFuncTrackTrain::Precache( void )
 {
 	if(m_moveSound == NO_STRING_VALUE && m_sounds > 0)
 	{
-		Uint32 soundindex = m_sounds - 1;
+		UInt32 soundindex = m_sounds - 1;
 		if(soundindex >= NB_DEFAULT_MOVE_SOUNDS)
 		{
 			Util::EntityConPrintf(m_pEdict, "Invalid sound setting '%d'.\n", m_sounds);
@@ -247,7 +247,7 @@ bool CFuncTrackTrain::Spawn( void )
 // @brief
 //
 //=============================================
-void CFuncTrackTrain::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncTrackTrain::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(useMode != USE_SET)
 	{
@@ -271,9 +271,9 @@ void CFuncTrackTrain::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, us
 	}
 	else
 	{
-		Float delta = value;
+		float delta = value;
 		delta = ((Int32)(m_pState->speed*4)/(Int32)m_speed)*0.25 + 0.25*delta;
-		delta = clamp(delta, -1.0, 1.0);
+		delta = Clamp(delta, -1.0, 1.0);
 
 		// Cap at zero if we can only go forward
 		if(HasSpawnFlag(FL_FORWARD_ONLY) && delta < 0)
@@ -296,7 +296,7 @@ void CFuncTrackTrain::CallBlocked( CBaseEntity* pBlocker )
 		if(pBlocker->IsNPC() && !pBlocker->IsPlayer())
 			pBlocker->GroundEntityNudge();
 
-		Float deltaspeed = SDL_fabs(m_pState->speed);
+		float deltaspeed = SDL_fabs(m_pState->speed);
 		if(deltaspeed > 50)
 			deltaspeed = 50;
 		
@@ -389,7 +389,7 @@ void CFuncTrackTrain::Next( void )
 	if(!pNext || (!delta.x && !delta.y))
 		angles = m_pState->angles;
 
-	Float vy, vx;
+	float vy, vx;
 	if(!HasSpawnFlag(FL_NO_PITCH))
 		vx = Util::AngleDistance(angles.x, m_pState->angles.x);
 	else
@@ -422,7 +422,7 @@ void CFuncTrackTrain::Next( void )
 			// Fire the track's fire target
 			if(pFire->HasMessage())
 			{
-				const Char* pstrTrackFireTarget = pFire->GetMessage();
+				const char* pstrTrackFireTarget = pFire->GetMessage();
 				Util::FireTargets(pstrTrackFireTarget, this, this, USE_TOGGLE, 0);
 				if(pFire->HasSpawnFlag(CPathTrack::FL_FIRE_ONCE))
 					pFire->SetMessage(nullptr);
@@ -454,13 +454,13 @@ void CFuncTrackTrain::Next( void )
 		m_pState->velocity = (nextPosition-m_pState->origin);
 		m_pState->avelocity.Clear();
 
-		Float distance = m_pState->velocity.Length();
+		float distance = m_pState->velocity.Length();
 		m_oldSpeed = m_pState->speed;
 		m_pState->speed = 0;
 
 		if(distance > 0)
 		{
-			Double time = distance/m_oldSpeed;
+			double time = distance/m_oldSpeed;
 			Math::VectorScale(m_pState->velocity, m_oldSpeed/distance, m_pState->velocity);
 
 			SetThink(&CFuncTrackTrain::DeadEnd);
@@ -516,7 +516,7 @@ void CFuncTrackTrain::Find( void )
 // @brief
 //
 //=============================================
-CPathTrack* CFuncTrackTrain::FindPathTrack( const Char* pstrPathTrackName )
+CPathTrack* CFuncTrackTrain::FindPathTrack( const char* pstrPathTrackName )
 {
 	// Find the path_track with the same name
 	edict_t* pedict = nullptr;
@@ -567,13 +567,13 @@ void CFuncTrackTrain::RestorePath( void )
 	if(!m_pPath)
 	{
 		// Distance we will search for path_tracks
-		const Float searchDistance = 1024;
+		const float searchDistance = 1024;
 
-		Float nearestDistance = searchDistance;
+		float nearestDistance = searchDistance;
 		CPathTrack* pNearest = nullptr;
 
 		Vector mins, maxs;
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			mins[i] = m_pState->origin[i] - searchDistance;
 			maxs[i] = m_pState->origin[i] + searchDistance;
@@ -590,7 +590,7 @@ void CFuncTrackTrain::RestorePath( void )
 			if(!pEntity->IsPathTrackEntity())
 				continue;
 
-			Float distance = (m_pState->origin - pEntity->GetOrigin()).Length();
+			float distance = (m_pState->origin - pEntity->GetOrigin()).Length();
 			if(distance < nearestDistance)
 			{
 				nearestDistance = distance;
@@ -663,7 +663,7 @@ void CFuncTrackTrain::DeadEnd( void )
 
 		if(pTrack->HasNetname())
 		{
-			const Char* pstrPathTrackTarget = pTrack->GetNetname();
+			const char* pstrPathTrackTarget = pTrack->GetNetname();
 			Util::FireTargets(pstrPathTrackTarget, this, this, USE_TOGGLE, 0);
 		}
 	}
@@ -676,7 +676,7 @@ void CFuncTrackTrain::DeadEnd( void )
 // @brief
 //
 //=============================================
-void CFuncTrackTrain::SetNextThink( Double thinkTime, bool alwaysThink )
+void CFuncTrackTrain::SetNextThink( double thinkTime, bool alwaysThink )
 {
 	if(alwaysThink)
 		m_pState->flags |= FL_ALWAYSTHINK;
@@ -738,7 +738,7 @@ void CFuncTrackTrain::StopSound( void )
 {
 	if(m_moveSound != NO_STRING_VALUE)
 	{
-		const Char* pstrMoveSound = gd_engfuncs.pfnGetString(m_moveSound);
+		const char* pstrMoveSound = gd_engfuncs.pfnGetString(m_moveSound);
 		gd_engfuncs.pfnPlayEntitySound(m_pEdict->entindex, pstrMoveSound, SND_FL_STOP, SND_CHAN_BODY, 0, 0, 0, 0, NO_CLIENT_INDEX);
 	}
 
@@ -774,7 +774,7 @@ void CFuncTrackTrain::UpdateSound( void )
 	else if(m_moveSound != NO_STRING_VALUE && pitch != m_lastPitch)
 	{
 		// Update pitch
-		const Char* pstrMoveSound = gd_engfuncs.pfnGetString(m_moveSound);
+		const char* pstrMoveSound = gd_engfuncs.pfnGetString(m_moveSound);
 		gd_engfuncs.pfnPlayEntitySound(m_pEdict->entindex, pstrMoveSound, SND_FL_CHANGE_PITCH, SND_CHAN_BODY, m_volume, ATTN_NORM, pitch, 0, NO_CLIENT_INDEX);
 	}
 
@@ -813,7 +813,7 @@ CPathTrack* CFuncTrackTrain::GetPath( void )
 // @brief
 //
 //=============================================
-Float CFuncTrackTrain::GetLength( void ) const
+float CFuncTrackTrain::GetLength( void ) const
 {
 	return m_length;
 }

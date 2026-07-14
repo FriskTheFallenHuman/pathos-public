@@ -15,7 +15,7 @@ All Rights Reserved.
 // Undefined skill cvar value
 static const Int32 SKILLCVAR_UNDEFINED = -1;
 // Default skill cvar value if null
-static const Float SKILLCVAR_DEFAULT_VALUE = 1;
+static const float SKILLCVAR_DEFAULT_VALUE = 1;
 
 struct skillcvars_t
 {
@@ -135,7 +135,7 @@ class CSkillData
 {
 public:
 	// Skill cvar settings file
-	static const Char SKILLCVAR_FILE[];
+	static const char SKILLCVAR_FILE[];
 
 public:
 	struct skillcvar_t
@@ -165,9 +165,9 @@ public:
 
 public:
 	// Registers a skilldata cvar
-	Int32 RegisterSkillCVar( const Char* pstrcvarname );
+	Int32 RegisterSkillCVar( const char* pstrcvarname );
 	// Retrieves setting of a skill cvar
-	Float GetSkillCVarSetting( Int32 skillcvarindex, force_skillcvar_t forceskill = FORCE_SKILL_OFF );
+	float GetSkillCVarSetting( Int32 skillcvarindex, force_skillcvar_t forceskill = FORCE_SKILL_OFF );
 
 	// Returns the difficulty setting
 	skill_level_t GetSkillLevel( void ) const;

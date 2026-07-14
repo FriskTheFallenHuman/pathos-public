@@ -11,6 +11,6 @@ All Rights Reserved.
 #define PORTAL_SHARED_H
 
 // Max portal entities in a level
-static constexpr Uint32 MAX_PORTAL_ENTITIES = 64;
+static constexpr UInt32 MAX_PORTAL_ENTITIES = 64;
 
 #endif //PORTAL_SHARED_H

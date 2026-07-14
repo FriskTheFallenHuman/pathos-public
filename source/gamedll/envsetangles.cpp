@@ -53,7 +53,7 @@ bool CEnvSetAngles::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvSetAngles::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSetAngles::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	edict_t* ptarget = Util::FindEntityByTargetName(nullptr, gd_engfuncs.pfnGetString(m_pFields->target));
 	if(!ptarget)

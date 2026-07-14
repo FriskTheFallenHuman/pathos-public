@@ -22,9 +22,9 @@ class CTracerRenderer
 {
 public:
 	// Allocation size for tracers
-	static const Uint32 TRACER_ALLOC_SIZE;
+	static const UInt32 TRACER_ALLOC_SIZE;
 	// Tracer texture file path
-	static const Char TRACER_TEXTURE_PATH[];
+	static const char TRACER_TEXTURE_PATH[];
 
 public:
 	CTracerRenderer( void );
@@ -48,14 +48,14 @@ public:
 	void Update( void );
 
 	// Creates a tracer
-	tracer_t* CreateTracer( const Vector& origin, const Vector& velocity, const Vector& color, Float alpha, Float width, Float length, Float life, tracer_type_t type );
+	tracer_t* CreateTracer( const Vector& origin, const Vector& velocity, const Vector& color, float alpha, float width, float length, float life, tracer_type_t type );
 
 	// Creates an implosion effect
-	void CreateImplosionEffect( const Vector& destination, Float radius, Uint32 count, Float life, const Vector& color, Float alpha, Float width, Float length, bool reverse );
+	void CreateImplosionEffect( const Vector& destination, float radius, UInt32 count, float life, const Vector& color, float alpha, float width, float length, bool reverse );
 	// Creates a spark streak effect
-	void CreateSparkStreak( const Vector& origin, Uint32 count, const Vector& color, Float alpha, Float width, Float length, Float minLifetime, Float maxLifetime, Float minVelocity, Float maxVelocity );
+	void CreateSparkStreak( const Vector& origin, UInt32 count, const Vector& color, float alpha, float width, float length, float minLifetime, float maxLifetime, float minVelocity, float maxVelocity );
 	// Creates a streak splash effect
-	void CreateStreakSplash( const Vector& origin, const Vector& direction, const Vector& color, Float alpha, Float width, Float length, Uint32 count, Float speed, Float minLifetime, Float maxLifetime, Float minVelocity, Float maxVelocity );
+	void CreateStreakSplash( const Vector& origin, const Vector& direction, const Vector& color, float alpha, float width, float length, UInt32 count, float speed, float minLifetime, float maxLifetime, float minVelocity, float maxVelocity );
 
 private:
 	// Allocates tracers

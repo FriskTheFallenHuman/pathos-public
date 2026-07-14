@@ -15,17 +15,17 @@ All Rights Reserved.
 LINK_ENTITY_TO_CLASS(item_taperecorder, CItemTapeRecorder);
 
 // Recorder model for benefactor
-const Char CItemTapeRecorder::RECORDER_MODEL[] = "models/taperecorder.mdl";
+const char CItemTapeRecorder::RECORDER_MODEL[] = "models/taperecorder.mdl";
 // Recorder idle sequence name
-const Char CItemTapeRecorder::RECORDER_IDLE_SEQ_NAME[] = "idle";
+const char CItemTapeRecorder::RECORDER_IDLE_SEQ_NAME[] = "idle";
 // Recorder play sequence name
-const Char CItemTapeRecorder::RECORDER_PLAY_SEQ_NAME[] = "play";
+const char CItemTapeRecorder::RECORDER_PLAY_SEQ_NAME[] = "play";
 // Recorder use sound name
-const Char CItemTapeRecorder::RECORDER_USE_SOUND_NAME[] = "items/recorder_use.wav";
+const char CItemTapeRecorder::RECORDER_USE_SOUND_NAME[] = "items/recorder_use.wav";
 // Recorder stop sound name
-const Char CItemTapeRecorder::RECORDER_STOP_SOUND_NAME[] = "items/recorder_stop.wav";
+const char CItemTapeRecorder::RECORDER_STOP_SOUND_NAME[] = "items/recorder_stop.wav";
 // Recorder play sound name
-const Char CItemTapeRecorder::RECORDER_PLAY_SOUND_NAME[] = "items/recorder_play.wav";
+const char CItemTapeRecorder::RECORDER_PLAY_SOUND_NAME[] = "items/recorder_play.wav";
 
 //=============================================
 // @brief
@@ -132,7 +132,7 @@ void CItemTapeRecorder::SendInitMessage( const CBaseEntity* pPlayer )
 	if(!m_isActive)
 		return;
 
-	Float timeOffset = g_pGameVars->time - m_playbackBeginTime;
+	float timeOffset = g_pGameVars->time - m_playbackBeginTime;
 	if(timeOffset >= m_duration)
 	{
 		m_playbackBeginTime = 0;
@@ -179,7 +179,7 @@ bool CItemTapeRecorder::Spawn( void )
 // @brief
 //
 //=============================================
-void CItemTapeRecorder::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CItemTapeRecorder::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(HasSpawnFlag(SF_START_INVISIBLE))
 	{

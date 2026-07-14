@@ -62,7 +62,7 @@ bool CEnvSetSkyTexture::Spawn( void )
 	}
 
 	// Manage custom sky texture
-	const Char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_pFields->netname);
+	const char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_pFields->netname);
 	if(pstrSkyTexture)
 		m_pState->body = gSkyTextureSets.RegisterSkyTextureSet(pstrSkyTexture);
 
@@ -85,7 +85,7 @@ bool CEnvSetSkyTexture::Restore( void )
 	// Manage custom sky texture
 	if(m_pFields->netname != NO_STRING_VALUE)
 	{
-		const Char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_pFields->netname);
+		const char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_pFields->netname);
 		if(pstrSkyTexture)
 			m_pState->body = gSkyTextureSets.RegisterSkyTextureSet(pstrSkyTexture);
 	}
@@ -97,7 +97,7 @@ bool CEnvSetSkyTexture::Restore( void )
 // @brief
 //
 //=============================================
-void CEnvSetSkyTexture::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSetSkyTexture::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool prevstate = m_isActive;
 	switch(useMode)

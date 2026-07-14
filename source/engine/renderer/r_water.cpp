@@ -36,26 +36,26 @@ All Rights Reserved.
 #include "modelcache.h"
 
 // Default phong exponent value
-const Float CWaterShader::DEFAULT_PHONG_EXPONENT = 16.0f;
+const float CWaterShader::DEFAULT_PHONG_EXPONENT = 16.0f;
 // Default phong exponent value
-const Float CWaterShader::DEFAULT_SPECULAR_FACTOR = 2.0;
+const float CWaterShader::DEFAULT_SPECULAR_FACTOR = 2.0;
 
 // Water shader default normalmap texture path
-const Char CWaterShader::WATER_DEFAULT_NORMALMAP_PATH[] = "general/watershader.tga";
+const char CWaterShader::WATER_DEFAULT_NORMALMAP_PATH[] = "general/watershader.tga";
 // Script base path
-const Char CWaterShader::WATER_SCRIPT_BASEPATH[] = "scripts/water/";
+const char CWaterShader::WATER_SCRIPT_BASEPATH[] = "scripts/water/";
 // Default water script name
-const Char CWaterShader::DEFAULT_WATER_SCRIPT_FILENAME[] = "water_default.txt";
+const char CWaterShader::DEFAULT_WATER_SCRIPT_FILENAME[] = "water_default.txt";
 
 // Lightmap X resolution
-const Uint32 CWaterShader::WATER_LIGHTMAP_DEFAULT_WIDTH = 128;
+const UInt32 CWaterShader::WATER_LIGHTMAP_DEFAULT_WIDTH = 128;
 // Lightmap Y resolution
-const Uint32 CWaterShader::WATER_LIGHTMAP_DEFAULT_HEIGHT = 128;
+const UInt32 CWaterShader::WATER_LIGHTMAP_DEFAULT_HEIGHT = 128;
 
 // FBO resolution for water
-const Uint32 CWaterShader::WATER_FBO_SIZE = 1024;
+const UInt32 CWaterShader::WATER_FBO_SIZE = 1024;
 // RTT resolution for water
-const Uint32 CWaterShader::WATER_RTT_SIZE = 512;
+const UInt32 CWaterShader::WATER_RTT_SIZE = 512;
 
 //=============================================
 //
@@ -243,7 +243,7 @@ bool CWaterShader::InitGL( void )
 	// If we have water entities, restore them also
 	if(!m_waterEntitiesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_waterEntitiesArray.size(); i++)
+		for(UInt32 i = 0; i < m_waterEntitiesArray.size(); i++)
 		{
 			if(!CreateRenderToTexture(m_waterEntitiesArray[i]))
 			{
@@ -274,7 +274,7 @@ void CWaterShader::ClearGL( void )
 {
 	if(!m_waterEntitiesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_waterEntitiesArray.size(); i++)
+		for(UInt32 i = 0; i < m_waterEntitiesArray.size(); i++)
 		{
 			if(m_waterEntitiesArray[i]->preflectfbo)
 			{
@@ -347,7 +347,7 @@ void CWaterShader::ClearGame( void )
 {
 	if(!m_waterEntitiesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_waterEntitiesArray.size(); i++)
+		for(UInt32 i = 0; i < m_waterEntitiesArray.size(); i++)
 		{
 			if(m_waterEntitiesArray[i]->preflectfbo)
 			{
@@ -403,33 +403,33 @@ void CWaterShader::CreateLightmapTexture( cl_water_t* pwater )
  	if(!pcachemodel)
 		return;
 
-	Uint32 paddingAmount = clamp(g_pCvarLightmapPadding->GetValue(), 0, MAX_LIGHTMAP_PADDING);
+	UInt32 paddingAmount = Clamp(g_pCvarLightmapPadding->GetValue(), 0, MAX_LIGHTMAP_PADDING);
 
 	brushmodel_t* pbrushmodel = pcachemodel->getBrushmodel();
 	msurface_t *psurfaces = pbrushmodel->psurfaces + pbrushmodel->firstmodelsurface;
 
 	// Holds texture data
-	for(Uint32 i = 0; i < MAX_SURFACE_STYLES; i++)
+	for(UInt32 i = 0; i < MAX_SURFACE_STYLES; i++)
 	{
-		Uint32 lightmappixelsize = pwater->lightmaptextureheights[i] * pwater->lightmaptexturewidths[i];
+		UInt32 lightmappixelsize = pwater->lightmaptextureheights[i] * pwater->lightmaptexturewidths[i];
 		color32_t* plightmapdata = new color32_t[lightmappixelsize];
-		for(Uint32 j = 0; j < lightmappixelsize; j++)
+		for(UInt32 j = 0; j < lightmappixelsize; j++)
 			plightmapdata[j] = color32_t(0, 0, 0, 255);
 
 		color32_t* pdiffusemaptexture = new color32_t[lightmappixelsize];
-		for(Uint32 j = 0; j < lightmappixelsize; j++)
+		for(UInt32 j = 0; j < lightmappixelsize; j++)
 			plightmapdata[j] = color32_t(0, 0, 0, 255);
 
 		color32_t* plightvecstexture = new color32_t[lightmappixelsize];
-		for(Uint32 j = 0; j < lightmappixelsize; j++)
+		for(UInt32 j = 0; j < lightmappixelsize; j++)
 			plightmapdata[j] = color32_t(0, 0, 0, 255);
 
-		Uint32 lightmapdatasize = 0;
-		Uint32 diffuselightdatasize = 0;
-		Uint32 lightvecsdatasize = 0;
+		UInt32 lightmapdatasize = 0;
+		UInt32 diffuselightdatasize = 0;
+		UInt32 lightvecsdatasize = 0;
 
 		// Get overdarken treshold
-		Float overdarken;
+		float overdarken;
 		if(i <= 0)
 		{
 			overdarken = g_pCvarOverdarkenTreshold->GetValue();
@@ -442,7 +442,7 @@ void CWaterShader::CreateLightmapTexture( cl_water_t* pwater )
 			overdarken = 0;
 		}
 
-		for(Uint32 j = 0; j < pbrushmodel->nummodelsurfaces; j++)
+		for(UInt32 j = 0; j < pbrushmodel->nummodelsurfaces; j++)
 		{
 			msurface_t* psurf = &psurfaces[j];
 			if(!(psurf->flags & SURF_SHADERWATER))
@@ -453,13 +453,13 @@ void CWaterShader::CreateLightmapTexture( cl_water_t* pwater )
 				continue;
 
 			// Determine sizes
-			Uint32 xsize = (psurf->extents[0] / psurf->lightmapdivider)+1;
-			Uint32 ysize = (psurf->extents[1] / psurf->lightmapdivider)+1;
-			Uint32 size = xsize*ysize;
+			UInt32 xsize = (psurf->extents[0] / psurf->lightmapdivider)+1;
+			UInt32 ysize = (psurf->extents[1] / psurf->lightmapdivider)+1;
+			UInt32 size = xsize*ysize;
 
 			color24_t *psrc;
 			if(pbrushmodel->plightdata_water[SURF_LIGHTMAP_DEFAULT])
-				psrc = reinterpret_cast<color24_t*>(reinterpret_cast<byte*>(pbrushmodel->plightdata_water[SURF_LIGHTMAP_DEFAULT]) + psurf->lightoffset_water);
+				psrc = reinterpret_cast<color24_t*>(reinterpret_cast<Byte*>(pbrushmodel->plightdata_water[SURF_LIGHTMAP_DEFAULT]) + psurf->lightoffset_water);
 			else
 				psrc = nullptr;
 
@@ -470,12 +470,12 @@ void CWaterShader::CreateLightmapTexture( cl_water_t* pwater )
 			if(pbrushmodel->plightdata_water[SURF_LIGHTMAP_DIFFUSE] && pbrushmodel->plightdata_water[SURF_LIGHTMAP_AMBIENT])
 			{
 				// Grab diffuse lightmap data
-				psrc = reinterpret_cast<color24_t*>(reinterpret_cast<byte*>(pbrushmodel->plightdata_water[SURF_LIGHTMAP_DIFFUSE]) + psurf->lightoffset_water);
+				psrc = reinterpret_cast<color24_t*>(reinterpret_cast<Byte*>(pbrushmodel->plightdata_water[SURF_LIGHTMAP_DIFFUSE]) + psurf->lightoffset_water);
 				R_BuildLightmap(psurf->light_s[i], psurf->light_t[i], psrc, psurf, pdiffusemaptexture, i, pwater->lightmaptexturewidths[i], 0, paddingAmount);
 				diffuselightdatasize += size * sizeof(color32_t);
 
 				// Grab vectors lightmap data
-				psrc = reinterpret_cast<color24_t*>(reinterpret_cast<byte*>(pbrushmodel->plightdata_water[SURF_LIGHTMAP_VECTORS]) + psurf->lightoffset_water);
+				psrc = reinterpret_cast<color24_t*>(reinterpret_cast<Byte*>(pbrushmodel->plightdata_water[SURF_LIGHTMAP_VECTORS]) + psurf->lightoffset_water);
 				R_BuildLightmap(psurf->light_s[i], psurf->light_t[i], psrc, psurf, plightvecstexture, i, pwater->lightmaptexturewidths[i], 0, paddingAmount, true);
 				lightvecsdatasize += size * sizeof(color32_t);
 			}
@@ -501,8 +501,8 @@ void CWaterShader::CreateLightmapTexture( cl_water_t* pwater )
 				CString filepath;
 				filepath << basedirpath << "water_" << pwater->index << "_lightmap_default_style_" << i << ".tga";
 
-				Uint32 compressionPercentage = 0;
-				const byte* pwritedata = reinterpret_cast<const byte*>(plightmapdata);
+				UInt32 compressionPercentage = 0;
+				const Byte* pwritedata = reinterpret_cast<const Byte*>(plightmapdata);
 				if(TGA_Write(pwritedata, 4, pwater->lightmaptexturewidths[i], pwater->lightmaptextureheights[i], filepath.c_str(), FL_GetInterface(), Con_Printf, &compressionPercentage))
 					Con_Printf("Exported %s(%d percent compression).\n", filepath.c_str(), compressionPercentage);
 			}
@@ -547,8 +547,8 @@ void CWaterShader::CreateLightmapTexture( cl_water_t* pwater )
 					CString filepath;
 					filepath << basedirpath << "water_" << pwater->index << "_lightmap_diffuse_style_" << i << ".tga";
 
-					Uint32 compressionPercentage = 0;
-					const byte* pwritedata = reinterpret_cast<const byte*>(pdiffusemaptexture);
+					UInt32 compressionPercentage = 0;
+					const Byte* pwritedata = reinterpret_cast<const Byte*>(pdiffusemaptexture);
 					if(TGA_Write(pwritedata, 4, pwater->lightmaptexturewidths[i], pwater->lightmaptextureheights[i], filepath.c_str(), FL_GetInterface(), Con_Printf, &compressionPercentage))
 						Con_Printf("Exported %s(%d percent compression).\n", filepath.c_str(), compressionPercentage);
 
@@ -556,7 +556,7 @@ void CWaterShader::CreateLightmapTexture( cl_water_t* pwater )
 					filepath.clear();
 					filepath << basedirpath << "water_" << pwater->index << "_lightmap_vectors_style_" << i << ".tga";
 
-					pwritedata = reinterpret_cast<const byte*>(plightvecstexture);
+					pwritedata = reinterpret_cast<const Byte*>(plightvecstexture);
 					if(TGA_Write(pwritedata, 4, pwater->lightmaptexturewidths[i], pwater->lightmaptextureheights[i], filepath.c_str(), FL_GetInterface(), Con_Printf, &compressionPercentage))
 						Con_Printf("Exported %s(%d percent compression).\n", filepath.c_str(), compressionPercentage);
 				}
@@ -569,7 +569,7 @@ void CWaterShader::CreateLightmapTexture( cl_water_t* pwater )
 	}
 
 	// Remove lighting data, as we don't need it now
-	for(Uint32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
+	for(UInt32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
 	{
 		if(!pbrushmodel->plightdata_water[i])
 			break;
@@ -621,16 +621,16 @@ void CWaterShader::Restore( void ) const
 //====================================
 //
 //====================================
-void CWaterShader::ParseScript( const Char* pstrFilename, water_settings_t *psettings, const Char* pfile )
+void CWaterShader::ParseScript( const char* pstrFilename, water_settings_t *psettings, const char* pfile )
 {
 	CString normalmappath;
 	CString flowmappath;
 
-	const Char *pscan = pfile;
+	const char *pscan = pfile;
 	while(pscan)
 	{
-		static Char szField[MAX_PARSE_LENGTH];
-		static Char szValue[MAX_PARSE_LENGTH];
+		static char szField[MAX_PARSE_LENGTH];
+		static char szValue[MAX_PARSE_LENGTH];
 
 		pscan = Common::Parse(pscan, szField);
 
@@ -775,11 +775,11 @@ void CWaterShader::ReloadLightmapData( void )
 
 	CTextureManager* pTextureManager = CTextureManager::GetInstance();
 
-	for (Uint32 i = 0; i < m_waterEntitiesArray.size(); i++)
+	for (UInt32 i = 0; i < m_waterEntitiesArray.size(); i++)
 	{
 		cl_water_t* pwater = m_waterEntitiesArray[i];
 
-		for(Uint32 j = 0; j < MAX_SURFACE_STYLES; j++)
+		for(UInt32 j = 0; j < MAX_SURFACE_STYLES; j++)
 		{
 			if (pwater->plightmap_textures[j])
 			{
@@ -816,24 +816,24 @@ void CWaterShader::LoadScripts( void )
 	CString mapname;
 
 	// Retreive level name
-	const Char *levelname = Engine_GetLevelName();
+	const char *levelname = Engine_GetLevelName();
 	Common::Basename(levelname, mapname);
 
 	while(1)
 	{
-		const Char *pFile = nullptr;
+		const char *pFile = nullptr;
 		if(rns.daystage == DAYSTAGE_NIGHTSTAGE)
 		{
 			filename.clear();
 			filename << WATER_SCRIPT_BASEPATH << "water_" << mapname << "_" << static_cast<Int32>(m_waterSettingsArray.size()) << "_n.txt";
-			pFile = reinterpret_cast<const Char *>(FL_LoadFile(filename.c_str(), nullptr));
+			pFile = reinterpret_cast<const char *>(FL_LoadFile(filename.c_str(), nullptr));
 		}
 		
 		if(!pFile)
 		{
 			filename.clear();
 			filename << WATER_SCRIPT_BASEPATH << "water_" << mapname << "_" << static_cast<Int32>(m_waterSettingsArray.size()) << ".txt";
-			pFile = reinterpret_cast<const Char *>(FL_LoadFile(filename.c_str(), nullptr));
+			pFile = reinterpret_cast<const char *>(FL_LoadFile(filename.c_str(), nullptr));
 		}
 
 		if(!pFile)
@@ -851,7 +851,7 @@ void CWaterShader::LoadScripts( void )
 		CString filepath;
 		filepath << WATER_SCRIPT_BASEPATH << DEFAULT_WATER_SCRIPT_FILENAME;
 
-		const Char *pFile = reinterpret_cast<const Char *>(FL_LoadFile(filepath.c_str(), nullptr));
+		const char *pFile = reinterpret_cast<const char *>(FL_LoadFile(filepath.c_str(), nullptr));
 
 		m_waterSettingsArray.resize(m_waterSettingsArray.size()+1);
 		water_settings_t *pSettings = &m_waterSettingsArray[m_waterSettingsArray.size()-1];
@@ -886,7 +886,7 @@ void CWaterShader::LoadScripts( void )
 //====================================
 //
 //====================================
-bool CWaterShader::ShouldReflect( Uint32 index, const water_settings_t* psettings ) const
+bool CWaterShader::ShouldReflect( UInt32 index, const water_settings_t* psettings ) const
 {
 	if(m_waterQuality <= WATER_QUALITY_NO_REFLECT || psettings->refractonly)
 		return false;
@@ -898,7 +898,7 @@ bool CWaterShader::ShouldReflect( Uint32 index, const water_settings_t* psetting
 		return false;
 
 	// Check if we can draw anything
-	for(Uint32 i = 0; i < index; i++)
+	for(UInt32 i = 0; i < index; i++)
 	{
 		cl_entity_t *pentity = rns.objects.pvisents_unsorted[i];
 
@@ -926,7 +926,7 @@ bool CWaterShader::ShouldReflect( Uint32 index, const water_settings_t* psetting
 //====================================
 void CWaterShader::AddEntity( cl_entity_t *pentity ) 
 {
-	for(Uint32 i = 0; i < m_waterEntitiesArray.size(); i++)
+	for(UInt32 i = 0; i < m_waterEntitiesArray.size(); i++)
 	{
 		if(m_waterEntitiesArray[i]->pentity == pentity)
 			return;// Already in cache
@@ -938,22 +938,22 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 		m_pShader->SetVBO(m_pVBO);
 	}
 
-	Uint32 vertexcount = 0;
-	Uint32 indexcount = 0;
+	UInt32 vertexcount = 0;
+	UInt32 indexcount = 0;
 
 	const brushmodel_t* pbrushmodel = pentity->pmodel->getBrushmodel();
 	msurface_t *psurfaces = pbrushmodel->psurfaces + pbrushmodel->firstmodelsurface;
 
 	// First clear any flags and find the highest Z value
-	Float highestzvalue = NULL_MAXS[2];
-	for(Uint32 i = 0; i < pbrushmodel->nummodelsurfaces; i++)
+	float highestzvalue = NULL_MAXS[2];
+	for(UInt32 i = 0; i < pbrushmodel->nummodelsurfaces; i++)
 	{
 		msurface_t* psurf = &psurfaces[i];
 
 		if(psurf->flags & SURF_SHADERWATER)
 			psurf->flags &= ~SURF_SHADERWATER;
 
-		for(Uint32 j = 0; j < psurf->numedges; j++)
+		for(UInt32 j = 0; j < psurf->numedges; j++)
 		{
 			Vector vertexpos;
 			Int32 e_index = ens.pworld->psurfedges[psurf->firstedge+j];
@@ -968,11 +968,11 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 	}
 
 	// Determine vertex and index count, and which surface is relevant
-	for(Uint32 i = 0; i < pbrushmodel->nummodelsurfaces; i++)
+	for(UInt32 i = 0; i < pbrushmodel->nummodelsurfaces; i++)
 	{
 		msurface_t* psurf = &psurfaces[i];
 
-		Uint32 j = 0;
+		UInt32 j = 0;
 		for(; j < psurf->numedges; j++)
 		{
 			Vector vertexpos;
@@ -1016,33 +1016,33 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 
 	// Allocate array of pointers
 	water_vertex_t *pvertexes = new water_vertex_t[vertexcount];
-	Uint32 vertexindex = 0;
+	UInt32 vertexindex = 0;
 	
-	Uint32 *pindexes = new Uint32[indexcount];
-	Uint32 indexoffset = 0;
+	UInt32 *pindexes = new UInt32[indexcount];
+	UInt32 indexoffset = 0;
 
-	Uint32 paddingAmount = clamp(g_pCvarLightmapPadding->GetValue(), 0, MAX_LIGHTMAP_PADDING);
+	UInt32 paddingAmount = Clamp(g_pCvarLightmapPadding->GetValue(), 0, MAX_LIGHTMAP_PADDING);
 
 	pwater->mins = NULL_MINS;
 	pwater->maxs = NULL_MAXS;
 
 	Int32 vertex_base = m_pVBO->GetVBOSize()/sizeof(water_vertex_t);
-	Int32 index_base = m_pVBO->GetIBOSize()/sizeof(Uint32);
+	Int32 index_base = m_pVBO->GetIBOSize()/sizeof(UInt32);
 
 	pwater->start_index = index_base;
 	pwater->num_indexes = indexcount;
 
-	for(Uint32 i = 0; i < MAX_SURFACE_STYLES; i++)
+	for(UInt32 i = 0; i < MAX_SURFACE_STYLES; i++)
 	{
 		pwater->lightmaptexturewidths[i] = WATER_LIGHTMAP_DEFAULT_WIDTH;
 		pwater->lightmaptextureheights[i] = WATER_LIGHTMAP_DEFAULT_HEIGHT;
 
 		// For tracking lightmap allocations
-		Uint32* pallocations = new Uint32[pwater->lightmaptexturewidths[i]];
-		for(Uint32 j = 0; j < pwater->lightmaptexturewidths[i]; j++)
+		UInt32* pallocations = new UInt32[pwater->lightmaptexturewidths[i]];
+		for(UInt32 j = 0; j < pwater->lightmaptexturewidths[i]; j++)
 			pallocations[j] = 0;
 
-		for(Uint32 j = 0; j < pbrushmodel->nummodelsurfaces; j++)
+		for(UInt32 j = 0; j < pbrushmodel->nummodelsurfaces; j++)
 		{
 			msurface_t* psurf = &psurfaces[j];
 			if(!(psurf->flags & SURF_SHADERWATER))
@@ -1052,8 +1052,8 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 			if(i > BASE_LIGHTMAP_INDEX && psurf->styles[i] == NULL_LIGHTSTYLE_INDEX)
 				continue;
 
-			Uint32 xsize = (psurf->extents[0] / psurf->lightmapdivider)+1;
-			Uint32 ysize = (psurf->extents[1] / psurf->lightmapdivider)+1;
+			UInt32 xsize = (psurf->extents[0] / psurf->lightmapdivider)+1;
+			UInt32 ysize = (psurf->extents[1] / psurf->lightmapdivider)+1;
 
 			R_AllocBlock(xsize, ysize, psurf->light_s[i], psurf->light_t[i], pwater->lightmaptexturewidths[i], pwater->lightmaptextureheights[i], pallocations, paddingAmount);
 		}
@@ -1061,14 +1061,14 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 		delete[] pallocations;
 	}
 
-	for(Uint32 i = 0; i < pbrushmodel->nummodelsurfaces; i++)
+	for(UInt32 i = 0; i < pbrushmodel->nummodelsurfaces; i++)
 	{
 		msurface_t* psurf = &psurfaces[i];
 		if(!(psurf->flags & SURF_SHADERWATER))
 			continue;
 
 		water_vertex_t *pcurvert = pvertexes + vertexindex;
-		for(Uint32 j = 0; j < psurf->numedges; j++)
+		for(UInt32 j = 0; j < psurf->numedges; j++)
 		{
 			Vector vertex_origin;
 			Int32 e_index = ens.pworld->psurfedges[psurf->firstedge+j];
@@ -1077,7 +1077,7 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 			else
 				Math::VectorCopy(ens.pworld->pvertexes[ens.pworld->pedges[-e_index].vertexes[1]].origin, vertex_origin);
 
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 				pcurvert->origin[k] = vertex_origin[k];
 
 			pcurvert->origin[3] = 1.0;
@@ -1092,17 +1092,17 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 			Math::VectorCopy(psurf->pplane->normal, pcurvert->normal);
 			if(psurf->flags & SURF_PLANEBACK)
 			{
-				for(Uint32 l = 0; l < 3; l++)
+				for(UInt32 l = 0; l < 3; l++)
 					pcurvert->normal[l] *= -1;
 			}
 
 			pcurvert->texcoords[0] = Math::DotProduct(&pcurvert->origin[0], ptexinfo->vecs[0]) + ptexinfo->vecs[0][3];
-			pcurvert->texcoords[0] /= static_cast<Float>(ptexinfo->ptexture->width);
+			pcurvert->texcoords[0] /= static_cast<float>(ptexinfo->ptexture->width);
 
 			pcurvert->texcoords[1] = Math::DotProduct(&pcurvert->origin[0], ptexinfo->vecs[1]) + ptexinfo->vecs[1][3];
-			pcurvert->texcoords[1] /= static_cast<Float>(ptexinfo->ptexture->height);
+			pcurvert->texcoords[1] /= static_cast<float>(ptexinfo->ptexture->height);
 
-			for(Uint32 k = 0; k < MAX_SURFACE_STYLES; k++)
+			for(UInt32 k = 0; k < MAX_SURFACE_STYLES; k++)
 			{
 				pcurvert->lightcoords[k][0] = Math::DotProduct(&pcurvert->origin[0], ptexinfo->vecs[0]) + ptexinfo->vecs[0][3];
 				pcurvert->lightcoords[k][0] -= psurf->texturemins[0];
@@ -1115,7 +1115,7 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 				pcurvert->lightcoords[k][1] /= pwater->lightmaptextureheights[k]*psurf->lightmapdivider;
 			}
 
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 			{
 				if(pwater->mins[k] > pcurvert->origin[k])
 					pwater->mins[k] = pcurvert->origin[k];
@@ -1128,17 +1128,17 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 			pcurvert++;
 		}
 
-		Uint32 surf_start_index = index_base + indexoffset;
+		UInt32 surf_start_index = index_base + indexoffset;
 
-		Uint32 indexes[3];
-		for(Uint32 j = 0; j < 3; j++)
+		UInt32 indexes[3];
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			indexes[j] = vertex_base+j;
 			pindexes[indexoffset] = indexes[j];
 			indexoffset++;
 		}
 
-		for(Uint32 j = 0, k = 3; j < (psurf->numedges-3); j++, k++)
+		for(UInt32 j = 0, k = 3; j < (psurf->numedges-3); j++, k++)
 		{
 			indexes[1] = indexes[2];
 			indexes[2] = vertex_base+k;
@@ -1148,10 +1148,10 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 			pindexes[indexoffset] = indexes[2]; indexoffset++;
 		}
 
-		Uint32 surf_end_index = index_base + indexoffset;
+		UInt32 surf_end_index = index_base + indexoffset;
 
 		// Set up any styles
-		for(Uint32 j = 1; j < MAX_SURFACE_STYLES; j++)
+		for(UInt32 j = 1; j < MAX_SURFACE_STYLES; j++)
 		{
 			if(psurf->styles[j] == NULL_LIGHTSTYLE_INDEX)
 				break;
@@ -1159,7 +1159,7 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 			Int32 styleindex = psurf->styles[j];
 
 			cl_water_style_batches_t* pstylebatch = nullptr;
-			for(Uint32 k = 0; k < pwater->stylebatches.size(); k++)
+			for(UInt32 k = 0; k < pwater->stylebatches.size(); k++)
 			{
 				if(pwater->stylebatches[k].styleindex == styleindex)
 				{
@@ -1170,13 +1170,13 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 
 			if(!pstylebatch)
 			{
-				Uint32 insertposition = pwater->stylebatches.size();
+				UInt32 insertposition = pwater->stylebatches.size();
 				pwater->stylebatches.resize(pwater->stylebatches.size()+1);
 				pstylebatch = &pwater->stylebatches[insertposition];
 				pstylebatch->styleindex = styleindex;
 			}
 
-			Uint32 k;
+			UInt32 k;
 			for(k = 0; k < pstylebatch->batches[j].size(); k++)
 			{
 				cl_water_style_batch_t& batch = pstylebatch->batches[j][k];
@@ -1194,7 +1194,7 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 
 			if(k == pstylebatch->batches[j].size())
 			{
-				Uint32 insertposition = pstylebatch->batches[j].size();
+				UInt32 insertposition = pstylebatch->batches[j].size();
 				pstylebatch->batches[j].resize(pstylebatch->batches[j].size()+1);
 
 				cl_water_style_batch_t& batch = pstylebatch->batches[j][insertposition];
@@ -1206,7 +1206,7 @@ void CWaterShader::AddEntity( cl_entity_t *pentity )
 		vertex_base += psurf->numedges;
 	}
 
-	m_pVBO->Append(pvertexes, sizeof(water_vertex_t)*vertexcount, pindexes, sizeof(Uint32)*indexcount);
+	m_pVBO->Append(pvertexes, sizeof(water_vertex_t)*vertexcount, pindexes, sizeof(UInt32)*indexcount);
 	delete[] pvertexes;
 	delete[] pindexes;
 
@@ -1384,7 +1384,7 @@ void CWaterShader::SetupClipping( const ref_params_t *pparams, bool negative ) c
 	Math::VectorScale(vRight, -1, vRight);
 	Math::VectorScale(vUp, -1, vUp);
 
-	Float eq1[4];
+	float eq1[4];
 	if(negative)
 	{
 		eq1[0] = Math::DotProduct(vRight, -Vector(0, 0, 1));
@@ -1404,16 +1404,16 @@ void CWaterShader::SetupClipping( const ref_params_t *pparams, bool negative ) c
 	R_SetProjectionMatrix(rns.view.nearclip, rns.view.fov);
 
 	// Change current projection matrix into an oblique projection matrix
-	Float projection[16];
-	memcpy(projection, rns.view.projection.Transpose(), sizeof(Float)*16);
+	float projection[16];
+	memcpy(projection, rns.view.projection.Transpose(), sizeof(float)*16);
 
-	Float eq2[4];
+	float eq2[4];
 	eq2[0] = (sgn(eq1[0]) + projection[8]) / projection[0];
 	eq2[1] = (sgn(eq1[1]) + projection[9]) / projection[5];
 	eq2[2] = -1.0F;
 	eq2[3] = (1.0F + projection[10]) / projection[14];
 
-	Float dot = eq1[0]*eq2[0] + eq1[1]*eq2[1] + eq1[2]*eq2[2] + eq1[3]*eq2[3];
+	float dot = eq1[0]*eq2[0] + eq1[1]*eq2[1] + eq1[2]*eq2[2] + eq1[3]*eq2[3];
 
     projection[2] = eq1[0]*(2.0f/dot);
     projection[6] = eq1[1]*(2.0f/dot);
@@ -1475,7 +1475,7 @@ bool CWaterShader::DrawWaterPasses( void )
 	bool result = true;
 
 	// Check if we can draw anything
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t *pentity = rns.objects.pvisents_unsorted[i];
 
@@ -1557,7 +1557,7 @@ bool CWaterShader::DrawWaterPasses( void )
 
 	if(result && m_waterQuality > WATER_QUALITY_NO_REFLECT_REFRACT)
 	{
-		for(Uint32 i = 0; i < m_waterEntitiesArray.size(); i++)
+		for(UInt32 i = 0; i < m_waterEntitiesArray.size(); i++)
 		{
 			m_pCurrentWater = m_waterEntitiesArray[i];
 			if(m_pCurrentWater->pentity->curstate.rendertype == RT_SKYWATERENT)
@@ -1729,7 +1729,7 @@ void CWaterShader::SetupReflect( void )
 	Math::AngleVectors(rns.view.params.v_angles, &forward, nullptr, nullptr);
 
 	Vector viewOrg = GetViewOrigin();
-	Float flDist = abs((m_pCurrentWater->pentity->curstate.origin[2]+m_pCurrentWater->origin[2])-viewOrg[2]);
+	float flDist = abs((m_pCurrentWater->pentity->curstate.origin[2]+m_pCurrentWater->origin[2])-viewOrg[2]);
 	Math::VectorMA(viewOrg, -2*flDist, Vector(0, 0, 1), m_waterParams.v_origin);
 
 	flDist = Math::DotProduct(forward, Vector(0, 0, 1));
@@ -1822,13 +1822,13 @@ bool CWaterShader::DrawWater( bool skybox )
 	bool result = true;
 	if(rns.fog.settings.active)
 	{
-		result = m_pShader->SetDeterminator(m_attribs.d_fog, TRUE, false);
+		result = m_pShader->SetDeterminator(m_attribs.d_fog, true, false);
 		m_pShader->SetUniform3f(m_attribs.u_fogcolor, rns.fog.settings.color[0], rns.fog.settings.color[1], rns.fog.settings.color[2]);
-		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<Float>(rns.fog.settings.end)- static_cast<Float>(rns.fog.settings.start)));
+		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<float>(rns.fog.settings.end)- static_cast<float>(rns.fog.settings.start)));
 	}
 	else
 	{
-		result = m_pShader->SetDeterminator(m_attribs.d_fog, FALSE, false);
+		result = m_pShader->SetDeterminator(m_attribs.d_fog, false, false);
 	}
 
 	if (result)
@@ -1852,7 +1852,7 @@ bool CWaterShader::DrawWater( bool skybox )
 	CFBOCache::cache_fbo_t* pScreenFBO = nullptr;
 
 	// Check if we can draw anything
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t *pentity = rns.objects.pvisents_unsorted[i];
 
@@ -1926,13 +1926,13 @@ bool CWaterShader::DrawWater( bool skybox )
 			m_pShader->SetUniform1i(m_attribs.u_flowmap, textureUnit);
 			textureUnit++;
 
-			result = m_pShader->SetDeterminator(m_attribs.d_flowmap, TRUE, false);
+			result = m_pShader->SetDeterminator(m_attribs.d_flowmap, true, false);
 			if (!result)
 				break;
 		}
 		else
 		{
-			result = m_pShader->SetDeterminator(m_attribs.d_flowmap, FALSE, false);
+			result = m_pShader->SetDeterminator(m_attribs.d_flowmap, false, false);
 			if (!result)
 				break;
 		}
@@ -1950,7 +1950,7 @@ bool CWaterShader::DrawWater( bool skybox )
 		Int32 rectangleUnit = NO_POSITION;
 		if(psettings->cheaprefraction || m_waterQuality <= WATER_QUALITY_NO_REFLECT_REFRACT)
 		{
-			result = m_pShader->SetDeterminator(m_attribs.d_rectrefract, TRUE, false);
+			result = m_pShader->SetDeterminator(m_attribs.d_rectrefract, true, false);
 			if (!result)
 				break;
 
@@ -1968,7 +1968,7 @@ bool CWaterShader::DrawWater( bool skybox )
 		}
 		else
 		{
-			result = m_pShader->SetDeterminator(m_attribs.d_rectrefract, FALSE, false);
+			result = m_pShader->SetDeterminator(m_attribs.d_rectrefract, false, false);
 			if(!result)
 				break;
 
@@ -1988,7 +1988,7 @@ bool CWaterShader::DrawWater( bool skybox )
 			m_pShader->SetUniform1i(m_attribs.u_reflect, textureUnit);
 
 			// Optimization: Try and find a water entity on the same z coord
-			Uint32 j = 0;
+			UInt32 j = 0;
 			for(; j < i; j++)
 			{
 				pentity = rns.objects.pvisents_unsorted[j];
@@ -2034,7 +2034,7 @@ bool CWaterShader::DrawWater( bool skybox )
 			&& m_pCurrentWater->plightmap_diffuse_textures[BASE_LIGHTMAP_INDEX] 
 			&& m_pCurrentWater->plightmap_lightvecs_textures[BASE_LIGHTMAP_INDEX])
 		{
-			result = m_pShader->SetDeterminator(m_attribs.d_specular, TRUE);
+			result = m_pShader->SetDeterminator(m_attribs.d_specular, true);
 			if(!result)
 				break;
 
@@ -2048,7 +2048,7 @@ bool CWaterShader::DrawWater( bool skybox )
 		}
 		else
 		{
-			result = m_pShader->SetDeterminator(m_attribs.d_specular, FALSE);
+			result = m_pShader->SetDeterminator(m_attribs.d_specular, false);
 			if(!result)
 				break;
 		}
@@ -2062,11 +2062,11 @@ bool CWaterShader::DrawWater( bool skybox )
 
 		if(!m_pCurrentWater->stylebatches.empty())
 		{
-			result = m_pShader->SetDeterminator(m_attribs.d_rectrefract, FALSE, false);
+			result = m_pShader->SetDeterminator(m_attribs.d_rectrefract, false, false);
 			if(!result)
 				break;
 
-			result = m_pShader->SetDeterminator(m_attribs.d_lightonly, TRUE);
+			result = m_pShader->SetDeterminator(m_attribs.d_lightonly, true);
 			if(!result)
 				break;
 
@@ -2077,18 +2077,18 @@ bool CWaterShader::DrawWater( bool skybox )
 				m_pShader->SetUniform3f(m_attribs.u_fogcolor, 0, 0, 0);
 
 			// Set ptr to lightstyles array
-			CArray<Float>* pLightStyleValuesArray = gLightStyles.GetLightStyleValuesArray();
-			for(Uint32 j = 0; j < m_pCurrentWater->stylebatches.size(); j++)
+			CArray<float>* pLightStyleValuesArray = gLightStyles.GetLightStyleValuesArray();
+			for(UInt32 j = 0; j < m_pCurrentWater->stylebatches.size(); j++)
 			{
 				cl_water_style_batches_t& stylebatches = m_pCurrentWater->stylebatches[j];
 				if(stylebatches.styleindex == NO_POSITION)
 					continue;
 
-				Float styleStrength = (*pLightStyleValuesArray)[stylebatches.styleindex];
+				float styleStrength = (*pLightStyleValuesArray)[stylebatches.styleindex];
 				if(!styleStrength)
 					continue;
 
-				for(Uint32 k = 1; k < MAX_SURFACE_STYLES; k++)
+				for(UInt32 k = 1; k < MAX_SURFACE_STYLES; k++)
 				{
 					if(stylebatches.batches[k].empty())
 						continue;
@@ -2126,7 +2126,7 @@ bool CWaterShader::DrawWater( bool skybox )
 							break;
 					}
 
-					for(Uint32 l = 0; l < stylebatches.batches[k].size(); l++)
+					for(UInt32 l = 0; l < stylebatches.batches[k].size(); l++)
 					{
 						cl_water_style_batch_t& batch = stylebatches.batches[k][l];
 						m_pShader->DrawElements(GL_TRIANGLES, batch.num_indexes, GL_UNSIGNED_INT, BUFFER_OFFSET(batch.start_index));
@@ -2137,7 +2137,7 @@ bool CWaterShader::DrawWater( bool skybox )
 			if(rns.fog.settings.active)
 				m_pShader->SetUniform3f(m_attribs.u_fogcolor, rns.fog.settings.color[0], rns.fog.settings.color[1], rns.fog.settings.color[2]);
 
-			result = m_pShader->SetDeterminator(m_attribs.d_lightonly, FALSE, false);
+			result = m_pShader->SetDeterminator(m_attribs.d_lightonly, false, false);
 			if(!result)
 				break;
 		}

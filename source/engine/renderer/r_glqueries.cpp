@@ -22,7 +22,7 @@ All Rights Reserved.
 #include "r_glqueries.h"
 
 // Glow query increment count
-static constexpr Uint32 GLOW_QUERY_INCR_COUNT = 64;
+static constexpr UInt32 GLOW_QUERY_INCR_COUNT = 64;
 
 //====================================
 //
@@ -44,14 +44,14 @@ void R_ClearQueryObjects( void )
 	if(rns.objects.glowqueryarray.empty())
 		return;
 
-	for(Uint32 i = 0; i < rns.objects.glowqueryarray.size(); i++)
+	for(UInt32 i = 0; i < rns.objects.glowqueryarray.size(); i++)
 	{
 		glowquery_t* pQuery = &rns.objects.glowqueryarray[i];
 		if(!pQuery->queries.empty())
 		{
 			gGLExtF.glDeleteQueriesARB(pQuery->queries.size(), &pQuery->queries[0]);
 
-			for(Uint32 j = 0; j < pQuery->queries.size(); j++)
+			for(UInt32 j = 0; j < pQuery->queries.size(); j++)
 				pQuery->queries[j] = 0;
 		}
 	}
@@ -62,12 +62,12 @@ void R_ClearQueryObjects( void )
 //====================================
 //
 //====================================
-glowquery_t* R_AllocQueryObject( Int32 key, Uint32 numqueries, Uint32 renderpassidx, querytype_t type )
+glowquery_t* R_AllocQueryObject( Int32 key, UInt32 numqueries, UInt32 renderpassidx, querytype_t type )
 {
 	glowquery_t* pQuery = nullptr;
 
 	// See if it's already used
-	for(Uint32 i = 0; i < rns.objects.glowqueryarray.size(); i++)
+	for(UInt32 i = 0; i < rns.objects.glowqueryarray.size(); i++)
 	{
 		if(rns.objects.glowqueryarray[i].key == key 
 			&& rns.objects.glowqueryarray[i].type == type
@@ -81,7 +81,7 @@ glowquery_t* R_AllocQueryObject( Int32 key, Uint32 numqueries, Uint32 renderpass
 	if(!pQuery)
 	{
 		// Look up an unused slot
-		for(Uint32 i = 0; i < rns.objects.glowqueryarray.size(); i++)
+		for(UInt32 i = 0; i < rns.objects.glowqueryarray.size(); i++)
 		{
 			if(rns.objects.glowqueryarray[i].key == NO_POSITION)
 			{
@@ -94,7 +94,7 @@ glowquery_t* R_AllocQueryObject( Int32 key, Uint32 numqueries, Uint32 renderpass
 		// Extend the array if none are available
 		if(!pQuery)
 		{
-			Uint32 previousSize = rns.objects.glowqueryarray.size();
+			UInt32 previousSize = rns.objects.glowqueryarray.size();
 			rns.objects.glowqueryarray.resize(previousSize + GLOW_QUERY_INCR_COUNT);
 
 			pQuery = &rns.objects.glowqueryarray[previousSize];
@@ -120,19 +120,19 @@ glowquery_t* R_AllocQueryObject( Int32 key, Uint32 numqueries, Uint32 renderpass
 //====================================
 //
 //====================================
-Float R_CalcOcclusionFactor( const Vector& origin, 
+float R_CalcOcclusionFactor( const Vector& origin, 
 	Int32 key, 
-	Float width, 
-	Float scale, 
-	Float glowSpeed, 
-	Uint32 numGlowTraces, 
+	float width, 
+	float scale, 
+	float glowSpeed, 
+	UInt32 numGlowTraces, 
 	querytype_t queryType,
 	struct glowstate_t& glowState, 
 	bool useQueries, 
 	bool traceAll, 
 	bool checkSky,
 	bool checkPortal,
-	Float (*viewMatrix)[4], 
+	float (*viewMatrix)[4], 
 	void *pContext, 
 	void (*pfnPreDrawFnPtr)( void* pContext ), 
 	void (*pfnDrawFnPtr)( void* pContext, const Vector& origin )
@@ -145,10 +145,10 @@ Float R_CalcOcclusionFactor( const Vector& origin,
 	Vector shiftedOrigin;
 	Math::VectorMA( origin, numGlowTraces-1, dirToView, shiftedOrigin );
 
-	for(Uint32 j = 0; j < 3; j++)
+	for(UInt32 j = 0; j < 3; j++)
 		viewMatrix[j][3] = shiftedOrigin[j];
 
-	Float flwidth = width * scale * 0.5;
+	float flwidth = width * scale * 0.5;
 
 	Vector left, right;
 	left[0] = 0; left[1] = -flwidth / 5; left[2] = 0;
@@ -162,8 +162,8 @@ Float R_CalcOcclusionFactor( const Vector& origin,
 	Math::VectorSubtract(aright, aleft, dist);
 	Math::VectorScale(dist, 1.0 / (numGlowTraces+1), step);
 
-	Float totalfrac = 0;
-	Float frac = 1.0f/ static_cast<Float>(numGlowTraces);
+	float totalfrac = 0;
+	float frac = 1.0f/ static_cast<float>(numGlowTraces);
 
 	if(useQueries)
 	{
@@ -180,7 +180,7 @@ Float R_CalcOcclusionFactor( const Vector& origin,
 
 			glPointSize(1.0);
 
-			for (Uint32 j = 0; j < numGlowTraces; j++)
+			for (UInt32 j = 0; j < numGlowTraces; j++)
 			{
 				Vector start;
 				Math::VectorMA(aleft, j+1, step, start);
@@ -199,7 +199,7 @@ Float R_CalcOcclusionFactor( const Vector& origin,
 			pObject->queried = true;
 		}
 
-		Uint32 j = 0;
+		UInt32 j = 0;
 		for (; j < numGlowTraces; j++)
 		{
 			GLint queryResult = 0;
@@ -235,7 +235,7 @@ Float R_CalcOcclusionFactor( const Vector& origin,
 	}
 	else
 	{
-		for (Uint32 j = 0; j < numGlowTraces; j++)
+		for (UInt32 j = 0; j < numGlowTraces; j++)
 		{
 			Vector start;
 			Math::VectorMA(aleft, j+1, step, start);
@@ -275,8 +275,8 @@ Float R_CalcOcclusionFactor( const Vector& origin,
 	// Check if we've been away too long & we're totally blocked
 	if(rns.mainframe && totalfrac == 0)
 	{
-		Float flinterval = rns.time - glowState.lastrendertime;
-		Float remaintime = glowState.currentalpha / glowSpeed;
+		float flinterval = rns.time - glowState.lastrendertime;
+		float remaintime = glowState.currentalpha / glowSpeed;
 
 		if(flinterval > remaintime)
 		{
@@ -285,10 +285,10 @@ Float R_CalcOcclusionFactor( const Vector& origin,
 		}
 	}
 
-	Float currentalpha;
+	float currentalpha;
 	if(rns.mainframe)
 	{
-		Float targetalpha = totalfrac;
+		float targetalpha = totalfrac;
 		if (glowState.currentalpha > targetalpha)
 		{
 			glowState.currentalpha -= rns.frametime * glowSpeed;
@@ -335,10 +335,10 @@ void R_ReleaseQueryObject( glowquery_t* pQuery )
 //====================================
 //
 //====================================
-void R_ReleaseRenderPassQueryObjects( Uint32 renderpassidx, querytype_t type )
+void R_ReleaseRenderPassQueryObjects( UInt32 renderpassidx, querytype_t type )
 {
 	// See if it's already used
-	for(Uint32 i = 0; i < rns.objects.glowqueryarray.size(); i++)
+	for(UInt32 i = 0; i < rns.objects.glowqueryarray.size(); i++)
 	{
 		glowquery_t& query = rns.objects.glowqueryarray[i];
 		if(query.key != NO_POSITION 
@@ -347,7 +347,7 @@ void R_ReleaseRenderPassQueryObjects( Uint32 renderpassidx, querytype_t type )
 		{
 			if(rns.objects.glowqueryarray[i].queried)
 			{
-				Uint32 j = 0;
+				UInt32 j = 0;
 				for (; j < query.queries.size(); j++)
 				{
 					GLint queryResult = 0;

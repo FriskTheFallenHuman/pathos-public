@@ -53,7 +53,7 @@ void CL_ClearDownload( void )
 	cls.netinfo.download.filechunks.begin();
 	while(!cls.netinfo.download.filechunks.end())
 	{
-		byte* pdata = reinterpret_cast<byte*>(cls.netinfo.download.filechunks.get());
+		Byte* pdata = reinterpret_cast<Byte*>(cls.netinfo.download.filechunks.get());
 		delete[] pdata;
 
 		cls.netinfo.download.filechunks.next();
@@ -146,7 +146,7 @@ bool CL_BeginResourceDownload( cl_resource_t* presource )
 	// Tell the server we're downloading this file
 	cls.netinfo.pnet->CLS_MessageBegin(cls_resources);
 		cls.netinfo.pnet->WriteByte(SV_RESOURCE_DOWNLOAD_BEGIN);
-		cls.netinfo.pnet->WriteBuffer(reinterpret_cast<const byte*>(filepath.c_str()), filepath.length()+1);
+		cls.netinfo.pnet->WriteBuffer(reinterpret_cast<const Byte*>(filepath.c_str()), filepath.length()+1);
 		cls.netinfo.pnet->WriteUint16(presource->fileid);
 	cls.netinfo.pnet->CLS_MessageEnd();
 
@@ -201,9 +201,9 @@ bool CL_ReadFileInfo( void )
 	CMSGReader& reader = cls.netinfo.reader;
 
 	// Read filename and file id
-	const Char* pstrFilename = reader.ReadString();
+	const char* pstrFilename = reader.ReadString();
 	Int32 fileid = reader.ReadUint16();
-	Uint32 numchunks = reader.ReadInt32();
+	UInt32 numchunks = reader.ReadInt32();
 
 	if(reader.HasError())
 	{
@@ -262,7 +262,7 @@ bool CL_LoadResources( void )
 		{
 		case RS_TYPE_MODEL:
 			{
-				const Char* pstrModelName = resource.filepath.c_str();
+				const char* pstrModelName = resource.filepath.c_str();
 				if(!gModelCache.LoadModel(pstrModelName))
 				{
 					Con_EPrintf("%s - Failed to precache %s.\n", __FUNCTION__, pstrModelName);
@@ -275,7 +275,7 @@ bool CL_LoadResources( void )
 			break;
 		case RS_TYPE_SOUND:
 			{
-				const Char* pstrSoundName = resource.filepath.c_str();
+				const char* pstrSoundName = resource.filepath.c_str();
 				if(!gSoundEngine.PrecacheSound(pstrSoundName, resource.svindex, RS_GAME_LEVEL, false))
 					Con_EPrintf("%s - Could not precache %s.\n", __FUNCTION__, pstrSoundName);
 
@@ -310,7 +310,7 @@ bool CL_LoadResources( void )
 bool CL_FinishDownloadedFile( void )
 {
 	// Calculate the final file size
-	Uint32 finalFileSize = 0;
+	UInt32 finalFileSize = 0;
 	cls.netinfo.download.filechunks.begin();
 	while(!cls.netinfo.download.filechunks.end())
 	{
@@ -327,11 +327,11 @@ bool CL_FinishDownloadedFile( void )
 		return false;
 	}
 
-	byte* pbuffer = new byte[finalFileSize];
-	memset(pbuffer, 0, sizeof(byte)*finalFileSize);
+	Byte* pbuffer = new Byte[finalFileSize];
+	memset(pbuffer, 0, sizeof(Byte)*finalFileSize);
 
 	// Note: File chunks are supposed to be in order
-	Uint32 insertOffset = 0;
+	UInt32 insertOffset = 0;
 	cls.netinfo.download.filechunks.begin();
 	while(!cls.netinfo.download.filechunks.end())
 	{
@@ -345,9 +345,9 @@ bool CL_FinishDownloadedFile( void )
 		}
 
 		// Copy data to the buffer
-		byte* pdatadest = pbuffer + insertOffset;
-		byte* pdatasrc = (reinterpret_cast<byte*>(pchunk) + pchunk->dataoffset);
-		memcpy(pdatadest, pdatasrc, sizeof(byte)*pchunk->datasize);
+		Byte* pdatadest = pbuffer + insertOffset;
+		Byte* pdatasrc = (reinterpret_cast<Byte*>(pchunk) + pchunk->dataoffset);
+		memcpy(pdatadest, pdatasrc, sizeof(Byte)*pchunk->datasize);
 
 		// Increment and continue
 		insertOffset += pchunk->datasize;
@@ -366,7 +366,7 @@ bool CL_FinishDownloadedFile( void )
 	filepath = Common::FixSlashes(filepath.c_str());
 
 	CString dirpath, token;
-	const Char* pstr = filepath.c_str();
+	const char* pstr = filepath.c_str();
 	while(pstr)
 	{
 		while(*pstr == '\\' || *pstr == '/')
@@ -406,7 +406,7 @@ bool CL_FinishDownloadedFile( void )
 	if(pWindow)
 	{
 		// Set the value of the total progress bar
-		Float value = static_cast<Float>(cls.netinfo.numdownloadedresources)/static_cast<Float>(cls.netinfo.nummissingresources);
+		float value = static_cast<float>(cls.netinfo.numdownloadedresources)/static_cast<float>(cls.netinfo.nummissingresources);
 		pWindow->SetTotalProgressBar(value);
 	}
 
@@ -427,9 +427,9 @@ bool CL_ReadFileChunk( void )
 		return true;
 	}
 
-	Uint32 fileid = reader.ReadUint16();
-	Uint32 chunkindex = reader.ReadUint32();
-	Uint32 chunksize = reader.ReadUint32();
+	UInt32 fileid = reader.ReadUint16();
+	UInt32 chunkindex = reader.ReadUint32();
+	UInt32 chunksize = reader.ReadUint32();
 
 	if(reader.HasError())
 	{
@@ -438,18 +438,18 @@ bool CL_ReadFileChunk( void )
 	}
 
 	// Make sure everything is alright
-	if(fileid != static_cast<Uint32>(cls.netinfo.download.presource->fileid))
+	if(fileid != static_cast<UInt32>(cls.netinfo.download.presource->fileid))
 	{
 		Con_EPrintf("%s - Mismatch in file ID. Received: %d, expected: %d.\n", __FUNCTION__, fileid, cls.netinfo.download.presource->fileid);
 		return false;
 	}
 
 	// Retreive data from the packet
-	const byte* pdata = reader.ReadBuffer(chunksize);
+	const Byte* pdata = reader.ReadBuffer(chunksize);
 
 	// Allocate the chunk's data
-	Uint32 allocsize = chunksize + sizeof(filechunk_t);
-	byte* pchunkdata = new byte[allocsize];
+	UInt32 allocsize = chunksize + sizeof(filechunk_t);
+	Byte* pchunkdata = new Byte[allocsize];
 	filechunk_t* pheader = reinterpret_cast<filechunk_t*>(pchunkdata);
 
 	// Set header info
@@ -459,8 +459,8 @@ bool CL_ReadFileChunk( void )
 	pheader->datasize = chunksize;
 
 	// Copy the raw data
-	byte* pcopydest = pchunkdata + sizeof(filechunk_t);
-	memcpy(pcopydest, pdata, sizeof(byte)*chunksize);
+	Byte* pcopydest = pchunkdata + sizeof(filechunk_t);
+	memcpy(pcopydest, pdata, sizeof(Byte)*chunksize);
 
 	if(cls.netinfo.download.filechunks.empty())
 	{
@@ -500,15 +500,15 @@ bool CL_ReadFileChunk( void )
 	if(pWindow)
 	{
 		// Set file progress bar
-		Float count = cls.netinfo.download.chunkbits.count();
-		Float size = cls.netinfo.download.chunkbits.size();
+		float count = cls.netinfo.download.chunkbits.count();
+		float size = cls.netinfo.download.chunkbits.size();
 
-		Float fileValue = count/size;
+		float fileValue = count/size;
 		pWindow->SetFileProgressBar(fileValue);
 
 		// Set total progress bar
-		Float totalValue = static_cast<Float>(cls.netinfo.numdownloadedresources)/static_cast<Float>(cls.netinfo.nummissingresources);
-		totalValue += fileValue * 1.0f/ static_cast<Float>(cls.netinfo.nummissingresources);
+		float totalValue = static_cast<float>(cls.netinfo.numdownloadedresources)/static_cast<float>(cls.netinfo.nummissingresources);
+		totalValue += fileValue * 1.0f/ static_cast<float>(cls.netinfo.nummissingresources);
 
 		pWindow->SetTotalProgressBar(totalValue);
 	}
@@ -559,14 +559,14 @@ bool CL_ReadResourceList( void )
 	CMSGReader& reader = cls.netinfo.reader;
 
 	// Get the type
-	Uint16 resourceType = reader.ReadByte();
+	UInt16 resourceType = reader.ReadByte();
 	switch(resourceType)
 	{
 	case RS_LIST_MODELS:
 		{
 			// Read in model by model
-			Uint16 nummodels = reader.ReadUint16();
-			for(Uint32 i = 0; i < nummodels; i++)
+			UInt16 nummodels = reader.ReadUint16();
+			for(UInt32 i = 0; i < nummodels; i++)
 			{
 				cl_resource_t newRes;
 				newRes.fileid = cls.netinfo.resourcestlist.size() + 1;
@@ -591,8 +591,8 @@ bool CL_ReadResourceList( void )
 	case RS_LIST_SOUNDS:
 		{
 			// Read in the number of sounds
-			Uint16 numsounds = reader.ReadUint16();
-			for(Uint32 i = 0; i < numsounds; i++)
+			UInt16 numsounds = reader.ReadUint16();
+			for(UInt32 i = 0; i < numsounds; i++)
 			{
 				cl_resource_t newRes;
 				newRes.fileid = cls.netinfo.resourcestlist.size() + 1;
@@ -619,8 +619,8 @@ bool CL_ReadResourceList( void )
 		break;
 	case RS_LIST_TEXTURES:
 		{
-			Uint16 numTextures = reader.ReadUint16();
-			for(Uint32 i = 0; i < numTextures; i++)
+			UInt16 numTextures = reader.ReadUint16();
+			for(UInt32 i = 0; i < numTextures; i++)
 			{
 				cl_resource_t newRes;
 				newRes.fileid = cls.netinfo.resourcestlist.size() + 1;
@@ -647,8 +647,8 @@ bool CL_ReadResourceList( void )
 		break;
 	case RS_LIST_MATERIAL_SCRIPTS:
 		{
-			Uint16 numMaterialScripts = reader.ReadUint16();
-			for(Uint32 i = 0; i < numMaterialScripts; i++)
+			UInt16 numMaterialScripts = reader.ReadUint16();
+			for(UInt32 i = 0; i < numMaterialScripts; i++)
 			{
 				cl_resource_t newRes;
 				newRes.fileid = cls.netinfo.resourcestlist.size() + 1;
@@ -669,8 +669,8 @@ bool CL_ReadResourceList( void )
 		break;
 	case RS_LIST_GENERIC:
 		{
-			Uint16 numFiles = reader.ReadUint16();
-			for(Uint32 i = 0; i < numFiles; i++)
+			UInt16 numFiles = reader.ReadUint16();
+			for(UInt32 i = 0; i < numFiles; i++)
 			{
 				cl_resource_t newRes;
 				newRes.fileid = cls.netinfo.resourcestlist.size() + 1;
@@ -694,8 +694,8 @@ bool CL_ReadResourceList( void )
 		break;
 	case RS_LIST_PARTICLE_SCRIPTS:
 		{
-			Uint16 numFiles = reader.ReadUint16();
-			for(Uint32 i = 0; i < numFiles; i++)
+			UInt16 numFiles = reader.ReadUint16();
+			for(UInt32 i = 0; i < numFiles; i++)
 			{
 				cl_resource_t newRes;
 				newRes.fileid = cls.netinfo.resourcestlist.size() + 1;
@@ -725,10 +725,10 @@ bool CL_ReadResourceList( void )
 			if(!cls.netinfo.decalcache.empty())
 				cls.netinfo.decalcache.clear();
 
-			Uint16 numFiles = reader.ReadUint16();
+			UInt16 numFiles = reader.ReadUint16();
 			cls.netinfo.decalcache.reserve(numFiles);
 
-			for(Uint32 i = 0; i < numFiles; i++)
+			for(UInt32 i = 0; i < numFiles; i++)
 			{
 				decalcache_t newcache;
 				newcache.name = reader.ReadString();

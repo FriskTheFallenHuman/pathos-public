@@ -28,17 +28,17 @@ struct cache_model_t;
 struct entity_extrainfo_t;
 
 // Max dynamic lights affecting a model entity
-static constexpr Uint32 MAX_ENT_ACTIVE_DLIGHTS			= 4;
+static constexpr UInt32 MAX_ENT_ACTIVE_DLIGHTS			= 4;
 // Max dynamic lights affecting a model entity
-static constexpr Uint32 MAX_ENT_DLIGHTS					= 12;
+static constexpr UInt32 MAX_ENT_DLIGHTS					= 12;
 // Max studio decals total
-static constexpr Uint32 MAX_VBM_TOTAL_DECALS			= 512;
+static constexpr UInt32 MAX_VBM_TOTAL_DECALS			= 512;
 // Max temporary indexes for decal creation
-static constexpr Uint32 MAX_TEMP_VBM_INDEXES			= 32768;
+static constexpr UInt32 MAX_TEMP_VBM_INDEXES			= 32768;
 // Max temporary vertexes for special render stuff
-static constexpr Uint32 MAX_TEMP_VBM_VERTEXES			= 16354;
+static constexpr UInt32 MAX_TEMP_VBM_VERTEXES			= 16354;
 // Maximum submodels rendered at once
-static constexpr Uint32 RENDERED_SUBMODELS_ALLOC_SIZE	= 64;
+static constexpr UInt32 RENDERED_SUBMODELS_ALLOC_SIZE	= 64;
 
 enum vbm_shtype
 {
@@ -93,10 +93,10 @@ struct vbm_decal_mesh_t
 	Int32 bodypartindex; // Original bodypart index
 	Int32 submodelindex; // Original submodel index
 
-	Uint32 start_index;
-	Uint32 num_indexes;
+	UInt32 start_index;
+	UInt32 num_indexes;
 
-	byte *pbones;
+	Byte *pbones;
 	Int32 numbones;
 
 	bool alphatest;
@@ -119,22 +119,22 @@ struct vbmdecal_t
 	}
 	~vbmdecal_t()
 	{
-		for(Uint32 i = 0; i < meshes.size(); i++)
+		for(UInt32 i = 0; i < meshes.size(); i++)
 			delete meshes[i];
 	}
 
 	Int32 entindex;
 	cl_entity_t *pentity;
-	Uint32 identifier;
+	UInt32 identifier;
 
-	Uint32 start_vertex;
-	Uint32 num_vertexes;
+	UInt32 start_vertex;
+	UInt32 num_vertexes;
 
 	CArray<vbm_decal_mesh_t*> meshes;
 
 	const decalgroupentry_t *pentry;
 
-	Uint32 totaldecals;
+	UInt32 totaldecals;
 	vbmdecal_t *next;
 	vbmdecal_t *prev;
 };
@@ -154,13 +154,13 @@ struct vbm_glvertex_t
 	Vector origin;
 	Vector tangent;
 	Vector normal;
-	Float texcoord1[2];
-	Float texcoord2[2];
-	Float boneindexes[MAX_VBM_BONEWEIGHTS];
-	Float boneweights[MAX_VBM_BONEWEIGHTS];
-	Float flexcoord[2];
+	float texcoord1[2];
+	float texcoord2[2];
+	float boneindexes[MAX_VBM_BONEWEIGHTS];
+	float boneweights[MAX_VBM_BONEWEIGHTS];
+	float flexcoord[2];
 
-	byte pad[4];
+	Byte pad[4];
 };
 
 struct vbm_vlight_glvertex_t
@@ -186,23 +186,23 @@ struct vbm_vlight_glvertex_t
 		memset(pad, 0, sizeof(pad));
 	}
 		
-	byte vertexlight0_vector[3];
-	byte vertexlight0_ambient[3];
-	byte vertexlight0_diffuse[3];
+	Byte vertexlight0_vector[3];
+	Byte vertexlight0_ambient[3];
+	Byte vertexlight0_diffuse[3];
 
-	byte vertexlight1_vector[3];
-	byte vertexlight1_ambient[3];
-	byte vertexlight1_diffuse[3];
+	Byte vertexlight1_vector[3];
+	Byte vertexlight1_ambient[3];
+	Byte vertexlight1_diffuse[3];
 
-	byte vertexlight2_vector[3];
-	byte vertexlight2_ambient[3];
-	byte vertexlight2_diffuse[3];
+	Byte vertexlight2_vector[3];
+	Byte vertexlight2_ambient[3];
+	Byte vertexlight2_diffuse[3];
 
-	byte vertexlight3_vector[3];
-	byte vertexlight3_ambient[3];
-	byte vertexlight3_diffuse[3];
+	Byte vertexlight3_vector[3];
+	Byte vertexlight3_ambient[3];
+	Byte vertexlight3_diffuse[3];
 
-	byte pad[28];
+	Byte pad[28];
 };
 
 struct ubo_modellight_t
@@ -214,9 +214,9 @@ struct ubo_modellight_t
 		memset(radius, 0, sizeof(radius));
 	}
 
-	Float origin[4];
-	Float color[4];
-	Float radius[4];
+	float origin[4];
+	float color[4];
+	float radius[4];
 };
 
 struct attrib_light
@@ -241,7 +241,7 @@ struct vlight_vbo_t
 		vertexcount(0),
 		stylecount(0)
 	{
-		for(Uint32 i = 0; i < MAX_ENTITY_STYLES; i++)
+		for(UInt32 i = 0; i < MAX_ENTITY_STYLES; i++)
 			styles[i] = NULL_LIGHTSTYLE_INDEX;
 	}
 
@@ -255,10 +255,10 @@ struct vlight_vbo_t
 	CVBO* pvbo;
 
 	Int32 vlightoffset;
-	Uint32 vertexcount;
+	UInt32 vertexcount;
 
-	byte styles[MAX_ENTITY_STYLES];
-	Uint32 stylecount;
+	Byte styles[MAX_ENTITY_STYLES];
+	UInt32 stylecount;
 };
 
 struct vbm_dlight_attribs_t
@@ -351,7 +351,7 @@ struct vbm_attribs
 		u_d_vlight_style2(CGLSLShader::PROPERTY_UNAVAILABLE),
 		u_d_vlight_style3(CGLSLShader::PROPERTY_UNAVAILABLE)
 		{
-			for(Uint32 i = 0; i < MAX_SHADER_BONES; i++)
+			for(UInt32 i = 0; i < MAX_SHADER_BONES; i++)
 				boneindexes[i] = 0;
 		}
 
@@ -450,21 +450,21 @@ class CVBMRenderer
 {
 public:
 	// Number of light reductions
-	static const Uint32 NUM_LIGHT_REDUCTIONS;
+	static const UInt32 NUM_LIGHT_REDUCTIONS;
 	// Time it takes to interpolate lighting value changes
-	static const Float LIGHTING_LERP_TIME;
+	static const float LIGHTING_LERP_TIME;
 
 	// Max decals on a single model entity
-	static const Uint32 MAX_VBM_ENTITY_DECALS;
+	static const UInt32 MAX_VBM_ENTITY_DECALS;
 
 	// Minimum array size for vbm model vertexes
-	static const Uint32 MIN_VBMDECAL_VERTEXES;
+	static const UInt32 MIN_VBMDECAL_VERTEXES;
 
 	// Eyeglint texture path
-	static const Char EYEGLINT_TEXTURE_PATH[];
+	static const char EYEGLINT_TEXTURE_PATH[];
 
 	// Default lightmap sampling offset
-	static const Float DEFAULT_LIGHTMAP_SAMPLE_OFFSET;
+	static const float DEFAULT_LIGHTMAP_SAMPLE_OFFSET;
 
 	enum vs_matrices_t
 	{
@@ -505,14 +505,14 @@ public:
 	// Updates attachments on a model
 	void UpdateAttachments( cl_entity_t *pEntity );
 	// Updates bone positions and gives back a particular bone's position
-	bool GetBonePosition( cl_entity_t *pEntity, const Char *szname, Vector& origin );
+	bool GetBonePosition( cl_entity_t *pEntity, const char *szname, Vector& origin );
 	// Transforms a vector by a bone matrix
 	void TransformVectorByBoneMatrix( cl_entity_t *pEntity, Int32 boneindex, Vector& vector, bool inverse );
 	// Rotates a vector by a bone matrix
 	void RotateVectorByBoneMatrix( cl_entity_t *pEntity, Int32 boneindex, Vector& vector, bool inverse );
 
 	// Sets up pre-baked vertex lighting for a model
-	bool SetupEntityVertexLightVBO( cl_entity_t* pentity, Int32 vlightoffset, Uint32 vertexcount, byte* plightstyles );
+	bool SetupEntityVertexLightVBO( cl_entity_t* pentity, Int32 vlightoffset, UInt32 vertexcount, Byte* plightstyles );
 	// Rebuilds vertex lighting VBOs
 	bool RebuildVertexLightingVBOs( void );
 
@@ -530,7 +530,7 @@ public:
 	bool DrawDecals( bool transparentPass );
 
 	// Draws VSM objects
-	bool DrawVSM( struct cl_dlight_t *dl, cl_entity_t** pvisents, Uint32 numentities );
+	bool DrawVSM( struct cl_dlight_t *dl, cl_entity_t** pvisents, UInt32 numentities );
 	// Triggers clientside events
 	void PlayEvents( void );
 
@@ -539,7 +539,7 @@ public:
 	// Ends aura rendering
 	void FinishAuraPass( void );
 	// Draws a model for aura rendering
-	bool DrawAura( cl_entity_t *pEntity, const Vector& color, Float alpha );
+	bool DrawAura( cl_entity_t *pEntity, const Vector& color, float alpha );
 
 	// Prepares for VSM rendering
 	bool PrepareVSM( cl_dlight_t *dl );
@@ -552,7 +552,7 @@ public:
 	// Draws decals for an entity
 	bool DrawEntityDecals( cl_entity_t* pentity );
 	// Applies a decal to a model
-	void CreateDecal( const Vector& position, const Vector& normal, decalgroupentry_t *texptr, cl_entity_t *pEntity, byte flags );
+	void CreateDecal( const Vector& position, const Vector& normal, decalgroupentry_t *texptr, cl_entity_t *pEntity, Byte flags );
 	// Releases entity VBM data
 	void FreeEntityData( const cl_entity_t* pEntity );
 
@@ -560,7 +560,7 @@ public:
 	class CFlexManager* GetFlexManager( void ) { return m_pFlexManager; }
 
 	// Get the shader error string
-	const Char* GetShaderErrorString( void ) const;
+	const char* GetShaderErrorString( void ) const;
 
 private:
 	// Sets orientation-related data
@@ -569,7 +569,7 @@ private:
 	void SetupTransformationMatrix( void );
 
 	// Applies any renderfx effects
-	void ApplyRenderFX( Float (*pmatrix)[4] );
+	void ApplyRenderFX( float (*pmatrix)[4] );
 
 	// Sets up bones
 	bool SetupBones( Int32 flags );
@@ -581,9 +581,9 @@ private:
 	// Process gait animation
 	void ProcessGait( void );
 	// Estimate gait animation related info
-	void EstimateGait( Double dt );
+	void EstimateGait( double dt );
 	// Calculate player blending
-	void CalcPlayerBlend( const mstudioseqdesc_t* pseqdesc, Float& blend, Float& pitch );
+	void CalcPlayerBlend( const mstudioseqdesc_t* pseqdesc, float& blend, float& pitch );
 
 	// Calculates attachment positions
 	void CalculateAttachments( void );
@@ -592,7 +592,7 @@ private:
 	// Sets up model lighting
 	void SetupLighting( Int32 flags );
 	// Compare light values with light info
-	bool CompareLightValues( const Vector* pambientlightvalues, const Vector* pdiffuselightvalues, const Vector& lightdir, const byte* plightstyles );
+	bool CompareLightValues( const Vector* pambientlightvalues, const Vector* pdiffuselightvalues, const Vector& lightdir, const Byte* plightstyles );
 
 	// Gets model lights
 	void GetModelLights( void );
@@ -665,7 +665,7 @@ private:
 	bool DrawFlexedSubmodels( void );
 
 	// Sets up submodels
-	void SetupModel( Uint32 bodypart, vbmlod_type_t type );
+	void SetupModel( UInt32 bodypart, vbmlod_type_t type );
 	// Retreives the ideal LOD for the type specified
 	const vbmsubmodel_t* GetIdealLOD( const vbmsubmodel_t* psubmodel, vbmlod_type_t type );
 
@@ -675,7 +675,7 @@ private:
 	bool BuildVertexLightVBO( vlight_vbo_t* pvlightvbo );
 
 	// Set bone UBO contents
-	void SetShaderBoneTransform( BoneTransformArray_t* pbonetransform, const byte* pboneindexes, Uint32 numbones );
+	void SetShaderBoneTransform( BoneTransformArray_t* pbonetransform, const Byte* pboneindexes, UInt32 numbones );
 
 private:
 	// Allocates a decal slot
@@ -683,13 +683,13 @@ private:
 	// Allocates a decal
 	vbmdecal_t* AllocDecal( void );
 	// Finalizes a decal mesh
-	void FinalizeDecalMesh( vbmdecal_t* pdecal, vbm_decal_mesh_t* pmesh, Uint32& curstart );
+	void FinalizeDecalMesh( vbmdecal_t* pdecal, vbm_decal_mesh_t* pmesh, UInt32& curstart );
 	// Applies a decal on a triangle
-	bool DecalTriangle( Int32 pbodypartindex, Int32 submodelindex, vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, const vbmvertex_t **pverts, const byte *pboneids, const Vector& position, const Vector& normal, vbmdecal_t *decal, const Vector& up, const Vector& right, Uint32& curstart, byte flags, en_material_t* pmaterial );
+	bool DecalTriangle( Int32 pbodypartindex, Int32 submodelindex, vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, const vbmvertex_t **pverts, const Byte *pboneids, const Vector& position, const Vector& normal, vbmdecal_t *decal, const Vector& up, const Vector& right, UInt32& curstart, Byte flags, en_material_t* pmaterial );
 	// Deletes a decal
 	void DeleteDecal( vbmdecal_t *pdecal );
 	// Retreives the offset for the decal mesh
-	void GetDecalOffsets( Uint32 numverts, Uint32 numindexes, Uint32& vertexoffset, Uint32& indexoffset );
+	void GetDecalOffsets( UInt32 numverts, UInt32 numindexes, UInt32& vertexoffset, UInt32& indexoffset );
 	// Clears a single decal
 	void ClearDecal( vbmdecal_t* pdecal );
 
@@ -737,7 +737,7 @@ private:
 	vbm_attribs m_attribs;
 
 	// Draw buffer offset
-	Uint32 m_drawBufferIndex;
+	UInt32 m_drawBufferIndex;
 
 	// Flex texture allocation
 	struct en_texalloc_t* m_pFlexTexture;
@@ -753,14 +753,14 @@ private:
 	const vbmsubmodel_t *m_pVBMSubModel;
 
 	// Decal index cache size
-	Uint32 m_decalIndexCacheSize;
+	UInt32 m_decalIndexCacheSize;
 	// Decal vertex cache size
-	Uint32 m_decalVertexCacheSize;
+	UInt32 m_decalVertexCacheSize;
 
 	// Pointer to rotation matrix used
-	Float (*m_pRotationMatrix)[3][4];
+	float (*m_pRotationMatrix)[3][4];
 	// Internal rotation matrix
-	Float m_pInternalRotationMatrix[3][4];
+	float m_pInternalRotationMatrix[3][4];
 
 	// Pointer to bone matrix array
 	BoneTransformArray_t* m_pBoneTransform;
@@ -792,7 +792,7 @@ private:
 	// Pointer to entity extradata
 	entity_extrainfo_t *m_pExtraInfo;
 	// Entity alpha used for rendering
-	Float m_renderAlpha;
+	float m_renderAlpha;
 	// Global light vector used for rendering
 	Vector m_renderLightVector;
 	// Global ambient color used for rendering
@@ -815,7 +815,7 @@ private:
 	// Tells if flexes are used
 	bool m_useFlexes;
 
-	// TRUE if we are blendig
+	// true if we are blendig
 	bool m_useBlending;
 
 private:
@@ -827,48 +827,48 @@ private:
 	// Model lights array
 	mlightinfo_t m_modelLights[MAX_ENT_MLIGHTS];
 	// Number of model lights
-	Uint32 m_numModelLights;
+	UInt32 m_numModelLights;
 
 	// Pointer array of dynamic lights
 	cl_dlight_t *m_pDynamicLights[MAX_ENT_DLIGHTS];
 	// Number of dynamic lights
-	Uint32 m_numDynamicLights;
+	UInt32 m_numDynamicLights;
 
-	// TRUE if we're rendering in multipass
+	// true if we're rendering in multipass
 	bool m_isMultiPass;
-	// TRUE if we're rendering an aura pass
+	// true if we're rendering an aura pass
 	bool m_isAuraPass;
 
 private:
 	// List of submodels to render
 	CArray<const vbmsubmodel_t*> m_pSubmodelDrawList;
 	// Amount of batched submodels
-	Uint32 m_numDrawSubmodels;
+	UInt32 m_numDrawSubmodels;
 
 	// Array of vbm entity decals
 	vbmdecal_t m_vbmDecals[MAX_VBM_TOTAL_DECALS];
 	// Number of decals used by VBM entities
-	Uint32 m_numVBMDecals;
+	UInt32 m_numVBMDecals;
 
 	// Temporary indexes array for decal creation
-	Uint32 m_tempIndexes[MAX_TEMP_VBM_INDEXES];
+	UInt32 m_tempIndexes[MAX_TEMP_VBM_INDEXES];
 	// Number of temporary indexes
-	Uint32 m_numTempIndexes;
+	UInt32 m_numTempIndexes;
 
 	// Temporary vertexes for decal creation
 	vbm_glvertex_t m_tempVertexes[MAX_TEMP_VBM_VERTEXES];
 	// Number of temporary vertexes in array
-	Uint32 m_numTempVertexes;
+	UInt32 m_numTempVertexes;
 
 	// Current index for decal vertex allocation
-	Uint32 m_vCache_Index;
+	UInt32 m_vCache_Index;
 	// Base index for vertex cache
-	Uint32 m_vCache_Base;
+	UInt32 m_vCache_Base;
 
 	// Current index for index cache
-	Uint32 m_iCache_Index;
+	UInt32 m_iCache_Index;
 	// Base index for index cache
-	Uint32 m_iCache_Base;
+	UInt32 m_iCache_Base;
 
 private:
 	// Flex manager instance
@@ -894,18 +894,18 @@ private:
 	CArray<Vector>	m_bonePositions5;
 	CArray<vec4_t>	m_boneQuaternions5;
 	// Used for bone transform calculations
-	Float	m_boneMatrix[3][4];
+	float	m_boneMatrix[3][4];
 
 	// Gait estimate
-	Float	m_gaitEstimate;
+	float	m_gaitEstimate;
 	// Gait movement
-	Float	m_gaitMovement;
+	float	m_gaitMovement;
 
 private:
 	// Used for uploading modellight data to the modellight UBO
 	ubo_modellight_t m_uboModelLightData[MAX_ENT_MLIGHTS];
 	// Used for uploading to the bonematrices UBO
-	Float	m_uboBoneMatrixData[MAX_SHADER_BONES][3][4];
+	float	m_uboBoneMatrixData[MAX_SHADER_BONES][3][4];
 };
 extern CVBMRenderer gVBMRenderer;
 extern en_material_t* VBM_FindMaterialScriptByIndex( Int32 index );

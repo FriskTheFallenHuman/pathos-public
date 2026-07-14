@@ -12,9 +12,9 @@ All Rights Reserved.
 #include "plattrainentity.h"
 
 // Number of legacy move sounds
-const Uint32 CPlatTrainEntity::NB_LEGACY_MOVE_SOUNDS = 15;
+const UInt32 CPlatTrainEntity::NB_LEGACY_MOVE_SOUNDS = 15;
 // Legacy move sounds
-const Char* CPlatTrainEntity::LEGACY_MOVE_SOUNDS[NB_LEGACY_MOVE_SOUNDS] =
+const char* CPlatTrainEntity::LEGACY_MOVE_SOUNDS[NB_LEGACY_MOVE_SOUNDS] =
 {
 	"plats/bigmove1.wav",
 	"plats/bigmove2.wav",
@@ -34,9 +34,9 @@ const Char* CPlatTrainEntity::LEGACY_MOVE_SOUNDS[NB_LEGACY_MOVE_SOUNDS] =
 };
 
 // Number of legacy stop sounds
-const Uint32 CPlatTrainEntity::NB_LEGACY_STOP_SOUNDS = 9;
+const UInt32 CPlatTrainEntity::NB_LEGACY_STOP_SOUNDS = 9;
 // Legacy stop sounds
-const Char* CPlatTrainEntity::LEGACY_STOP_SOUNDS[NB_LEGACY_STOP_SOUNDS] = 
+const char* CPlatTrainEntity::LEGACY_STOP_SOUNDS[NB_LEGACY_STOP_SOUNDS] = 
 {
 	"plats/bigstop1.wav",
 	"plats/bigstop2.wav",
@@ -144,13 +144,13 @@ bool CPlatTrainEntity::Spawn( void )
 {
 	if(m_moveSoundFile == NO_STRING_VALUE && m_moveSound > 0)
 	{
-		const Char* pstrSoundFile = LEGACY_MOVE_SOUNDS[m_moveSound - 1];
+		const char* pstrSoundFile = LEGACY_MOVE_SOUNDS[m_moveSound - 1];
 		m_moveSoundFile = gd_engfuncs.pfnAllocString(pstrSoundFile);
 	}
 
 	if(m_stopSoundFile == NO_STRING_VALUE && m_stopSound > 0)
 	{
-		const Char* pstrSoundFile = LEGACY_STOP_SOUNDS[m_stopSound - 1];
+		const char* pstrSoundFile = LEGACY_STOP_SOUNDS[m_stopSound - 1];
 		m_stopSoundFile = gd_engfuncs.pfnAllocString(pstrSoundFile);
 	}
 
@@ -168,13 +168,13 @@ void CPlatTrainEntity::Precache( void )
 {
 	if(m_moveSoundFile != NO_STRING_VALUE)
 	{
-		const Char* pstrSoundFile = gd_engfuncs.pfnGetString(m_moveSoundFile);
+		const char* pstrSoundFile = gd_engfuncs.pfnGetString(m_moveSoundFile);
 		gd_engfuncs.pfnPrecacheSound(pstrSoundFile);
 	}
 
 	if(m_stopSoundFile != NO_STRING_VALUE)
 	{
-		const Char* pstrSoundFile = gd_engfuncs.pfnGetString(m_stopSoundFile);
+		const char* pstrSoundFile = gd_engfuncs.pfnGetString(m_stopSoundFile);
 		gd_engfuncs.pfnPrecacheSound(pstrSoundFile);
 	}
 }

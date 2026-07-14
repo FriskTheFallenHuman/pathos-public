@@ -67,36 +67,36 @@ public:
 
 public:
 	// Object x inset for login window
-	static const Uint32 DOCUMENTSWINDOW_TAB_X_INSET;
+	static const UInt32 DOCUMENTSWINDOW_TAB_X_INSET;
 	// Object y inset for login window
-	static const Uint32 DOCUMENTSWINDOW_TAB_Y_INSET;
+	static const UInt32 DOCUMENTSWINDOW_TAB_Y_INSET;
 	// Object y spacing for login window
-	static const Uint32 DOCUMENTSWINDOW_TAB_X_SPACING;
+	static const UInt32 DOCUMENTSWINDOW_TAB_X_SPACING;
 	// Object x spacing for login window
-	static const Uint32 DOCUMENTSWINDOW_TAB_Y_SPACING;
+	static const UInt32 DOCUMENTSWINDOW_TAB_Y_SPACING;
 	// Text inset for documents window
-	static const Uint32 DOCUMENTSWINDOW_TAB_TEXT_INSET;
+	static const UInt32 DOCUMENTSWINDOW_TAB_TEXT_INSET;
 	// Default text color
 	static const color32_t DOCUMENTSWINDOW_TEXT_COLOR;
 	// Height of the title surface
-	static const Uint32 DOCUMENTSWINDOW_TITLE_SURFACE_HEIGHT;
+	static const UInt32 DOCUMENTSWINDOW_TITLE_SURFACE_HEIGHT;
 	// Height of the main surface
-	static const Uint32 DOCUMENTSWINDOW_MAIN_SURFACE_HEIGHT;
+	static const UInt32 DOCUMENTSWINDOW_MAIN_SURFACE_HEIGHT;
 	// Height of the bottom button surface
-	static const Uint32 DOCUMENTSWINDOW_BOTTOM_BUTTON_SURFACE_HEIGHT;
+	static const UInt32 DOCUMENTSWINDOW_BOTTOM_BUTTON_SURFACE_HEIGHT;
 	// Script subfolder name
-	static const Char DOCUMENTSWINDOW_SCRIPT_SUBFOLDER_NAME[];
+	static const char DOCUMENTSWINDOW_SCRIPT_SUBFOLDER_NAME[];
 	// Base script name
-	static const Char DOCUMENTSWINDOW_SCRIPT_NAME[];
+	static const char DOCUMENTSWINDOW_SCRIPT_NAME[];
 	// Color of highlighted buttons for this window
 	static const color32_t DOCUMENTSWINDOW_BUTTON_NEW_COLOR;
 	// Title text default schema set name
-	static const Char DOCUMENTSWINDOW_TITLE_TEXTSCHEMA_NAME[];
+	static const char DOCUMENTSWINDOW_TITLE_TEXTSCHEMA_NAME[];
 	// Text default font schema name
-	static const Char DOCUMENTSWINDOW_TEXTSCHEMA_NAME[];
+	static const char DOCUMENTSWINDOW_TEXTSCHEMA_NAME[];
 
 public:
-	CGameUIDocumentsWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
+	CGameUIDocumentsWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
 	~CGameUIDocumentsWindow();
 
 public:
@@ -104,7 +104,7 @@ public:
 	void init( void ) override;
 
 	// Initializes the data
-	bool initData( const CArray<CString>& textFilesArray, const Char* pstrActiveFileName );
+	bool initData( const CArray<CString>& textFilesArray, const char* pstrActiveFileName );
 	// Returns the current window information
 	void getInformation( CArray<CString>& textFilesArray, CString& pstrActiveFileName ) const;
 
@@ -124,23 +124,23 @@ private:
 	CArray<button_t> m_buttonsArray;
 
 	// Edge thickness used
-	Float m_usedEdgeThickness;
+	float m_usedEdgeThickness;
 	// Button base X position used
-	Uint32 m_buttonXPos;
+	UInt32 m_buttonXPos;
 	// Button base Y position used
-	Uint32 m_buttonYPos;
+	UInt32 m_buttonYPos;
 
 	// Button width used
-	Uint32 m_buttonWidth;
+	UInt32 m_buttonWidth;
 	// Button height used
-	Uint32 m_buttonHeight;
+	UInt32 m_buttonHeight;
 
 	// Text inset used
-	Uint32 m_textInset;
+	UInt32 m_textInset;
 	// Tab Y inset used
-	Uint32 m_tabYSpacing;
+	UInt32 m_tabYSpacing;
 	// Tab width
-	Uint32 m_tabWidth;
+	UInt32 m_tabWidth;
 
 	// Title text object
 	CGameUIText* m_pReaderTitleText;
@@ -172,7 +172,7 @@ CGameUIDocumentsWindowButtonCallbackEvent
 class CGameUIDocumentsWindowButtonCallbackEvent : public CGameUICallbackEvent
 {
 public:
-	CGameUIDocumentsWindowButtonCallbackEvent( CGameUIDocumentsWindow* pWindow, Uint32 type ):
+	CGameUIDocumentsWindowButtonCallbackEvent( CGameUIDocumentsWindow* pWindow, UInt32 type ):
 		m_pWindow(pWindow),
 		m_eventType((documentsbuttonevent_t)type)
 	{ 
@@ -181,7 +181,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) override;
+	virtual void PerformAction( float param ) override;
 	// Handles a special key event
 	virtual bool KeyEvent( Int32 button, Int16 mod, bool keyDown ) override { return false; }
 	// Handles a mouse button event

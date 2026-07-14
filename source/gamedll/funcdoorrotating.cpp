@@ -77,7 +77,7 @@ void CFuncDoorRotating::SetMovementVectors( void )
 //=============================================
 void CFuncDoorRotating::DoorBeginMoveUp( void )
 {
-	Float sign = 1.0;
+	float sign = 1.0;
 	if(m_activator && (m_activator->IsPlayer() || m_activator->IsNPC()))
 	{
 		if(!HasSpawnFlag(FL_ONE_WAY) && m_pState->movedir[YAW])
@@ -89,7 +89,7 @@ void CFuncDoorRotating::DoorBeginMoveUp( void )
 			direction[ROLL] = 0;
 
 			Vector next = (m_activatorOrigin+(direction*10))-m_pState->origin;
-			Float comp = (direction.x*next.y - direction.y*next.x);
+			float comp = (direction.x*next.y - direction.y*next.x);
 			if(comp < 0)
 				sign = -1.0;
 		}

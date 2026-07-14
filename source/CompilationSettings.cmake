@@ -1,12 +1,8 @@
-# Set minimum policy version to avoid errors about new CMake features
-# This is mainly for vorbis.
-set(CMAKE_POLICY_VERSION_MINIMUM 3.15)
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $<1:>${CMAKE_SOURCE_DIR}/../engine)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_EXTENSIONS ON)
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     add_compile_definitions(_64BUILD)

@@ -11,7 +11,7 @@ All Rights Reserved.
 #define MLIGHT_H
 
 // Max lights a studiomodel can have
-static constexpr Uint32 MAX_ENT_MLIGHTS = 6;
+static constexpr UInt32 MAX_ENT_MLIGHTS = 6;
 
 struct mlight_t
 {
@@ -24,7 +24,7 @@ struct mlight_t
 	entindex_t entindex;
 
 	Vector	origin;
-	Float	radius;
+	float	radius;
 	Vector	color;
 
 	Vector mins;
@@ -43,9 +43,9 @@ struct mlightinfo_t
 		{}
 
 	mlight_t light;
-	Double lighttime;
-	Float strength;
-	Float prev_strength;
+	double lighttime;
+	float strength;
+	float prev_strength;
 	bool occluded;
 };
 

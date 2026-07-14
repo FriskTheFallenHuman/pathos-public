@@ -44,11 +44,11 @@ All Rights Reserved.
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SayText( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SayText( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	const Char* pstrPlayerName = reader.ReadString();
-	const Char* pstrText = reader.ReadString();
+	const char* pstrPlayerName = reader.ReadString();
+	const char* pstrText = reader.ReadString();
 
 	if(reader.HasError())
 	{
@@ -64,20 +64,20 @@ MSGFN MsgFunc_SayText( const Char* pstrName, const byte* pdata, Uint32 msgsize )
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetFog( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetFog( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
 	Vector color;
 	entindex_t entindex = reader.ReadInt16();
 
-	for(Uint32 i = 0; i < 3; i++)
-		color[i] = (Float)reader.ReadByte()/255.0f;
+	for(UInt32 i = 0; i < 3; i++)
+		color[i] = (float)reader.ReadByte()/255.0f;
 
-	Float startdist = reader.ReadFloat();
-	Float enddist = reader.ReadFloat();
+	float startdist = reader.ReadFloat();
+	float enddist = reader.ReadFloat();
 	bool affectsky = (reader.ReadByte() == 1) ? false : true;
-	Float blendtime = reader.ReadSmallFloat();
+	float blendtime = reader.ReadSmallFloat();
 
 	if(reader.HasError())
 	{
@@ -94,13 +94,13 @@ MSGFN MsgFunc_SetFog( const Char* pstrName, const byte* pdata, Uint32 msgsize )
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_CreateGenericDecal( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_CreateGenericDecal( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	Uint16 flags = reader.ReadUint16();
+	UInt16 flags = reader.ReadUint16();
 	
 	Vector origin;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		origin[i] = reader.ReadFloat();
 
 	CString name = reader.ReadString();
@@ -108,7 +108,7 @@ MSGFN MsgFunc_CreateGenericDecal( const Char* pstrName, const byte* pdata, Uint3
 	Vector normal;
 	if(flags & FL_DECAL_HAS_NORMAL)
 	{
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			normal[i] = reader.ReadSmallFloat()/360.0f;
 	}
 
@@ -116,9 +116,9 @@ MSGFN MsgFunc_CreateGenericDecal( const Char* pstrName, const byte* pdata, Uint3
 	if(flags & FL_DECAL_TIED_TO_ENTITY)
 		entindex = reader.ReadInt32();
 
-	Float life = 0;
-	Float fadetime = 0;
-	Float growthtime = 0;
+	float life = 0;
+	float fadetime = 0;
+	float growthtime = 0;
 
 	if(!(flags & FL_DECAL_PERSISTENT))
 	{
@@ -146,16 +146,16 @@ MSGFN MsgFunc_CreateGenericDecal( const Char* pstrName, const byte* pdata, Uint3
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_CreateParticleSystem( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_CreateParticleSystem( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
 	Vector origin;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		origin[i] = reader.ReadFloat();
 
 	Vector angles;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		angles[i] = reader.ReadSmallFloat()/360.0f;
 
 	part_script_type_t scripttype = (part_script_type_t)reader.ReadByte();
@@ -192,7 +192,7 @@ MSGFN MsgFunc_CreateParticleSystem( const Char* pstrName, const byte* pdata, Uin
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_PrecacheParticleSystem( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_PrecacheParticleSystem( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
@@ -224,7 +224,7 @@ MSGFN MsgFunc_PrecacheParticleSystem( const Char* pstrName, const byte* pdata, U
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_RemoveParticleSystem( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_RemoveParticleSystem( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	Int32 id = reader.ReadInt32();
@@ -245,7 +245,7 @@ MSGFN MsgFunc_RemoveParticleSystem( const Char* pstrName, const byte* pdata, Uin
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_CreateVBMDecal( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_CreateVBMDecal( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
@@ -258,10 +258,10 @@ MSGFN MsgFunc_CreateVBMDecal( const Char* pstrName, const byte* pdata, Uint32 ms
 		return true;
 
 	Vector origin, normal;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		origin[i] = reader.ReadFloat();
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		normal[i] = reader.ReadSmallFloat()/360.0f;
 
 	CString decalgrpname = reader.ReadString();
@@ -291,7 +291,7 @@ MSGFN MsgFunc_CreateVBMDecal( const Char* pstrName, const byte* pdata, Uint32 ms
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SkyboxParameters( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SkyboxParameters( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
@@ -299,23 +299,23 @@ MSGFN MsgFunc_SkyboxParameters( const Char* pstrName, const byte* pdata, Uint32 
 
 	Vector worldorigin;
 	Vector fogcolor;
-	Float skysize = 0;
-	Float fogstart = 0;
-	Float fogend = 0;
+	float skysize = 0;
+	float fogstart = 0;
+	float fogend = 0;
 	bool affectskybox = false;
 	Int32 skytextureset = NO_POSITION;
 
 	if(isactive)
 	{
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			worldorigin[i] = reader.ReadFloat();
 
 		skysize = reader.ReadSmallFloat();
 		fogstart = reader.ReadFloat();
 		fogend = reader.ReadFloat();
 	
-		for(Uint32 i = 0; i < 3; i++)
-			fogcolor[i] = (Float)reader.ReadByte()/255.0f;
+		for(UInt32 i = 0; i < 3; i++)
+			fogcolor[i] = (float)reader.ReadByte()/255.0f;
 
 		affectskybox = (reader.ReadByte() == 1) ? false : true;
 		skytextureset = reader.ReadChar();
@@ -335,23 +335,23 @@ MSGFN MsgFunc_SkyboxParameters( const Char* pstrName, const byte* pdata, Uint32 
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_DynamicLight( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_DynamicLight( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
 	Vector origin;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		origin[i] = reader.ReadFloat();
 
-	Float radius = reader.ReadSmallFloat();
+	float radius = reader.ReadSmallFloat();
 	
 	Vector color;
-	for(Uint32 i = 0; i < 3; i++)
-		color[i] = (Float)reader.ReadByte()/255.0f;
+	for(UInt32 i = 0; i < 3; i++)
+		color[i] = (float)reader.ReadByte()/255.0f;
 
-	Float life = reader.ReadSmallFloat();
-	Float decay = reader.ReadSmallFloat();
-	Float decaydelay = reader.ReadSmallFloat();
+	float life = reader.ReadSmallFloat();
+	float decay = reader.ReadSmallFloat();
+	float decaydelay = reader.ReadSmallFloat();
 	Int32 flags = reader.ReadByte();
 
 	Int32 key = 0;
@@ -397,7 +397,7 @@ MSGFN MsgFunc_DynamicLight( const Char* pstrName, const byte* pdata, Uint32 msgs
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetDayStage( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetDayStage( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	daystage_t stage = (daystage_t)reader.ReadByte();
@@ -416,7 +416,7 @@ MSGFN MsgFunc_SetDayStage( const Char* pstrName, const byte* pdata, Uint32 msgsi
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetSpecialFog( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetSpecialFog( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	bool enablespecialfog = (reader.ReadByte() == 1) ? true : false;
@@ -435,7 +435,7 @@ MSGFN MsgFunc_SetSpecialFog( const Char* pstrName, const byte* pdata, Uint32 msg
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_FreeEntityData( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_FreeEntityData( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	entindex_t entindex = reader.ReadInt16();
@@ -455,13 +455,13 @@ MSGFN MsgFunc_FreeEntityData( const Char* pstrName, const byte* pdata, Uint32 ms
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_AddCustomLightStyle( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_AddCustomLightStyle( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	bool interpolate = (reader.ReadByte() == 1) ? true : false;
 	Int32 styleindex = reader.ReadInt16();
 	CString pattern = reader.ReadString();
-	Float framerate = reader.ReadSmallFloat();
+	float framerate = reader.ReadSmallFloat();
 
 	if(reader.HasError())
 	{
@@ -477,13 +477,13 @@ MSGFN MsgFunc_AddCustomLightStyle( const Char* pstrName, const byte* pdata, Uint
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetLightStyle( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetLightStyle( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	bool interpolate = (reader.ReadByte() == 1) ? true : false;
 	Int32 styleindex = reader.ReadInt16();
 	CString pattern = reader.ReadString();
-	Float framerate = reader.ReadSmallFloat();
+	float framerate = reader.ReadSmallFloat();
 
 	if(reader.HasError())
 	{
@@ -499,11 +499,11 @@ MSGFN MsgFunc_SetLightStyle( const Char* pstrName, const byte* pdata, Uint32 msg
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_PrecacheFlexScript( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_PrecacheFlexScript( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	flextypes_t type = (flextypes_t)reader.ReadByte();
-	const Char* pstrscriptpath = reader.ReadString();
+	const char* pstrscriptpath = reader.ReadString();
 
 	if(reader.HasError())
 	{
@@ -519,11 +519,11 @@ MSGFN MsgFunc_PrecacheFlexScript( const Char* pstrName, const byte* pdata, Uint3
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetEntityFlexScript( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetEntityFlexScript( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	entindex_t entindex = reader.ReadInt16();
-	const Char* pstrscriptpath = reader.ReadString();
+	const char* pstrscriptpath = reader.ReadString();
 
 	if(reader.HasError())
 	{
@@ -539,37 +539,37 @@ MSGFN MsgFunc_SetEntityFlexScript( const Char* pstrName, const byte* pdata, Uint
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_CreateTempEntity( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	byte type = reader.ReadByte();
+	Byte type = reader.ReadByte();
 
 	switch(type)
 	{
 	case TE_BREAKMODEL:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Vector size;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				size[i] = reader.ReadSmallFloat();
 
 			bm_velocity_t velmode = static_cast<bm_velocity_t>(reader.ReadByte());
 
 			Vector velvector;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				velvector[i] = reader.ReadFloat();
 
-			Uint32 randomvelmin = reader.ReadUint16();
-			Uint32 randomvelmax = reader.ReadUint16();
-			Float life = reader.ReadSmallFloat();
-			Uint32 num = reader.ReadUint16();
-			Uint32 modelindex = reader.ReadUint16();
+			UInt32 randomvelmin = reader.ReadUint16();
+			UInt32 randomvelmax = reader.ReadUint16();
+			float life = reader.ReadSmallFloat();
+			UInt32 num = reader.ReadUint16();
+			UInt32 modelindex = reader.ReadUint16();
 			Int32 sound = reader.ReadByte();
-			Float bouyancy = reader.ReadSmallFloat();
-			Float waterfriction = reader.ReadSmallFloat();
+			float bouyancy = reader.ReadSmallFloat();
+			float waterfriction = reader.ReadSmallFloat();
 			Int32 flags = reader.ReadInt32();
 			
 			if(reader.HasError())
@@ -584,17 +584,17 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_BUBBLES:
 		{
 			Vector mins;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				mins[i] = reader.ReadFloat();
 
 			Vector maxs;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				maxs[i] = reader.ReadFloat();
 
-			Float height = reader.ReadSmallFloat();
-			Uint32 modelindex = reader.ReadUint16();
-			Uint32 num = reader.ReadUint16();
-			Float speed = reader.ReadSmallFloat();
+			float height = reader.ReadSmallFloat();
+			UInt32 modelindex = reader.ReadUint16();
+			UInt32 num = reader.ReadUint16();
+			float speed = reader.ReadSmallFloat();
 			
 			if(reader.HasError())
 			{
@@ -608,17 +608,17 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_BUBBLETRAIL:
 		{
 			Vector start;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				start[i] = reader.ReadFloat();
 
 			Vector end;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				end[i] = reader.ReadFloat();
 
-			Float height = reader.ReadSmallFloat();
-			Uint32 modelindex = reader.ReadUint16();
-			Uint32 num = reader.ReadUint16();
-			Float speed = reader.ReadSmallFloat();
+			float height = reader.ReadSmallFloat();
+			UInt32 modelindex = reader.ReadUint16();
+			UInt32 num = reader.ReadUint16();
+			float speed = reader.ReadSmallFloat();
 
 			cl_efxapi.pfnBubbleTrail(start, end, height, modelindex, num, speed);
 		}
@@ -626,16 +626,16 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_FUNNELSPRITE:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Vector color;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				color[i] = reader.ReadByte();
 
-			Float alpha = reader.ReadByte();
+			float alpha = reader.ReadByte();
 
-			Uint32 modelindex = reader.ReadUint16();
+			UInt32 modelindex = reader.ReadUint16();
 			bool reverse = (reader.ReadByte() == 1) ? true : false;
 			
 			if(reader.HasError())
@@ -650,16 +650,16 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_SPHEREMODEL:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
-			Float speed = reader.ReadSmallFloat();
-			Float life = reader.ReadSmallFloat();
-			Uint32 num = reader.ReadUint16();
-			Uint32 modelindex = reader.ReadUint16();
+			float speed = reader.ReadSmallFloat();
+			float life = reader.ReadSmallFloat();
+			UInt32 num = reader.ReadUint16();
+			UInt32 modelindex = reader.ReadUint16();
 			Int32 sound = reader.ReadByte();
-			Float bouyancy = reader.ReadSmallFloat();
-			Float waterfriction = reader.ReadSmallFloat();
+			float bouyancy = reader.ReadSmallFloat();
+			float waterfriction = reader.ReadSmallFloat();
 
 			if(reader.HasError())
 			{
@@ -673,23 +673,23 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_TEMPMODEL:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Vector angles;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				angles[i] = reader.ReadSmallFloat();
 
 			Vector velocity;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				velocity[i] = reader.ReadSmallFloat();
 
-			Float life = reader.ReadSmallFloat();
-			Uint32 num = reader.ReadUint16();
-			Uint32 modelindex = reader.ReadUint16();
+			float life = reader.ReadSmallFloat();
+			UInt32 num = reader.ReadUint16();
+			UInt32 modelindex = reader.ReadUint16();
 			Int32 sound = reader.ReadByte();
-			Float bouyancy = reader.ReadSmallFloat();
-			Float waterfriction = reader.ReadSmallFloat();
+			float bouyancy = reader.ReadSmallFloat();
+			float waterfriction = reader.ReadSmallFloat();
 			Int32 flags = reader.ReadInt32();
 			Int32 body = reader.ReadInt16();
 			
@@ -699,7 +699,7 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 				return false;
 			}
 
-			for(Uint32 i = 0; i < num; i++)
+			for(UInt32 i = 0; i < num; i++)
 			{
 				tempentity_t* ptemp = cl_efxapi.pfnTempModel(origin, velocity, angles, life, modelindex, sound, bouyancy, waterfriction, flags);
 				if(body != -1 && ptemp)
@@ -710,19 +710,19 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_TEMPSPRITE:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Vector velocity;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				velocity[i] = reader.ReadSmallFloat();
 
-			Float life = reader.ReadSmallFloat();
-			Float scale = reader.ReadSmallFloat();
-			Uint32 modelindex = reader.ReadUint16();
+			float life = reader.ReadSmallFloat();
+			float scale = reader.ReadSmallFloat();
+			UInt32 modelindex = reader.ReadUint16();
 			rendermode_t rendermode = (rendermode_t)reader.ReadUint16();
-			Uint32 renderfx = reader.ReadByte();
-			Float alpha = reader.ReadSmallFloat();
+			UInt32 renderfx = reader.ReadByte();
+			float alpha = reader.ReadSmallFloat();
 			Int32 sound = reader.ReadByte();
 			Int32 flags = reader.ReadByte();
 			
@@ -738,7 +738,7 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_PARTICLEEXPLOSION1:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 			
 			if(reader.HasError())
@@ -753,7 +753,7 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_PARTICLEEXPLOSION2:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Int32 colorstart = reader.ReadByte();
@@ -771,7 +771,7 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_BLOBEXPLOSION:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 			
 			if(reader.HasError())
@@ -786,7 +786,7 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_ROCKETEXPLOSION:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Int32 color = reader.ReadByte();
@@ -803,11 +803,11 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_PARTICLEEFFECT:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Vector velocity;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				velocity[i] = reader.ReadSmallFloat();
 
 			Int32 color = reader.ReadByte();
@@ -825,7 +825,7 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_LAVASPLASH:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 			
 			if(reader.HasError())
@@ -840,7 +840,7 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_TELEPORTSPLASH:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 			
 			if(reader.HasError())
@@ -855,14 +855,14 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_ROCKETTRAIL:
 		{
 			Vector start;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				start[i] = reader.ReadFloat();
 
 			Vector end;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				end[i] = reader.ReadFloat();
 
-			Uint32 parttype = reader.ReadByte();
+			UInt32 parttype = reader.ReadByte();
 
 			if(reader.HasError())
 			{
@@ -876,21 +876,21 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_TRACER:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Vector velocity;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				velocity[i] = reader.ReadFloat();
 
 			Vector color;
-			for(Uint32 i = 0; i < 3; i++)
-				color[i] = static_cast<Float>(reader.ReadByte()) / 255.0f;
+			for(UInt32 i = 0; i < 3; i++)
+				color[i] = static_cast<float>(reader.ReadByte()) / 255.0f;
 
-			Float alpha = static_cast<Float>(reader.ReadByte()) / 255.0f;
-			Float width = reader.ReadByte();
-			Float length = reader.ReadSmallFloat();
-			Float life = reader.ReadSmallFloat();
+			float alpha = static_cast<float>(reader.ReadByte()) / 255.0f;
+			float width = reader.ReadByte();
+			float length = reader.ReadSmallFloat();
+			float life = reader.ReadSmallFloat();
 			tracer_type_t tracertype = static_cast<tracer_type_t>(reader.ReadByte());
 
 			if(reader.HasError())
@@ -905,22 +905,22 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_SPARKSTREAK:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
-			Uint32 count = reader.ReadUint16();
+			UInt32 count = reader.ReadUint16();
 			
 			Vector color;
-			for(Uint32 i = 0; i < 3; i++)
-				color[i] = static_cast<Float>(reader.ReadByte()) / 255.0f;
+			for(UInt32 i = 0; i < 3; i++)
+				color[i] = static_cast<float>(reader.ReadByte()) / 255.0f;
 
-			Float alpha = static_cast<Float>(reader.ReadByte()) / 255.0f;		
-			Float minLifetime = reader.ReadFloat();
-			Float maxLifetime = reader.ReadFloat();
-			Float minVelocity = reader.ReadFloat();
-			Float maxVelocity = reader.ReadFloat();
-			Float width = reader.ReadSmallFloat();
-			Float length = reader.ReadSmallFloat();
+			float alpha = static_cast<float>(reader.ReadByte()) / 255.0f;		
+			float minLifetime = reader.ReadFloat();
+			float maxLifetime = reader.ReadFloat();
+			float minVelocity = reader.ReadFloat();
+			float maxVelocity = reader.ReadFloat();
+			float width = reader.ReadSmallFloat();
+			float length = reader.ReadSmallFloat();
 
 			cl_efxapi.pfnCreateSparkStreak(origin, count, color, alpha, width, length, minLifetime, maxLifetime, minVelocity, maxVelocity);
 		}
@@ -928,27 +928,27 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_STREAKSPLASH:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Vector direction;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				direction[i] = reader.ReadFloat();
 
 			Vector color;
-			for(Uint32 i = 0; i < 3; i++)
-				color[i] = static_cast<Float>(reader.ReadByte()) / 255.0f;
+			for(UInt32 i = 0; i < 3; i++)
+				color[i] = static_cast<float>(reader.ReadByte()) / 255.0f;
 
-			Float alpha = static_cast<Float>(reader.ReadByte()) / 255.0f;
+			float alpha = static_cast<float>(reader.ReadByte()) / 255.0f;
 
-			Uint32 count = reader.ReadUint16();
-			Float speed = reader.ReadFloat();
-			Float minLifetime = reader.ReadFloat();
-			Float maxLifetime = reader.ReadFloat();
-			Float minVelocity = reader.ReadFloat();
-			Float maxVelocity = reader.ReadFloat();
-			Float width = reader.ReadSmallFloat();
-			Float length = reader.ReadSmallFloat();
+			UInt32 count = reader.ReadUint16();
+			float speed = reader.ReadFloat();
+			float minLifetime = reader.ReadFloat();
+			float maxLifetime = reader.ReadFloat();
+			float minVelocity = reader.ReadFloat();
+			float maxVelocity = reader.ReadFloat();
+			float width = reader.ReadSmallFloat();
+			float length = reader.ReadSmallFloat();
 
 			cl_efxapi.pfnCreateStreakSplash(origin, direction, color, alpha, width, length, count, speed, minLifetime, maxLifetime, minVelocity, maxVelocity);
 		}
@@ -956,7 +956,7 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_LARGEFUNNEL:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			bool reverse = (reader.ReadByte() == 1) ? true : false;
@@ -966,15 +966,15 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_BLOODSTREAM:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Vector direction;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				direction[i] = reader.ReadFloat();
 
-			Uint32 color = reader.ReadByte();
-			Float speed = reader.ReadFloat();
+			UInt32 color = reader.ReadByte();
+			float speed = reader.ReadFloat();
 
 			cl_efxapi.pfnCreateBloodStream(origin, direction, color, speed);
 		}
@@ -982,15 +982,15 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_BLOODPARTICLES:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Vector direction;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				direction[i] = reader.ReadFloat();
 
-			Uint32 color = reader.ReadByte();
-			Float speed = reader.ReadFloat();
+			UInt32 color = reader.ReadByte();
+			float speed = reader.ReadFloat();
 
 			cl_efxapi.pfnCreateBloodParticles(origin, direction, color, speed);
 		}
@@ -998,22 +998,22 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 	case TE_TRACERIMPLOSION:
 		{
 			Vector destination;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				destination[i] = reader.ReadFloat();
 
-			Float radius = reader.ReadSmallFloat();
-			Uint32 count = reader.ReadUint32();
-			Float life = reader.ReadSmallFloat();
+			float radius = reader.ReadSmallFloat();
+			UInt32 count = reader.ReadUint32();
+			float life = reader.ReadSmallFloat();
 
 			Vector color;
-			for(Uint32 i = 0; i < 3; i++)
-				color[i] = static_cast<Float>(reader.ReadByte()) / 255.0f;
+			for(UInt32 i = 0; i < 3; i++)
+				color[i] = static_cast<float>(reader.ReadByte()) / 255.0f;
 
-			Float alpha = static_cast<Float>(reader.ReadByte()) / 255.0f;
+			float alpha = static_cast<float>(reader.ReadByte()) / 255.0f;
 			bool reverse = (reader.ReadByte() == 1) ? true : false;
 
-			Float width = reader.ReadSmallFloat();
-			Float length = reader.ReadSmallFloat();
+			float width = reader.ReadSmallFloat();
+			float length = reader.ReadSmallFloat();
 
 			cl_efxapi.pfnCreateTracerImplosion(destination, radius, count, life, color, alpha, width, length, reverse);
 		}
@@ -1031,10 +1031,10 @@ MSGFN MsgFunc_CreateTempEntity( const Char* pstrName, const byte* pdata, Uint32 
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_Stamina( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_Stamina( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	Float stamina = (Float)reader.ReadByte()/255.0f;
+	float stamina = (float)reader.ReadByte()/255.0f;
 
 	if(reader.HasError())
 	{
@@ -1050,10 +1050,10 @@ MSGFN MsgFunc_Stamina( const Char* pstrName, const byte* pdata, Uint32 msgsize )
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_Health( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_Health( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	Float healthamount = (Float)reader.ReadByte();
+	float healthamount = (float)reader.ReadByte();
 
 	if(reader.HasError())
 	{
@@ -1069,10 +1069,10 @@ MSGFN MsgFunc_Health( const Char* pstrName, const byte* pdata, Uint32 msgsize )
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_Kevlar( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_Kevlar( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	Float kevlaramount = (Float)reader.ReadByte();
+	float kevlaramount = (float)reader.ReadByte();
 
 	if(reader.HasError())
 	{
@@ -1088,10 +1088,10 @@ MSGFN MsgFunc_Kevlar( const Char* pstrName, const byte* pdata, Uint32 msgsize )
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_MovementNoise( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_MovementNoise( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	Float speed = (Float)reader.ReadInt16();
+	float speed = (float)reader.ReadInt16();
 
 	if(reader.HasError())
 	{
@@ -1107,14 +1107,14 @@ MSGFN MsgFunc_MovementNoise( const Char* pstrName, const byte* pdata, Uint32 msg
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_HealthKit( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_HealthKit( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
 	bool ismedkitcount = (reader.ReadByte() == 1) ? true : false;
 	if(ismedkitcount)
 	{
-		Uint32 healthkitnb = reader.ReadByte();
+		UInt32 healthkitnb = reader.ReadByte();
 
 		if(reader.HasError())
 		{
@@ -1128,7 +1128,7 @@ MSGFN MsgFunc_HealthKit( const Char* pstrName, const byte* pdata, Uint32 msgsize
 	else
 	{
 		// Get heal progress
-		Float healprogress = reader.ReadSmallFloat()/100.0f;
+		float healprogress = reader.ReadSmallFloat()/100.0f;
 
 		if(reader.HasError())
 		{
@@ -1146,15 +1146,15 @@ MSGFN MsgFunc_HealthKit( const Char* pstrName, const byte* pdata, Uint32 msgsize
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_CurrentWeapon( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_CurrentWeapon( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
 	// Read info
 	Int32 state = reader.ReadByte();
 	Int32 id = reader.ReadByte();
-	Uint32 clip = reader.ReadInt16();
-	Uint32 cone = reader.ReadByte();
+	UInt32 clip = reader.ReadInt16();
+	UInt32 cone = reader.ReadByte();
 	Int32 clipright = reader.ReadByte();
 	Int32 clipleft = reader.ReadByte();
 
@@ -1172,16 +1172,16 @@ MSGFN MsgFunc_CurrentWeapon( const Char* pstrName, const byte* pdata, Uint32 msg
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_WeaponList( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_WeaponList( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	
-	const Char* pstrweaponname = reader.ReadString();
+	const char* pstrweaponname = reader.ReadString();
 	Int32 ammotype = (Int32)reader.ReadChar();
 	Int32 maxammo = reader.ReadInt16();
 	Int32 maxclip = reader.ReadInt16();
-	Uint32 slot = reader.ReadByte();
-	Uint32 slotposition = reader.ReadByte();
+	UInt32 slot = reader.ReadByte();
+	UInt32 slotposition = reader.ReadByte();
 	Int32 id = reader.ReadByte();
 	Int32 flags = reader.ReadByte();
 
@@ -1199,12 +1199,12 @@ MSGFN MsgFunc_WeaponList( const Char* pstrName, const byte* pdata, Uint32 msgsiz
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_AmmoCount( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_AmmoCount( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
-	Uint32 index = reader.ReadByte();
-	Uint32 count = reader.ReadByte();
+	UInt32 index = reader.ReadByte();
+	UInt32 count = reader.ReadByte();
 
 	if(reader.HasError())
 	{
@@ -1220,11 +1220,11 @@ MSGFN MsgFunc_AmmoCount( const Char* pstrName, const byte* pdata, Uint32 msgsize
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_AmmoPickup( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_AmmoPickup( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	const Char* pstrname = reader.ReadString();
-	Uint32 count = reader.ReadByte();
+	const char* pstrname = reader.ReadString();
+	UInt32 count = reader.ReadByte();
 
 	if(reader.HasError())
 	{
@@ -1240,11 +1240,11 @@ MSGFN MsgFunc_AmmoPickup( const Char* pstrName, const byte* pdata, Uint32 msgsiz
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_WeaponPickup( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_WeaponPickup( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	Int32 id = reader.ReadByte();
-	Uint32 ammocount = reader.ReadByte();
+	UInt32 ammocount = reader.ReadByte();
 
 	if(reader.HasError())
 	{
@@ -1260,10 +1260,10 @@ MSGFN MsgFunc_WeaponPickup( const Char* pstrName, const byte* pdata, Uint32 msgs
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_ItemPickup( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_ItemPickup( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	const Char *szName = reader.ReadString();
+	const char *szName = reader.ReadString();
 
 	if(reader.HasError())
 	{
@@ -1280,10 +1280,10 @@ MSGFN MsgFunc_ItemPickup( const Char* pstrName, const byte* pdata, Uint32 msgsiz
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_CustomItemPickup( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_CustomItemPickup( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	const Char *szString = reader.ReadString();
+	const char *szString = reader.ReadString();
 
 	if(reader.HasError())
 	{
@@ -1300,7 +1300,7 @@ MSGFN MsgFunc_CustomItemPickup( const Char* pstrName, const byte* pdata, Uint32 
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetHUDActive( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetHUDActive( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	gHUD.SetActive(reader.ReadByte() == 1 ? true : false);
@@ -1318,12 +1318,12 @@ MSGFN MsgFunc_SetHUDActive( const Char* pstrName, const byte* pdata, Uint32 msgs
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetUsableObject( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetUsableObject( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	
 	usableobject_type_t type = USABLE_OBJECT_NONE;
-	byte readType = reader.ReadByte();
+	Byte readType = reader.ReadByte();
 	switch(readType)
 	{
 	case 0:
@@ -1346,10 +1346,10 @@ MSGFN MsgFunc_SetUsableObject( const Char* pstrName, const byte* pdata, Uint32 m
 	Vector mins, maxs;
 	if(type != USABLE_OBJECT_NONE)
 	{
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			mins[i] = reader.ReadFloat();
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			maxs[i] = reader.ReadFloat();
 	}
 
@@ -1367,12 +1367,12 @@ MSGFN MsgFunc_SetUsableObject( const Char* pstrName, const byte* pdata, Uint32 m
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetCountdownTimer( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetCountdownTimer( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
 	CString title;
-	Double time = reader.ReadDouble();
+	double time = reader.ReadDouble();
 	if(time)
 		title = reader.ReadString();
 
@@ -1390,12 +1390,12 @@ MSGFN MsgFunc_SetCountdownTimer( const Char* pstrName, const byte* pdata, Uint32
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetAutoAimVector( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetAutoAimVector( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
-	Float autoAimX = reader.ReadFloat();
-	Float autoAimY = reader.ReadFloat();
+	float autoAimX = reader.ReadFloat();
+	float autoAimY = reader.ReadFloat();
 	bool isOnTarget = (reader.ReadByte() == 1) ? true : false;
 
 	if(reader.HasError())
@@ -1414,12 +1414,12 @@ MSGFN MsgFunc_SetAutoAimVector( const Char* pstrName, const byte* pdata, Uint32 
 // @brief
 //
 //=============================================
-MSGFN  MsgFunc_SetFlashlight( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN  MsgFunc_SetFlashlight( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
 	bool istacticalon = (reader.ReadByte() == 1) ? true : false;
-	Float tacticalamount = (Float)reader.ReadByte()/255.0f;
+	float tacticalamount = (float)reader.ReadByte()/255.0f;
 	
 	if(reader.HasError())
 	{
@@ -1435,12 +1435,12 @@ MSGFN  MsgFunc_SetFlashlight( const Char* pstrName, const byte* pdata, Uint32 ms
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_ScreenShake( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_ScreenShake( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	Float amplitude = (Float)reader.ReadSmallFloat()/10.0f;
-	Float duration = (Float)reader.ReadSmallFloat()/10.0f;
-	Float frequency = (Float)reader.ReadSmallFloat()/10.0f;
+	float amplitude = (float)reader.ReadSmallFloat()/10.0f;
+	float duration = (float)reader.ReadSmallFloat()/10.0f;
+	float frequency = (float)reader.ReadSmallFloat()/10.0f;
 
 	if(reader.HasError())
 	{
@@ -1456,7 +1456,7 @@ MSGFN MsgFunc_ScreenShake( const Char* pstrName, const byte* pdata, Uint32 msgsi
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_RadioMessage( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_RadioMessage( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
@@ -1464,7 +1464,7 @@ MSGFN MsgFunc_RadioMessage( const Char* pstrName, const byte* pdata, Uint32 msgs
 
 	entindex_t entindex = reader.ReadInt16();
 	CString callername = reader.ReadString();
-	Float lifetime = reader.ReadSmallFloat();
+	float lifetime = reader.ReadSmallFloat();
 
 	color.r = reader.ReadByte();
 	color.g = reader.ReadByte();
@@ -1488,7 +1488,7 @@ MSGFN MsgFunc_RadioMessage( const Char* pstrName, const byte* pdata, Uint32 msgs
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_CreateGameUIWindow( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_CreateGameUIWindow( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	gameui_windows_t type = (gameui_windows_t)reader.ReadByte();
@@ -1644,15 +1644,15 @@ MSGFN MsgFunc_CreateGameUIWindow( const Char* pstrName, const byte* pdata, Uint3
 	case GAMEUI_OBJECTIVESWINDOW:
 		{
 			// Read nb of objectives
-			Uint32 nbObjectives = reader.ReadByte();
+			UInt32 nbObjectives = reader.ReadByte();
 			// Read new objective bits
 			Int32 newObjectiveBits = reader.ReadInt32();
 
 			// Read each objective in
 			CArray<CString> objectivesArray;
-			for(Uint32 i = 0; i < nbObjectives; i++)
+			for(UInt32 i = 0; i < nbObjectives; i++)
 			{
-				const Char* pString = reader.ReadString();
+				const char* pString = reader.ReadString();
 				if(!qstrlen(pString))
 				{
 					cl_engfuncs.pfnCon_EPrintf("%s - No identifier specified for 'CGameUIObjectivesWindow' objective at index %d.\n", __FUNCTION__, i);
@@ -1686,13 +1686,13 @@ MSGFN MsgFunc_CreateGameUIWindow( const Char* pstrName, const byte* pdata, Uint3
 	case GAMEUI_DOCUMENTSWINDOW:
 		{
 			// Read nb of objectives
-			Uint32 nbDocuments = reader.ReadInt16();
+			UInt32 nbDocuments = reader.ReadInt16();
 
 			// Read each objective in
 			CArray<CString> documentsArray;
-			for(Uint32 i = 0; i < nbDocuments; i++)
+			for(UInt32 i = 0; i < nbDocuments; i++)
 			{
-				const Char* pString = reader.ReadString();
+				const char* pString = reader.ReadString();
 				if(!qstrlen(pString))
 				{
 					cl_engfuncs.pfnCon_EPrintf("%s - No identifier specified for 'CGameUIDocumentsWindow' objective at index %d.\n", __FUNCTION__, i);
@@ -1734,10 +1734,10 @@ MSGFN MsgFunc_CreateGameUIWindow( const Char* pstrName, const byte* pdata, Uint3
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetFOV( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetFOV( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	Uint32 desiredFOV = reader.ReadByte();
+	UInt32 desiredFOV = reader.ReadByte();
 
 	if(reader.HasError())
 	{
@@ -1753,11 +1753,11 @@ MSGFN MsgFunc_SetFOV( const Char* pstrName, const byte* pdata, Uint32 msgsize )
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_TriggerZoom( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_TriggerZoom( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	Uint32 desiredFOV = reader.ReadByte();
-	Float blenddelta = reader.ReadSmallFloat();
+	UInt32 desiredFOV = reader.ReadByte();
+	float blenddelta = reader.ReadSmallFloat();
 
 	if(reader.HasError())
 	{
@@ -1773,7 +1773,7 @@ MSGFN MsgFunc_TriggerZoom( const Char* pstrName, const byte* pdata, Uint32 msgsi
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_Ladder( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_Ladder( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	gLadder.ProcessMessage(pdata, msgsize);
 	return true;
@@ -1783,7 +1783,7 @@ MSGFN MsgFunc_Ladder( const Char* pstrName, const byte* pdata, Uint32 msgsize )
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_MotorBike( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_MotorBike( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	gMotorBike.ProcessMessage(pdata, msgsize);
 	return true;
@@ -1793,7 +1793,7 @@ MSGFN MsgFunc_MotorBike( const Char* pstrName, const byte* pdata, Uint32 msgsize
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_ViewController( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_ViewController( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	gViewController.ProcessMessage(pdata, msgsize);
 	return true;
@@ -1803,7 +1803,7 @@ MSGFN MsgFunc_ViewController( const Char* pstrName, const byte* pdata, Uint32 ms
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_ViewModel( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_ViewModel( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	gViewModel.ProcessMessage(pdata, msgsize);
 	return true;
@@ -1813,7 +1813,7 @@ MSGFN MsgFunc_ViewModel( const Char* pstrName, const byte* pdata, Uint32 msgsize
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_NodeDebug( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_NodeDebug( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	node_msg_type_t msgtype = (node_msg_type_t)reader.ReadByte();
@@ -1822,16 +1822,16 @@ MSGFN MsgFunc_NodeDebug( const Char* pstrName, const byte* pdata, Uint32 msgsize
 	case NODE_DEBUG_PATHS:
 		{
 			Vector node1;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				node1[i] = reader.ReadFloat();
 
 			Vector node2;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				node2[i] = reader.ReadFloat();
 
 			Vector color;
-			for(Uint32 i = 0; i < 3; i++)
-				color[i] = (Float)reader.ReadByte()/255.0f;
+			for(UInt32 i = 0; i < 3; i++)
+				color[i] = (float)reader.ReadByte()/255.0f;
 
 			if(reader.HasError())
 			{
@@ -1845,15 +1845,15 @@ MSGFN MsgFunc_NodeDebug( const Char* pstrName, const byte* pdata, Uint32 msgsize
 	case NODE_DEBUG_BBOX:
 		{
 			Vector origin;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				origin[i] = reader.ReadFloat();
 
 			Vector mins;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				mins[i] = reader.ReadFloat();
 
 			Vector maxs;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				maxs[i] = reader.ReadFloat();
 			
 			if(reader.HasError())
@@ -1869,16 +1869,16 @@ MSGFN MsgFunc_NodeDebug( const Char* pstrName, const byte* pdata, Uint32 msgsize
 		{
 			waypoint_type_t type = (waypoint_type_t)reader.ReadByte();
 			entindex_t entindex = reader.ReadInt32();
-			Uint32 numpoints = reader.ReadUint16();
+			UInt32 numpoints = reader.ReadUint16();
 
 			// Allocate
 			CArray<Vector> points;
 			points.resize(numpoints);
 
-			for(Uint32 i = 0; i < numpoints; i++)
+			for(UInt32 i = 0; i < numpoints; i++)
 			{
 				Vector point;
-				for(Uint32 j = 0; j < 3; j++)
+				for(UInt32 j = 0; j < 3; j++)
 					point[j] = reader.ReadFloat();
 
 				points[i] = point;
@@ -1905,11 +1905,11 @@ MSGFN MsgFunc_NodeDebug( const Char* pstrName, const byte* pdata, Uint32 msgsize
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_MotionBlur( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_MotionBlur( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
-	Float blurfade = 0;
+	float blurfade = 0;
 	bool ison = (reader.ReadByte() == 1) ? true : false;
 	if(ison)
 		blurfade = reader.ReadSmallFloat();
@@ -1929,11 +1929,11 @@ MSGFN MsgFunc_MotionBlur( const Char* pstrName, const byte* pdata, Uint32 msgsiz
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_ShowMessage( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_ShowMessage( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
-	const Char* pstrmsgname = reader.ReadString();
+	const char* pstrmsgname = reader.ReadString();
 
 	if(reader.HasError())
 	{
@@ -1949,12 +1949,12 @@ MSGFN MsgFunc_ShowMessage( const Char* pstrName, const byte* pdata, Uint32 msgsi
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_ShowCustomMessage( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_ShowCustomMessage( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
-	Float xpos = reader.ReadSmallFloat();
-	Float ypos = reader.ReadSmallFloat();
+	float xpos = reader.ReadSmallFloat();
+	float ypos = reader.ReadSmallFloat();
 
 	Int32 effect = reader.ReadByte();
 	
@@ -1968,13 +1968,13 @@ MSGFN MsgFunc_ShowCustomMessage( const Char* pstrName, const byte* pdata, Uint32
 	color2.g = reader.ReadByte();
 	color2.b = reader.ReadByte();
 
-	Float fadein = reader.ReadSmallFloat();
-	Float fadeout = reader.ReadSmallFloat();
-	Float holdtime = reader.ReadSmallFloat();
-	Float fxtime = reader.ReadSmallFloat();
+	float fadein = reader.ReadSmallFloat();
+	float fadeout = reader.ReadSmallFloat();
+	float holdtime = reader.ReadSmallFloat();
+	float fxtime = reader.ReadSmallFloat();
 	Int32 channel = reader.ReadByte();
 
-	const Char* pstrText = reader.ReadString();
+	const char* pstrText = reader.ReadString();
 
 	if(reader.HasError())
 	{
@@ -1999,22 +1999,22 @@ MSGFN MsgFunc_ShowCustomMessage( const Char* pstrName, const byte* pdata, Uint32
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_ScreenFade( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_ScreenFade( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
-	Float duration = reader.ReadSmallFloat()/100.0f;
-	Float holdtime = reader.ReadSmallFloat()/100.0f;
+	float duration = reader.ReadSmallFloat()/100.0f;
+	float holdtime = reader.ReadSmallFloat()/100.0f;
 	Int32 flags = reader.ReadInt16();
 
 	color24_t color;
 	color.r = reader.ReadByte();
 	color.g = reader.ReadByte();
 	color.b = reader.ReadByte();
-	byte a = reader.ReadByte();
+	Byte a = reader.ReadByte();
 
-	byte layer = reader.ReadByte();
-	Float timeoffset = reader.ReadSmallFloat();
+	Byte layer = reader.ReadByte();
+	float timeoffset = reader.ReadSmallFloat();
 
 	if(reader.HasError())
 	{
@@ -2030,7 +2030,7 @@ MSGFN MsgFunc_ScreenFade( const Char* pstrName, const byte* pdata, Uint32 msgsiz
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetViewEntity( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetViewEntity( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	entindex_t entityIndex = reader.ReadInt16();
@@ -2049,13 +2049,13 @@ MSGFN MsgFunc_SetViewEntity( const Char* pstrName, const byte* pdata, Uint32 msg
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_ScreenText( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_ScreenText( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	const Char* pstrText = reader.ReadString();
+	const char* pstrText = reader.ReadString();
 	Int32 xcoord = reader.ReadInt16();
 	Int32 ycoord = reader.ReadInt16();
-	Float lifetime = reader.ReadSmallFloat();
+	float lifetime = reader.ReadSmallFloat();
 
 	if(reader.HasError())
 	{
@@ -2071,7 +2071,7 @@ MSGFN MsgFunc_ScreenText( const Char* pstrName, const byte* pdata, Uint32 msgsiz
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_TempBeam( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_TempBeam( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	beam_msgtype_t type = (beam_msgtype_t)reader.ReadByte();
@@ -2099,32 +2099,32 @@ MSGFN MsgFunc_TempBeam( const Char* pstrName, const byte* pdata, Uint32 msgsize 
 				startentity = reader.ReadInt16();
 				attachment1 = reader.ReadChar();
 
-				for(Uint32 i = 0; i < 3; i++)
+				for(UInt32 i = 0; i < 3; i++)
 					endpos[i] = reader.ReadFloat();
 			}
 			else
 			{
-				for(Uint32 i = 0; i < 3; i++)
+				for(UInt32 i = 0; i < 3; i++)
 					startpos[i] = reader.ReadFloat();
 
-				for(Uint32 i = 0; i < 3; i++)
+				for(UInt32 i = 0; i < 3; i++)
 					endpos[i] = reader.ReadFloat();
 			}
 
 			Int32 modelindex = reader.ReadInt16();
-			Uint32 startframe = reader.ReadByte();
-			Float framerate = reader.ReadSmallFloat()/10.0f;
-			Float life = reader.ReadSmallFloat()/10.0f;
-			Float width = reader.ReadSmallFloat()/10.0f;
-			Float amplitude = (Float)reader.ReadByte()/100.0f;
+			UInt32 startframe = reader.ReadByte();
+			float framerate = reader.ReadSmallFloat()/10.0f;
+			float life = reader.ReadSmallFloat()/10.0f;
+			float width = reader.ReadSmallFloat()/10.0f;
+			float amplitude = (float)reader.ReadByte()/100.0f;
 
-			Float r = (Float)reader.ReadByte()/255.0f;
-			Float g = (Float)reader.ReadByte()/255.0f;
-			Float b = (Float)reader.ReadByte()/255.0f;
+			float r = (float)reader.ReadByte()/255.0f;
+			float g = (float)reader.ReadByte()/255.0f;
+			float b = (float)reader.ReadByte()/255.0f;
 
-			Float brightness = (Float)reader.ReadByte()/255.0f;
-			Float speed = reader.ReadSmallFloat()/10.0f;
-			Float noisespeed = reader.ReadSmallFloat()/10.0f;
+			float brightness = (float)reader.ReadByte()/255.0f;
+			float speed = reader.ReadSmallFloat()/10.0f;
+			float noisespeed = reader.ReadSmallFloat()/10.0f;
 			
 			Int32 flags = reader.ReadInt32();
 
@@ -2145,33 +2145,33 @@ MSGFN MsgFunc_TempBeam( const Char* pstrName, const byte* pdata, Uint32 msgsize 
 	case BEAM_MSG_BEAMSPRITE:
 		{
 			Vector startpos, endpos;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				startpos[i] = reader.ReadFloat();
 
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				endpos[i] = reader.ReadFloat();
 
 			Int32 modelindex = reader.ReadInt16();
-			Uint32 startframe = reader.ReadByte();
-			Float framerate = reader.ReadSmallFloat()/10.0f;
-			Float life = reader.ReadSmallFloat()/10.0f;
-			Float width = reader.ReadSmallFloat()/10.0f;
-			Float amplitude = (Float)reader.ReadByte()/100.0f;
+			UInt32 startframe = reader.ReadByte();
+			float framerate = reader.ReadSmallFloat()/10.0f;
+			float life = reader.ReadSmallFloat()/10.0f;
+			float width = reader.ReadSmallFloat()/10.0f;
+			float amplitude = (float)reader.ReadByte()/100.0f;
 
-			Float r = (Float)reader.ReadByte()/255.0f;
-			Float g = (Float)reader.ReadByte()/255.0f;
-			Float b = (Float)reader.ReadByte()/255.0f;
+			float r = (float)reader.ReadByte()/255.0f;
+			float g = (float)reader.ReadByte()/255.0f;
+			float b = (float)reader.ReadByte()/255.0f;
 
-			Float brightness = (Float)reader.ReadByte()/255.0f;
-			Float speed = reader.ReadSmallFloat()/10.0f;
-			Float noisespeed = reader.ReadSmallFloat()/10.0f;
+			float brightness = (float)reader.ReadByte()/255.0f;
+			float speed = reader.ReadSmallFloat()/10.0f;
+			float noisespeed = reader.ReadSmallFloat()/10.0f;
 
 			Int32 flags = reader.ReadInt32();
 
 			Int32 sprmodelindex = reader.ReadInt16();
-			Float spritescale = reader.ReadSmallFloat();
+			float spritescale = reader.ReadSmallFloat();
 			rendermode_t rendermode = (rendermode_t)reader.ReadByte();
-			Float spralpha = (Float)reader.ReadByte()/255.0f;
+			float spralpha = (float)reader.ReadByte()/255.0f;
 
 			cl_efxapi.pfnBeamPoints(startpos, endpos, modelindex, life, width, amplitude, brightness, speed, noisespeed, startframe, framerate, r, g, b, flags);
 			tempentity_t* pSprite = cl_efxapi.pfnTempSprite(endpos, ZERO_VECTOR, spritescale, sprmodelindex, rendermode, RenderFx_None, spralpha, life, TE_BOUNCE_NONE, TE_FL_NONE);
@@ -2183,26 +2183,26 @@ MSGFN MsgFunc_TempBeam( const Char* pstrName, const byte* pdata, Uint32 msgsize 
 	case BEAM_MSG_BEAMTORUS:
 		{
 			Vector startpos, endpos;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				startpos[i] = reader.ReadFloat();
 
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				endpos[i] = reader.ReadFloat();
 
 			Int32 modelindex = reader.ReadInt16();
-			Uint32 startframe = reader.ReadByte();
-			Float framerate = reader.ReadSmallFloat()/10.0f;
-			Float life = reader.ReadSmallFloat()/10.0f;
-			Float width = reader.ReadSmallFloat()/10.0f;
-			Float amplitude = (Float)reader.ReadByte()/100.0f;
+			UInt32 startframe = reader.ReadByte();
+			float framerate = reader.ReadSmallFloat()/10.0f;
+			float life = reader.ReadSmallFloat()/10.0f;
+			float width = reader.ReadSmallFloat()/10.0f;
+			float amplitude = (float)reader.ReadByte()/100.0f;
 
-			Float r = (Float)reader.ReadByte()/255.0f;
-			Float g = (Float)reader.ReadByte()/255.0f;
-			Float b = (Float)reader.ReadByte()/255.0f;
+			float r = (float)reader.ReadByte()/255.0f;
+			float g = (float)reader.ReadByte()/255.0f;
+			float b = (float)reader.ReadByte()/255.0f;
 
-			Float brightness = (Float)reader.ReadByte()/255.0f;
-			Float speed = reader.ReadSmallFloat()/10.0f;
-			Float noisespeed = reader.ReadSmallFloat()/10.0f;
+			float brightness = (float)reader.ReadByte()/255.0f;
+			float speed = reader.ReadSmallFloat()/10.0f;
+			float noisespeed = reader.ReadSmallFloat()/10.0f;
 
 			Int32 flags = reader.ReadInt32();
 
@@ -2231,13 +2231,13 @@ MSGFN MsgFunc_TempBeam( const Char* pstrName, const byte* pdata, Uint32 msgsize 
 			Int32 attachment = reader.ReadChar();
 
 			Int32 modelindex = reader.ReadInt16();
-			Float life = reader.ReadSmallFloat()/10.0f;
-			Float width = reader.ReadSmallFloat()/10.0f;
+			float life = reader.ReadSmallFloat()/10.0f;
+			float width = reader.ReadSmallFloat()/10.0f;
 
-			Float r = (Float)reader.ReadByte()/255.0f;
-			Float g = (Float)reader.ReadByte()/255.0f;
-			Float b = (Float)reader.ReadByte()/255.0f;
-			Float brightness = (Float)reader.ReadByte()/255.0f;
+			float r = (float)reader.ReadByte()/255.0f;
+			float g = (float)reader.ReadByte()/255.0f;
+			float b = (float)reader.ReadByte()/255.0f;
+			float brightness = (float)reader.ReadByte()/255.0f;
 			
 			cl_efxapi.pfnBeamFollow(startentity, attachment, modelindex, life, width, brightness, r, g, b);
 		}
@@ -2250,19 +2250,19 @@ MSGFN MsgFunc_TempBeam( const Char* pstrName, const byte* pdata, Uint32 msgsize 
 			Int32 attachment2 = reader.ReadChar();
 
 			Int32 modelindex = reader.ReadInt16();
-			Uint32 startframe = reader.ReadByte();
-			Float framerate = reader.ReadSmallFloat()/10.0f;
-			Float life = reader.ReadSmallFloat()/10.0f;
-			Float width = reader.ReadSmallFloat()/10.0f;
-			Float amplitude = (Float)reader.ReadByte()/100.0f;
+			UInt32 startframe = reader.ReadByte();
+			float framerate = reader.ReadSmallFloat()/10.0f;
+			float life = reader.ReadSmallFloat()/10.0f;
+			float width = reader.ReadSmallFloat()/10.0f;
+			float amplitude = (float)reader.ReadByte()/100.0f;
 
-			Float r = (Float)reader.ReadByte()/255.0f;
-			Float g = (Float)reader.ReadByte()/255.0f;
-			Float b = (Float)reader.ReadByte()/255.0f;
+			float r = (float)reader.ReadByte()/255.0f;
+			float g = (float)reader.ReadByte()/255.0f;
+			float b = (float)reader.ReadByte()/255.0f;
 
-			Float brightness = (Float)reader.ReadByte()/255.0f;
-			Float speed = reader.ReadSmallFloat()/10.0f;
-			Float noisespeed = reader.ReadSmallFloat()/10.0f;
+			float brightness = (float)reader.ReadByte()/255.0f;
+			float speed = reader.ReadSmallFloat()/10.0f;
+			float noisespeed = reader.ReadSmallFloat()/10.0f;
 
 			Int32 flags = reader.ReadInt32();
 
@@ -2296,7 +2296,7 @@ MSGFN MsgFunc_TempBeam( const Char* pstrName, const byte* pdata, Uint32 msgsize 
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_BlackHole( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_BlackHole( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	blackhole_msg_types_t type = (blackhole_msg_types_t)reader.ReadByte();
@@ -2311,12 +2311,12 @@ MSGFN MsgFunc_BlackHole( const Char* pstrName, const byte* pdata, Uint32 msgsize
 			origin.y = reader.ReadFloat();
 			origin.z = reader.ReadFloat();
 
-			Float life = reader.ReadFloat();
-			Float scale = reader.ReadFloat();
-			Float strength = reader.ReadFloat();
-			Float rotation = reader.ReadFloat();
-			Float growthtime = reader.ReadSmallFloat();
-			Float shrinktime = reader.ReadSmallFloat();
+			float life = reader.ReadFloat();
+			float scale = reader.ReadFloat();
+			float strength = reader.ReadFloat();
+			float rotation = reader.ReadFloat();
+			float growthtime = reader.ReadSmallFloat();
+			float shrinktime = reader.ReadSmallFloat();
 
 			cl_efxapi.pfnCreateBlackHole( key, origin, life, scale, strength, rotation, growthtime, shrinktime);
 		}
@@ -2347,15 +2347,15 @@ MSGFN MsgFunc_BlackHole( const Char* pstrName, const byte* pdata, Uint32 msgsize
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SunFlare( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SunFlare( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	entindex_t entindex = reader.ReadInt16();
 	bool isActive = (reader.ReadByte() == 0) ? false : true;
 	
-	Float pitch = 0;
-	Float roll = 0;
-	Float scale = 0;
+	float pitch = 0;
+	float roll = 0;
+	float scale = 0;
 	Vector color;
 	bool portalSunFlare = false;
 
@@ -2365,7 +2365,7 @@ MSGFN MsgFunc_SunFlare( const Char* pstrName, const byte* pdata, Uint32 msgsize 
 		roll = reader.ReadSmallFloat();
 		scale = reader.ReadSmallFloat();
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			color[i] = reader.ReadByte();
 
 		portalSunFlare = (reader.ReadByte() == 0) ? false : true;
@@ -2386,7 +2386,7 @@ MSGFN MsgFunc_SunFlare( const Char* pstrName, const byte* pdata, Uint32 msgsize 
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_VaporTrail( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_VaporTrail( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
@@ -2401,39 +2401,39 @@ MSGFN MsgFunc_VaporTrail( const Char* pstrName, const byte* pdata, Uint32 msgsiz
 	}
 	else
 	{
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			startpos[i] = reader.ReadFloat();
 	}
 
 	Vector endpos;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		endpos[i] = reader.ReadFloat();
 
 	Int32 modelindex1 = reader.ReadInt16();
 	Int32 modelindex2 = reader.ReadInt16();
-	Float life = reader.ReadByte() * 0.1;
-	Float width = reader.ReadByte() * 0.1;
-	Float brightness = (Float)reader.ReadByte() / 255.0f;
+	float life = reader.ReadByte() * 0.1;
+	float width = reader.ReadByte() * 0.1;
+	float brightness = (float)reader.ReadByte() / 255.0f;
 
-	Float colorfadedelay = 0;
-	Float colorfadetime = 0;
+	float colorfadedelay = 0;
+	float colorfadetime = 0;
 
 	Vector color1, color2;
 	if(modelindex1 == modelindex2)
 	{
-		for(Uint32 i = 0; i < 3; i++)
-			color1[i] = color2[i] = (Float)reader.ReadByte() / 255.0f;
+		for(UInt32 i = 0; i < 3; i++)
+			color1[i] = color2[i] = (float)reader.ReadByte() / 255.0f;
 	}
 	else
 	{
-		for(Uint32 i = 0; i < 3; i++)
-			color1[i] = (Float)reader.ReadByte() / 255.0f;
+		for(UInt32 i = 0; i < 3; i++)
+			color1[i] = (float)reader.ReadByte() / 255.0f;
 
-		for(Uint32 i = 0; i < 3; i++)
-			color2[i] = (Float)reader.ReadByte() / 255.0f;
+		for(UInt32 i = 0; i < 3; i++)
+			color2[i] = (float)reader.ReadByte() / 255.0f;
 
-		colorfadedelay = (Float)reader.ReadByte() * 0.1;
-		colorfadetime = (Float)reader.ReadByte() * 0.1;
+		colorfadedelay = (float)reader.ReadByte() * 0.1;
+		colorfadetime = (float)reader.ReadByte() * 0.1;
 	}
 
 	if(reader.HasError())
@@ -2473,10 +2473,10 @@ MSGFN MsgFunc_VaporTrail( const Char* pstrName, const byte* pdata, Uint32 msgsiz
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_NPCAwareness( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_NPCAwareness( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
-	Float awareness = (Float)reader.ReadSmallFloat();
+	float awareness = (float)reader.ReadSmallFloat();
 
 	color24_t color;
 	color.r = reader.ReadByte();
@@ -2497,7 +2497,7 @@ MSGFN MsgFunc_NPCAwareness( const Char* pstrName, const byte* pdata, Uint32 msgs
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_NewObjective( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_NewObjective( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	bool newObjective = reader.ReadByte() ? true : false;
@@ -2516,7 +2516,7 @@ MSGFN MsgFunc_NewObjective( const Char* pstrName, const byte* pdata, Uint32 msgs
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_AddSkyTextureSet( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_AddSkyTextureSet( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	
@@ -2537,7 +2537,7 @@ MSGFN MsgFunc_AddSkyTextureSet( const Char* pstrName, const byte* pdata, Uint32 
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetSkyTexture( const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SetSkyTexture( const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	Int32 setIndex = reader.ReadChar();
@@ -2556,13 +2556,13 @@ MSGFN MsgFunc_SetSkyTexture( const Char* pstrName, const byte* pdata, Uint32 msg
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_Vignette(const Char* pstrName, const byte* pdata, Uint32 msgsize)
+MSGFN MsgFunc_Vignette(const char* pstrName, const Byte* pdata, UInt32 msgsize)
 {
 	CMSGReader reader(pdata, msgsize);
 	bool isActive = (reader.ReadByte() == 1) ? true : false;
 	
-	Float strength;
-	Float radius;
+	float strength;
+	float radius;
 
 	if (isActive)
 	{
@@ -2589,12 +2589,12 @@ MSGFN MsgFunc_Vignette(const Char* pstrName, const byte* pdata, Uint32 msgsize)
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_FilmGrain(const Char* pstrName, const byte* pdata, Uint32 msgsize)
+MSGFN MsgFunc_FilmGrain(const char* pstrName, const Byte* pdata, UInt32 msgsize)
 {
 	CMSGReader reader(pdata, msgsize);
 	bool isActive = (reader.ReadByte() == 1) ? true : false;
 
-	Float strength;
+	float strength;
 	if (isActive)
 		strength = reader.ReadFloat();
 	else
@@ -2614,12 +2614,12 @@ MSGFN MsgFunc_FilmGrain(const Char* pstrName, const byte* pdata, Uint32 msgsize)
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_BlackAndWhite(const Char* pstrName, const byte* pdata, Uint32 msgsize)
+MSGFN MsgFunc_BlackAndWhite(const char* pstrName, const Byte* pdata, UInt32 msgsize)
 {
 	CMSGReader reader(pdata, msgsize);
 	bool isActive = (reader.ReadByte() == 1) ? true : false;
 
-	Float strength;
+	float strength;
 	if (isActive)
 		strength = reader.ReadFloat();
 	else
@@ -2639,12 +2639,12 @@ MSGFN MsgFunc_BlackAndWhite(const Char* pstrName, const byte* pdata, Uint32 msgs
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_Chromatic(const Char* pstrName, const byte* pdata, Uint32 msgsize)
+MSGFN MsgFunc_Chromatic(const char* pstrName, const Byte* pdata, UInt32 msgsize)
 {
 	CMSGReader reader(pdata, msgsize);
 	bool isActive = (reader.ReadByte() == 1) ? true : false;
 
-	Float strength;
+	float strength;
 	if (isActive)
 		strength = reader.ReadFloat();
 	else
@@ -2664,7 +2664,7 @@ MSGFN MsgFunc_Chromatic(const Char* pstrName, const byte* pdata, Uint32 msgsize)
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SetScreenOverlay(const Char* pstrName, const byte* pdata, Uint32 msgsize)
+MSGFN MsgFunc_SetScreenOverlay(const char* pstrName, const Byte* pdata, UInt32 msgsize)
 {
 	CMSGReader reader(pdata, msgsize);
 	Int32 layerindex = reader.ReadByte();
@@ -2698,10 +2698,10 @@ MSGFN MsgFunc_SetScreenOverlay(const Char* pstrName, const byte* pdata, Uint32 m
 			}
 
 			Vector rendercolor;
-			for(Uint32 i = 0; i < 3; i++)
-				rendercolor[i] = static_cast<Float>(reader.ReadByte()) / 255.0f;
+			for(UInt32 i = 0; i < 3; i++)
+				rendercolor[i] = static_cast<float>(reader.ReadByte()) / 255.0f;
 
-			Float renderamt = static_cast<Float>(reader.ReadByte()) / 255.0f;
+			float renderamt = static_cast<float>(reader.ReadByte()) / 255.0f;
 
 			overlay_effect_t effect;
 			Int32 msgeffect = reader.ReadByte();
@@ -2719,8 +2719,8 @@ MSGFN MsgFunc_SetScreenOverlay(const Char* pstrName, const byte* pdata, Uint32 m
 				break;
 			}
 		
-			Float effectspeed;
-			Float effectminalpha;
+			float effectspeed;
+			float effectminalpha;
 			if(msgeffect != OVERLAY_EFFECT_NONE)
 			{
 				effectspeed = reader.ReadSmallFloat();
@@ -2732,13 +2732,13 @@ MSGFN MsgFunc_SetScreenOverlay(const Char* pstrName, const byte* pdata, Uint32 m
 				effectminalpha = 0;
 			}
 
-			Float fadetime = reader.ReadSmallFloat();
+			float fadetime = reader.ReadSmallFloat();
 			cl_efxapi.pfnSetScreenOverlay(layerindex, texturename.c_str(), rendermode, rendercolor, renderamt, effect, effectspeed, effectminalpha, fadetime);
 		}
 		break;
 	case OVERLAY_MSG_CLEAR_FADEOUT:
 		{
-			Float duration = reader.ReadSmallFloat();
+			float duration = reader.ReadSmallFloat();
 			cl_efxapi.pfnClearScreenOverlay(layerindex, duration);
 		}
 		break;

@@ -42,7 +42,7 @@ void CUISchemaManager::Clear( void )
 	if(m_tabSchemeArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_tabSchemeArray.size(); i++)
+	for(UInt32 i = 0; i < m_tabSchemeArray.size(); i++)
 		delete m_tabSchemeArray[i];
 
 	m_tabSchemeArray.clear();
@@ -52,10 +52,10 @@ void CUISchemaManager::Clear( void )
 // @brief
 //
 //=============================================
-ui_schemeinfo_t* CUISchemaManager::LoadSchemaFile( const Char* pstrFilename )
+ui_schemeinfo_t* CUISchemaManager::LoadSchemaFile( const char* pstrFilename )
 {
 	// Try to find it in the cache first
-	for(Uint32 i = 0; i < m_tabSchemeArray.size(); i++)
+	for(UInt32 i = 0; i < m_tabSchemeArray.size(); i++)
 	{
 		if(!qstrcmp(m_tabSchemeArray[i]->schemeName, pstrFilename))
 			return m_tabSchemeArray[i];
@@ -65,15 +65,15 @@ ui_schemeinfo_t* CUISchemaManager::LoadSchemaFile( const Char* pstrFilename )
 	CString scriptPath;
 	scriptPath << "resources/schemas/" << pstrFilename;
 
-	Uint32 fileSize = 0;
-	const Char* pfile = reinterpret_cast<const Char*>(m_fileInterface.pfnLoadFile(scriptPath.c_str(), &fileSize));
+	UInt32 fileSize = 0;
+	const char* pfile = reinterpret_cast<const char*>(m_fileInterface.pfnLoadFile(scriptPath.c_str(), &fileSize));
 	if(!pfile)
 	{
 		m_errorString << "Failed to load UI schema script '" << scriptPath.c_str() << "'";
 		return nullptr;
 	}
 
-	CString jsonStr(reinterpret_cast<const Char*>(pfile));
+	CString jsonStr(reinterpret_cast<const char*>(pfile));
 	m_fileInterface.pfnFreeFile(pfile);
 
 	// Parse JSON
@@ -215,7 +215,7 @@ ui_schemeinfo_t* CUISchemaManager::LoadSchemaFile( const Char* pstrFilename )
 // @brief
 //
 //=============================================
-Uint32 CUISchemaManager::GetNbWarnings( void ) const
+UInt32 CUISchemaManager::GetNbWarnings( void ) const
 {
 	return m_warningStringArray.size();
 }
@@ -224,7 +224,7 @@ Uint32 CUISchemaManager::GetNbWarnings( void ) const
 // @brief
 //
 //=============================================
-CString CUISchemaManager::GetWarning( Uint32 index ) const
+CString CUISchemaManager::GetWarning( UInt32 index ) const
 {
 	if(index > m_warningStringArray.size())
 		return CString();

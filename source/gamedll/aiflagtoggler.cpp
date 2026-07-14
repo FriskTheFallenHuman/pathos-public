@@ -89,9 +89,9 @@ bool CAIFlagToggler::Spawn( void )
 // @brief
 //
 //=============================================
-void CAIFlagToggler::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CAIFlagToggler::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
-	const Char* pstrTargetEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTargetEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
 
 	edict_t* pTargetEdict = Util::FindEntityByTargetName(nullptr, pstrTargetEntityName);
 	if(Util::IsNullEntity(pTargetEdict))
@@ -107,7 +107,7 @@ void CAIFlagToggler::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, use
 		return;
 	}
 
-	Uint64 flagToSet = 0;
+	UInt64 flagToSet = 0;
 	switch(m_flag)
 	{
 		case FLAG_WAITTILLSEEN: 

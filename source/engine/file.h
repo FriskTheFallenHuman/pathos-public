@@ -10,8 +10,6 @@ All Rights Reserved.
 #ifndef FILE_H
 #define FILE_H
 
-#include <map>
-
 /*
 =================================
 CFileCache
@@ -35,13 +33,13 @@ private:
 				delete[] pfile;
 		}
 
-		const byte* pfile;
-		Uint32 filesize;
-		Uint32 refcount;
+		const Byte* pfile;
+		UInt32 filesize;
+		UInt32 refcount;
 	};
 
 	typedef std::map<CString, file_t*> FileCacheMap_t;
-	typedef std::map<const byte*, FileCacheMap_t::iterator> FilePtrCacheIteratorMap_t;
+	typedef std::map<const Byte*, FileCacheMap_t::iterator> FilePtrCacheIteratorMap_t;
 
 public:
 	CFileCache( void );
@@ -49,7 +47,7 @@ public:
 
 public:
 	// Loads a file into memory
-	const byte* LoadFile( const Char* pstrpath, Uint32* psize = nullptr );
+	const Byte* LoadFile( const char* pstrpath, UInt32* psize = nullptr );
 	// Reduces refcount on a file, and removes it is refcount is zero
 	bool FreeFile( const void* pfile );
 	// Dumps open files list
@@ -63,18 +61,18 @@ private:
 };
 extern CFileCache gFileCache;
 
-extern const byte* FL_LoadFile( const Char* pstrpath, Uint32* psize = nullptr );
-extern const byte* FL_LoadFileFromRoot( const Char* pstrpath, Uint32* psize = nullptr );
-extern bool FL_WriteFile( const byte* pdata, Uint32 size, const Char* pstrpath, bool append = false );
-extern bool FL_WriteLogFile( const byte* pdata, Uint32 size, const Char* pstrpath, bool append = false );
-extern bool FL_WriteFileRoot( const byte* pdata, Uint32 size, const Char* pstrpath, bool append = false );
+extern const Byte* FL_LoadFile( const char* pstrpath, UInt32* psize = nullptr );
+extern const Byte* FL_LoadFileFromRoot( const char* pstrpath, UInt32* psize = nullptr );
+extern bool FL_WriteFile( const Byte* pdata, UInt32 size, const char* pstrpath, bool append = false );
+extern bool FL_WriteLogFile( const Byte* pdata, UInt32 size, const char* pstrpath, bool append = false );
+extern bool FL_WriteFileRoot( const Byte* pdata, UInt32 size, const char* pstrpath, bool append = false );
 extern void FL_FreeFile( const void* pfile );
-extern bool FL_FileExists( const Char* pstrpath );
-extern bool FL_DeleteFile( const Char* pstrpath );
-extern bool FL_DeleteFileRoot( const Char* pstrpath );
-extern bool FL_CreateDirectory( const Char* pstrpath );
-extern bool FL_GetFileDate( const Char* pstrFile, file_dateinfo_t& dateinfo );
+extern bool FL_FileExists( const char* pstrpath );
+extern bool FL_DeleteFile( const char* pstrpath );
+extern bool FL_DeleteFileRoot( const char* pstrpath );
+extern bool FL_CreateDirectory( const char* pstrpath );
+extern bool FL_GetFileDate( const char* pstrFile, file_dateinfo_t& dateinfo );
 extern Int32 FL_CompareFileDates( const file_dateinfo_t& d1, const file_dateinfo_t& d2 );
-extern const Char* FL_GetGameDirectory( void );
+extern const char* FL_GetGameDirectory( void );
 extern struct file_interface_t& FL_GetInterface( void );
 #endif //FILE_H

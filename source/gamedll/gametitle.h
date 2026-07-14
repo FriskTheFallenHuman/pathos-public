@@ -19,13 +19,13 @@ class CGameTitle : public CPointEntity
 {
 public:
 	// Game title message name
-	static const Char TITLE_MESSAGE_NAME[];
+	static const char TITLE_MESSAGE_NAME[];
 
 public:
 	explicit CGameTitle( edict_t* pedict );
 	virtual ~CGameTitle( void );
 
 public:
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 };
 #endif //GAMETITLE_H

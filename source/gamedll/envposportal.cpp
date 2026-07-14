@@ -25,7 +25,7 @@ CEnvPosPortal::CEnvPosPortal( edict_t* pedict ):
 	m_numPortalSurfaces(0),
 	m_skyTextureName(NO_STRING_VALUE)
 {
-	for(Uint32 i = 0; i < MAX_PORTAL_ENTITIES; i++)
+	for(UInt32 i = 0; i < MAX_PORTAL_ENTITIES; i++)
 		m_pPortalSurfaces[i] = nullptr;
 }
 
@@ -116,7 +116,7 @@ bool CEnvPosPortal::Spawn( void )
 	// Manage custom sky texture
 	if(m_skyTextureName != NO_STRING_VALUE)
 	{
-		const Char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_skyTextureName);
+		const char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_skyTextureName);
 		if(pstrSkyTexture)
 			m_pState->body = gSkyTextureSets.RegisterSkyTextureSet(pstrSkyTexture);
 	}
@@ -168,7 +168,7 @@ bool CEnvPosPortal::Restore( void )
 	// Re-register this
 	if(m_skyTextureName != NO_STRING_VALUE)
 	{
-		const Char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_skyTextureName);
+		const char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_skyTextureName);
 		if(pstrSkyTexture)
 			m_pState->body = gSkyTextureSets.RegisterSkyTextureSet(pstrSkyTexture);
 	}
@@ -192,7 +192,7 @@ void CEnvPosPortal::FreeEntity( edict_removed_t freeMode )
 
 	m_numPortalSurfaces = 0;
 
-	for(Uint32 i = 0; i < MAX_PORTAL_ENTITIES; i++)
+	for(UInt32 i = 0; i < MAX_PORTAL_ENTITIES; i++)
 		m_pPortalSurfaces[i] = nullptr;
 }
 
@@ -217,11 +217,11 @@ void CEnvPosPortal::SetPVSData( void )
 		return;
 	}
 
-	Uint32 bufsize = gd_engfuncs.pfnGetVISBufferSize();
+	UInt32 bufsize = gd_engfuncs.pfnGetVISBufferSize();
 	if(!m_pPVSData)
 	{
 		// Allocate buffer
-		m_pPVSData = new byte[gd_engfuncs.pfnGetVISBufferSize()];
+		m_pPVSData = new Byte[gd_engfuncs.pfnGetVISBufferSize()];
 	}
 
 	gd_engfuncs.pfnLeafPVS(m_pPVSData, bufsize, (*pleaf), (*pbrushmodel));
@@ -231,7 +231,7 @@ void CEnvPosPortal::SetPVSData( void )
 // @brief
 //
 //=============================================
-const byte* CEnvPosPortal::GetPVSData( void ) const
+const Byte* CEnvPosPortal::GetPVSData( void ) const
 {
 	return m_pPVSData;
 }
@@ -246,7 +246,7 @@ bool CEnvPosPortal::CheckPortalBBox( const edict_t* pedict ) const
 		return true;
 
 	Vector bboxmins, bboxmaxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		bboxmins[i] = m_pState->origin[i] - m_pState->renderamt;
 		bboxmaxs[i] = m_pState->origin[i] + m_pState->renderamt;
@@ -294,7 +294,7 @@ void CEnvPosPortal::AddPortalSurfaceEntity( const edict_t* pedict )
 // @brief
 //
 //=============================================
-Uint32 CEnvPosPortal::GetNbPortalSurfaces( void ) const
+UInt32 CEnvPosPortal::GetNbPortalSurfaces( void ) const
 {
 	return m_numPortalSurfaces;
 }
@@ -303,8 +303,8 @@ Uint32 CEnvPosPortal::GetNbPortalSurfaces( void ) const
 // @brief
 //
 //=============================================
-const edict_t* CEnvPosPortal::GetPortalSurfaceByIndex( Uint32 index ) const
+const edict_t* CEnvPosPortal::GetPortalSurfaceByIndex( UInt32 index ) const
 {
-	assert(index < (Uint32)m_numPortalSurfaces);
+	assert(index < (UInt32)m_numPortalSurfaces);
 	return m_pPortalSurfaces[index];
 }

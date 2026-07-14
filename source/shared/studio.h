@@ -28,16 +28,16 @@ All Rights Reserved.
 // This is used to identify a studiomdl file
 static constexpr Int32 IDSTUDIOHEADER			= (('T'<<24)+('S'<<16)+('D'<<8)+'I');
 // Version used by Half-Life 1, JACK, VHE for studiomodels
-static constexpr Uint32 STUDIO_VERSION			= 10;
+static constexpr UInt32 STUDIO_VERSION			= 10;
 
 // Max vertexes supported by VHE
-static constexpr Uint32 MAXSTUDIOVERTS_REF		= 2048;
+static constexpr UInt32 MAXSTUDIOVERTS_REF		= 2048;
 // Max nb of bones due to byte being used to store bone indexes
-static constexpr Uint32 MAXSTUDIOSRCBONES		= 256;
+static constexpr UInt32 MAXSTUDIOSRCBONES		= 256;
 // Max bones in a model
-static constexpr Uint32 MAXSTUDIOBONES			= 128;
+static constexpr UInt32 MAXSTUDIOBONES			= 128;
 // Max event option string length
-static constexpr Uint32 MAXEVENTSTRLENGTH		= 64;
+static constexpr UInt32 MAXEVENTSTRLENGTH		= 64;
 
 // Used by studiohdr->flags
 enum studio_flags_t
@@ -139,7 +139,7 @@ struct mstudiobone_t
 	}
 
 	// Bone name
-	Char name[32];
+	char name[32];
 	// Parent bone index
 	Int32 parent;
 	// Flags for special animation exceptions
@@ -147,9 +147,9 @@ struct mstudiobone_t
 	// Bone controller index, -1 means null
 	Int32 bonecontroller[6];
 	// Default DoF values
-	Float value[6];
+	float value[6];
 	// Scale for delta DoF values
-	Float scale[6];
+	float scale[6];
 };
 
 struct mstudiobonecontroller_t
@@ -168,9 +168,9 @@ struct mstudiobonecontroller_t
 	// Controller type
 	Int32 type;
 	// Start value
-	Float start;
+	float start;
 	// End value
-	Float end;
+	float end;
 	// Byte index value at neutral
 	Int32 rest;
 	// Controller index(0-3 are user set controllers, 4 is mouth)
@@ -214,9 +214,9 @@ struct mstudioseqgroup_t
 	}
 
 	// Label of the sequence group
-	Char label[32];
+	char label[32];
 	// Name of the file(always none)
-	Char name[64];
+	char name[64];
 	// Cache index pointer
 	cache_user_t cache;
 	// Hack variable for group 0
@@ -240,7 +240,7 @@ struct mstudioevent_t
 	// Event type
 	Int32 type;
 	// String for optional options
-	Char options[MAXEVENTSTRLENGTH];
+	char options[MAXEVENTSTRLENGTH];
 };
 
 struct mstudioseqdesc_t
@@ -277,14 +277,14 @@ struct mstudioseqdesc_t
 	const mstudioevent_t* getEvent( const studiohdr_t* phdr, Int32 index ) const
 	{
 		assert(index >= 0 && index < numevents);
-		return reinterpret_cast<const mstudioevent_t*>(reinterpret_cast<const byte*>(phdr) + eventindex) + index;
+		return reinterpret_cast<const mstudioevent_t*>(reinterpret_cast<const Byte*>(phdr) + eventindex) + index;
 	}
 
 	// Name of the sequence
-	Char label[32];
+	char label[32];
 
 	// Framerate
-	Float fps;
+	float fps;
 	// Flag bits for sequence
 	Int32 flags;
 
@@ -329,9 +329,9 @@ struct mstudioseqdesc_t
 	// Blend type
 	Int32 blendtype[2];
 	// Blend start
-	Float blendstart[2];
+	float blendstart[2];
 	// Blend end
-	Float blendend[2];
+	float blendend[2];
 	// Blend parent
 	Int32 blendparent;
 
@@ -374,7 +374,7 @@ struct mstudioattachment_t
 	}
 
 	// Name of attachment
-	Char name[32];
+	char name[32];
 	// Attachment type
 	Int32 type;
 	// Bone attachment is tied to
@@ -395,11 +395,11 @@ struct mstudioanim_t
 	const mstudioanimvalue_t* getAnimationValue( Int32 index ) const
 	{
 		assert(index >= 0 && index < 6);
-		return reinterpret_cast<const mstudioanimvalue_t*>(reinterpret_cast<const byte*>(this) + offset[index]);
+		return reinterpret_cast<const mstudioanimvalue_t*>(reinterpret_cast<const Byte*>(this) + offset[index]);
 	}
 
 	// Offset values
-	Uint16 offset[6];
+	UInt16 offset[6];
 };
 
 // This is ugly and should be refactored
@@ -407,8 +407,8 @@ union mstudioanimvalue_t
 {
 	struct 
 	{
-		byte	valid;
-		byte	total;
+		Byte	valid;
+		Byte	total;
 	} num;
 
 	Int16 value;
@@ -426,7 +426,7 @@ struct mstudiotexture_t
 	}
 
 	// Name of texture
-	Char name[64];
+	char name[64];
 	// Texture flags
 	Int32 flags;
 	// Width of texture
@@ -482,37 +482,37 @@ struct mstudiomodel_t
 	const mstudiomesh_t* getMesh( const studiohdr_t* phdr, Int32 index ) const
 	{
 		assert(index >= 0 && index < nummesh);
-		return reinterpret_cast<const mstudiomesh_t*>(reinterpret_cast<const byte*>(phdr) + meshindex) + index;
+		return reinterpret_cast<const mstudiomesh_t*>(reinterpret_cast<const Byte*>(phdr) + meshindex) + index;
 	}
 
 	const Vector* getVertexes( const studiohdr_t* phdr ) const
 	{
-		return reinterpret_cast<const Vector*>(reinterpret_cast<const byte*>(phdr) + vertindex);
+		return reinterpret_cast<const Vector*>(reinterpret_cast<const Byte*>(phdr) + vertindex);
 	}
 
-	const byte* getVertexBoneIndexes( const studiohdr_t* phdr ) const
+	const Byte* getVertexBoneIndexes( const studiohdr_t* phdr ) const
 	{
-		return (reinterpret_cast<const byte*>(phdr) + vertinfoindex);
+		return (reinterpret_cast<const Byte*>(phdr) + vertinfoindex);
 	}
 
 	const Vector* getNormals( const studiohdr_t* phdr ) const
 	{
-		return reinterpret_cast<const Vector*>(reinterpret_cast<const byte*>(phdr) + normindex);
+		return reinterpret_cast<const Vector*>(reinterpret_cast<const Byte*>(phdr) + normindex);
 	}
 
-	const byte* getNormalBoneIndexes( const studiohdr_t* phdr ) const
+	const Byte* getNormalBoneIndexes( const studiohdr_t* phdr ) const
 	{
-		return (reinterpret_cast<const byte*>(phdr) + norminfoindex);
+		return (reinterpret_cast<const Byte*>(phdr) + norminfoindex);
 	}
 
 	// Name of the submodel
-	Char name[64];
+	char name[64];
 
 	// Unused?
 	Int32 type;
 
 	// Unused?
-	Float boundingradius;
+	float boundingradius;
 
 	// Number of meshes
 	Int32 nummesh;
@@ -552,11 +552,11 @@ struct mstudiobodyparts_t
 	const mstudiomodel_t* getSubmodel( const studiohdr_t* phdr, Int32 index ) const
 	{
 		assert(index >= 0 && index < nummodels);
-		return reinterpret_cast<const mstudiomodel_t*>(reinterpret_cast<const byte*>(phdr) + modelindex) + index;
+		return reinterpret_cast<const mstudiomodel_t*>(reinterpret_cast<const Byte*>(phdr) + modelindex) + index;
 	}
 
 	// Name of bodygroup
-	Char name[64];
+	char name[64];
 	// Number of submodels in bodygroup
 	Int32 nummodels;
 	// Base index
@@ -605,55 +605,55 @@ struct studiohdr_t
 	const mstudiobone_t* getBone( Int32 index ) const
 	{
 		assert(index >= 0 && index < numbones);
-		return reinterpret_cast<const mstudiobone_t*>(reinterpret_cast<const byte*>(this) + boneindex) + index;
+		return reinterpret_cast<const mstudiobone_t*>(reinterpret_cast<const Byte*>(this) + boneindex) + index;
 	}
 
 	const mstudiobonecontroller_t* getBoneController( Int32 index ) const
 	{
 		assert(index >= 0 && index < numbonecontrollers);
-		return reinterpret_cast<const mstudiobonecontroller_t*>(reinterpret_cast<const byte*>(this) + bonecontrollerindex) + index;
+		return reinterpret_cast<const mstudiobonecontroller_t*>(reinterpret_cast<const Byte*>(this) + bonecontrollerindex) + index;
 	}
 
 	const mstudiobbox_t* getHitBox( Int32 index ) const
 	{
 		assert(index >= 0 && index < numhitboxes);
-		return reinterpret_cast<const mstudiobbox_t*>(reinterpret_cast<const byte*>(this) + hitboxindex) + index;
+		return reinterpret_cast<const mstudiobbox_t*>(reinterpret_cast<const Byte*>(this) + hitboxindex) + index;
 	}
 
 	const mstudioseqdesc_t* getSequence( Int32 index ) const
 	{
 		assert(index >= 0 && index < numseq);
-		return reinterpret_cast<const mstudioseqdesc_t*>(reinterpret_cast<const byte*>(this) + seqindex) + index;
+		return reinterpret_cast<const mstudioseqdesc_t*>(reinterpret_cast<const Byte*>(this) + seqindex) + index;
 	}
 
 	const mstudiotexture_t* getTexture( Int32 index ) const
 	{
 		assert(index >= 0 && index < numtextures);
-		return reinterpret_cast<const mstudiotexture_t*>(reinterpret_cast<const byte*>(this) + textureindex) + index;
+		return reinterpret_cast<const mstudiotexture_t*>(reinterpret_cast<const Byte*>(this) + textureindex) + index;
 	}
 
 	const Int16* getSkinFamily( Int32 index ) const
 	{
 		assert(index >= 0 && index < numskinfamilies);
-		return reinterpret_cast<const Int16*>(reinterpret_cast<const byte*>(this) + skinindex) + index*numskinref;
+		return reinterpret_cast<const Int16*>(reinterpret_cast<const Byte*>(this) + skinindex) + index*numskinref;
 	}
 
 	const mstudiobodyparts_t* getBodyPart( Int32 index ) const
 	{
 		assert(index >= 0 && index < numbodyparts);
-		return reinterpret_cast<const mstudiobodyparts_t*>(reinterpret_cast<const byte*>(this) + bodypartindex) + index;
+		return reinterpret_cast<const mstudiobodyparts_t*>(reinterpret_cast<const Byte*>(this) + bodypartindex) + index;
 	}
 
 	const mstudioattachment_t* getAttachment( Int32 index ) const
 	{
 		assert(index >= 0 && index < numattachments);
-		return reinterpret_cast<const mstudioattachment_t*>(reinterpret_cast<const byte*>(this) + attachmentindex) + index;
+		return reinterpret_cast<const mstudioattachment_t*>(reinterpret_cast<const Byte*>(this) + attachmentindex) + index;
 	}
 
 	const mstudioseqgroup_t* getSequenceGroup( Int32 groupindex ) const
 	{
 		assert(groupindex >= 0 && groupindex < numseqgroups);
-		return reinterpret_cast<const mstudioseqgroup_t*>(reinterpret_cast<const byte*>(this) + seqgroupindex) + groupindex;
+		return reinterpret_cast<const mstudioseqgroup_t*>(reinterpret_cast<const Byte*>(this) + seqgroupindex) + groupindex;
 	}
 
 	// Holds the ID of the file type
@@ -662,7 +662,7 @@ struct studiohdr_t
 	Int32 version;
 
 	// Model file name
-	Char name[64];
+	char name[64];
 	// Total size of model
 	Int32 length;
 
@@ -758,19 +758,19 @@ struct vbmcache_t
 	{
 		if(pstudiohdr)
 		{
-			const byte* _pstudiohdr = reinterpret_cast<const byte*>(pstudiohdr);
+			const Byte* _pstudiohdr = reinterpret_cast<const Byte*>(pstudiohdr);
 			delete[] _pstudiohdr;
 		}
 
 		if(pvbmhdr)
 		{
-			const byte* _pvbmhdr = reinterpret_cast<const byte*>(pvbmhdr);
+			const Byte* _pvbmhdr = reinterpret_cast<const Byte*>(pvbmhdr);
 			delete[] _pvbmhdr;
 		}
 
 		if(pmcdheader)
 		{
-			const byte* _pmcdheader = reinterpret_cast<const byte*>(pmcdheader);
+			const Byte* _pmcdheader = reinterpret_cast<const Byte*>(pmcdheader);
 			delete[] _pmcdheader;
 		}
 	}

@@ -80,9 +80,9 @@ bool CAIWanderController::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CAIWanderController::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CAIWanderController::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
-	const Char* pstrTargetEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTargetEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
 
 	edict_t* pTargetEdict = Util::FindEntityByTargetName(nullptr, pstrTargetEntityName);
 	if(Util::IsNullEntity(pTargetEdict))

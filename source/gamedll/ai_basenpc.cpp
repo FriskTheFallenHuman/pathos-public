@@ -31,125 +31,125 @@ All Rights Reserved.
 #include "materialdefs.h"
 
 // Delay between npc thinking
-const Float CBaseNPC::NPC_THINK_TIME = 0.1f;
+const float CBaseNPC::NPC_THINK_TIME = 0.1f;
 // Head turn speed on yaw
-const Float CBaseNPC::NPC_HEAD_TURN_YAW_SPEED = 70;
+const float CBaseNPC::NPC_HEAD_TURN_YAW_SPEED = 70;
 // Head turn speed on pitch
-const Float CBaseNPC::NPC_HEAD_TURN_PITCH_SPEED = 40;
+const float CBaseNPC::NPC_HEAD_TURN_PITCH_SPEED = 40;
 // Maximum looking distance
-const Float CBaseNPC::NPC_DEFAULT_MAX_LOOK_DISTANCE = 4096.0f;
+const float CBaseNPC::NPC_DEFAULT_MAX_LOOK_DISTANCE = 4096.0f;
 // Maximum firing distance
-const Float CBaseNPC::NPC_DEFAULT_MAX_FIRING_DISTANCE = 2048.0f;
+const float CBaseNPC::NPC_DEFAULT_MAX_FIRING_DISTANCE = 2048.0f;
 
 // Default hearing sensitivity
-const Float CBaseNPC::NPC_DEFAULT_HEARING_SENSITIVITY = 0.1f;
+const float CBaseNPC::NPC_DEFAULT_HEARING_SENSITIVITY = 0.1f;
 // Hearing lean awareness gain
-const Float CBaseNPC::NPC_HEAR_LEAN_AWARENESS_GAIN = 0.5f;
+const float CBaseNPC::NPC_HEAR_LEAN_AWARENESS_GAIN = 0.5f;
 // Lean awareness timeout
-const Float CBaseNPC::NPC_LEANAWARENESS_TIMEOUT = 2;
+const float CBaseNPC::NPC_LEANAWARENESS_TIMEOUT = 2;
 // NPC step size
-const Float CBaseNPC::NPC_STEP_SIZE = 16.0f;
+const float CBaseNPC::NPC_STEP_SIZE = 16.0f;
 // Maximum danger exposure time
-const Float CBaseNPC::NPC_MAX_DANGER_TIME = 1.0f;
+const float CBaseNPC::NPC_MAX_DANGER_TIME = 1.0f;
 // Minimum enemy distance
-const Float CBaseNPC::NPC_MINIMUM_ENEMY_DISTANCE = 128.0f;
+const float CBaseNPC::NPC_MINIMUM_ENEMY_DISTANCE = 128.0f;
 // Enemy intercept distance
-const Float CBaseNPC::NPC_ENEMY_INTERCEPT_DISTANCE = 64.0f;
+const float CBaseNPC::NPC_ENEMY_INTERCEPT_DISTANCE = 64.0f;
 // Enemy combat state timeout
-const Float CBaseNPC::NPC_COMBATSTATE_TIMEOUT = 35.0f;
+const float CBaseNPC::NPC_COMBATSTATE_TIMEOUT = 35.0f;
 // Distance beyond which we'll try to cut corners
-const Float CBaseNPC::NPC_CORNER_CUT_MIN_DIST = 2.0f;
+const float CBaseNPC::NPC_CORNER_CUT_MIN_DIST = 2.0f;
 // Enemy update distance
-const Float CBaseNPC::NPC_ENEMY_UPDATE_DISTANCE = 64.0f;
+const float CBaseNPC::NPC_ENEMY_UPDATE_DISTANCE = 64.0f;
 // Triangulation maximum height
-const Float CBaseNPC::NPC_TRIANGULATION_MAX_HEIGHT = 72.0f;
+const float CBaseNPC::NPC_TRIANGULATION_MAX_HEIGHT = 72.0f;
 // Triangulation minimum x size
-const Float CBaseNPC::NPC_TRIANGULATION_MIN_SIZE_X = 24.0f;
+const float CBaseNPC::NPC_TRIANGULATION_MIN_SIZE_X = 24.0f;
 // Triangulation maximum x size
-const Float CBaseNPC::NPC_TRIANGULATION_MAX_SIZE_X = 48.0f;
+const float CBaseNPC::NPC_TRIANGULATION_MAX_SIZE_X = 48.0f;
 // Door search radius when looking for double doors
-const Float CBaseNPC::NPC_DOOR_SEARCH_RADIUS = 256;
+const float CBaseNPC::NPC_DOOR_SEARCH_RADIUS = 256;
 // Minimum localmove check distance
-const Float CBaseNPC::MIN_LOCALMOVE_CHECK_DIST = 32;
+const float CBaseNPC::MIN_LOCALMOVE_CHECK_DIST = 32;
 // Maximum distance the NPC can simplify paths in
-const Float CBaseNPC::NPC_MAX_SIMPLIFY_DISTANCE = 2048;
+const float CBaseNPC::NPC_MAX_SIMPLIFY_DISTANCE = 2048;
 // Maximum traces an NPC can do while simplifying routes
-const Uint32 CBaseNPC::NPC_MAX_SIMPLIFY_TRACES = 6;
+const UInt32 CBaseNPC::NPC_MAX_SIMPLIFY_TRACES = 6;
 // Distance between corner cut checks
-const Float CBaseNPC::NPC_SIMPLIFICATION_FIX_DISTANCE = 40;
+const float CBaseNPC::NPC_SIMPLIFICATION_FIX_DISTANCE = 40;
 // NPC error glow aura color
 const Vector CBaseNPC::NPC_ERROR_GLOW_AURA_COLOR = Vector(255, 0, 0);
 // Default max distance for navigation
-const Float CBaseNPC::NPC_MAX_NAVIGATION_DISTANCE = 4096;
+const float CBaseNPC::NPC_MAX_NAVIGATION_DISTANCE = 4096;
 // Dangerous enemy minimum distance
-const Float CBaseNPC::NPC_DANGEROUS_ENEMY_MIN_DISTANCE = 180;
+const float CBaseNPC::NPC_DANGEROUS_ENEMY_MIN_DISTANCE = 180;
 // Dangerous enemy minimum cover distance
-const Float CBaseNPC::NPC_DANGEROUS_ENEMY_MIN_COVER_DISTANCE = 512;
+const float CBaseNPC::NPC_DANGEROUS_ENEMY_MIN_COVER_DISTANCE = 512;
 // Enemy search distance
-const Float CBaseNPC::NPC_MAX_ENEMY_SEARCH_DISTANCE = 1024;
+const float CBaseNPC::NPC_MAX_ENEMY_SEARCH_DISTANCE = 1024;
 // Number of lateral cover checks
-const Float CBaseNPC::NPC_LATERAL_COVER_CHECK_NUM = 6;
+const float CBaseNPC::NPC_LATERAL_COVER_CHECK_NUM = 6;
 // Lateral cover check distance
-const Float CBaseNPC::NPC_LATERAL_COVER_CHECK_DISTANCE = 32;
+const float CBaseNPC::NPC_LATERAL_COVER_CHECK_DISTANCE = 32;
 // NPC follow walk distance
-const Float CBaseNPC::NPC_FOLLOW_WALK_DISTANCE = 200;
+const float CBaseNPC::NPC_FOLLOW_WALK_DISTANCE = 200;
 // NPC follow run distance
-const Float CBaseNPC::NPC_FOLLOW_RUN_DISTANCE = 300;
+const float CBaseNPC::NPC_FOLLOW_RUN_DISTANCE = 300;
 // NPC default cover distance
-const Float CBaseNPC::NPC_DEFAULT_COVER_DISTANCE = 2048;
+const float CBaseNPC::NPC_DEFAULT_COVER_DISTANCE = 2048;
 // NPC reload cover distance
-const Float CBaseNPC::NPC_RELOAD_COVER_DISTANCE = 512;
+const float CBaseNPC::NPC_RELOAD_COVER_DISTANCE = 512;
 // Best sound cover minimum distance
-const Float CBaseNPC::NPC_COVER_BESTSOUND_MIN_DISTANCE = 64;
+const float CBaseNPC::NPC_COVER_BESTSOUND_MIN_DISTANCE = 64;
 // Best sound cover maximum distance
-const Float CBaseNPC::NPC_COVER_BESTSOUND_MAX_DISTANCE = 1024;
+const float CBaseNPC::NPC_COVER_BESTSOUND_MAX_DISTANCE = 1024;
 // Best sound cover optimal distance
-const Float CBaseNPC::NPC_COVER_BESTSOUND_OPTIMAL_DISTANCE = 400;
+const float CBaseNPC::NPC_COVER_BESTSOUND_OPTIMAL_DISTANCE = 400;
 // NPC move wait time
-const Float CBaseNPC::NPC_DEFAULT_MOVE_WAIT_TIME = 2;
+const float CBaseNPC::NPC_DEFAULT_MOVE_WAIT_TIME = 2;
 // Dodge min distance
-const Float CBaseNPC::NPC_DODGE_MIN_DISTANCE = 128;
+const float CBaseNPC::NPC_DODGE_MIN_DISTANCE = 128;
 // Dodge max distance
-const Float CBaseNPC::NPC_DODGE_MAX_DISTANCE = 512;
+const float CBaseNPC::NPC_DODGE_MAX_DISTANCE = 512;
 // Minimum health value for gibbing
-const Float CBaseNPC::NPC_GIB_HEALTH_VALUE = -30;
+const float CBaseNPC::NPC_GIB_HEALTH_VALUE = -30;
 // Bullet gib damage treshold
-const Float CBaseNPC::NPC_BULLETGIB_DMG_TRESHOLD = 70;
+const float CBaseNPC::NPC_BULLETGIB_DMG_TRESHOLD = 70;
 // Bullet gibbing minimum health treshold
-const Float CBaseNPC::NPC_BULLETGIB_MIN_HEALTH = 30;
+const float CBaseNPC::NPC_BULLETGIB_MIN_HEALTH = 30;
 // Light damage treshold
-const Float CBaseNPC::NPC_LIGHT_DAMAGE_TRESHOLD = 1;
+const float CBaseNPC::NPC_LIGHT_DAMAGE_TRESHOLD = 1;
 // Heavy damage treshold
-const Float CBaseNPC::NPC_HEAVY_DAMAGE_TRESHOLD = 30;
+const float CBaseNPC::NPC_HEAVY_DAMAGE_TRESHOLD = 30;
 // Default lean awareness time
-const Float CBaseNPC::NPC_DEFAULT_LEAN_AWARE_TIME = 1.0f;
+const float CBaseNPC::NPC_DEFAULT_LEAN_AWARE_TIME = 1.0f;
 // Script move minimum distance
-const Float CBaseNPC::NPC_SCRIPT_MOVE_MIN_DIST = 8.0f;
+const float CBaseNPC::NPC_SCRIPT_MOVE_MIN_DIST = 8.0f;
 // NPC gun sound radius
-const Float CBaseNPC::NPC_GUN_SOUND_RADIUS = 384.0f;
+const float CBaseNPC::NPC_GUN_SOUND_RADIUS = 384.0f;
 // Minimum size of an enemy the NPC will kick
-const Float CBaseNPC::NPC_ENEMY_MIN_KICK_SIZE = 24.0f;
+const float CBaseNPC::NPC_ENEMY_MIN_KICK_SIZE = 24.0f;
 // NPC firing angle treshold
-const Float CBaseNPC::NPC_FIRING_ANGLE_TRESHOLD = 0.5f;
+const float CBaseNPC::NPC_FIRING_ANGLE_TRESHOLD = 0.5f;
 // Max localmove height diff in start and end
-const Float CBaseNPC::NPC_MAX_LOCALMOVE_HEIGHT_DIFF = 1024.0f;
+const float CBaseNPC::NPC_MAX_LOCALMOVE_HEIGHT_DIFF = 1024.0f;
 // Distance at which we can be decapitated
-const Float CBaseNPC::NPC_DECAP_MAX_DISTANCE = 256.0f;
+const float CBaseNPC::NPC_DECAP_MAX_DISTANCE = 256.0f;
 // Distance at which we can be gibbed by a bullet
-const Float CBaseNPC::NPC_BULLETGIB_MAX_DISTANCE = 350.0f;
+const float CBaseNPC::NPC_BULLETGIB_MAX_DISTANCE = 350.0f;
 // Number of coverage checks
-const Uint32 CBaseNPC::NPC_NUM_COVERAGE_CHECKS = 6;
+const UInt32 CBaseNPC::NPC_NUM_COVERAGE_CHECKS = 6;
 // Max number of schedule changes per think
-const Uint32 CBaseNPC::NPC_MAX_SCHEDULE_CHANGES = 4;
+const UInt32 CBaseNPC::NPC_MAX_SCHEDULE_CHANGES = 4;
 // Max number of tasks executed
-const Uint32 CBaseNPC::NPC_MAX_TASK_EXECUTIONS = 8;
+const UInt32 CBaseNPC::NPC_MAX_TASK_EXECUTIONS = 8;
 // Navigability minimum distance change
-const Float CBaseNPC::NAVIGABILITY_CHECK_MIN_DISTANCE_CHANGE = 16;
+const float CBaseNPC::NAVIGABILITY_CHECK_MIN_DISTANCE_CHANGE = 16;
 // Max walk-move traces per frame
-const Uint32 CBaseNPC::MAX_FRAME_WALKMOVE_TRACES = 128;
+const UInt32 CBaseNPC::MAX_FRAME_WALKMOVE_TRACES = 128;
 
 // AI state names
-static const Char* AI_STATE_NAMES[NB_AI_STATES] = 
+static const char* AI_STATE_NAMES[NB_AI_STATES] = 
 {
 	"None",
 	"Idle",
@@ -164,10 +164,10 @@ Int32 CBaseNPC::g_lastCoverSearchNodeIndex = 0;
 // Last active idle search node
 Int32 CBaseNPC::g_lastActiveIdleSearchNodeIndex = 0;
 // Number of walk move traces this frame
-Uint32 CBaseNPC::g_numFrameWalkMoveTraces = 0;
+UInt32 CBaseNPC::g_numFrameWalkMoveTraces = 0;
 
 // Door group bits
-const Uint32 CBaseNPC::AI_CAP_DOORS_GROUP_BITS[] = {AI_CAP_USE, AI_CAP_AUTO_OPEN_DOORS, AI_CAP_OPEN_DOORS};
+const UInt32 CBaseNPC::AI_CAP_DOORS_GROUP_BITS[] = {AI_CAP_USE, AI_CAP_AUTO_OPEN_DOORS, AI_CAP_OPEN_DOORS};
 // Door group bitset
 const CBitSet CBaseNPC::AI_CAP_GROUP_DOORS(AI_CAP_BITS_COUNT, AI_CAP_DOORS_GROUP_BITS, PT_ARRAYSIZE(AI_CAP_DOORS_GROUP_BITS));
 
@@ -350,7 +350,7 @@ void CBaseNPC::DeclareSaveFields( void )
 // @brief Manages keyvalues
 //
 // @param kv Keyvalue data
-// @return TRUE if keyvalue as managed, false otherwise
+// @return true if keyvalue as managed, false otherwise
 //=============================================
 bool CBaseNPC::KeyValue( const keyvalue_t& kv )
 {
@@ -458,7 +458,7 @@ void CBaseNPC::Precache( void )
 //
 // @return Hearing sensitivity
 //=============================================
-Float CBaseNPC::GetHearingSensitivity( void )
+float CBaseNPC::GetHearingSensitivity( void )
 {
 	return NPC_DEFAULT_HEARING_SENSITIVITY;
 }
@@ -469,7 +469,7 @@ Float CBaseNPC::GetHearingSensitivity( void )
 // @param pitch Ideal pitch value
 // @param yaw Ideal yaw value
 //=============================================
-void CBaseNPC::SetIdealHeadAngles( Float pitch, Float yaw )
+void CBaseNPC::SetIdealHeadAngles( float pitch, float yaw )
 {
 	if(!HasCapability(AI_CAP_TURN_HEAD))
 		return;
@@ -480,7 +480,7 @@ void CBaseNPC::SetIdealHeadAngles( Float pitch, Float yaw )
 		return;
 	}
 
-	Float _pitch = pitch;
+	float _pitch = pitch;
 	if(_pitch < 0)
 		_pitch += 360;
 
@@ -507,12 +507,12 @@ void CBaseNPC::SetIdealHeadAngles( Float pitch, Float yaw )
 // @brief
 //
 //=============================================
-bool CBaseNPC::SetIdealHeadYaw( Float yaw )
+bool CBaseNPC::SetIdealHeadYaw( float yaw )
 {
 	if(!HasCapability(AI_CAP_TURN_HEAD))
 		return false;
 
-	Float _yaw = yaw;
+	float _yaw = yaw;
 	if(_yaw < 0)
 		_yaw += 360;
 
@@ -555,11 +555,11 @@ void CBaseNPC::UpdateHeadControllers( void )
 	// Apply head turning on yaw
 	if(HasCapability(AI_CAP_TURN_HEAD))
 	{
-		Float currentyaw = Math::AngleMod(m_headYaw);
+		float currentyaw = Math::AngleMod(m_headYaw);
 		if(currentyaw != m_idealHeadYaw)
 		{
-			Float moveamount = m_idealHeadYaw - currentyaw;
-			Float turnspeed = NPC_HEAD_TURN_YAW_SPEED * m_thinkIntervalTime;
+			float moveamount = m_idealHeadYaw - currentyaw;
+			float turnspeed = NPC_HEAD_TURN_YAW_SPEED * m_thinkIntervalTime;
 
 			if(m_idealHeadYaw > currentyaw)
 			{
@@ -588,11 +588,11 @@ void CBaseNPC::UpdateHeadControllers( void )
 	// Apply head turning on pitch
 	if(HasCapability(AI_CAP_TURN_HEAD_PITCH))
 	{
-		Float currentpitch = Math::AngleMod(m_headPitch);
+		float currentpitch = Math::AngleMod(m_headPitch);
 		if(currentpitch != m_idealHeadPitch)
 		{
-			Float moveamount = m_idealHeadPitch - currentpitch;
-			Float turnspeed = NPC_HEAD_TURN_PITCH_SPEED * m_thinkIntervalTime;
+			float moveamount = m_idealHeadPitch - currentpitch;
+			float turnspeed = NPC_HEAD_TURN_PITCH_SPEED * m_thinkIntervalTime;
 
 			if(m_idealHeadPitch > currentpitch)
 			{
@@ -664,7 +664,7 @@ void CBaseNPC::UpdateBestSound( void )
 {
 	// Determine which sound is the best sound
 	ai_sound_t* pbestsound = nullptr;
-	Float bestsounddist = 0;
+	float bestsounddist = 0;
 
 	// Get eye/head position
 	Vector headposition = GetEyePosition();
@@ -673,7 +673,7 @@ void CBaseNPC::UpdateBestSound( void )
 	while(!m_soundsList.end())
 	{
 		ai_sound_t& snd = m_soundsList.get();
-		Float distance = (headposition-snd.position).Length();
+		float distance = (headposition-snd.position).Length();
 		if(!pbestsound || distance < bestsounddist)
 		{
 			pbestsound = &snd;
@@ -697,7 +697,7 @@ void CBaseNPC::HearSounds( void )
 	// Clear sound list
 	m_soundTypes = 0;
 
-	Uint64 soundmask = GetSoundMask();
+	UInt64 soundmask = GetSoundMask();
 	if(!soundmask)
 		return;
 
@@ -721,7 +721,7 @@ void CBaseNPC::HearSounds( void )
 
 	if(m_pSchedule)
 	{
-		Uint64 scheduleMask = m_pSchedule->GetSoundMask();
+		UInt64 scheduleMask = m_pSchedule->GetSoundMask();
 		if(m_npcState == NPC_STATE_SCRIPT)
 		{
 			if(m_pScriptedSequence && m_pScriptedSequence->CanInterrupt() && m_pScriptedSequence->HasSpawnFlag(CScriptedSequence::FL_SOUNDS_CAN_INTERRUPT))
@@ -813,7 +813,7 @@ void CBaseNPC::HearSounds( void )
 // @brief Processes a sound heard
 //
 //=============================================
-bool CBaseNPC::ProcessHeardSound( ai_sound_t& sound, Uint64 soundMask )
+bool CBaseNPC::ProcessHeardSound( ai_sound_t& sound, UInt64 soundMask )
 {
 	// If enemy, and not seen, then update position
 	if(sound.emitter == m_enemy 
@@ -859,7 +859,7 @@ bool CBaseNPC::ProcessHeardSound( ai_sound_t& sound, Uint64 soundMask )
 // @brief
 //
 //=============================================
-void CBaseNPC::PerformMovement( Double animInterval )
+void CBaseNPC::PerformMovement( double animInterval )
 {
 	// Don't move if we don't have a valid route
 	if(IsRouteClear())
@@ -880,7 +880,7 @@ void CBaseNPC::PerformMovement( Double animInterval )
 	// Get current point and get direction
 	route_point_t& currentPoint = m_routePointsArray[m_routePointIndex];
 	Vector moveDirection = (currentPoint.position - m_pState->origin);
-	Float distanceToPoint = moveDirection.Length();
+	float distanceToPoint = moveDirection.Length();
 	moveDirection.Normalize();
 
 	// Manage yaw related stuff
@@ -888,7 +888,7 @@ void CBaseNPC::PerformMovement( Double animInterval )
 
 	// Use distance to waypoint as max dist, because otherwise
 	// we night not detect anything blocking us in time
-	Float moveDistance = 0;
+	float moveDistance = 0;
 
 	// Check our movement
 	localmove_t moveResult = CheckLocalMove(m_pState->origin, currentPoint.position, m_movementGoalEntity, &moveDistance, false, true);
@@ -946,7 +946,7 @@ void CBaseNPC::PerformMovement( Double animInterval )
 // @brief
 //
 //=============================================
-bool CBaseNPC::CheckAdvanceRoute( Float distanceToPoint, CBaseEntity* pTargetEntity )
+bool CBaseNPC::CheckAdvanceRoute( float distanceToPoint, CBaseEntity* pTargetEntity )
 {
 	trace_t tr;
 	while(true)
@@ -956,8 +956,8 @@ bool CBaseNPC::CheckAdvanceRoute( Float distanceToPoint, CBaseEntity* pTargetEnt
 		if(point.type == MF_NONE)
 			break;
 
-		Float pointDistance2D = (point.position - m_pState->origin).Length2D();
-		Float heightDifference = SDL_fabs(point.position.z - m_pState->origin.z);
+		float pointDistance2D = (point.position - m_pState->origin).Length2D();
+		float heightDifference = SDL_fabs(point.position.z - m_pState->origin.z);
 		if(heightDifference > NPC_TRIANGULATION_MAX_HEIGHT)
 		{
 			if(pointDistance2D > NPC_CORNER_CUT_MIN_DIST)
@@ -1009,7 +1009,7 @@ bool CBaseNPC::CheckAdvanceRoute( Float distanceToPoint, CBaseEntity* pTargetEnt
 		&& !(m_routePointsArray[m_routePointIndex].type & MF_IS_GOAL))
 	{
 		// Keep track of traceline counts to avoid slowing down the game
-		Uint32 traceCounter = 0;
+		UInt32 traceCounter = 0;
 		Int32 lastValidPathIndex = NO_POSITION;
 
 		for(Int32 i = m_routePointIndex + 1; i < MAX_ROUTE_POINTS; i++)
@@ -1060,7 +1060,7 @@ bool CBaseNPC::CheckAdvanceRoute( Float distanceToPoint, CBaseEntity* pTargetEnt
 
 		if(m_canCutCorners && m_shortcutPathIndex != NO_POSITION)
 		{
-			Float distance = (m_lastCornerCutOrigin-m_pState->origin).Length2D();
+			float distance = (m_lastCornerCutOrigin-m_pState->origin).Length2D();
 			if(distance >= NPC_SIMPLIFICATION_FIX_DISTANCE)
 			{
 				// Advance till
@@ -1085,13 +1085,13 @@ bool CBaseNPC::CheckAdvanceRoute( Float distanceToPoint, CBaseEntity* pTargetEnt
 // @brief
 //
 //=============================================
-void CBaseNPC::ExecuteMovement( CBaseEntity* pTargetEntity, const Vector& direction, Double animInterval, Float checkDistance )
+void CBaseNPC::ExecuteMovement( CBaseEntity* pTargetEntity, const Vector& direction, double animInterval, float checkDistance )
 {
 	if(GetIdealActivity() != m_movementActivity)
 		SetIdealActivity(m_movementActivity);
 
-	Float totalDistance = m_groundSpeed * animInterval;
-	totalDistance = clamp(totalDistance, 0, checkDistance);
+	float totalDistance = m_groundSpeed * animInterval;
+	totalDistance = Clamp(totalDistance, 0, checkDistance);
 	totalDistance *= m_pState->framerate;
 
 	// Get reference to current point
@@ -1100,13 +1100,13 @@ void CBaseNPC::ExecuteMovement( CBaseEntity* pTargetEntity, const Vector& direct
 	// to calculate movement vectors... why? This caused issues when
 	// AdvanceRoute changed the destination node in another direction
 	// but calculate it here just in case
-	Float moveYaw = Util::VectorToYaw(direction);
+	float moveYaw = Util::VectorToYaw(direction);
 
 	// Do the movement
 	while(totalDistance > 0.001)
 	{
 		// Clamp step distance to the max step size
-		Float stepDistance = clamp(totalDistance, 0, NPC_STEP_SIZE);
+		float stepDistance = Clamp(totalDistance, 0, NPC_STEP_SIZE);
 		gd_engfuncs.pfnMoveToOrigin(m_pEdict, endPosition, moveYaw, stepDistance, MOVE_NORMAL);
 		totalDistance -= stepDistance;
 	}
@@ -1216,9 +1216,9 @@ void CBaseNPC::BecomeDead( bool startedDead )
 		Vector newOrigin = m_pState->origin + Vector(0, 0, 4);
 		SetOrigin(newOrigin);
 
-		Float upDp = -Math::DotProduct(Vector(0, 0, 1), m_damageDirection);
-		upDp = clamp(upDp, 0, 1);
-		Float blastVelocity = upDp * Common::RandomFloat(250, 350) + (1.0 - upDp) * Common::RandomFloat(1250, 1450);
+		float upDp = -Math::DotProduct(Vector(0, 0, 1), m_damageDirection);
+		upDp = Clamp(upDp, 0, 1);
+		float blastVelocity = upDp * Common::RandomFloat(250, 350) + (1.0 - upDp) * Common::RandomFloat(1250, 1450);
 
 		// Set angles
 		m_pState->angles = Math::VectorToAngles(-gMultiDamage.GetShotDirection());
@@ -1226,8 +1226,8 @@ void CBaseNPC::BecomeDead( bool startedDead )
 		m_updateYaw = false;
 
 		// Set velocity to make us fly off
-		const Float blowbackReferenceDmg = 100;
-		Float blastDmgVelocity = blastVelocity * (m_deathDamageAmount / blowbackReferenceDmg);
+		const float blowbackReferenceDmg = 100;
+		float blastDmgVelocity = blastVelocity * (m_deathDamageAmount / blowbackReferenceDmg);
 		if(blastDmgVelocity > 950)
 			blastDmgVelocity = 950;
 
@@ -1354,7 +1354,7 @@ void CBaseNPC::Killed( CBaseEntity* pAttacker, gibbing_t gibbing, deathmode_t de
 // @brief
 //
 //=============================================
-bool CBaseNPC::TakeHealth( Float amount, Int32 damageFlags )
+bool CBaseNPC::TakeHealth( float amount, Int32 damageFlags )
 {
 	if(HasSpawnFlag(FL_NPC_IMMORTAL) || m_pState->takedamage != TAKEDAMAGE_YES)
 		return false;
@@ -1369,7 +1369,7 @@ bool CBaseNPC::TakeHealth( Float amount, Int32 damageFlags )
 // @brief
 //
 //=============================================
-bool CBaseNPC::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags )
+bool CBaseNPC::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags )
 {
 	if(!pInflictor || !pAttacker)
 		return false;
@@ -1418,13 +1418,13 @@ bool CBaseNPC::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Floa
 		return TakeDamageDead(pInflictor, pAttacker, amount, damageFlags);
 
 	// Get basic infos
-	Uint32 totalNbShots = gMultiDamage.GetShotCount();
-	Uint32 npcNpcHitShots = gMultiDamage.GetEntityHitCount(this);
+	UInt32 totalNbShots = gMultiDamage.GetShotCount();
+	UInt32 npcNpcHitShots = gMultiDamage.GetEntityHitCount(this);
 	hitgroups_t highestHitGrp = gMultiDamage.GetHitHighestCountGroupForEntity(this);
 
 	// Get distance to shooter
-	Float shooterDistance = (pInflictor->GetCenter() - GetCenter()).Length();
-	Float _dmgAmount = amount;
+	float shooterDistance = (pInflictor->GetCenter() - GetCenter()).Length();
+	float _dmgAmount = amount;
 
 	// If firing a shotgun from a close range, apply blowback dmg flag
 	bullet_types_t bulletType = gMultiDamage.GetBulletType();
@@ -1436,8 +1436,8 @@ bool CBaseNPC::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Floa
 	if((damageFlags & DMG_INSTANTDECAP) && highestHitGrp == HITGROUP_HEAD 
 		&& CanBeInstantlyDecapitated() && (bulletType != BULLET_NPC_BUCKSHOT && shooterDistance < NPC_DECAP_MAX_DISTANCE))
 	{
-		Uint32 groupHitCount = gMultiDamage.GetHitGroupHitCountForEntity(this, highestHitGrp);
-		Uint32 totalShotCount = gMultiDamage.GetShotCount();
+		UInt32 groupHitCount = gMultiDamage.GetHitGroupHitCountForEntity(this, highestHitGrp);
+		UInt32 totalShotCount = gMultiDamage.GetShotCount();
 
 		// Apply if it's one bullet, or the shots to the head are the majority
 		if((totalShotCount <= 1 || groupHitCount > totalShotCount * 0.5))
@@ -1466,7 +1466,7 @@ bool CBaseNPC::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Floa
 		AddClearDamage(DMG_EXPLOSION, 1.0);
 
 	// Deal the damage to the NPC
-	Float prevHealth = m_pState->health;
+	float prevHealth = m_pState->health;
 	m_pState->health -= _dmgAmount;
 
 	// Don't let scripted NPCs die if specific flags are set
@@ -1544,7 +1544,7 @@ bool CBaseNPC::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Floa
 			m_currentActivity = ACT_RESET;
 
 			// Set velocity and angles
-			const Float blowbackReferenceDmg = 100;
+			const float blowbackReferenceDmg = 100;
 			m_pState->velocity += -m_damageDirection * Common::RandomFloat(155, 225) * (_dmgAmount / blowbackReferenceDmg) * GetBlowbackDmgAccelerationMultiplier();
 			m_pState->angles[YAW] = Util::VectorToYaw(m_damageDirection);
 			m_pState->idealyaw = m_pState->angles[YAW];
@@ -1606,7 +1606,7 @@ bool CBaseNPC::ShouldApplyDeathBlowback( bool shouldGib, Int32 damageFlags, Int3
 // @brief Tells if the NPC should be gibbed
 //
 //=============================================
-bool CBaseNPC::ShouldDamageGibNPC( Float damageAmount, Float prevHealth, Int32 dmgFlags, bool wasDecapitated )
+bool CBaseNPC::ShouldDamageGibNPC( float damageAmount, float prevHealth, Int32 dmgFlags, bool wasDecapitated )
 {
 	// Always gib enemies in DMG_BULLETGIB type if we cross the treshold for gibbing damage,
 	// and we're at a minimum health, or at a one out of three random chance. Also never gib 
@@ -1623,7 +1623,7 @@ bool CBaseNPC::ShouldDamageGibNPC( Float damageAmount, Float prevHealth, Int32 d
 // @brief
 //
 //=============================================
-bool CBaseNPC::TakeDamageDead( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags )
+bool CBaseNPC::TakeDamageDead( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags )
 {
 	// Grab the direction from the inflictor
 	Vector dmgDirection;
@@ -1648,9 +1648,9 @@ bool CBaseNPC::TakeDamageDead( CBaseEntity* pInflictor, CBaseEntity* pAttacker, 
 		&& HasCapability(AI_CAP_BLOWBACK_ANIMS) 
 		&& m_pState->velocity.Length() > 0)
 	{
-		Float upDp = -Math::DotProduct(Vector(0, 0, 1), gMultiDamage.GetShotDirection());
-		upDp = clamp(upDp, 0, 1);
-		Float blastVelocity = upDp * Common::RandomFloat(250, 350) + (1.0 - upDp) * Common::RandomFloat(1250, 1450);
+		float upDp = -Math::DotProduct(Vector(0, 0, 1), gMultiDamage.GetShotDirection());
+		upDp = Clamp(upDp, 0, 1);
+		float blastVelocity = upDp * Common::RandomFloat(250, 350) + (1.0 - upDp) * Common::RandomFloat(1250, 1450);
 
 		// Set angles
 		m_pState->flags &= FL_ONGROUND;
@@ -1659,8 +1659,8 @@ bool CBaseNPC::TakeDamageDead( CBaseEntity* pInflictor, CBaseEntity* pAttacker, 
 		m_updateYaw = false;
 
 		// Set velocity to make us fly off
-		const Float blowbackReferenceDmg = 100;
-		Float blastDmgVelocity = blastVelocity * (m_deathDamageAmount / blowbackReferenceDmg);
+		const float blowbackReferenceDmg = 100;
+		float blastDmgVelocity = blastVelocity * (m_deathDamageAmount / blowbackReferenceDmg);
 		if(blastDmgVelocity > 950)
 			blastDmgVelocity = 950;
 
@@ -1699,7 +1699,7 @@ void CBaseNPC::ProcessClearDamageList( void )
 // @brief Adds a new damage bit that needs delayed clearing
 //
 //=============================================
-void CBaseNPC::AddClearDamage( Int32 dmgbit, Float delay )
+void CBaseNPC::AddClearDamage( Int32 dmgbit, float delay )
 {
 	while(!m_damageClearList.end())
 	{
@@ -1723,9 +1723,9 @@ void CBaseNPC::AddClearDamage( Int32 dmgbit, Float delay )
 // @brief
 //
 //=============================================
-Float CBaseNPC::GetHitgroupDmgMultiplier( Int32 hitgroup )
+float CBaseNPC::GetHitgroupDmgMultiplier( Int32 hitgroup )
 {
-	Float dmgMultiplier = 1.0;
+	float dmgMultiplier = 1.0;
 	switch(hitgroup)
 	{
 	case HITGROUP_HEAD:
@@ -1767,13 +1767,13 @@ Float CBaseNPC::GetHitgroupDmgMultiplier( Int32 hitgroup )
 // @brief
 //
 //=============================================
-void CBaseNPC::TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
+void CBaseNPC::TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
 {
 	// Do not take damage from allies
 	if(pAttacker && (GetRelationship(pAttacker) == R_ALLY || GetRelationship(pAttacker) == R_NONE && pAttacker != this && pAttacker->IsNPC()))
 		return;
 
-	Float _dmgAmount = damage;
+	float _dmgAmount = damage;
 
 	if(m_pState->takedamage == TAKEDAMAGE_YES)
 	{
@@ -1861,7 +1861,7 @@ void CBaseNPC::ResetNPC( void )
 	m_activeFlexState = FLEX_AISTATE_NONE;
 	m_flexScriptDuration = g_pGameVars->time + 2;
 
-	for(Uint32 i = 0; i < MAX_CONTROLLERS; i++)
+	for(UInt32 i = 0; i < MAX_CONTROLLERS; i++)
 		SetBoneController(i, 0);
 }
 
@@ -1970,7 +1970,7 @@ void CBaseNPC::StartNPC( void )
 	// See if the NPC has a target
 	if(HasTarget())
 	{
-		const Char* pstrTarget = GetTarget();
+		const char* pstrTarget = GetTarget();
 		edict_t* pedict = Util::FindEntityByTargetName(nullptr, pstrTarget);
 		if(pedict && !Util::IsNullEntity(pedict))
 		{
@@ -2140,8 +2140,8 @@ void CBaseNPC::HandleAnimationEvent( const mstudioevent_t* pevent )
 
 			if(Common::RandomLong(0, 2) == 0)
 			{
-				Float duration = 0;
-				const Char* pstrSentence = g_pSentencesFile->GetRandomSentence(pevent->options, &duration);
+				float duration = 0;
+				const char* pstrSentence = g_pSentencesFile->GetRandomSentence(pevent->options, &duration);
 				if(pstrSentence)
 				{
 					Util::EmitEntitySound(this, pstrSentence, SND_CHAN_VOICE, VOL_NORM, ATTN_NORM, GetVoicePitch());
@@ -2155,8 +2155,8 @@ void CBaseNPC::HandleAnimationEvent( const mstudioevent_t* pevent )
 			if(!g_pSentencesFile)
 				return;
 
-			Float duration = 0;
-			const Char* pstrSentence = g_pSentencesFile->GetRandomSentence(pevent->options, &duration);
+			float duration = 0;
+			const char* pstrSentence = g_pSentencesFile->GetRandomSentence(pevent->options, &duration);
 			if(pstrSentence)
 			{
 				Util::EmitEntitySound(this, pstrSentence, SND_CHAN_VOICE, VOL_NORM, ATTN_NORM, GetVoicePitch());
@@ -2225,7 +2225,7 @@ void CBaseNPC::HandleAnimationEvent( const mstudioevent_t* pevent )
 		break;
 	case NPC_AE_SETBODYGROUP:
 		{
-			const Char* pstrSemicolon = qstrstr(pevent->options, ";");
+			const char* pstrSemicolon = qstrstr(pevent->options, ";");
 			if(!pstrSemicolon)
 			{
 				Util::EntityConPrintf(m_pEdict, "Missing ';' in event '%d' options '%s'.\n", pevent->event, pevent->options);
@@ -2233,11 +2233,11 @@ void CBaseNPC::HandleAnimationEvent( const mstudioevent_t* pevent )
 			}
 
 			// Extract bodygroup name
-			Uint32 bodyGrpLength = pstrSemicolon - pevent->options;
+			UInt32 bodyGrpLength = pstrSemicolon - pevent->options;
 			CString bodygroupname(pevent->options, bodyGrpLength);
 
 			// Extract the submodel name
-			Uint32 stringLength = qstrlen(pevent->options);
+			UInt32 stringLength = qstrlen(pevent->options);
 			Int32 submodelLength = stringLength - bodyGrpLength - 1;
 			if(submodelLength <= 0)
 			{
@@ -2288,7 +2288,7 @@ void CBaseNPC::FootStep( void )
 	if(tr.noHit() || tr.allSolid() || tr.startSolid())
 		return;
 
-	const Char* pstrTextureName = gd_tracefuncs.pfnTraceTexture(tr.hitentity, tr.endpos+tr.plane.normal, tr.endpos-tr.plane.normal);
+	const char* pstrTextureName = gd_tracefuncs.pfnTraceTexture(tr.hitentity, tr.endpos+tr.plane.normal, tr.endpos-tr.plane.normal);
 	if(!pstrTextureName || !qstrcmp(pstrTextureName, "black"))
 		return;
 
@@ -2296,7 +2296,7 @@ void CBaseNPC::FootStep( void )
 	if(!pMaterial)
 		return;
 
-	Float volume;
+	float volume;
 	if(m_currentActivity == ACT_WALK)
 		volume = 0.5;
 	else
@@ -2449,7 +2449,7 @@ void CBaseNPC::ExitScriptedSequence( void )
 // @brief
 //
 //=============================================
-void CBaseNPC::NPCUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CBaseNPC::NPCUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Move NPC to alert state
 	m_idealNPCState = NPC_STATE_ALERT;
@@ -2478,12 +2478,12 @@ void CBaseNPC::GibNPC( void )
 	soundFile << "impact/gib_0" << (Int32)Common::RandomLong(1, 2) << ".wav";
 	Util::EmitAmbientSound(GetCenter(), soundFile.c_str());
 
-	Float chestMinvel;
-	Float chestMaxvel;
-	Float headMinvel;
-	Float headMaxvel;
-	Float randomMinvel;
-	Float randomMaxvel;
+	float chestMinvel;
+	float chestMaxvel;
+	float headMinvel;
+	float headMaxvel;
+	float randomMinvel;
+	float randomMaxvel;
 
 	Vector myCenter;
 	Vector* pCenter = nullptr;
@@ -2553,9 +2553,9 @@ void CBaseNPC::OnGibSpawnCallback( CBaseEntity* pGib )
 		Util::CreateDynamicLight(pGib->GetOrigin(), 128, 255, 192, 64, 10, 64, 6, (FL_DLIGHT_NOSHADOWS|FL_DLIGHT_FOLLOW_ENTITY|FL_DLIGHT_USE_LIGHTSTYLES), pGib->GetEntityIndex(), NO_POSITION, lightystyle);
 
 		// Create bbox for prolonged dmg
-		Float burnDmg = gSkillData.GetSkillCVarSetting(g_skillcvars.skillExplodeGibBurnDmg);
-		Float dmgDelay = gSkillData.GetSkillCVarSetting(g_skillcvars.skillExplodeGibDmgDelay);
-		Float dmgRadius = gSkillData.GetSkillCVarSetting(g_skillcvars.skillExplodeGibDmgRadius);
+		float burnDmg = gSkillData.GetSkillCVarSetting(g_skillcvars.skillExplodeGibBurnDmg);
+		float dmgDelay = gSkillData.GetSkillCVarSetting(g_skillcvars.skillExplodeGibDmgDelay);
+		float dmgRadius = gSkillData.GetSkillCVarSetting(g_skillcvars.skillExplodeGibDmgRadius);
 
 		Vector mins(-dmgRadius, -dmgRadius, -dmgRadius);
 		Vector maxs(dmgRadius, dmgRadius, dmgRadius);
@@ -2594,9 +2594,9 @@ void CBaseNPC::GroundEntityNudge( bool noExceptions )
 // @brief
 //
 //=============================================
-Float CBaseNPC::GetYawDifference( void )
+float CBaseNPC::GetYawDifference( void )
 {
-	Float currentYaw = Math::AngleMod(m_pState->angles[1]);
+	float currentYaw = Math::AngleMod(m_pState->angles[1]);
 	if(currentYaw != m_pState->idealyaw)
 		return Util::AngleDistance(m_pState->idealyaw, currentYaw);
 	else
@@ -2607,7 +2607,7 @@ Float CBaseNPC::GetYawDifference( void )
 // @brief
 //
 //=============================================
-void CBaseNPC::ChangeYaw( Double timeInterval )
+void CBaseNPC::ChangeYaw( double timeInterval )
 {
 	if(!m_pState->yawspeed)
 		return;
@@ -2615,12 +2615,12 @@ void CBaseNPC::ChangeYaw( Double timeInterval )
 	if(!IsMoving() && !m_updateYaw)
 		return;
 
-	Float currentYaw = Math::AngleMod(m_pState->angles[YAW]);
-	Float idealYaw = m_pState->idealyaw;
+	float currentYaw = Math::AngleMod(m_pState->angles[YAW]);
+	float idealYaw = m_pState->idealyaw;
 	if(currentYaw != idealYaw)
 	{
-		Float yawSpeed = m_pState->yawspeed * timeInterval;
-		Float yawMove = idealYaw - currentYaw;
+		float yawSpeed = m_pState->yawspeed * timeInterval;
+		float yawMove = idealYaw - currentYaw;
 
 		if(idealYaw > currentYaw)
 		{
@@ -2644,7 +2644,7 @@ void CBaseNPC::ChangeYaw( Double timeInterval )
 		// Turn head in desired direction if we can turn heads
 		if(HasCapability(AI_CAP_TURN_HEAD))
 		{
-			Float headYaw = m_pState->idealyaw - m_pState->angles[YAW];
+			float headYaw = m_pState->idealyaw - m_pState->angles[YAW];
 			if(headYaw > 180.0f)
 				headYaw -= 360.0f;
 			else if(headYaw < -180.0f)
@@ -2671,7 +2671,7 @@ bool CBaseNPC::IsFacingIdealYaw( void )
 void CBaseNPC::SetTurnActivity( void )
 {
 	// Get difference in yaw-ideal yaw
-	Float yawDifference = GetYawDifference();
+	float yawDifference = GetYawDifference();
 
 	if(yawDifference <= -45 && FindActivity(ACT_TURN_RIGHT) != NO_SEQUENCE_VALUE)
 		SetIdealActivity(ACT_TURN_RIGHT);
@@ -2720,7 +2720,7 @@ void CBaseNPC::SetIdealYaw( const Vector& targetVector, bool isPositionVector )
 // @brief
 //
 //=============================================
-Float CBaseNPC::VectorToYaw( const Vector& direction ) const
+float CBaseNPC::VectorToYaw( const Vector& direction ) const
 {
 	if(direction.IsZero())
 		return m_pState->angles[YAW];
@@ -2732,7 +2732,7 @@ Float CBaseNPC::VectorToYaw( const Vector& direction ) const
 // @brief
 //
 //=============================================
-Float CBaseNPC::VectorToPitch( const Vector& direction ) const
+float CBaseNPC::VectorToPitch( const Vector& direction ) const
 {
 	if(direction.IsZero())
 		return m_pState->angles[PITCH];
@@ -2744,7 +2744,7 @@ Float CBaseNPC::VectorToPitch( const Vector& direction ) const
 // @brief
 //
 //=============================================
-void CBaseNPC::ClearCondition( Uint32 conditionBit )
+void CBaseNPC::ClearCondition( UInt32 conditionBit )
 {
 	m_aiConditionBits.reset(conditionBit);
 }
@@ -2762,7 +2762,7 @@ void CBaseNPC::ClearConditions( const CBitSet& conditionBitSet )
 // @brief
 //
 //=============================================
-void CBaseNPC::SetCondition( Uint32 conditionBit )
+void CBaseNPC::SetCondition( UInt32 conditionBit )
 {
 	m_aiConditionBits.set(conditionBit);
 }
@@ -2780,7 +2780,7 @@ void CBaseNPC::SetConditions( const CBitSet& conditionBitSet )
 // @brief
 //
 //=============================================
-bool CBaseNPC::CheckCondition( Uint32 conditionBit ) const
+bool CBaseNPC::CheckCondition( UInt32 conditionBit ) const
 {
 	return m_aiConditionBits.test(conditionBit);
 }
@@ -2798,7 +2798,7 @@ bool CBaseNPC::CheckConditions( const CBitSet& conditionBitSet ) const
 // @brief
 //
 //=============================================
-void CBaseNPC::SetMemory( Uint32 memoryBit )
+void CBaseNPC::SetMemory( UInt32 memoryBit )
 {
 	m_memoryBits.set(memoryBit);
 }
@@ -2807,7 +2807,7 @@ void CBaseNPC::SetMemory( Uint32 memoryBit )
 // @brief
 //
 //=============================================
-void CBaseNPC::ClearMemory( Uint32 memoryBit )
+void CBaseNPC::ClearMemory( UInt32 memoryBit )
 {
 	m_memoryBits.reset(memoryBit);
 }
@@ -2816,7 +2816,7 @@ void CBaseNPC::ClearMemory( Uint32 memoryBit )
 // @brief
 //
 //=============================================
-bool CBaseNPC::HasMemory( Uint32 memoryBit ) const
+bool CBaseNPC::HasMemory( UInt32 memoryBit ) const
 {
 	return (m_memoryBits.test(memoryBit)) ? true : false;
 }
@@ -2825,7 +2825,7 @@ bool CBaseNPC::HasMemory( Uint32 memoryBit ) const
 // @brief
 //
 //=============================================
-void CBaseNPC::SetCapability( Uint32 capabilityBit )
+void CBaseNPC::SetCapability( UInt32 capabilityBit )
 {
 	m_capabilityBits.set(capabilityBit);
 }
@@ -2843,7 +2843,7 @@ void CBaseNPC::SetCapabilities( const CBitSet& capabilityBitSet )
 // @brief
 //
 //=============================================
-void CBaseNPC::DisableCapability( Uint32 capabilityBit )
+void CBaseNPC::DisableCapability( UInt32 capabilityBit )
 {
 	m_disabledCapabilityBits.set(capabilityBit);
 }
@@ -2852,7 +2852,7 @@ void CBaseNPC::DisableCapability( Uint32 capabilityBit )
 // @brief
 //
 //=============================================
-void CBaseNPC::RemoveCapability( Uint32 capabilityBit )
+void CBaseNPC::RemoveCapability( UInt32 capabilityBit )
 {
 	m_capabilityBits.reset(capabilityBit);
 }
@@ -2861,7 +2861,7 @@ void CBaseNPC::RemoveCapability( Uint32 capabilityBit )
 // @brief
 //
 //=============================================
-bool CBaseNPC::HasCapability( Uint32 capabilityBit ) const
+bool CBaseNPC::HasCapability( UInt32 capabilityBit ) const
 {
 	return (m_capabilityBits.test(capabilityBit) && !m_disabledCapabilityBits.test(capabilityBit)) ? true : false;
 }
@@ -2891,12 +2891,12 @@ void CBaseNPC::UpdateDistances( void )
 	{
 		// Get fog color also
 		color24_t& fogColor = CEnvFog::GetFogColor();
-		Float colorStrength = (fogColor.r / 255.0f + fogColor.g / 255.0f + fogColor.b / 255.0f) / 3.0f;
+		float colorStrength = (fogColor.r / 255.0f + fogColor.g / 255.0f + fogColor.b / 255.0f) / 3.0f;
 
 		// These fractions should depend on fog end distance
-		Float minVisibilityFraction;
-		Float minFiringFractionEdgeCase;
-		Float minFiringFractionGeneric;
+		float minVisibilityFraction;
+		float minFiringFractionEdgeCase;
+		float minFiringFractionGeneric;
 		if(colorStrength < 0.25)
 		{
 			minVisibilityFraction = 0.9;
@@ -2919,7 +2919,7 @@ void CBaseNPC::UpdateDistances( void )
 		m_lookDistance = endDistance * minVisibilityFraction;
 
 		// For very small or very large firing cones, set up shorter distance
-		Uint32 firingCone = GetFiringCone(false);
+		UInt32 firingCone = GetFiringCone(false);
 		if(firingCone <= 1 || firingCone >= 7)
 			m_firingDistance = endDistance * minFiringFractionEdgeCase;
 		else
@@ -3060,7 +3060,7 @@ void CBaseNPC::CheckAITriggers( void )
 // @brief
 //
 //=============================================
-void CBaseNPC::SetAITriggerCondition( Int32 conditionIndex, Int32 condition, const Char* pstrTarget )
+void CBaseNPC::SetAITriggerCondition( Int32 conditionIndex, Int32 condition, const char* pstrTarget )
 {
 	switch(conditionIndex)
 	{
@@ -3217,36 +3217,36 @@ bool CBaseNPC::CanPlaySentence( bool disregardState )
 // @brief
 //
 //=============================================
-void CBaseNPC::PlaySentence( const Char* pstrSentenceName, Float duration, Float volume, Float attenuation, Float timeOffset, bool subtitleOnlyInRadius, CBaseEntity* pPlayer )
+void CBaseNPC::PlaySentence( const char* pstrSentenceName, float duration, float volume, float attenuation, float timeOffset, bool subtitleOnlyInRadius, CBaseEntity* pPlayer )
 {
 	if(!IsAlive() || !g_pSentencesFile)
 		return;
 
-	Float sentduration = 0;
+	float sentduration = 0;
 	if(pstrSentenceName && qstrlen(pstrSentenceName))
 	{
-		Uint64 sndFlags = SND_FL_NONE;
+		UInt64 sndFlags = SND_FL_NONE;
 		if(subtitleOnlyInRadius)
 			sndFlags |= SND_FL_SUB_ONLY_RADIUS;
 		
 		if(pstrSentenceName[0] == '!')
 		{
 			// Just play the sentence specified
-			const Char* pstrName = g_pSentencesFile->GetSentence(pstrSentenceName, &sentduration);
+			const char* pstrName = g_pSentencesFile->GetSentence(pstrSentenceName, &sentduration);
 			if(pstrName)
 				Util::EmitEntitySound(this, pstrName, SND_CHAN_VOICE, volume, attenuation, GetVoicePitch(), sndFlags, pPlayer, timeOffset);
 		}
 		else
 		{
 			// Get sentence from group
-			const Char* pstrRandomSentence = g_pSentencesFile->GetRandomSentence(pstrSentenceName, &sentduration);
+			const char* pstrRandomSentence = g_pSentencesFile->GetRandomSentence(pstrSentenceName, &sentduration);
 			if(pstrRandomSentence)
 				Util::EmitEntitySound(this, pstrRandomSentence, SND_CHAN_VOICE, volume, attenuation, GetVoicePitch(), sndFlags, pPlayer, timeOffset);
 		}
 	}
 
 	// Make sure the duration is set before checking if pstrSentenceName is valid
-	Float _duration = (duration < sentduration) ? sentduration : duration;
+	float _duration = (duration < sentduration) ? sentduration : duration;
 	if(_duration > 0)
 		m_talkTime = g_pGameVars->time + _duration;
 	else
@@ -3257,7 +3257,7 @@ void CBaseNPC::PlaySentence( const Char* pstrSentenceName, Float duration, Float
 // @brief
 //
 //=============================================
-void CBaseNPC::PlayScriptedSentence( const Char* pstrSentenceName, Float duration, Float volume, Float attenuation, Float timeOffset, bool subtitleOnlyInRadius, bool isConcurrent, CBaseEntity* pListener, CBaseEntity* pPlayer )
+void CBaseNPC::PlayScriptedSentence( const char* pstrSentenceName, float duration, float volume, float attenuation, float timeOffset, bool subtitleOnlyInRadius, bool isConcurrent, CBaseEntity* pListener, CBaseEntity* pPlayer )
 {
 	PlaySentence(pstrSentenceName, duration, volume, attenuation, timeOffset, subtitleOnlyInRadius, pPlayer);
 
@@ -3415,7 +3415,7 @@ npcstate_t CBaseNPC::GetNPCState( void )
 // @brief
 //
 //=============================================
-void CBaseNPC::UpdatePartialAwareness( enemyawareness_t* pAwarenessinfo, Uint64 sightBits )
+void CBaseNPC::UpdatePartialAwareness( enemyawareness_t* pAwarenessinfo, UInt64 sightBits )
 {
 	assert(pAwarenessinfo != nullptr);
 	assert(pAwarenessinfo->entity != nullptr);
@@ -3435,8 +3435,8 @@ void CBaseNPC::UpdatePartialAwareness( enemyawareness_t* pAwarenessinfo, Uint64 
 
 			Vector forward;
 			Math::AngleVectors(m_pState->angles, &forward);
-			Float dp = Math::DotProduct(playerDir, forward);
-			dp = clamp(dp, 0.0, 1.0);
+			float dp = Math::DotProduct(playerDir, forward);
+			dp = Clamp(dp, 0.0, 1.0);
 
 			if(dp > 0.5)
 			{
@@ -3506,7 +3506,7 @@ CBaseNPC::enemyawareness_t* CBaseNPC::GetEnemyAwarenessInfo(CBaseEntity* pEntity
 // @brief
 //
 //=============================================
-bool CBaseNPC::ShouldSeeNPC( Uint64 sightBits, CBaseEntity* pEntity, enemyawareness_t* pPartialAwareness, enemyawareness_t* pEnemyAwareness )
+bool CBaseNPC::ShouldSeeNPC( UInt64 sightBits, CBaseEntity* pEntity, enemyawareness_t* pPartialAwareness, enemyawareness_t* pEnemyAwareness )
 {
 	if(pEntity->GetEffectFlags() & EF_NODRAW)
 		return false;
@@ -3551,10 +3551,10 @@ bool CBaseNPC::ShouldSeeNPC( Uint64 sightBits, CBaseEntity* pEntity, enemyawaren
 // @brief
 //
 //=============================================
-Uint64 CBaseNPC::GetNPCVisibilityBits( CBaseEntity* pEntity, bool checkGlass, enemyawareness_t** pAwarenessPtr )
+UInt64 CBaseNPC::GetNPCVisibilityBits( CBaseEntity* pEntity, bool checkGlass, enemyawareness_t** pAwarenessPtr )
 {
 	trace_t tr;
-	Uint64 sightBits = 0;
+	UInt64 sightBits = 0;
 	// Get eye position
 	Vector eyePosition = GetEyePosition();
 	// Check first without adding lean
@@ -3699,7 +3699,7 @@ Uint64 CBaseNPC::GetNPCVisibilityBits( CBaseEntity* pEntity, bool checkGlass, en
 // @brief Returns an entity we can kick
 //
 //=============================================
-CBaseEntity* CBaseNPC::GetKickEntity( Float checkDistance )
+CBaseEntity* CBaseNPC::GetKickEntity( float checkDistance )
 {
 	trace_t tr;
 
@@ -3758,7 +3758,7 @@ void CBaseNPC::Look( void )
 	// Sighted enemy AI conditions
 	CBitSet sightConditions(AI_COND_BITSET_SIZE);
 	// Sighted enemy bits
-	Uint64 sightBits = 0;
+	UInt64 sightBits = 0;
 
 	// Clear previous list contents
 	if(!m_sightedHostileNPCsList.empty())
@@ -3777,7 +3777,7 @@ void CBaseNPC::Look( void )
 		Vector maxs;
 
 		Vector eyePosition = GetEyePosition();
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			mins[i] = eyePosition[i] - m_lookDistance;
 			maxs[i] = eyePosition[i] + m_lookDistance;
@@ -3818,13 +3818,13 @@ void CBaseNPC::Look( void )
 				continue;
 
 			// We can't rely on bbox alone
-			Float linearDistance = (pEntity->GetEyePosition() - GetEyePosition()).Length();
+			float linearDistance = (pEntity->GetEyePosition() - GetEyePosition()).Length();
 			if(linearDistance > m_lookDistance)
 				continue;
 
 			// Get visibility bits
 			enemyawareness_t* pPartialAwareness = nullptr;
-			Uint64 visibilityBits = GetNPCVisibilityBits(pEntity, false, &pPartialAwareness);
+			UInt64 visibilityBits = GetNPCVisibilityBits(pEntity, false, &pPartialAwareness);
 			if ((visibilityBits & AI_SIGHTED_PLAYER_LEAN))
 			{
 				// Add to partially aware NPC list
@@ -3935,7 +3935,7 @@ void CBaseNPC::Look( void )
 // @brief
 //
 //=============================================
-Float CBaseNPC::GetFiringCoverage( const Vector& shootOrigin, const Vector& targetPosition, const Vector& firingCone )
+float CBaseNPC::GetFiringCoverage( const Vector& shootOrigin, const Vector& targetPosition, const Vector& firingCone )
 {
 	trace_t tr;
 	Util::TraceLine(shootOrigin, targetPosition, true, true, true, m_pEdict, tr);
@@ -3950,9 +3950,9 @@ Float CBaseNPC::GetFiringCoverage( const Vector& shootOrigin, const Vector& targ
 
 	// Determine how much of the firing cone is not blocked
 	// by any nearby occluders
-	Float coverage = 1.0f/5.0f;
+	float coverage = 1.0f/5.0f;
 	Vector direction = (targetPosition - shootOrigin).Normalize();
-	Float distance = (targetPosition - shootOrigin).Length();
+	float distance = (targetPosition - shootOrigin).Length();
 
 	// Precalculate offsets
 	const Vector offsets[] = { 
@@ -3969,7 +3969,7 @@ Float CBaseNPC::GetFiringCoverage( const Vector& shootOrigin, const Vector& targ
 		Util::TraceLine(shootOrigin, targetPosition, true, true, true, m_pEdict, tr);
 
 		// Determine how far we travelled
-		Double traceDist = tr.fraction * distance;
+		double traceDist = tr.fraction * distance;
 		if(tr.fraction == 1.0 || traceDist > (distance*0.75))
 		{
 			coverage += 1.0f/5.0f;
@@ -4014,7 +4014,7 @@ void CBaseNPC::ClearRoute( void )
 void CBaseNPC::NewRoute( void )
 {
 	// Clear previous routes
-	for(Uint32 i = 0; i < MAX_ROUTE_POINTS; i++)
+	for(UInt32 i = 0; i < MAX_ROUTE_POINTS; i++)
 		m_routePointsArray[i] = route_point_t();
 
 	m_movementGoalEntity.reset();
@@ -4052,7 +4052,7 @@ bool CBaseNPC::RefreshRoute( void )
 			{
 				CBaseEntity* pPath = m_goalEntity;
 
-				Uint32 numpoints = 0;
+				UInt32 numpoints = 0;
 				while(true)
 				{
 					route_point_t& pt = m_routePointsArray[numpoints];
@@ -4124,7 +4124,7 @@ void CBaseNPC::SimplifyRoute( CBaseEntity* pTargetEntity )
 	static route_point_t resultArray[MAX_ROUTE_POINTS];
 
 	// Count the points we have
-	Uint32 pointCount = 0;
+	UInt32 pointCount = 0;
 	for(Int32 i = m_routePointIndex; i < MAX_ROUTE_POINTS; i++)
 	{
 		// Check if we reached the end
@@ -4143,10 +4143,10 @@ void CBaseNPC::SimplifyRoute( CBaseEntity* pTargetEntity )
 		return;
 
 	// Start simplifying the route
-	Uint32 outCount = 0;
+	UInt32 outCount = 0;
 	Vector startPosition = m_pState->origin;
 
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for(; i < pointCount-1 && outCount < (MAX_ROUTE_POINTS-1); i++)
 	{
 		const route_point_t& pt1 = m_routePointsArray[m_routePointIndex+i];
@@ -4193,7 +4193,7 @@ void CBaseNPC::SimplifyRoute( CBaseEntity* pTargetEntity )
 // @brief
 //
 //=============================================
-bool CBaseNPC::MoveToLocation( activity_t moveActivity, Float waitTime, const Vector& goalPosition )
+bool CBaseNPC::MoveToLocation( activity_t moveActivity, float waitTime, const Vector& goalPosition )
 {
 	m_movementActivity = moveActivity;
 	m_moveWaitTime = waitTime;
@@ -4207,7 +4207,7 @@ bool CBaseNPC::MoveToLocation( activity_t moveActivity, Float waitTime, const Ve
 // @brief
 //
 //=============================================
-bool CBaseNPC::MoveToNode( activity_t moveActivity, Float waitTime, const Vector& goalPosition )
+bool CBaseNPC::MoveToNode( activity_t moveActivity, float waitTime, const Vector& goalPosition )
 {
 	m_movementActivity = moveActivity;
 	m_moveWaitTime = waitTime;
@@ -4221,7 +4221,7 @@ bool CBaseNPC::MoveToNode( activity_t moveActivity, Float waitTime, const Vector
 // @brief
 //
 //=============================================
-bool CBaseNPC::MoveToTarget( activity_t moveActivity, Float waitTime )
+bool CBaseNPC::MoveToTarget( activity_t moveActivity, float waitTime )
 {
 	m_movementActivity = moveActivity;
 	m_moveWaitTime = waitTime;
@@ -4234,7 +4234,7 @@ bool CBaseNPC::MoveToTarget( activity_t moveActivity, Float waitTime )
 // @brief
 //
 //=============================================
-void CBaseNPC::CheckAttacks( CBaseEntity* pTargetEntity, Float distance )
+void CBaseNPC::CheckAttacks( CBaseEntity* pTargetEntity, float distance )
 {
 	if(pTargetEntity->GetFlags() & FL_NOTARGET)
 		return;
@@ -4252,7 +4252,7 @@ void CBaseNPC::CheckAttacks( CBaseEntity* pTargetEntity, Float distance )
 	forward[2] = 0;
 	forward.Normalize();
 
-	Float dp = Math::DotProduct(dirToEnemy, forward);
+	float dp = Math::DotProduct(dirToEnemy, forward);
 
 	// Check range attack 1
 	if(HasCapability(AI_CAP_RANGE_ATTACK1) || HasCapability(AI_CAP_RANGE_ATTACK2))
@@ -4398,7 +4398,7 @@ void CBaseNPC::ForgetPlayer( CBaseEntity* pPlayer )
 	}
 	else
 	{
-		for(Uint32 i = 0; i < MAX_BACKED_UP_ENEMIES; i++)
+		for(UInt32 i = 0; i < MAX_BACKED_UP_ENEMIES; i++)
 		{
 			if(m_backedUpEnemies[i].enemy == reinterpret_cast<const CBaseEntity*>(pPlayer))
 			{
@@ -4474,11 +4474,11 @@ void CBaseNPC::ExamineDangers( void )
 		m_dangerOrigin = pDangerEntity->GetOrigin();
 
 	// Determine current distance and calculate exposure
-	Float dangerExposure = 0;
-	Float dangerDistance = (m_pState->origin - m_dangerOrigin).Length();
+	float dangerExposure = 0;
+	float dangerDistance = (m_pState->origin - m_dangerOrigin).Length();
 
 	// If we're getting closer, then the exposure poses danger
-	Float flDiff = dangerDistance - m_lastDangerDistance;
+	float flDiff = dangerDistance - m_lastDangerDistance;
 	if(flDiff < 0)
 	{
 		if(dangerDistance < 1024)
@@ -4491,7 +4491,7 @@ void CBaseNPC::ExamineDangers( void )
 		dangerExposure -= 0.1;
 	}
 
-	// Double if he's facing us
+	// double if he's facing us
 	if(pDangerEntity && pDangerEntity->IsAlive())
 	{
 		// Determine if the danger source is facing us, and how much
@@ -4501,7 +4501,7 @@ void CBaseNPC::ExamineDangers( void )
 		Math::AngleVectors(pDangerEntity->GetAngles(), &forward);
 
 		// If our enemy is looking right at us, then get worried
-		Float flDot = Math::DotProduct(forward, dangerDir);
+		float flDot = Math::DotProduct(forward, dangerDir);
 		if(flDot > 0.2)
 		{
 			trace_t tr;
@@ -4548,16 +4548,16 @@ void CBaseNPC::ExamineDangers( void )
 // @brief
 //
 //=============================================
-bool CBaseNPC::FindCoverWithBestDistance( const Vector& threatPosition, Float minDistance, float maxDistance, Float optimalDistance, Vector& outPosition )
+bool CBaseNPC::FindCoverWithBestDistance( const Vector& threatPosition, float minDistance, float maxDistance, float optimalDistance, Vector& outPosition )
 {
-	Float traveledDist = 0;
-	Float bestDistance = 0;
+	float traveledDist = 0;
+	float bestDistance = 0;
 	Vector bestCoverSpot;
 
 	// Determine ideal escape vector
 	Vector threatAngle;
 	Vector vecFromThreat = m_pState->origin - Vector(threatPosition.x, threatPosition.y, m_pState->origin.z);
-	Float distToThreat = vecFromThreat.Length();
+	float distToThreat = vecFromThreat.Length();
 	vecFromThreat.Normalize();
 
 	// Ideal direction is directly away from the threat
@@ -4607,16 +4607,16 @@ bool CBaseNPC::FindCoverWithBestDistance( const Vector& threatPosition, Float mi
 // @brief
 //
 //=============================================
-bool CBaseNPC::FindDodgeCover( const Vector& threatPosition, Float minDistance, float maxDistance, Vector& outPosition )
+bool CBaseNPC::FindDodgeCover( const Vector& threatPosition, float minDistance, float maxDistance, Vector& outPosition )
 {
-	Float traveledDist = 0;
-	Float bestDistance = 0;
+	float traveledDist = 0;
+	float bestDistance = 0;
 	Vector bestCoverSpot = Vector(0, 0, 0);
 
 	// Determine ideal escape vector
 	Vector threatAngle;
 	Vector vecFromThreat = m_pState->origin - Vector(threatPosition.x, threatPosition.y, m_pState->origin.z);
-	Float distToThreat = vecFromThreat.Length();
+	float distToThreat = vecFromThreat.Length();
 	vecFromThreat.Normalize();
 
 	// Ideal direction is directly away from the threat
@@ -4686,7 +4686,7 @@ bool CBaseNPC::FindDodgeCover( const Vector& threatPosition, Float minDistance, 
 // @brief
 //
 //=============================================
-bool CBaseNPC::FindCover( const Vector& threatPosition, const Vector& viewOffset, Float minDistance, Float maxDistance, CBaseEntity* pThreatEntity )
+bool CBaseNPC::FindCover( const Vector& threatPosition, const Vector& viewOffset, float minDistance, float maxDistance, CBaseEntity* pThreatEntity )
 {
 	if(!gNodeGraph.IsNodeGraphValid())
 	{
@@ -4695,19 +4695,19 @@ bool CBaseNPC::FindCover( const Vector& threatPosition, const Vector& viewOffset
 	}
 
 	// Make sure max distance is valid
-	Float _maxDistance = maxDistance;
+	float _maxDistance = maxDistance;
 	if(!_maxDistance)
 		_maxDistance = NPC_MAX_NAVIGATION_DISTANCE;
 
 	// Set min distance also if not valid
-	Float _minDistance = minDistance;
+	float _minDistance = minDistance;
 	if(_minDistance > _maxDistance * 0.5)
 		_minDistance = _maxDistance * 0.5;
 
 	// Get the hull type for this NPC
 	node_hull_types_t hullType = Util::GetNodeHullForNPC(this);
 	// Get the node type
-	Uint64 nodeType = Util::GetNodeTypeForNPC(this);
+	UInt64 nodeType = Util::GetNodeTypeForNPC(this);
 	// Get the node we're near to
 	Int32 startNode = gNodeGraph.GetNearestNode(m_pState->origin, nodeType, this);
 	if(startNode == NO_POSITION)
@@ -4744,7 +4744,7 @@ bool CBaseNPC::FindCover( const Vector& threatPosition, const Vector& viewOffset
 			if(!pNode)
 				continue;
 
-			Float distance = (m_pState->origin - pNode->origin).Length();
+			float distance = (m_pState->origin - pNode->origin).Length();
 			if(distance < _minDistance)
 				continue;
 
@@ -4770,8 +4770,8 @@ bool CBaseNPC::FindCover( const Vector& threatPosition, const Vector& viewOffset
 			}
 			else
 			{
-				Float distanceToCover = gNodeGraph.GetPathLength(startNode, nodeIndex, hullType, m_capabilityBits);
-				Float threatDistance = gNodeGraph.GetPathLength(threatNode, nodeIndex, hullType, m_capabilityBits);
+				float distanceToCover = gNodeGraph.GetPathLength(startNode, nodeIndex, hullType, m_capabilityBits);
+				float threatDistance = gNodeGraph.GetPathLength(threatNode, nodeIndex, hullType, m_capabilityBits);
 
 				if(distanceToCover <= threatDistance)
 				{
@@ -4796,7 +4796,7 @@ bool CBaseNPC::FindCover( const Vector& threatPosition, const Vector& viewOffset
 		if(!pNode)
 			continue;
 
-		Float distance = (m_pState->origin - pNode->origin).Length();
+		float distance = (m_pState->origin - pNode->origin).Length();
 		if(distance < _minDistance || distance > _maxDistance)
 			continue;
 
@@ -4812,8 +4812,8 @@ bool CBaseNPC::FindCover( const Vector& threatPosition, const Vector& viewOffset
 				continue;
 		}
 
-		Float distanceToCover = gNodeGraph.GetPathLength(startNode, nodeIndex, hullType, m_capabilityBits);
-		Float threatDistance = gNodeGraph.GetPathLength(threatNode, nodeIndex, hullType, m_capabilityBits);
+		float distanceToCover = gNodeGraph.GetPathLength(startNode, nodeIndex, hullType, m_capabilityBits);
+		float threatDistance = gNodeGraph.GetPathLength(threatNode, nodeIndex, hullType, m_capabilityBits);
 
 		if(distanceToCover <= threatDistance)
 		{
@@ -4943,7 +4943,7 @@ bool CBaseNPC::IsInDanger( void )
 		return true;
 
 	// If one of our backed up enemies is dangerous
-	for(Uint32 i = 0; i < MAX_BACKED_UP_ENEMIES; i++)
+	for(UInt32 i = 0; i < MAX_BACKED_UP_ENEMIES; i++)
 	{
 		if(m_backedUpEnemies[i].enemy && m_backedUpEnemies[i].enemy->IsNPCDangerous())
 			return true;
@@ -4972,7 +4972,7 @@ bool CBaseNPC::GetLateralShootingPosition( const Vector& enemyPosition )
 	// Try finding a crouching position first
 	if(CanCrouch())
 	{
-		for(Float distance = 64; distance >= 512; distance += 64)
+		for(float distance = 64; distance >= 512; distance += 64)
 		{
 			Vector testPosition = m_pState->origin + right*distance;
 			Vector testViewPosition = testPosition + (GetGunPosition(STANCE_CROUCHING) - m_pState->origin);
@@ -5013,7 +5013,7 @@ bool CBaseNPC::GetLateralShootingPosition( const Vector& enemyPosition )
 		}
 	}
 
-	for(Float distance = 64; distance >= 512; distance += 64)
+	for(float distance = 64; distance >= 512; distance += 64)
 	{
 		Vector testPosition = m_pState->origin + right*distance;
 		Vector testViewPosition = testPosition + (GetGunPosition(STANCE_STANDING) - m_pState->origin);
@@ -5072,18 +5072,18 @@ bool CBaseNPC::GetClosestShootingPosition( const Vector& enemyPosition )
 	Math::AngleVectors(threatAngle, &forward, &right);
 
 	// Get distance to enemy
-	Float distance = (enemyPosition - m_pState->origin).Length2D();
+	float distance = (enemyPosition - m_pState->origin).Length2D();
 
 	// Try going as far as you can
 	for(Int32 i = 0; i < 2; i++)
 	{
-		for(Float fl = 0; fl < 0.5; fl += 0.1)
+		for(float fl = 0; fl < 0.5; fl += 0.1)
 		{
 			// Try to find a position from forward to side from where we can shoot him
 			Vector vSide = (i == 0) ? right : -right;
 			Vector vecDir = forward * (1.0 - fl) + vSide * fl;
 
-			Float walkDistance = 0;
+			float walkDistance = 0;
 			WalkMoveTrace(m_pState->origin, vecDir, walkPosition, distance, walkDistance);
 			if(walkDistance > 16)
 			{
@@ -5110,7 +5110,7 @@ bool CBaseNPC::GetClosestShootingPosition( const Vector& enemyPosition )
 // @brief
 //
 //=============================================
-bool CBaseNPC::BuildNearestVisibleRoute( const Vector& destination, const Vector& viewOffset, Float minDistance, Float maxDistance )
+bool CBaseNPC::BuildNearestVisibleRoute( const Vector& destination, const Vector& viewOffset, float minDistance, float maxDistance )
 {
 	if(!gNodeGraph.IsNodeGraphValid())
 	{
@@ -5118,18 +5118,18 @@ bool CBaseNPC::BuildNearestVisibleRoute( const Vector& destination, const Vector
 		return false;
 	}
 
-	Float _maxDistance = maxDistance;
+	float _maxDistance = maxDistance;
 	if(!_maxDistance)
 		_maxDistance = NPC_MAX_NAVIGATION_DISTANCE;
 
-	Float _minDistance = minDistance;
+	float _minDistance = minDistance;
 	if(_minDistance > maxDistance * 0.5)
 		_minDistance = maxDistance * 0.5;
 
 	// Get the hull type for this NPC
 	node_hull_types_t hullType = Util::GetNodeHullForNPC(this);
 	// Get the node type
-	Uint64 nodeType = Util::GetNodeTypeForNPC(this);
+	UInt64 nodeType = Util::GetNodeTypeForNPC(this);
 	// Get the node we're near to
 	Int32 startNode = gNodeGraph.GetNearestNode(m_pState->origin, nodeType, this);
 	if(startNode == NO_POSITION)
@@ -5159,7 +5159,7 @@ bool CBaseNPC::BuildNearestVisibleRoute( const Vector& destination, const Vector
 				continue;
 
 			// See if we can get there
-			Float distance = (destination - pNode->origin).Length();
+			float distance = (destination - pNode->origin).Length();
 			if(distance > _minDistance && distance < _maxDistance)
 			{
 				if(gNodeGraph.GetNextNodeInRoute(startNode, nodeIndex, hullType, capIndex) != startNode)
@@ -5193,7 +5193,7 @@ bool CBaseNPC::BuildNearestVisibleRoute( const Vector& destination, const Vector
 				continue;
 
 			// See if we can get there
-			Float distance = (destination - pNode->origin).Length();
+			float distance = (destination - pNode->origin).Length();
 			if(distance < _minDistance || distance > _maxDistance)
 				continue;
 
@@ -5239,7 +5239,7 @@ bool CBaseNPC::BuildNearestVisibleRoute( const Vector& destination, const Vector
 // @brief
 //
 //=============================================
-bool CBaseNPC::BuildNearestRoute( const Vector& destination, Float minDistance, Float maxDistance )
+bool CBaseNPC::BuildNearestRoute( const Vector& destination, float minDistance, float maxDistance )
 {
 	if(!gNodeGraph.IsNodeGraphValid())
 	{
@@ -5247,18 +5247,18 @@ bool CBaseNPC::BuildNearestRoute( const Vector& destination, Float minDistance, 
 		return false;
 	}
 
-	Float _maxDistance = maxDistance;
+	float _maxDistance = maxDistance;
 	if(!_maxDistance)
 		_maxDistance = NPC_MAX_NAVIGATION_DISTANCE;
 
-	Float _minDistance = minDistance;
+	float _minDistance = minDistance;
 	if(_minDistance > maxDistance * 0.5)
 		_minDistance = maxDistance * 0.5;
 
 	// Get the hull type for this NPC
 	node_hull_types_t hullType = Util::GetNodeHullForNPC(this);
 	// Get the node type
-	Uint64 nodeType = Util::GetNodeTypeForNPC(this);
+	UInt64 nodeType = Util::GetNodeTypeForNPC(this);
 	// Get the node we're near to
 	Int32 startNode = gNodeGraph.GetNearestNode(m_pState->origin, nodeType, this);
 	if(startNode == NO_POSITION)
@@ -5282,7 +5282,7 @@ bool CBaseNPC::BuildNearestRoute( const Vector& destination, Float minDistance, 
 			continue;
 
 		// See if we can get there
-		Float distance = (destination - pNode->origin).Length();
+		float distance = (destination - pNode->origin).Length();
 		if(distance < _minDistance || distance > _maxDistance)
 			continue;
 
@@ -5355,7 +5355,7 @@ bool CBaseNPC::IsEnemyShootable( CBaseEntity& enemy, bool ignoreGlass, bool igno
 bool CBaseNPC::CheckMaterialPenetration( CBaseEntity* pHitEntity, const Vector& gunPosition, const Vector& hitPosition, const Vector& hitNormal, Vector& outPosition )
 {
 	// We check for texture itself to make sure TX_FL_NO_PENETRATION is not set
-	const Char* pstrTextureName = Util::TraceTexture(pHitEntity->GetEntityIndex(), hitPosition, hitNormal);
+	const char* pstrTextureName = Util::TraceTexture(pHitEntity->GetEntityIndex(), hitPosition, hitNormal);
 	if(!pstrTextureName)
 		return false;
 
@@ -5399,9 +5399,9 @@ bool CBaseNPC::CheckMaterialPenetration( CBaseEntity* pHitEntity, const Vector& 
 	direction.Normalize();
 
 	trace_t tr;
-	Float depthOfPenetration = 0;
+	float depthOfPenetration = 0;
 
-	for(Float distance = 4.0f; distance <= penetrationInfo.penetrationdepth; distance += 4.0f)
+	for(float distance = 4.0f; distance <= penetrationInfo.penetrationdepth; distance += 4.0f)
 	{
 		tr = trace_t();
 		Vector testPosition = startPosition + direction*distance;
@@ -5510,8 +5510,8 @@ bool CBaseNPC::CheckFiringWithStance( CBaseEntity& enemy, const Vector& firingCo
 	// Determine how many of the shots might be successful when crouching
 	Vector gunCrouchPosition = GetGunPosition(STANCE_CROUCHING);
 	Vector targetCrouching = GetIdealEnemyBodyTarget(gunCrouchPosition);
-	Float crouchingCoverage = GetFiringCoverage(gunCrouchPosition, targetCrouching, firingCone);
-	Float totalCoverage = crouchingCoverage;
+	float crouchingCoverage = GetFiringCoverage(gunCrouchPosition, targetCrouching, firingCone);
+	float totalCoverage = crouchingCoverage;
 
 	// Don't bother checking if we're good
 	if(crouchingCoverage != 1.0)
@@ -5519,7 +5519,7 @@ bool CBaseNPC::CheckFiringWithStance( CBaseEntity& enemy, const Vector& firingCo
 		// Determine how many of the shots might be successful when standing
 		Vector targetStandingPosition = GetGunPosition(STANCE_STANDING);
 		Vector targetStanding = GetIdealEnemyBodyTarget(targetStandingPosition);
-		Float standingCoverage = GetFiringCoverage(targetStandingPosition, targetStanding, firingCone);
+		float standingCoverage = GetFiringCoverage(targetStandingPosition, targetStanding, firingCone);
 		totalCoverage = (totalCoverage + standingCoverage) / 2.0f;
 
 		// See if we should stand or crouch
@@ -5541,7 +5541,7 @@ bool CBaseNPC::CheckFiringWithStance( CBaseEntity& enemy, const Vector& firingCo
 CBaseEntity* CBaseNPC::GetBestVisibleEnemy( void )
 {
 	static CBaseEntity* categorizedEnemies[NUM_ENEMY_RELATIONS];
-	static Float enemyDistances[NUM_ENEMY_RELATIONS];
+	static float enemyDistances[NUM_ENEMY_RELATIONS];
 	static bool enemyShootable[NUM_ENEMY_RELATIONS];
 
 	// Make sure these arrays are always reset
@@ -5560,7 +5560,7 @@ CBaseEntity* CBaseNPC::GetBestVisibleEnemy( void )
 		{
 			// Get origin we can test with and get distance
 			Vector enemyOrigin = pEnemy->GetNavigablePosition();
-			Float enemyDist = ( enemyOrigin - m_pState->origin ).Length();
+			float enemyDist = ( enemyOrigin - m_pState->origin ).Length();
 
 			// Only check if we have ranged attacks
 			bool isShootable = false;
@@ -5683,7 +5683,7 @@ bool CBaseNPC::CheckEnemy( void )
 	bool updatedEnemy = false;
 
 	// Check visibility on the enemy
-	Uint64 visibilityBits = GetNPCVisibilityBits(m_enemy, false);
+	UInt64 visibilityBits = GetNPCVisibilityBits(m_enemy, false);
 	if(visibilityBits == AI_SIGHTED_NOTHING)
 		SetCondition(AI_COND_ENEMY_OCCLUDED);
 	else
@@ -5702,13 +5702,13 @@ bool CBaseNPC::CheckEnemy( void )
 	// Get distance to enemy's origin
 	Vector enemyPosition = m_enemy->GetNavigablePosition();
 	Vector myNavigablePosition = GetNavigablePosition();
-	Float enemyDistance1 = (enemyPosition-myNavigablePosition).Length();
+	float enemyDistance1 = (enemyPosition-myNavigablePosition).Length();
 
 	// Get distance to enemy head or feet
 	Vector enemySize = m_enemy->GetSize();
 	enemyPosition.z += enemySize.z * 0.5;
 
-	Float enemyDistance2 = (enemyPosition - myNavigablePosition).Length();
+	float enemyDistance2 = (enemyPosition - myNavigablePosition).Length();
 	if(enemyDistance2 < enemyDistance1)
 	{
 		// Distance to head is used
@@ -5798,7 +5798,7 @@ bool CBaseNPC::CheckEnemy( void )
 				// Check for missing enemy if not timed out yet
 				if(!CheckCondition(AI_COND_ENEMY_NOT_FOUND))
 				{
-					Float enemyLKPDistance = (m_enemyLastKnownPosition - m_pState->origin).Length2D();
+					float enemyLKPDistance = (m_enemyLastKnownPosition - m_pState->origin).Length2D();
 					if(enemyLKPDistance < NPC_STEP_SIZE)
 					{
 						Vector enemyLookOrigin = (m_enemy->GetEyePosition() - m_enemy->GetNavigablePosition()) + m_enemyLastKnownPosition;
@@ -5828,7 +5828,7 @@ bool CBaseNPC::CheckEnemy( void )
 	// See if enemy is navigable
 	if(ShouldCheckEnemyNavigability())
 	{
-		Float distanceChange = (m_enemyLastKnownPosition - m_lastNavigabilityCheckPosition).Length();
+		float distanceChange = (m_enemyLastKnownPosition - m_lastNavigabilityCheckPosition).Length();
 		if(distanceChange > NAVIGABILITY_CHECK_MIN_DISTANCE_CHANGE)
 		{
 			m_lastNavigabilityCheckResult = CheckRoute(m_pState->origin, m_enemyLastKnownPosition, m_enemy);\
@@ -5897,7 +5897,7 @@ bool CBaseNPC::CheckEnemy( void )
 // @brief
 //
 //=============================================
-void CBaseNPC::PushEnemy( CBaseEntity* pEnemy, const Vector& lastPosition, const Vector& lastAngles, Double lastSightTime )
+void CBaseNPC::PushEnemy( CBaseEntity* pEnemy, const Vector& lastPosition, const Vector& lastAngles, double lastSightTime )
 {
 	// Ignore if null, or if it's the main enemy
 	if(!pEnemy)
@@ -6059,7 +6059,7 @@ bool CBaseNPC::GetNextEnemy( void )
 // @brief Get an ideal weapon drop position
 //
 //=============================================
-bool CBaseNPC::GetWeaponDropPosition( Uint32 attachmentIndex, Vector& outPosition )
+bool CBaseNPC::GetWeaponDropPosition( UInt32 attachmentIndex, Vector& outPosition )
 {
 	// Get the gun pos first
 	Vector gunPosition;
@@ -6073,8 +6073,8 @@ bool CBaseNPC::GetWeaponDropPosition( Uint32 attachmentIndex, Vector& outPositio
 		return true;
 	}
 
-	Float fraction = 1.0;
-	Float maxHeight = m_pState->maxs[2] - m_pState->mins[2];
+	float fraction = 1.0;
+	float maxHeight = m_pState->maxs[2] - m_pState->mins[2];
 	while(fraction > 0)
 	{
 		Vector startPosition = gunPosition + Vector(0, 0, maxHeight)*fraction;
@@ -6096,7 +6096,7 @@ bool CBaseNPC::GetWeaponDropPosition( Uint32 attachmentIndex, Vector& outPositio
 // @brief
 //
 //=============================================
-CBaseEntity* CBaseNPC::DropItem( weaponid_t weaponId, Uint32 attachmentIndex, bool wasGibbed, Int32 clipAmmoCount )
+CBaseEntity* CBaseNPC::DropItem( weaponid_t weaponId, UInt32 attachmentIndex, bool wasGibbed, Int32 clipAmmoCount )
 {
 	if(weaponId <= WEAPON_NONE || WEAPON_NONE >= NUM_WEAPONS)
 		return nullptr;
@@ -6115,7 +6115,7 @@ CBaseEntity* CBaseNPC::DropItem( weaponid_t weaponId, Uint32 attachmentIndex, bo
 	if(weaponName.empty())
 	{
 		Util::EntityConPrintf(m_pEdict, "No classname specified.\n");
-		return false;
+		return nullptr;
 	}
 
 	CBaseEntity* pEntity = CBaseEntity::CreateEntity(weaponName.c_str(), gunPosition, angles, this);
@@ -6130,7 +6130,7 @@ CBaseEntity* CBaseNPC::DropItem( weaponid_t weaponId, Uint32 attachmentIndex, bo
 
 	if(wasGibbed)
 	{
-		for(Uint32 i = 0; i < 2; i++)
+		for(UInt32 i = 0; i < 2; i++)
 			velocity[i] = Common::RandomFloat(-100, 100);
 		velocity[2] = Common::RandomFloat(200, 300);
 					
@@ -6172,7 +6172,7 @@ bool CBaseNPC::IsAwareOf( CBaseEntity* pNPC ) const
 	if(m_enemy == pNPC)
 		return true;
 
-	for(Uint32 i = 0; i < MAX_BACKED_UP_ENEMIES; i++)
+	for(UInt32 i = 0; i < MAX_BACKED_UP_ENEMIES; i++)
 	{
 		if(m_backedUpEnemies[i].enemy == pNPC)
 			return true;
@@ -6238,7 +6238,7 @@ void CBaseNPC::SetActivity( Int32 activity )
 	}
 
 	// Reset blending
-	for(Uint32 i = 0; i < MAX_BLENDING; i++)
+	for(UInt32 i = 0; i < MAX_BLENDING; i++)
 		SetBlending(i, 0);
 
 	// Remember last sequence
@@ -6296,7 +6296,7 @@ void CBaseNPC::SetActivity( Int32 activity )
 // @brief
 //
 //=============================================
-void CBaseNPC::SetSequenceByName( const Char* pstrName )
+void CBaseNPC::SetSequenceByName( const char* pstrName )
 {
 	// Look it up by name
 	Int32 newSequence = FindSequence(pstrName);
@@ -6327,7 +6327,7 @@ void CBaseNPC::SetSequenceByName( const Char* pstrName )
 // @brief
 //
 //=============================================
-bool CBaseNPC::WalkMoveTrace( const Vector& origin, const Vector& moveDirection, Vector& outPosition, Float moveDistance, Float& distanceMoved, bool noNPCs )
+bool CBaseNPC::WalkMoveTrace( const Vector& origin, const Vector& moveDirection, Vector& outPosition, float moveDistance, float& distanceMoved, bool noNPCs )
 {
 	if(g_numFrameWalkMoveTraces >= MAX_FRAME_WALKMOVE_TRACES)
 		return false;
@@ -6338,11 +6338,11 @@ bool CBaseNPC::WalkMoveTrace( const Vector& origin, const Vector& moveDirection,
 	Vector startPosition = origin;
 	Vector endPosition = startPosition + moveDirection * moveDistance;
 
-	Float yaw = Util::VectorToYaw(endPosition-startPosition);
-	Float distance = (endPosition-startPosition).Length2D();
+	float yaw = Util::VectorToYaw(endPosition-startPosition);
+	float distance = (endPosition-startPosition).Length2D();
 
 	// Save these for after-test restore
-	Uint64 savedFlags = m_pState->flags;
+	UInt64 savedFlags = m_pState->flags;
 	entindex_t savedGroundEntity = m_pState->groundent;
 
 	// Assume we'll make it
@@ -6359,7 +6359,7 @@ bool CBaseNPC::WalkMoveTrace( const Vector& origin, const Vector& moveDirection,
 	Vector lastValidPosition = m_pState->origin;
 	for(distanceMoved = 0; distanceMoved < distance; distanceMoved += NPC_STEP_SIZE)
 	{
-		Float stepSize = NPC_STEP_SIZE;
+		float stepSize = NPC_STEP_SIZE;
 		if((distanceMoved+NPC_STEP_SIZE) > (distance-1))
 			stepSize = (distance-distanceMoved) - 1;
 
@@ -6384,7 +6384,7 @@ bool CBaseNPC::WalkMoveTrace( const Vector& origin, const Vector& moveDirection,
 						CArray<CBaseEntity*> linkEntitiesArray;
 						Util::FindLinkEntities(pHitEntity, linkEntitiesArray, nullptr);
 
-						for(Uint32 i = 0; i < linkEntitiesArray.size(); i++)
+						for(UInt32 i = 0; i < linkEntitiesArray.size(); i++)
 							saveStack.SaveEntity(linkEntitiesArray[i]);
 					}
 
@@ -6427,14 +6427,14 @@ bool CBaseNPC::WalkMoveTrace( const Vector& origin, const Vector& moveDirection,
 // @brief
 //
 //=============================================
-localmove_t CBaseNPC::CheckLocalMove( const Vector startPosition, const Vector& endPosition, const CBaseEntity* pTargetEntity, Float* pDistance, bool isInitial, bool isPerformingMovement )
+localmove_t CBaseNPC::CheckLocalMove( const Vector startPosition, const Vector& endPosition, const CBaseEntity* pTargetEntity, float* pDistance, bool isInitial, bool isPerformingMovement )
 {
 	// Don't waste resources on objects significantly higher than us
 	if((startPosition.z - endPosition.z) > NPC_MAX_LOCALMOVE_HEIGHT_DIFF)
 		return LOCAL_MOVE_INVALID_NO_TRIANGULATION;
 
 	// Save these for after-test restore
-	Uint64 savedFlags = m_pState->flags;
+	UInt64 savedFlags = m_pState->flags;
 	entindex_t savedGroundEntity = m_pState->groundent;
 
 	// Move NPC to start position and drop him to the floor
@@ -6464,20 +6464,20 @@ localmove_t CBaseNPC::CheckLocalMove( const Vector startPosition, const Vector& 
 	// Reset blocker entity
 	m_blockerEntity.reset();
 	
-	Float yaw = Util::VectorToYaw(endPosition - startPosition);
-	Float distance = (endPosition - startPosition).Length2D();
+	float yaw = Util::VectorToYaw(endPosition - startPosition);
+	float distance = (endPosition - startPosition).Length2D();
 
 	// Result of move
 	localmove_t moveResult = LOCAL_MOVE_VALID;
 	// Total distance moved
-	Float distanceMoved = 0;
+	float distanceMoved = 0;
 
 	if(distance > 0)
 	{
 		// Perform the movement
 		for(; distanceMoved < distance; distanceMoved += NPC_STEP_SIZE)
 		{
-			Float stepSize = NPC_STEP_SIZE;
+			float stepSize = NPC_STEP_SIZE;
 			if((distanceMoved+NPC_STEP_SIZE) > (distance-1))
 				stepSize = (distance-distanceMoved) - 1;
 
@@ -6571,7 +6571,7 @@ localmove_t CBaseNPC::CheckLocalMove( const Vector startPosition, const Vector& 
 // @brief
 //
 //=============================================
-Double CBaseNPC::OpenDoor( CBaseEntity* pDoorEntity )
+double CBaseNPC::OpenDoor( CBaseEntity* pDoorEntity )
 {
 	if(!pDoorEntity || !pDoorEntity->IsFuncDoorEntity())
 		return g_pGameVars->time;
@@ -6585,13 +6585,13 @@ Double CBaseNPC::OpenDoor( CBaseEntity* pDoorEntity )
 	pDoorEntity->CallUse(this, this, USE_ON, 0);
 
 	// Get travel time
-	Double openTime = pDoorEntity->GetNextThinkTime() - pDoorEntity->GetLocalTime();
+	double openTime = pDoorEntity->GetNextThinkTime() - pDoorEntity->GetLocalTime();
 
 	// See if a trigger_multiple is targeting this door, and if so, then
 	// set it to wait for it's given time
 	if(pDoorEntity->HasTargetName())
 	{
-		const Char* pstrTargetName = pDoorEntity->GetTargetName();
+		const char* pstrTargetName = pDoorEntity->GetTargetName();
 
 		edict_t* pEdict = nullptr;
 		while(true)
@@ -6616,7 +6616,7 @@ Double CBaseNPC::OpenDoor( CBaseEntity* pDoorEntity )
 	// If we have something, trigger those entities
 	if(!linkEntityArray.empty())
 	{
-		for(Uint32 i = 0; i < linkEntityArray.size(); i++)
+		for(UInt32 i = 0; i < linkEntityArray.size(); i++)
 			linkEntityArray[i]->CallUse(this, this, USE_ON, 0);
 	}
 
@@ -6627,7 +6627,7 @@ Double CBaseNPC::OpenDoor( CBaseEntity* pDoorEntity )
 // @brief
 //
 //=============================================
-CBaseNPC::advance_result_t CBaseNPC::AdvanceRoute( Float distance )
+CBaseNPC::advance_result_t CBaseNPC::AdvanceRoute( float distance )
 {
 	if(m_routePointIndex >= MAX_ROUTE_POINTS - 1)
 	{
@@ -6663,7 +6663,7 @@ CBaseNPC::advance_result_t CBaseNPC::AdvanceRoute( Float distance )
 		&& routePoint.nodeindex != NO_POSITION)
 	{
 		// See if we have any link entities
-		Uint32 numlinkentities = 0;
+		UInt32 numlinkentities = 0;
 		CAINodeGraph::link_entity_t* plinkentities = nullptr;
 		if(gNodeGraph.GetNodeLinkEntities(routePoint.nodeindex, nextRoutePoint.nodeindex, plinkentities, numlinkentities))
 		{
@@ -6671,7 +6671,7 @@ CBaseNPC::advance_result_t CBaseNPC::AdvanceRoute( Float distance )
 			Int32 hullType = Util::GetNodeHullForNPC(this);
 
 			// Go through all the linkents
-			for(Uint32 i = 0; i < numlinkentities; i++)
+			for(UInt32 i = 0; i < numlinkentities; i++)
 			{
 				CAINodeGraph::link_entity_t& linkentity = plinkentities[i];
 				if(linkentity.hulltype > hullType 
@@ -6693,7 +6693,7 @@ CBaseNPC::advance_result_t CBaseNPC::AdvanceRoute( Float distance )
 						if(plinkentity->IsFuncDoorEntity())
 						{
 							// Only doors for now
-							Double waitTime = OpenDoor(plinkentity);
+							double waitTime = OpenDoor(plinkentity);
 							if(waitTime > m_moveWaitFinishTime)
 								m_moveWaitFinishTime = waitTime;
 						}
@@ -6721,7 +6721,7 @@ CBaseNPC::advance_result_t CBaseNPC::AdvanceRoute( Float distance )
 // @brief
 //
 //=============================================
-CBaseNPC::movegoal_t CBaseNPC::ClassifyRoute( Uint64 moveFlags )
+CBaseNPC::movegoal_t CBaseNPC::ClassifyRoute( UInt64 moveFlags )
 {
 	if(moveFlags & MF_TO_TARGETENT)
 		return MOVE_GOAL_TARGET_ENT;
@@ -6893,7 +6893,7 @@ bool CBaseNPC::UpdateRoute( CBaseEntity* pTargetEntity, const Vector& destinatio
 // @brief
 //
 //=============================================
-bool CBaseNPC::BuildRoute( const Vector& destination, Uint64 moveFlags, CBaseEntity* pTargetEntity )
+bool CBaseNPC::BuildRoute( const Vector& destination, UInt64 moveFlags, CBaseEntity* pTargetEntity )
 {
 	// Begin a new route
 	NewRoute();
@@ -6923,7 +6923,7 @@ bool CBaseNPC::BuildRoute( const Vector& destination, Uint64 moveFlags, CBaseEnt
 	// Check if we can move to this point straight away,
 	// but only if it's not too far up or down from us
 	Vector apexPosition;
-	Float moveDistance = -1;
+	float moveDistance = -1;
 	localmove_t moveResult = LOCAL_MOVE_INVALID_NO_TRIANGULATION;
 	if(!(moveFlags & MF_TO_ENEMY) || SDL_fabs(m_pState->origin.z - destination.z) < NPC_TRIANGULATION_MAX_HEIGHT)
 		moveResult = CheckLocalMove(m_pState->origin, destination, pTargetEntity, &moveDistance, true);
@@ -7002,7 +7002,7 @@ bool CBaseNPC::BuildRoute( const Vector& destination, Uint64 moveFlags, CBaseEnt
 //=============================================
 bool CBaseNPC::IsPositionNavigable( const Vector& position )
 {
-	Uint64 savedFlags = m_pState->flags;
+	UInt64 savedFlags = m_pState->flags;
 	entindex_t savedGroundEntity = m_pState->groundent;
 
 	// Remember original position
@@ -7037,9 +7037,9 @@ bool CBaseNPC::IsPositionNavigable( const Vector& position )
 // @brief
 //
 //=============================================
-void CBaseNPC::InsertRoutePoint( const Vector& position, Int32 nodeIndex, Uint64 moveFlags )
+void CBaseNPC::InsertRoutePoint( const Vector& position, Int32 nodeIndex, UInt64 moveFlags )
 {
-	Uint64 typeFlags = (moveFlags | (m_routePointsArray[m_routePointIndex].type & ~MF_NOT_TO_MASK));
+	UInt64 typeFlags = (moveFlags | (m_routePointsArray[m_routePointIndex].type & ~MF_NOT_TO_MASK));
 	typeFlags &= ~(MF_TO_ENEMY|MF_IS_GOAL);
 
 	for(Int32 i = MAX_ROUTE_POINTS-1; i > m_routePointIndex; i--)
@@ -7055,13 +7055,13 @@ void CBaseNPC::InsertRoutePoint( const Vector& position, Int32 nodeIndex, Uint64
 // @brief
 //
 //=============================================
-void CBaseNPC::InsertRoutePoint( Int32 insertIndex, const Vector& position, Int32 nodeIndex, Uint64 moveFlags )
+void CBaseNPC::InsertRoutePoint( Int32 insertIndex, const Vector& position, Int32 nodeIndex, UInt64 moveFlags )
 {
 	// Make sure the position is valid
 	if(insertIndex >= MAX_ROUTE_POINTS)
 		return;
 
-	Uint64 typeFlags = (moveFlags | (m_routePointsArray[insertIndex].type & ~MF_NOT_TO_MASK));
+	UInt64 typeFlags = (moveFlags | (m_routePointsArray[insertIndex].type & ~MF_NOT_TO_MASK));
 	typeFlags &= ~(MF_TO_ENEMY|MF_IS_GOAL);
 
 	for(Int32 i = MAX_ROUTE_POINTS-1; i > insertIndex; i--)
@@ -7079,7 +7079,7 @@ void CBaseNPC::InsertRoutePoint( Int32 insertIndex, const Vector& position, Int3
 //=============================================
 bool CBaseNPC::CheckRoute( const Vector& startPosition, const Vector& endPosition, CBaseEntity* pTargetEntity )
 {
-	Float distanceTravelled = 0;
+	float distanceTravelled = 0;
 	Vector apexPosition;
 
 	// Make sure it's a valid position, not something inside a solid
@@ -7135,7 +7135,7 @@ bool CBaseNPC::BuildNodeRoute( const Vector& destination, CBaseEntity* pTargetEn
 	}
 
 	// Get start node
-	Uint64 nodeTypeBits = Util::GetNodeTypeForNPC(this);
+	UInt64 nodeTypeBits = Util::GetNodeTypeForNPC(this);
 	Int32 startNode = gNodeGraph.GetNearestNode(m_pState->origin, nodeTypeBits, this, pTargetEntity);
 	if(startNode == NO_POSITION)
 	{
@@ -7192,7 +7192,7 @@ bool CBaseNPC::BuildNodeRoute( const Vector& destination, CBaseEntity* pTargetEn
 		numNodes = MAX_ROUTE_POINTS;
 
 	// Final number of nodes
-	Uint32 finalNumNodes = 0;
+	UInt32 finalNumNodes = 0;
 
 	// Copy nodes from result array
 	for(Int32 i = 0; i < numNodes; i++)
@@ -7229,15 +7229,15 @@ bool CBaseNPC::BuildNodeRoute( const Vector& destination, CBaseEntity* pTargetEn
 //=============================================
 bool CBaseNPC::FindRandomSearchSpot( void )
 {
-	const Float maxCheckDistance = 256;
-	const Float maxChecksWithDistance = 4;
-	const Float maxTotalChecks = 16;
+	const float maxCheckDistance = 256;
+	const float maxChecksWithDistance = 4;
+	const float maxTotalChecks = 16;
 
-	Float traveledDist = 0;
-	Float largestDistance = 0;
+	float traveledDist = 0;
+	float largestDistance = 0;
 	Vector bestSearchSpot;
 
-	Uint32 numChecks = 0;
+	UInt32 numChecks = 0;
 	while(true)
 	{
 		// Define a search angle randomly
@@ -7292,7 +7292,7 @@ bool CBaseNPC::FindUnseenNode( void )
 		return false;
 	}
 
-	Uint64 nodeTypeBits = Util::GetNodeTypeForNPC(this);
+	UInt64 nodeTypeBits = Util::GetNodeTypeForNPC(this);
 	Int32 startNode = gNodeGraph.GetNearestNode(m_pState->origin, nodeTypeBits, this, nullptr);
 	if(startNode == NO_POSITION)
 		return false;
@@ -7319,7 +7319,7 @@ bool CBaseNPC::FindUnseenNode( void )
 
 		// Randomly find a position near the player
 		Vector enemyPosition = m_enemyLastKnownPosition;
-		Float lkpDistance = (enemyPosition - pNode->origin).Length();
+		float lkpDistance = (enemyPosition - pNode->origin).Length();
 		if(lkpDistance > NPC_MAX_ENEMY_SEARCH_DISTANCE)
 			continue;
 
@@ -7428,7 +7428,7 @@ bool CBaseNPC::FindClearNode( CBaseEntity* pBlockedEntity )
 		m_lastClearNode = 0;
 
 	Int32 lastClosestNodeIndex = NO_POSITION;
-	Float lastClosestDistance = 0;
+	float lastClosestDistance = 0;
 
 	for(Int32 i = 0; i < numNodes; i++)
 	{
@@ -7442,7 +7442,7 @@ bool CBaseNPC::FindClearNode( CBaseEntity* pBlockedEntity )
 		{
 			if(m_lastClearNode != i && IsFacing(pBlockedEntity, pNode->origin))
 			{
-				Float distance = (pNode->origin-m_pState->origin).Length();
+				float distance = (pNode->origin-m_pState->origin).Length();
 				if(lastClosestNodeIndex == NO_POSITION || distance < lastClosestDistance)
 				{
 					lastClosestDistance = distance;
@@ -7452,7 +7452,7 @@ bool CBaseNPC::FindClearNode( CBaseEntity* pBlockedEntity )
 		}
 		else
 		{
-			Float distance = (pNode->origin-m_pState->origin).Length();
+			float distance = (pNode->origin-m_pState->origin).Length();
 			if(lastClosestNodeIndex == NO_POSITION || distance < lastClosestDistance)
 			{
 				lastClosestDistance = distance;
@@ -7519,7 +7519,7 @@ void CBaseNPC::ReportAIState( void )
 
 	if(m_pSchedule)
 	{
-		const Char* pstrName = m_pSchedule->GetName();
+		const char* pstrName = m_pSchedule->GetName();
 		if(!pstrName || !qstrlen(pstrName))
 			msg << "Unknown schedule, ";
 		else
@@ -7672,7 +7672,7 @@ bool CBaseNPC::BuildNodeDetourRoute( const Vector& destination, CBaseEntity* pBl
 	}
 
 	// Get start node
-	Uint64 nodeTypeBits = Util::GetNodeTypeForNPC(this);
+	UInt64 nodeTypeBits = Util::GetNodeTypeForNPC(this);
 	Int32 startNode = gNodeGraph.GetNearestNode(m_pState->origin, nodeTypeBits, this, pTargetEntity, -1.0f, &ignoreList);
 	if(startNode == NO_POSITION)
 		return false;
@@ -7771,12 +7771,12 @@ bool CBaseNPC::BuildNodeDetourRoute( const Vector& destination, CBaseEntity* pBl
 // @brief
 //
 //=============================================
-bool CBaseNPC::AttemptTriangulation( const Vector& startPosition, const Vector& endPosition, Float distance, CBaseEntity* pTargetEntity, Vector* pApexPosition, bool isTest )
+bool CBaseNPC::AttemptTriangulation( const Vector& startPosition, const Vector& endPosition, float distance, CBaseEntity* pTargetEntity, Vector* pApexPosition, bool isTest )
 {
 	// Use a minimum of 24, because CheckLocalMove uses that size
-	Float sizeX = m_pState->size.x;
-	sizeX = clamp(sizeX, NPC_TRIANGULATION_MIN_SIZE_X, NPC_TRIANGULATION_MAX_SIZE_X);
-	Float sizeZ = m_pState->size.z;
+	float sizeX = m_pState->size.x;
+	sizeX = Clamp(sizeX, NPC_TRIANGULATION_MIN_SIZE_X, NPC_TRIANGULATION_MAX_SIZE_X);
+	float sizeZ = m_pState->size.z;
 
 	Vector forwardDirection = (endPosition-startPosition);
 	forwardDirection[2] = 0;
@@ -7788,8 +7788,8 @@ bool CBaseNPC::AttemptTriangulation( const Vector& startPosition, const Vector& 
 	Math::CrossProduct(forwardDirection, upDirection, rightDirection);
 
 	// Make sure distance isn't too short
-	Float travelledDistance = distance;
-	Float destinationDistance = (endPosition-startPosition).Length();
+	float travelledDistance = distance;
+	float destinationDistance = (endPosition-startPosition).Length();
 	if((travelledDistance/destinationDistance) < 0.3)
 		travelledDistance = destinationDistance * 0.5;
 
@@ -7816,7 +7816,7 @@ bool CBaseNPC::AttemptTriangulation( const Vector& startPosition, const Vector& 
 	if(m_pState->movetype == MOVETYPE_FLY)
 		Math::VectorScale(upDirection, sizeZ*2, upDirection);
 
-	for(Uint32 i = 0; i < 8; i++)
+	for(UInt32 i = 0; i < 8; i++)
 	{
 		// Try right first
 		localmove_t moveResult = CheckLocalMove(m_pState->origin, testRight, pTargetEntity);
@@ -7904,7 +7904,7 @@ bool CBaseNPC::AttemptTriangulation( const Vector& startPosition, const Vector& 
 // @brief
 //
 //=============================================
-void CBaseNPC::ShowRoute( bool isDetour, Uint32 maxPath, const Vector& destination )
+void CBaseNPC::ShowRoute( bool isDetour, UInt32 maxPath, const Vector& destination )
 {
 	// Only send msgs if we actually have the cvar enabled
 	if(gd_engfuncs.pfnGetCvarFloatValue(NODE_DEBUG_CVAR_NAME) < 1)
@@ -7916,7 +7916,7 @@ void CBaseNPC::ShowRoute( bool isDetour, Uint32 maxPath, const Vector& destinati
 	pointsArray.push_back(m_pState->origin);
 
 	// Count the number of points
-	Uint32 i = m_routePointIndex;
+	UInt32 i = m_routePointIndex;
 	for(; i < maxPath; i++)
 	{
 		if(!m_routePointsArray[i].type)
@@ -7947,7 +7947,7 @@ void CBaseNPC::ShowRoute( bool isDetour, Uint32 maxPath, const Vector& destinati
 // @brief Shows the current route
 //
 //=============================================
-void CBaseNPC::ShowRoute( const Vector* pPoints, Uint32 numPoints )
+void CBaseNPC::ShowRoute( const Vector* pPoints, UInt32 numPoints )
 {
 	// Only send msgs if we actually have the cvar enabled
 	if(gd_engfuncs.pfnGetCvarFloatValue(NODE_DEBUG_CVAR_NAME) < 1)
@@ -7958,7 +7958,7 @@ void CBaseNPC::ShowRoute( const Vector* pPoints, Uint32 numPoints )
 	gd_engfuncs.pfnMsgWriteByte(WAYPOINT_NORMAL);
 	gd_engfuncs.pfnMsgWriteInt32(m_pState->entindex);
 	gd_engfuncs.pfnMsgWriteUint16(numPoints);
-	for(Uint32 i = 0; i < numPoints; i++)
+	for(UInt32 i = 0; i < numPoints; i++)
 	{
 		gd_engfuncs.pfnMsgWriteFloat(pPoints[i].x);
 		gd_engfuncs.pfnMsgWriteFloat(pPoints[i].y);
@@ -8058,7 +8058,7 @@ void CBaseNPC::NudgePlayer( CBaseEntity* pPlayer ) const
 		if(Math::DotProduct(moveDirection, blockerDirection) > Math::DotProduct(moveDirection, testDirection))
 		{
 			// Store previous fraction
-			Double rightFraction = tr.fraction;
+			double rightFraction = tr.fraction;
 
 			checkPosition = blockerOrigin - rightDirection * 64;
 			Util::TraceHull(blockerOrigin, checkPosition, false, false, false, hullType, pPlayer->GetEdict(), tr);
@@ -8093,14 +8093,14 @@ bool CBaseNPC::AttemptCircleAround( bool isRetry, const Vector& destination, CBa
 	bool fullCircle = false;
 	bool isSuccessful = false;
 
-	Float movedDistance = 0;
-	Float sideMoveDistance = 0;
+	float movedDistance = 0;
+	float sideMoveDistance = 0;
 
 	// Get current destination
 	route_point_t& point = m_routePointsArray[m_routePointIndex];
 
 	// Get distance to target
-	Float distance = (m_pState->origin - destination).Length2D();
+	float distance = (m_pState->origin - destination).Length2D();
 	if( distance < 32 )
 	{
 		if(!isRetry && !(point.type & MF_IS_GOAL))
@@ -8250,7 +8250,7 @@ bool CBaseNPC::AttemptShiftDestination( CBaseEntity* pTargetEntity )
 		const route_point_t& nextPoint = m_routePointsArray[nextNode];
 		Vector nextPosition = nextPoint.position;
 
-		Float pathLength = (destination - nextPosition).Length();
+		float pathLength = (destination - nextPosition).Length();
 		if(pathLength)
 			break;
 	}
@@ -8258,10 +8258,10 @@ bool CBaseNPC::AttemptShiftDestination( CBaseEntity* pTargetEntity )
 	// Get the direction to the destination
 	const route_point_t& nextPoint = m_routePointsArray[nextNode];
 	Vector vecDir = (nextPoint.position - destination).Normalize(); 
-	Float distance = (nextPoint.position - destination).Length2D();
+	float distance = (nextPoint.position - destination).Length2D();
 
 	// Test if we can get there
-	Float moveDistance = NPC_STEP_SIZE;
+	float moveDistance = NPC_STEP_SIZE;
 	while( moveDistance < distance )
 	{
 		Vector testPosition = destination + vecDir * NPC_STEP_SIZE;
@@ -8281,7 +8281,7 @@ bool CBaseNPC::AttemptShiftDestination( CBaseEntity* pTargetEntity )
 // @brief
 //
 //=============================================
-bool CBaseNPC::HandleBlockage( CBaseEntity* pBlocker, CBaseEntity* pTargetEntity, Float moveDistance )
+bool CBaseNPC::HandleBlockage( CBaseEntity* pBlocker, CBaseEntity* pTargetEntity, float moveDistance )
 {
 	// Get reference to destination
 	const route_point_t& currentPoint = m_routePointsArray[m_routePointIndex];
@@ -8310,7 +8310,7 @@ bool CBaseNPC::HandleBlockage( CBaseEntity* pBlocker, CBaseEntity* pTargetEntity
 				if(pBlocker->HasTargetName())
 				{
 					// Trigger the door
-					const Char* pstrTargetName = pBlocker->GetTargetName();
+					const char* pstrTargetName = pBlocker->GetTargetName();
 					Util::FireTargets(pstrTargetName, this, this, USE_TOGGLE, 0);
 
 					// Look for any trigger_multiples targeting this entity
@@ -8391,7 +8391,7 @@ bool CBaseNPC::HandleBlockage( CBaseEntity* pBlocker, CBaseEntity* pTargetEntity
 
 				// Wait for a second
 				m_moveWaitFinishTime = g_pGameVars->time + m_moveWaitTime;
-				return TRUE;
+				return true;
 			}
 		}
 		else if( !pBlocker->IsPlayer() && pBlocker->IsAlive() 
@@ -8436,7 +8436,7 @@ bool CBaseNPC::HandleBlockage( CBaseEntity* pBlocker, CBaseEntity* pTargetEntity
 // @brief
 //
 //=============================================
-bool CBaseNPC::CheckMoveResult( localmove_t moveResult, Float moveDistance, const Vector& vectorToTarget )
+bool CBaseNPC::CheckMoveResult( localmove_t moveResult, float moveDistance, const Vector& vectorToTarget )
 {
 	// Check if there's an error at all
 	if(moveResult > LOCAL_MOVE_RESULT_FAILURE)
@@ -8604,7 +8604,7 @@ void CBaseNPC::SetIdealExpression( void )
 	flextypes_t npctype = GetFlexNPCType();
 
 	// Get the script name
-	const Char* pstrscript = g_pFlexManager->GetAIScript(npctype, aistate);
+	const char* pstrscript = g_pFlexManager->GetAIScript(npctype, aistate);
 	if(!pstrscript || !qstrlen(pstrscript))
 	{
 		// Don't try again for a while
@@ -8638,7 +8638,7 @@ void CBaseNPC::SetIdealExpression( void )
 // @brief
 //
 //=============================================
-void CBaseNPC::PlayFlexScript( const Char* pstrSentenceName )
+void CBaseNPC::PlayFlexScript( const char* pstrSentenceName )
 {
 	if(!g_pFlexManager)
 		return;
@@ -8650,7 +8650,7 @@ void CBaseNPC::PlayFlexScript( const Char* pstrSentenceName )
 	if(!pstrSentenceName || !qstrlen(pstrSentenceName))
 		return;
 
-	const Char* pstrscript = g_pFlexManager->GetSentenceScript(pstrSentenceName[0] == '!' ? pstrSentenceName+1 : pstrSentenceName);
+	const char* pstrscript = g_pFlexManager->GetSentenceScript(pstrSentenceName[0] == '!' ? pstrSentenceName+1 : pstrSentenceName);
 	if(!pstrscript)
 	{
 		Util::EntityConPrintf(m_pEdict, "NPC has no flex script for sentence '%s'.\n", pstrSentenceName);
@@ -8734,7 +8734,7 @@ void CBaseNPC::NPCThink( void )
 	RunAI();
 
 	// Advance frame and get animation interval time
-	Double animInterval = FrameAdvance(0);
+	double animInterval = FrameAdvance(0);
 
 	// Set next think time
 	m_pState->nextthink = g_pGameVars->time + NPC_THINK_TIME;
@@ -8767,7 +8767,7 @@ void CBaseNPC::NPCThink( void )
 }
  
 //=============================================
-// @brief TRUE if a black hole can pull this entity
+// @brief true if a black hole can pull this entity
 //
 //=============================================
 bool CBaseNPC::CanBlackHolePull( void ) const
@@ -8791,7 +8791,7 @@ void CBaseNPC::StopAnimation( void )
 // @brief
 //
 //=============================================
-Float CBaseNPC::GetCoverDistance( void )
+float CBaseNPC::GetCoverDistance( void )
 {
 	return NPC_DEFAULT_COVER_DISTANCE;
 }
@@ -8886,7 +8886,7 @@ activity_t CBaseNPC::GetDeathActivity( void )
 
 	Vector forward;
 	Math::AngleVectors(m_pState->angles, &forward);
-	Float dp = Math::DotProduct(forward, gMultiDamage.GetDamageDirection() * -1);
+	float dp = Math::DotProduct(forward, gMultiDamage.GetDamageDirection() * -1);
 
 	if(m_damageBits & DMG_EXPLOSION || m_lastHitGroup == HITGROUP_GENERIC)
 	{
@@ -8967,7 +8967,7 @@ activity_t CBaseNPC::GetBlowbackDeathActivity( void )
 	{
 		// See if we're flat against a wall up to the neck or so
 		// Test up till waist
-		Float height = m_pState->absmax[2] - m_pState->absmin[2];
+		float height = m_pState->absmax[2] - m_pState->absmin[2];
 		Vector testPoint = m_pState->origin + Vector(0, 0, height*0.33);
 		Vector testEnd = testPoint - forward * 40;
 
@@ -8993,8 +8993,8 @@ activity_t CBaseNPC::GetBlowbackDeathActivity( void )
 	}
 
 	// Check if we're landing aimed towards ground
-	Float downDot = Math::DotProduct(forward, Vector(0, 0, 1));
-	downDot = clamp(downDot, 0, 1);
+	float downDot = Math::DotProduct(forward, Vector(0, 0, 1));
+	downDot = Clamp(downDot, 0, 1);
 
 	// Determine if there's space behind us
 	Vector traceForward(forward);
@@ -9055,7 +9055,7 @@ void CBaseNPC::StopMovement( void )
 // @brief
 //
 //=============================================
-Float CBaseNPC::GetLeanAwarenessTime( void )
+float CBaseNPC::GetLeanAwarenessTime( void )
 {
 	return NPC_DEFAULT_LEAN_AWARE_TIME;
 }
@@ -9139,7 +9139,7 @@ void CBaseNPC::SetIdealNPCState( npcstate_t state )
 // @brief
 //
 //=============================================
-void CBaseNPC::SetLastActivityTime( Double time )
+void CBaseNPC::SetLastActivityTime( double time )
 {
 	m_lastActivityTime = time;
 }
@@ -9179,7 +9179,7 @@ void CBaseNPC::SetEnemyInfo( const Vector& enemyLKP, const Vector& enemyLKA )
 // @brief Gets the enemy information
 //
 //=============================================
-void CBaseNPC::GetEnemyInfo( Vector& enemyLKP, Vector& enemyLKA, Double& enemyLST )
+void CBaseNPC::GetEnemyInfo( Vector& enemyLKP, Vector& enemyLKA, double& enemyLST )
 {
 	enemyLKP = m_enemyLastKnownPosition;
 	enemyLKA = m_enemyLastKnownAngles;
@@ -9204,7 +9204,7 @@ void CBaseNPC::SetEnemy( CBaseEntity* pEnemy )
 // @brief Sets the last time the enemy was sighted
 //
 //=============================================
-void CBaseNPC::SetLastEnemySightTime( Double time )
+void CBaseNPC::SetLastEnemySightTime( double time )
 {
 	m_lastEnemySightTime = time;
 }
@@ -9213,7 +9213,7 @@ void CBaseNPC::SetLastEnemySightTime( Double time )
 // @brief Sets the last enemy sight time
 //
 //=============================================
-Double CBaseNPC::GetLastEnemySightTime( void )
+double CBaseNPC::GetLastEnemySightTime( void )
 {
 	return m_lastEnemySightTime;
 }
@@ -9222,7 +9222,7 @@ Double CBaseNPC::GetLastEnemySightTime( void )
 // @brief Returns the voice pitch
 //
 //=============================================
-Uint32 CBaseNPC::GetVoicePitch( void )
+UInt32 CBaseNPC::GetVoicePitch( void )
 {
 	return PITCH_NORM;
 }
@@ -9249,7 +9249,7 @@ void CBaseNPC::SetCanDropWeapons( bool canDrop )
 // @brief Fires a weapon
 //
 //=============================================
-void CBaseNPC::FireWeapon( Uint32 numShots, const Char* soundPattern, Uint32 numSounds, Uint32* ptrAmmoLoaded )
+void CBaseNPC::FireWeapon( UInt32 numShots, const char* soundPattern, UInt32 numSounds, UInt32* ptrAmmoLoaded )
 {
 	bullet_types_t bulletType = GetBulletType();
 	if(bulletType == BULLET_NONE)
@@ -9266,7 +9266,7 @@ void CBaseNPC::FireWeapon( Uint32 numShots, const Char* soundPattern, Uint32 num
 	Vector up, right;
 	Math::GetUpRight(shootDirection, up, right);
 
-	Uint32 firingConeId = GetFiringCone(true);
+	UInt32 firingConeId = GetFiringCone(true);
 	Vector firingCone = Weapon_GetConeSize(firingConeId);
 
 	FireBullets(numShots, shootOrigin, shootDirection, right, up, firingCone, NPC_DEFAULT_MAX_FIRING_DISTANCE, bulletType, 4, 0, this);
@@ -9313,17 +9313,17 @@ bool CBaseNPC::IsAutoAimable( CBaseEntity* pAimerEntity )
 // @brief Calculates coverage for a position
 //
 //=============================================
-Float CBaseNPC::CalculateCoverage( const Vector& lookOrigin, const Vector& lookOffset, const Vector& enemyEyePosition )
+float CBaseNPC::CalculateCoverage( const Vector& lookOrigin, const Vector& lookOffset, const Vector& enemyEyePosition )
 {
 	trace_t tr;
-	Float coverage = 0;
+	float coverage = 0;
 
-	for(Uint32 i = 0; i < NPC_NUM_COVERAGE_CHECKS; i++)
+	for(UInt32 i = 0; i < NPC_NUM_COVERAGE_CHECKS; i++)
 	{
-		Vector testPosition = lookOrigin + lookOffset*((Float)i/(Float)NPC_NUM_COVERAGE_CHECKS);
+		Vector testPosition = lookOrigin + lookOffset*((float)i/(float)NPC_NUM_COVERAGE_CHECKS);
 		Util::TraceLine(testPosition, enemyEyePosition, true, false, m_pEdict, tr);
 		if(!tr.noHit())
-			coverage += 1.0f/(Float)NPC_NUM_COVERAGE_CHECKS;
+			coverage += 1.0f/(float)NPC_NUM_COVERAGE_CHECKS;
 	}
 
 	return coverage;
@@ -9339,7 +9339,7 @@ const CAISchedule* CBaseNPC::GetReloadSchedule( void )
 	{
 		// See if our coverage warrants actually hiding
 		Vector enemyEyePosition = m_enemy->GetEyePosition();
-		Float coverage = CalculateCoverage(m_pState->origin, m_pState->view_offset, enemyEyePosition);
+		float coverage = CalculateCoverage(m_pState->origin, m_pState->view_offset, enemyEyePosition);
 		
 		if(coverage < 0.5)
 			return GetScheduleByIndex(AI_SCHED_HIDE_RELOAD);
@@ -9356,9 +9356,9 @@ const CAISchedule* CBaseNPC::GetReloadSchedule( void )
 // @brief Returns the length of the route we are taking
 //
 //=============================================
-Float CBaseNPC::GetRouteLength( void )
+float CBaseNPC::GetRouteLength( void )
 {
-	Float pathLength = 0;
+	float pathLength = 0;
 	Vector prevPosition = GetNavigablePosition();
 	for(Int32 i = m_routePointIndex; i < MAX_ROUTE_POINTS; i++)
 	{
@@ -9383,7 +9383,7 @@ Float CBaseNPC::GetRouteLength( void )
 // @brief Returns the reaction time
 //
 //=============================================
-Float CBaseNPC::GetReactionTime( void ) 
+float CBaseNPC::GetReactionTime( void ) 
 { 
 	return GetSkillCVarValue(g_skillcvars.skillNPCReactionTime);
 }
@@ -9401,7 +9401,7 @@ bool CBaseNPC::CanHeavyFlinch( void )
 // @brief Return skill cvar value
 //
 //=============================================
-Float CBaseNPC::GetSkillCVarValue( Int32 skillcvar ) const
+float CBaseNPC::GetSkillCVarValue( Int32 skillcvar ) const
 {
 	return gSkillData.GetSkillCVarSetting(skillcvar, (force_skillcvar_t)m_forceSkillCvar);
 }
@@ -9410,7 +9410,7 @@ Float CBaseNPC::GetSkillCVarValue( Int32 skillcvar ) const
 // @brief Return skill cvar value
 //
 //=============================================
-Uint32 CBaseNPC::GetFogAttenuatedFiringCone( Uint32 coneIndex )
+UInt32 CBaseNPC::GetFogAttenuatedFiringCone( UInt32 coneIndex )
 {
 	if(!m_enemy)
 		return coneIndex;
@@ -9425,15 +9425,15 @@ Uint32 CBaseNPC::GetFogAttenuatedFiringCone( Uint32 coneIndex )
 	Vector enemyPosition = m_enemy->GetNavigablePosition();
 	Vector myEyePosition = GetEyePosition();
 
-	Uint32 add;
+	UInt32 add;
 	if(coneIndex < 3)
 		add = 2;
 	else
 		add = 1;
 
-	Uint32 _coneIndex = coneIndex;
-	Float distance = (enemyPosition - myEyePosition).Length();
-	Float ratio = distance / (Float)endDistance;
+	UInt32 _coneIndex = coneIndex;
+	float distance = (enemyPosition - myEyePosition).Length();
+	float ratio = distance / (float)endDistance;
 	if(ratio > 0.4 && ratio < 0.6)
 		_coneIndex += add;
 	else if(ratio >= 0.6 && ratio < 0.8)
@@ -9441,7 +9441,7 @@ Uint32 CBaseNPC::GetFogAttenuatedFiringCone( Uint32 coneIndex )
 	else
 		_coneIndex += add * 2.5;
 
-	_coneIndex = clamp(_coneIndex, 0, 11);
+	_coneIndex = Clamp(_coneIndex, 0, 11);
 	return _coneIndex;
 }
 

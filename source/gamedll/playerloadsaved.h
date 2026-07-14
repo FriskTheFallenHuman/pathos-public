@@ -25,18 +25,18 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	
 public:
-	Float GetDuration( void );
-	Float GetHoldTime( void );
-	Float GetMessageTime( void );
-	Float GetLoadTime( void );
+	float GetDuration( void );
+	float GetHoldTime( void );
+	float GetMessageTime( void );
+	float GetLoadTime( void );
 
-	void SetDuration( Float duration );
-	void SetHoldTime( Float holdtime );
-	void SetMessageTime( Float messagetime );
-	void SetLoadTime( Float loadtime );
+	void SetDuration( float duration );
+	void SetHoldTime( float holdtime );
+	void SetMessageTime( float messagetime );
+	void SetLoadTime( float loadtime );
 
 public:
 	void EXPORTFN MessageThink( void );
@@ -47,10 +47,10 @@ public:
 	static bool IsBlockingSaving( void );
 
 private:
-	Float m_messageTime;
-	Float m_loadTime;
-	Float m_duration;
-	Float m_holdTime;
+	float m_messageTime;
+	float m_loadTime;
+	float m_duration;
+	float m_holdTime;
 
 private:
 	static bool m_isBlockingSaveGame;

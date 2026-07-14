@@ -35,7 +35,7 @@ CTriggerParalyzePlayer::~CTriggerParalyzePlayer( void )
 // @brief
 //
 //=============================================
-void CTriggerParalyzePlayer::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerParalyzePlayer::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	CBaseEntity* pPlayer = Util::GetHostPlayer();
 	if(!pPlayer)

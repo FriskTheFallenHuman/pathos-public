@@ -17,14 +17,6 @@ template <typename T> class CArray;
 #define MAX_PATH			260
 #endif //MAX_PATH
 
-#ifndef TRUE
-#define TRUE				1
-#endif //TRUE
-
-#ifndef FALSE
-#define FALSE				0
-#endif //FALSE
-
 #ifndef M_PI
 #define M_PI		3.14159265358979323846	// matches value in gcc v2 math.h
 #endif //M_PI
@@ -37,9 +29,9 @@ template <typename T> class CArray;
 #define RAD2DEG( a ) ( a * 180.0F ) / M_PI
 #endif //RAD2DEG
 
-#ifndef clamp
-#define clamp( val, min, max ) ( ((val) > (max)) ? (max) : ( ((val) < (min)) ? (min) : (val) ) )
-#endif //clamp
+#ifndef Clamp
+#define Clamp( val, min, max ) ( ((val) > (max)) ? (max) : ( ((val) < (min)) ? (min) : (val) ) )
+#endif //Clamp
 
 #ifndef _max
 #define _max( max, val ) ( ((val) > (max)) ? (max) : (val) )
@@ -71,7 +63,7 @@ template <typename T> class CArray;
 static constexpr Int32 NANMASK = 0x7F800000;
 
 // Valid slash used in paths
-static constexpr Char PATH_SLASH_CHAR = '/';
+static constexpr char PATH_SLASH_CHAR = '/';
 
 // Maximum line length
 static constexpr Uint32 MAX_LINE_LENGTH = 4096;
@@ -181,82 +173,82 @@ struct file_dateinfo_t
 
 class CString;
 
-extern inline Uint32 qstrlen( const Char* pstr );
-extern inline Char* qstrcpy( Char* pdest, const Char *psrc );
-extern inline Char* qstrncpy( Char* pdest, const Char *psrc, Uint32 size );
-extern inline Char* qstrcpy_s( Char* pdest, const Char *psrc, Uint32 m );
-extern Int32 qstrcmp( const Char* pstr1, const Char* pstr2 );
+extern DO_INLINE Uint32 qstrlen( const char* pstr );
+extern DO_INLINE char* qstrcpy( char* pdest, const char *psrc );
+extern DO_INLINE char* qstrncpy( char* pdest, const char *psrc, Uint32 size );
+extern DO_INLINE char* qstrcpy_s( char* pdest, const char *psrc, Uint32 m );
+extern Int32 qstrcmp( const char* pstr1, const char* pstr2 );
 extern Int32 qstrcmp( const CString& str1, const CString& str2 );
-extern Int32 qstrcmp( const Char* pstr1, const CString& str2 );
-extern Int32 qstrcmp( const CString& str1, const Char* pstr2 );
-extern Int32 qstrcicmp( const Char* pstr1, const Char* pstr2 );
+extern Int32 qstrcmp( const char* pstr1, const CString& str2 );
+extern Int32 qstrcmp( const CString& str1, const char* pstr2 );
+extern Int32 qstrcicmp( const char* pstr1, const char* pstr2 );
 extern Int32 qstrcicmp( const CString& str1, const CString& str2 );
-extern Int32 qstrcicmp( const Char* pstr1, const CString& str2 );
-extern Int32 qstrcicmp( const CString& str1, const Char* pstr2 );
-extern Int32 qstrncmp( const Char* pstr1, const Char* pstr2, Uint32 n );
+extern Int32 qstrcicmp( const char* pstr1, const CString& str2 );
+extern Int32 qstrcicmp( const CString& str1, const char* pstr2 );
+extern Int32 qstrncmp( const char* pstr1, const char* pstr2, Uint32 n );
 extern Int32 qstrncmp( const CString& str1, const CString& str2, Uint32 n );
-extern Int32 qstrncmp( const Char* pstr1, const CString& str2, Uint32 n );
-extern Int32 qstrncmp( const CString& str1, const Char* pstr2, Uint32 n );
-extern Int32 qstrncimp( const Char* pstr1, const Char* pstr2, Uint32 n );
-extern void qstrins( const Char* psrc, Char *pdest, Uint32 offset );
-extern inline const Char* qstrstr( const Char* pstr, const Char *psubstr );
+extern Int32 qstrncmp( const char* pstr1, const CString& str2, Uint32 n );
+extern Int32 qstrncmp( const CString& str1, const char* pstr2, Uint32 n );
+extern Int32 qstrncimp( const char* pstr1, const char* pstr2, Uint32 n );
+extern void qstrins( const char* psrc, char *pdest, Uint32 offset );
+extern DO_INLINE const char* qstrstr( const char* pstr, const char *psubstr );
 
-extern inline Float qrsqrt( Float value );
-extern inline Float sgn(Float a);
+extern DO_INLINE float qrsqrt( float value );
+extern DO_INLINE float sgn(float a);
 
 namespace Common
 {
-	extern const Char* Parse( const Char *pstr, Char* pdest, const Char* pbreakchars = nullptr, bool ignoreComma = false, bool checkCurlyBrackets = false );
-	extern const Char* Parse( const Char *pstr, CString& str, const Char* pbreakchars = nullptr, bool ignoreComma = false, bool checkCurlyBrackets = false );
-	extern const Char* ReadLine( const Char* pstr, Char* pdest );
-	extern const Char* ReadLine( const Char* pstr, CString& str );
+	extern const char* Parse( const char *pstr, char* pdest, const char* pbreakchars = nullptr, bool ignoreComma = false, bool checkCurlyBrackets = false );
+	extern const char* Parse( const char *pstr, CString& str, const char* pbreakchars = nullptr, bool ignoreComma = false, bool checkCurlyBrackets = false );
+	extern const char* ReadLine( const char* pstr, char* pdest );
+	extern const char* ReadLine( const char* pstr, CString& str );
 	extern void *ResizeArray( void *parray, Uint64 size, Uint64 count, Uint64 countNew = 1 );
-	extern void Basename( const Char *pstrin, Char *pstrout );
-	extern void Basename( const Char *pstrin, CString& strOut );
-	extern bool IsNumber( const Char *pstr );
+	extern void Basename( const char *pstrin, char *pstrout );
+	extern void Basename( const char *pstrin, CString& strOut );
+	extern bool IsNumber( const char *pstr );
 	extern bool IsNumber( const CString& str );
-	extern Char GetShiftedChar( Char c );
-	extern void StringToVector( const Char* pstrString, Vector& outVector );
+	extern char GetShiftedChar( char c );
+	extern void StringToVector( const char* pstrString, Vector& outVector );
 	extern void NormalizeAngles( Vector& angles );
-	extern void ConvertStringToLowerCase( Char* pstring );
-	extern Uint32 GetStringCRC32Hash( const Char* pstrString );
-	extern void GetDirectoryPath( const Char* pstrPath, CString& output );
-	extern CString CleanupPath( const Char* pstrPath );
-	extern Float BytesToMegaBytes( Uint32 bytesCount );
+	extern void ConvertStringToLowerCase( char* pstring );
+	extern Uint32 GetStringCRC32Hash( const char* pstrString );
+	extern void GetDirectoryPath( const char* pstrPath, CString& output );
+	extern CString CleanupPath( const char* pstrPath );
+	extern float BytesToMegaBytes( Uint32 bytesCount );
 
-	extern inline Int16 ByteToInt16( const byte *pdata );
-	extern inline Uint16 ByteToUint16( const byte *pdata );
-	extern inline Int32 ByteToInt32( const byte *pdata );
-	extern inline Uint32 ByteToUint32( const byte *pdata );
-	extern inline Float ByteToFloat( const byte *pdata );
-	extern inline Int64 ByteToInt64( const byte *pdata );
-	extern inline Uint64 ByteToUint64( const byte *pdata );
-	extern inline Double ByteToDouble( const byte *pdata );
+	extern DO_INLINE Int16 ByteToInt16( const Byte *pdata );
+	extern DO_INLINE Uint16 ByteToUint16( const Byte *pdata );
+	extern DO_INLINE Int32 ByteToInt32( const Byte *pdata );
+	extern DO_INLINE Uint32 ByteToUint32( const Byte *pdata );
+	extern DO_INLINE float ByteToFloat( const Byte *pdata );
+	extern DO_INLINE Int64 ByteToInt64( const Byte *pdata );
+	extern DO_INLINE Uint64 ByteToUint64( const Byte *pdata );
+	extern DO_INLINE double ByteToDouble( const Byte *pdata );
 
 	extern bool IsPowerOfTwo( Uint32 size );
-	extern inline CString GetDate( void );
-	extern inline CString GetDateFilename( void );
-	extern inline Int32 IsPitchReversed( Float pitch );
-	extern void FixVector( Float* pflVector );
-	extern inline Float RandomFloat( Float low, Float high );
-	extern inline Int64 RandomLong( Int64 low, Int64 high );
-	extern inline bool IsNAN( Float value );
-	extern inline Float SplineFraction( Float value, Float scale );
-	extern inline void ScaleByte( DWORD *nInput );
-	extern inline CString FixSlashes( const Char* pstring );
-	extern inline bool CheckVisibility( const CArray<Uint32>& leafnums, Uint32 numleafs, const byte* pset );
-	extern bool GetWADList( const Char* pstrEntityData, CArray<CString>& outputArray );
-	extern Uint32 GetFileLineCount( const Char* pstrdata );
+	extern CString GetDate( void );
+	extern CString GetDateFilename( void );
+	extern Int32 IsPitchReversed( float pitch );
+	extern void FixVector( float* pflVector );
+	extern float RandomFloat( float low, float high );
+	extern Int64 RandomLong( Int64 low, Int64 high );
+	extern DO_INLINE bool IsNAN( float value );
+	extern DO_INLINE float SplineFraction( float value, float scale );
+	extern DO_INLINE void ScaleByte( Dword *nInput );
+	extern CString FixSlashes( const char* pstring );
+	extern bool CheckVisibility( const CArray<Uint32>& leafnums, Uint32 numleafs, const Byte* pset );
+	extern bool GetWADList( const char* pstrEntityData, CArray<CString>& outputArray );
+	extern Uint32 GetFileLineCount( const char* pstrdata );
 
-	extern inline void ParseColor( Float* pout, const color24_t *plightmap );
-	extern inline void ParseVectorColor (Float* pout, const color24_t *plightmap);
-	extern inline Float RemapValue( Float value, Float a, Float b, Float c, Float d );
+	extern DO_INLINE void ParseColor( float* pout, const color24_t *plightmap );
+	extern DO_INLINE void ParseVectorColor (float* pout, const color24_t *plightmap);
+	extern DO_INLINE float RemapValue( float value, float a, float b, float c, float d );
 
-	extern inline bool ValueInRange( Float comparisonValue, Float referenceValue, Float rangeMax );
-	extern void ResizeTextureToPOT( Uint32& outwidth, Uint32& outheight, byte*& pdata );
+	extern DO_INLINE bool ValueInRange( float comparisonValue, float referenceValue, float rangeMax );
+	extern void ResizeTextureToPOT( Uint32& outwidth, Uint32& outheight, Byte*& pdata );
 	extern void ResizeTexture32( Uint32 width, Uint32 height, Uint32 targetwidth, Uint32 targetheight, const color32_t* pindata, color32_t*& poutdata );
 	extern void ResizeTexture24( Uint32 width, Uint32 height, Uint32 targetwidth, Uint32 targetheight, const color24_t* pindata, color24_t*& poutdata );
-	extern void FlipTexture( Uint32 width, Uint32 height, Uint32 bpp, bool fliph, bool flipv, byte*& pdata );
+	extern void FlipTexture( Uint32 width, Uint32 height, Uint32 bpp, bool fliph, bool flipv, Byte*& pdata );
 };
 #include "common_inline.hpp"
 #endif

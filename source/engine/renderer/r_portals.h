@@ -40,15 +40,15 @@ struct cl_portal_t
 	Vector origin;
 	CArray<msurface_t*> surfaces;
 
-	Uint32 start_vertex;
-	Uint32 num_vertexes;
+	UInt32 start_vertex;
+	UInt32 num_vertexes;
 
-	Uint32 renderpassidx;
+	UInt32 renderpassidx;
 
 	en_texalloc_t* ptexture;
 	fbobind_t* pfbo;
 
-	byte* pvisset;
+	Byte* pvisset;
 };
 
 struct portal_vertex_t
@@ -60,7 +60,7 @@ struct portal_vertex_t
 	}
 
 	vec4_t origin;
-	byte padding[16];
+	Byte padding[16];
 };
 
 struct portal_attribs
@@ -129,15 +129,15 @@ public:
 	// Draws renderpasses for portals
 	bool DrawPortalPasses( void );
 	// Seeks out any matching portals
-	cl_portal_t* GetMatchingPortal( Uint32 currentindex, class CFrustum& mainFrustum );
+	cl_portal_t* GetMatchingPortal( UInt32 currentindex, class CFrustum& mainFrustum );
 	
 	// Allocates a new portal
 	void AllocNewPortal( cl_entity_t* pentity );
 
 	// Gets the number of portals
-	Uint32 GetNbPortals( void ) const { return m_portalsArray.size(); }
+	UInt32 GetNbPortals( void ) const { return m_portalsArray.size(); }
 	// Retreives the portal's PVS data
-	const byte* GetPortalPVS( Uint32 portalindex );
+	const Byte* GetPortalPVS( UInt32 portalindex );
 
 private:
 	// Sets up a portal renderpass
@@ -168,7 +168,7 @@ private:
 	CCVar *m_pCvarPortalDebug;
 
 	// Number of portals drawn
-	Uint32 m_numPortalsDrawn;
+	UInt32 m_numPortalsDrawn;
 
 	// Shared depth texture
 	en_texalloc_t* m_pDepthTexture;

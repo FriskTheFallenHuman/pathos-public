@@ -32,7 +32,7 @@ const mleaf_t* Mod_PointInLeaf( const Vector& position, const brushmodel_t& mode
 			return reinterpret_cast<mleaf_t*>(pnode);
 
 		plane_t* pplane = pnode->pplane;
-		Float dp = Math::DotProduct(position, pplane->normal) - pplane->dist;
+		float dp = Math::DotProduct(position, pplane->normal) - pplane->dist;
 		if(dp > 0)
 			pnode = pnode->pchildren[0];
 		else
@@ -46,15 +46,15 @@ const mleaf_t* Mod_PointInLeaf( const Vector& position, const brushmodel_t& mode
 // @brief
 //
 //=============================================
-byte* Mod_DecompressVIS( byte* pbuffer, Uint32 bufsize, byte* pin, const brushmodel_t& model, Uint32 bytecount )
+Byte* Mod_DecompressVIS( Byte* pbuffer, UInt32 bufsize, Byte* pin, const brushmodel_t& model, UInt32 bytecount )
 {
-	byte* pout = pbuffer;
-	byte *ppin = pin;
+	Byte* pout = pbuffer;
+	Byte *ppin = pin;
 
 	if(!ppin)
 	{
 		// Make all visible if there's no vis info
-		for(Uint32 i = 0; i < bytecount; i++)
+		for(UInt32 i = 0; i < bytecount; i++)
 		{
 			(*pout) = 0xFF;
 			pout++;
@@ -89,13 +89,13 @@ byte* Mod_DecompressVIS( byte* pbuffer, Uint32 bufsize, byte* pin, const brushmo
 			continue;
 		}
 
-		Uint32 count = ppin[1];
+		UInt32 count = ppin[1];
 		ppin += 2;
 
 		if(count > pbuffer + bytecount - pout)
 			count = pbuffer + bytecount - pout;
 
-		memset(pout, 0, sizeof(byte)*count);
+		memset(pout, 0, sizeof(Byte)*count);
 		pout += count;
 
 		if((pout - pbuffer) >= bufsize)
@@ -112,15 +112,15 @@ byte* Mod_DecompressVIS( byte* pbuffer, Uint32 bufsize, byte* pin, const brushmo
 // @brief
 //
 //=============================================
-byte* Mod_DecompressPAS( byte* pbuffer, Uint32 bufsize, byte* pin, const brushmodel_t& model, Uint32 bytecount )
+Byte* Mod_DecompressPAS( Byte* pbuffer, UInt32 bufsize, Byte* pin, const brushmodel_t& model, UInt32 bytecount )
 {
-	byte* pout = pbuffer;
-	byte *ppin = pin;
+	Byte* pout = pbuffer;
+	Byte *ppin = pin;
 
 	if(!ppin)
 	{
 		// Make all visible if there's no vis info
-		for(Uint32 i = 0; i < bytecount; i++)
+		for(UInt32 i = 0; i < bytecount; i++)
 		{
 			(*pout) = 0xFF;
 			pout++;
@@ -155,13 +155,13 @@ byte* Mod_DecompressPAS( byte* pbuffer, Uint32 bufsize, byte* pin, const brushmo
 			continue;
 		}
 
-		Uint32 count = ppin[1];
+		UInt32 count = ppin[1];
 		ppin += 2;
 
 		if(count > pbuffer + bytecount - pout)
 			count = pbuffer + bytecount - pout;
 
-		memset(pout, 0, sizeof(byte)*count);
+		memset(pout, 0, sizeof(Byte)*count);
 		pout += count;
 
 		if((pout - pbuffer) >= bufsize)
@@ -178,9 +178,9 @@ byte* Mod_DecompressPAS( byte* pbuffer, Uint32 bufsize, byte* pin, const brushmo
 // @brief
 //
 //=============================================
-const byte* Mod_LeafPVS( byte* pbuffer, Uint32 bufsize, const mleaf_t& leaf, const brushmodel_t& model )
+const Byte* Mod_LeafPVS( Byte* pbuffer, UInt32 bufsize, const mleaf_t& leaf, const brushmodel_t& model )
 {
-	Uint32 bytecount = (model.numleafs + 7) >> 3;
+	UInt32 bytecount = (model.numleafs + 7) >> 3;
 	if(&leaf == model.pleafs)
 		return Mod_DecompressVIS(pbuffer, bufsize, nullptr, model, bytecount);
 	else
@@ -191,9 +191,9 @@ const byte* Mod_LeafPVS( byte* pbuffer, Uint32 bufsize, const mleaf_t& leaf, con
 // @brief
 //
 //=============================================
-const byte* Mod_LeafPAS( byte* pbuffer, Uint32 bufsize, const mleaf_t& leaf, const brushmodel_t& model )
+const Byte* Mod_LeafPAS( Byte* pbuffer, UInt32 bufsize, const mleaf_t& leaf, const brushmodel_t& model )
 {
-	Uint32 bytecount = (model.numleafs + 7) / 8;
+	UInt32 bytecount = (model.numleafs + 7) / 8;
 	if(&leaf == model.pleafs)
 		return Mod_DecompressPAS(pbuffer, bufsize, nullptr, model, bytecount);
 	else
@@ -204,11 +204,11 @@ const byte* Mod_LeafPAS( byte* pbuffer, Uint32 bufsize, const mleaf_t& leaf, con
 // @brief
 //
 //=============================================
-byte* Mod_CompressVIS( const byte* pin, Uint32* psize, const brushmodel_t& model, Int32 visbuffersize )
+Byte* Mod_CompressVIS( const Byte* pin, UInt32* psize, const brushmodel_t& model, Int32 visbuffersize )
 {
 	Int32 rownum = (model.numleafs+7)>>3;
-	byte* pvisdata = new byte[visbuffersize];
-	byte* pdest = pvisdata;
+	Byte* pvisdata = new Byte[visbuffersize];
+	Byte* pdest = pvisdata;
 
 	for(Int32 j = 0; j < rownum; j++)
 	{
@@ -249,8 +249,8 @@ const msurface_t* Mod_SurfaceAtPoint( const brushmodel_t* pmodel, const mnode_t*
 		return nullptr;
 
 	plane_t* pplane = pnode->pplane;
-	Float front = Math::DotProduct(start, pplane->normal) - pplane->dist;
-	Float back = Math::DotProduct(end, pplane->normal) - pplane->dist;
+	float front = Math::DotProduct(start, pplane->normal) - pplane->dist;
+	float back = Math::DotProduct(end, pplane->normal) - pplane->dist;
 
 	bool s = (front < 0.0f) ? true : false;
 	bool t = (back < 0.0f) ? true : false;
@@ -259,7 +259,7 @@ const msurface_t* Mod_SurfaceAtPoint( const brushmodel_t* pmodel, const mnode_t*
 		return Mod_SurfaceAtPoint(pmodel, pnode->pchildren[s], start, end);
 
 	Vector mid, point;
-	Float frac = front / (front - back);
+	float frac = front / (front - back);
 	Math::VectorSubtract(end, start, point);
 	Math::VectorMA(start, frac, point, mid);
 
@@ -267,7 +267,7 @@ const msurface_t* Mod_SurfaceAtPoint( const brushmodel_t* pmodel, const mnode_t*
 	if(psurface)
 		return psurface;
 
-	for(Uint32 i = 0; i < pnode->numsurfaces; i++)
+	for(UInt32 i = 0; i < pnode->numsurfaces; i++)
 	{
 		psurface = &pmodel->psurfaces[pnode->firstsurface + i];
 		mtexinfo_t *ptexinfo = psurface->ptexinfo;
@@ -289,7 +289,7 @@ const msurface_t* Mod_SurfaceAtPoint( const brushmodel_t* pmodel, const mnode_t*
 //=============================================
 //
 //=============================================
-void Mod_FindTouchedLeafs( const brushmodel_t* pworld, CArray<Uint32>& leafnumsarray, Uint32& leafcount, const Vector& mins, const Vector& maxs, mnode_t* pnode )
+void Mod_FindTouchedLeafs( const brushmodel_t* pworld, CArray<UInt32>& leafnumsarray, UInt32& leafcount, const Vector& mins, const Vector& maxs, mnode_t* pnode )
 {
 	if(pnode->contents == CONTENTS_SOLID)
 		return;
@@ -297,7 +297,7 @@ void Mod_FindTouchedLeafs( const brushmodel_t* pworld, CArray<Uint32>& leafnumsa
 	if(pnode->contents < 0)
 	{
 		mleaf_t* pleaf = reinterpret_cast<mleaf_t*>(pnode);
-		Uint32 leafnum = pleaf - pworld->pleafs - 1;
+		UInt32 leafnum = pleaf - pworld->pleafs - 1;
 
 		if(leafnumsarray.size() <= leafcount)
 			leafnumsarray.resize(leafnumsarray.size() + LEAFNUM_ALLOC_COUNT);
@@ -321,21 +321,21 @@ void Mod_FindTouchedLeafs( const brushmodel_t* pworld, CArray<Uint32>& leafnumsa
 //=============================================
 //
 //=============================================
-bool Mod_RecursiveLightPoint( const brushmodel_t* pworld, mnode_t *pnode, const Vector &start, const Vector &end, Vector* poutcolors, byte* poutstyles )
+bool Mod_RecursiveLightPoint( const brushmodel_t* pworld, mnode_t *pnode, const Vector &start, const Vector &end, Vector* poutcolors, Byte* poutstyles )
 {
 	if (pnode->contents < 0)
 		return false;
 	
 	plane_t* pplane = pnode->pplane;
-	Float front = Math::DotProduct (start, pplane->normal) - pplane->dist;
-	Float back = Math::DotProduct (end, pplane->normal) - pplane->dist;
+	float front = Math::DotProduct (start, pplane->normal) - pplane->dist;
+	float back = Math::DotProduct (end, pplane->normal) - pplane->dist;
 	Int32 side = front < 0;
 	
 	if ( (back < 0) == side )
 		return Mod_RecursiveLightPoint(pworld, pnode->pchildren[side], start, end, poutcolors, poutstyles);
 	
 	Vector mid;
-	Float frac = front / (front-back);
+	float frac = front / (front-back);
 	mid[0] = start[0] + (end[0] - start[0])*frac;
 	mid[1] = start[1] + (end[1] - start[1])*frac;
 	mid[2] = start[2] + (end[2] - start[2])*frac;
@@ -348,7 +348,7 @@ bool Mod_RecursiveLightPoint( const brushmodel_t* pworld, mnode_t *pnode, const 
 		return true;
 
 	msurface_t* psurfaces = pworld->psurfaces + pnode->firstsurface;
-	for (Uint32 i = 0; i < pnode->numsurfaces; i++)
+	for (UInt32 i = 0; i < pnode->numsurfaces; i++)
 	{
 		msurface_t* psurf = &psurfaces[i];
 		if (psurf->flags & (SURF_DRAWTURB | SURF_DRAWSKY) || !psurf->psamples)
@@ -373,8 +373,8 @@ bool Mod_RecursiveLightPoint( const brushmodel_t* pworld, mnode_t *pnode, const 
 		color24_t* plightmap = psurf->psamples[SURF_LIGHTMAP_DEFAULT];
 		plightmap += dt * ((psurf->base_extents[0] / psurf->base_samplesize)+1) + ds;
 
-		Float flIntensity = (plightmap->r + plightmap->g + plightmap->b)/3;
-		Float flScale = flIntensity/35;
+		float flIntensity = (plightmap->r + plightmap->g + plightmap->b)/3;
+		float flScale = flIntensity/35;
 
 		if(flScale > 1.0) 
 			flScale = 1.0;
@@ -386,11 +386,11 @@ bool Mod_RecursiveLightPoint( const brushmodel_t* pworld, mnode_t *pnode, const 
 		// Check styles
 		if(poutstyles)
 		{
-			Uint32 xsize = (psurf->base_extents[0] / psurf->base_samplesize) + 1;
-			Uint32 ysize = (psurf->base_extents[1] / psurf->base_samplesize) + 1;
-			Uint32 size = xsize*ysize;
+			UInt32 xsize = (psurf->base_extents[0] / psurf->base_samplesize) + 1;
+			UInt32 ysize = (psurf->base_extents[1] / psurf->base_samplesize) + 1;
+			UInt32 size = xsize*ysize;
 
-			for(Uint32 k = 1; k < MAX_SURFACE_STYLES; k++)
+			for(UInt32 k = 1; k < MAX_SURFACE_STYLES; k++)
 			{
 				if(psurf->styles[k] == NULL_LIGHTSTYLE_INDEX)
 					break;
@@ -406,7 +406,7 @@ bool Mod_RecursiveLightPoint( const brushmodel_t* pworld, mnode_t *pnode, const 
 		// See if we need to set destination styles
 		if(poutstyles)
 		{
-			for(Uint32 k = 0; k < MAX_SURFACE_STYLES; k++)
+			for(UInt32 k = 0; k < MAX_SURFACE_STYLES; k++)
 				poutstyles[k] = psurf->styles[k];
 		}
 
@@ -420,21 +420,21 @@ bool Mod_RecursiveLightPoint( const brushmodel_t* pworld, mnode_t *pnode, const 
 //=============================================
 //
 //=============================================
-bool Mod_RecursiveLightPoint_BumpData( const brushmodel_t* pworld, mnode_t *pnode, const Vector &start, const Vector &end, Vector* poutambientcolors, Vector* poutdiffusecolors, Vector* poutlightdirs, Vector* poutsurfnormal, byte* poutstyles )
+bool Mod_RecursiveLightPoint_BumpData( const brushmodel_t* pworld, mnode_t *pnode, const Vector &start, const Vector &end, Vector* poutambientcolors, Vector* poutdiffusecolors, Vector* poutlightdirs, Vector* poutsurfnormal, Byte* poutstyles )
 {
 	if (pnode->contents < 0)
 		return false;
 	
 	plane_t* pplane = pnode->pplane;
-	Float front = Math::DotProduct (start, pplane->normal) - pplane->dist;
-	Float back = Math::DotProduct (end, pplane->normal) - pplane->dist;
+	float front = Math::DotProduct (start, pplane->normal) - pplane->dist;
+	float back = Math::DotProduct (end, pplane->normal) - pplane->dist;
 	Int32 side = front < 0;
 	
 	if ( (back < 0) == side )
 		return Mod_RecursiveLightPoint_BumpData(pworld, pnode->pchildren[side], start, end, poutambientcolors, poutdiffusecolors, poutlightdirs, poutsurfnormal, poutstyles);
 	
 	Vector mid;
-	Float frac = front / (front-back);
+	float frac = front / (front-back);
 	mid[0] = start[0] + (end[0] - start[0])*frac;
 	mid[1] = start[1] + (end[1] - start[1])*frac;
 	mid[2] = start[2] + (end[2] - start[2])*frac;
@@ -447,7 +447,7 @@ bool Mod_RecursiveLightPoint_BumpData( const brushmodel_t* pworld, mnode_t *pnod
 		return true;
 
 	msurface_t* psurfaces = pworld->psurfaces + pnode->firstsurface;
-	for (Uint32 i = 0; i < pnode->numsurfaces; i++)
+	for (UInt32 i = 0; i < pnode->numsurfaces; i++)
 	{
 		msurface_t* psurf = &psurfaces[i];
 		if (psurf->flags & (SURF_DRAWTURB | SURF_DRAWSKY))
@@ -478,26 +478,26 @@ bool Mod_RecursiveLightPoint_BumpData( const brushmodel_t* pworld, mnode_t *pnod
 			|| !psurf->psamples[SURF_LIGHTMAP_VECTORS])
 			return false;
 
-		Uint32 xsize = (psurf->base_extents[0] / psurf->base_samplesize)+1;
-		Uint32 ysize = (psurf->base_extents[1] / psurf->base_samplesize)+1;
-		Uint32 size = xsize*ysize;
+		UInt32 xsize = (psurf->base_extents[0] / psurf->base_samplesize)+1;
+		UInt32 ysize = (psurf->base_extents[1] / psurf->base_samplesize)+1;
+		UInt32 size = xsize*ysize;
 
 		// Use base lighting as reference for overdarkening
 		color24_t* pbaselightmap = psurf->psamples[SURF_LIGHTMAP_DEFAULT];
 		pbaselightmap += dt * xsize + ds;
 
-		Float flIntensity = (pbaselightmap->r + pbaselightmap->g + pbaselightmap->b)/3;
-		Float flScale = flIntensity/35;
+		float flIntensity = (pbaselightmap->r + pbaselightmap->g + pbaselightmap->b)/3;
+		float flScale = flIntensity/35;
 		if(flScale > 1.0)
 			flScale = 1.0;
 
 		// Now process along with styles
-		for(Uint32 j = 0; j < MAX_SURFACE_STYLES; j++)
+		for(UInt32 j = 0; j < MAX_SURFACE_STYLES; j++)
 		{
 			if(psurf->styles[j] == NULL_LIGHTSTYLE_INDEX)
 				break;
 
-			Float styleScale;
+			float styleScale;
 			if(j == BASE_LIGHTMAP_INDEX)
 			{
 				// Only overdarkening is applied to base lightmap
@@ -559,22 +559,22 @@ bool Mod_RecursiveLightPoint_BumpData( const brushmodel_t* pworld, mnode_t *pnod
 			// Note: Trying to get this to work right, I ended up doing what Paranoia does here
 			// Still looks like shit though in 60% of cases
 			Vector scale;
-			Float dp = tmp[2] * 2 - 1;
+			float dp = tmp[2] * 2 - 1;
 			Math::VectorScale(diffusecolor, dp, scale);
 			Math::VectorAdd(scale, ambientcolor, scale);
 			Math::VectorScale(scale, 2.0, scale);// ???
 
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 				poutdiffusecolors[j][k] = diffusecolor[k] * scale[k];
 
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 				poutambientcolors[j][k] = ambientcolor[k] * scale[k];
 		}
 
 		// See if we need to set destination styles
 		if(poutstyles)
 		{
-			for(Uint32 k = 0; k < MAX_SURFACE_STYLES; k++)
+			for(UInt32 k = 0; k < MAX_SURFACE_STYLES; k++)
 				poutstyles[k] = psurf->styles[k];
 		}
 
@@ -596,9 +596,9 @@ bool Mod_RecursiveLightPoint_BumpData( const brushmodel_t* pworld, mnode_t *pnod
 //=============================================
 //
 //=============================================
-Int32 Mod_StyleIndex ( const msurface_t *psurface, Uint32 style )
+Int32 Mod_StyleIndex ( const msurface_t *psurface, UInt32 style )
 {
-	for (Uint32 j = 0 ; j < MAX_SURFACE_STYLES && psurface->styles[j] != NULL_LIGHTSTYLE_INDEX ; j++)
+	for (UInt32 j = 0 ; j < MAX_SURFACE_STYLES && psurface->styles[j] != NULL_LIGHTSTYLE_INDEX ; j++)
 	{
 		if (psurface->styles[j] == style)
 			return j;

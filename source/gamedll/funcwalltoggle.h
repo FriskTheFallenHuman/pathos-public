@@ -32,7 +32,7 @@ public:
 public:
 	virtual bool Spawn( void ) override;
 	virtual Int32 GetEntityFlags( void ) override { return CBaseEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION; }	
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual bool IsFuncWallToggleEntity( void ) const override { return true; }
 
 	void TurnOff( void );

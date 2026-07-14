@@ -17,9 +17,9 @@ namespace Math
 	//
 	// @param v1 First vector to compare
 	// @param v2 Second vector to compare
-	// @return TRUE if vectors match, FALSE otherwise
+	// @return true if vectors match, false otherwise
 	//=============================================
-	inline bool VectorCompare( const Vector& v1, const Vector& v2 )
+	DO_INLINE bool VectorCompare( const Vector& v1, const Vector& v2 )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 		{
@@ -36,7 +36,7 @@ namespace Math
 	// @param src Source vector
 	// @param dest Destination vector
 	//=============================================
-	inline void VectorCopy( const Vector& src, Vector& dest )
+	DO_INLINE void VectorCopy( const Vector& src, Vector& dest )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 			dest[i] = src[i];
@@ -48,7 +48,7 @@ namespace Math
 	// @param src Source array of floating point values
 	// @param dest Destination vector
 	//=============================================
-	inline void VectorCopy( const Float* psrc, Vector& dest )
+	DO_INLINE void VectorCopy( const float* psrc, Vector& dest )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 			dest[i] = psrc[i];
@@ -61,7 +61,7 @@ namespace Math
 	// @param src Source array of floating point values
 	// @param dest Destination array of floating point values
 	//=============================================
-	inline void VectorCopy( const Float* psrc, Float* pdest )
+	DO_INLINE void VectorCopy( const float* psrc, float* pdest )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 			pdest[i] = psrc[i];
@@ -74,7 +74,7 @@ namespace Math
 	// @param src Source vector
 	// @param dest Destination array of floating point values
 	//=============================================
-	inline void VectorCopy( const Vector& src, Float* pdest )
+	DO_INLINE void VectorCopy( const Vector& src, float* pdest )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 			pdest[i] = src[i];
@@ -85,7 +85,7 @@ namespace Math
 	//
 	// @param dest Vector to clear
 	//=============================================
-	inline void VectorClear( Vector& dest )
+	DO_INLINE void VectorClear( Vector& dest )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 			dest[i] = 0;
@@ -98,7 +98,7 @@ namespace Math
 	// @param v2 Vector to subtract
 	// @param dest Destination vector to hold the result
 	//=============================================
-	inline void Math::VectorSubtract( const Vector& v1, const Vector& v2, Vector& dest )
+	DO_INLINE void VectorSubtract( const Vector& v1, const Vector& v2, Vector& dest )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 			dest[i] = v1[i] - v2[i];
@@ -111,7 +111,7 @@ namespace Math
 	// @param v2 Vector to add
 	// @param dest Destination vector to hold the result
 	//=============================================
-	inline void Math::VectorAdd( const Vector& v1, const Vector& v2, Vector& dest )
+	DO_INLINE void VectorAdd( const Vector& v1, const Vector& v2, Vector& dest )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 			dest[i] = v1[i] + v2[i];
@@ -125,7 +125,7 @@ namespace Math
 	// @param v2 Vector to multiply then add
 	// @param dest Destination vector to hold the result
 	//=============================================
-	inline void Math::VectorMA( const Vector& v1, Float scale, const Vector& v2, Vector& dest )
+	DO_INLINE void VectorMA( const Vector& v1, float scale, const Vector& v2, Vector& dest )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 			dest[i] = v1[i] + v2[i]*scale;
@@ -138,7 +138,7 @@ namespace Math
 	// @param scale Amount to scale the vector by
 	// @param dest Destination vector to hold the result
 	//=============================================
-	inline void Math::VectorScale( const Vector& src, Float scale, Vector& dest )
+	DO_INLINE void VectorScale( const Vector& src, float scale, Vector& dest )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 			dest[i] = src[i]*scale;
@@ -151,7 +151,7 @@ namespace Math
 	// @param v2 Second vector of dot product
 	// @return Result of dot product
 	//=============================================
-	inline Float Math::DotProduct( const Vector& v1, const Vector& v2 )
+	DO_INLINE float DotProduct( const Vector& v1, const Vector& v2 )
 	{
 		return (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]);
 	}
@@ -163,7 +163,7 @@ namespace Math
 	// @param pv2 Pointer to second vector of dot product
 	// @return Result of dot product
 	//=============================================
-	inline Float Math::DotProduct( const Vector& v1, const Float *pv2 )
+	DO_INLINE float DotProduct( const Vector& v1, const float *pv2 )
 	{
 		return (v1[0] * pv2[0] + v1[1] * pv2[1] + v1[2] * pv2[2]);
 	}
@@ -175,7 +175,7 @@ namespace Math
 	// @param v2 Second float array of dot product
 	// @return Result of dot product
 	//=============================================
-	inline Float Math::DotProduct4( const Float* pv1, const Float *pv2 )
+	DO_INLINE float DotProduct4( const float* pv1, const float *pv2 )
 	{
 		return (pv1[0] * pv2[0] + pv1[1] * pv2[1] + pv1[2] * pv2[2] + pv1[3] * pv2[3]);
 	}
@@ -186,7 +186,7 @@ namespace Math
 	// @param angles Angles to get vectors from
 	// @param pforward Forward vector result
 	//=============================================
-	inline void Math::AngleVectors( const Vector& angles, Vector* pforward )
+	DO_INLINE void AngleVectors( const Vector& angles, Vector* pforward )
 	{
 		Math::AngleVectors(angles, pforward, nullptr, nullptr);
 	}
@@ -198,7 +198,7 @@ namespace Math
 	// @param pforward Forward vector result
 	// @param pright Right vector result
 	//=============================================
-	inline void Math::AngleVectors( const Vector& angles, Vector* pforward, Vector* pright )
+	DO_INLINE void AngleVectors( const Vector& angles, Vector* pforward, Vector* pright )
 	{
 		Math::AngleVectors(angles, pforward, pright, nullptr);
 	}
@@ -211,17 +211,17 @@ namespace Math
 	// @param pright Right vector result
 	// @param pup Up vector result
 	//=============================================
-	inline void Math::AngleVectors( const Vector& angles, Vector* pforward, Vector* pright, Vector* pup )
+	DO_INLINE void AngleVectors( const Vector& angles, Vector* pforward, Vector* pright, Vector* pup )
 	{
-		Float angle = static_cast<Float>(angles[YAW] * (M_PI * 2 / 360));
-		const Float sy = sin(angle);
-		const Float cy = cos(angle);
-		angle = static_cast<Float>(angles[PITCH] * (M_PI * 2 / 360));
-		const Float sp = sin(angle);
-		const Float cp = cos(angle);
-		angle = static_cast<Float>(angles[ROLL] * (M_PI * 2 / 360));
-		const Float sr = sin(angle);
-		const Float cr = cos(angle);
+		float angle = static_cast<float>(angles[YAW] * (M_PI * 2 / 360));
+		const float sy = sin(angle);
+		const float cy = cos(angle);
+		angle = static_cast<float>(angles[PITCH] * (M_PI * 2 / 360));
+		const float sp = sin(angle);
+		const float cp = cos(angle);
+		angle = static_cast<float>(angles[ROLL] * (M_PI * 2 / 360));
+		const float sr = sin(angle);
+		const float cr = cos(angle);
 
 		if (pforward)
 		{
@@ -251,7 +251,7 @@ namespace Math
 	// @param angles Angles to get vectors of
 	// @param pforward Forward vector result
 	//=============================================
-	inline void Math::AngleVectorsTranspose( const Vector& angles, Vector* pforward )
+	DO_INLINE void AngleVectorsTranspose( const Vector& angles, Vector* pforward )
 	{
 		Math::AngleVectorsTranspose(angles, pforward, nullptr, nullptr);
 	}
@@ -263,7 +263,7 @@ namespace Math
 	// @param pforward Forward vector result
 	// @param pright Right vector result
 	//=============================================
-	inline void Math::AngleVectorsTranspose( const Vector& angles, Vector* pforward, Vector* pright )
+	DO_INLINE void AngleVectorsTranspose( const Vector& angles, Vector* pforward, Vector* pright )
 	{
 		Math::AngleVectorsTranspose(angles, pforward, pright, nullptr);
 	}
@@ -276,17 +276,17 @@ namespace Math
 	// @param pright Right vector result
 	// @param pup Up vector result
 	//=============================================
-	inline void Math::AngleVectorsTranspose( const Vector& angles, Vector* pforward, Vector* pright, Vector* pup )
+	DO_INLINE void AngleVectorsTranspose( const Vector& angles, Vector* pforward, Vector* pright, Vector* pup )
 	{
-		Float angle = static_cast<Float>(angles[YAW] * (M_PI * 2 / 360));
-		const Float sy = sin(angle);
-		const Float cy = cos(angle);
-		angle = static_cast<Float>(angles[PITCH] * (M_PI * 2 / 360));
-		const Float sp = sin(angle);
-		const Float cp = cos(angle);
-		angle = static_cast<Float>(angles[ROLL] * (M_PI * 2 / 360));
-		const Float sr = sin(angle);
-		const Float cr = cos(angle);
+		float angle = static_cast<float>(angles[YAW] * (M_PI * 2 / 360));
+		const float sy = sin(angle);
+		const float cy = cos(angle);
+		angle = static_cast<float>(angles[PITCH] * (M_PI * 2 / 360));
+		const float sp = sin(angle);
+		const float cp = cos(angle);
+		angle = static_cast<float>(angles[ROLL] * (M_PI * 2 / 360));
+		const float sr = sin(angle);
+		const float cr = cos(angle);
 
 		if (pforward)
 		{
@@ -317,7 +317,7 @@ namespace Math
 	// @param v2 Second vector
 	// @param dest Destination to hold cross product
 	//=============================================
-	inline void Math::CrossProduct( const Vector& v1, const Vector& v2, Vector& dest )
+	DO_INLINE void CrossProduct( const Vector& v1, const Vector& v2, Vector& dest )
 	{
 		dest[0] = v1[1]*v2[2] - v1[2]*v2[1];
 		dest[1] = v1[2]*v2[0] - v1[0]*v2[2];
@@ -330,9 +330,9 @@ namespace Math
 	// @param angle Angle value to normalize
 	// @result Normalized angle
 	//=============================================
-	inline Float Math::AngleMod( Float angle )
+	DO_INLINE float AngleMod( float angle )
 	{
-		Float _angle;
+		float _angle;
 		if(angle > 360)
 			_angle = angle - (static_cast<Int32>(angle/360))*360;
 		else if(angle < 0)
@@ -350,9 +350,9 @@ namespace Math
 	// @param srcangle Current angle value
 	// @result Difference between the two angles
 	//=============================================
-	inline Float Math::AngleDiff( Float destangle, Float srcangle )
+	DO_INLINE float AngleDiff( float destangle, float srcangle )
 	{
-		Float delta = destangle - srcangle;
+		float delta = destangle - srcangle;
 		if(destangle > srcangle)
 		{
 			if(delta >= 180)
@@ -373,14 +373,14 @@ namespace Math
 	// @param v Vector to normalize
 	// @result Original length of the vector
 	//=============================================
-	inline Float Math::VectorNormalize( Vector& v )
+	DO_INLINE float VectorNormalize( Vector& v )
 	{
-		Float length = Math::DotProduct(v, v);
+		float length = Math::DotProduct(v, v);
 		length = sqrt(length);
 
 		if (length)
 		{
-			Float ilength = 1/length;
+			float ilength = 1/length;
 			v[0] *= ilength;
 			v[1] *= ilength;
 			v[2] *= ilength;
@@ -393,10 +393,10 @@ namespace Math
 	// @brief Tells if a vector has only zero values
 	//
 	// @param v Vector to test
-	// @return TRUE if the vector only has zero values,
-	// FALSE otherwise
+	// @return true if the vector only has zero values,
+	// false otherwise
 	//=============================================
-	inline bool Math::IsVectorZero( const Vector& v )
+	DO_INLINE bool IsVectorZero( const Vector& v )
 	{
 		if(v[0] || v[1] || v[2])
 			return false;
@@ -411,9 +411,9 @@ namespace Math
 	// @param maxs1 Maxs of first bounding box
 	// @param mins2 Mins of second bounding box
 	// @param maxs2 Maxs of second bounding box
-	// @return TRUE if bounding boxes intersect, FALSE otherwise
+	// @return true if bounding boxes intersect, false otherwise
 	//=============================================
-	inline bool Math::CheckMinsMaxs( const Vector& mins1, const Vector& maxs1, const Vector& mins2, const Vector& maxs2 )
+	DO_INLINE bool CheckMinsMaxs( const Vector& mins1, const Vector& maxs1, const Vector& mins2, const Vector& maxs2 )
 	{
 		if (mins1[0] > maxs2[0]) 
 			return true;
@@ -442,10 +442,10 @@ namespace Math
 	// @param point Coordinate to test
 	// @param mins Mins of bounding box
 	// @param maxs Maxs of bounding box
-	// @return TRUE if point is inside the bounding box,
-	// FALSE otherwise
+	// @return true if point is inside the bounding box,
+	// false otherwise
 	//=============================================
-	inline bool Math::PointInMinsMaxs( const Vector& point, const Vector& mins, const Vector& maxs )
+	DO_INLINE bool PointInMinsMaxs( const Vector& point, const Vector& mins, const Vector& maxs )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 		{
@@ -465,7 +465,7 @@ namespace Math
 	// @param angles Angles of entity
 	// @param vec Reference to vector to rotate to local space
 	//=============================================
-	inline void Math::RotateToEntitySpace( const Vector& angles, Vector& vec )
+	DO_INLINE void RotateToEntitySpace( const Vector& angles, Vector& vec )
 	{
 		Vector vtemp, vforward, vright, vup;
 		Math::VectorCopy(vec, vtemp);
@@ -483,7 +483,7 @@ namespace Math
 	// @param angles Angles of entity to rotate from
 	// @param vec Reference to vector to rotate to world space
 	//=============================================
-	inline void Math::RotateFromEntitySpace( const Vector& angles, Vector& vec )
+	DO_INLINE void RotateFromEntitySpace( const Vector& angles, Vector& vec )
 	{
 		Vector vtemp, vforward, vright, vup;
 		Math::VectorCopy(vec, vtemp);
@@ -502,19 +502,19 @@ namespace Math
 	// @param pmatrix Output matrix of 3x4 floats to hold the
 	// rotation matrix
 	//=============================================
-	inline void Math::AngleMatrix( const Vector& angles, Float (*pmatrix)[4] )
+	DO_INLINE void AngleMatrix( const Vector& angles, float (*pmatrix)[4] )
 	{
-		Float angle = angles[YAW]*(M_PI*2/360);
-		Float sy = SDL_sin(angle);
-		Float cy = SDL_cos(angle);
+		float angle = angles[YAW]*(M_PI*2/360);
+		float sy = SDL_sin(angle);
+		float cy = SDL_cos(angle);
 
 		angle = angles[PITCH]*(M_PI*2/360);
-		Float sp = SDL_sin(angle);
-		Float cp = SDL_cos(angle);
+		float sp = SDL_sin(angle);
+		float cp = SDL_cos(angle);
 
 		angle = angles[ROLL]*(M_PI*2/360);
-		Float sr = SDL_sin(angle);
-		Float cr = SDL_cos(angle);
+		float sr = SDL_sin(angle);
+		float cr = SDL_cos(angle);
 
 		pmatrix[0][0] = cp*cy;
 		pmatrix[1][0] = cp*sy;
@@ -541,17 +541,17 @@ namespace Math
 	// @param pmatrix Output matrix of 3x4 floats to hold the
 	// inverse rotation matrix
 	//=============================================
-	inline void Math::AngleInverseMatrix( const Vector& angles, Float (*pmatrix)[4] )
+	DO_INLINE void AngleInverseMatrix( const Vector& angles, float (*pmatrix)[4] )
 	{
-		Float angle = angles[YAW] * (M_PI*2 / 360);
-		Float sy = sin(angle);
-		Float cy = cos(angle);
+		float angle = angles[YAW] * (M_PI*2 / 360);
+		float sy = sin(angle);
+		float cy = cos(angle);
 		angle = angles[PITCH] * (M_PI*2 / 360);
-		Float sp = sin(angle);
-		Float cp = cos(angle);
+		float sp = sin(angle);
+		float cp = cos(angle);
 		angle = angles[ROLL] * (M_PI*2 / 360);
-		Float sr = sin(angle);
-		Float cr = cos(angle);
+		float sr = sin(angle);
+		float cr = cos(angle);
 
 		pmatrix[0][0] = cp*cy;
 		pmatrix[0][1] = cp*sy;
@@ -577,7 +577,7 @@ namespace Math
 	// @param pmatrix 3x4 matrix to rotate with
 	// @param out Reference to vector to hold the result
 	//=============================================
-	inline void Math::VectorRotate( const Vector& vec, const Float (*pmatrix)[4], Vector& out )
+	DO_INLINE void VectorRotate( const Vector& vec, const float (*pmatrix)[4], Vector& out )
 	{
 		out[0] = (vec[0] * pmatrix[0][0]) + (vec[1] * pmatrix[0][1]) + (vec[2] * pmatrix[0][2]);
 		out[1] = (vec[0] * pmatrix[1][0]) + (vec[1] * pmatrix[1][1]) + (vec[2] * pmatrix[1][2]);
@@ -591,7 +591,7 @@ namespace Math
 	// @param pmatrix 3x4 matrix to rotate with
 	// @param out Reference to vector to hold the result
 	//=============================================
-	inline void Math::VectorInverseRotate( const Vector& vec, const Float (*pmatrix)[4], Vector& out )
+	DO_INLINE void VectorInverseRotate( const Vector& vec, const float (*pmatrix)[4], Vector& out )
 	{
 		out[0] = vec[0]*pmatrix[0][0] + vec[1]*pmatrix[1][0] + vec[2]*pmatrix[2][0];
 		out[1] = vec[0]*pmatrix[0][1] + vec[1]*pmatrix[1][1] + vec[2]*pmatrix[2][1];
@@ -606,18 +606,18 @@ namespace Math
 	// @param left Left vector
 	// @result Angles calculated from forward and left vectors
 	//=============================================
-	inline Vector Math::VectorToAngles( const Vector& forward, const Vector& left )
+	DO_INLINE Vector VectorToAngles( const Vector& forward, const Vector& left )
 	{
 		// I think I referenced the Source SDK for this math solution, so credit
 		// goes to Valve for the code I referenced.
 		Vector angles;
 	
-		const Float xyDist = sqrtf( forward[0] * forward[0] + forward[1] * forward[1] );
+		const float xyDist = sqrtf( forward[0] * forward[0] + forward[1] * forward[1] );
 		if ( xyDist > 0.001f )
 		{
 			angles[1] = RAD2DEG( SDL_atan2f( forward[1], forward[0] ) );
 			angles[0] = RAD2DEG( SDL_atan2f( -forward[2], xyDist ) );
-			const Float up_z = (left[1] * forward[0]) - (left[0] * forward[1]);
+			const float up_z = (left[1] * forward[0]) - (left[0] * forward[1]);
 			angles[2] = RAD2DEG( SDL_atan2f( left[2], up_z ) );
 		}
 		else
@@ -638,10 +638,10 @@ namespace Math
 	// @param forward Forward vector defining the forward direction
 	// @result Angles calculated from forward vector
 	//=============================================
-	inline Vector Math::VectorToAngles( const Vector& forward )
+	DO_INLINE Vector VectorToAngles( const Vector& forward )
 	{
-		Float yaw = 0;
-		Float pitch = 0;
+		float yaw = 0;
+		float pitch = 0;
 
 		if(forward[1] == 0 && forward[0] == 0)
 		{
@@ -653,12 +653,12 @@ namespace Math
 		}
 		else
 		{
-			yaw = static_cast<Float>(SDL_atan2(forward[1], forward[0]) * 180/M_PI);
+			yaw = static_cast<float>(SDL_atan2(forward[1], forward[0]) * 180/M_PI);
 			if(yaw < 0)
 				yaw += 360.0f;
 
-			const Float tmp = SDL_sqrt(forward[0]*forward[0]+forward[1]*forward[1]);
-			pitch = static_cast<Float>(SDL_atan2(forward[2], tmp)*180/M_PI);
+			const float tmp = SDL_sqrt(forward[0]*forward[0]+forward[1]*forward[1]);
+			pitch = static_cast<float>(SDL_atan2(forward[2], tmp)*180/M_PI);
 			if(pitch < 0)
 				pitch += 360.0f;
 		}
@@ -678,7 +678,7 @@ namespace Math
 	// @param vecin Vector to multiply with the matrix
 	// @param vecout Result vector
 	//=============================================
-	inline void Math::MatMultPosition( const Float *flmatrix, const Vector& vecin, Vector *vecout )
+	DO_INLINE void MatMultPosition( const float *flmatrix, const Vector& vecin, Vector *vecout )
 	{
 		vecout->x = vecin[0]*flmatrix[0] + vecin[1]*flmatrix[4] + vecin[2]*flmatrix[8] + flmatrix[12];
 		vecout->y = vecin[0]*flmatrix[1] + vecin[1]*flmatrix[5] + vecin[2]*flmatrix[9] + flmatrix[13];
@@ -692,7 +692,7 @@ namespace Math
 	// @param vecin Vector to multiply with the matrix
 	// @param vecout Result vector
 	//=============================================
-	inline void Math::MatMult( const Float *flmatrix, const Vector& vecin, Vector *vecout )
+	DO_INLINE void MatMult( const float *flmatrix, const Vector& vecin, Vector *vecout )
 	{
 		vecout->x = vecin[0]*flmatrix[0] + vecin[1]*flmatrix[4] + vecin[2]*flmatrix[8];
 		vecout->y = vecin[0]*flmatrix[1] + vecin[1]*flmatrix[5] + vecin[2]*flmatrix[9];
@@ -706,7 +706,7 @@ namespace Math
 	// @param vecin 4 element vector to multiply with the matrix
 	// @param vecout Result vector
 	//=============================================
-	inline void Math::MatMult4( const Float *flmatrix, const Float *vecin, Float *vecout )
+	DO_INLINE void MatMult4( const float *flmatrix, const float *vecin, float *vecout )
 	{
 		vecout[0] = vecin[0]*flmatrix[0] + vecin[1]*flmatrix[4] + vecin[2]*flmatrix[8] + vecin[3]*flmatrix[12];
 		vecout[1] = vecin[0]*flmatrix[1] + vecin[1]*flmatrix[5] + vecin[2]*flmatrix[9] + vecin[3]*flmatrix[13];
@@ -721,7 +721,7 @@ namespace Math
 	// @param up Result up vector
 	// @param right Result right vector
 	//=============================================
-	inline void Math::GetUpRight( const Vector& forward, Vector &up, Vector &right )
+	DO_INLINE void GetUpRight( const Vector& forward, Vector &up, Vector &right )
 	{
 		// Thanks to BUzer for the original code.
 		Math::VectorClear(up);
@@ -745,7 +745,7 @@ namespace Math
 	// @param pmatrix The 3x4 matrix to multiply with
 	// @param out Result vector
 	//=============================================
-	inline void Math::VectorTransform( const Vector& in, Float (*pmatrix)[4], Vector& out )
+	DO_INLINE void VectorTransform( const Vector& in, float (*pmatrix)[4], Vector& out )
 	{
 		out[0] = (in[0] * pmatrix[0][0]) + (in[1] * pmatrix[0][1]) + (in[2] * pmatrix[0][2]) + pmatrix[0][3];
 		out[1] = (in[0] * pmatrix[1][0]) + (in[1] * pmatrix[1][1]) + (in[2] * pmatrix[1][2]) + pmatrix[1][3];
@@ -759,7 +759,7 @@ namespace Math
 	// @param pmatrix 3x4 matrix to rotate with
 	// @param out Reference to vector to hold the result
 	//=============================================
-	inline void Math::VectorInverseTransform( const Vector& vec, const Float (*pmatrix)[4], Vector& out )
+	DO_INLINE void VectorInverseTransform( const Vector& vec, const float (*pmatrix)[4], Vector& out )
 	{
 		// We first have to subtract the position, THEN inverse rotate
 		Vector tmp;
@@ -777,7 +777,7 @@ namespace Math
 	// @param quaternion Input quaternion
 	// @param pmatrix Result 3x4 matrix
 	//=============================================
-	inline void Math::QuaternionMatrix( const vec4_t& quaternion, Float (*pmatrix)[4] )
+	DO_INLINE void QuaternionMatrix( const vec4_t& quaternion, float (*pmatrix)[4] )
 	{
 		pmatrix[0][0] = 1.0 - 2.0 * quaternion[1] * quaternion[1] - 2.0 * quaternion[2] * quaternion[2];
 		pmatrix[1][0] = 2.0 * quaternion[0] * quaternion[1] + 2.0 * quaternion[3] * quaternion[2];
@@ -800,10 +800,10 @@ namespace Math
 	// @param interp A value from 0-1 determining how the quaternions are blended together
 	// @param outq Reference to vec4_t to hold the resulting quaternion
 	//=============================================
-	inline void Math::QuaternionBlend( const vec4_t& q1, const vec4_t& q2, Float interp, vec4_t& outq )
+	DO_INLINE void QuaternionBlend( const vec4_t& q1, const vec4_t& q2, float interp, vec4_t& outq )
 	{
-		Float a = 0;
-		Float b = 0;
+		float a = 0;
+		float b = 0;
 
 		vec4_t quat1;
 		for(Uint32 i = 0; i < 4; i++)
@@ -823,15 +823,15 @@ namespace Math
 				quat1[i] = q1[i];
 		}
 
-		Float sclq1;
-		Float sclq2;
-		const Float cosom = Math::DotProduct4(quat1, q2);
+		float sclq1;
+		float sclq2;
+		const float cosom = Math::DotProduct4(quat1, q2);
 		if(1.0+cosom > 0.000001f)
 		{
 			if(1.0-cosom > 0.00001f)
 			{
-				const Float omega = SDL_acos(cosom);
-				const Float sinom = SDL_sin(omega);
+				const float omega = SDL_acos(cosom);
+				const float sinom = SDL_sin(omega);
 				sclq1 = SDL_sin((1.0f-interp)*omega)/sinom;
 				sclq2 = SDL_sin(interp*omega)/sinom;
 			}
@@ -862,18 +862,18 @@ namespace Math
 	// @param angles Input angles
 	// @param quaternion Result quaternion
 	//=============================================
-	inline void Math::AngleQuaternion( const Vector& angles, vec4_t& quaternion )
+	DO_INLINE void AngleQuaternion( const Vector& angles, vec4_t& quaternion )
 	{
 		// FIXME: rescale the inputs to 1/2 angle
-		Float angle = angles[2] * 0.5;
-		Float sy = sin(angle);
-		Float cy = cos(angle);
+		float angle = angles[2] * 0.5;
+		float sy = sin(angle);
+		float cy = cos(angle);
 		angle = angles[1] * 0.5;
-		Float sp = sin(angle);
-		Float cp = cos(angle);
+		float sp = sin(angle);
+		float cp = cos(angle);
 		angle = angles[0] * 0.5;
-		Float sr = sin(angle);
-		Float cr = cos(angle);
+		float sr = sin(angle);
+		float cr = cos(angle);
 
 		quaternion[0] = sr*cp*cy-cr*sp*sy; // X
 		quaternion[1] = cr*sp*cy+sr*cp*sy; // Y
@@ -888,7 +888,7 @@ namespace Math
 	// @param pin2 Input 3x4 matrix 2
 	// @param pout Output 3x4 matrix
 	//=============================================
-	inline void Math::ConcatTransforms( const Float (*pin1)[4], const Float (*pin2)[4], Float (*pout)[4] )
+	DO_INLINE void ConcatTransforms( const float (*pin1)[4], const float (*pin2)[4], float (*pout)[4] )
 	{
 		pout[0][0] = pin1[0][0] * pin2[0][0] + pin1[0][1] * pin2[1][0] + pin1[0][2] * pin2[2][0];
 		pout[0][1] = pin1[0][0] * pin2[0][1] + pin1[0][1] * pin2[1][1] + pin1[0][2] * pin2[2][1];
@@ -910,7 +910,7 @@ namespace Math
 	// @param pin Input 3x4 matrix
 	// @param pout Result 3x4 matrix
 	//=============================================
-	inline void Math::CopyMatrix( const Float (*pin)[4], Float (*pout)[4] )
+	DO_INLINE void CopyMatrix( const float (*pin)[4], float (*pout)[4] )
 	{
 		for(Uint32 i = 0; i < 3; i++)
 		{
@@ -926,38 +926,38 @@ namespace Math
 	// @param angles Angles to adjust
 	// @result Angles adjusted to surface normal
 	//=============================================
-	inline Vector Math::AdjustAnglesToNormal( const Vector& normal, const Vector& angles )
+	DO_INLINE Vector AdjustAnglesToNormal( const Vector& normal, const Vector& angles )
 	{
 		// Thanks to Magic Nipples for the code to align the bike
 		Vector planeAngle = Math::VectorToAngles(normal);
-		Float playerYawX = angles[1];
+		float playerYawX = angles[1];
 		if (playerYawX > 180) 
 			playerYawX -= 360;
 		if (playerYawX < -180) 
 			playerYawX += 360;
 
-		Float planeYaw = planeAngle[1];
+		float planeYaw = planeAngle[1];
 		if (planeYaw > 180) 
 			planeYaw -= 360;
 		if (planeYaw < -180) 
 			planeYaw += 360;
 
-		Float yawDiffX = planeYaw - playerYawX;
+		float yawDiffX = planeYaw - playerYawX;
 		if (yawDiffX > 180) 
 			yawDiffX -= 360;
 		if (yawDiffX < -180) 
 			yawDiffX += 360;
 
 		yawDiffX = SDL_fabs(yawDiffX);
-		const Float crossYawX = ((planeAngle[0] * yawDiffX) / 90 - planeAngle[0]);
+		const float crossYawX = ((planeAngle[0] * yawDiffX) / 90 - planeAngle[0]);
 	
-		Float playerYawY = angles[1] + 90;
+		float playerYawY = angles[1] + 90;
 		if (playerYawY > 180) 
 			playerYawY -= 360;
 		if (playerYawY < -180) 
 			playerYawY += 360;
 
-		Float yawDiffY = planeYaw - playerYawY;
+		float yawDiffY = planeYaw - playerYawY;
 		if (yawDiffY > 180) 
 			yawDiffY -= 360;
 		if (yawDiffY < -180) 
@@ -965,9 +965,9 @@ namespace Math
 
 		yawDiffY = SDL_fabs(yawDiffY);
 
-		Float targetX;
-		Float targetY;
-		Float crossYawY = ((planeAngle[0] * yawDiffY) / 90 - planeAngle[0]);
+		float targetX;
+		float targetY;
+		float crossYawY = ((planeAngle[0] * yawDiffY) / 90 - planeAngle[0]);
 		if (planeAngle[0] == 90)
 		{
 			targetX = 0;
@@ -995,7 +995,7 @@ namespace Math
 	// @param v3 Third value to check
 	// @return Smallest value of the three
 	//=============================================
-	inline Float Math::FindMinValueOf3( Float v1, Float v2, Float v3 )
+	DO_INLINE float FindMinValueOf3( float v1, float v2, float v3 )
 	{
 		return _max(_max(v1, v2), v3);
 	}
@@ -1008,7 +1008,7 @@ namespace Math
 	// @param v3 Third value to check
 	// @return Largest value of the three
 	//=============================================
-	inline Float Math::FindMaxValueOf3( Float v1, Float v2, Float v3 )
+	DO_INLINE float FindMaxValueOf3( float v1, float v2, float v3 )
 	{
 		return _min(_min(v1, v2), v3);
 	}
@@ -1022,7 +1022,7 @@ namespace Math
 	// @param min Smallest value of the three
 	// @param max Largest value of the three
 	//=============================================
-	inline void Math::FindMinMaxValuesOf3( Float v1, Float v2, Float v3, Float& min, Float& max )
+	DO_INLINE void FindMinMaxValuesOf3( float v1, float v2, float v3, float& min, float& max )
 	{
 		min = FindMinValueOf3(v1, v2, v3);
 		max = FindMaxValueOf3(v1, v2, v3);

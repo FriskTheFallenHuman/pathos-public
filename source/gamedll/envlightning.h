@@ -20,7 +20,7 @@ class CEnvLightning : public CBeam
 {
 public:
 	// Number of random loops
-	static const Uint32 NUM_RANDOM_LOOPS;
+	static const UInt32 NUM_RANDOM_LOOPS;
 
 public:
 	explicit CEnvLightning( edict_t* pedict );
@@ -42,9 +42,9 @@ public:
 
 public:
 	// Use function for striking the beam
-	void EXPORTFN StrikeUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	void EXPORTFN StrikeUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 	// Use function for toggling the beam
-	void EXPORTFN ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	void EXPORTFN ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 
 	// Called when striking
 	void EXPORTFN StrikeThink( void );
@@ -66,35 +66,35 @@ public:
 	bool IsPointEntity( CBaseEntity* pEntity );
 
 public:
-	// TRUE if active
+	// true if active
 	bool m_isActive;
 	// Start entity name
 	string_t m_startEntityName;
 	// End entity name
 	string_t m_endEntityName;
 	// Lifetime of beam
-	Float m_life;
+	float m_life;
 	// Beam width
-	Float m_beamWidth;
+	float m_beamWidth;
 	// Noise amplitude
-	Float m_noiseAmplitude;
+	float m_noiseAmplitude;
 	// Brightness
-	Uint32 m_brightness;
+	UInt32 m_brightness;
 	// Speed of scroll
-	Float m_speed;
+	float m_speed;
 	// Spead of beam noise
-	Float m_noiseSpeed;
+	float m_noiseSpeed;
 	// Max delay before next strikg
-	Float m_strikeMaxDelay;
+	float m_strikeMaxDelay;
 	// Sprite texture index
 	Int32 m_spriteModelIndex;
 	// Sprite model name
 	string_t m_spriteModelName;
 	// Start frame
-	Uint32 m_startFrame;
+	UInt32 m_startFrame;
 	// Radius
-	Float m_radius;
-	// TRUE if tesla beam
+	float m_radius;
+	// true if tesla beam
 	bool m_isTeslaBeam;
 };
 #endif //ENVLIGHTNING

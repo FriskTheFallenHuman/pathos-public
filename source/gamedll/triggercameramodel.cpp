@@ -13,11 +13,11 @@ All Rights Reserved.
 #include "player.h"
 #include "vcontroller_shared.h"
 
-// TRUE if we are blocking saving
+// true if we are blocking saving
 bool CTriggerCameraModel::g_bIsBlockingSaving = false;
 
 // v_sequences model file path
-const Char CTriggerCameraModel::V_SEQUENCES_MODELNAME[] = "models/v_sequences.mdl";
+const char CTriggerCameraModel::V_SEQUENCES_MODELNAME[] = "models/v_sequences.mdl";
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(trigger_cameramodel, CTriggerCameraModel);
@@ -117,7 +117,7 @@ bool CTriggerCameraModel::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-bool CTriggerCameraModel::ShouldOverrideKeyValue( const Char* pstrKeyValue )
+bool CTriggerCameraModel::ShouldOverrideKeyValue( const char* pstrKeyValue )
 {
 	// Fov is handled by this entity specially
 	if(!qstrcmp(pstrKeyValue, "fov"))
@@ -209,7 +209,7 @@ bool CTriggerCameraModel::CheckSequence( string_t& sequence )
 // @brief
 //
 //=============================================
-void CTriggerCameraModel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerCameraModel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pentity;
@@ -311,7 +311,7 @@ void CTriggerCameraModel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller
 		if(m_loopSequence != NO_STRING_VALUE && m_entrySequence != NO_STRING_VALUE 
 			&& m_triggerState != CAMMODEL_STATE_LOOP)
 		{
-			const Char* pstrSeqName = gd_engfuncs.pfnGetString(m_entrySequence);
+			const char* pstrSeqName = gd_engfuncs.pfnGetString(m_entrySequence);
 			m_pState->sequence = FindSequence(pstrSeqName);
 			m_pState->frame = 0;
 
@@ -327,7 +327,7 @@ void CTriggerCameraModel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller
 		else if(m_triggerSequence != NO_STRING_VALUE)
 		{
 			// Set sequence to play
-			const Char* pstrSeqName = gd_engfuncs.pfnGetString(m_triggerSequence);
+			const char* pstrSeqName = gd_engfuncs.pfnGetString(m_triggerSequence);
 			m_pState->sequence = FindSequence(pstrSeqName);
 			m_pState->frame = 0;
 
@@ -365,7 +365,7 @@ void CTriggerCameraModel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller
 // @brief
 //
 //=============================================
-CTriggerCameraModel* CTriggerCameraModel::CreateCameraModel( const CBaseEntity* pOwner, Float bendTime, const Char* pstrRestSequence, const Char* pstrEntrySequence, const Char* pstrLoopSequence, const Char* pstrTriggerSequence )
+CTriggerCameraModel* CTriggerCameraModel::CreateCameraModel( const CBaseEntity* pOwner, float bendTime, const char* pstrRestSequence, const char* pstrEntrySequence, const char* pstrLoopSequence, const char* pstrTriggerSequence )
 {
 	edict_t* pedict = gd_engfuncs.pfnCreateEntity("trigger_cameramodel");
 	if(!pedict)
@@ -477,7 +477,7 @@ void CTriggerCameraModel::EnterLoopThink( void )
 // @brief
 //
 //=============================================
-void CTriggerCameraModel::SetEntrySequence( const Char* pstrseqname )
+void CTriggerCameraModel::SetEntrySequence( const char* pstrseqname )
 {
 	if(pstrseqname && qstrlen(pstrseqname))
 		m_entrySequence = gd_engfuncs.pfnAllocString(pstrseqname);
@@ -489,7 +489,7 @@ void CTriggerCameraModel::SetEntrySequence( const Char* pstrseqname )
 // @brief
 //
 //=============================================
-void CTriggerCameraModel::SetLoopSequence( const Char* pstrseqname )
+void CTriggerCameraModel::SetLoopSequence( const char* pstrseqname )
 {
 	if(pstrseqname && qstrlen(pstrseqname))
 		m_loopSequence = gd_engfuncs.pfnAllocString(pstrseqname);
@@ -501,7 +501,7 @@ void CTriggerCameraModel::SetLoopSequence( const Char* pstrseqname )
 // @brief
 //
 //=============================================
-void CTriggerCameraModel::SetRestSequence( const Char* pstrseqname )
+void CTriggerCameraModel::SetRestSequence( const char* pstrseqname )
 {
 	if(pstrseqname && qstrlen(pstrseqname))
 		m_restSequence = gd_engfuncs.pfnAllocString(pstrseqname);
@@ -513,7 +513,7 @@ void CTriggerCameraModel::SetRestSequence( const Char* pstrseqname )
 // @brief
 //
 //=============================================
-void CTriggerCameraModel::SetTriggerSequence( const Char* pstrseqname )
+void CTriggerCameraModel::SetTriggerSequence( const char* pstrseqname )
 {
 	if(pstrseqname && qstrlen(pstrseqname))
 		m_triggerSequence = gd_engfuncs.pfnAllocString(pstrseqname);
@@ -525,7 +525,7 @@ void CTriggerCameraModel::SetTriggerSequence( const Char* pstrseqname )
 // @brief
 //
 //=============================================
-void CTriggerCameraModel::SetBlendTime( Float time )
+void CTriggerCameraModel::SetBlendTime( float time )
 {
 	m_blendTime = time;
 }

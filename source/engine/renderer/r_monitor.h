@@ -40,18 +40,18 @@ struct cl_monitor_t
 	Vector origin;
 	CArray<msurface_t*> surfaces;
 
-	Uint32 start_vertex;
-	Uint32 num_vertexes;
+	UInt32 start_vertex;
+	UInt32 num_vertexes;
 
-	Uint32 xresolution;
-	Uint32 yresolution;
+	UInt32 xresolution;
+	UInt32 yresolution;
 
-	Uint32 renderpassidx;
+	UInt32 renderpassidx;
 
 	fbobind_t *pfbo;
 	en_texalloc_t* ptexture;
 
-	byte* pvisset;
+	Byte* pvisset;
 };
 
 struct monitor_vertex_t
@@ -64,8 +64,8 @@ struct monitor_vertex_t
 	}
 
 	vec4_t origin;
-	Float texcoord[2];
-	byte padding[8];
+	float texcoord[2];
+	Byte padding[8];
 };
 
 struct monitor_attribs
@@ -109,9 +109,9 @@ class CMonitorManager
 {
 public:
 	// Scanline texture width
-	static const Uint32 SCANLINE_TEXTURE_WIDTH;
+	static const UInt32 SCANLINE_TEXTURE_WIDTH;
 	// Scanline texture height
-	static const Uint32 SCANLINE_TEXTURE_HEIGHT;
+	static const UInt32 SCANLINE_TEXTURE_HEIGHT;
 
 public:
 	CMonitorManager( void );
@@ -138,7 +138,7 @@ public:
 	// Draws renderpasses for monitors
 	bool DrawMonitorPasses( void );
 	// Seeks out any matching monitors
-	cl_monitor_t* GetMatchingMonitor( Uint32 currentindex );
+	cl_monitor_t* GetMatchingMonitor( UInt32 currentindex );
 	
 	// Allocates a new monitor
 	void AllocNewMonitor( cl_entity_t* pentity );
@@ -147,9 +147,9 @@ public:
 	void CreateScanlineTexture( void );
 
 	// Gets the number of monitors
-	Uint32 GetNbMonitors( void ) const { return m_monitorsArray.size(); }
+	UInt32 GetNbMonitors( void ) const { return m_monitorsArray.size(); }
 	// Retreives the monitor's PVS data
-	const byte* GetMonitorPVS( Uint32 monitorindex );
+	const Byte* GetMonitorPVS( UInt32 monitorindex );
 
 private:
 	// Sets up a monitor renderpass
@@ -181,7 +181,7 @@ private:
 	CCVar *m_pCvarMonitorsDebug;
 
 	// Numbe of monitors drawn
-	Uint32 m_numMonitorsDrawn;
+	UInt32 m_numMonitorsDrawn;
 
 private:
 	// Monitor view params

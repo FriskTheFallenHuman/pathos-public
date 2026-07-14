@@ -13,19 +13,19 @@ All Rights Reserved.
 #include "weapons_shared.h"
 
 // Model used by this NPC
-const Char CNPCSentry::NPC_MODEL_NAME[] = "models/sentry.mdl";
+const char CNPCSentry::NPC_MODEL_NAME[] = "models/sentry.mdl";
 // Retracted height
-const Float CNPCSentry::NPC_RETRACTED_HEIGHT = 64;
+const float CNPCSentry::NPC_RETRACTED_HEIGHT = 64;
 // Deployed height
-const Float CNPCSentry::NPC_DEPLOYED_HEIGHT = 64;
+const float CNPCSentry::NPC_DEPLOYED_HEIGHT = 64;
 // Minimum pitch value
-const Float CNPCSentry::NPC_MIN_PITCH_VALUE = -60;
+const float CNPCSentry::NPC_MIN_PITCH_VALUE = -60;
 // View offset for npc
 const Vector CNPCSentry::NPC_VIEW_OFFSET = Vector(0, 0, 48);
 // X size of NPC
-const Float CNPCSentry::NPC_X_SIZE = 16;
+const float CNPCSentry::NPC_X_SIZE = 16;
 // Y size of NPC
-const Float CNPCSentry::NPC_Y_SIZE = 16;
+const float CNPCSentry::NPC_Y_SIZE = 16;
 
 LINK_ENTITY_TO_CLASS( npc_sentry, CNPCSentry );
 
@@ -93,7 +93,7 @@ void CNPCSentry::InitializeTurret( void )
 // @brief Makes the entity take on damage
 //
 //=============================================
-bool CNPCSentry::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags )
+bool CNPCSentry::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags )
 {
 	m_pState->health -= amount;
 	if(m_pState->health <= 0)
@@ -139,7 +139,7 @@ void CNPCSentry::TurretShoot( const Vector& shootOrigin, const Vector& enemyDire
 	Vector up, right;
 	Math::GetUpRight(enemyDirection, up, right);
 
-	Uint32 firingConeId = GetFiringCone(true);
+	UInt32 firingConeId = GetFiringCone(true);
 	Vector firingCone = Weapon_GetConeSize(firingConeId);
 
 	FireBullets(1, shootOrigin, enemyDirection, right, up, firingCone, NPC_DEFAULT_MAX_FIRING_DISTANCE, BULLET_NPC_SIG552, 4, 0, this);

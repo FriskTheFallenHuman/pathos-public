@@ -64,7 +64,7 @@ bool CEnvBlackHole::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvBlackHole::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvBlackHole::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool desiredState = false;
 	switch(useMode)
@@ -189,7 +189,7 @@ void CEnvBlackHole::SendInitMessage( const CBaseEntity* pPlayer )
 	else
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.blackhole, nullptr, nullptr);
 
-	Float adjustedGrowthTime = m_growthTime - ((Float)g_pGameVars->time - (Float)m_spawnTime);
+	float adjustedGrowthTime = m_growthTime - ((float)g_pGameVars->time - (float)m_spawnTime);
 	if(adjustedGrowthTime < 0)
 		adjustedGrowthTime = 0;
 
@@ -225,12 +225,12 @@ void CEnvBlackHole::SuckThink( void )
 	}
 
 	// Scale of pull strength
-	Float scale = m_pState->scale;
+	float scale = m_pState->scale;
 
 	// Calculate growth period
 	if(m_growthTime && g_pGameVars->time < (m_spawnTime + m_growthTime))
 	{
-		Float growthFactor = (g_pGameVars->time - m_spawnTime) / m_growthTime;
+		float growthFactor = (g_pGameVars->time - m_spawnTime) / m_growthTime;
 		if(growthFactor > 1.0)
 			growthFactor = 1.0;
 		else if(growthFactor > 1.0)
@@ -242,10 +242,10 @@ void CEnvBlackHole::SuckThink( void )
 	// Calculate shrinking
 	if(m_lifeTime != -1 && m_shrinkTime)
 	{
-		Double shrinkBeginTime = (m_spawnTime + m_lifeTime - m_shrinkTime);
+		double shrinkBeginTime = (m_spawnTime + m_lifeTime - m_shrinkTime);
 		if(shrinkBeginTime < g_pGameVars->time)
 		{
-			Float shrinkFactor = (g_pGameVars->time - shrinkBeginTime) / m_shrinkTime;
+			float shrinkFactor = (g_pGameVars->time - shrinkBeginTime) / m_shrinkTime;
 			if(shrinkFactor < 0)
 				shrinkFactor = 0;
 			else if(shrinkFactor > 1.0)
@@ -255,11 +255,11 @@ void CEnvBlackHole::SuckThink( void )
 		}
 	}
 
-	Float fullRadius = BLACK_HOLE_SIZE*m_pState->scale*scale;
-	Float radiusSquared = fullRadius*fullRadius;
+	float fullRadius = BLACK_HOLE_SIZE*m_pState->scale*scale;
+	float radiusSquared = fullRadius*fullRadius;
 
 	Vector mins, maxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		mins[i] = m_pState->origin[i] - fullRadius;
 		maxs[i] = m_pState->origin[i] + fullRadius;
@@ -281,12 +281,12 @@ void CEnvBlackHole::SuckThink( void )
 
 		// Use inverse square radius
 		Vector direction = m_pState->origin - entityOrigin;
-		Float distance = Math::DotProduct(direction, direction);
-		Float attenuation = ((distance/radiusSquared) - 1.0) * -1.0;
-		attenuation = clamp(attenuation, 0.0, 1.0);
+		float distance = Math::DotProduct(direction, direction);
+		float attenuation = ((distance/radiusSquared) - 1.0) * -1.0;
+		attenuation = Clamp(attenuation, 0.0, 1.0);
 
 		// Calculate strength of pull by black hole
-		Float pullStrength = attenuation*BLACK_HOLE_SUCK_SPEED*m_pullStrength;
+		float pullStrength = attenuation*BLACK_HOLE_SUCK_SPEED*m_pullStrength;
 		direction.Normalize();
 
 		Vector entityVelocity = pEntity->GetVelocity();
@@ -304,14 +304,14 @@ void CEnvBlackHole::SuckThink( void )
 			Vector right, up;
 			Math::GetUpRight(direction, up, right);
 
-			Float orbitAtten = radiusSquared/(distance*sqrt(distance));
-			orbitAtten = clamp(orbitAtten, 0.0, 1.0);
+			float orbitAtten = radiusSquared/(distance*sqrt(distance));
+			orbitAtten = Clamp(orbitAtten, 0.0, 1.0);
 
 			awayDirection = velocityDirection - right;
 			awayDirection.Normalize();
 
 			// Calculate orbit strength
-			Float orbitStrength = BLACK_HOLE_SUCK_SPEED * m_rotationSpeed * (1.0 - orbitAtten);
+			float orbitStrength = BLACK_HOLE_SUCK_SPEED * m_rotationSpeed * (1.0 - orbitAtten);
 
 			// Orbit direction should pull towards the black hole the closer we are
 			entityVelocity = entityVelocity + right * orbitStrength * g_pGameVars->frametime;

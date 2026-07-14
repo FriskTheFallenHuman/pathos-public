@@ -15,7 +15,7 @@ All Rights Reserved.
 #include "ai_sounds.h"
 
 // Model file path
-const Char CGrenade::MODEL_FILENAME[] = "models/grenade.mdl";
+const char CGrenade::MODEL_FILENAME[] = "models/grenade.mdl";
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(grenade, CGrenade);
@@ -254,7 +254,7 @@ void CGrenade::TumbleThink( void )
 // @brief
 //
 //=============================================
-void CGrenade::SetExplodeTime( Float explodeTime )
+void CGrenade::SetExplodeTime( float explodeTime )
 {
 	m_explodeTime = g_pGameVars->time + explodeTime;
 }
@@ -263,7 +263,7 @@ void CGrenade::SetExplodeTime( Float explodeTime )
 // @brief
 //
 //=============================================
-void CGrenade::SetExplodeDelay( Float delay )
+void CGrenade::SetExplodeDelay( float delay )
 {
 	m_explodeDelay = delay;
 }
@@ -272,7 +272,7 @@ void CGrenade::SetExplodeDelay( Float delay )
 // @brief
 //
 //=============================================
-void CGrenade::SetDamageAmount( Float dmgAmount )
+void CGrenade::SetDamageAmount( float dmgAmount )
 {
 	m_damageAmount = dmgAmount;
 }
@@ -281,7 +281,7 @@ void CGrenade::SetDamageAmount( Float dmgAmount )
 // @brief
 //
 //=============================================
-void CGrenade::SetDamageRadius( Float dmgRadius )
+void CGrenade::SetDamageRadius( float dmgRadius )
 {
 	m_damageRadius = dmgRadius;
 }
@@ -290,7 +290,7 @@ void CGrenade::SetDamageRadius( Float dmgRadius )
 // @brief
 //
 //=============================================
-void CGrenade::SetDamageTime( Float dmgtime )
+void CGrenade::SetDamageTime( float dmgtime )
 {
 	m_nextDmgTime = g_pGameVars->time + dmgtime;
 }
@@ -317,7 +317,7 @@ void CGrenade::SetWeapon( CPlayerWeapon* pWeapon )
 // @brief
 //
 //=============================================
-CGrenade* CGrenade::CreateTimed( CBaseEntity* pOwner, const Vector& origin, const Vector& velocity, Float time, Float radius, Float damage, bool contactDelayCountdown, CPlayerWeapon* pWeapon )
+CGrenade* CGrenade::CreateTimed( CBaseEntity* pOwner, const Vector& origin, const Vector& velocity, float time, float radius, float damage, bool contactDelayCountdown, CPlayerWeapon* pWeapon )
 {
 	CGrenade* pGrenade = reinterpret_cast<CGrenade*>(CBaseEntity::CreateEntity("grenade", pOwner));
 	if(!pGrenade->Spawn())
@@ -376,7 +376,7 @@ CGrenade* CGrenade::CreateTimed( CBaseEntity* pOwner, const Vector& origin, cons
 // @brief
 //
 //=============================================
-CGrenade* CGrenade::CreateContact( CBaseEntity* pOwner, const Vector& origin, const Vector& velocity, Float radius, Float damage, CPlayerWeapon* pWeapon )
+CGrenade* CGrenade::CreateContact( CBaseEntity* pOwner, const Vector& origin, const Vector& velocity, float radius, float damage, CPlayerWeapon* pWeapon )
 {
 	CGrenade* pGrenade = reinterpret_cast<CGrenade*>(CBaseEntity::CreateEntity("grenade", pOwner));
 	if(!pGrenade->Spawn())

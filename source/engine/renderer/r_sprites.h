@@ -27,8 +27,8 @@ struct sprite_vertex_t
 	vec4_t origin;
 	vec4_t color;
 
-	Float texcoord[2];
-	byte padding[24];
+	float texcoord[2];
+	Byte padding[24];
 };
 
 struct sprite_attribs
@@ -70,7 +70,7 @@ struct temp_sprite_t
 		{}
 
 	Int32 key;
-	Double life;
+	double life;
 
 	cl_entity_t entity;
 };
@@ -85,23 +85,23 @@ class CSpriteRenderer
 {
 public:
 	// Draw buffer allocation size
-	static const Uint32 DRAWBUFFER_ALLOC_SIZE;
+	static const UInt32 DRAWBUFFER_ALLOC_SIZE;
 
 	// Glow interpolation speed
-	static const Float GLOW_INTERP_SPEED;
+	static const float GLOW_INTERP_SPEED;
 
 	// Glow minimum distance
-	static const Float GLOW_MINDIST;
+	static const float GLOW_MINDIST;
 	// Glow maximum distance
-	static const Float GLOW_MAXDIST;
+	static const float GLOW_MAXDIST;
 	// Glow halo distance
-	static const Float GLOW_HALODIST;
+	static const float GLOW_HALODIST;
 
 public:
 	// Number of glow tracelines
-	static const Uint32 GLOW_NUM_TRACES = 5;
+	static const UInt32 GLOW_NUM_TRACES = 5;
 	// Maximum temporary sprites
-	static const Uint32 MAX_TEMP_SPRITES = 64;
+	static const UInt32 MAX_TEMP_SPRITES = 64;
 
 public:
 	CSpriteRenderer( void );
@@ -132,7 +132,7 @@ public:
 	// Allocates a static sprite
 	cl_entity_t* AllocStaticSprite( void );
 	// Allocates a temporary sprite object
-	cl_entity_t* AllocTempSprite( Int32 key, Float life );	
+	cl_entity_t* AllocTempSprite( Int32 key, float life );	
 
 public:
 	// Draw function for rendering glow dots
@@ -145,14 +145,14 @@ private:
 	// Batches a sprite
 	bool BatchSprite( cl_entity_t *pEntity );
 	// Batches a sprite vertex
-	void BatchVertex( const Vector& vertex, const vec4_t& color, Float texcoords, Float texcoordt );
+	void BatchVertex( const Vector& vertex, const vec4_t& color, float texcoords, float texcoordt );
 	// Batches a sprite vertex
-	void BatchVertex( Uint32 position, const Vector& vertex, Float r, Float g, Float b, Float a, Float texcoords, Float texcoordt );
+	void BatchVertex( UInt32 position, const Vector& vertex, float r, float g, float b, float a, float texcoords, float texcoordt );
 
 	// Batches sprites for rendering
-	void BatchSprites( cl_entity_t* entitiesArray, Uint32 numEntities );
+	void BatchSprites( cl_entity_t* entitiesArray, UInt32 numEntities );
 	// Draws sprite arrays
-	bool DrawSpriteArrays( cl_entity_t* entitiesArray, Uint32 numEntities );
+	bool DrawSpriteArrays( cl_entity_t* entitiesArray, UInt32 numEntities );
 
 	// Increases the draw buffer size
 	void AllocDrawBuffer( void );
@@ -181,22 +181,22 @@ private:
 	sprite_attribs m_attribs;
 
 	// Offset for occlusion query buffer
-	Uint32 m_occlusionQueryVBOBufferOffset;
+	UInt32 m_occlusionQueryVBOBufferOffset;
 
 private:
 	// View matrix for rendering
-	Float m_viewMatrix[3][4];
+	float m_viewMatrix[3][4];
 
 	// Number of indexes to render
-	Uint32 m_numIndexes;
+	UInt32 m_numIndexes;
 
 	// Draw buffer alloc size
-	Uint32 m_drawBufferAllocSize;
+	UInt32 m_drawBufferAllocSize;
 
 	// Array for vertex uploads to GPU
 	sprite_vertex_t* m_pVertexes;
 	// Number of vertexes batched
-	Uint32	m_numVertexes;
+	UInt32	m_numVertexes;
 
 	// Left vector for glow occlusion
 	Vector m_aLeft;

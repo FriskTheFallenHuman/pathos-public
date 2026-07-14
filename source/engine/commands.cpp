@@ -34,7 +34,7 @@ CCommandManager::CCommandManager( void ):
 	m_invokerPlayerIndex(NO_CLIENT_INDEX),
 	m_breakExecution(false)
 {
-	m_pCommandBuffer = new Char[m_cmdBufSize];
+	m_pCommandBuffer = new char[m_cmdBufSize];
 	m_pCommandBuffer[0] = '\0';
 }
 
@@ -51,11 +51,11 @@ CCommandManager::CCommandManager( const CCommandManager& src ):
 	m_invokerPlayerIndex(src.m_invokerPlayerIndex),
 	m_breakExecution(src.m_breakExecution)
 {
-	for(Uint32 i = 0; i < m_numArgs; i++)
+	for(UInt32 i = 0; i < m_numArgs; i++)
 		m_commandArgs[i] = src.m_commandArgs[i];
 
-	m_pCommandBuffer = new Char[m_cmdBufSize];
-	memcpy(m_pCommandBuffer, src.m_pCommandBuffer, sizeof(byte)*m_cmdBufSize);
+	m_pCommandBuffer = new char[m_cmdBufSize];
+	memcpy(m_pCommandBuffer, src.m_pCommandBuffer, sizeof(Byte)*m_cmdBufSize);
 }
 
 //=============================================
@@ -87,7 +87,7 @@ CCommandManager& CCommandManager::operator= ( const CCommandManager& src )
 	m_invokerPlayerIndex = src.m_invokerPlayerIndex;
 	m_breakExecution = src.m_breakExecution;
 
-	for(Uint32 i = 0; i < m_numArgs; i++)
+	for(UInt32 i = 0; i < m_numArgs; i++)
 		m_commandArgs[i] = src.m_commandArgs[i];
 
 	if(m_pCommandBuffer)
@@ -96,8 +96,8 @@ CCommandManager& CCommandManager::operator= ( const CCommandManager& src )
 		m_pCommandBuffer = nullptr;
 	}
 
-	m_pCommandBuffer = new Char[m_cmdBufSize];
-	memcpy(m_pCommandBuffer, src.m_pCommandBuffer, sizeof(byte)*m_cmdBufSize);
+	m_pCommandBuffer = new char[m_cmdBufSize];
+	memcpy(m_pCommandBuffer, src.m_pCommandBuffer, sizeof(Byte)*m_cmdBufSize);
 	return *this;
 }
 
@@ -127,7 +127,7 @@ void CCommandManager::ClearCommands( void )
 // @param description Optional description for the command
 // @param flags Flags of the command
 //=============================================
-void CCommandManager::CreateCommand( const Char* name, cmdfunc_t pfn, const Char* description, Int32 flags )
+void CCommandManager::CreateCommand( const char* name, cmdfunc_t pfn, const char* description, Int32 flags )
 {
 	// Make sure it's not already added
 	if(CommandExists(name))
@@ -155,8 +155,8 @@ void CCommandManager::CreateCommand( const Char* name, cmdfunc_t pfn, const Char
 //=============================================
 void CCommandManager::IncreaseBufferSize( void )
 {
-	void* pnew = Common::ResizeArray(m_pCommandBuffer, sizeof(Char), m_cmdBufUsageLength, CMDBUF_ALLOC_SIZE);
-	m_pCommandBuffer = static_cast<Char*>(pnew);
+	void* pnew = Common::ResizeArray(m_pCommandBuffer, sizeof(char), m_cmdBufUsageLength, CMDBUF_ALLOC_SIZE);
+	m_pCommandBuffer = static_cast<char*>(pnew);
 
 	Con_DPrintf("Increasing command buffer size by %d bytes.\n", static_cast<Int32>(CMDBUF_ALLOC_SIZE));
 	m_cmdBufSize += CMDBUF_ALLOC_SIZE;
@@ -167,16 +167,16 @@ void CCommandManager::IncreaseBufferSize( void )
 //
 // @param pstrCommand Full command string
 //=============================================
-void CCommandManager::AddCommand( const Char* pstrCommand )
+void CCommandManager::AddCommand( const char* pstrCommand )
 {
-	Uint32 cmdLength = qstrlen(pstrCommand);
+	UInt32 cmdLength = qstrlen(pstrCommand);
 
 	// See if we need to resize the buffer
 	if(m_cmdBufSize < (m_cmdBufUsageLength+cmdLength+2))
 		IncreaseBufferSize();
 
 	// Add the new command
-	Char *pdest = m_pCommandBuffer + m_cmdBufUsageLength;
+	char *pdest = m_pCommandBuffer + m_cmdBufUsageLength;
 	memcpy(pdest, pstrCommand, cmdLength);
 	
 	// Add a newline and a terminator
@@ -192,18 +192,18 @@ void CCommandManager::AddCommand( const Char* pstrCommand )
 //
 // @param pstrCommand Full command string
 //=============================================
-void CCommandManager::InsertCommand( const Char* pstrCommand )
+void CCommandManager::InsertCommand( const char* pstrCommand )
 {
-	Char *ptemp = nullptr;
-	Uint64 tmpsize = 0;
+	char *ptemp = nullptr;
+	UInt64 tmpsize = 0;
 
 	// Move current buffer into temp array
 	if(m_cmdBufUsageLength)
 	{
-		ptemp = new Char[m_cmdBufUsageLength];
+		ptemp = new char[m_cmdBufUsageLength];
 		tmpsize = m_cmdBufUsageLength;
 
-		memcpy(ptemp, m_pCommandBuffer, sizeof(Char)*tmpsize);
+		memcpy(ptemp, m_pCommandBuffer, sizeof(char)*tmpsize);
 
 		m_pCommandBuffer[0] = '\0';
 		m_cmdBufUsageLength = 0;
@@ -220,8 +220,8 @@ void CCommandManager::InsertCommand( const Char* pstrCommand )
 			IncreaseBufferSize();
 
 		// Copy over the contents
-		Char* pdest = m_pCommandBuffer + m_cmdBufUsageLength;
-		memcpy(pdest, ptemp, sizeof(Char)*tmpsize);
+		char* pdest = m_pCommandBuffer + m_cmdBufUsageLength;
+		memcpy(pdest, ptemp, sizeof(char)*tmpsize);
 		delete[] ptemp;
 	}
 }
@@ -238,15 +238,15 @@ void CCommandManager::ExecuteCommands( void )
 	// Set invoker to local
 	m_invokerPlayerIndex = 0;
 
-	Uint32 cmdLength = 0;
+	UInt32 cmdLength = 0;
 	CString szbuffer;
 	while(m_cmdBufUsageLength)
 	{
 		// Parse a single command from the buffer
 		bool inQuote = false;
 
-		Char* pstrBegin = m_pCommandBuffer;
-		Char* pstr = pstrBegin;
+		char* pstrBegin = m_pCommandBuffer;
+		char* pstr = pstrBegin;
 		while(pstr)
 		{
 			if(*pstr == '\"')
@@ -275,7 +275,7 @@ void CCommandManager::ExecuteCommands( void )
 		while(pstr && SDL_isspace(*pstr) && *pstr)
 			pstr++;
 
-		Uint64 bufPos = (pstr - m_pCommandBuffer);
+		UInt64 bufPos = (pstr - m_pCommandBuffer);
 		if(bufPos == m_cmdBufUsageLength)
 		{
 			// No more commands to execute
@@ -287,8 +287,8 @@ void CCommandManager::ExecuteCommands( void )
 			m_cmdBufUsageLength -= bufPos;
 			
 			// Move the contents
-			Char* pdst = m_pCommandBuffer;
-			Char* psrc = pstr;
+			char* pdst = m_pCommandBuffer;
+			char* psrc = pstr;
 			while(*psrc)
 			{
 				*pdst = *psrc;
@@ -314,10 +314,10 @@ void CCommandManager::ExecuteCommands( void )
 // @brief Executes a single command
 //
 //=============================================
-void CCommandManager::CacheCommand( const Char* pstrCommand )
+void CCommandManager::CacheCommand( const char* pstrCommand )
 {
 	// Clear previous args
-	for(Uint32 i = 0; i < m_numArgs; i++)
+	for(UInt32 i = 0; i < m_numArgs; i++)
 		m_commandArgs[i].clear();
 
 	// Reset this
@@ -325,7 +325,7 @@ void CCommandManager::CacheCommand( const Char* pstrCommand )
 
 	// Tokenize the string
 	CString argument;
-	const Char* pstr = pstrCommand;
+	const char* pstr = pstrCommand;
 	while(pstr)
 	{
 		if(m_numArgs == MAX_CMD_ARGS)
@@ -334,7 +334,7 @@ void CCommandManager::CacheCommand( const Char* pstrCommand )
 			break;
 		}
 
-		pstr = Common::Parse(pstr, argument, '\0', true);
+		pstr = Common::Parse(pstr, argument, nullptr, true);
 
 		// Add new arg
 		m_commandArgs[m_numArgs] = argument;
@@ -354,7 +354,7 @@ void CCommandManager::CacheCommand( const Char* pstrCommand )
 // @brief Executes a single command
 //
 //=============================================
-bool CCommandManager::ExecuteCommand( const Char* pstrCommand, bool isServerCall )
+bool CCommandManager::ExecuteCommand( const char* pstrCommand, bool isServerCall )
 {
 	// Process it into the arrays
 	CacheCommand(pstrCommand);
@@ -364,7 +364,7 @@ bool CCommandManager::ExecuteCommand( const Char* pstrCommand, bool isServerCall
 
 	// Seek out the command
 	cmd_definition_t* pcmd = nullptr;
-	for(Uint32 i = 0; i < m_cmdDefinitionsArray.size(); i++)
+	for(UInt32 i = 0; i < m_cmdDefinitionsArray.size(); i++)
 	{
 		if(!qstrcmp(m_cmdDefinitionsArray[i].name, m_commandArgs[0]))
 		{
@@ -464,7 +464,7 @@ bool CCommandManager::ForwardToServer( void ) const
 		return false;
 	
 	// Do not include "cmd" part
-	Uint32 i;
+	UInt32 i;
 	if(!qstrcmp(m_commandArgs[0], "cmd"))
 		i = 1;
 	else
@@ -493,7 +493,7 @@ bool CCommandManager::ForwardToServer( void ) const
 // @param index Index of the argument to retrieve
 // @return Command argument string 
 //=============================================
-const Char* CCommandManager::Cmd_Argv( Uint32 index ) const
+const char* CCommandManager::Cmd_Argv( UInt32 index ) const
 {
 	if( index >= m_numArgs )
 		return "";
@@ -505,11 +505,11 @@ const Char* CCommandManager::Cmd_Argv( Uint32 index ) const
 // @brief Tells if a command already exists with the specified name
 //
 // @param index Index of the argument to retrieve
-// @return TRUE if it was found, FALSE otherwise 
+// @return true if it was found, false otherwise 
 //=============================================
-bool CCommandManager::CommandExists( const Char* pstrName ) const
+bool CCommandManager::CommandExists( const char* pstrName ) const
 {
-	for(Uint32 i = 0; i < m_cmdDefinitionsArray.size(); i++)
+	for(UInt32 i = 0; i < m_cmdDefinitionsArray.size(); i++)
 	{
 		if(!qstrcmp(m_cmdDefinitionsArray[i].name.c_str(), pstrName))
 			return true;
@@ -522,11 +522,11 @@ bool CCommandManager::CommandExists( const Char* pstrName ) const
 // @brief Tells if a command already exists with the specified name
 //
 // @param index Index of the argument to retrieve
-// @return TRUE if it was found, FALSE otherwise 
+// @return true if it was found, false otherwise 
 //=============================================
-Int32 CCommandManager::GetCommandFlags( const Char* pstrName ) const
+Int32 CCommandManager::GetCommandFlags( const char* pstrName ) const
 {
-	for(Uint32 i = 0; i < m_cmdDefinitionsArray.size(); i++)
+	for(UInt32 i = 0; i < m_cmdDefinitionsArray.size(); i++)
 	{
 		if(!qstrcmp(m_cmdDefinitionsArray[i].name.c_str(), pstrName))
 			return m_cmdDefinitionsArray[i].flags;
@@ -539,7 +539,7 @@ Int32 CCommandManager::GetCommandFlags( const Char* pstrName ) const
 // @brief Tells if a command already exists with the specified name
 //
 // @param index Index of the argument to retrieve
-// @return TRUE if it was found, FALSE otherwise 
+// @return true if it was found, false otherwise 
 //=============================================
 void CCommandManager::SetInvokerPlayerIndex( Int32 index )
 {
@@ -550,7 +550,7 @@ void CCommandManager::SetInvokerPlayerIndex( Int32 index )
 // @brief Tells if a command already exists with the specified name
 //
 // @param index Index of the argument to retrieve
-// @return TRUE if it was found, FALSE otherwise 
+// @return true if it was found, false otherwise 
 //=============================================
 Int32 CCommandManager::GetInvokerPlayerIndex( void ) const
 {

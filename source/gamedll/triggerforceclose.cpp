@@ -35,9 +35,9 @@ CTriggerForceClose::~CTriggerForceClose( void )
 // @brief
 //
 //=============================================
-void CTriggerForceClose::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerForceClose::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
-	const Char* pstrName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrName = gd_engfuncs.pfnGetString(m_pFields->target);
 	if(!pstrName || !qstrlen(pstrName))
 	{
 		Util::EntityConPrintf(m_pEdict, "Target was null.\n");

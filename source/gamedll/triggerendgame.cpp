@@ -81,7 +81,7 @@ bool CTriggerEndGame::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerEndGame::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerEndGame::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	gd_engfuncs.pfnEndGame(gd_engfuncs.pfnGetString(m_endGameCode));
 }

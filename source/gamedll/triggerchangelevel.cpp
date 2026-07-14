@@ -80,14 +80,14 @@ bool CTriggerChangeLevel::Spawn( void )
 		return false;
 	}
 
-	const Char* pstrLevelname = gd_engfuncs.pfnGetString(m_nextLevelName);
+	const char* pstrLevelname = gd_engfuncs.pfnGetString(m_nextLevelName);
 	if(qstrlen(pstrLevelname) >= SAVE_FILE_STRING_MAX_LENGTH)
 	{
 		Util::EntityConPrintf(m_pEdict, "Level name '%s' is too long.\n", pstrLevelname);
 		return false;
 	}
 
-	const Char* pstrLandmarkName = gd_engfuncs.pfnGetString(m_landmarkName);
+	const char* pstrLandmarkName = gd_engfuncs.pfnGetString(m_landmarkName);
 	if(qstrlen(pstrLandmarkName) >= SAVE_FILE_STRING_MAX_LENGTH)
 	{
 		Util::EntityConPrintf(m_pEdict, "Landmark name '%s' is too long.\n", pstrLandmarkName);
@@ -122,7 +122,7 @@ bool CTriggerChangeLevel::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerChangeLevel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerChangeLevel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Do the level change
 	BeginLevelChange();
@@ -142,8 +142,8 @@ void CTriggerChangeLevel::BeginLevelChange( void )
 	m_lastFiredtime = g_pGameVars->time;
 
 	// Get params
-	const Char* pstrLevelname = gd_engfuncs.pfnGetString(m_nextLevelName);
-	const Char* pstrLandmarkName = gd_engfuncs.pfnGetString(m_landmarkName);
+	const char* pstrLevelname = gd_engfuncs.pfnGetString(m_nextLevelName);
+	const char* pstrLandmarkName = gd_engfuncs.pfnGetString(m_landmarkName);
 
 	// Find landmark entity
 	edict_t* plandmark = nullptr;

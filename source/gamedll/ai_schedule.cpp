@@ -16,7 +16,7 @@ All Rights Reserved.
 // @brief
 //
 //=============================================
-CAISchedule::CAISchedule( ai_task_t* pTasks, Uint32 nbTasks, const CBitSet& conditionMask, Uint64 soundMask, const Char* pstrName ):
+CAISchedule::CAISchedule( ai_task_t* pTasks, UInt32 nbTasks, const CBitSet& conditionMask, UInt64 soundMask, const char* pstrName ):
 	m_aiCondInterruptMask(conditionMask),
 	m_aiCondInverseInterruptMask(AI_COND_BITSET_SIZE),
 	m_specialInterruptSchedule(AI_COND_BITSET_SIZE),
@@ -26,7 +26,7 @@ CAISchedule::CAISchedule( ai_task_t* pTasks, Uint32 nbTasks, const CBitSet& cond
 	m_soundMask(soundMask),
 	m_scheduleName(pstrName)
 {
-	for(Uint32 i = 0; i < nbTasks; i++)
+	for(UInt32 i = 0; i < nbTasks; i++)
 		m_tasksArray.push_back(pTasks[i]);
 }
 
@@ -34,7 +34,7 @@ CAISchedule::CAISchedule( ai_task_t* pTasks, Uint32 nbTasks, const CBitSet& cond
 // @brief
 //
 //=============================================
-CAISchedule::CAISchedule( ai_task_t* pTasks, Uint32 nbTasks, const CBitSet& conditionMask, const CBitSet& inverseConditionMask, Uint64 soundMask, const Char* pstrName ):
+CAISchedule::CAISchedule( ai_task_t* pTasks, UInt32 nbTasks, const CBitSet& conditionMask, const CBitSet& inverseConditionMask, UInt64 soundMask, const char* pstrName ):
 	m_aiCondInterruptMask(conditionMask),
 	m_aiCondInverseInterruptMask(inverseConditionMask),
 	m_specialInterruptSchedule(AI_COND_BITSET_SIZE),
@@ -44,7 +44,7 @@ CAISchedule::CAISchedule( ai_task_t* pTasks, Uint32 nbTasks, const CBitSet& cond
 	m_soundMask(soundMask),
 	m_scheduleName(pstrName)
 {
-	for(Uint32 i = 0; i < nbTasks; i++)
+	for(UInt32 i = 0; i < nbTasks; i++)
 		m_tasksArray.push_back(pTasks[i]);
 }
 
@@ -52,7 +52,7 @@ CAISchedule::CAISchedule( ai_task_t* pTasks, Uint32 nbTasks, const CBitSet& cond
 // @brief
 //
 //=============================================
-CAISchedule::CAISchedule( ai_task_t* pTasks, Uint32 nbTasks, const CBitSet& conditionMask, const CBitSet& inverseConditionMask, Int32 specialInterruptSchedule, const CBitSet& specialInterruptConditionMask, const CBitSet& specialInterruptExceptionMask, const CBitSet& specialInterruptRequirementMask, Uint64 soundMask, const Char* pstrName ):
+CAISchedule::CAISchedule( ai_task_t* pTasks, UInt32 nbTasks, const CBitSet& conditionMask, const CBitSet& inverseConditionMask, Int32 specialInterruptSchedule, const CBitSet& specialInterruptConditionMask, const CBitSet& specialInterruptExceptionMask, const CBitSet& specialInterruptRequirementMask, UInt64 soundMask, const char* pstrName ):
 	m_aiCondInterruptMask(conditionMask),
 	m_aiCondInverseInterruptMask(inverseConditionMask),
 	m_specialInterruptSchedule(specialInterruptSchedule),
@@ -62,7 +62,7 @@ CAISchedule::CAISchedule( ai_task_t* pTasks, Uint32 nbTasks, const CBitSet& cond
 	m_soundMask(soundMask),
 	m_scheduleName(pstrName)
 {
-	for(Uint32 i = 0; i < nbTasks; i++)
+	for(UInt32 i = 0; i < nbTasks; i++)
 		m_tasksArray.push_back(pTasks[i]);
 }
 

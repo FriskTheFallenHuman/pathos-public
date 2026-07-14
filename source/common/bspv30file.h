@@ -16,32 +16,32 @@ All Rights Reserved.
 // BSP limits
 //
 
-static constexpr Uint32 V30_MAX_MAP_HULLS			= 4;
+static constexpr UInt32 V30_MAX_MAP_HULLS			= 4;
 
-static constexpr Uint32 V30_MAX_MAP_MODELS			= 1024;
-static constexpr Uint32 V30_MAX_MAP_BRUSHES			= 65536;
-static constexpr Uint32 V30_MAX_MAP_ENTITIES		= 8192;
-static constexpr Uint32 V30_MAX_MAP_ENTSTRING		= 65536;
+static constexpr UInt32 V30_MAX_MAP_MODELS			= 1024;
+static constexpr UInt32 V30_MAX_MAP_BRUSHES			= 65536;
+static constexpr UInt32 V30_MAX_MAP_ENTITIES		= 8192;
+static constexpr UInt32 V30_MAX_MAP_ENTSTRING		= 65536;
 
-static constexpr Uint32 V30_MAX_MAP_PLANES			= 32768;
-static constexpr Uint32 V30_MAX_MAP_NODES			= 32768;
-static constexpr Uint32 V30_MAX_MAP_CLIPNODES		= 32768;
-static constexpr Uint32 V30_MAX_MAP_LEAFS			= 32768;
-static constexpr Uint32 V30_MAX_MAP_VERTS			= 65536;
-static constexpr Uint32 V30_MAX_MAP_FACES			= 65536;
-static constexpr Uint32 V30_MAX_MAP_MARKSURFACES	= 65536;
-static constexpr Uint32 V30_MAX_MAP_TEXINFO			= 32768;
-static constexpr Uint32 V30_MAX_MAP_EDGES			= 262144;
-static constexpr Uint32 V30_MAX_MAP_SURFEDGES		= 524288;
-static constexpr Uint32 V30_MAX_MAP_TEXTURES		= 4096;
-static constexpr Uint32 V30_MAX_MAP_LIGHTING		= 16777216;
-static constexpr Uint32 V30_MAX_MAP_VISIBILITY		= 16777216;
+static constexpr UInt32 V30_MAX_MAP_PLANES			= 32768;
+static constexpr UInt32 V30_MAX_MAP_NODES			= 32768;
+static constexpr UInt32 V30_MAX_MAP_CLIPNODES		= 32768;
+static constexpr UInt32 V30_MAX_MAP_LEAFS			= 32768;
+static constexpr UInt32 V30_MAX_MAP_VERTS			= 65536;
+static constexpr UInt32 V30_MAX_MAP_FACES			= 65536;
+static constexpr UInt32 V30_MAX_MAP_MARKSURFACES	= 65536;
+static constexpr UInt32 V30_MAX_MAP_TEXINFO			= 32768;
+static constexpr UInt32 V30_MAX_MAP_EDGES			= 262144;
+static constexpr UInt32 V30_MAX_MAP_SURFEDGES		= 524288;
+static constexpr UInt32 V30_MAX_MAP_TEXTURES		= 4096;
+static constexpr UInt32 V30_MAX_MAP_LIGHTING		= 16777216;
+static constexpr UInt32 V30_MAX_MAP_VISIBILITY		= 16777216;
 
-static constexpr Uint32 V30_MAX_LIGHTMAPS			= 4;
-static constexpr Uint32 V30_LM_BASE_SAMPLE_SIZE		= 16;
+static constexpr UInt32 V30_MAX_LIGHTMAPS			= 4;
+static constexpr UInt32 V30_LM_BASE_SAMPLE_SIZE		= 16;
 
-static constexpr Uint32 V30_NUM_AMBIENTS			= 4;
-static constexpr Uint32 V30_MAX_SURFACE_EXTENTS		= 512;
+static constexpr UInt32 V30_NUM_AMBIENTS			= 4;
+static constexpr UInt32 V30_MAX_SURFACE_EXTENTS		= 512;
 
 
 //
@@ -131,9 +131,9 @@ struct dv30model_t
 		memset(headnode, 0, sizeof(headnode));
 	}
 
-	Float mins[3];
-	Float maxs[3];
-	Float origin[3];
+	float mins[3];
+	float maxs[3];
+	float origin[3];
 
 	Int32 headnode[V30_MAX_MAP_HULLS];
 	Int32 visleafs;
@@ -149,7 +149,7 @@ struct dv30vertex_t
 		memset(origin, 0, sizeof(origin));
 	}
 
-	Float origin[3];
+	float origin[3];
 };
 
 struct dv30plane_t
@@ -161,8 +161,8 @@ struct dv30plane_t
 		memset(normal, 0, sizeof(normal));
 	}
 
-	Float normal[3];
-	Float dist;
+	float normal[3];
+	float dist;
 
 	Int32 type;
 };
@@ -184,8 +184,8 @@ struct dv30node_t
 	Int16 mins[3];
 	Int16 maxs[3];
 
-	Uint16 firstface;
-	Uint16 numfaces;
+	UInt16 firstface;
+	UInt16 numfaces;
 };
 
 struct dv30clipnode_t
@@ -209,14 +209,14 @@ struct dv30texinfo_t
 		memset(vecs, 0, sizeof(vecs));
 	}
 
-	Float vecs[2][4];
+	float vecs[2][4];
 	Int32 miptex;
 	Int32 flags;
 };
 
 struct dv30edge_t
 {
-	Uint16 vertexes[2];
+	UInt16 vertexes[2];
 };
 
 struct dv30face_t
@@ -232,14 +232,14 @@ struct dv30face_t
 		memset(lmstyles, 0, sizeof(lmstyles));
 	}
 
-	Uint16 planenum;
+	UInt16 planenum;
 	Int16 side;
 
 	Int32 firstedge;
 	Int16 numedges;
 	Int16 texinfo;
 
-	byte lmstyles[V30_MAX_LIGHTMAPS];
+	Byte lmstyles[V30_MAX_LIGHTMAPS];
 	Int32 lightoffset;
 };
 
@@ -262,9 +262,9 @@ struct dv30leaf_t
 	Int16 mins[3];
 	Int16 maxs[3];
 
-	Uint16 firstmarksurface;
-	Uint16 nummarksurfaces;
+	UInt16 firstmarksurface;
+	UInt16 nummarksurfaces;
 
-	byte ambient_level[V30_NUM_AMBIENTS];
+	Byte ambient_level[V30_NUM_AMBIENTS];
 };
 #endif //BSPV30FILE_H

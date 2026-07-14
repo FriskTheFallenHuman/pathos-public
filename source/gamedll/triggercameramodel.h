@@ -21,7 +21,7 @@ class CTriggerCameraModel : public CAnimatingEntity
 {
 public:
 	// v_sequences model file path
-	static const Char V_SEQUENCES_MODELNAME[];
+	static const char V_SEQUENCES_MODELNAME[];
 
 public:
 	enum
@@ -50,22 +50,22 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void SendInitMessage( const CBaseEntity* pPlayer ) override;
 	virtual Int32 GetEntityFlags( void ) override { return CAnimatingEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION; }
-	virtual bool ShouldOverrideKeyValue( const Char* pstrKeyValue ) override;
+	virtual bool ShouldOverrideKeyValue( const char* pstrKeyValue ) override;
 
 public:
-	static CTriggerCameraModel* CreateCameraModel( const CBaseEntity* pOwner, Float bendTime, const Char* pstrRestSequence, const Char* pstrEntrySequence, const Char* pstrLoopSequence, const Char* pstrTriggerSequence );
+	static CTriggerCameraModel* CreateCameraModel( const CBaseEntity* pOwner, float bendTime, const char* pstrRestSequence, const char* pstrEntrySequence, const char* pstrLoopSequence, const char* pstrTriggerSequence );
 	static bool IsBlockingSaving( void );
 	static void SetBlockingSaving( bool blocking );
 
 public:
-	void SetEntrySequence( const Char* pstrseqname );
-	void SetLoopSequence( const Char* pstrseqname );
-	void SetRestSequence( const Char* pstrseqname );
-	void SetTriggerSequence( const Char* pstrseqname );
-	void SetBlendTime( Float time );
+	void SetEntrySequence( const char* pstrseqname );
+	void SetLoopSequence( const char* pstrseqname );
+	void SetRestSequence( const char* pstrseqname );
+	void SetTriggerSequence( const char* pstrseqname );
+	void SetBlendTime( float time );
 
 private:
 	void EXPORTFN FinishThink( void );
@@ -83,7 +83,7 @@ private:
 	string_t m_restSequence;
 	string_t m_triggerSequence;
 
-	Float m_blendTime;
+	float m_blendTime;
 
 	Int32	m_triggerState;
 	Int32	m_fov;
@@ -91,7 +91,7 @@ private:
 	CPlayerEntity* m_pPlayer;
 
 private:
-	// TRUE if we are blocking saving
+	// true if we are blocking saving
 	static bool g_bIsBlockingSaving;
 };
 

@@ -22,7 +22,7 @@ class CTextSchemas
 {
 public:
 	// Path to the folder containing the schemas
-	static const Char SCHEMA_FOLDER_PATH[];
+	static const char SCHEMA_FOLDER_PATH[];
 
 public:
 	struct text_reschema_t
@@ -34,9 +34,9 @@ public:
 			{
 			}
 
-		Uint32 screenheight;
-		Uint32 fontsize;
-		Uint32 outlineradius;
+		UInt32 screenheight;
+		UInt32 fontsize;
+		UInt32 outlineradius;
 	};
 
 	struct textschema_t
@@ -53,8 +53,8 @@ public:
 		color32_t outlinecolor;
 		CString fontsetname;
 
-		Uint32 fontsize;
-		Uint32 outlineradius;
+		UInt32 fontsize;
+		UInt32 outlineradius;
 
 		CArray<text_reschema_t> resolutions;
 	};
@@ -68,11 +68,11 @@ public:
 	void Clear( void );
 
 public:
-	const font_set_t* GetSchemaFontSet( const Char* schemaFileName );
-	const font_set_t* GetResolutionSchemaFontSet( const Char* schemaFileName, Uint32 resolution );
+	const font_set_t* GetSchemaFontSet( const char* schemaFileName );
+	const font_set_t* GetResolutionSchemaFontSet( const char* schemaFileName, UInt32 resolution );
 
 private:
-	const textschema_t* LoadSchema( const Char* schemaFileName );
+	const textschema_t* LoadSchema( const char* schemaFileName );
 
 public:
 	// List of schemas

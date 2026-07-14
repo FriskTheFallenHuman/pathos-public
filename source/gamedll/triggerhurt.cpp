@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "triggerhurt.h"
 
 // Damage delay time
-const Float CTriggerHurt::DEFAULT_DMG_DELAY = 0.5;
+const float CTriggerHurt::DEFAULT_DMG_DELAY = 0.5;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(trigger_hurt, CTriggerHurt);
@@ -113,7 +113,7 @@ bool CTriggerHurt::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerHurt::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerHurt::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{
@@ -184,7 +184,7 @@ void CTriggerHurt::HurtTouch( CBaseEntity* pOther )
 			return;
 	}
 
-	Float dmgamount = m_dmgAmount * 0.5;
+	float dmgamount = m_dmgAmount * 0.5;
 	if(dmgamount < 0)
 		pOther->TakeHealth(-dmgamount, m_bitsDamageInflict);
 	else

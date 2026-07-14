@@ -36,15 +36,15 @@ struct plane_t
 	// Plane normal
 	Vector normal;
 	// Distance element
-	Float dist;
+	float dist;
 
 	// Plane type
 	Int32 type;
-	byte signbits;
+	Byte signbits;
 };
 
 // Assigns sign bits for the plane
-extern inline Int32 SignbitsForPlane( const plane_t& plane );
+extern DO_INLINE Int32 SignbitsForPlane( const plane_t& plane );
 
 #include "plane_inline.hpp"
 #endif //PLANE_H

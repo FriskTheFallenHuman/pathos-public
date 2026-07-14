@@ -74,7 +74,7 @@ void CSysPrintInterface::ClearGame( void )
 //
 // @param pstring String to be printed
 //=============================================
-void CSysPrintInterface::Printf( const Char *pstring )
+void CSysPrintInterface::Printf( const char *pstring )
 {
 	CString msg(pstring);
 
@@ -102,7 +102,7 @@ void CSysPrintInterface::Printf( const Char *pstring )
 //
 // @param pstring String to be printed
 //=============================================
-void CSysPrintInterface::DPrintf( const Char *pstring )
+void CSysPrintInterface::DPrintf( const char *pstring )
 {
 	CString msg;
 	msg << "[color r255]DEBUG:[/color] " << pstring;
@@ -134,7 +134,7 @@ void CSysPrintInterface::DPrintf( const Char *pstring )
 //
 // @param pstring String to be printed
 //=============================================
-void CSysPrintInterface::VPrintf( const Char *pstring )
+void CSysPrintInterface::VPrintf( const char *pstring )
 {
 	CString msg;
 	msg << "[color b255]VERBOSE:[/color] " << pstring;
@@ -166,7 +166,7 @@ void CSysPrintInterface::VPrintf( const Char *pstring )
 //
 // @param pstring String to be printed
 //=============================================
-void CSysPrintInterface::WPrintf( const Char *pstring )
+void CSysPrintInterface::WPrintf( const char *pstring )
 {
 	CString msg;
 	msg << "[color r255 g255]WARNING:[/color] " << pstring;
@@ -195,7 +195,7 @@ void CSysPrintInterface::WPrintf( const Char *pstring )
 //
 // @param pstring String to be printed
 //=============================================
-void CSysPrintInterface::EPrintf( const Char *pstring )
+void CSysPrintInterface::EPrintf( const char *pstring )
 {
 	CString msg;
 	msg << "[color r255]ERROR:[/color] " << pstring;
@@ -229,7 +229,7 @@ void CSysPrintInterface::CheckForFlags( CString& inputstring, Int32& outflags )
 	outflags = PRINT_FL_NONE;
 
 	Int32 offset = 0;
-	Uint32 eraseoffset = 0;
+	UInt32 eraseoffset = 0;
 
 	CString output;
 
@@ -247,7 +247,7 @@ void CSysPrintInterface::CheckForFlags( CString& inputstring, Int32& outflags )
 		
 		// Check if it has valid contents
 		bool hasValidContents = false;
-		const Char* pstr = inputstring.c_str() + bracketpos + 1;
+		const char* pstr = inputstring.c_str() + bracketpos + 1;
 		while(true)
 		{
 			while((*pstr) && SDL_isspace(*pstr))
@@ -279,7 +279,7 @@ void CSysPrintInterface::CheckForFlags( CString& inputstring, Int32& outflags )
 							break;
 
 						// Skip till whitespace or end
-						Uint32 i = 0;
+						UInt32 i = 0;
 						while(!SDL_isspace(*(pstr+i)) && (*(pstr+i)) != ']')
 							i++;
 
@@ -321,7 +321,7 @@ void CSysPrintInterface::CheckForFlags( CString& inputstring, Int32& outflags )
 			if(output.empty())
 				output = inputstring;
 
-			Uint32 removecnt = (endbracketpos - bracketpos) + 1;
+			UInt32 removecnt = (endbracketpos - bracketpos) + 1;
 			output.erase(bracketpos-eraseoffset, removecnt);
 			eraseoffset += removecnt;
 		}
@@ -339,12 +339,12 @@ void CSysPrintInterface::CheckForFlags( CString& inputstring, Int32& outflags )
 // @brief Tells if the message should be printed
 //
 //====================================
-bool CSysPrintInterface::ShouldPrintMessage( const Char* pstrMessage, Int32 flags )
+bool CSysPrintInterface::ShouldPrintMessage( const char* pstrMessage, Int32 flags )
 {
 	if(flags & (PRINT_FL_ONLYONCE|PRINT_FL_ONLYONCE_GAME))
 	{
 		m_md5Hasher.Init();
-		m_md5Hasher.Update(reinterpret_cast<const byte*>(pstrMessage), qstrlen(pstrMessage));
+		m_md5Hasher.Update(reinterpret_cast<const Byte*>(pstrMessage), qstrlen(pstrMessage));
 	
 		CString md5hash(CString::fl_str_nopooling);
 		md5hash = m_md5Hasher.Finalize().HexDigest();
@@ -369,7 +369,7 @@ bool CSysPrintInterface::ShouldPrintMessage( const Char* pstrMessage, Int32 flag
 //====================================
 //
 //====================================
-void Con_Printf( const Char *fmt, ... )
+void Con_Printf( const char *fmt, ... )
 {
 	if(g_conPrintfSemaphore)
 		return;
@@ -379,10 +379,10 @@ void Con_Printf( const Char *fmt, ... )
 
 	// compile the string result
 	va_list	vArgPtr;
-	static Char cMsg[PRINT_MSG_BUFFER_SIZE];
+	static char cMsg[PRINT_MSG_BUFFER_SIZE];
 	
 	va_start(vArgPtr,fmt);
-	vsprintf_s(cMsg, fmt, vArgPtr);
+	ENGINE_VSPRINTF_S(cMsg, sizeof(cMsg), fmt, vArgPtr);
 	va_end(vArgPtr);
 
 	// Send to print interface to complete
@@ -395,7 +395,7 @@ void Con_Printf( const Char *fmt, ... )
 //====================================
 //
 //====================================
-void Con_DPrintf( const Char *fmt, ... )
+void Con_DPrintf( const char *fmt, ... )
 {
 	if(g_pCvarDeveloper->GetValue() < DEV_MODE_ON && !ens.plogfile)
 		return;
@@ -408,10 +408,10 @@ void Con_DPrintf( const Char *fmt, ... )
 
 	// compile the string result
 	va_list	vArgPtr;
-	static Char cMsg[PRINT_MSG_BUFFER_SIZE];
+	static char cMsg[PRINT_MSG_BUFFER_SIZE];
 	
 	va_start(vArgPtr,fmt);
-	vsprintf_s(cMsg, fmt, vArgPtr);
+	ENGINE_VSPRINTF_S(cMsg, sizeof(cMsg), fmt, vArgPtr);
 	va_end(vArgPtr);
 
 	// Send to print interface to complete
@@ -424,7 +424,7 @@ void Con_DPrintf( const Char *fmt, ... )
 //====================================
 //
 //====================================
-void Con_VPrintf( const Char *fmt, ... )
+void Con_VPrintf( const char *fmt, ... )
 {
 	if(g_pCvarDeveloper->GetValue() < DEV_MODE_VERBOSE)
 		return;
@@ -437,10 +437,10 @@ void Con_VPrintf( const Char *fmt, ... )
 
 	// compile the string result
 	va_list	vArgPtr;
-	static Char cMsg[PRINT_MSG_BUFFER_SIZE];
+	static char cMsg[PRINT_MSG_BUFFER_SIZE];
 	
 	va_start(vArgPtr,fmt);
-	vsprintf_s(cMsg, fmt, vArgPtr);
+	ENGINE_VSPRINTF_S(cMsg, sizeof(cMsg), fmt, vArgPtr);
 	va_end(vArgPtr);
 
 	// Send to print interface to complete
@@ -453,7 +453,7 @@ void Con_VPrintf( const Char *fmt, ... )
 //====================================
 //
 //====================================
-void Con_WPrintf( const Char *fmt, ... )
+void Con_WPrintf( const char *fmt, ... )
 {
 	if(g_conWPrintfSemaphore)
 		return;
@@ -463,10 +463,10 @@ void Con_WPrintf( const Char *fmt, ... )
 
 	// compile the string result
 	va_list	vArgPtr;
-	static Char cMsg[PRINT_MSG_BUFFER_SIZE];
+	static char cMsg[PRINT_MSG_BUFFER_SIZE];
 	
 	va_start(vArgPtr,fmt);
-	vsprintf_s(cMsg, fmt, vArgPtr);
+	ENGINE_VSPRINTF_S(cMsg, sizeof(cMsg), fmt, vArgPtr);
 	va_end(vArgPtr);
 
 	// Send to print interface to complete
@@ -479,7 +479,7 @@ void Con_WPrintf( const Char *fmt, ... )
 //====================================
 //
 //====================================
-void Con_EPrintf( const Char *fmt, ... )
+void Con_EPrintf( const char *fmt, ... )
 {
 	if(g_conEPrintfSemaphore)
 		return;
@@ -489,10 +489,10 @@ void Con_EPrintf( const Char *fmt, ... )
 
 	// compile the string result
 	va_list	vArgPtr;
-	static Char cMsg[PRINT_MSG_BUFFER_SIZE];
+	static char cMsg[PRINT_MSG_BUFFER_SIZE];
 	
 	va_start(vArgPtr,fmt);
-	vsprintf_s(cMsg, fmt, vArgPtr);
+	ENGINE_VSPRINTF_S(cMsg, sizeof(cMsg), fmt, vArgPtr);
 	va_end(vArgPtr);
 
 	// Send to print interface to complete

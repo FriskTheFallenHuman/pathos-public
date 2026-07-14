@@ -23,9 +23,9 @@ class CScreenMessages
 {
 public:
 	// Filename of titles file
-	static const Char TITLES_FILENAME[];
+	static const char TITLES_FILENAME[];
 	// Font set schema name for this clas
-	static const Char MESSAGES_FONT_SCHEMA_FILENAME[];
+	static const char MESSAGES_FONT_SCHEMA_FILENAME[];
 
 public:
 	enum effects_t
@@ -48,9 +48,9 @@ public:
 
 		CString text;
 
-		Uint32 width;
-		Uint32 height;
-		Uint32 charoffset;
+		UInt32 width;
+		UInt32 height;
+		UInt32 charoffset;
 		Int32 yoffset;
 	};
 
@@ -73,22 +73,22 @@ public:
 
 		CString name;
 
-		Float xposition;
-		Float yposition;
+		float xposition;
+		float yposition;
 
 		effects_t effect;
 		color24_t color1;
 		color24_t color2;
 
-		Float fadein;
-		Float fadeout;
-		Float holdtime;
-		Float fxtime;
+		float fadein;
+		float fadeout;
+		float holdtime;
+		float fxtime;
 
 		// Values set by code
-		Uint32 width;
-		Uint32 height;
-		Float lifetime;
+		UInt32 width;
+		UInt32 height;
+		float lifetime;
 
 		// Text broken down into lines
 		CArray<msgline_t> lines;
@@ -108,9 +108,9 @@ public:
 			{}
 
 		// Time this message was called to display
-		Float time;
+		float time;
 		// Total lifetime of the message
-		Float die;
+		float die;
 
 		// Pointer to message contents
 		scrmessage_t* pmsg;
@@ -138,9 +138,9 @@ public:
 
 public:
 	// Shows a message on-screen
-	void ShowMessage( const Char* pstrMessageName );
+	void ShowMessage( const char* pstrMessageName );
 	// Shows a custom message on-screen
-	void ShowMessage( const Char* pstrMessageText, Float fadein, Float fadeout, Float fxtime, Float holdtime, effects_t effect, Int32 channel, Float xposition, Float yposition, const color24_t& color1, const color24_t& color2 );
+	void ShowMessage( const char* pstrMessageText, float fadein, float fadeout, float fxtime, float holdtime, effects_t effect, Int32 channel, float xposition, float yposition, const color24_t& color1, const color24_t& color2 );
 
 	// Draws messages
 	bool DrawMessages( void );
@@ -156,14 +156,14 @@ private:
 	// Draws a single message
 	bool DrawMessage( displaymsg_t& msg );
 	// Calculates message x and y position
-	void GetTextXPosition( Double time, const font_set_t* pset, displaymsg_t& msg, msgline_t& line, Int32& xcoord );
+	void GetTextXPosition( double time, const font_set_t* pset, displaymsg_t& msg, msgline_t& line, Int32& xcoord );
 
 	// Calculates message size
 	void CalculateMessageSizes( scrmessage_t& msg );
 	// Calculates the lifetime of a message
 	static void CalculateMessageLifetime( scrmessage_t& msg );
 	// Processes message text
-	static void ProcessMessageText( const font_set_t* pset, scrmessage_t& msg, const Char* pstrMessageText );
+	static void ProcessMessageText( const font_set_t* pset, scrmessage_t& msg, const char* pstrMessageText );
 
 private:
 	// Array of messages
@@ -175,9 +175,9 @@ private:
 	scrmessage_t m_customMessage;
 
 	// Screen width
-	Uint32 m_screenWidth;
+	UInt32 m_screenWidth;
 	// Screen height
-	Uint32 m_screenHeight;
+	UInt32 m_screenHeight;
 
 	// Font set used by engine
 	const font_set_t* m_pFontSet;

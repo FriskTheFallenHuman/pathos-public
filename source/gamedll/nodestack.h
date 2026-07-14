@@ -20,7 +20,7 @@ class CNodeStack
 {
 public:
 	// Max nodes in the queue
-	static const Uint32 MAX_STACK_NODES = 128;
+	static const UInt32 MAX_STACK_NODES = 128;
 
 public:
 	CNodeStack( void );
@@ -31,8 +31,8 @@ public:
 	Int32 Pop( void );
 	Int32 Top( void ) const;
 	bool IsEmpty( void ) const;
-	Uint32 GetSize( void ) const;
-	void CopyToArray( Int32* pArray, Uint32 maxElements );
+	UInt32 GetSize( void ) const;
+	void CopyToArray( Int32* pArray, UInt32 maxElements );
 
 private:
 	Int32 m_stack[MAX_STACK_NODES];

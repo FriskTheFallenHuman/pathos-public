@@ -16,7 +16,7 @@ All Rights Reserved.
 // @param pdata Pointer to data buffer
 // @param msgsize Size of data buffer
 //=============================================
-inline void CMSGReader::BeginRead( const byte* pdata, Uint32 msgsize )
+DO_INLINE void CMSGReader::BeginRead( const Byte* pdata, Uint32 msgsize )
 {
 	m_pMessageData = pdata;
 	m_messageSize = msgsize;
@@ -31,7 +31,7 @@ inline void CMSGReader::BeginRead( const byte* pdata, Uint32 msgsize )
 //
 // @return Pointer to error string
 //=============================================
-inline const Char* CMSGReader::GetError( void ) const
+DO_INLINE const char* CMSGReader::GetError( void ) const
 {
 	return m_errorString.c_str();
 }
@@ -39,9 +39,9 @@ inline const Char* CMSGReader::GetError( void ) const
 //=============================================
 // @brief Tells if we had an error in the read
 //
-// @return TRUE if an error was encountered, FALSE otherwise
+// @return true if an error was encountered, false otherwise
 //=============================================
-inline bool CMSGReader::HasError( void )
+DO_INLINE bool CMSGReader::HasError( void )
 {
 	if(!m_errorString.empty())
 		return true;
@@ -60,19 +60,19 @@ inline bool CMSGReader::HasError( void )
 //
 // @return Byte value
 //=============================================
-byte CMSGReader::ReadByte( void )
+Byte CMSGReader::ReadByte( void )
 {
 	if(!m_errorString.empty())
 		return 0;
 
-	if(m_readOffset + sizeof(byte) > m_messageSize)
+	if(m_readOffset + sizeof(Byte) > m_messageSize)
 	{
 		m_errorString = "Read out of bounds on message";
 		return 0;
 	}
 
-	const byte *pdata = m_pMessageData + m_readOffset;
-	const byte value = (*pdata);
+	const Byte *pdata = m_pMessageData + m_readOffset;
+	const Byte value = (*pdata);
 	m_readOffset++;
 
 	return value;
@@ -81,21 +81,21 @@ byte CMSGReader::ReadByte( void )
 //=============================================
 // @brief Reads a single char from the buffer
 //
-// @return Char value
+// @return char value
 //=============================================
-Char CMSGReader::ReadChar( void )
+char CMSGReader::ReadChar( void )
 {
 	if(!m_errorString.empty())
 		return '\0';
 
-	if(m_readOffset + sizeof(Char) > m_messageSize)
+	if(m_readOffset + sizeof(char) > m_messageSize)
 	{
 		m_errorString = "Read out of bounds on message";
 		return '\0';
 	}
 
-	const byte *pdata = m_pMessageData + m_readOffset;
-	const Char value = static_cast<Char>(*pdata);
+	const Byte *pdata = m_pMessageData + m_readOffset;
+	const char value = static_cast<char>(*pdata);
 	m_readOffset++;
 
 	return value;
@@ -117,7 +117,7 @@ Int16 CMSGReader::ReadInt16( void )
 		return 0;
 	}
 
-	const byte *pdata = m_pMessageData + m_readOffset;
+	const Byte *pdata = m_pMessageData + m_readOffset;
 	const Int16 value = Common::ByteToInt16(pdata);
 	m_readOffset += sizeof(Int16);
 
@@ -140,7 +140,7 @@ Uint16 CMSGReader::ReadUint16( void )
 		return 0;
 	}
 
-	const byte *pdata = m_pMessageData + m_readOffset;
+	const Byte *pdata = m_pMessageData + m_readOffset;
 	const Uint16 value = Common::ByteToUint16(pdata);
 	m_readOffset += sizeof(Uint16);
 
@@ -163,7 +163,7 @@ Int32 CMSGReader::ReadInt32( void )
 		return 0;
 	}
 
-	const byte *pdata = m_pMessageData + m_readOffset;
+	const Byte *pdata = m_pMessageData + m_readOffset;
 	const Int32 value = Common::ByteToInt32(pdata);
 	m_readOffset += sizeof(Int32);
 
@@ -186,7 +186,7 @@ Uint32 CMSGReader::ReadUint32( void )
 		return 0;
 	}
 
-	const byte *pdata = m_pMessageData + m_readOffset;
+	const Byte *pdata = m_pMessageData + m_readOffset;
 	const Uint32 value = Common::ByteToUint32(pdata);
 	m_readOffset += sizeof(Uint32);
 
@@ -209,7 +209,7 @@ Int64 CMSGReader::ReadInt64( void )
 		return 0;
 	}
 
-	const byte *pdata = m_pMessageData + m_readOffset;
+	const Byte *pdata = m_pMessageData + m_readOffset;
 	const Int64 value = Common::ByteToInt64(pdata);
 	m_readOffset += sizeof(Int64);
 
@@ -232,7 +232,7 @@ Uint64 CMSGReader::ReadUint64( void )
 		return 0;
 	}
 
-	const byte *pdata = m_pMessageData + m_readOffset;
+	const Byte *pdata = m_pMessageData + m_readOffset;
 	const Uint64 value = Common::ByteToUint64(pdata);
 	m_readOffset += sizeof(Uint64);
 
@@ -244,7 +244,7 @@ Uint64 CMSGReader::ReadUint64( void )
 //
 // @return Half-float value
 //=============================================
-Float CMSGReader::ReadSmallFloat( void )
+float CMSGReader::ReadSmallFloat( void )
 {
 	if(!m_errorString.empty())
 		return 0;
@@ -256,24 +256,24 @@ Float CMSGReader::ReadSmallFloat( void )
 //=============================================
 // @brief Reads a single float from the buffer
 //
-// @return Float value
+// @return float value
 //=============================================
-Float CMSGReader::ReadFloat( void )
+float CMSGReader::ReadFloat( void )
 {
 	if(!m_errorString.empty())
 		return 0;
 
-	if(m_readOffset + sizeof(Float) > m_messageSize)
+	if(m_readOffset + sizeof(float) > m_messageSize)
 	{
 		m_errorString = "Read out of bounds on message";
 		return 0;
 	}
 
-	Float value;
+	float value;
 
-	const byte *pdata = m_pMessageData + m_readOffset;
-	memcpy(&value, pdata, sizeof(Float));
-	m_readOffset += sizeof(Float);
+	const Byte *pdata = m_pMessageData + m_readOffset;
+	memcpy(&value, pdata, sizeof(float));
+	m_readOffset += sizeof(float);
 
 	return value;
 }
@@ -281,24 +281,24 @@ Float CMSGReader::ReadFloat( void )
 //=============================================
 // @brief Reads a single double from the buffer
 //
-// @return Double value
+// @return double value
 //=============================================
-Double CMSGReader::ReadDouble( void )
+double CMSGReader::ReadDouble( void )
 {
 	if(!m_errorString.empty())
 		return 0;
 
-	if(m_readOffset + sizeof(Double) > m_messageSize)
+	if(m_readOffset + sizeof(double) > m_messageSize)
 	{
 		m_errorString = "Read out of bounds on message";
 		return 0;
 	}
 
-	Double value;
+	double value;
 
-	const byte *pdata = m_pMessageData + m_readOffset;
-	memcpy(&value, pdata, sizeof(Double));
-	m_readOffset += sizeof(Double);
+	const Byte *pdata = m_pMessageData + m_readOffset;
+	memcpy(&value, pdata, sizeof(double));
+	m_readOffset += sizeof(double);
 
 	return value;
 }
@@ -309,7 +309,7 @@ Double CMSGReader::ReadDouble( void )
 //
 // @return Pointer to string
 //=============================================
-const Char* CMSGReader::ReadString( void )
+const char* CMSGReader::ReadString( void )
 {
 	if(!m_errorString.empty())
 		return "";
@@ -326,7 +326,7 @@ const Char* CMSGReader::ReadString( void )
 		return 0;
 	}
 
-	const Char *pdata = reinterpret_cast<const Char*>(m_pMessageData + m_readOffset);
+	const char *pdata = reinterpret_cast<const char*>(m_pMessageData + m_readOffset);
 	m_readOffset += strlength;
 	return pdata;
 }
@@ -336,7 +336,7 @@ const Char* CMSGReader::ReadString( void )
 //
 // @return Pointer to data buffer
 //=============================================
-const byte* CMSGReader::ReadBuffer( Uint32 size )
+const Byte* CMSGReader::ReadBuffer( Uint32 size )
 {
 	if(!m_errorString.empty())
 		return nullptr;
@@ -347,7 +347,7 @@ const byte* CMSGReader::ReadBuffer( Uint32 size )
 		return nullptr;
 	}
 
-	const byte *pdata = (m_pMessageData + m_readOffset);
+	const Byte *pdata = (m_pMessageData + m_readOffset);
 	m_readOffset += size;
 	return pdata;
 }
@@ -371,14 +371,14 @@ CBitSet CMSGReader::ReadBitSet( void )
 		return CBitSet();
 
 	// Do a consistency check with CBitSet
-	Uint32 fullBytesCount = SDL_ceil(static_cast<Float>(numBits) / static_cast<Float>(CBitSet::NB_BITS_IN_BYTE));
+	Uint32 fullBytesCount = SDL_ceil(static_cast<float>(numBits) / static_cast<float>(CBitSet::NB_BITS_IN_BYTE));
 	if(fullBytesCount != numBytes)
 	{
 		m_errorString << "CBitSet consistency check failed: Expected " << fullBytesCount << " bytes for " << numBits << " bits, message specified " << numBytes << " bytes instead";
 		return CBitSet();
 	}
 
-	const byte* pDataArray = ReadBuffer(numBytes);
+	const Byte* pDataArray = ReadBuffer(numBytes);
 	if(!m_errorString.empty())
 		return CBitSet();
 

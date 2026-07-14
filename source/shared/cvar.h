@@ -30,7 +30,7 @@ enum cvar_type_t
 };
 
 typedef void (*pfnCVarCallback_t)( class CCVar* pCVar );
-typedef void (*pfnCon_EPrintf_t)( const Char *fmt, ... );
+typedef void (*pfnCon_EPrintf_t)( const char *fmt, ... );
 
 /*
 =================================
@@ -42,29 +42,29 @@ class CCVar
 {
 	friend class CConsole;
 public:
-	CCVar( cvar_type_t type, Int32 flags, const Char* pstrName, pfnCVarCallback_t pfnCallback, pfnCon_EPrintf_t pfnCon_EPrintf );
+	CCVar( cvar_type_t type, Int32 flags, const char* pstrName, pfnCVarCallback_t pfnCallback, pfnCon_EPrintf_t pfnCon_EPrintf );
 
 	virtual ~CCVar( void );
 
 public:
 	// Retrieves a string value
-	virtual const Char* GetStrValue( void ) const = 0;
+	virtual const char* GetStrValue( void ) const = 0;
 	// Retrieves a float value
-	virtual Float GetValue( void ) const = 0;
+	virtual float GetValue( void ) const = 0;
 
 	// Retrieves the type
 	cvar_type_t GetType( void ) const { return m_type; }
 	// Retrieves the flags
 	Int32 GetFlags( void ) const { return m_flags; }
 	// Retrieves the name
-	const Char* GetName( void ) const { return m_name.c_str(); }
+	const char* GetName( void ) const { return m_name.c_str(); }
 	
 private:
 	// These should never be called outside CConsole
 	// Sets a string value for the cvar
-	virtual bool SetValue( const Char* pstrValue ) = 0;
+	virtual bool SetValue( const char* pstrValue ) = 0;
 	// Sets a float value
-	virtual bool SetValue( Float value ) = 0;
+	virtual bool SetValue( float value ) = 0;
 
 protected:
 	// Type of the cvar
@@ -88,21 +88,21 @@ CStringCVar
 class CStringCVar : public CCVar
 {
 public:
-	CStringCVar( Int32 flags, const Char* pstrName, pfnCVarCallback_t pfnCallback, pfnCon_EPrintf_t pfnCon_EPrintf );
+	CStringCVar( Int32 flags, const char* pstrName, pfnCVarCallback_t pfnCallback, pfnCon_EPrintf_t pfnCon_EPrintf );
 	virtual ~CStringCVar( void );
 
 public:
 	// Retrieves a string value
-	const Char* GetStrValue( void ) const override;
+	const char* GetStrValue( void ) const override;
 	// Retrieves a float value
-	Float GetValue( void ) const override;
+	float GetValue( void ) const override;
 
 private:
 	// These should never be called outside CConsole
 	// Sets a string value for the cvar
-	bool SetValue( const Char* pstrValue ) override;
+	bool SetValue( const char* pstrValue ) override;
 	// Sets a float value
-	bool SetValue( Float value ) override;
+	bool SetValue( float value ) override;
 
 private:
 	// Value of the cvar
@@ -118,24 +118,24 @@ CFloatCVar
 class CFloatCVar : public CCVar
 {
 public:
-	CFloatCVar( Int32 flags, const Char* pstrName, pfnCVarCallback_t pfnCallback, pfnCon_EPrintf_t pfnCon_EPrintf );
+	CFloatCVar( Int32 flags, const char* pstrName, pfnCVarCallback_t pfnCallback, pfnCon_EPrintf_t pfnCon_EPrintf );
 	virtual ~CFloatCVar( void );
 
 public:
 	// Retrieves a string value
-	const Char* GetStrValue( void ) const override;
+	const char* GetStrValue( void ) const override;
 	// Retrieves a float value
-	Float GetValue( void ) const override;
+	float GetValue( void ) const override;
 
 private:
 	// These should never be called outside CConsole
 	// Sets a string value for the cvar
-	bool SetValue( const Char* pstrValue ) override;
+	bool SetValue( const char* pstrValue ) override;
 	// Sets a float value
-	bool SetValue( Float value ) override;
+	bool SetValue( float value ) override;
 
 private:
 	// Value of the cvar
-	Float m_value;
+	float m_value;
 };
 #endif // CVAR_H

@@ -19,19 +19,19 @@ class CItemDiary : public CAnimatingEntity
 {
 public:
 	// Blend time for diary
-	static const Float DIARY_BLEND_TIME;
+	static const float DIARY_BLEND_TIME;
 	// Diary model for benefactor
-	static const Char DIARY_MODEL_BENEFACTOR[];
+	static const char DIARY_MODEL_BENEFACTOR[];
 	// Diary model for benefactor
-	static const Char DIARY_MODEL_RADFORD[];
+	static const char DIARY_MODEL_RADFORD[];
 	// Diary entry sequence name
-	static const Char DIARY_ENTRY_SEQ_NAME[];
+	static const char DIARY_ENTRY_SEQ_NAME[];
 	// Diary loop sequence name
-	static const Char DIARY_LOOP_SEQ_NAME[];
+	static const char DIARY_LOOP_SEQ_NAME[];
 	// Diary exit sequence name
-	static const Char DIARY_EXIT_SEQ_NAME[];
+	static const char DIARY_EXIT_SEQ_NAME[];
 	// Diary rest sequence name
-	static const Char DIARY_REST_SEQ_NAME[];
+	static const char DIARY_REST_SEQ_NAME[];
 
 public:
 	enum diarytype_t
@@ -62,7 +62,7 @@ public:
 	virtual void Precache( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual Int32 GetEntityFlags( void ) override { return (CAnimatingEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION)|FL_ENTITY_PLAYER_USABLE; }
 	virtual void AdvanceState( void ) override;
 	virtual void SendInitMessage( const CBaseEntity* pPlayer ) override;
@@ -74,7 +74,7 @@ public:
 	void EXPORTFN Enter( void );
 
 private:
-	Float m_duration;
+	float m_duration;
 	Int32 m_diaryType;
 	Int32 m_state;
 	bool m_isDisabled;

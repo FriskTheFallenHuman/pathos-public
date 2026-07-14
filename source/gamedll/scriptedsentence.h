@@ -47,7 +47,7 @@ public:
 	virtual void DeclareSaveFields( void ) override;
 	virtual Int32 GetEntityFlags( void ) override { return (CBaseEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION); }
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 protected:
 	void EXPORTFN FindThink( void );
@@ -62,16 +62,16 @@ private:
 	string_t	m_npcName;
 	string_t	m_listenerName;
 
-	Float		m_radius;
-	Float		m_repeatRate;
-	Float		m_attenuation;
+	float		m_radius;
+	float		m_repeatRate;
+	float		m_attenuation;
 	Int32		m_attenuationSetting;
-	Float		m_volume;
+	float		m_volume;
 
 	bool		m_isActive;
 
-	Float		m_duration;
-	Double		m_beginTime;
+	float		m_duration;
+	double		m_beginTime;
 
 	CEntityHandle	m_targetEntity;
 	CEntityHandle	m_listenerEntity;

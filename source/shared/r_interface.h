@@ -33,16 +33,16 @@ struct r_interface_t
 	// Creates a texture index allocation
 	en_texalloc_t*		(*pfnAllocTextureIndex)( rs_level_t level );
 	// Loads a texture
-	en_texture_t*		(*pfnLoadTexture)( const Char* pstrFilename, rs_level_t level, Int32 flags, const GLint* pborder );
+	en_texture_t*		(*pfnLoadTexture)( const char* pstrFilename, rs_level_t level, Int32 flags, const GLint* pborder );
 	// Loads a texture from memory
-	en_texture_t*		(*pfnLoadTextureFromMemory)( const Char* pstrTextureName, rs_level_t level, Int32 flags, const byte* pdata, Uint32 width, Uint32 height, Uint32 bpp );
+	en_texture_t*		(*pfnLoadTextureFromMemory)( const char* pstrTextureName, rs_level_t level, Int32 flags, const Byte* pdata, UInt32 width, UInt32 height, UInt32 bpp );
 	// Loads a material script
-	en_material_t*		(*pfnLoadMaterialScript)( const Char* pstrFilename, rs_level_t level );
+	en_material_t*		(*pfnLoadMaterialScript)( const char* pstrFilename, rs_level_t level );
 
 	// Binds a texture to a texture unit
-	void				(*pfnBind2DTexture)( Int32 texture, Uint32 id, bool force );
+	void				(*pfnBind2DTexture)( Int32 texture, UInt32 id, bool force );
 	// Clears all memorized binds
-	void				(*pfnClearBinds)( Uint32 firstunit );
+	void				(*pfnClearBinds)( UInt32 firstunit );
 
 	// Tells if basic draw is active
 	bool				(*pfnBasicDrawIsActive)( void );
@@ -61,19 +61,19 @@ struct r_interface_t
 	void				(*pfnBasicDrawEnd)( void );
 
 	// Sets the projection matrix
-	void				(*pfnBasicDrawSetProjection)( const Float* pMatrix );
+	void				(*pfnBasicDrawSetProjection)( const float* pMatrix );
 	// Sets the modelview matrix
-	void				(*pfnBasicDrawSetModelView)( const Float* pMatrix );
+	void				(*pfnBasicDrawSetModelView)( const float* pMatrix );
 
 	// Sets a vertex's color
-	void				(*pfnBasicDrawColor4f)( Float r, Float g, Float b, Float a );
-	void				(*pfnBasicDrawColor4fv)( const Float* pfc );
+	void				(*pfnBasicDrawColor4f)( float r, float g, float b, float a );
+	void				(*pfnBasicDrawColor4fv)( const float* pfc );
 	// Sets a vertex's texcoords
-	void				(*pfnBasicDrawTexCoord2f)( Float u, Float v );
-	void				(*pfnBasicDrawTexCoord2fv)( const Float* ptc );
+	void				(*pfnBasicDrawTexCoord2f)( float u, float v );
+	void				(*pfnBasicDrawTexCoord2fv)( const float* ptc );
 	// Sets a vertex's origin
-	void				(*pfnBasicDrawVertex3f)( Float x, Float y, Float z );
-	void				(*pfnBasicDrawVertex3fv)( const Float* pfv );
+	void				(*pfnBasicDrawVertex3f)( float x, float y, float z );
+	void				(*pfnBasicDrawVertex3fv)( const float* pfv );
 
 	// Retreives the class holding the export functions
 	const CGLExtF&		(*pfnGetExportFunctionsClass)( void );
@@ -86,31 +86,31 @@ struct r_interface_t
 	// Retreives view params structure
 	const ref_params_t&	(*pfnGetViewParams)( void );
 	// Retreives window width and height
-	void				(*pfnGetScreenSize)( Uint32& scrwidth, Uint32& scrheight );
+	void				(*pfnGetScreenSize)( UInt32& scrwidth, UInt32& scrheight );
 
 
 	// Gets the default font set
 	const font_set_t*	(*pfnGetDefaultFontSet)( void );
 	// Loads a font set
-	const font_set_t*	(*pfnLoadFontSet)( const Char *pstrFilename, Int32 fontSize );
+	const font_set_t*	(*pfnLoadFontSet)( const char *pstrFilename, Int32 fontSize );
 	// Draws a simple string on the screen
-	bool				(*pfnDrawSimpleString)( color32_t color, Int32 x, Int32 y, const Char* pstrString, const font_set_t* pfont );
+	bool				(*pfnDrawSimpleString)( color32_t color, Int32 x, Int32 y, const char* pstrString, const font_set_t* pfont );
 	// Draws a string box on the screen
-	bool				(*pfnDrawStringBox)( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int16 insetx, Int16 insety, bool reverse, color32_t color, Int32 x, Int32 y, const Char* pstrString, const font_set_t* pfont, Uint32 offset, Uint32 minlineheight, Uint32 xoffset );
+	bool				(*pfnDrawStringBox)( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int16 insetx, Int16 insety, bool reverse, color32_t color, Int32 x, Int32 y, const char* pstrString, const font_set_t* pfont, UInt32 offset, UInt32 minlineheight, UInt32 xoffset );
 	// Sets up for text rendering
 	bool				(*pfnBeginTextRendering)( const font_set_t* pfontset );
 	// Ends text rendering
 	void				(*pfnFinishTextRendering)( void );
 	// Draws a single character
-	bool				(*pfnDrawCharacter)( Int32 x, Int32 y, Char character, Uint32 r, Uint32 g, Uint32 b, Uint32 a );
+	bool				(*pfnDrawCharacter)( Int32 x, Int32 y, char character, UInt32 r, UInt32 g, UInt32 b, UInt32 a );
 	// Returns the size of a string in pixels
-	void				(*pfnGetStringSize)( const font_set_t *pset, const Char *pstring, Uint32 *width, Uint32 *height, Int32 *ymin );
+	void				(*pfnGetStringSize)( const font_set_t *pset, const char *pstring, UInt32 *width, UInt32 *height, Int32 *ymin );
 	// Estimates height of a string
-	Int32				(*pfnEstimateStringHeight)( const font_set_t *pset, const Char *pstrString, Uint32 minlineheight );
+	Int32				(*pfnEstimateStringHeight)( const font_set_t *pset, const char *pstrString, UInt32 minlineheight );
 	// Sets the string drawing rectangle
 	void				(*pfnSetStringRectangle)( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int32 insetx, Int32 insety );
 	// Returns the error string from the text renderer class
-	const Char*			(*pfnGetStringDrawError)( void );
+	const char*			(*pfnGetStringDrawError)( void );
 
 	// Prepares for vbm rendering
 	bool				(*pfnVBMPrepareDraw)( void );
@@ -127,15 +127,15 @@ struct r_interface_t
 	bool				(*pfnDrawVBMModelVSM)( cl_entity_t* pentity, cl_dlight_t* pdlight );
 
 	// Returns the error string from the VBM shader object
-	const Char*			(*pfnGetVBMShaderError)( void );
+	const char*			(*pfnGetVBMShaderError)( void );
 
 	// Returns the number of entities to be rendered
-	Uint32				(*pfnGetNumRenderEntities)( void );
+	UInt32				(*pfnGetNumRenderEntities)( void );
 	// Returns a renderable entity
-	cl_entity_t*		(*pfnGetRenderEntityByIndex)( Uint32 index );
+	cl_entity_t*		(*pfnGetRenderEntityByIndex)( UInt32 index );
 
 	// Sets the projection matrix
-	void				(*pfnSetProjectionMatrix)( Float znear, Float fovY );
+	void				(*pfnSetProjectionMatrix)( float znear, float fovY );
 	// Sets the modelview matrix
 	void				(*pfnSetModelViewMatrix)( const Vector& origin, const Vector& angles );
 	

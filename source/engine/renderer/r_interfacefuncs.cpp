@@ -107,7 +107,7 @@ en_texalloc_t* R_AllocTextureIndex( rs_level_t level )
 //====================================
 //
 //====================================
-en_texture_t* R_LoadTexture( const Char* pstrFilename, rs_level_t level, Int32 flags, const GLint* pborder )
+en_texture_t* R_LoadTexture( const char* pstrFilename, rs_level_t level, Int32 flags, const GLint* pborder )
 {
 	return CTextureManager::GetInstance()->LoadTexture(pstrFilename, level, flags, pborder);
 }
@@ -115,7 +115,7 @@ en_texture_t* R_LoadTexture( const Char* pstrFilename, rs_level_t level, Int32 f
 //====================================
 //
 //====================================
-en_texture_t* R_LoadTextureFromMemory( const Char* pstrTextureName, rs_level_t level, Int32 flags, const byte* pdata, Uint32 width, Uint32 height, Uint32 bpp )
+en_texture_t* R_LoadTextureFromMemory( const char* pstrTextureName, rs_level_t level, Int32 flags, const Byte* pdata, UInt32 width, UInt32 height, UInt32 bpp )
 {
 	return CTextureManager::GetInstance()->LoadFromMemory(pstrTextureName, level, flags, pdata, width, height, bpp);
 }
@@ -123,7 +123,7 @@ en_texture_t* R_LoadTextureFromMemory( const Char* pstrTextureName, rs_level_t l
 //====================================
 //
 //====================================
-en_material_t* R_LoadMaterialScript( const Char* pstrFilename, rs_level_t level )
+en_material_t* R_LoadMaterialScript( const char* pstrFilename, rs_level_t level )
 {
 	return CTextureManager::GetInstance()->LoadMaterialScript(pstrFilename, level);
 }
@@ -179,7 +179,7 @@ void R_BasicDrawEnd( void )
 //====================================
 //
 //====================================
-void R_BasicDrawSetProjection( const Float* pMatrix )
+void R_BasicDrawSetProjection( const float* pMatrix )
 {
 	CBasicDraw::GetInstance()->SetProjection(pMatrix);
 }
@@ -187,7 +187,7 @@ void R_BasicDrawSetProjection( const Float* pMatrix )
 //====================================
 //
 //====================================
-void R_BasicDrawSetModelView( const Float* pMatrix )
+void R_BasicDrawSetModelView( const float* pMatrix )
 {
 	CBasicDraw::GetInstance()->SetModelview(pMatrix);
 }
@@ -195,7 +195,7 @@ void R_BasicDrawSetModelView( const Float* pMatrix )
 //====================================
 //
 //====================================
-void R_BasicDrawColor4f( Float r, Float g, Float b, Float a )
+void R_BasicDrawColor4f( float r, float g, float b, float a )
 {
 	CBasicDraw::GetInstance()->Color4f(r, g, b, a);
 }
@@ -203,7 +203,7 @@ void R_BasicDrawColor4f( Float r, Float g, Float b, Float a )
 //====================================
 //
 //====================================
-void R_BasicDrawColor4fv( const Float* pfc )
+void R_BasicDrawColor4fv( const float* pfc )
 {
 	CBasicDraw::GetInstance()->Color4fv(pfc);
 }
@@ -211,7 +211,7 @@ void R_BasicDrawColor4fv( const Float* pfc )
 //====================================
 //
 //====================================
-void R_BasicDrawTexCoord2f( Float u, Float v )
+void R_BasicDrawTexCoord2f( float u, float v )
 {
 	CBasicDraw::GetInstance()->TexCoord2f(u, v);
 }
@@ -219,7 +219,7 @@ void R_BasicDrawTexCoord2f( Float u, Float v )
 //====================================
 //
 //====================================
-void R_BasicDrawTexCoord2fv( const Float* ptc )
+void R_BasicDrawTexCoord2fv( const float* ptc )
 {
 	CBasicDraw::GetInstance()->TexCoord2fv(ptc);
 }
@@ -227,7 +227,7 @@ void R_BasicDrawTexCoord2fv( const Float* ptc )
 //====================================
 //
 //====================================
-void R_BasicDrawVertex3f( Float x, Float y, Float z )
+void R_BasicDrawVertex3f( float x, float y, float z )
 {
 	CBasicDraw::GetInstance()->Vertex3f(x, y, z);
 }
@@ -235,7 +235,7 @@ void R_BasicDrawVertex3f( Float x, Float y, Float z )
 //====================================
 //
 //====================================
-void R_BasicDrawVertex3fv( const Float* pfv )
+void R_BasicDrawVertex3fv( const float* pfv )
 {
 	CBasicDraw::GetInstance()->Vertex3fv(pfv);
 }
@@ -283,7 +283,7 @@ const font_set_t* R_GetDefaultFontSet( void )
 //====================================
 //
 //====================================
-const font_set_t* R_LoadFontSet( const Char *pstrFilename, Int32 fontSize )
+const font_set_t* R_LoadFontSet( const char *pstrFilename, Int32 fontSize )
 {
 	return gText.LoadFont(pstrFilename, fontSize);
 }
@@ -291,7 +291,7 @@ const font_set_t* R_LoadFontSet( const Char *pstrFilename, Int32 fontSize )
 //====================================
 //
 //====================================
-void R_GetScreenSize( Uint32& scrwidth, Uint32& scrheight )
+void R_GetScreenSize( UInt32& scrwidth, UInt32& scrheight )
 {
 	scrwidth = gWindow.GetWidth();
 	scrheight = gWindow.GetHeight();
@@ -308,7 +308,7 @@ bool R_BasicDrawIsActive( void )
 //====================================
 //
 //====================================
-void R_GetStringSize( const font_set_t *pset, const Char *pstring, Uint32 *width, Uint32 *height, Int32 *ymin )
+void R_GetStringSize( const font_set_t *pset, const char *pstring, UInt32 *width, UInt32 *height, Int32 *ymin )
 {
 	gText.GetStringSize(pset, pstring, width, height, ymin);
 }
@@ -316,7 +316,7 @@ void R_GetStringSize( const font_set_t *pset, const Char *pstring, Uint32 *width
 //====================================
 //
 //====================================
-Int32 R_EstimateStringHeight( const font_set_t *pset, const Char *pstrString, Uint32 minlineheight )
+Int32 R_EstimateStringHeight( const font_set_t *pset, const char *pstrString, UInt32 minlineheight )
 {
 	return gText.EstimateHeight(pset, pstrString, minlineheight);
 }
@@ -332,7 +332,7 @@ void R_SetStringRectangle( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int32
 //====================================
 //
 //====================================
-const Char* R_GetStringDrawError( void )
+const char* R_GetStringDrawError( void )
 {
 	return gText.GetShaderError();
 }
@@ -380,7 +380,7 @@ void R_VBMEndVSMDraw( void )
 //====================================
 //
 //====================================
-const Char* R_VBMGetShaderError( void )
+const char* R_VBMGetShaderError( void )
 {
 	return gVBMRenderer.GetShaderErrorString();
 }
@@ -396,7 +396,7 @@ bool R_DrawVBMModelVSM( cl_entity_t* pentity, cl_dlight_t* pdlight )
 //====================================
 //
 //====================================
-Uint32 R_GetNumRenderEntities( void )
+UInt32 R_GetNumRenderEntities( void )
 {
 	return rns.objects.numvisents;
 }
@@ -404,7 +404,7 @@ Uint32 R_GetNumRenderEntities( void )
 //====================================
 //
 //====================================
-cl_entity_t* R_GetRenderEntityByIndex( Uint32 index )
+cl_entity_t* R_GetRenderEntityByIndex( UInt32 index )
 {
 	if(index >= rns.objects.numvisents)
 		return nullptr;

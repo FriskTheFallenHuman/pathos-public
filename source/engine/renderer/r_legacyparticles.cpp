@@ -29,18 +29,18 @@ All Rights Reserved.
 //
 
 // Ramp 1 values
-const Uint32 CLegacyParticles::PARTICLE_RAMP1[8] = {111, 109, 107, 105, 103, 101, 99, 97};
+const UInt32 CLegacyParticles::PARTICLE_RAMP1[8] = {111, 109, 107, 105, 103, 101, 99, 97};
 // Ramp 2 values
-const Uint32 CLegacyParticles::PARTICLE_RAMP2[8] = {111, 110, 109, 108, 107, 106, 104, 102};
+const UInt32 CLegacyParticles::PARTICLE_RAMP2[8] = {111, 110, 109, 108, 107, 106, 104, 102};
 // Ramp 3 values
-const Uint32 CLegacyParticles::PARTICLE_RAMP3[8] = {109, 107, 6, 5, 4, 3};
+const UInt32 CLegacyParticles::PARTICLE_RAMP3[8] = {109, 107, 6, 5, 4, 3};
 // Particle fade out time
-const Float CLegacyParticles::PARTICLE_FADEOUT_TIME = 1;
+const float CLegacyParticles::PARTICLE_FADEOUT_TIME = 1;
 
 // Path to particle texture
-const Char CLegacyParticles::PARTICLE_TEXTURE_FILEPATH[] = "general/particle.tga";
+const char CLegacyParticles::PARTICLE_TEXTURE_FILEPATH[] = "general/particle.tga";
 // Path to palette file
-const Char CLegacyParticles::PALETTE_FILEPATH[] = "textures/general/palette.lmp";
+const char CLegacyParticles::PALETTE_FILEPATH[] = "textures/general/palette.lmp";
 
 // Object definition
 CLegacyParticles gLegacyParticles;
@@ -53,8 +53,8 @@ Int32 Legacy_SortParticles( const void* p1, const void* p2 )
 	const CLegacyParticles::particle_t **pp1 = static_cast<const CLegacyParticles::particle_t **>(const_cast<void*>(p1));
 	const CLegacyParticles::particle_t **pp2 = static_cast<const CLegacyParticles::particle_t **>(const_cast<void*>(p2));
 
-	Float length1 = ((*pp1)->origin - rns.view.v_origin).Length();
-	Float length2 = ((*pp2)->origin - rns.view.v_origin).Length();
+	float length1 = ((*pp1)->origin - rns.view.v_origin).Length();
+	float length2 = ((*pp2)->origin - rns.view.v_origin).Length();
 
 	if(length1 < length2)
 		return 1;
@@ -99,8 +99,8 @@ bool CLegacyParticles::Init( void )
 	}
 
 	// Load the palette
-	Uint32 filesize = 0;
-	const byte* ppalfile = FL_LoadFile(PALETTE_FILEPATH, &filesize);
+	UInt32 filesize = 0;
+	const Byte* ppalfile = FL_LoadFile(PALETTE_FILEPATH, &filesize);
 	if(!ppalfile)
 	{
 		Con_WPrintf("Failed to load '%s'.\n", PALETTE_FILEPATH);
@@ -108,7 +108,7 @@ bool CLegacyParticles::Init( void )
 	}
 
 	m_pColorPalette = new color24_t[256];
-	memcpy(m_pColorPalette, ppalfile, sizeof(byte)*filesize);
+	memcpy(m_pColorPalette, ppalfile, sizeof(Byte)*filesize);
 	FL_FreeFile(ppalfile);
 
 	return true;
@@ -137,7 +137,7 @@ void CLegacyParticles::ReleaseAllParticles( void )
 
 	if(!m_pParticleBlocksArray.empty())
 	{
-		for(Uint32 i = 0; i < m_pParticleBlocksArray.size(); i++)
+		for(UInt32 i = 0; i < m_pParticleBlocksArray.size(); i++)
 			delete[] m_pParticleBlocksArray[i];
 
 		m_pParticleBlocksArray.clear();
@@ -198,7 +198,7 @@ void CLegacyParticles::AllocateParticles( void )
 	m_pParticleBlocksArray.push_back(pnewblock);
 
 	// Allocate particles
-	for(Uint32 i = 0; i < LEGACY_PARTICLE_ALLOC_COUNT; i++)
+	for(UInt32 i = 0; i < LEGACY_PARTICLE_ALLOC_COUNT; i++)
 	{
 		particle_t* pnew = &pnewblock[i];
 
@@ -209,9 +209,9 @@ void CLegacyParticles::AllocateParticles( void )
 		m_pFreeParticleHeader = pnew;
 	}
 
-	Uint32 prevSize = m_pSortedParticles.size();
+	UInt32 prevSize = m_pSortedParticles.size();
 	m_pSortedParticles.resize(prevSize + LEGACY_PARTICLE_ALLOC_COUNT);
-	for(Uint32 i = prevSize; i < LEGACY_PARTICLE_ALLOC_COUNT; i++)
+	for(UInt32 i = prevSize; i < LEGACY_PARTICLE_ALLOC_COUNT; i++)
 		m_pSortedParticles[i] = nullptr;
 }
 
@@ -283,7 +283,7 @@ CLegacyParticles::particle_t* CLegacyParticles::AllocParticle( void )
 //====================================
 void CLegacyParticles::CreateParticleExplosion1( const Vector& origin )
 {
-	for(Uint32 i = 0; i < 1024; i++)
+	for(UInt32 i = 0; i < 1024; i++)
 	{
 		particle_t* pnew = AllocParticle();
 		if(!pnew)
@@ -301,14 +301,14 @@ void CLegacyParticles::CreateParticleExplosion1( const Vector& origin )
 
 		while(true)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				pnew->velocity[j] = Common::RandomFloat(-512, 512);
 
 			if(pnew->velocity.Length() <= 512)
 				break;
 		}
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			pnew->origin[j] = origin[j] + pnew->velocity[j] * 0.25;
 	}
 }
@@ -316,11 +316,11 @@ void CLegacyParticles::CreateParticleExplosion1( const Vector& origin )
 //====================================
 //
 //====================================
-void CLegacyParticles::CreateParticleExplosion2( const Vector& origin, Uint32 colorstart, Uint32 colorlength )
+void CLegacyParticles::CreateParticleExplosion2( const Vector& origin, UInt32 colorstart, UInt32 colorlength )
 {
-	Uint32 colormod = 0;
+	UInt32 colormod = 0;
 
-	for(Uint32 i = 0; i < 512; i++)
+	for(UInt32 i = 0; i < 512; i++)
 	{
 		particle_t* pnew = AllocParticle();
 		if(!pnew)
@@ -333,7 +333,7 @@ void CLegacyParticles::CreateParticleExplosion2( const Vector& origin, Uint32 co
 		pnew->type = pt_blob1;
 		colormod++;
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			pnew->origin[j] = origin[j] + Common::RandomFloat(-16, 16);
 			pnew->velocity[j] = Common::RandomFloat(-256, 256);
@@ -346,7 +346,7 @@ void CLegacyParticles::CreateParticleExplosion2( const Vector& origin, Uint32 co
 //====================================
 void CLegacyParticles::CreateBlobExplosion( const Vector& origin )
 {
-	for(Uint32 i = 0; i < 1024; i++)
+	for(UInt32 i = 0; i < 1024; i++)
 	{
 		particle_t* pnew = AllocParticle();
 		if(!pnew)
@@ -367,7 +367,7 @@ void CLegacyParticles::CreateBlobExplosion( const Vector& origin )
 			pnew->color = 150 + Common::RandomLong(0, 6);
 		}
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			pnew->origin[j] = origin[j] + Common::RandomFloat(-16, 16);
 			pnew->velocity[j] = Common::RandomFloat(-256, 256);
@@ -378,9 +378,9 @@ void CLegacyParticles::CreateBlobExplosion( const Vector& origin )
 //====================================
 //
 //====================================
-void CLegacyParticles::CreateRocketExplosion( const Vector& origin, Uint32 color )
+void CLegacyParticles::CreateRocketExplosion( const Vector& origin, UInt32 color )
 {
-	for(Uint32 i = 0; i < 1024; i++)
+	for(UInt32 i = 0; i < 1024; i++)
 	{
 		particle_t* pnew = AllocParticle();
 		if(!pnew)
@@ -396,7 +396,7 @@ void CLegacyParticles::CreateRocketExplosion( const Vector& origin, Uint32 color
 		else
 			pnew->type = pt_explode2;
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			pnew->origin[j] = origin[j] + Common::RandomFloat(-16, 16);
 			pnew->velocity[j] = Common::RandomFloat(-256, 256);
@@ -407,9 +407,9 @@ void CLegacyParticles::CreateRocketExplosion( const Vector& origin, Uint32 color
 //====================================
 //
 //====================================
-void CLegacyParticles::CreateParticleEffect( const Vector& origin, const Vector& velocity, Uint32 color, Uint32 count )
+void CLegacyParticles::CreateParticleEffect( const Vector& origin, const Vector& velocity, UInt32 color, UInt32 count )
 {
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
 		particle_t* pnew = AllocParticle();
 		if(!pnew)
@@ -420,7 +420,7 @@ void CLegacyParticles::CreateParticleEffect( const Vector& origin, const Vector&
 		pnew->color = (color&~7) + Common::RandomLong(0, 7);
 		pnew->type = pt_slowgravity;
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			pnew->origin[j] = origin[j] + Common::RandomFloat(-16, 16);
 			pnew->velocity[j] = velocity[j]*15;
@@ -458,7 +458,7 @@ void CLegacyParticles::CreateLavaSplash( const Vector& origin )
 				pnew->origin[2] = origin[2] + Common::RandomLong(0, 63);
 
 				Math::VectorNormalize(dir);
-				Float velocity = Common::RandomFloat(50, 113);
+				float velocity = Common::RandomFloat(50, 113);
 				Math::VectorScale(dir, velocity, pnew->velocity);
 			}
 		}
@@ -495,7 +495,7 @@ void CLegacyParticles::CreateTeleportSplash( const Vector& origin )
 				pnew->origin[2] = origin[2] + k + Common::RandomFloat(0, 3);
 
 				Math::VectorNormalize(dir);
-				Float velocity = Common::RandomFloat(50, 113);
+				float velocity = Common::RandomFloat(50, 113);
 				Math::VectorScale(dir, velocity, pnew->velocity);
 			}
 		}
@@ -505,7 +505,7 @@ void CLegacyParticles::CreateTeleportSplash( const Vector& origin )
 //====================================
 //
 //====================================
-void CLegacyParticles::CreateRocketTrail( const Vector& start, const Vector& end, Uint32 type )
+void CLegacyParticles::CreateRocketTrail( const Vector& start, const Vector& end, UInt32 type )
 {
 	Int32 dec;
 	Int32 tc = 0;
@@ -521,7 +521,7 @@ void CLegacyParticles::CreateRocketTrail( const Vector& start, const Vector& end
 
 	Vector _start = start;
 	Vector vec = end - start;
-	Float length = Math::VectorNormalize(vec);
+	float length = Math::VectorNormalize(vec);
 
 	while(length > 0)
 	{
@@ -538,24 +538,24 @@ void CLegacyParticles::CreateRocketTrail( const Vector& start, const Vector& end
 		case trail_rocket:
 			{
 				pnew->ramp = Common::RandomLong(0, 3);
-				pnew->color = PARTICLE_RAMP3[static_cast<Uint32>(pnew->ramp)];
+				pnew->color = PARTICLE_RAMP3[static_cast<UInt32>(pnew->ramp)];
 				pnew->type = pt_fire;
 				pnew->die = cls.cl_time + 2;
 				pnew->spawntime = cls.cl_time;
 
-				for(Uint32 j = 0; j < 3; j++)
+				for(UInt32 j = 0; j < 3; j++)
 					pnew->origin[j] = _start[j] + Common::RandomFloat(-3, 3);
 			}
 			break;
 		case trail_smoke:
 			{
 				pnew->ramp = Common::RandomLong(2, 5);
-				pnew->color = PARTICLE_RAMP3[static_cast<Uint32>(pnew->ramp)];
+				pnew->color = PARTICLE_RAMP3[static_cast<UInt32>(pnew->ramp)];
 				pnew->type = pt_fire;
 				pnew->die = cls.cl_time + 2;
 				pnew->spawntime = cls.cl_time;
 
-				for(Uint32 j = 0; j < 3; j++)
+				for(UInt32 j = 0; j < 3; j++)
 					pnew->origin[j] = _start[j] + Common::RandomFloat(-3, 3);
 			}
 			break;
@@ -567,7 +567,7 @@ void CLegacyParticles::CreateRocketTrail( const Vector& start, const Vector& end
 				pnew->die = cls.cl_time + 2;
 				pnew->spawntime = cls.cl_time;
 
-				for(Uint32 j = 0; j < 3; j++)
+				for(UInt32 j = 0; j < 3; j++)
 					pnew->origin[j] = _start[j] + Common::RandomFloat(-3, 3);
 			}
 			break;
@@ -603,7 +603,7 @@ void CLegacyParticles::CreateRocketTrail( const Vector& start, const Vector& end
 				pnew->die = cls.cl_time + 2;
 				pnew->spawntime = cls.cl_time;
 
-				for(Uint32 j = 0; j < 3; j++)
+				for(UInt32 j = 0; j < 3; j++)
 					pnew->origin[j] = _start[j] + Common::RandomFloat(-3, 3);
 
 				length -= 3;
@@ -616,7 +616,7 @@ void CLegacyParticles::CreateRocketTrail( const Vector& start, const Vector& end
 				pnew->die = cls.cl_time + 0.3;
 				pnew->spawntime = cls.cl_time;
 
-				for(Uint32 j = 0; j < 3; j++)
+				for(UInt32 j = 0; j < 3; j++)
 					pnew->origin[j] = _start[j] + Common::RandomFloat(-8, 8);
 			}
 			break;
@@ -640,7 +640,7 @@ void CLegacyParticles::CreateLargeFunnel( const Vector& origin, bool reverse )
 				return;
 
 			Vector dir;
-			Float velocity;
+			float velocity;
 			if(reverse)
 			{
 				pnew->origin = origin;
@@ -673,7 +673,7 @@ void CLegacyParticles::CreateLargeFunnel( const Vector& origin, bool reverse )
 				velocity = 64;
 
 			velocity += Common::RandomFloat(64, 128);
-			Float distance = Math::VectorNormalize(dir);
+			float distance = Math::VectorNormalize(dir);
 			pnew->velocity = velocity * dir;
 
 			pnew->die = cls.cl_time + (distance / velocity);
@@ -685,15 +685,15 @@ void CLegacyParticles::CreateLargeFunnel( const Vector& origin, bool reverse )
 //====================================
 //
 //====================================
-void CLegacyParticles::CreateBloodStream( const Vector& origin, const Vector& direction, Uint32 color, Float speed )
+void CLegacyParticles::CreateBloodStream( const Vector& origin, const Vector& direction, UInt32 color, float speed )
 {
 	Vector normDirection(direction);
 	Math::VectorNormalize(normDirection);
 
-	Float arc = 0.05;
-	Float particleSpeed = speed;
+	float arc = 0.05;
+	float particleSpeed = speed;
 
-	for(Uint32 i = 0; i < 100; i++)
+	for(UInt32 i = 0; i < 100; i++)
 	{
 		particle_t* pnew = AllocParticle();
 		if(!pnew)
@@ -717,7 +717,7 @@ void CLegacyParticles::CreateBloodStream( const Vector& origin, const Vector& di
 	}
 
 	arc = 0.075;
-	for(Uint32 i = 0; i < (speed/5); i++)
+	for(UInt32 i = 0; i < (speed/5); i++)
 	{
 		particle_t* pnew = AllocParticle();
 		if(!pnew)
@@ -733,14 +733,14 @@ void CLegacyParticles::CreateBloodStream( const Vector& origin, const Vector& di
 		particleDirection[2] -= arc;
 		arc -= 0.005;
 
-		Float num = Common::RandomFloat(0, 1);
+		float num = Common::RandomFloat(0, 1);
 		particleSpeed = speed * num;
 		num *= 1.7;
 
 		particleDirection = particleDirection * num;
 		pnew->velocity = particleDirection * particleSpeed;
 
-		for(Uint32 j = 0; j < 2; j++)
+		for(UInt32 j = 0; j < 2; j++)
 		{
 			pnew = AllocParticle();
 			if(!pnew)
@@ -751,7 +751,7 @@ void CLegacyParticles::CreateBloodStream( const Vector& origin, const Vector& di
 			pnew->type = pt_vox_slowgravity;
 			pnew->color = color + Common::RandomLong(0, 9);
 
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 				pnew->origin[k] = origin[k] + Common::RandomFloat(-1, 1);
 
 			particleDirection = normDirection;
@@ -766,26 +766,26 @@ void CLegacyParticles::CreateBloodStream( const Vector& origin, const Vector& di
 //====================================
 //
 //====================================
-void CLegacyParticles::CreateBloodParticles( const Vector& origin, const Vector& direction, Uint32 color, Float speed )
+void CLegacyParticles::CreateBloodParticles( const Vector& origin, const Vector& direction, UInt32 color, float speed )
 {
 	Vector normDirection(direction);
 	Math::VectorNormalize(normDirection);
 
-	Float arc = 0.06;
-	Float particleSpeed = speed * 3;
+	float arc = 0.06;
+	float particleSpeed = speed * 3;
 
-	for(Uint32 i = 0; i < (speed / 2.0); i++)
+	for(UInt32 i = 0; i < (speed / 2.0); i++)
 	{
 		Vector particleOrigin;
 		Vector particleDirection;
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			particleOrigin[j] = origin[j] + Common::RandomFloat(-3, 3);
 			particleDirection[j] = normDirection[j] + Common::RandomFloat(-arc, arc);
 		}
 
-		for(Uint32 j = 0; j < 8; j++)
+		for(UInt32 j = 0; j < 8; j++)
 		{
 			particle_t* pnew = AllocParticle();
 			if(!pnew)
@@ -796,7 +796,7 @@ void CLegacyParticles::CreateBloodParticles( const Vector& origin, const Vector&
 			pnew->color = color + Common::RandomLong(0, 9);
 			pnew->type = pt_vox_gravity;
 
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 				pnew->origin[k] = particleOrigin[k] + Common::RandomFloat(-1, 1);
 
 			pnew->velocity = particleDirection * particleSpeed;
@@ -815,7 +815,7 @@ void CLegacyParticles::UpdateParticles( void )
 		return;
 
 	// Fetch gravity
-	Float gravity = m_pCvarGravity->GetValue();
+	float gravity = m_pCvarGravity->GetValue();
 
 	// Draw the particles
 	particle_t* pnext = m_pActiveParticleHeader;
@@ -832,7 +832,7 @@ void CLegacyParticles::UpdateParticles( void )
 
 		// Determine gravity amount
 		// This comes from Quake 1, where particle_gravity is particle gravity multiplied by 0.05
-		Float particle_gravity = 0;
+		float particle_gravity = 0;
 		switch(pnext->type)
 		{
 		case pt_fire:
@@ -878,7 +878,7 @@ void CLegacyParticles::UpdateParticles( void )
 				if(pnext->ramp >= 6)
 					pnext->die = -1;
 				else
-					pnext->color = PARTICLE_RAMP3[static_cast<Uint32>(pnext->ramp)];
+					pnext->color = PARTICLE_RAMP3[static_cast<UInt32>(pnext->ramp)];
 
 				// Apply gravity
 				pnext->velocity[2] += cls.frametime * particle_gravity * gravity;
@@ -891,10 +891,10 @@ void CLegacyParticles::UpdateParticles( void )
 				if(pnext->ramp >= 8)
 					pnext->die = -1;
 				else
-					pnext->color = PARTICLE_RAMP1[static_cast<Uint32>(pnext->ramp)];
+					pnext->color = PARTICLE_RAMP1[static_cast<UInt32>(pnext->ramp)];
 
 				// Speed it up a bit
-				for(Uint32 i = 0; i < 3; i++)
+				for(UInt32 i = 0; i < 3; i++)
 					pnext->velocity[i] += pnext->velocity[i]*cls.frametime*4;
 
 				// Apply gravity
@@ -908,10 +908,10 @@ void CLegacyParticles::UpdateParticles( void )
 				if(pnext->ramp >= 8)
 					pnext->die = -1;
 				else
-					pnext->color = PARTICLE_RAMP2[static_cast<Uint32>(pnext->ramp)];
+					pnext->color = PARTICLE_RAMP2[static_cast<UInt32>(pnext->ramp)];
 
 				// Speed it up a bit
-				for(Uint32 i = 0; i < 3; i++)
+				for(UInt32 i = 0; i < 3; i++)
 					pnext->velocity[i] -= pnext->velocity[i]*cls.frametime;
 
 				// Apply gravity
@@ -920,7 +920,7 @@ void CLegacyParticles::UpdateParticles( void )
 			break;
 		case pt_blob1:
 			{
-				for(Uint32 i = 0; i < 2; i++)
+				for(UInt32 i = 0; i < 2; i++)
 					pnext->velocity[i] -= pnext->velocity[i]*cls.frametime*4;
 
 				pnext->velocity[2] -= cls.frametime * particle_gravity * gravity;
@@ -1003,20 +1003,20 @@ bool CLegacyParticles::DrawParticles( void )
 	}
 
 	// Compensate for texture size
-	Float texscalex = (8.0/static_cast<Float>(m_pParticleTexture->width)) / 1.0f;
-	Float texscaley = (8.0/static_cast<Float>(m_pParticleTexture->width)) / 1.0f;
+	float texscalex = (8.0/static_cast<float>(m_pParticleTexture->width)) / 1.0f;
+	float texscaley = (8.0/static_cast<float>(m_pParticleTexture->width)) / 1.0f;
 
 	// Sort by distance
 	qsort(&m_pSortedParticles[0], m_nbSortedParticles, sizeof(particle_t*), Legacy_SortParticles);
 
 	// Draw the particles
-	Uint32 nbVertexes = 0;
-	for(Uint32 i = 0; i < m_nbSortedParticles; i++)
+	UInt32 nbVertexes = 0;
+	for(UInt32 i = 0; i < m_nbSortedParticles; i++)
 	{
 		pnext = m_pSortedParticles[i];
 
 		// Draw the particle
-		Float scale = (pnext->origin[0] - rns.view.v_origin[0])*forward[0] + 
+		float scale = (pnext->origin[0] - rns.view.v_origin[0])*forward[0] + 
 			(pnext->origin[1] - rns.view.v_origin[1])*forward[1] +
 			(pnext->origin[2] - rns.view.v_origin[2])*forward[2];
 
@@ -1025,21 +1025,21 @@ bool CLegacyParticles::DrawParticles( void )
 		else
 			scale = 1 + scale * 0.004;
 
-		Uint32 colorindex = pnext->color;
+		UInt32 colorindex = pnext->color;
 		if(colorindex > 255)
 			colorindex = 0;
 
 		color24_t* pcolor = &m_pColorPalette[colorindex];
-		Vector color = Vector(static_cast<Float>(pcolor->r)/255.0f, static_cast<Float>(pcolor->g)/255.0f, static_cast<Float>(pcolor->b)/255.0f);
+		Vector color = Vector(static_cast<float>(pcolor->r)/255.0f, static_cast<float>(pcolor->g)/255.0f, static_cast<float>(pcolor->b)/255.0f);
 
-		Float fadeOutTime;
-		Float lifeTime = (pnext->die - pnext->spawntime);
+		float fadeOutTime;
+		float lifeTime = (pnext->die - pnext->spawntime);
 		if(lifeTime < PARTICLE_FADEOUT_TIME)
 			fadeOutTime = lifeTime * 0.5;
 		else
 			fadeOutTime = PARTICLE_FADEOUT_TIME;
 
-		Float particleAlpha;
+		float particleAlpha;
 		if((pnext->die - fadeOutTime) < rns.time)
 			particleAlpha = 1.0 - ((rns.time - (pnext->die - fadeOutTime)) / fadeOutTime);
 		else

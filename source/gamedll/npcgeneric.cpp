@@ -14,9 +14,9 @@ All Rights Reserved.
 // Special renderfx value for mirror only(for legacy support)
 const Int32 CNPCGeneric::NPC_GENERIC_MIRROR_ONLY_FX_VALUE = 666;
 // Yaw speed for npc
-const Uint32 CNPCGeneric::NPC_YAW_SPEED = 180;
+const UInt32 CNPCGeneric::NPC_YAW_SPEED = 180;
 // Default health for NPC
-const Float CNPCGeneric::NPC_DEFAULT_HEALTH = 10;
+const float CNPCGeneric::NPC_DEFAULT_HEALTH = 10;
 
 LINK_ENTITY_TO_CLASS( npc_generic, CNPCGeneric );
 
@@ -129,7 +129,7 @@ void CNPCGeneric::SetYawSpeed( void )
 // @brief Returns the sound mask for the NPC
 //
 //=============================================
-Uint64 CNPCGeneric::GetSoundMask( void )
+UInt64 CNPCGeneric::GetSoundMask( void )
 {
 	return (AI_SOUND_WORLD|AI_SOUND_COMBAT|AI_SOUND_DANGER|AI_SOUND_PLAYER);
 }

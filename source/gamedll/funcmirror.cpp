@@ -53,7 +53,7 @@ bool CFuncMirror::Spawn( void )
 // @brief
 //
 //=============================================
-void CFuncMirror::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncMirror::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{

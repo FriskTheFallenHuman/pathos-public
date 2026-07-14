@@ -25,7 +25,7 @@ enum node_hull_types_t;
 struct nodefilehdr_t;
 
 // Delay until node compile begins
-static const Float NODE_GRAPH_GENERATION_DELAY = 2.5f;
+static const float NODE_GRAPH_GENERATION_DELAY = 2.5f;
 
 // Node hint types
 enum node_hint_types_t
@@ -65,9 +65,9 @@ public:
 	static const Int32 NODE_FILE_VERSION;
 
 	// Node file extension
-	static const Char NODE_FILE_EXTENSION[];
+	static const char NODE_FILE_EXTENSION[];
 	// Report file extension
-	static const Char REPORT_FILE_EXTENSION[];
+	static const char REPORT_FILE_EXTENSION[];
 
 	// Small test hull min size
 	static const Vector HULL_SMALL_MIN;
@@ -82,33 +82,33 @@ public:
 	// Empty hash link value
 	static const Int16 EMPTY_HASH_LINK_VALUE;
 	// Link search radius
-	static const Float LINK_SEARCH_RADIUS;
+	static const float LINK_SEARCH_RADIUS;
 
 	// Node files folder path
-	static const Char NODE_FILES_FOLDER_PATH[];
+	static const char NODE_FILES_FOLDER_PATH[];
 
 	// Node peek offset
 	static const Vector NODE_PEEK_OFFSET;
 	// Unstick max distance
-	static const Float MAX_UNSTICK_DISTANCE;
+	static const float MAX_UNSTICK_DISTANCE;
 
 public:
 	// Number of prime values
-	static const Uint32 NUM_PRIME_VALUES = 177;
+	static const UInt32 NUM_PRIME_VALUES = 177;
 	// Array of prime values
 	static const Int32 PRIME_VALUES[NUM_PRIME_VALUES];
 	// Number of hash primes
-	static const Uint32 NUM_HASH_PRIMES = 16;
+	static const UInt32 NUM_HASH_PRIMES = 16;
 	// Maximum nodes in a level
-	static const Uint32 MAX_MAP_NODES = 4096;
+	static const UInt32 MAX_MAP_NODES = 4096;
 	// Bitset array size for MAX_MAP_NODES
-	static const Uint32 NB_INTS_FOR_ALL_NODES = (MAX_MAP_NODES/32);
+	static const UInt32 NB_INTS_FOR_ALL_NODES = (MAX_MAP_NODES/32);
 	// Cache size
-	static const Uint32 CACHE_SIZE = 512;
+	static const UInt32 CACHE_SIZE = 512;
 
 public:
 	// Max saved string length
-	static const Uint32 MAX_STRING_LENGTH = 32;
+	static const UInt32 MAX_STRING_LENGTH = 32;
 
 public:
 	enum linktypes_t
@@ -180,7 +180,7 @@ public:
 			}
 
 		Int32 entityindex;
-		Char modelname[MAX_STRING_LENGTH];
+		char modelname[MAX_STRING_LENGTH];
 		node_hull_types_t hulltype;
 	};
 	
@@ -199,10 +199,10 @@ public:
 		Int32 destnode;
 
 		Int32 linkentityindex;
-		Uint32 numlinkentities;
+		UInt32 numlinkentities;
 
-		Uint64 linkinfobits;
-		Float weight;
+		UInt64 linkinfobits;
+		float weight;
 	};
 
 	struct node_t
@@ -232,25 +232,25 @@ public:
 		Vector mins[NUM_NODE_HULLS];
 		Vector maxs[NUM_NODE_HULLS];
 
-		Uint32 numlinks;
+		UInt32 numlinks;
 		Int32 firstlinkindex;
 
-		Uint64 nodeinfobits;
+		UInt64 nodeinfobits;
 
 		Int32 nextbestnode[NUM_NODE_HULLS][NB_CAP_INDEXES];
 
-		Float closestsofar;
+		float closestsofar;
 		Int32 previousnode;
 
-		Float linkrange;
+		float linkrange;
 
 		Int32 hinttype;
 		Int32 hintactivity;
-		Float hintyaw;
+		float hintyaw;
 
-		Uint64 nodeflags;
+		UInt64 nodeflags;
 
-		Char noderegionname[MAX_STRING_LENGTH];
+		char noderegionname[MAX_STRING_LENGTH];
 	};
 
 	struct cache_entry_t
@@ -287,30 +287,30 @@ public:
 		Int32 version;
 
 		Int32 nodeindex;
-		Uint32 numnodes;
+		UInt32 numnodes;
 
 		Int32 linkoffset;
-		Uint32 numlinks;
+		UInt32 numlinks;
 
 		Int32 hashlinkoffset;
-		Uint32 numhashlinks;
+		UInt32 numhashlinks;
 
 		Int32 linkentityoffset;
-		Uint32 numlinkentities;
+		UInt32 numlinkentities;
 
 		Int32 routeinfoindex;
-		Uint32 routeinfosize;
+		UInt32 routeinfosize;
 
 		Int32 hashprimes[NUM_HASH_PRIMES];
 
-		Uint32 filesize;
+		UInt32 filesize;
 
 		node_t* getNode( Int32 nodeIndex )
 		{
 			if(nodeIndex < 0 || nodeIndex >= (Int32)this->numnodes)
 				return nullptr;
 			else
-				return reinterpret_cast<node_t*>(reinterpret_cast<byte*>(this) + this->nodeindex) + nodeIndex;
+				return reinterpret_cast<node_t*>(reinterpret_cast<Byte*>(this) + this->nodeindex) + nodeIndex;
 		}
 
 		node_link_t* getLink( Int32 linkIndex )
@@ -318,7 +318,7 @@ public:
 			if(linkIndex < 0 || linkIndex >= (Int32)this->numlinks)
 				return nullptr;
 			else
-				return reinterpret_cast<node_link_t*>(reinterpret_cast<byte*>(this) + this->linkoffset) + linkIndex;
+				return reinterpret_cast<node_link_t*>(reinterpret_cast<Byte*>(this) + this->linkoffset) + linkIndex;
 		}
 
 		link_entity_t* getLinkEntity( Int32 linkIndex, Int32 linkEntityIndex )
@@ -330,7 +330,7 @@ public:
 			if(linkEntityIndex < 0 || linkEntityIndex >= (Int32)plink->numlinkentities)
 				return nullptr;
 
-			return reinterpret_cast<link_entity_t*>(reinterpret_cast<byte*>(this) + this->linkentityoffset) + plink->linkentityindex + linkEntityIndex;
+			return reinterpret_cast<link_entity_t*>(reinterpret_cast<Byte*>(this) + this->linkentityoffset) + plink->linkentityindex + linkEntityIndex;
 		}
 
 		link_entity_t* getLinkEntity( Int32 linkEntityIndex )
@@ -338,7 +338,7 @@ public:
 			if(linkEntityIndex < 0 || linkEntityIndex >= (Int32)this->numlinkentities)
 				return nullptr;
 
-			return reinterpret_cast<link_entity_t*>(reinterpret_cast<byte*>(this) + this->linkentityoffset) + linkEntityIndex;
+			return reinterpret_cast<link_entity_t*>(reinterpret_cast<Byte*>(this) + this->linkentityoffset) + linkEntityIndex;
 		}
 
 		node_link_t* getNodeLink( Int32 nodeIndex, Int32 linkIndex )
@@ -353,7 +353,7 @@ public:
 			if(linkIndex < 0 || linkIndex >= (Int32)pnode->numlinks)
 				return nullptr;
 
-			return reinterpret_cast<node_link_t*>(reinterpret_cast<byte*>(this) + this->linkoffset) + pnode->firstlinkindex + linkIndex;
+			return reinterpret_cast<node_link_t*>(reinterpret_cast<Byte*>(this) + this->linkoffset) + pnode->firstlinkindex + linkIndex;
 		}
 
 		node_link_t* getNodeLink( node_t* pnode, Int32 linkIndex )
@@ -364,7 +364,7 @@ public:
 			if(linkIndex < 0 || linkIndex >= (Int32)pnode->numlinks)
 				return nullptr;
 
-			return reinterpret_cast<node_link_t*>(reinterpret_cast<byte*>(this) + this->linkoffset) + pnode->firstlinkindex + linkIndex;
+			return reinterpret_cast<node_link_t*>(reinterpret_cast<Byte*>(this) + this->linkoffset) + pnode->firstlinkindex + linkIndex;
 		}
 
 		const node_link_t* getNodeLink( const node_t* pnode, Int32 linkIndex ) const
@@ -375,7 +375,7 @@ public:
 			if(linkIndex < 0 || linkIndex >= (Int32)pnode->numlinks)
 				return nullptr;
 
-			return reinterpret_cast<const node_link_t*>(reinterpret_cast<const byte*>(this) + this->linkoffset) + pnode->firstlinkindex + linkIndex;
+			return reinterpret_cast<const node_link_t*>(reinterpret_cast<const Byte*>(this) + this->linkoffset) + pnode->firstlinkindex + linkIndex;
 		}
 
 		node_t* getDestNodeFromLink( Int32 nodeIndex, Int32 linkIndex )
@@ -424,19 +424,19 @@ public:
 	const node_t* GetNode( Int32 nodeIndex );
 	const node_link_t* GetNodeLink( Int32 nodeIndex, Int32 linkIndex );
 	const node_link_t* GetNodeLink( const node_t* pnode, Int32 linkIndex ) const;
-	bool GetNodeLinkEntities( Int32 srcNode, Int32 linkNodeIndex, link_entity_t*& pLinkPtr, Uint32& numLinks );
+	bool GetNodeLinkEntities( Int32 srcNode, Int32 linkNodeIndex, link_entity_t*& pLinkPtr, UInt32& numLinks );
 
 	Int32 GetNextNodeInRoute( Int32 currentNode, Int32 destNode, node_hull_types_t hullType, capability_indexes_t capabilityIndex );
-	Int32 GetNearestNode( const Vector& position, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity = nullptr, Float minDistance = -1, const CNodeIgnoreList* pIgnoreList = nullptr );
-	Int32 GetNearestNode( const Vector& position, Uint64 nodeTypes, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity = nullptr, Float minDistance = -1, const CNodeIgnoreList* pIgnoreList = nullptr );
+	Int32 GetNearestNode( const Vector& position, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity = nullptr, float minDistance = -1, const CNodeIgnoreList* pIgnoreList = nullptr );
+	Int32 GetNearestNode( const Vector& position, UInt64 nodeTypes, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity = nullptr, float minDistance = -1, const CNodeIgnoreList* pIgnoreList = nullptr );
 	Int32 GetNearestNode( const Vector& position );
 	Int32 GetShortestPath( Int32 startNode, Int32 endNode, node_hull_types_t hullType, const CBitSet& capabilityBitSet, Int32 *pNodeIndexArray, const CBaseEntity* pNPC = nullptr, const CBaseEntity* pTargetEntity = nullptr, const CNodeIgnoreList* pIgnoreList = nullptr, const CBaseEntity* pViewCheckNPC = nullptr );
-	Float GetPathLength( Int32 startNode, Int32 endNode, node_hull_types_t hullType, const CBitSet& capabilityBitSet );
+	float GetPathLength( Int32 startNode, Int32 endNode, node_hull_types_t hullType, const CBitSet& capabilityBitSet );
 	bool IsValidCoverPath( Int32 startNode, Int32 endNode, node_hull_types_t hullType, const CBitSet& capabilityBitSet, const CBaseEntity* pNPC, const CBaseEntity* pThreatEntity );
 	void ShowNearestNodeBBox( const Vector& position, node_hull_types_t hullType );
 
 public:
-	void AddNode( const Vector& origin, Float hintYaw, Int32 hintType, Int32 hintActivity, Float range, const Char* pstrRegionName, bool isAirNode, bool disableOptimization );
+	void AddNode( const Vector& origin, float hintYaw, Int32 hintType, Int32 hintActivity, float range, const char* pstrRegionName, bool isAirNode, bool disableOptimization );
 
 private:
 	void SetGraphPointers( void );
@@ -446,21 +446,21 @@ private:
 	void SortNodes( void );
 	void BuildLinkLookups( void );
 	void SetNodeMinsMaxs( CBaseEntity* pTestNPC );
-	void BuildStaticRoutingTables( Int16*& pRouteInfo, Uint32& routeInfoSize );
+	void BuildStaticRoutingTables( Int16*& pRouteInfo, UInt32& routeInfoSize );
 	static bool CheckNodeBBox( node_t* pnode, const Vector& origin, CBaseEntity* pNPC );
 
-	void WriteToReportFile( const Char* pstrString );
+	void WriteToReportFile( const char* pstrString );
 
-	void ChooseHashPrimes( Uint32 tableSize );
+	void ChooseHashPrimes( UInt32 tableSize );
 	void InsertLinkHash( Int16 srcNode, Int16 dstNode, Int32 key ) const;
 	Int32 SearchHash( Int16 srcNode, Int16 dstNode );
-	static Uint32 GenHash( const byte* pData, Uint32 length );
+	static UInt32 GenHash( const Byte* pData, UInt32 length );
 
-	void CheckNode( const Vector& origin, Int32 nodeIndex, Uint64 nodeTypes, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity, Float minDistance );
+	void CheckNode( const Vector& origin, Int32 nodeIndex, UInt64 nodeTypes, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity, float minDistance );
 	static bool WalkPath( const Vector& startPosition, const Vector& endPosition, CBaseEntity* pTestNPC, CArray<CBaseEntity*>& linkEntityArray, bool isWaterNode = false );
 	static bool IsLinkEntityManaged( CBaseEntity* pEntity );
 
-	static Uint64 GetMaskForHull( node_hull_types_t type );
+	static UInt64 GetMaskForHull( node_hull_types_t type );
 
 private:
 	// Array of nodes at link time
@@ -480,7 +480,7 @@ private:
 	nodefilehdr_t* m_pNodeHeader;
 
 	// Nearest distance to a node
-	Float m_nearestNodeDistance;
+	float m_nearestNodeDistance;
 	// Nearest node index
 	Int32 m_nearestNodeIndex;
 

@@ -21,9 +21,9 @@ public:
 
 public:
 	// start lightstyle index for dynlights
-	static const Uint32 CUSTOM_LIGHTSTYLE_START_INDEX;
+	static const UInt32 CUSTOM_LIGHTSTYLE_START_INDEX;
 	// Default framerate value
-	static const Float DEFAULT_LIGHTSTYLE_FRAMERATE;
+	static const float DEFAULT_LIGHTSTYLE_FRAMERATE;
 
 public:
 	struct lightstyle_t
@@ -37,8 +37,8 @@ public:
 
 		CString pattern;
 		bool interpolate;
-		Uint32 styleindex;
-		Float framerate;
+		UInt32 styleindex;
+		float framerate;
 	};
 
 public:
@@ -46,18 +46,18 @@ public:
 	void SendLightStylesToClient( edict_t* pPlayer );
 	void Think( void );
 
-	void SetLightStyle( const Char* pstrpattern, bool interpolate, Float framerate, Uint32 styleindex );
-	Int32 AddCustomLightStyle( const Char* pstrpattern, bool interpolate, Float framerate );
-	CArray<Float>* GetLightStyleValuesArray( void );
+	void SetLightStyle( const char* pstrpattern, bool interpolate, float framerate, UInt32 styleindex );
+	Int32 AddCustomLightStyle( const char* pstrpattern, bool interpolate, float framerate );
+	CArray<float>* GetLightStyleValuesArray( void );
 
 private:
 	// Array of custom lightstyles
 	CArray<lightstyle_t> m_lightStylesArray;
 	// Next available lightstyle index
-	Uint32 m_nextLightStyleIndex;
+	UInt32 m_nextLightStyleIndex;
 
 	// Lightstyle values array
-	CArray<Float> m_lightStyleValuesArray;
+	CArray<float> m_lightStyleValuesArray;
 };
 extern CLightStyles gSVLightStyles;
 #endif //LIGHTSTYLES_H

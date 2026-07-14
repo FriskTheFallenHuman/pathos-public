@@ -25,9 +25,9 @@ All Rights Reserved.
 #include "r_blackhole.h"
 
 // Tempentity allocation size
-const Uint32 CTempEntityManager::TEMPENT_ALLOC_SIZE = 256;
+const UInt32 CTempEntityManager::TEMPENT_ALLOC_SIZE = 256;
 // One shard every n^3 units
-const Float CTempEntityManager::SHARD_VOLUME = 12.0;
+const float CTempEntityManager::SHARD_VOLUME = 12.0;
 
 // Object definition
 CTempEntityManager gTempEntities;
@@ -105,7 +105,7 @@ void CTempEntityManager::DeleteAllTempEntities( void )
 
 	if(!m_pTempEntityAllocationBlocksArray.empty())
 	{
-		for(Uint32 i = 0; i < m_pTempEntityAllocationBlocksArray.size(); i++)
+		for(UInt32 i = 0; i < m_pTempEntityAllocationBlocksArray.size(); i++)
 			delete[] m_pTempEntityAllocationBlocksArray[i];
 
 		m_pTempEntityAllocationBlocksArray.clear();
@@ -123,7 +123,7 @@ void CTempEntityManager::AllocateTempEntities( void )
 	tempentity_t* pnewblock = new tempentity_t[TEMPENT_ALLOC_SIZE];
 	m_pTempEntityAllocationBlocksArray.push_back(pnewblock);
 
-	for(Uint32 i = 0; i < TEMPENT_ALLOC_SIZE; i++)
+	for(UInt32 i = 0; i < TEMPENT_ALLOC_SIZE; i++)
 	{
 		tempentity_t* pnew = &pnewblock[i];
 
@@ -261,7 +261,7 @@ void CTempEntityManager::UpdateTempEntities( void )
 					pnext->entity.curstate.rendermode = RENDER_TRANSTEXTURE_LIT;
 
 				// Calculate alpha value
-				Float life = pnext->die - cls.cl_time;
+				float life = pnext->die - cls.cl_time;
 				pnext->entity.curstate.renderamt = pnext->startrenderamt * (1+life*pnext->fadespeed);
 
 				// Kill if faded out
@@ -366,7 +366,7 @@ bool CTempEntityManager::UpdateTempEntity( tempentity_t* ptemp ) const
 			Math::VectorMA(entity.prevstate.origin, tr.fraction*cls.frametime, entity.curstate.velocity, entity.curstate.origin);
 
 			// get velocity damping
-			Float damp = ptemp->bouncefactor;
+			float damp = ptemp->bouncefactor;
 			if(ptemp->flags & (TE_FL_GRAVITY|TE_FL_SLOWGRAVITY))
 			{
 				// Lower it a bit
@@ -390,7 +390,7 @@ bool CTempEntityManager::UpdateTempEntity( tempentity_t* ptemp ) const
 			{
 				if(damp != 0)
 				{
-					Float proj = Math::DotProduct(entity.curstate.velocity, tr.plane.normal);
+					float proj = Math::DotProduct(entity.curstate.velocity, tr.plane.normal);
 					Math::VectorMA(entity.curstate.velocity, -proj*2, tr.plane.normal, entity.curstate.velocity);
 					entity.curstate.angles[1] = -entity.curstate.angles[1];
 				}
@@ -434,7 +434,7 @@ bool CTempEntityManager::UpdateTempEntity( tempentity_t* ptemp ) const
 		gLegacyParticles.CreateRocketTrail(ptemp->entity.prevstate.origin, ptemp->entity.curstate.origin, trail_smoke);
 
 	// Manage gravity
-	Float gravityAmount = 0;
+	float gravityAmount = 0;
 	if(ptemp->flags & (TE_FL_GRAVITY|TE_FL_SLOWGRAVITY))
 	{
 		// Determine amount
@@ -456,10 +456,10 @@ bool CTempEntityManager::UpdateTempEntity( tempentity_t* ptemp ) const
 
 				if(ptemp->waterfriction > 0)
 				{
-					Float speed = entity.curstate.velocity.Length();
+					float speed = entity.curstate.velocity.Length();
 					if(speed > 0)
 					{
-						Float newspeed = speed - cls.frametime * speed * ptemp->waterfriction;
+						float newspeed = speed - cls.frametime * speed * ptemp->waterfriction;
 						if(newspeed < 0)
 							newspeed = 0;
 
@@ -471,7 +471,7 @@ bool CTempEntityManager::UpdateTempEntity( tempentity_t* ptemp ) const
 				if(ptemp->soundtype != TE_BOUNCE_SHELL && ptemp->soundtype != TE_BOUNCE_METAL
 					&& ptemp->soundtype != TE_BOUNCE_GLASS && ptemp->soundtype != TE_BOUNCE_CONCRETE)
 				{
-					for(Uint32 i = 0; i < 3; i++)
+					for(UInt32 i = 0; i < 3; i++)
 					{
 						if(i == YAW)
 							continue;
@@ -516,7 +516,7 @@ bool CTempEntityManager::UpdateTempEntity( tempentity_t* ptemp ) const
 // @brief
 //
 //=============================================
-void CTempEntityManager::PlayTempEntitySound( tempentity_t *ptempentity, Float volume )
+void CTempEntityManager::PlayTempEntitySound( tempentity_t *ptempentity, float volume )
 {
 	if(ptempentity->soundtype == TE_BOUNCE_NONE)
 		return;
@@ -556,7 +556,7 @@ void CTempEntityManager::PlayTempEntitySound( tempentity_t *ptempentity, Float v
 //====================================
 //
 //====================================
-void CTempEntityManager::CreateFunnel( const Vector& origin, const Vector& color, Float alpha, Uint32 modelindex, bool reverse )
+void CTempEntityManager::CreateFunnel( const Vector& origin, const Vector& color, float alpha, UInt32 modelindex, bool reverse )
 {
 	if(!modelindex)
 	{
@@ -584,7 +584,7 @@ void CTempEntityManager::CreateFunnel( const Vector& origin, const Vector& color
 			tempentity_t* ptemp = nullptr;
 
 			Vector dir;
-			Float velocity;
+			float velocity;
 			Vector entorigin;
 
 			if(reverse)
@@ -633,7 +633,7 @@ void CTempEntityManager::CreateFunnel( const Vector& origin, const Vector& color
 			ptemp->flags = TE_FL_ROTATE|TE_FL_FADEOUT;
 			ptemp->fadespeed = 2.0f;
 
-			Float dist = Math::VectorNormalize(dir);
+			float dist = Math::VectorNormalize(dir);
 			if(velocity < 64)
 				velocity = 64;
 
@@ -641,7 +641,7 @@ void CTempEntityManager::CreateFunnel( const Vector& origin, const Vector& color
 			Math::VectorScale(dir, velocity, ptemp->entity.curstate.velocity);
 
 			// Die when getting there
-			Float particlelife = dist / velocity;
+			float particlelife = dist / velocity;
 			ptemp->die = cls.cl_time + particlelife - 0.5f;
 		}
 	}
@@ -650,7 +650,7 @@ void CTempEntityManager::CreateFunnel( const Vector& origin, const Vector& color
 //====================================
 //
 //====================================
-void CTempEntityManager::CreateBreakModel( const Vector& origin, const Vector& size, bm_velocity_t velmode, const Vector& velvector, Uint32 randomvelmin, Uint32 randomvelmax, Float life, Uint32 num, Uint32 modelindex, Int32 sound, Float bouyancy, Float waterfriction, Int32 flags )
+void CTempEntityManager::CreateBreakModel( const Vector& origin, const Vector& size, bm_velocity_t velmode, const Vector& velvector, UInt32 randomvelmin, UInt32 randomvelmax, float life, UInt32 num, UInt32 modelindex, Int32 sound, float bouyancy, float waterfriction, Int32 flags )
 {
 	if(!modelindex)
 	{
@@ -671,7 +671,7 @@ void CTempEntityManager::CreateBreakModel( const Vector& origin, const Vector& s
 		return;
 	}
 
-	Uint32 _num = num;
+	UInt32 _num = num;
 	if(_num == 0)
 		_num = (size[0]*size[1]+size[1]*size[2]+size[2]*size[0])/(3*SHARD_VOLUME*SHARD_VOLUME);
 
@@ -679,14 +679,14 @@ void CTempEntityManager::CreateBreakModel( const Vector& origin, const Vector& s
 		_num = 100;
 
 	// Get number of variations
-	Uint64 framecount = Cache_GetModelFrameCount(*pmodel);
+	UInt64 framecount = Cache_GetModelFrameCount(*pmodel);
 
 	// Create the pieces
-	for(Uint32 i = 0; i < _num; i++)
+	for(UInt32 i = 0; i < _num; i++)
 	{
 		Vector pieceorigin;
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			pieceorigin[j] = origin[j] + Common::RandomFloat(-0.5, 0.5)*size[j];
 
 		trace_t tr;
@@ -707,7 +707,7 @@ void CTempEntityManager::CreateBreakModel( const Vector& origin, const Vector& s
 		if(Common::RandomLong(0, 255) < 200)
 		{
 			ptemp->flags |= TE_FL_ROTATE;
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				ptemp->entity.curstate.angles[j] = Common::RandomFloat(-360, 360);
 		}
 
@@ -748,7 +748,7 @@ void CTempEntityManager::CreateBreakModel( const Vector& origin, const Vector& s
 				Math::VectorNormalize(velocity);
 
 				// In this case, minimum velocity is negative
-				Float velmin = -static_cast<Int32>(randomvelmin);
+				float velmin = -static_cast<Int32>(randomvelmin);
 				ptemp->entity.curstate.velocity = velocity * Common::RandomFloat(velmin, randomvelmax);
 			}
 			break;
@@ -766,7 +766,7 @@ void CTempEntityManager::CreateBreakModel( const Vector& origin, const Vector& s
 //====================================
 //
 //====================================
-void CTempEntityManager::CreateBubbles( const Vector& mins, const Vector& maxs, Float height, Uint32 modelindex, Uint32 num, Float speed )
+void CTempEntityManager::CreateBubbles( const Vector& mins, const Vector& maxs, float height, UInt32 modelindex, UInt32 num, float speed )
 {
 	if(!modelindex)
 	{
@@ -788,12 +788,12 @@ void CTempEntityManager::CreateBubbles( const Vector& mins, const Vector& maxs, 
 	}
 
 	// Get number of variations
-	Uint64 framecount = Cache_GetModelFrameCount(*pmodel);
+	UInt64 framecount = Cache_GetModelFrameCount(*pmodel);
 
-	for(Uint32 i = 0; i < num; i++)
+	for(UInt32 i = 0; i < num; i++)
 	{
 		Vector origin;
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			origin[j] = Common::RandomFloat(mins[j], maxs[j]);
 
 		tempentity_t* ptemp = AllocTempEntity(origin, pmodel);
@@ -806,11 +806,11 @@ void CTempEntityManager::CreateBubbles( const Vector& mins, const Vector& maxs, 
 		ptemp->flags |= TE_FL_SINEWAVE;
 		ptemp->add = origin;
 
-		Float rand = Common::RandomFloat(-M_PI, M_PI);
-		Float s = SDL_sin(rand);
-		Float c = SDL_cos(rand);
+		float rand = Common::RandomFloat(-M_PI, M_PI);
+		float s = SDL_sin(rand);
+		float c = SDL_cos(rand);
 
-		Float zspeed = Common::RandomFloat(80, 140);
+		float zspeed = Common::RandomFloat(80, 140);
 		ptemp->entity.curstate.velocity = Vector(speed*c, speed*s, zspeed);
 		ptemp->die = cls.cl_time + ((height-(origin[2]-mins[2]))/zspeed)-0.1;
 		ptemp->entity.curstate.frame = Common::RandomLong(0, framecount-1);
@@ -826,7 +826,7 @@ void CTempEntityManager::CreateBubbles( const Vector& mins, const Vector& maxs, 
 //====================================
 //
 //====================================
-void CTempEntityManager::CreateBubbleTrail( const Vector& start, const Vector& end, Float height, Uint32 modelindex, Uint32 num, Float speed )
+void CTempEntityManager::CreateBubbleTrail( const Vector& start, const Vector& end, float height, UInt32 modelindex, UInt32 num, float speed )
 {
 	if(!modelindex)
 	{
@@ -848,13 +848,13 @@ void CTempEntityManager::CreateBubbleTrail( const Vector& start, const Vector& e
 	}
 
 	// Get number of variations
-	Uint64 framecount = Cache_GetModelFrameCount(*pmodel);
+	UInt64 framecount = Cache_GetModelFrameCount(*pmodel);
 
-	for(Uint32 i = 0; i < num; i++)
+	for(UInt32 i = 0; i < num; i++)
 	{
-		Float dist = Common::RandomFloat(0.0, 1.0);
+		float dist = Common::RandomFloat(0.0, 1.0);
 		Vector origin;
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			origin[j] = start[j] + dist * (end[j]-start[j]);
 
 		tempentity_t* ptemp = AllocTempEntity(origin, pmodel);
@@ -867,11 +867,11 @@ void CTempEntityManager::CreateBubbleTrail( const Vector& start, const Vector& e
 		ptemp->flags |= TE_FL_SINEWAVE;
 		ptemp->add = origin;
 
-		Float rand = Common::RandomFloat(-M_PI, M_PI);
-		Float s = SDL_sin(rand);
-		Float c = SDL_cos(rand);
+		float rand = Common::RandomFloat(-M_PI, M_PI);
+		float s = SDL_sin(rand);
+		float c = SDL_cos(rand);
 
-		Float zspeed = Common::RandomFloat(80, 140);
+		float zspeed = Common::RandomFloat(80, 140);
 		ptemp->entity.curstate.velocity = Vector(speed*c, speed*s, zspeed);
 		ptemp->die = cls.cl_time + ((height-(origin[2]-start[2]))/zspeed)-0.1;
 		ptemp->entity.curstate.frame = Common::RandomLong(0, framecount-1);
@@ -887,7 +887,7 @@ void CTempEntityManager::CreateBubbleTrail( const Vector& start, const Vector& e
 //====================================
 //
 //====================================
-tempentity_t* CTempEntityManager::CreateTempModel( const Vector& origin, const Vector& velocity, const Vector& angles, Float life, Uint32 modelindex, Int32 sound, Float bouyancy, Float waterfriction, Int32 flags )
+tempentity_t* CTempEntityManager::CreateTempModel( const Vector& origin, const Vector& velocity, const Vector& angles, float life, UInt32 modelindex, Int32 sound, float bouyancy, float waterfriction, Int32 flags )
 {
 	if(!modelindex)
 	{
@@ -924,7 +924,7 @@ tempentity_t* CTempEntityManager::CreateTempModel( const Vector& origin, const V
 	{
 		if(sound & (TE_BOUNCE_SHELL|TE_BOUNCE_SHOTSHELL))
 		{
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				ptemp->entity.curstate.avelocity[i] = Common::RandomFloat(-200, 200);
 
 			ptemp->flags |= TE_FL_ROTATE;
@@ -947,7 +947,7 @@ tempentity_t* CTempEntityManager::CreateTempModel( const Vector& origin, const V
 //====================================
 //
 //====================================
-tempentity_t* CTempEntityManager::CreateTempSprite( const Vector& origin, const Vector& velocity, Float scale, Uint32 modelindex, Int32 rendermode, Int32 renderfx, Float alpha, Float life, Int32 sound, Int32 flags )
+tempentity_t* CTempEntityManager::CreateTempSprite( const Vector& origin, const Vector& velocity, float scale, UInt32 modelindex, Int32 rendermode, Int32 renderfx, float alpha, float life, Int32 sound, Int32 flags )
 {
 	if(!modelindex)
 	{
@@ -969,7 +969,7 @@ tempentity_t* CTempEntityManager::CreateTempSprite( const Vector& origin, const 
 	}
 
 	// Get number of variations
-	Uint64 framecount = Cache_GetModelFrameCount(*pmodel);
+	UInt64 framecount = Cache_GetModelFrameCount(*pmodel);
 
 	// Create the tempentity
 	tempentity_t* ptemp = AllocTempEntity(origin, pmodel);
@@ -1000,7 +1000,7 @@ tempentity_t* CTempEntityManager::CreateTempSprite( const Vector& origin, const 
 //====================================
 //
 //====================================
-void CTempEntityManager::CreateSphereModel( const Vector& origin, Float speed, Float life, Uint32 num, Uint32 modelindex, Float bouyancy, Float waterfriction, Int32 sound )
+void CTempEntityManager::CreateSphereModel( const Vector& origin, float speed, float life, UInt32 num, UInt32 modelindex, float bouyancy, float waterfriction, Int32 sound )
 {
 	if(!modelindex)
 	{
@@ -1022,10 +1022,10 @@ void CTempEntityManager::CreateSphereModel( const Vector& origin, Float speed, F
 	}
 
 	// Get number of variations
-	Uint64 framecount = Cache_GetModelFrameCount(*pmodel);
+	UInt64 framecount = Cache_GetModelFrameCount(*pmodel);
 
 	// Create the pieces
-	for(Uint32 i = 0; i < num; i++)
+	for(UInt32 i = 0; i < num; i++)
 	{
 		tempentity_t* ptemp = AllocTempEntity(origin, pmodel);
 		if(!ptemp)
@@ -1043,7 +1043,7 @@ void CTempEntityManager::CreateSphereModel( const Vector& origin, Float speed, F
 		if(Common::RandomLong(0, 255) < 200)
 		{
 			ptemp->flags |= TE_FL_ROTATE;
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				ptemp->entity.curstate.angles[j] = Common::RandomFloat(-360, 360);
 		}
 
@@ -1062,7 +1062,7 @@ void CTempEntityManager::CreateSphereModel( const Vector& origin, Float speed, F
 			ptemp->entity.curstate.renderamt = 255;
 		}
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			ptemp->entity.curstate.velocity[j] = Common::RandomFloat(-1.0, 1.0);
 
 		Math::VectorNormalize(ptemp->entity.curstate.velocity);

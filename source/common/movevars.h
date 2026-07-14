@@ -31,25 +31,25 @@ struct movevars_t
 		holdtoduck(false)
 	{}
 
-	Float gravity;
-	Float stopspeed;
-	Float maxspeed;
+	float gravity;
+	float stopspeed;
+	float maxspeed;
 	
-	Float accelerate;
-	Float airaccelerate;
-	Float wateraccelerate;
+	float accelerate;
+	float airaccelerate;
+	float wateraccelerate;
 
-	Float friction;
-	Float edgefriction;
-	Float waterfriction;
+	float friction;
+	float edgefriction;
+	float waterfriction;
 
-	Float entgravity;
-	Float bounce;
-	Float stepsize;
-	Float maxvelocity;
-	Float waterdist;
+	float entgravity;
+	float bounce;
+	float stepsize;
+	float maxvelocity;
+	float waterdist;
 
-	Uint32 maxclients;
+	UInt32 maxclients;
 	bool holdtoduck;
 };
 #endif

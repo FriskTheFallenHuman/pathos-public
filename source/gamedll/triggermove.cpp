@@ -82,7 +82,7 @@ bool CTriggerMove::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerMove::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerMove::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	edict_t *pMoveEdict = Util::FindEntityByTargetName(nullptr, gd_engfuncs.pfnGetString(m_pFields->target));
 	if(!pMoveEdict)

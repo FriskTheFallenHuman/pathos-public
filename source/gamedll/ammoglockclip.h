@@ -25,6 +25,6 @@ public:
 	virtual void SetSpawnProperties( void ) override;
 	virtual Int32 GetAmmoAmount( void ) override;
 	virtual Int32 GetMaxAmmo( void ) override;
-	virtual const Char* GetAmmoTypeName( void ) override;
+	virtual const char* GetAmmoTypeName( void ) override;
 };
 #endif //AMMOGLOCKCLIP_H

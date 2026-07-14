@@ -132,8 +132,8 @@ activity_mapping_t ACTIVITYMAP[] =
 bool Activity_CheckActivityMapConsinstency( pfnCon_Printf_t pfnCon_Printf )
 {
 	// Check concinstency on activity mappings
-	Uint32 activityMapSize = sizeof(ACTIVITYMAP);
-	Uint32 mapSize = activityMapSize / sizeof(activity_mapping_t);
+	UInt32 activityMapSize = sizeof(ACTIVITYMAP);
+	UInt32 mapSize = activityMapSize / sizeof(activity_mapping_t);
 	mapSize -= 1; // do not count last empty one
 
 	if (mapSize != NB_ACTIVITIES)

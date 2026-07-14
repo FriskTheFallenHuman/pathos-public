@@ -21,71 +21,71 @@ All Rights Reserved.
 // View offset for npc
 const Vector CNPCCloneSoldier::NPC_VIEW_OFFSET = Vector(0, 0, 50);
 // Yaw speed for npc
-const Uint32 CNPCCloneSoldier::NPC_YAW_SPEED = 180;
+const UInt32 CNPCCloneSoldier::NPC_YAW_SPEED = 180;
 // Kick distance for NPC
-const Float CNPCCloneSoldier::NPC_KICK_DISTANCE = 70;
+const float CNPCCloneSoldier::NPC_KICK_DISTANCE = 70;
 // Kick treshold distance for NPC
-const Float CNPCCloneSoldier::NPC_KICK_TRESHOLD_DISTANCE = 64;
+const float CNPCCloneSoldier::NPC_KICK_TRESHOLD_DISTANCE = 64;
 // Attachment for weapon
-const Uint32 CNPCCloneSoldier::NPC_WEAPON_ATTACHMENT_INDEX = 0;
+const UInt32 CNPCCloneSoldier::NPC_WEAPON_ATTACHMENT_INDEX = 0;
 // Gun position offset when standing
 const Vector CNPCCloneSoldier::NPC_GUN_POSITION_STANDING_OFFSET = Vector(0, 0, 60);
 // Gun position offset when crouching
 const Vector CNPCCloneSoldier::NPC_GUN_POSITION_CROUCHING_OFFSET = Vector(0, 0, 48);
 // Clip size for Sig552
-const Uint32 CNPCCloneSoldier::NPC_SIG552_CLIP_SIZE = 30;
+const UInt32 CNPCCloneSoldier::NPC_SIG552_CLIP_SIZE = 30;
 // Clip size for shotgun
-const Uint32 CNPCCloneSoldier::NPC_SHOTGUN_CLIP_SIZE = 8;
+const UInt32 CNPCCloneSoldier::NPC_SHOTGUN_CLIP_SIZE = 8;
 // Clip size for M249 SAW
-const Uint32 CNPCCloneSoldier::NPC_M249_CLIP_SIZE = 50;
+const UInt32 CNPCCloneSoldier::NPC_M249_CLIP_SIZE = 50;
 // Clip size for TRG42
-const Uint32 CNPCCloneSoldier::NPC_TRG42_CLIP_SIZE = 5;
+const UInt32 CNPCCloneSoldier::NPC_TRG42_CLIP_SIZE = 5;
 // Grenade explode delay
-const Float CNPCCloneSoldier::NPC_GRENADE_EXPLODE_DELAY = 3.5;
+const float CNPCCloneSoldier::NPC_GRENADE_EXPLODE_DELAY = 3.5;
 // Next grenade check delay
-const Float CNPCCloneSoldier::NPC_GRENADE_CHECK_DELAY = 6;
+const float CNPCCloneSoldier::NPC_GRENADE_CHECK_DELAY = 6;
 // NPC weapon sound radius
-const Float CNPCCloneSoldier::NPC_WEAPON_SOUND_RADIUS = 384;
+const float CNPCCloneSoldier::NPC_WEAPON_SOUND_RADIUS = 384;
 // NPC weapon sound duration
-const Float CNPCCloneSoldier::NPC_WEAPON_SOUND_DURATION = 0.3;
+const float CNPCCloneSoldier::NPC_WEAPON_SOUND_DURATION = 0.3;
 // NPC helmet health
-const Float CNPCCloneSoldier::NPC_HELMET_HEALTH = 30;
+const float CNPCCloneSoldier::NPC_HELMET_HEALTH = 30;
 // How much of the damage the helmet takes
-const Float CNPCCloneSoldier::NPC_HELMET_DMG_TAKE = 0.6f;
+const float CNPCCloneSoldier::NPC_HELMET_DMG_TAKE = 0.6f;
 // How much of the damage the helmet absorbs
-const Float CNPCCloneSoldier::NPC_HELMET_DMG_ABSORB = 0.2f;
+const float CNPCCloneSoldier::NPC_HELMET_DMG_ABSORB = 0.2f;
 // Minimum enemy distance for support type
-const Float CNPCCloneSoldier::NPC_MIN_ENEMY_DISTANCE = 512;
+const float CNPCCloneSoldier::NPC_MIN_ENEMY_DISTANCE = 512;
 // Maximum tactical position distance for support type
-const Float CNPCCloneSoldier::NPC_MAX_TACTICALPOS_DISTANCE = 1024;
+const float CNPCCloneSoldier::NPC_MAX_TACTICALPOS_DISTANCE = 1024;
 // Minimum distance at which we'll throw grenades with a visible enemy
-const Float CNPCCloneSoldier::NPC_MIN_GRENADE_DISTANCE = 1024;
+const float CNPCCloneSoldier::NPC_MIN_GRENADE_DISTANCE = 1024;
 // Max grenades on a clone soldier
-const Uint32 CNPCCloneSoldier::NPC_NUM_GRENADES = 3;
+const UInt32 CNPCCloneSoldier::NPC_NUM_GRENADES = 3;
 // Max look distance
-const Float CNPCCloneSoldier::NPC_MAX_LOOK_DISTANCE = 4096;
+const float CNPCCloneSoldier::NPC_MAX_LOOK_DISTANCE = 4096;
 // Max normal firing distance
-const Float CNPCCloneSoldier::NPC_MAX_FIRING_DISTANCE = 2048;
+const float CNPCCloneSoldier::NPC_MAX_FIRING_DISTANCE = 2048;
 // Max normal firing distance for shotgunner
-const Float CNPCCloneSoldier::NPC_MAX_SHOTGUNNER_FIRING_DISTANCE = 1024;
+const float CNPCCloneSoldier::NPC_MAX_SHOTGUNNER_FIRING_DISTANCE = 1024;
 // Precise firing distance
-const Float CNPCCloneSoldier::NPC_PRECISE_FIRING_DISTANCE = 1024;
+const float CNPCCloneSoldier::NPC_PRECISE_FIRING_DISTANCE = 1024;
 // Minimum ambush distance
-const Float CNPCCloneSoldier::NPC_MIN_AMBUSH_DISTANCE_DISTANCE = 512;
+const float CNPCCloneSoldier::NPC_MIN_AMBUSH_DISTANCE_DISTANCE = 512;
 
 // Model name for the npc
-const Char CNPCCloneSoldier::NPC_MODEL_NAME[] = "models/replica.mdl";
+const char CNPCCloneSoldier::NPC_MODEL_NAME[] = "models/replica.mdl";
 // Pain sound pattern
-const Char CNPCCloneSoldier::NPC_PAIN_SOUND_PATTERN[] = "replica/pain%d.wav";
+const char CNPCCloneSoldier::NPC_PAIN_SOUND_PATTERN[] = "replica/pain%d.wav";
 // Number of pain sounds
-const Uint32 CNPCCloneSoldier::NPC_NB_PAIN_SOUNDS = 3;
+const UInt32 CNPCCloneSoldier::NPC_NB_PAIN_SOUNDS = 3;
 // Death sound pattern
-const Char CNPCCloneSoldier::NPC_DEATH_SOUND_PATTERN[] = "replica/death%d.wav";
+const char CNPCCloneSoldier::NPC_DEATH_SOUND_PATTERN[] = "replica/death%d.wav";
 // Number of death sounds
-const Uint32 CNPCCloneSoldier::NPC_NB_DEATH_SOUNDS = 3;
+const UInt32 CNPCCloneSoldier::NPC_NB_DEATH_SOUNDS = 3;
 
 // Array of clone soldier sentences
-const Char* CNPCCloneSoldier::NPC_SENTENCES[NUM_NPC_SENTENCES] = 
+const char* CNPCCloneSoldier::NPC_SENTENCES[NUM_NPC_SENTENCES] = 
 {
 	"RP_GRENADE",
 	"RP_ALERT",
@@ -97,29 +97,29 @@ const Char* CNPCCloneSoldier::NPC_SENTENCES[NUM_NPC_SENTENCES] =
 };
 
 // Bodygroup name for heads
-const Char CNPCCloneSoldier::NPC_BODYGROUP_HEADS_NAME[] = "heads";
+const char CNPCCloneSoldier::NPC_BODYGROUP_HEADS_NAME[] = "heads";
 // Submodel name for normal head
-const Char CNPCCloneSoldier::NPC_SUBMODEL_HEAD_NORMAL_NAME[] = "replica_head_normal_reference";
+const char CNPCCloneSoldier::NPC_SUBMODEL_HEAD_NORMAL_NAME[] = "replica_head_normal_reference";
 // Submodel name for decapitated head
-const Char CNPCCloneSoldier::NPC_SUBMODEL_HEAD_DECAPITATED_NAME[] = "replica_head_decap_reference";
+const char CNPCCloneSoldier::NPC_SUBMODEL_HEAD_DECAPITATED_NAME[] = "replica_head_decap_reference";
 
 // Bodygroup name for weapons
-const Char CNPCCloneSoldier::NPC_BODYGROUP_WEAPONS_NAME[] = "weapons";
+const char CNPCCloneSoldier::NPC_BODYGROUP_WEAPONS_NAME[] = "weapons";
 // Submodel name for spanner weapon
-const Char CNPCCloneSoldier::NPC_SUBMODEL_WEAPON_SIG552_NAME[] = "blank";
+const char CNPCCloneSoldier::NPC_SUBMODEL_WEAPON_SIG552_NAME[] = "blank";
 // Submodel name for spanner weapon
-const Char CNPCCloneSoldier::NPC_SUBMODEL_WEAPON_SHOTGUN_NAME[] = "blank";
+const char CNPCCloneSoldier::NPC_SUBMODEL_WEAPON_SHOTGUN_NAME[] = "blank";
 // Submodel name for spanner weapon
-const Char CNPCCloneSoldier::NPC_SUBMODEL_WEAPON_M249_NAME[] = "blank";
+const char CNPCCloneSoldier::NPC_SUBMODEL_WEAPON_M249_NAME[] = "blank";
 // Submodel name for spanner weapon
-const Char CNPCCloneSoldier::NPC_SUBMODEL_WEAPON_TRG42_NAME[] = "blank";
+const char CNPCCloneSoldier::NPC_SUBMODEL_WEAPON_TRG42_NAME[] = "blank";
 // Submodel name for blank weapon
-const Char CNPCCloneSoldier::NPC_SUBMODEL_WEAPON_BLANK_NAME[] = "blank";
+const char CNPCCloneSoldier::NPC_SUBMODEL_WEAPON_BLANK_NAME[] = "blank";
 
 // Question asked
 CNPCCloneSoldier::npc_question_types_t CNPCCloneSoldier::g_questionAsked = NPC_QUESTION_NONE;
 // Time until we talk again
-Double CNPCCloneSoldier::g_talkWaitTime = 0;
+double CNPCCloneSoldier::g_talkWaitTime = 0;
 
 //==========================================================================
 //
@@ -134,7 +134,7 @@ Double CNPCCloneSoldier::g_talkWaitTime = 0;
 ai_task_t taskListScheduleCloneSoldierTakeTacticalPosition[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,							0),
-	AITASK(AI_TASK_SET_FAIL_SCHEDULE,					(Float)AI_SCHED_ELOF_FAIL),
+	AITASK(AI_TASK_SET_FAIL_SCHEDULE,					(float)AI_SCHED_ELOF_FAIL),
 	AITASK(AI_CLONE_SOLDIER_TASK_GET_TACTICAL_POSITION,	0),
 	AITASK(AI_CLONE_SOLDIER_TASK_SPEAK_SENTENCE,		0),
 	AITASK(AI_TASK_RUN_PATH,							0),
@@ -143,7 +143,7 @@ ai_task_t taskListScheduleCloneSoldierTakeTacticalPosition[] =
 	AITASK(AI_TASK_FACE_ENEMY,							0)
 };
 
-Uint32 interruptBitsScheduleCloneSoldierTakeTacticalPosition[] =
+UInt32 interruptBitsScheduleCloneSoldierTakeTacticalPosition[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -174,7 +174,7 @@ const CAISchedule scheduleCloneSoldierTakeTacticalPosition(
 ai_task_t taskListScheduleCloneSoldierAmbushEnemy[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,								0),
-	AITASK(AI_TASK_SET_FAIL_SCHEDULE,						(Float)AI_SCHED_ELOF_FAIL),
+	AITASK(AI_TASK_SET_FAIL_SCHEDULE,						(float)AI_SCHED_ELOF_FAIL),
 	AITASK(AI_CLONE_SOLDIER_TASK_GET_AMBUSH_PATH,			0),
 	AITASK(AI_CLONE_SOLDIER_TASK_SPEAK_SENTENCE,			0),
 	AITASK(AI_TASK_RUN_PATH,								0),
@@ -183,7 +183,7 @@ ai_task_t taskListScheduleCloneSoldierAmbushEnemy[] =
 	AITASK(AI_TASK_FACE_ENEMY,								0)
 };
 
-Uint32 interruptBitsScheduleCloneSoldierAmbushEnemy[] =
+UInt32 interruptBitsScheduleCloneSoldierAmbushEnemy[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -202,12 +202,12 @@ Uint32 interruptBitsScheduleCloneSoldierAmbushEnemy[] =
 	AI_COND_ENEMY_DEAD
 };
 
-Uint32 specialInterruptBitsScheduleCloneSoldierAmbushEnemy[] =
+UInt32 specialInterruptBitsScheduleCloneSoldierAmbushEnemy[] =
 {
 	AI_COND_SHOOT_VECTOR_VALID
 };
 
-Uint32 specialInterruptExceptionBitsScheduleCloneSoldierAmbushEnemy[] =
+UInt32 specialInterruptExceptionBitsScheduleCloneSoldierAmbushEnemy[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -252,7 +252,7 @@ ai_task_t taskListScheduleCloneSoldierIdleSweep[] =
 	AITASK(AI_TASK_WAIT,								2)
 };
 
-Uint32 interruptBitsScheduleCloneSoldierIdleSweep[] =
+UInt32 interruptBitsScheduleCloneSoldierIdleSweep[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -299,7 +299,7 @@ ai_task_t taskListScheduleCloneSoldierHideAndWait[] =
 	AITASK(AI_TASK_WAIT_FACE_ENEMY_INDEFINITE,			0)
 };
 
-Uint32 interruptBitsScheduleCloneSoldierHideAndWait[] =
+UInt32 interruptBitsScheduleCloneSoldierHideAndWait[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -486,7 +486,7 @@ void CNPCCloneSoldier::Precache( void )
 
 	if(g_pSentencesFile)
 	{
-		for(Uint32 i = 0; i < NUM_NPC_SENTENCES; i++)
+		for(UInt32 i = 0; i < NUM_NPC_SENTENCES; i++)
 			g_pSentencesFile->PrecacheGroup(NPC_SENTENCES[i]);
 	}
 }
@@ -574,7 +574,7 @@ void CNPCCloneSoldier::HandleAnimationEvent( const mstudioevent_t* pevent )
 					pKickEntity->SetVelocity(hurtVelocity);
 				}
 
-				Float hurtDamage = GetSkillCVarValue(g_skillcvars.skillReplicaKickDmg);
+				float hurtDamage = GetSkillCVarValue(g_skillcvars.skillReplicaKickDmg);
 				if(hurtDamage > 0)
 					pKickEntity->TakeDamage(this, this, hurtDamage, DMG_MELEE);
 			}
@@ -587,7 +587,7 @@ void CNPCCloneSoldier::HandleAnimationEvent( const mstudioevent_t* pevent )
 	case NPC_AE_BURST3:
 	case NPC_AE_BURST3_PRECISE:
 		{
-			Uint32 numShots = 0;
+			UInt32 numShots = 0;
 			const char* pstrSound = nullptr;
 
 			if(m_pState->weapons & NPC_WEAPON_SIG552)
@@ -627,8 +627,8 @@ void CNPCCloneSoldier::HandleAnimationEvent( const mstudioevent_t* pevent )
 			Vector forward;
 			Math::AngleVectors(m_pState->angles, &forward);
 
-			Float grenadeRadius = GetSkillCVarValue(g_skillcvars.skillGrenadeRadius);
-			Float grenadeDamage = GetSkillCVarValue(g_skillcvars.skillGrenadeDmg);
+			float grenadeRadius = GetSkillCVarValue(g_skillcvars.skillGrenadeRadius);
+			float grenadeDamage = GetSkillCVarValue(g_skillcvars.skillGrenadeDmg);
 
 			CGrenade::CreateTimed(this, GetGunPosition(), m_tossVelocity, NPC_GRENADE_EXPLODE_DELAY, grenadeRadius, grenadeDamage, true);
 
@@ -638,7 +638,7 @@ void CNPCCloneSoldier::HandleAnimationEvent( const mstudioevent_t* pevent )
 			CBaseEntity* pSquadLeader = GetSquadLeader();
 			if(pSquadLeader)
 			{
-				Uint32 numGrenades = pSquadLeader->GetNumGrenades();
+				UInt32 numGrenades = pSquadLeader->GetNumGrenades();
 				if(numGrenades > 0)
 				{
 					numGrenades--;
@@ -666,7 +666,7 @@ void CNPCCloneSoldier::SetYawSpeed( void )
 // @brief Returns the sound mask for the NPC
 //
 //=============================================
-Uint64 CNPCCloneSoldier::GetSoundMask( void )
+UInt64 CNPCCloneSoldier::GetSoundMask( void )
 {
 	return (AI_SOUND_WORLD|AI_SOUND_COMBAT|AI_SOUND_DANGER|AI_SOUND_PLAYER);
 }
@@ -965,21 +965,21 @@ void CNPCCloneSoldier::DeclareSaveFields( void )
 // @brief Handles damage calculation for a hitscan
 //
 //=============================================
-void CNPCCloneSoldier::TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
+void CNPCCloneSoldier::TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
 {
 	// Remember damage
-	Float _damage = damage;
+	float _damage = damage;
 
 	if(tr.hitgroup == HITGROUP_HELMET)
 	{
 		if(m_helmetHealth > 0 && damageFlags & (DMG_BULLET|DMG_EXPLOSION|DMG_MELEE|DMG_SLASH))
 		{
 			// Determine amounts
-			Float dmgAbsorbed = _damage - m_helmetHealth;
-			Float finalDamageAbsorb = SDL_fabs(_min(0, dmgAbsorbed));
+			float dmgAbsorbed = _damage - m_helmetHealth;
+			float finalDamageAbsorb = SDL_fabs(_min(0, dmgAbsorbed));
 			_damage = finalDamageAbsorb * NPC_HELMET_DMG_ABSORB;
 			
-			Float dmgFullAdd = damage - finalDamageAbsorb;
+			float dmgFullAdd = damage - finalDamageAbsorb;
 			if(dmgFullAdd > 0)
 			{
 				// Helmet is useless
@@ -1194,7 +1194,7 @@ bool CNPCCloneSoldier::CanCheckAttacks( void ) const
 // @brief Checks if we can do range attack 1
 //
 //=============================================
-bool CNPCCloneSoldier::CheckRangeAttack1( Float dp, Float distance )
+bool CNPCCloneSoldier::CheckRangeAttack1( float dp, float distance )
 {
 	if((CheckCondition(AI_COND_ENEMY_OCCLUDED) || CheckCondition(AI_COND_FRIENDLY_FIRE)) || dp < NPC_FIRING_ANGLE_TRESHOLD || distance > m_firingDistance)
 		return false;
@@ -1209,7 +1209,7 @@ bool CNPCCloneSoldier::CheckRangeAttack1( Float dp, Float distance )
 // @brief Checks if we can do range attack 2
 //
 //=============================================
-bool CNPCCloneSoldier::CheckRangeAttack2( Float dp, Float distance )
+bool CNPCCloneSoldier::CheckRangeAttack2( float dp, float distance )
 {
 	if(!(m_pState->weapons & NPC_WEAPON_GRENADE))
 		return false;
@@ -1230,7 +1230,7 @@ bool CNPCCloneSoldier::CheckRangeAttack2( Float dp, Float distance )
 // @brief Checks if we can do melee attack 1
 //
 //=============================================
-bool CNPCCloneSoldier::CheckMeleeAttack1( Float dp, Float distance )
+bool CNPCCloneSoldier::CheckMeleeAttack1( float dp, float distance )
 {
 	if(!m_enemy || m_enemy->IsNPCDangerous())
 		return false;
@@ -1254,7 +1254,7 @@ void CNPCCloneSoldier::PreScheduleThink( void )
 	if(m_enemy && m_npcState == NPC_STATE_COMBAT && !m_takeAttackChance && m_tacticalCoverage > 0)
 	{
 		Vector lookerPosition = m_enemyLastKnownPosition + m_enemy->GetViewOffset(true);
-		Float coverage = CalculateCoverage(m_movementGoalPosition, m_pState->view_offset, lookerPosition);
+		float coverage = CalculateCoverage(m_movementGoalPosition, m_pState->view_offset, lookerPosition);
 		if(coverage < m_tacticalCoverage)
 			m_takeAttackChance = true;
 	}
@@ -1266,7 +1266,7 @@ void CNPCCloneSoldier::PreScheduleThink( void )
 // @brief Returns the firing cone used
 //
 //=============================================
-const Uint32 CNPCCloneSoldier::GetFiringCone( bool attenuateByFog )
+const UInt32 CNPCCloneSoldier::GetFiringCone( bool attenuateByFog )
 {
 	Int32 skillCvar;
 	if( m_pState->weapons & NPC_WEAPON_SHOTGUN)
@@ -1278,7 +1278,7 @@ const Uint32 CNPCCloneSoldier::GetFiringCone( bool attenuateByFog )
 	else
 		skillCvar = g_skillcvars.skillReplicaM249ConeSize;
 
-	Uint32 coneIndex = (Int32)GetSkillCVarValue(skillCvar);
+	UInt32 coneIndex = (Int32)GetSkillCVarValue(skillCvar);
 	if(attenuateByFog)
 		coneIndex = GetFogAttenuatedFiringCone(coneIndex);
 
@@ -1526,7 +1526,7 @@ void CNPCCloneSoldier::SetNPCState( npcstate_t state )
 //=============================================
 void CNPCCloneSoldier::UpdateDistances( void )
 {
-	Float fogEndDistance = CEnvFog::GetFogEndDistance();
+	float fogEndDistance = CEnvFog::GetFogEndDistance();
 	if(!fogEndDistance)
 	{
 		m_lookDistance = NPC_MAX_LOOK_DISTANCE;
@@ -1540,7 +1540,7 @@ void CNPCCloneSoldier::UpdateDistances( void )
 	{
 		m_lookDistance = fogEndDistance;
 
-		Float fogEdgeDistance = fogEndDistance*0.9;
+		float fogEdgeDistance = fogEndDistance*0.9;
 		if(m_pState->weapons & NPC_WEAPON_SHOTGUN)
 		{
 			if(fogEdgeDistance < NPC_MAX_SHOTGUNNER_FIRING_DISTANCE)
@@ -1593,7 +1593,7 @@ void CNPCCloneSoldier::SpeakSentence( void )
 // @brief Builds a route to a tactical position
 //
 //=============================================
-bool CNPCCloneSoldier::BuildTacticalRoute( CBaseEntity* pTargetEntity, const Vector& threatPosition, const Vector& threatAngles, const Vector& viewOffset, Float minDistance, Float maxDistance, bool& isPartialCover )
+bool CNPCCloneSoldier::BuildTacticalRoute( CBaseEntity* pTargetEntity, const Vector& threatPosition, const Vector& threatAngles, const Vector& viewOffset, float minDistance, float maxDistance, bool& isPartialCover )
 {
 	if(!minDistance)
 	{
@@ -1614,7 +1614,7 @@ bool CNPCCloneSoldier::BuildTacticalRoute( CBaseEntity* pTargetEntity, const Vec
 	}
 
 	// Get node type
-	Uint64 nodeType = Util::GetNodeTypeForNPC(this);
+	UInt64 nodeType = Util::GetNodeTypeForNPC(this);
 	// Get node hull
 	node_hull_types_t hullType = Util::GetNodeHullForNPC(this);
 
@@ -1630,21 +1630,21 @@ bool CNPCCloneSoldier::BuildTacticalRoute( CBaseEntity* pTargetEntity, const Vec
 	}
 
 	Vector lookerPosition = threatPosition + viewOffset;
-	Float distanceToEnemy = (lookerPosition - m_pState->origin).Length2D();
+	float distanceToEnemy = (lookerPosition - m_pState->origin).Length2D();
 
 	Int32 lastBestNodeIndex = NO_POSITION;
-	Float lastBestCoverage = 0;
+	float lastBestCoverage = 0;
 
 	// Current coverage needs to be compared against best one, so we don't move for no reason
 	// However keep in mind whether the enemy is totally occluded from our current position, in
 	// which case current coverage would be invalid
 	Vector myEyesPosition = m_pState->origin + m_pState->view_offset;
-	Float currentCoverage = 0;
+	float currentCoverage = 0;
 	if(Util::CheckTraceLine(lookerPosition, myEyesPosition))
 		currentCoverage = CalculateCoverage(m_pState->origin, m_pState->view_offset, lookerPosition);
 
-	Uint32 numNodes = gNodeGraph.GetNumNodes();
-	for(Uint32 i = 0; i < numNodes; i++)
+	UInt32 numNodes = gNodeGraph.GetNumNodes();
+	for(UInt32 i = 0; i < numNodes; i++)
 	{
 		Int32 nodeIndex = (i + g_lastCoverSearchNodeIndex) % numNodes;
 		
@@ -1657,12 +1657,12 @@ bool CNPCCloneSoldier::BuildTacticalRoute( CBaseEntity* pTargetEntity, const Vec
 			continue;
 
 		// Don't take node if enemy is too close
-		Float enemyDistanceToNode = (threatPosition - pNode->origin).Length();
+		float enemyDistanceToNode = (threatPosition - pNode->origin).Length();
 		if(enemyDistanceToNode < minDistance || enemyDistanceToNode > maxDistance)
 			continue;
 
 		// Do not take nodes that are beyond the enemy's position
-		Float myDistanceToNode = (m_pState->origin - pNode->origin).Length2D();
+		float myDistanceToNode = (m_pState->origin - pNode->origin).Length2D();
 		if(myDistanceToNode > distanceToEnemy && enemyDistanceToNode < myDistanceToNode)
 			continue;
 
@@ -1682,7 +1682,7 @@ bool CNPCCloneSoldier::BuildTacticalRoute( CBaseEntity* pTargetEntity, const Vec
 		if(IsSquadMemberInRange(pNode->origin, 64))
 			continue;
 
-		Float coverage = CalculateCoverage(pNode->origin, m_pState->view_offset, lookerPosition);
+		float coverage = CalculateCoverage(pNode->origin, m_pState->view_offset, lookerPosition);
 		if(coverage > lastBestCoverage || lastBestNodeIndex == NO_POSITION)
 		{
 			lastBestNodeIndex = nodeIndex;
@@ -1719,7 +1719,7 @@ bool CNPCCloneSoldier::BuildTacticalRoute( CBaseEntity* pTargetEntity, const Vec
 // @brief Builds a route to an ambush position
 //
 //=============================================
-bool CNPCCloneSoldier::BuildAmbushRoute( bool isObscured, const Vector& threatPosition, const Vector& threatAngles, const Vector& viewOffset, Float minDistance, Float maxDistance )
+bool CNPCCloneSoldier::BuildAmbushRoute( bool isObscured, const Vector& threatPosition, const Vector& threatAngles, const Vector& viewOffset, float minDistance, float maxDistance )
 {
 	if(!minDistance)
 	{
@@ -1740,7 +1740,7 @@ bool CNPCCloneSoldier::BuildAmbushRoute( bool isObscured, const Vector& threatPo
 	}
 
 	// Get node type
-	Uint64 nodeType = Util::GetNodeTypeForNPC(this);
+	UInt64 nodeType = Util::GetNodeTypeForNPC(this);
 	// Get node hull
 	node_hull_types_t hullType = Util::GetNodeHullForNPC(this);
 
@@ -1756,15 +1756,15 @@ bool CNPCCloneSoldier::BuildAmbushRoute( bool isObscured, const Vector& threatPo
 	}
 
 	Vector lookerPosition = threatPosition + viewOffset;
-	Float distanceToEnemy = (lookerPosition - m_pState->origin).Length2D();
+	float distanceToEnemy = (lookerPosition - m_pState->origin).Length2D();
 
 	Vector enemyForward;
 	Math::AngleVectors(threatAngles, &enemyForward);
 	enemyForward[ROLL] = 0;
 	enemyForward.Normalize();
 
-	Uint32 numNodes = gNodeGraph.GetNumNodes();
-	for(Uint32 i = 0; i < numNodes; i++)
+	UInt32 numNodes = gNodeGraph.GetNumNodes();
+	for(UInt32 i = 0; i < numNodes; i++)
 	{
 		Int32 nodeIndex = (i + g_lastCoverSearchNodeIndex) % numNodes;
 		g_lastCoverSearchNodeIndex = nodeIndex + 1;
@@ -1777,11 +1777,11 @@ bool CNPCCloneSoldier::BuildAmbushRoute( bool isObscured, const Vector& threatPo
 		if(!pNode)
 			continue;
 
-		Float enemyDistanceToNode = (threatPosition - pNode->origin).Length();
+		float enemyDistanceToNode = (threatPosition - pNode->origin).Length();
 		if(enemyDistanceToNode < minDistance || enemyDistanceToNode > maxDistance)
 			continue;
 
-		Float myDistanceToNode = (m_pState->origin - pNode->origin).Length2D();
+		float myDistanceToNode = (m_pState->origin - pNode->origin).Length2D();
 		if(myDistanceToNode > distanceToEnemy && enemyDistanceToNode < myDistanceToNode)
 			continue;
 
@@ -1829,7 +1829,7 @@ bool CNPCCloneSoldier::BuildAmbushRoute( bool isObscured, const Vector& threatPo
 // @brief Finds a nearby cover position from the enemy's view
 //
 //=============================================
-bool CNPCCloneSoldier::BuildNearbyHidingPosition( CBaseEntity* pTargetEntity, const Vector& threatPosition, const Vector& viewOffset, Float minDistance, Float maxDistance )
+bool CNPCCloneSoldier::BuildNearbyHidingPosition( CBaseEntity* pTargetEntity, const Vector& threatPosition, const Vector& viewOffset, float minDistance, float maxDistance )
 {
 	if(!minDistance)
 	{
@@ -1850,7 +1850,7 @@ bool CNPCCloneSoldier::BuildNearbyHidingPosition( CBaseEntity* pTargetEntity, co
 	}
 
 	// Get node type
-	Uint64 nodeType = Util::GetNodeTypeForNPC(this);
+	UInt64 nodeType = Util::GetNodeTypeForNPC(this);
 	// Get node hull
 	node_hull_types_t hullType = Util::GetNodeHullForNPC(this);
 
@@ -1866,10 +1866,10 @@ bool CNPCCloneSoldier::BuildNearbyHidingPosition( CBaseEntity* pTargetEntity, co
 	}
 
 	Vector lookerPosition = threatPosition + viewOffset;
-	Float distanceToEnemy = (lookerPosition - m_pState->origin).Length2D();
+	float distanceToEnemy = (lookerPosition - m_pState->origin).Length2D();
 
-	Uint32 numNodes = gNodeGraph.GetNumNodes();
-	for(Uint32 i = 0; i < numNodes; i++)
+	UInt32 numNodes = gNodeGraph.GetNumNodes();
+	for(UInt32 i = 0; i < numNodes; i++)
 	{
 		Int32 nodeIndex = (i + g_lastCoverSearchNodeIndex) % numNodes;
 		g_lastCoverSearchNodeIndex = nodeIndex + 1;
@@ -1882,11 +1882,11 @@ bool CNPCCloneSoldier::BuildNearbyHidingPosition( CBaseEntity* pTargetEntity, co
 		if(!pNode)
 			continue;
 
-		Float enemyDistanceToNode = (threatPosition - pNode->origin).Length();
+		float enemyDistanceToNode = (threatPosition - pNode->origin).Length();
 		if(enemyDistanceToNode < minDistance || enemyDistanceToNode > maxDistance)
 			continue;
 
-		Float myDistanceToNode = (m_pState->origin - pNode->origin).Length2D();
+		float myDistanceToNode = (m_pState->origin - pNode->origin).Length2D();
 		if(myDistanceToNode > distanceToEnemy && enemyDistanceToNode < myDistanceToNode)
 			continue;
 
@@ -2041,7 +2041,7 @@ void CNPCCloneSoldier::Spoke( void )
 // @brief Returns the voice pitch
 //
 //=============================================
-Uint32 CNPCCloneSoldier::GetVoicePitch( void )
+UInt32 CNPCCloneSoldier::GetVoicePitch( void )
 {
 	return m_voicePitch;
 }
@@ -2050,7 +2050,7 @@ Uint32 CNPCCloneSoldier::GetVoicePitch( void )
 // @brief Tells how many grenades this NPC has
 //
 //=============================================
-Uint32 CNPCCloneSoldier::GetNumGrenades( void )
+UInt32 CNPCCloneSoldier::GetNumGrenades( void )
 { 
 	return m_numGrenades; 
 }
@@ -2059,7 +2059,7 @@ Uint32 CNPCCloneSoldier::GetNumGrenades( void )
 // @brief Sets grenade count on NPC
 //
 //=============================================
-void CNPCCloneSoldier::SetNumGrenades( Uint32 numGrenades ) 
+void CNPCCloneSoldier::SetNumGrenades( UInt32 numGrenades ) 
 { 
 	m_numGrenades = numGrenades; 
 }
@@ -2078,7 +2078,7 @@ void CNPCCloneSoldier::Reset( void )
 // @brief Returns the reaction time
 //
 //=============================================
-Float CNPCCloneSoldier::GetReactionTime( void ) 
+float CNPCCloneSoldier::GetReactionTime( void ) 
 { 
 	return GetSkillCVarValue(g_skillcvars.skillReplicaReactionTime);
 }

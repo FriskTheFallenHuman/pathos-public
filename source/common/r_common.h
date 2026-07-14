@@ -30,21 +30,21 @@ enum screenratio_strings_t
 	NB_SCREENRATIO_STRINGS
 };
 
-extern const Char* SCREEN_RATIO_STRINGS[NB_SCREENRATIO_STRINGS];
+extern const char* SCREEN_RATIO_STRINGS[NB_SCREENRATIO_STRINGS];
 
-extern void R_AllocBlock ( Uint32 w, Uint32 h, Uint32 &x, Uint32 &y, Uint32& width, Uint32 &height, Uint32*& pallocations, Uint32 padamount );
-extern void R_BuildLightmap( Uint16 light_s, Uint16 light_t, const color24_t *psamples, const msurface_t *psurface, color32_t *pout, Int32 index, Uint32 sizex, Float overdarken, Uint32 padamount, bool isvectormap = false, bool fullbright = false );
+extern void R_AllocBlock ( UInt32 w, UInt32 h, UInt32 &x, UInt32 &y, UInt32& width, UInt32 &height, UInt32*& pallocations, UInt32 padamount );
+extern void R_BuildLightmap( UInt16 light_s, UInt16 light_t, const color24_t *psamples, const msurface_t *psurface, color32_t *pout, Int32 index, UInt32 sizex, float overdarken, UInt32 padamount, bool isvectormap = false, bool fullbright = false );
 extern bool R_IsEntityMoved( const cl_entity_t& entity );
 extern bool R_IsEntityRotated( const cl_entity_t& entity );
 extern bool R_IsEntityTransparent( const cl_entity_t& entity, bool ignoreVBMFlags = false );
 extern void R_RotateForEntity( CMatrix& matrix, const cl_entity_t& entity );
-extern bool R_CheckShaderVertexAttribute( Int32 attribindex, const Char* pstrattribname, const CGLSLShader* pshader, void	(*pfnErrorPopup)( const Char *fmt, ... ) );
-extern bool R_CheckShaderDeterminator( Int32 attribindex, const Char* pstrattribname, const CGLSLShader* pshader, void	(*pfnErrorPopup)( const Char *fmt, ... ) );
-extern bool R_CheckShaderUniform( Int32 attribindex, const Char* pstrattribname, const CGLSLShader* pshader, void	(*pfnErrorPopup)( const Char *fmt, ... ) );
+extern bool R_CheckShaderVertexAttribute( Int32 attribindex, const char* pstrattribname, const CGLSLShader* pshader, void	(*pfnErrorPopup)( const char *fmt, ... ) );
+extern bool R_CheckShaderDeterminator( Int32 attribindex, const char* pstrattribname, const CGLSLShader* pshader, void	(*pfnErrorPopup)( const char *fmt, ... ) );
+extern bool R_CheckShaderUniform( Int32 attribindex, const char* pstrattribname, const CGLSLShader* pshader, void	(*pfnErrorPopup)( const char *fmt, ... ) );
 extern bool R_WorldToScreenTransform( CMatrix& matrix, const Vector& src, Vector& screenstart );
 
 extern Int32 R_GetRelativeX( Int32 xPos, Int32 baseWidth, Int32 windowWidth );
 extern Int32 R_GetRelativeY( Int32 yPos, Int32 baseHeight, Int32 windowHeight );
-extern void R_SetMatrixData( const Float *pin, Float* pout, bool transpose = false );
-extern CString R_GetAspectRatio( Uint32 width, Uint32 height );
+extern void R_SetMatrixData( const float *pin, float* pout, bool transpose = false );
+extern CString R_GetAspectRatio( UInt32 width, UInt32 height );
 #endif

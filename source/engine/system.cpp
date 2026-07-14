@@ -54,8 +54,8 @@ state variables and functionality.
 #include "dllexports.h"
 #include "filewriterthread.h"
 
-#if defined WIN32 && _64BUILD
-#include <detours.h>
+#if defined(_MSC_VER) && defined(_64BUILD)
+#include "detours.h"
 #endif
 
 extern file_interface_t ENGINE_FILE_FUNCTIONS;
@@ -81,7 +81,7 @@ CCVar* g_pCvarKeepOldSaves = nullptr;
 //=============================================
 // @brief Determines if the application should exit
 //
-// @return TRUE if we should exit, FALSE otherwise
+// @return true if we should exit, false otherwise
 //=============================================
 bool Sys_ShouldExit( void )
 {
@@ -92,12 +92,12 @@ bool Sys_ShouldExit( void )
 // @brief Initializes the basic systems
 // 
 // @param pparams Launch parameters
-// @return TRUE if successful, FALSE on error
+// @return true if successful, false on error
 //=============================================
 bool Sys_Init( CArray<CString>* argsArray )
 {
 	// Create console print mutex
-	g_hPrintMutex = CreateMutex(nullptr, FALSE, "PathosConsolePrintMutex");
+	g_hPrintMutex = CreateMutex(nullptr, false, "PathosConsolePrintMutex");
 	if(nullptr != g_hPrintMutex)
 		GetLastError();
 
@@ -110,7 +110,7 @@ bool Sys_Init( CArray<CString>* argsArray )
 	}
 
 	// Save launch args to args list
-	for (Uint32 i = 0; i < argsArray->size(); i++)
+	for (UInt32 i = 0; i < argsArray->size(); i++)
 		ens.launchargs.push_back((*argsArray)[i]);
 
 	// Find out what mod we are running before doing
@@ -338,13 +338,13 @@ void Sys_Exit()
 // @param fmt Formatted string template
 // @param ... Additional parameters
 //====================================
-void Sys_ErrorPopup ( const Char *fmt, ... )
+void Sys_ErrorPopup ( const char *fmt, ... )
 { 
 	va_list	vArgPtr;
-	static Char cMsg[PRINT_MSG_BUFFER_SIZE];
+	static char cMsg[PRINT_MSG_BUFFER_SIZE];
 	
 	va_start(vArgPtr,fmt);
-	vsprintf_s(cMsg, fmt, vArgPtr);
+	ENGINE_VSPRINTF_S(cMsg, sizeof(cMsg), fmt, vArgPtr);
 	va_end(vArgPtr);
 
 	SDL_Window* pWindow = gWindow.GetWindow();
@@ -359,7 +359,7 @@ void Sys_ErrorPopup ( const Char *fmt, ... )
 //=============================================
 // @brief Initializes time tracking
 // 
-// @return TRUE if successful, FALSE otherwise
+// @return true if successful, false otherwise
 //=============================================
 bool Sys_InitFloatTime( void )
 {
@@ -374,8 +374,8 @@ bool Sys_InitFloatTime( void )
 		return false;
 	}
 
-	Uint32 lowPart = static_cast<Uint32>(performanceFrequency.LowPart);
-	Uint32 highPart = static_cast<Uint32>(performanceFrequency.HighPart);
+	UInt32 lowPart = static_cast<UInt32>(performanceFrequency.LowPart);
+	UInt32 highPart = static_cast<UInt32>(performanceFrequency.HighPart);
 
 	// Default to this value
 	ens.lowshift = 0;
@@ -390,7 +390,7 @@ bool Sys_InitFloatTime( void )
 		highPart >>= 1;
 	}
 
-	ens.perffreq = 1.0f / static_cast<Double>(lowPart);
+	ens.perffreq = 1.0f / static_cast<double>(lowPart);
 
 	// So values are filled
 	Sys_FloatTime();
@@ -409,9 +409,9 @@ bool Sys_InitFloatTime( void )
 // 
 // @return Time in seconds
 //=============================================
-Double Sys_FloatTime( void )
+double Sys_FloatTime( void )
 {
-	static Uint32 oldtime = 0;
+	static UInt32 oldtime = 0;
 	static Int32 sametimecount = 0;
 	static bool isfirstcall = true;
 
@@ -420,8 +420,8 @@ Double Sys_FloatTime( void )
 	LARGE_INTEGER performanceFrequency;
 	QueryPerformanceCounter(&performanceFrequency);
 
-	Uint32 tmp = (static_cast<Uint32>(performanceFrequency.LowPart) >> ens.lowshift)
-		| (static_cast<Uint32>(performanceFrequency.HighPart) << (32 - ens.lowshift));
+	UInt32 tmp = (static_cast<UInt32>(performanceFrequency.LowPart) >> ens.lowshift)
+		| (static_cast<UInt32>(performanceFrequency.HighPart) << (32 - ens.lowshift));
 
 	if(isfirstcall)
 	{
@@ -437,8 +437,8 @@ Double Sys_FloatTime( void )
 		}
 		else
 		{
-			Uint32 t2 = tmp - oldtime;
-			Double time = static_cast<Double>(t2*ens.perffreq);
+			UInt32 t2 = tmp - oldtime;
+			double time = static_cast<double>(t2*ens.perffreq);
 			oldtime = tmp;
 			ens.curtime += time;
 
@@ -469,9 +469,9 @@ Double Sys_FloatTime( void )
 //
 // @return FPS limit as a float
 //=============================================
-Uint32 Sys_GetFPSLimit( void )
+UInt32 Sys_GetFPSLimit( void )
 {
-	Uint32 cvarLimit = static_cast<Uint32>(g_pCvarFPSMax->GetValue());
+	UInt32 cvarLimit = static_cast<UInt32>(g_pCvarFPSMax->GetValue());
 	return cvarLimit;
 }
 
@@ -485,7 +485,7 @@ Uint32 Sys_GetFPSLimit( void )
 bool Sys_CheckGameDir( const CArray<CString>* argsArray )
 {
 	// Parse all the other arguments
-	for(Uint32 i = 1; i < argsArray->size(); i++)
+	for(UInt32 i = 1; i < argsArray->size(); i++)
 	{
 		CString strArg = (*argsArray)[i];
 		CString argName(strArg);
@@ -531,7 +531,7 @@ bool Sys_ParseLaunchParams( const CArray<CString>* argsArray )
 
 	// See if we're asked to clear previous logs
 	bool clearPreviousLogs = false;
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for(; i < argsArray->size(); i++)
 	{
 		if(!qstrcmp((*argsArray)[i].c_str(), "-clearlogs"))
@@ -868,7 +868,7 @@ void Sys_SetPaused( bool paused, bool print )
 	svs.paused = paused;
 
 	// Send msgs to clients
-	for(Uint32 i = 0; i < svs.maxclients; i++)
+	for(UInt32 i = 0; i < svs.maxclients; i++)
 	{
 		if(!svs.clients[i].connected)
 			continue;
@@ -891,17 +891,17 @@ void Sys_SetPaused( bool paused, bool print )
 // @brief Manages think functions for the interface
 // 
 //=============================================
-#ifdef _64BUILD
+#if defined(_64BUILD) && defined(_MSC_VER)
 static BOOL CALLBACK ExportCallback( PVOID pContext, ULONG nOrdinal, LPCSTR szSymbol, PVOID pbTarget )
 {
 	dll_export_t newExport;
 	newExport.functionname = szSymbol;
 	g_pExportsTargetArray->push_back(newExport);
 
-	return TRUE;
+	return true;
 }
 #else
-static void ExportCallback( Char* pstrSymbolName )
+static void ExportCallback( char* pstrSymbolName )
 {
 	dll_export_t newExport;
 	newExport.functionname = pstrSymbolName;
@@ -913,9 +913,9 @@ static void ExportCallback( Char* pstrSymbolName )
 // @brief Manages think functions for the interface
 // 
 //=============================================
-bool Sys_GetDLLExports( const Char* pstrDLLName, void* pDLLHandle, CArray<dll_export_t>& destArray )
+bool Sys_GetDLLExports( const char* pstrDLLName, void* pDLLHandle, CArray<dll_export_t>& destArray )
 {
-#ifdef _64BUILD
+#if defined(_64BUILD) && defined(_MSC_VER)
 	HMODULE hDLL = GetModuleHandleA(pstrDLLName);
 	if(!hDLL)
 	{
@@ -926,7 +926,7 @@ bool Sys_GetDLLExports( const Char* pstrDLLName, void* pDLLHandle, CArray<dll_ex
 	// Set the destination array
 	g_pExportsTargetArray = &destArray;
 
-	BOOL validFlag = FALSE;
+	BOOL validFlag = false;
 	if(!DetourEnumerateExports(hDLL, &validFlag, ExportCallback))
 	{
 		Con_EPrintf("Couldn't get exports for '%s'.\n", pstrDLLName);
@@ -943,7 +943,7 @@ bool Sys_GetDLLExports( const Char* pstrDLLName, void* pDLLHandle, CArray<dll_ex
 	}
 #endif
 	// Set the function pointers
-	for(Uint32 i = 0; i < destArray.size(); i++)
+	for(UInt32 i = 0; i < destArray.size(); i++)
 	{
 		destArray[i].functionptr = SDL_LoadFunction(pDLLHandle, destArray[i].functionname.c_str());
 		if(destArray[i].functionptr == nullptr)
@@ -974,12 +974,12 @@ void Sys_Poll( void )
 // 
 // @param frametime Time elapsed since last frame
 //=============================================
-void Sys_Frame( Double frametime )
+void Sys_Frame( double frametime )
 {
 	// The basic layout I recreated to match what
 	// Quake 1 had. This is one of the first things
 	// I wrote for the engine.
-	Double _frametime = frametime;
+	double _frametime = frametime;
 	if(_frametime < 0 || _frametime > 1)
 		_frametime = 0;
 
@@ -1112,7 +1112,7 @@ Int32 Sys_Main( CArray<CString>* argsArray )
 	}
 
 	// Get current time
-	Double oldTime = Sys_FloatTime();
+	double oldTime = Sys_FloatTime();
 
 	// Run the main loop
 	while(!Sys_ShouldExit())
@@ -1121,11 +1121,11 @@ Int32 Sys_Main( CArray<CString>* argsArray )
 		Sys_PollEvents();
 
 		// Get current times
-		Double curTime = Sys_FloatTime();
-		Double frametime = curTime - oldTime;
+		double curTime = Sys_FloatTime();
+		double frametime = curTime - oldTime;
 
 		// Limit minimum FPS to 0.5 frames per second
-		Double fpsMax = Sys_GetFPSLimit();
+		double fpsMax = Sys_GetFPSLimit();
 		if(fpsMax < 0.5)
 			fpsMax = 0.5;
 

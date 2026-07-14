@@ -14,11 +14,11 @@ All Rights Reserved.
 #include "input.h"
 
 // Maximum text lifetime
-const Float CSayText::SAYTEXT_LIFETIME = 15;
+const float CSayText::SAYTEXT_LIFETIME = 15;
 // Fade duration for each line
-const Float CSayText::SAYTEXT_FADETIME = 1.0;
+const float CSayText::SAYTEXT_FADETIME = 1.0;
 // Screen text text schema name
-const Char CSayText::TEXTSCHEME_FILENAME[] = "saytext";
+const char CSayText::TEXTSCHEME_FILENAME[] = "saytext";
 
 // Object definition
 CSayText gSayText;
@@ -80,7 +80,7 @@ void CSayText::Shutdown( void )
 //====================================
 bool CSayText::InitGL( void )
 {
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	m_pFont = cl_engfuncs.pfnGetResolutionSchemaFontSet(TEXTSCHEME_FILENAME, screenHeight);
@@ -122,7 +122,7 @@ void CSayText::ClearGame( void )
 //====================================
 //
 //====================================
-void CSayText::AddText( const Char* pstrPlayerName, const Char* pstrText )
+void CSayText::AddText( const char* pstrPlayerName, const char* pstrText )
 {
 	if(!pstrPlayerName || pstrPlayerName[0] == '\0' || !pstrText || pstrText[0] == '\0')
 		return;
@@ -143,19 +143,19 @@ bool CSayText::DrawSayText( void )
 	if(m_sayTextList.empty() && !m_isInInputMode)
 		return true;
 
-	Uint32 scrwidth, scrheight;
+	UInt32 scrwidth, scrheight;
 	cl_renderfuncs.pfnGetScreenSize(scrwidth, scrheight);
 
-	Uint32 xcoord = scrwidth * 0.05;
-	Uint32 ycoord = scrheight * 0.75;
-	Uint32 ycoordbase = ycoord;
+	UInt32 xcoord = scrwidth * 0.05;
+	UInt32 ycoord = scrheight * 0.75;
+	UInt32 ycoordbase = ycoord;
 
-	Uint32 maxwidth = scrwidth * 0.4;
-	Uint32 maxheight = scrheight * 0.5;
-	Uint32 totalheight = 0;
+	UInt32 maxwidth = scrwidth * 0.4;
+	UInt32 maxheight = scrheight * 0.5;
+	UInt32 totalheight = 0;
 
 	// Get time
-	Double time = cl_engfuncs.pfnGetClientTime();
+	double time = cl_engfuncs.pfnGetClientTime();
 
 	// Draw last-to-first
 	m_sayTextList.begin();
@@ -164,7 +164,7 @@ bool CSayText::DrawSayText( void )
 		saytextinfo_t& text = m_sayTextList.get();
 
 		// Remove old text
-		Float alpha = 1.0;
+		float alpha = 1.0;
 		if((text.die - SAYTEXT_FADETIME) < time)
 			alpha = 1.0 - ((time - (text.die - SAYTEXT_FADETIME))/SAYTEXT_FADETIME);
 
@@ -178,17 +178,17 @@ bool CSayText::DrawSayText( void )
 			continue;
 		}
 
-		Uint32 textwidth = 0;
-		Uint32 textheight = m_pFont->fontsize;
+		UInt32 textwidth = 0;
+		UInt32 textheight = m_pFont->fontsize;
 
 		CString playernamestring;
 		playernamestring << text.playername << ": ";
 
-		Uint32 namestringlength = 0;
-		const Char* pstr = playernamestring.c_str();
+		UInt32 namestringlength = 0;
+		const char* pstr = playernamestring.c_str();
 		while(*pstr)
 		{
-			Uint32 glyphwidth = m_pFont->glyphs[*pstr].advancex;
+			UInt32 glyphwidth = m_pFont->glyphs[*pstr].advancex;
 			pstr++;
 
 			if(textwidth + glyphwidth > maxwidth)
@@ -205,7 +205,7 @@ bool CSayText::DrawSayText( void )
 		pstr = text.message.c_str();
 		while(*pstr)
 		{
-			Uint32 glyphwidth = m_pFont->glyphs[*pstr].advancex;
+			UInt32 glyphwidth = m_pFont->glyphs[*pstr].advancex;
 			pstr++;
 
 			if(textwidth + glyphwidth > maxwidth)
@@ -296,7 +296,7 @@ void CSayText::KeyEvent( Int32 button, Int16 mod, bool keyDown )
 	if(sdlKeycode >= SDLK_SPACE && sdlKeycode <= SDLK_z)
 	{
 		// Shift if needed
-		Char inputChar = (Char)sdlKeycode;
+		char inputChar = (char)sdlKeycode;
 		if(mod & KMOD_SHIFT)
 			inputChar = Common::GetShiftedChar(inputChar);
 

@@ -53,11 +53,11 @@ bool CEnvSetBody::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvSetBody::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSetBody::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool isFirst = false;
 	edict_t* pedict = nullptr;
-	const Char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
 
 	while(true)
 	{

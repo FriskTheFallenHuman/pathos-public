@@ -19,7 +19,7 @@ All Rights Reserved.
 #include "com_math.h"
 
 // View model default FOV value
-const Uint32 CViewModel::VIEWMODEL_DEFAULT_FOV_VALUE = 75;
+const UInt32 CViewModel::VIEWMODEL_DEFAULT_FOV_VALUE = 75;
 
 // Class definition
 CViewModel gViewModel;
@@ -154,14 +154,14 @@ void  CViewModel::Think ( void )
 	if(m_viewModelEntity.pmodel)
 		m_viewModelEntity.curstate.modelindex = m_viewModelEntity.pmodel->cacheindex;
 
-	Double time = cl_engfuncs.pfnGetClientTime();
+	double time = cl_engfuncs.pfnGetClientTime();
 
 	// Change sequence if requested
 	if(m_bUpdateSequence)
 	{
 		if(m_bBlendSequence && !m_bForceDontBlend)
 		{
-			for(Uint32 i = 0; i < MAX_BLENDING; i++)
+			for(UInt32 i = 0; i < MAX_BLENDING; i++)
 				m_viewModelEntity.latched.prevseqblending[i] = m_viewModelEntity.curstate.blending[i];
 
 			m_viewModelEntity.latched.sequence = m_viewModelEntity.curstate.sequence;
@@ -246,8 +246,8 @@ bool CViewModel::Draw ( void )
 
 	CMatrix& projection = cl_renderfuncs.pfnGetProjectionMatrix();
 
-	Uint32 currentFOV = gDefaultView.GetFOV();
-	Uint32 vmFovValue = m_pCvarViewModelFOV->GetValue()*(currentFOV/m_pCvarReferenceFOV->GetValue());
+	UInt32 currentFOV = gDefaultView.GetFOV();
+	UInt32 vmFovValue = m_pCvarViewModelFOV->GetValue()*(currentFOV/m_pCvarReferenceFOV->GetValue());
 
 	// Set up a projection matrix for view model fox
 	projection.PushMatrix();
@@ -282,7 +282,7 @@ bool CViewModel::Draw ( void )
 //====================================
 //
 //====================================
-void CViewModel::ProcessMessage( const byte* pdata, Uint32 msgsize )
+void CViewModel::ProcessMessage( const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
@@ -304,7 +304,7 @@ void CViewModel::ProcessMessage( const byte* pdata, Uint32 msgsize )
 	case VMODEL_SET_MODEL:
 		{
 			// Read model name
-			const Char* pstrmodelname = reader.ReadString();
+			const char* pstrmodelname = reader.ReadString();
 			if(!pstrmodelname || !qstrlen(pstrmodelname))
 			{
 				m_idealModel.clear();

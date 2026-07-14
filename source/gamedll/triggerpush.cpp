@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "triggerpush.h"
 
 // Default speed
-const Float CTriggerPush::DEFAULT_SPEED = 100;
+const float CTriggerPush::DEFAULT_SPEED = 100;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(trigger_push, CTriggerPush);
@@ -82,7 +82,7 @@ bool CTriggerPush::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerPush::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerPush::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{

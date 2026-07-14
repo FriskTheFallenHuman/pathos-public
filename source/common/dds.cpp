@@ -21,22 +21,22 @@ All Rights Reserved.
 // @param bpp Reference to texture bit depth variable
 // @param size Reference to data size variable
 // @param compression Reference to texture compression variable
-// @return TRUE if successfully loaded, FALSE otherwise
+// @return true if successfully loaded, false otherwise
 //=============================================
-bool DDS_Load( const Char* pstrFilename, const byte* pfile, byte*& pdata, Uint32& width, Uint32& height, Uint32& bpp, Uint32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn )
+bool DDS_Load( const char* pstrFilename, const Byte* pfile, Byte*& pdata, UInt32& width, UInt32& height, UInt32& bpp, UInt32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn )
 {
 	const dds_header_t *pDDSHeader = reinterpret_cast<const dds_header_t*>(pfile);
 
 	// Read information
-	const Uint32 ddsFlags = Common::ByteToUint32(pDDSHeader->bFlags);
-	const Uint32 ddsMagic = Common::ByteToUint32(pDDSHeader->bMagic);
-	const Uint32 ddsFourCC = Common::ByteToUint32(pDDSHeader->bPFFourCC);
-	const Uint32 ddsPFFlags = Common::ByteToUint32(pDDSHeader->bPFFlags);
-	const Uint32 ddsLinSize = Common::ByteToUint32(pDDSHeader->bPitchOrLinearSize);
-	const Uint32 ddsSize = Common::ByteToUint32(pDDSHeader->bSize);
+	const UInt32 ddsFlags = Common::ByteToUint32(pDDSHeader->bFlags);
+	const UInt32 ddsMagic = Common::ByteToUint32(pDDSHeader->bMagic);
+	const UInt32 ddsFourCC = Common::ByteToUint32(pDDSHeader->bPFFourCC);
+	const UInt32 ddsPFFlags = Common::ByteToUint32(pDDSHeader->bPFFlags);
+	const UInt32 ddsLinSize = Common::ByteToUint32(pDDSHeader->bPitchOrLinearSize);
+	const UInt32 ddsSize = Common::ByteToUint32(pDDSHeader->bSize);
 
-	const Uint32 ddsWidth = Common::ByteToUint32(pDDSHeader->bWidth);
-	const Uint32 ddsHeight = Common::ByteToUint32(pDDSHeader->bHeight);
+	const UInt32 ddsWidth = Common::ByteToUint32(pDDSHeader->bWidth);
+	const UInt32 ddsHeight = Common::ByteToUint32(pDDSHeader->bHeight);
 
 	if(ddsMagic != DDS_MAGIC || ddsSize != 124 || !(ddsFlags & DDSD_PIXELFORMAT)
 		|| !(ddsFlags & DDSD_CAPS) || !(ddsPFFlags & DDPF_FOURCC))
@@ -45,11 +45,11 @@ bool DDS_Load( const Char* pstrFilename, const byte* pfile, byte*& pdata, Uint32
 		return false;
 	}
 
-	if(ddsFourCC == D3DFMT_DXT1)
+	if(ddsFourCC == static_cast<UInt32>(D3DFMT_DXT1))
 	{
 		compression = TX_COMPRESSION_DXT1;
 	}
-	else if(ddsFourCC == D3DFMT_DXT5)
+	else if(ddsFourCC == static_cast<UInt32>(D3DFMT_DXT5))
 	{
 		compression = TX_COMPRESSION_DXT5;
 	}
@@ -66,7 +66,7 @@ bool DDS_Load( const Char* pstrFilename, const byte* pfile, byte*& pdata, Uint32
 	bpp = 4;
 
 	// Copy data
-	pdata = new byte[ddsLinSize];
+	pdata = new Byte[ddsLinSize];
 	memcpy(pdata, (pfile + DDS_DATA_OFFSET), ddsLinSize);
 
 	return true;

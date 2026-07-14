@@ -116,30 +116,30 @@ CCVar* g_pCvarLightmapPadding = nullptr;
 CCVar* g_pCvarBicubicLightmaps = nullptr;
 
 // Caustics texture list file path
-static const Char CAUSTICS_TEXTURE_FILE_PATH[] = "textures/general/caustics_textures.txt";
+static const char CAUSTICS_TEXTURE_FILE_PATH[] = "textures/general/caustics_textures.txt";
 // Projective texture list file path
-static const Char PROJECTIVE_TEXTURE_FILE_PATH[] = "textures/general/projective_textures.txt";
+static const char PROJECTIVE_TEXTURE_FILE_PATH[] = "textures/general/projective_textures.txt";
 // Path for the rotating lights sprite
-static const Char ROTATING_LIGHT_SPRITE_PATH[] = "sprites/emerg_flare.spr";
+static const char ROTATING_LIGHT_SPRITE_PATH[] = "sprites/emerg_flare.spr";
 
 // Reference width for the logo text
-static constexpr Uint32 LOAD_TEXT_BASE_WIDTH = 512;
+static constexpr UInt32 LOAD_TEXT_BASE_WIDTH = 512;
 // Reference width for the logo text
-static constexpr Uint32 LOAD_TEXT_BASE_HEIGHT = 128;
+static constexpr UInt32 LOAD_TEXT_BASE_HEIGHT = 128;
 
 // Reference width for the logo text
-static constexpr Uint32 PAUSED_TEXT_BASE_WIDTH = 512;
+static constexpr UInt32 PAUSED_TEXT_BASE_WIDTH = 512;
 // Reference width for the logo text
-static constexpr Uint32 PAUSED_TEXT_BASE_HEIGHT = 128;
+static constexpr UInt32 PAUSED_TEXT_BASE_HEIGHT = 128;
 
 // Max extensions per line
-static constexpr Uint32 MAX_EXTENSIONS_PER_LINE = 6;
+static constexpr UInt32 MAX_EXTENSIONS_PER_LINE = 6;
 
 // Max active-load shaders per frame
-static constexpr Uint32 MAX_ACTIVELOAD_SHADERS = 4;
+static constexpr UInt32 MAX_ACTIVELOAD_SHADERS = 4;
 
 // Max timings on time graph
-static constexpr Uint32 MAX_TIMINGS = 400;
+static constexpr UInt32 MAX_TIMINGS = 400;
 
 // Holds rendering related information
 renderer_state_t rns;
@@ -374,10 +374,10 @@ void R_Shutdown( void )
 // @brief
 //
 //=============================================
-bool R_LoadTextureListFile( const Char* pstrTextureListFile, CArray<en_texture_t*>& texArray, rs_level_t level, const GLint* pborder, bool clamp )
+bool R_LoadTextureListFile( const char* pstrTextureListFile, CArray<en_texture_t*>& texArray, rs_level_t level, const GLint* pborder, bool clamp )
 {
-	Uint32 filesize = 0;
-	const byte* pfile = FL_LoadFile(pstrTextureListFile, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = FL_LoadFile(pstrTextureListFile, &filesize);
 	if(!pfile)
 	{
 		Con_WPrintf("Failed to load '%s'.\n", pstrTextureListFile);
@@ -385,8 +385,8 @@ bool R_LoadTextureListFile( const Char* pstrTextureListFile, CArray<en_texture_t
 	}
 
 	// Read opening bracket
-	Char token[MAX_PARSE_LENGTH];
-	const Char* pstr = Common::Parse(reinterpret_cast<const Char*>(pfile), token);
+	char token[MAX_PARSE_LENGTH];
+	const char* pstr = Common::Parse(reinterpret_cast<const char*>(pfile), token);
 	if(qstrcmp(token, "{"))
 	{
 		Con_WPrintf("%s - Expected '{', got '%s' instead in '%s'.\n", __FUNCTION__, token, pstrTextureListFile);
@@ -410,7 +410,7 @@ bool R_LoadTextureListFile( const Char* pstrTextureListFile, CArray<en_texture_t
 		pstr = Common::ReadLine(pstr, linestr);
 
 		// Read in next token
-		const Char* plinestr = Common::Parse(linestr.c_str(), token);
+		const char* plinestr = Common::Parse(linestr.c_str(), token);
 		if(!qstrcmp(token, "}"))
 			break;
 
@@ -491,7 +491,7 @@ void R_LoadTextures( void )
 // @f]
 //====================================
 template<typename _Float>
-constexpr std::enable_if_t<std::is_floating_point_v<_Float>, _Float>
+constexpr typename std::enable_if<std::is_floating_point<_Float>::value, _Float>::type
 lerp(_Float __a, _Float __b, _Float __t)
 {
 	if (std::isnan(__a) || std::isnan(__b) || std::isnan(__t))
@@ -542,11 +542,11 @@ bool R_InitGL( void )
 		else
 			loadstage = DAYSTAGE_NORMAL_RESTORE;
 
-		byte* plmapdatapointers[NB_SURF_LIGHTMAP_LAYERS] = {nullptr};
-		byte* pvertexlightdatapointers[NB_BAKED_VERTEXLIGHT_LAYERS] = {nullptr};
+		Byte* plmapdatapointers[NB_SURF_LIGHTMAP_LAYERS] = {nullptr};
+		Byte* pvertexlightdatapointers[NB_BAKED_VERTEXLIGHT_LAYERS] = {nullptr};
 		if(ALD_Load(loadstage, plmapdatapointers, pvertexlightdatapointers))
 		{
-			for(Uint32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
+			for(UInt32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
 			{
 				// All data was successfully set, so release original data
 				if (ens.pworld->plightdata[i])
@@ -555,7 +555,7 @@ bool R_InitGL( void )
 				ens.pworld->plightdata[i] = reinterpret_cast<color24_t*>(plmapdatapointers[i]);
 			}
 
-			for(Uint32 i = 0; i < NB_BAKED_VERTEXLIGHT_LAYERS; i++)
+			for(UInt32 i = 0; i < NB_BAKED_VERTEXLIGHT_LAYERS; i++)
 			{
 				// All data was successfully set, so release original data
 				if (ens.pworld->pvertexlightdata[i])
@@ -700,8 +700,8 @@ bool R_InitGL( void )
 	// - Use '#define IMGUI_ENABLE_FREETYPE' in your imconfig file to use FreeType for higher quality font rendering.
 	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
 	// - Our Emscripten build process allows embedding fonts to be accessible at runtime from the "fonts/" folder. See Makefile.emscripten for details.
-	Uint32 fontFileSize = 0;
-	const byte* pFontData = FL_LoadFile("resources/fonts/InterDisplay-Bold.ttf", &fontFileSize);
+	UInt32 fontFileSize = 0;
+	const Byte* pFontData = FL_LoadFile("resources/fonts/InterDisplay-Bold.ttf", &fontFileSize);
 	if(pFontData && fontFileSize > 0)
 	{
 		// IM_ALLOC so ImGui can IM_FREE it when the atlas is destroyed
@@ -709,7 +709,7 @@ bool R_InitGL( void )
 		memcpy(pImBuf, pFontData, fontFileSize);
 		FL_FreeFile(pFontData);
 
-		Float fontSize = static_cast<Float>(R_GetRelativeY(14, CMenu::MENU_BASE_HEIGHT, gWindow.GetHeight()));
+		float fontSize = static_cast<float>(R_GetRelativeY(14, CMenu::MENU_BASE_HEIGHT, gWindow.GetHeight()));
 		io.Fonts->AddFontFromMemoryTTF(pImBuf, static_cast<Int32>(fontFileSize), fontSize);
 	}
 	else
@@ -987,7 +987,7 @@ bool R_LoadResources( void )
 bool R_InitGame( void )
 {
 	// Mark begin time
-	Double initbegintime = Sys_FloatTime();
+	double initbegintime = Sys_FloatTime();
 
 	// Load renderer resources
 	if(!R_LoadResources())
@@ -999,22 +999,22 @@ bool R_InitGame( void )
 	// Allocate vis buffer
 	if(!rns.pvisbuffer)
 	{
-		rns.pvisbuffer = new byte[ens.visbuffersize];
-		memset(rns.pvisbuffer, 0, sizeof(byte)*ens.visbuffersize);
+		rns.pvisbuffer = new Byte[ens.visbuffersize];
+		memset(rns.pvisbuffer, 0, sizeof(Byte)*ens.visbuffersize);
 	}
 
 	// Allocate secondary vis buffer
 	if(!rns.psecondaryvisbuffer)
 	{
-		rns.psecondaryvisbuffer = new byte[ens.visbuffersize];
-		memset(rns.psecondaryvisbuffer, 0, sizeof(byte)*ens.visbuffersize);
+		rns.psecondaryvisbuffer = new Byte[ens.visbuffersize];
+		memset(rns.psecondaryvisbuffer, 0, sizeof(Byte)*ens.visbuffersize);
 	}
 
 	// Set this as true
 	rns.isgameready = true;
 
 	// Print load time
-	Double loadtime = Sys_FloatTime() - initbegintime;
+	double loadtime = Sys_FloatTime() - initbegintime;
 	Con_DPrintf("Renderer setup time: %.2f seconds.\n", loadtime);
 
 	// Reset this
@@ -1109,7 +1109,7 @@ void R_PopulateExtensionsArray( void )
 
 	// Keep a max of 6 extensions per line
 	CString line;
-	Uint32 numonline = 0;
+	UInt32 numonline = 0;
 
 	if(ens.pgllogfile)
 		ens.pgllogfile->Printf("OpenGL Extensions:\n");
@@ -1123,7 +1123,7 @@ void R_PopulateExtensionsArray( void )
 		rns.glextensions.reserve(numExtensions);
 		for(Int32 i = 0; i < numExtensions; i++)
 		{
-			const Char* pstrExtension = reinterpret_cast<const Char*>(gGLExtF.glGetStringi(GL_EXTENSIONS, i));
+			const char* pstrExtension = reinterpret_cast<const char*>(gGLExtF.glGetStringi(GL_EXTENSIONS, i));
 			rns.glextensions.push_back(pstrExtension);
 
 			// If we have a gl log file, print all extensions
@@ -1147,8 +1147,8 @@ void R_PopulateExtensionsArray( void )
 	}
 	else
 	{
-		const Char* pstrExtensions = reinterpret_cast<const Char*>(glGetString(GL_EXTENSIONS));
-		const Char* pstr = pstrExtensions;
+		const char* pstrExtensions = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
+		const char* pstr = pstrExtensions;
 
 		// Reserve enough so we don't waste time resizing each time
 		rns.glextensions.reserve(8192);
@@ -1189,9 +1189,9 @@ void R_PopulateExtensionsArray( void )
 // @brief
 //
 //=============================================
-bool R_IsExtensionSupported( const Char *pstrextension )
+bool R_IsExtensionSupported( const char *pstrextension )
 {
-	for(Uint32 i = 0; i < rns.glextensions.size(); i++)
+	for(UInt32 i = 0; i < rns.glextensions.size(); i++)
 	{
 		if(!qstrcmp(rns.glextensions[i], pstrextension))
 			return true;
@@ -1203,7 +1203,7 @@ bool R_IsExtensionSupported( const Char *pstrextension )
 //====================================
 //
 //====================================
-void R_Bind2DTexture( Int32 texture, Uint32 id, bool force )
+void R_Bind2DTexture( Int32 texture, UInt32 id, bool force )
 {
 	Int32 idx = texture - GL_TEXTURE0;
 	assert(idx < MAX_BOUND_TEXTURES);
@@ -1220,7 +1220,7 @@ void R_Bind2DTexture( Int32 texture, Uint32 id, bool force )
 //====================================
 //
 //====================================
-void R_BindCubemapTexture( Int32 texture, Uint32 id, bool force )
+void R_BindCubemapTexture( Int32 texture, UInt32 id, bool force )
 {
 	Int32 idx = texture - GL_TEXTURE0;
 	assert(idx < MAX_BOUND_TEXTURES);
@@ -1237,7 +1237,7 @@ void R_BindCubemapTexture( Int32 texture, Uint32 id, bool force )
 //====================================
 //
 //====================================
-void R_BindRectangleTexture( Int32 texture, Uint32 id, bool force )
+void R_BindRectangleTexture( Int32 texture, UInt32 id, bool force )
 {
 	Int32 idx = texture - GL_TEXTURE0;
 	assert(idx < MAX_BOUND_TEXTURES);
@@ -1254,11 +1254,11 @@ void R_BindRectangleTexture( Int32 texture, Uint32 id, bool force )
 //====================================
 //
 //====================================
-void R_ClearBinds( Uint32 firstUnit )
+void R_ClearBinds( UInt32 firstUnit )
 {
 	assert(firstUnit < MAX_BOUND_TEXTURES);
 
-	for(Uint32 i = firstUnit; i < MAX_BOUND_TEXTURES; i++)
+	for(UInt32 i = firstUnit; i < MAX_BOUND_TEXTURES; i++)
 	{
 		if(rns.textures.texturebinds_2d[i] != 0)
 		{
@@ -1269,7 +1269,7 @@ void R_ClearBinds( Uint32 firstUnit )
 		rns.textures.texturebinds_2d[i] = 0;
 	}
 
-	for(Uint32 i = firstUnit; i < MAX_BOUND_TEXTURES; i++)
+	for(UInt32 i = firstUnit; i < MAX_BOUND_TEXTURES; i++)
 	{
 		if(rns.textures.texturebinds_cube[i] != 0)
 		{
@@ -1280,7 +1280,7 @@ void R_ClearBinds( Uint32 firstUnit )
 		rns.textures.texturebinds_cube[i] = 0;
 	}
 
-	for(Uint32 i = firstUnit; i < MAX_BOUND_TEXTURES; i++)
+	for(UInt32 i = firstUnit; i < MAX_BOUND_TEXTURES; i++)
 	{
 		if(rns.textures.texturebinds_rect[i] != 0)
 		{
@@ -1394,7 +1394,7 @@ void R_SetupView( const ref_params_t& params )
 //====================================
 //
 //====================================
-void R_SetProjectionMatrix( Float znear, Float fovY )
+void R_SetProjectionMatrix( float znear, float fovY )
 {
 	// Set in renderer info structure
 	rns.view.znear = znear;
@@ -1406,13 +1406,13 @@ void R_SetProjectionMatrix( Float znear, Float fovY )
 	else
 		rns.view.zfar = g_pCvarFarZ->GetValue();
 
-	Float ratio = static_cast<Float>(rns.view.viewsize_x)/static_cast<Float>(rns.view.viewsize_y);
-	Float fovX = GetXFOVFromY(fovY, ratio * 0.75f);
+	float ratio = static_cast<float>(rns.view.viewsize_x)/static_cast<float>(rns.view.viewsize_y);
+	float fovX = GetXFOVFromY(fovY, ratio * 0.75f);
 
-	Float width = 2*rns.view.znear*SDL_tan(fovX*M_PI/360.0f);
-	Float height = width/ratio;
+	float width = 2*rns.view.znear*SDL_tan(fovX*M_PI/360.0f);
+	float height = width/ratio;
 
-	static Float matrix[16];
+	static float matrix[16];
 	matrix[0] = 2*rns.view.znear/width;
 	matrix[1] = matrix[2] = matrix[3] = matrix[4] = 0.0;
 	matrix[5] = 2*rns.view.znear/height;
@@ -1456,11 +1456,11 @@ void R_MarkLeaves( const Vector& origin )
 	rns.view.pviewleaf = Mod_PointInLeaf(origin, *pworld);
 	rns.visframe++;
 
-	byte* pvsdata = rns.pvisbuffer;
+	Byte* pvsdata = rns.pvisbuffer;
 	Mod_LeafPVS(pvsdata, ens.visbuffersize, (*rns.view.pviewleaf), (*ens.pworld));
 
 	// Mark any visible leaves
-	for(Uint32 i = 0; i < ens.pworld->numleafs; i++)
+	for(UInt32 i = 0; i < ens.pworld->numleafs; i++)
 	{
 		if(pvsdata[i>>3] & (1<<(i&7)))
 		{
@@ -1481,9 +1481,9 @@ void R_MarkLeaves( const Vector& origin )
 //====================================
 //
 //====================================
-void R_ForceMarkLeaves( const mleaf_t* pleaf, Int32 visframe, byte *pvsdata )
+void R_ForceMarkLeaves( const mleaf_t* pleaf, Int32 visframe, Byte *pvsdata )
 {
-	byte* _pvsdata = pvsdata;
+	Byte* _pvsdata = pvsdata;
 	if(!_pvsdata)
 	{
 		_pvsdata = rns.psecondaryvisbuffer;
@@ -1491,7 +1491,7 @@ void R_ForceMarkLeaves( const mleaf_t* pleaf, Int32 visframe, byte *pvsdata )
 	}
 
 	// Mark any visible leaves
-	for(Uint32 i = 0; i < ens.pworld->numleafs-1; i++)
+	for(UInt32 i = 0; i < ens.pworld->numleafs-1; i++)
 	{
 		if(_pvsdata[i>>3] & (1<<(i&7)))
 		{
@@ -1521,14 +1521,14 @@ void R_Ent_ModelLight( cl_entity_t *pentity )
 	rns.objects.nummodellights++;
 
 	mlight->entindex = pentity->entindex;
-	mlight->color.x	= static_cast<Float>(pentity->curstate.rendercolor.x)/255;
-	mlight->color.y	= static_cast<Float>(pentity->curstate.rendercolor.y)/255;
-	mlight->color.z	= static_cast<Float>(pentity->curstate.rendercolor.z)/255;
+	mlight->color.x	= static_cast<float>(pentity->curstate.rendercolor.x)/255;
+	mlight->color.y	= static_cast<float>(pentity->curstate.rendercolor.y)/255;
+	mlight->color.z	= static_cast<float>(pentity->curstate.rendercolor.z)/255;
 	mlight->radius = pentity->curstate.renderamt*ENV_ELIGHT_RADIUS_MULTIPLIER*g_pCvarModelLightMultiplier->GetValue();
 	mlight->noblend = pentity->curstate.velocity.IsZero() ? false : true;
 
 	Math::VectorCopy(pentity->curstate.origin, mlight->origin);
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		mlight->mins[i] = mlight->origin[i] - mlight->radius;
 		mlight->maxs[i] = mlight->origin[i] + mlight->radius;
@@ -1545,11 +1545,11 @@ void R_Ent_DynamicLight( cl_entity_t *pentity )
 	cl_dlight_t *pdlight = gDynamicLights.AllocDynamicPointLight(pentity->entindex, 0, isstatic, noshadow, pentity);
 
 	pdlight->origin = pentity->curstate.origin;
-	pdlight->color.x = static_cast<Float>(pentity->curstate.rendercolor.x)/255.0f;
-	pdlight->color.y = static_cast<Float>(pentity->curstate.rendercolor.y)/255.0f;
-	pdlight->color.z = static_cast<Float>(pentity->curstate.rendercolor.z)/255.0f;
+	pdlight->color.x = static_cast<float>(pentity->curstate.rendercolor.x)/255.0f;
+	pdlight->color.y = static_cast<float>(pentity->curstate.rendercolor.y)/255.0f;
+	pdlight->color.z = static_cast<float>(pentity->curstate.rendercolor.z)/255.0f;
 	pdlight->radius = pentity->curstate.renderamt;
-	pdlight->lightstyle = static_cast<Uint32>(pentity->curstate.frame);
+	pdlight->lightstyle = static_cast<UInt32>(pentity->curstate.frame);
 	pdlight->lastframe = rns.framecount_main;
 	pdlight->die = -1;
 
@@ -1576,13 +1576,13 @@ void R_Ent_Spotlight( cl_entity_t *pentity )
 
 	pdlight->angles = pentity->curstate.angles;
 	pdlight->origin = pentity->curstate.origin;
-	pdlight->color.x = static_cast<Float>(pentity->curstate.rendercolor.x)/255.0f;
-	pdlight->color.y = static_cast<Float>(pentity->curstate.rendercolor.y)/255.0f;
-	pdlight->color.z = static_cast<Float>(pentity->curstate.rendercolor.z)/255.0f;
+	pdlight->color.x = static_cast<float>(pentity->curstate.rendercolor.x)/255.0f;
+	pdlight->color.y = static_cast<float>(pentity->curstate.rendercolor.y)/255.0f;
+	pdlight->color.z = static_cast<float>(pentity->curstate.rendercolor.z)/255.0f;
 	pdlight->radius = pentity->curstate.renderamt;
 	pdlight->cone_size = pentity->curstate.scale;
 	pdlight->textureindex = pentity->curstate.body;
-	pdlight->lightstyle = static_cast<Uint32>(pentity->curstate.frame);
+	pdlight->lightstyle = static_cast<UInt32>(pentity->curstate.frame);
 	pdlight->lastframe = rns.framecount_main;
 	pdlight->die = -1;
 
@@ -1599,8 +1599,8 @@ void R_Ent_RotLight( cl_entity_t *pentity )
 {
 	gVBMRenderer.UpdateAttachments(pentity);
 
-	Float radius = 600;
-	Float cone_size = 90;
+	float radius = 600;
+	float cone_size = 90;
 
 	bool noshadow = false;
 	if(pentity->curstate.renderfx == RenderFx_RotlightNS)
@@ -1640,9 +1640,9 @@ void R_Ent_RotLight( cl_entity_t *pentity )
 	}
 	else
 	{
-		dlight1->color.x = static_cast<Float>(pentity->curstate.rendercolor.x)/255.0f;
-		dlight1->color.y = static_cast<Float>(pentity->curstate.rendercolor.y)/255.0f;
-		dlight1->color.z = static_cast<Float>(pentity->curstate.rendercolor.z)/255.0f;
+		dlight1->color.x = static_cast<float>(pentity->curstate.rendercolor.x)/255.0f;
+		dlight1->color.y = static_cast<float>(pentity->curstate.rendercolor.y)/255.0f;
+		dlight1->color.z = static_cast<float>(pentity->curstate.rendercolor.z)/255.0f;
 	}
 
 	angles = Math::VectorToAngles(vback, vright);
@@ -1665,9 +1665,9 @@ void R_Ent_RotLight( cl_entity_t *pentity )
 	}
 	else
 	{
-		dlight2->color.x = static_cast<Float>(pentity->curstate.rendercolor.x)/255.0f;
-		dlight2->color.y = static_cast<Float>(pentity->curstate.rendercolor.y)/255.0f;
-		dlight2->color.z = static_cast<Float>(pentity->curstate.rendercolor.z)/255.0f;
+		dlight2->color.x = static_cast<float>(pentity->curstate.rendercolor.x)/255.0f;
+		dlight2->color.y = static_cast<float>(pentity->curstate.rendercolor.y)/255.0f;
+		dlight2->color.z = static_cast<float>(pentity->curstate.rendercolor.z)/255.0f;
 	}
 
 	// Allocate the sprites
@@ -1718,7 +1718,7 @@ void R_Ent_RotLight( cl_entity_t *pentity )
 		Math::VectorCopy( dlight1->color, pmlight1->color );
 		pmlight1->radius = 128;
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			pmlight1->mins[i] = pmlight1->origin[i] - pmlight1->radius;
 			pmlight1->maxs[i] = pmlight1->origin[i] + pmlight1->radius;
@@ -1732,7 +1732,7 @@ void R_Ent_RotLight( cl_entity_t *pentity )
 		Math::VectorCopy( dlight2->color, pmlight2->color );
 		pmlight2->radius = pmlight1->radius;
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			pmlight2->mins[i] = pmlight2->origin[i] - pmlight2->radius;
 			pmlight2->maxs[i] = pmlight2->origin[i] + pmlight2->radius;
@@ -1778,8 +1778,8 @@ void R_Ent_Monitor( cl_entity_t *pentity )
 				entity_extrainfo_t* pcamerainfo = CL_GetEntityExtraData(pcamerantity);
 				if(!pcamerainfo->ppvsdata)
 				{
-					Uint32 bufsize = ens.visbuffersize;
-					pcamerainfo->ppvsdata = new byte[bufsize];
+					UInt32 bufsize = ens.visbuffersize;
+					pcamerainfo->ppvsdata = new Byte[bufsize];
 
 					const mleaf_t* pleaf = Mod_PointInLeaf(pcamerantity->curstate.origin, (*ens.pworld));
 					Mod_LeafPVS(pcamerainfo->ppvsdata, bufsize, (*pleaf), (*ens.pworld));
@@ -1811,8 +1811,8 @@ void R_Ent_Portal( cl_entity_t *pentity )
 				entity_extrainfo_t* pportalinfo = CL_GetEntityExtraData(pportalentity);
 				if(!pportalinfo->ppvsdata)
 				{
-					Uint32 bufsize = ens.visbuffersize;
-					pportalinfo->ppvsdata = new byte[bufsize];
+					UInt32 bufsize = ens.visbuffersize;
+					pportalinfo->ppvsdata = new Byte[bufsize];
 
 					const mleaf_t* pleaf = Mod_PointInLeaf(pportalentity->curstate.origin, (*ens.pworld));
 					Mod_LeafPVS(pportalinfo->ppvsdata, bufsize, (*pleaf), (*ens.pworld));
@@ -1998,7 +1998,7 @@ void R_AddEntity( cl_entity_t* pentity )
 void R_AddEntityLights( void )
 {
 	// Add entity lights
-	for(Uint32 i = 0; i < MAX_ENTITY_LIGHTS; i++)
+	for(UInt32 i = 0; i < MAX_ENTITY_LIGHTS; i++)
 	{
 		const entitylight_t& el = cls.entitylights[i];
 		if(el.die < cls.cl_time)
@@ -2012,7 +2012,7 @@ void R_AddEntityLights( void )
 		ml.radius *= g_pCvarModelLightMultiplier->GetValue();
 
 		// Set mins/maxs
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			ml.mins[j] = ml.origin[j] - ml.radius;
 			ml.maxs[j] = ml.origin[j] + ml.radius;
@@ -2030,7 +2030,7 @@ void R_AddEntities( void )
 	if(!pplayer)
 		return;
 
-	for(Uint32 i = 1; i < MAX_RENDER_ENTITIES; i++)
+	for(UInt32 i = 1; i < MAX_RENDER_ENTITIES; i++)
 	{
 		cl_entity_t* pentity = CL_GetEntityByIndex(i);
 		if(!pentity)
@@ -2074,7 +2074,7 @@ bool R_DrawLogo( Int32 basewidth, Int32 baseheight )
 {
 	// Set matrices
 	rns.view.modelview.LoadIdentity();
-	rns.view.modelview.Scale(1.0/ static_cast<Float>(gWindow.GetWidth()), 1.0/ static_cast<Float>(gWindow.GetHeight()), 1.0);
+	rns.view.modelview.Scale(1.0/ static_cast<float>(gWindow.GetWidth()), 1.0/ static_cast<float>(gWindow.GetHeight()), 1.0);
 
 	rns.view.projection.LoadIdentity();
 	rns.view.projection.Ortho(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO, 0.1f, 100);
@@ -2091,13 +2091,13 @@ bool R_DrawLogo( Int32 basewidth, Int32 baseheight )
 
 	pDraw->Color4f(GL_ONE, GL_ONE, GL_ONE, GL_ONE);
 
-	Uint32 textWidth = 0;
-	Uint32 textHeight = 0;
+	UInt32 textWidth = 0;
+	UInt32 textHeight = 0;
 
 	const font_set_t* pfontset = gTextSchemas.GetResolutionSchemaFontSet(CMenu::MENU_TITLE_TEXT_SCHEMA, gWindow.GetHeight());
 	if(!pfontset)
 	{
-		Int32 idealFontSize = static_cast<Uint32>(R_GetRelativeY(CMenu::MENU_TITLE_FONTSIZE, CMenu::MENU_BASE_HEIGHT, gWindow.GetHeight()));
+		Int32 idealFontSize = static_cast<UInt32>(R_GetRelativeY(CMenu::MENU_TITLE_FONTSIZE, CMenu::MENU_BASE_HEIGHT, gWindow.GetHeight()));
 		pfontset = gText.LoadFont("InterDisplay-Bold.ttf", idealFontSize, true, nullptr, 2);
 	}
 
@@ -2105,7 +2105,7 @@ bool R_DrawLogo( Int32 basewidth, Int32 baseheight )
 
 	// Set the position off from the logo a bit
 	Int32 xpos = gWindow.GetWidth() / 2 - textWidth / 2;
-	Uint32 logoHeight = R_GetRelativeX(LOAD_TEXT_BASE_HEIGHT, CMenu::MENU_BASE_WIDTH, gWindow.GetWidth());
+	UInt32 logoHeight = R_GetRelativeX(LOAD_TEXT_BASE_HEIGHT, CMenu::MENU_BASE_WIDTH, gWindow.GetWidth());
 	Int32 ypos = gWindow.GetHeight() / 2 - R_GetRelativeX(logoHeight, CMenu::MENU_BASE_WIDTH, gWindow.GetWidth()) / 8.0f + pfontset->fontsize;
 
 	// Draw the string
@@ -2155,7 +2155,7 @@ bool R_DrawLoadingBackground( void )
 	pDraw->Color4f(GL_ONE, GL_ONE, GL_ONE, GL_ONE);
 	
 	// Draw the background
-	Float tcymod, tcscalex, tcscaley;
+	float tcymod, tcscalex, tcscaley;
 	if(!rns.isbgrectangletexture)
 	{
 		tcymod = 0.0;
@@ -2549,23 +2549,23 @@ void R_DrawTimeGraph( void )
 
 	if(ImGui::Begin("##timegraph", nullptr, timeFlags))
 	{
-		static Double lastFrameStart = 0;
-		static Float  timeHistory[MAX_TIMINGS] = {};
+		static double lastFrameStart = 0;
+		static float  timeHistory[MAX_TIMINGS] = {};
 		static Int32  timeHead = 0;
 
-		Double now = Sys_FloatTime();
-		Float  ms  = static_cast<Float>((now - lastFrameStart) * 1000.0);
+		double now = Sys_FloatTime();
+		float  ms  = static_cast<float>((now - lastFrameStart) * 1000.0);
 		lastFrameStart = now;
 
 		timeHistory[timeHead] = ms;
 		timeHead = (timeHead + 1) % MAX_TIMINGS;
 
-		Char overlayBuf[32];
+		char overlayBuf[32];
 		SDL_snprintf(overlayBuf, sizeof(overlayBuf), "%.2f ms", ms);
 		ImGui::PlotLines("##timegraph",
 			timeHistory, MAX_TIMINGS, timeHead,
 			overlayBuf, 0.0f, 50.0f,
-			ImVec2(static_cast<Float>(g_pCvarFPSGraphWidth->GetValue()), (g_pCvarGraphHeight->GetValue() * 2)));
+			ImVec2(static_cast<float>(g_pCvarFPSGraphWidth->GetValue()), (g_pCvarGraphHeight->GetValue() * 2)));
 	}
 	ImGui::End();
 }
@@ -2592,26 +2592,26 @@ void R_DrawFPSGraph( void )
 
 	if(ImGui::Begin("##fpsgraph", nullptr, fpsFlags))
 	{
-		static Float fpsHistory[MAX_TIMINGS] = {};
+		static float fpsHistory[MAX_TIMINGS] = {};
 		static Int32 fpsHead = 0;
 
-		static Double lastFPSTime = 0;
-		Double now  = Sys_FloatTime();
-		Double dt   = now - lastFPSTime;
+		static double lastFPSTime = 0;
+		double now  = Sys_FloatTime();
+		double dt   = now - lastFPSTime;
 		lastFPSTime = now;
 
-		Float fps = (dt > 0.0 && dt < 1.0) ? static_cast<Float>(1.0 / dt) : 0.0f;
+		float fps = (dt > 0.0 && dt < 1.0) ? static_cast<float>(1.0 / dt) : 0.0f;
 		fpsHistory[fpsHead] = fps;
 		fpsHead = (fpsHead + 1) % MAX_TIMINGS;
 
-		Char overlayBuf[32];
+		char overlayBuf[32];
 		SDL_snprintf(overlayBuf, sizeof(overlayBuf), "%.0f fps", fps);
 		ImGui::PlotHistogram("##fpsgraph",
 			fpsHistory, MAX_TIMINGS, fpsHead,
 			overlayBuf, 0.0f,
-			static_cast<Float>(g_pCvarFPSGraphHeight->GetValue()),
-			ImVec2(static_cast<Float>(g_pCvarFPSGraphWidth->GetValue()),
-				   static_cast<Float>(g_pCvarFPSGraphHeight->GetValue())));
+			static_cast<float>(g_pCvarFPSGraphHeight->GetValue()),
+			ImVec2(static_cast<float>(g_pCvarFPSGraphWidth->GetValue()),
+				   static_cast<float>(g_pCvarFPSGraphHeight->GetValue())));
 	}
 	ImGui::End();
 }
@@ -2633,7 +2633,7 @@ bool R_DrawInterface( void )
 	CMenu::rendercode_t menuResult = gMenu.Draw();
 	if(menuResult != CMenu::RC_OK)
 	{
-		const Char* pstrError = nullptr;
+		const char* pstrError = nullptr;
 		switch(menuResult)
 		{
 		case CMenu::RC_BASICDRAW_FAIL:
@@ -2746,7 +2746,7 @@ bool R_DrawImGui( void )
 //====================================
 //
 //====================================
-bool R_DrawLoadingScreen( const Char* pstrText )
+bool R_DrawLoadingScreen( const char* pstrText )
 {
 	R_ClearBinds();
 
@@ -2778,15 +2778,15 @@ bool R_DrawLoadingScreen( const Char* pstrText )
 
 	if(pstrText)
 	{
-		Uint32 textWidth = 0;
-		Uint32 textHeight = 0;
+		UInt32 textWidth = 0;
+		UInt32 textHeight = 0;
 
 		const font_set_t* pfontset = gText.GetDefaultFont();
 		gText.GetStringSize(pfontset, pstrText, &textWidth, &textHeight);
 
 		// Set the position off from the logo a bit
 		Int32 xpos = gWindow.GetWidth() / 2 - textWidth / 2;
-		Uint32 logoHeight = R_GetRelativeX(LOAD_TEXT_BASE_HEIGHT, CMenu::MENU_BASE_WIDTH, gWindow.GetWidth());
+		UInt32 logoHeight = R_GetRelativeX(LOAD_TEXT_BASE_HEIGHT, CMenu::MENU_BASE_WIDTH, gWindow.GetWidth());
 		Int32 ypos = gWindow.GetHeight() / 2 + R_GetRelativeX(logoHeight, CMenu::MENU_BASE_WIDTH, gWindow.GetWidth()) / 2.0f + pfontset->fontsize;
 
 		// Draw the string
@@ -2877,16 +2877,16 @@ bool R_DrawShownMaterial( void )
 //====================================
 //
 //====================================
-void R_SetFrustum( CFrustum& frustum, const Vector& origin, const Vector& angles, Float fov, Float viewsize_x, Float viewsize_y, bool fogCull )
+void R_SetFrustum( CFrustum& frustum, const Vector& origin, const Vector& angles, float fov, float viewsize_x, float viewsize_y, bool fogCull )
 {
-	Float flAspect = viewsize_x/viewsize_y;
-	Float flFovX;
+	float flAspect = viewsize_x/viewsize_y;
+	float flFovX;
 	if(!rns.cubemapdraw)
 		flFovX = GetXFOVFromY( fov, flAspect * 0.75f );
 	else 
 		flFovX = fov;
 
-	Float flCullEndDist = 0;
+	float flCullEndDist = 0;
 	if(fogCull)
 		flCullEndDist = rns.fog.settings.affectsky ? rns.fog.settings.end : 0;
 
@@ -2909,7 +2909,7 @@ void R_BindFBO( fbobind_t *pfbo )
 //====================================
 //
 //====================================
-inline void R_ValidateShader( CGLSLShader* pShader )
+void R_ValidateShader( CGLSLShader* pShader )
 {
 	if(!rns.validateshaders)
 		return;
@@ -2920,7 +2920,7 @@ inline void R_ValidateShader( CGLSLShader* pShader )
 //====================================
 //
 //====================================
-inline void R_ValidateShader( CBasicDraw* pDraw )
+void R_ValidateShader( CBasicDraw* pDraw )
 {
 	if(!rns.validateshaders)
 		return;
@@ -2952,7 +2952,7 @@ void R_UpdateFog( void )
 	if(!rns.fog.blendtime)
 		return;
 
-	Float fltime = rns.time;
+	float fltime = rns.time;
 
 	if(rns.fog.blendtime <= fltime)
 	{
@@ -2963,7 +2963,7 @@ void R_UpdateFog( void )
 	}
 	else
 	{
-		Float flFrac = rns.fog.blendtime-fltime;
+		float flFrac = rns.fog.blendtime-fltime;
 		flFrac = Common::SplineFraction( flFrac, 1.0f/rns.fog.blend2.blend );
 
 		if(!rns.fog.blend1.affectsky || !rns.fog.blend2.affectsky)
@@ -3069,7 +3069,7 @@ bool R_Update( void )
 //====================================
 //
 //====================================
-bool R_DrawString( color32_t color, Int32 x, Int32 y, const Char* pstrString, const font_set_t* pfont )
+bool R_DrawString( color32_t color, Int32 x, Int32 y, const char* pstrString, const font_set_t* pfont )
 {
 	const font_set_t* pfontset = nullptr;
 	if(!pfont)
@@ -3096,7 +3096,7 @@ bool R_DrawString( color32_t color, Int32 x, Int32 y, const Char* pstrString, co
 //====================================
 //
 //====================================
-bool R_DrawStringBox( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int16 insetx, Int16 insety, bool reverse, color32_t color, Int32 x, Int32 y, const Char* pstrString, const font_set_t* pfont, Uint32 lineoffset, Uint32 minlineheight, Uint32 xoffset )
+bool R_DrawStringBox( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int16 insetx, Int16 insety, bool reverse, color32_t color, Int32 x, Int32 y, const char* pstrString, const font_set_t* pfont, UInt32 lineoffset, UInt32 minlineheight, UInt32 xoffset )
 {
 	const font_set_t* pfontset = nullptr;
 	if(!pfont)
@@ -3156,7 +3156,7 @@ void R_FinishTextRendering( void )
 //====================================
 //
 //====================================
-bool R_DrawCharacter( Int32 x, Int32 y, Char character, Uint32 r, Uint32 g, Uint32 b, Uint32 a )
+bool R_DrawCharacter( Int32 x, Int32 y, char character, UInt32 r, UInt32 g, UInt32 b, UInt32 a )
 {
 	return gText.DrawChar(character, x, y, r, g, b, a);
 }
@@ -3237,9 +3237,9 @@ bool R_DrawOrigins( void )
 	glDisable(GL_DEPTH_TEST);
 	glLineWidth(2.0);
 
-	constexpr Float linelength = 16;
+	constexpr float linelength = 16;
 
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t* pentity = rns.objects.pvisents[i];
 		if(!pentity->pmodel)
@@ -3271,7 +3271,7 @@ bool R_DrawOrigins( void )
 //====================================
 //
 //====================================
-Float R_GetRenderFOV( Float viewsize )
+float R_GetRenderFOV( float viewsize )
 {
 	return g_pCvarDefaultFOV->GetValue()*(viewsize/g_pCvarReferenceFOV->GetValue());
 }
@@ -3351,9 +3351,9 @@ void R_LoadSprite( cache_model_t* pmodel )
 
 	CTextureManager* pTextureManager = CTextureManager::GetInstance();
 
-	Uint32 frameindex = 0;
+	UInt32 frameindex = 0;
 	const msprite_t* psprite = pmodel->getSprite();
-	for(Uint32 i = 0; i < psprite->frames.size(); i++)
+	for(UInt32 i = 0; i < psprite->frames.size(); i++)
 	{
 		mspriteframedesc_t* pframedesc = &psprite->frames[i];
 		if(pframedesc->type == SPR_SINGLE)
@@ -3376,7 +3376,7 @@ void R_LoadSprite( cache_model_t* pmodel )
 		else if(pframedesc->type == SPR_GROUP)
 		{
 			mspritegroup_t* pgroup = pframedesc->pgroupptr;
-			for(Uint32 j = 0; j < pgroup->frames.size(); j++)
+			for(UInt32 j = 0; j < pgroup->frames.size(); j++)
 			{
 				mspriteframe_t* pframe = pgroup->frames[j];
 
@@ -3403,10 +3403,10 @@ void R_LoadSprite( cache_model_t* pmodel )
 //====================================
 //
 //====================================
-Float R_RenderFxBlend( cl_entity_t* pentity )
+float R_RenderFxBlend( cl_entity_t* pentity )
 {
-	Float alpha = 0;
-	Float offset = pentity->entindex * 256;
+	float alpha = 0;
+	float offset = pentity->entindex * 256;
 
 	switch(pentity->curstate.renderfx)
 	{
@@ -3505,7 +3505,7 @@ Float R_RenderFxBlend( cl_entity_t* pentity )
 		break;
 	case RenderFx_Distort:
 		{
-			Float originDelta = (pentity->curstate.origin[0] - rns.view.v_origin[0]) * rns.view.v_forward[0]
+			float originDelta = (pentity->curstate.origin[0] - rns.view.v_origin[0]) * rns.view.v_forward[0]
 				+ (pentity->curstate.origin[1] - rns.view.v_origin[1]) * rns.view.v_forward[1]
 				+ (pentity->curstate.origin[2] - rns.view.v_origin[2]) * rns.view.v_forward[2];
 
@@ -3536,7 +3536,7 @@ Float R_RenderFxBlend( cl_entity_t* pentity )
 		break;
 	}
 
-	return clamp(alpha, 0, 255);
+	return Clamp(alpha, 0, 255);
 }
 
 //====================================
@@ -3550,8 +3550,8 @@ Int32 R_SortEntities( const void* p1, const void* p2 )
 	Vector center1 = (*ppentity1)->curstate.origin + ((*ppentity1)->curstate.mins + (*ppentity1)->curstate.maxs) * 0.5;
 	Vector center2 = (*ppentity2)->curstate.origin + ((*ppentity2)->curstate.mins + (*ppentity2)->curstate.maxs) * 0.5;
 
-	Float length1 = (center1 - rns.view.v_origin).Length();
-	Float length2 = (center2 - rns.view.v_origin).Length();
+	float length1 = (center1 - rns.view.v_origin).Length();
+	float length2 = (center2 - rns.view.v_origin).Length();
 
 	if(length1 < length2)
 		return 1;
@@ -3603,15 +3603,15 @@ bool R_PerformPendingShaderLoads( void )
 	else if(maxShaders > MAX_ACTIVELOAD_SHADERS)
 		maxShaders = MAX_ACTIVELOAD_SHADERS;
 
-	Uint32 numCompiled = 0;
+	UInt32 numCompiled = 0;
 	while(true)
 	{
 		// Pick first
 		g_pendingShadersList.begin();
 		active_load_shader_t& shaderinfo = g_pendingShadersList.get();
 
-		Uint32 i = shaderinfo.lastshaderindex;
-		Uint32 totalVariations = shaderinfo.pshader->GetNbTotalShaderVariations();
+		UInt32 i = shaderinfo.lastshaderindex;
+		UInt32 totalVariations = shaderinfo.pshader->GetNbTotalShaderVariations();
 		for(; i < totalVariations; i++)
 		{
 			if(shaderinfo.pshader->IsShaderVariationCompiled(i))
@@ -3657,17 +3657,17 @@ Vector R_GetLightingForPosition( const Vector& position, const Vector& defaultco
 {
 	// For retaining lightcolors set by Mod_RecursiveLightPoint
 	Vector lightcolors[MAX_SURFACE_STYLES];
-	byte lightstyles[MAX_SURFACE_STYLES];
+	Byte lightstyles[MAX_SURFACE_STYLES];
 
 	Vector end = position - Vector(0, 0, 8192);
 
 	// Get lightstyle values array
-	CArray<Float>* pStyleValuesArray = nullptr;
+	CArray<float>* pStyleValuesArray = nullptr;
 
 	if(Mod_RecursiveLightPoint(ens.pworld, ens.pworld->pnodes, position, end, lightcolors, lightstyles))
 	{
 		Vector lcolor = lightcolors[BASE_LIGHTMAP_INDEX];
-		for(Uint32 j = 1; j < MAX_SURFACE_STYLES; j++)
+		for(UInt32 j = 1; j < MAX_SURFACE_STYLES; j++)
 		{
 			if(lightstyles[j] == NULL_LIGHTSTYLE_INDEX)
 				break;
@@ -3675,7 +3675,7 @@ Vector R_GetLightingForPosition( const Vector& position, const Vector& defaultco
 			if(!pStyleValuesArray)
 				pStyleValuesArray = gLightStyles.GetLightStyleValuesArray();
 
-			Float value = (*pStyleValuesArray)[lightstyles[j]];
+			float value = (*pStyleValuesArray)[lightstyles[j]];
 			Math::VectorMA(lcolor, value, lightcolors[j], lcolor);
 		}
 
@@ -3692,7 +3692,7 @@ Vector R_GetLightingForPosition( const Vector& position, const Vector& defaultco
 //====================================
 //
 //====================================
-void R_SetLightmapTexture( Uint32 glindex, Uint32 width, Uint32 height, bool isvectormap, color32_t* pdata, Uint32& resultsize )
+void R_SetLightmapTexture( UInt32 glindex, UInt32 width, UInt32 height, bool isvectormap, color32_t* pdata, UInt32& resultsize )
 {
 	lightmapcompression_t method;
 	if(!isvectormap && g_pCvarLightmapCompression->GetValue() >= 1
@@ -3705,11 +3705,11 @@ void R_SetLightmapTexture( Uint32 glindex, Uint32 width, Uint32 height, bool isv
 	{
 	case LM_COMPRESSION_DXT1:
 		{
-			Uint32 imagedatasize = width*height*sizeof(color32_t);
-			Uint32 dxtdatasize = imagedatasize / 8;
+			UInt32 imagedatasize = width*height*sizeof(color32_t);
+			UInt32 dxtdatasize = imagedatasize / 8;
 
-			byte* pdxtdata = new byte[dxtdatasize];
-			rygCompress(pdxtdata, reinterpret_cast<byte*>(pdata), width, height, false);
+			Byte* pdxtdata = new Byte[dxtdatasize];
+			rygCompress(pdxtdata, reinterpret_cast<Byte*>(pdata), width, height, false);
 
 			glBindTexture(GL_TEXTURE_2D, glindex);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -3750,9 +3750,9 @@ void Cmd_PasteDecal( void )
 		return;
 	}
 
-	Float life = SDL_atof(gCommands.Cmd_Argv(2));
-	Float fadetime = SDL_atof(gCommands.Cmd_Argv(3));
-	Float growthtime = SDL_atof(gCommands.Cmd_Argv(4));
+	float life = SDL_atof(gCommands.Cmd_Argv(2));
+	float fadetime = SDL_atof(gCommands.Cmd_Argv(3));
+	float growthtime = SDL_atof(gCommands.Cmd_Argv(4));
 
 	Vector vend, vforward;
 	Math::AngleVectors(rns.view.v_angles, &vforward, nullptr, nullptr);
@@ -3766,7 +3766,7 @@ void Cmd_PasteDecal( void )
 		cl_entity_t* pentity = CL_GetEntityByIndex(tr.hitentity);
 		if(pentity && pentity->pmodel)
 		{
-			const Char* pdecalname = gCommands.Cmd_Argv(1);
+			const char* pdecalname = gCommands.Cmd_Argv(1);
 			if(pdecalname)
 			{
 				decalgroupentry_t *pentry = gDecals.GetDecalList().GetRandom(pdecalname);
@@ -3813,7 +3813,7 @@ void Cmd_CreateSprite( void )
 		cl_entity_t* pentity = CL_GetEntityByIndex(tr.hitentity);
 		if(pentity && pentity->pmodel)
 		{
-			const Char* pspritename = gCommands.Cmd_Argv(1);
+			const char* pspritename = gCommands.Cmd_Argv(1);
 			CString spritename;
 			spritename << "sprites/" << pspritename << ".spr";
 
@@ -3848,9 +3848,9 @@ void Cmd_CreateDynamicLight( void )
 	color.x = SDL_atof(gCommands.Cmd_Argv(1))/255.0f;
 	color.y = SDL_atof(gCommands.Cmd_Argv(2))/255.0f;
 	color.z = SDL_atof(gCommands.Cmd_Argv(3))/255.0f;
-	Float radius = SDL_atof(gCommands.Cmd_Argv(4));
-	Float life = SDL_atof(gCommands.Cmd_Argv(5));
-	Float decay = SDL_atof(gCommands.Cmd_Argv(6));
+	float radius = SDL_atof(gCommands.Cmd_Argv(4));
+	float life = SDL_atof(gCommands.Cmd_Argv(5));
+	float decay = SDL_atof(gCommands.Cmd_Argv(6));
 
 	cl_entity_t* pplayer = CL_GetLocalPlayer();
 	if(!pplayer)
@@ -3889,10 +3889,10 @@ void Cmd_CreateSpotLight( void )
 	color.x = SDL_atof(gCommands.Cmd_Argv(1))/255.0f;
 	color.y = SDL_atof(gCommands.Cmd_Argv(2))/255.0f;
 	color.z = SDL_atof(gCommands.Cmd_Argv(3))/255.0f;
-	Float radius = SDL_atof(gCommands.Cmd_Argv(4));
-	Float conesize = SDL_atof(gCommands.Cmd_Argv(5));
-	Float life = SDL_atof(gCommands.Cmd_Argv(6));
-	Float decay = SDL_atof(gCommands.Cmd_Argv(7));
+	float radius = SDL_atof(gCommands.Cmd_Argv(4));
+	float conesize = SDL_atof(gCommands.Cmd_Argv(5));
+	float life = SDL_atof(gCommands.Cmd_Argv(6));
+	float decay = SDL_atof(gCommands.Cmd_Argv(7));
 
 	cl_entity_t* pplayer = CL_GetLocalPlayer();
 	if(!pplayer)
@@ -3967,15 +3967,15 @@ void Cmd_LoadTGA( void )
 	else
 		filePath = strFilename;
 
-	const byte* pFile = FL_LoadFile(filePath.c_str(), nullptr);
+	const Byte* pFile = FL_LoadFile(filePath.c_str(), nullptr);
 	if(!pFile)
 	{
 		Con_EPrintf("Could not load '%s'.\n", filePath.c_str());
 		return;
 	}
 
-	byte* pdata = nullptr;
-	Uint32 width, height, bpp, size;
+	Byte* pdata = nullptr;
+	UInt32 width, height, bpp, size;
 	texture_compression_t compression;
 	if(!TGA_Load(filePath.c_str(), pFile, pdata, width, height, bpp, size, compression, Con_Printf))
 	{
@@ -4463,12 +4463,12 @@ void Cmd_EFX_BeamLightning( void )
 	}
 
 	CString spritename = gCommands.Cmd_Argv(1);
-	Float life = SDL_atof(gCommands.Cmd_Argv(2));
-	Float width = SDL_atof(gCommands.Cmd_Argv(3));
-	Float amplitude = SDL_atof(gCommands.Cmd_Argv(4));
-	Float brightness = SDL_atof(gCommands.Cmd_Argv(5));
-	Float speed = SDL_atof(gCommands.Cmd_Argv(6));
-	Float noisespeed = SDL_atof(gCommands.Cmd_Argv(7));
+	float life = SDL_atof(gCommands.Cmd_Argv(2));
+	float width = SDL_atof(gCommands.Cmd_Argv(3));
+	float amplitude = SDL_atof(gCommands.Cmd_Argv(4));
+	float brightness = SDL_atof(gCommands.Cmd_Argv(5));
+	float speed = SDL_atof(gCommands.Cmd_Argv(6));
+	float noisespeed = SDL_atof(gCommands.Cmd_Argv(7));
 
 	cache_model_t* pmodel = gModelCache.LoadModel(spritename.c_str());
 	if(!pmodel)
@@ -4524,17 +4524,17 @@ void Cmd_EFX_BeamCirclePoints( void )
 	}
 
 	CString spritename = gCommands.Cmd_Argv(2);
-	Float life = SDL_atof(gCommands.Cmd_Argv(3));
-	Float width = SDL_atof(gCommands.Cmd_Argv(4));
-	Float amplitude = SDL_atof(gCommands.Cmd_Argv(5));
-	Float brightness = SDL_atof(gCommands.Cmd_Argv(6));
-	Float speed = SDL_atof(gCommands.Cmd_Argv(7));
-	Float noisespeed = SDL_atof(gCommands.Cmd_Argv(8));
-	Uint32 startframe = SDL_atoi(gCommands.Cmd_Argv(9));
-	Float framerate = SDL_atof(gCommands.Cmd_Argv(10));
-	Float r = SDL_atof(gCommands.Cmd_Argv(11));
-	Float g = SDL_atof(gCommands.Cmd_Argv(12));
-	Float b = SDL_atof(gCommands.Cmd_Argv(13));
+	float life = SDL_atof(gCommands.Cmd_Argv(3));
+	float width = SDL_atof(gCommands.Cmd_Argv(4));
+	float amplitude = SDL_atof(gCommands.Cmd_Argv(5));
+	float brightness = SDL_atof(gCommands.Cmd_Argv(6));
+	float speed = SDL_atof(gCommands.Cmd_Argv(7));
+	float noisespeed = SDL_atof(gCommands.Cmd_Argv(8));
+	UInt32 startframe = SDL_atoi(gCommands.Cmd_Argv(9));
+	float framerate = SDL_atof(gCommands.Cmd_Argv(10));
+	float r = SDL_atof(gCommands.Cmd_Argv(11));
+	float g = SDL_atof(gCommands.Cmd_Argv(12));
+	float b = SDL_atof(gCommands.Cmd_Argv(13));
 
 	cache_model_t* pmodel = gModelCache.LoadModel(spritename.c_str());
 	if(!pmodel)
@@ -4590,17 +4590,17 @@ void Cmd_EFX_BeamEntityPoint( void )
 
 	Int32 attachment = SDL_atoi(gCommands.Cmd_Argv(1));
 	CString spritename = gCommands.Cmd_Argv(2);
-	Float life = SDL_atof(gCommands.Cmd_Argv(3));
-	Float width = SDL_atof(gCommands.Cmd_Argv(4));
-	Float amplitude = SDL_atof(gCommands.Cmd_Argv(5));
-	Float brightness = SDL_atof(gCommands.Cmd_Argv(6));
-	Float speed = SDL_atof(gCommands.Cmd_Argv(7));
-	Float noisespeed = SDL_atof(gCommands.Cmd_Argv(8));
-	Uint32 startframe = SDL_atoi(gCommands.Cmd_Argv(9));
-	Float framerate = SDL_atof(gCommands.Cmd_Argv(10));
-	Float r = SDL_atof(gCommands.Cmd_Argv(11));
-	Float g = SDL_atof(gCommands.Cmd_Argv(12));
-	Float b = SDL_atof(gCommands.Cmd_Argv(13));
+	float life = SDL_atof(gCommands.Cmd_Argv(3));
+	float width = SDL_atof(gCommands.Cmd_Argv(4));
+	float amplitude = SDL_atof(gCommands.Cmd_Argv(5));
+	float brightness = SDL_atof(gCommands.Cmd_Argv(6));
+	float speed = SDL_atof(gCommands.Cmd_Argv(7));
+	float noisespeed = SDL_atof(gCommands.Cmd_Argv(8));
+	UInt32 startframe = SDL_atoi(gCommands.Cmd_Argv(9));
+	float framerate = SDL_atof(gCommands.Cmd_Argv(10));
+	float r = SDL_atof(gCommands.Cmd_Argv(11));
+	float g = SDL_atof(gCommands.Cmd_Argv(12));
+	float b = SDL_atof(gCommands.Cmd_Argv(13));
 
 	cache_model_t* pmodel = gModelCache.LoadModel(spritename.c_str());
 	if(!pmodel)
@@ -4653,17 +4653,17 @@ void Cmd_EFX_BeamEntities( void )
 	Int32 attachment1 = SDL_atoi(gCommands.Cmd_Argv(1));
 	Int32 attachment2 = SDL_atoi(gCommands.Cmd_Argv(2));
 	CString spritename = gCommands.Cmd_Argv(3);
-	Float life = SDL_atof(gCommands.Cmd_Argv(4));
-	Float width = SDL_atof(gCommands.Cmd_Argv(5));
-	Float amplitude = SDL_atof(gCommands.Cmd_Argv(6));
-	Float brightness = SDL_atof(gCommands.Cmd_Argv(7));
-	Float speed = SDL_atof(gCommands.Cmd_Argv(8));
-	Float noisespeed = SDL_atof(gCommands.Cmd_Argv(9));
-	Uint32 startframe = SDL_atoi(gCommands.Cmd_Argv(10));
-	Float framerate = SDL_atof(gCommands.Cmd_Argv(11));
-	Float r = SDL_atof(gCommands.Cmd_Argv(12));
-	Float g = SDL_atof(gCommands.Cmd_Argv(13));
-	Float b = SDL_atof(gCommands.Cmd_Argv(14));
+	float life = SDL_atof(gCommands.Cmd_Argv(4));
+	float width = SDL_atof(gCommands.Cmd_Argv(5));
+	float amplitude = SDL_atof(gCommands.Cmd_Argv(6));
+	float brightness = SDL_atof(gCommands.Cmd_Argv(7));
+	float speed = SDL_atof(gCommands.Cmd_Argv(8));
+	float noisespeed = SDL_atof(gCommands.Cmd_Argv(9));
+	UInt32 startframe = SDL_atoi(gCommands.Cmd_Argv(10));
+	float framerate = SDL_atof(gCommands.Cmd_Argv(11));
+	float r = SDL_atof(gCommands.Cmd_Argv(12));
+	float g = SDL_atof(gCommands.Cmd_Argv(13));
+	float b = SDL_atof(gCommands.Cmd_Argv(14));
 
 	cache_model_t* pmodel = gModelCache.LoadModel(spritename.c_str());
 	if(!pmodel)
@@ -4694,12 +4694,12 @@ void Cmd_EFX_BeamFollow( void )
 
 	Int32 attachment = SDL_atoi(gCommands.Cmd_Argv(1));
 	CString spritename = gCommands.Cmd_Argv(2);
-	Float life = SDL_atof(gCommands.Cmd_Argv(3));
-	Float width = SDL_atof(gCommands.Cmd_Argv(4));
-	Float brightness = SDL_atof(gCommands.Cmd_Argv(5));
-	Float r = SDL_atof(gCommands.Cmd_Argv(6));
-	Float g = SDL_atof(gCommands.Cmd_Argv(7));
-	Float b = SDL_atof(gCommands.Cmd_Argv(8));
+	float life = SDL_atof(gCommands.Cmd_Argv(3));
+	float width = SDL_atof(gCommands.Cmd_Argv(4));
+	float brightness = SDL_atof(gCommands.Cmd_Argv(5));
+	float r = SDL_atof(gCommands.Cmd_Argv(6));
+	float g = SDL_atof(gCommands.Cmd_Argv(7));
+	float b = SDL_atof(gCommands.Cmd_Argv(8));
 
 	cache_model_t* pmodel = gModelCache.LoadModel(spritename.c_str());
 	if(!pmodel)
@@ -4725,20 +4725,20 @@ void Cmd_EFX_BeamVaporTrail( void )
 	CString sprite1name = gCommands.Cmd_Argv(1);
 	CString sprite2name = gCommands.Cmd_Argv(2);
 
-	Float life = SDL_atof(gCommands.Cmd_Argv(3));
-	Float width = SDL_atof(gCommands.Cmd_Argv(4));
-	Float brightness = SDL_atof(gCommands.Cmd_Argv(5));
+	float life = SDL_atof(gCommands.Cmd_Argv(3));
+	float width = SDL_atof(gCommands.Cmd_Argv(4));
+	float brightness = SDL_atof(gCommands.Cmd_Argv(5));
 
-	Float r1 = SDL_atof(gCommands.Cmd_Argv(6));
-	Float g1 = SDL_atof(gCommands.Cmd_Argv(7));
-	Float b1 = SDL_atof(gCommands.Cmd_Argv(8));
+	float r1 = SDL_atof(gCommands.Cmd_Argv(6));
+	float g1 = SDL_atof(gCommands.Cmd_Argv(7));
+	float b1 = SDL_atof(gCommands.Cmd_Argv(8));
 
-	Float r2 = SDL_atof(gCommands.Cmd_Argv(9));
-	Float g2 = SDL_atof(gCommands.Cmd_Argv(10));
-	Float b2 = SDL_atof(gCommands.Cmd_Argv(11));
+	float r2 = SDL_atof(gCommands.Cmd_Argv(9));
+	float g2 = SDL_atof(gCommands.Cmd_Argv(10));
+	float b2 = SDL_atof(gCommands.Cmd_Argv(11));
 
-	Float fadedelay = SDL_atof(gCommands.Cmd_Argv(12));
-	Float fadeduration = SDL_atof(gCommands.Cmd_Argv(13));
+	float fadedelay = SDL_atof(gCommands.Cmd_Argv(12));
+	float fadeduration = SDL_atof(gCommands.Cmd_Argv(13));
 
 	cache_model_t* pmodel1 = gModelCache.LoadModel(sprite1name.c_str());
 	if(!pmodel1)
@@ -4778,17 +4778,17 @@ void Cmd_EFX_BeamPoints( void )
 	}
 
 	CString spritename = gCommands.Cmd_Argv(1);
-	Float life = SDL_atof(gCommands.Cmd_Argv(2));
-	Float width = SDL_atof(gCommands.Cmd_Argv(3));
-	Float amplitude = SDL_atof(gCommands.Cmd_Argv(4));
-	Float brightness = SDL_atof(gCommands.Cmd_Argv(5));
-	Float speed = SDL_atof(gCommands.Cmd_Argv(6));
-	Float noisespeed = SDL_atof(gCommands.Cmd_Argv(7));
-	Uint32 startframe = SDL_atoi(gCommands.Cmd_Argv(8));
-	Float framerate = SDL_atof(gCommands.Cmd_Argv(9));
-	Float r = SDL_atof(gCommands.Cmd_Argv(10));
-	Float g = SDL_atof(gCommands.Cmd_Argv(11));
-	Float b = SDL_atof(gCommands.Cmd_Argv(12));
+	float life = SDL_atof(gCommands.Cmd_Argv(2));
+	float width = SDL_atof(gCommands.Cmd_Argv(3));
+	float amplitude = SDL_atof(gCommands.Cmd_Argv(4));
+	float brightness = SDL_atof(gCommands.Cmd_Argv(5));
+	float speed = SDL_atof(gCommands.Cmd_Argv(6));
+	float noisespeed = SDL_atof(gCommands.Cmd_Argv(7));
+	UInt32 startframe = SDL_atoi(gCommands.Cmd_Argv(8));
+	float framerate = SDL_atof(gCommands.Cmd_Argv(9));
+	float r = SDL_atof(gCommands.Cmd_Argv(10));
+	float g = SDL_atof(gCommands.Cmd_Argv(11));
+	float b = SDL_atof(gCommands.Cmd_Argv(12));
 
 	cache_model_t* pmodel = gModelCache.LoadModel(spritename.c_str());
 	if(!pmodel)
@@ -4851,17 +4851,17 @@ void Cmd_EFX_BeamRing( void )
 	Int32 attachment1 = SDL_atoi(gCommands.Cmd_Argv(1));
 	Int32 attachment2 = SDL_atoi(gCommands.Cmd_Argv(2));
 	CString spritename = gCommands.Cmd_Argv(3);
-	Float life = SDL_atof(gCommands.Cmd_Argv(4));
-	Float width = SDL_atof(gCommands.Cmd_Argv(5));
-	Float amplitude = SDL_atof(gCommands.Cmd_Argv(6));
-	Float brightness = SDL_atof(gCommands.Cmd_Argv(7));
-	Float speed = SDL_atof(gCommands.Cmd_Argv(8));
-	Float noisespeed = SDL_atof(gCommands.Cmd_Argv(9));
-	Uint32 startframe = SDL_atoi(gCommands.Cmd_Argv(10));
-	Float framerate = SDL_atof(gCommands.Cmd_Argv(11));
-	Float r = SDL_atof(gCommands.Cmd_Argv(12));
-	Float g = SDL_atof(gCommands.Cmd_Argv(13));
-	Float b = SDL_atof(gCommands.Cmd_Argv(14));
+	float life = SDL_atof(gCommands.Cmd_Argv(4));
+	float width = SDL_atof(gCommands.Cmd_Argv(5));
+	float amplitude = SDL_atof(gCommands.Cmd_Argv(6));
+	float brightness = SDL_atof(gCommands.Cmd_Argv(7));
+	float speed = SDL_atof(gCommands.Cmd_Argv(8));
+	float noisespeed = SDL_atof(gCommands.Cmd_Argv(9));
+	UInt32 startframe = SDL_atoi(gCommands.Cmd_Argv(10));
+	float framerate = SDL_atof(gCommands.Cmd_Argv(11));
+	float r = SDL_atof(gCommands.Cmd_Argv(12));
+	float g = SDL_atof(gCommands.Cmd_Argv(13));
+	float b = SDL_atof(gCommands.Cmd_Argv(14));
 
 	cache_model_t* pmodel = gModelCache.LoadModel(spritename.c_str());
 	if(!pmodel)
@@ -4942,11 +4942,11 @@ void Cmd_EFX_CreateTracer( void )
 	color[0] = SDL_atof(gCommands.Cmd_Argv(1)) / 255.0f;
 	color[1] = SDL_atof(gCommands.Cmd_Argv(2)) / 255.0f;
 	color[2] = SDL_atof(gCommands.Cmd_Argv(3)) / 255.0f;
-	Float alpha = SDL_atof(gCommands.Cmd_Argv(4)) / 255.0f;
-	Float width = SDL_atof(gCommands.Cmd_Argv(5));
-	Float length = SDL_atof(gCommands.Cmd_Argv(6));
-	Float velocity = SDL_atof(gCommands.Cmd_Argv(7));
-	Float life = SDL_atof(gCommands.Cmd_Argv(8));
+	float alpha = SDL_atof(gCommands.Cmd_Argv(4)) / 255.0f;
+	float width = SDL_atof(gCommands.Cmd_Argv(5));
+	float length = SDL_atof(gCommands.Cmd_Argv(6));
+	float velocity = SDL_atof(gCommands.Cmd_Argv(7));
+	float life = SDL_atof(gCommands.Cmd_Argv(8));
 	Int32 type = SDL_atoi(gCommands.Cmd_Argv(9));
 
 	tracer_type_t ttype;
@@ -4994,7 +4994,7 @@ void Cmd_BSPToSMD_Textures( void )
 		return;
 	}
 
-	Uint32 fileidx = 0;
+	UInt32 fileidx = 0;
 	CString filepath;
 	FILE* pf = NULL;
 
@@ -5037,7 +5037,7 @@ void Cmd_BSPToSMD_Textures( void )
 	fprintf(pf, "end\n");
 
 	fprintf(pf, "triangles\n");
-	for(Uint32 i = 0; i < gModelCache.GetNbCachedModels(); i++)
+	for(UInt32 i = 0; i < gModelCache.GetNbCachedModels(); i++)
 	{
 		cache_model_t* pcache = gModelCache.GetModelByIndex(i+1);
 		if(!pcache)
@@ -5050,7 +5050,7 @@ void Cmd_BSPToSMD_Textures( void )
 		if(!pmodel)
 			break;
 
-		for(Uint32 j = 0; j < pmodel->nummodelsurfaces; j++)
+		for(UInt32 j = 0; j < pmodel->nummodelsurfaces; j++)
 		{
 			msurface_t *psurf = &pmodel->psurfaces[pmodel->firstmodelsurface + j];
 			if(!psurf->ptexinfo || !psurf->ptexinfo->ptexture)
@@ -5066,7 +5066,7 @@ void Cmd_BSPToSMD_Textures( void )
 				continue;
 
 			bsp_vertex_t* pverts = new bsp_vertex_t[psurf->numedges];
-			for(Uint32 k = 0; k < psurf->numedges; k++)
+			for(UInt32 k = 0; k < psurf->numedges; k++)
 			{
 				int e_index = pmodel->psurfedges[psurf->firstedge+k];
 				if(e_index > 0)
@@ -5080,10 +5080,10 @@ void Cmd_BSPToSMD_Textures( void )
 
 				mtexinfo_t *ptexinfo = psurf->ptexinfo;
 				pverts[k].texcoord[0] = Math::DotProduct(&pverts[k].origin[0], ptexinfo->vecs[0]) + ptexinfo->vecs[0][3];
-				pverts[k].texcoord[0] /= static_cast<Float>(ptexinfo->ptexture->width);
+				pverts[k].texcoord[0] /= static_cast<float>(ptexinfo->ptexture->width);
 
 				pverts[k].texcoord[1] = Math::DotProduct(&pverts[k].origin[0], ptexinfo->vecs[1]) + ptexinfo->vecs[1][3];
-				pverts[k].texcoord[1] /= static_cast<Float>(ptexinfo->ptexture->height);
+				pverts[k].texcoord[1] /= static_cast<float>(ptexinfo->ptexture->height);
 
 				Math::VectorCopy(psurf->pplane->normal, pverts[k].normal);
 			}
@@ -5092,7 +5092,7 @@ void Cmd_BSPToSMD_Textures( void )
 
 			// Export first triangle
 			fprintf(pf, "%s.tga\n", psurf->ptexinfo->ptexture->name.c_str());
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 			{
 				fprintf(pf, "  0   %.4f  %.4f  %.4f  %.4f  %.4f  %.4f  %.4f  %.4f\n",
 				pverts[indexes[k]].origin[0], pverts[indexes[k]].origin[1], pverts[indexes[k]].origin[2],
@@ -5101,7 +5101,7 @@ void Cmd_BSPToSMD_Textures( void )
 			}
 
 			// Export the rest
-			for(Uint32 k = 0, l = 3; k < (psurf->numedges-3); k++, l++)
+			for(UInt32 k = 0, l = 3; k < (psurf->numedges-3); k++, l++)
 			{
 				indexes[1] = indexes[2];
 				indexes[2] = l;
@@ -5156,10 +5156,10 @@ void Cmd_BSPToSMD_Lightmap( void )
 		return;
 	}
 
-	Uint32 lightmapWidth = gBSPRenderer.GetLightmapWidth(styleIndex);
-	Uint32 lightmapHeight = gBSPRenderer.GetLightmapHeight(styleIndex);
+	UInt32 lightmapWidth = gBSPRenderer.GetLightmapWidth(styleIndex);
+	UInt32 lightmapHeight = gBSPRenderer.GetLightmapHeight(styleIndex);
 
-	Uint32 fileidx = 0;
+	UInt32 fileidx = 0;
 	CString filepath;
 	FILE* pf = NULL;
 
@@ -5202,7 +5202,7 @@ void Cmd_BSPToSMD_Lightmap( void )
 	fprintf(pf, "end\n");
 
 	fprintf(pf, "triangles\n");
-	for(Uint32 i = 0; i < gModelCache.GetNbCachedModels(); i++)
+	for(UInt32 i = 0; i < gModelCache.GetNbCachedModels(); i++)
 	{
 		cache_model_t* pcache = gModelCache.GetModelByIndex(i+1);
 		if(!pcache)
@@ -5215,7 +5215,7 @@ void Cmd_BSPToSMD_Lightmap( void )
 		if(!pmodel)
 			break;
 
-		for(Uint32 j = 0; j < pmodel->nummodelsurfaces; j++)
+		for(UInt32 j = 0; j < pmodel->nummodelsurfaces; j++)
 		{
 			msurface_t *psurf = &pmodel->psurfaces[pmodel->firstmodelsurface + j];
 			if(!psurf->ptexinfo || !psurf->ptexinfo->ptexture)
@@ -5231,7 +5231,7 @@ void Cmd_BSPToSMD_Lightmap( void )
 				continue;
 
 			bsp_vertex_t* pverts = new bsp_vertex_t[psurf->numedges];
-			for(Uint32 k = 0; k < psurf->numedges; k++)
+			for(UInt32 k = 0; k < psurf->numedges; k++)
 			{
 				int e_index = pmodel->psurfedges[psurf->firstedge+k];
 				if(e_index > 0)
@@ -5258,11 +5258,11 @@ void Cmd_BSPToSMD_Lightmap( void )
 				Math::VectorCopy(psurf->pplane->normal, pverts[k].normal);
 			}
 
-			Uint32 indexes[3] = { 0, 1, 2 };
+			UInt32 indexes[3] = { 0, 1, 2 };
 
 			// Export first triangle
 			fprintf(pf, "lightmap.tga\n");
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 			{
 				fprintf(pf, "  0   %.4f  %.4f  %.4f  %.4f  %.4f  %.4f  %f  %f\n",
 				pverts[indexes[k]].origin[0], pverts[indexes[k]].origin[1], pverts[indexes[k]].origin[2],
@@ -5271,13 +5271,13 @@ void Cmd_BSPToSMD_Lightmap( void )
 			}
 
 			// Export the rest
-			for(Uint32 k = 0, l = 3; k < (psurf->numedges-3); k++, l++)
+			for(UInt32 k = 0, l = 3; k < (psurf->numedges-3); k++, l++)
 			{
 				indexes[1] = indexes[2];
 				indexes[2] = l;
 
 				fprintf(pf, "lightmap.tga\n");
-				for(Uint32 m = 0; m < 3; m++)
+				for(UInt32 m = 0; m < 3; m++)
 				{
 					fprintf(pf, "  0   %.4f  %.4f  %.4f  %.4f  %.4f  %.4f  %f  %f\n",
 					pverts[indexes[m]].origin[0], pverts[indexes[m]].origin[1], pverts[indexes[m]].origin[2],
@@ -5301,8 +5301,8 @@ void Cmd_BSPToSMD_Lightmap( void )
 	else
 		loadstage = DAYSTAGE_NORMAL_RESTORE;
 
-	byte* plmapdatapointers[NB_SURF_LIGHTMAP_LAYERS] = {nullptr};
-	byte* pvertexlightdatapointers[NB_BAKED_VERTEXLIGHT_LAYERS] = {nullptr};
+	Byte* plmapdatapointers[NB_SURF_LIGHTMAP_LAYERS] = {nullptr};
+	Byte* pvertexlightdatapointers[NB_BAKED_VERTEXLIGHT_LAYERS] = {nullptr};
 
 	if(!ALD_Load(loadstage, plmapdatapointers, pvertexlightdatapointers))
 	{
@@ -5310,36 +5310,36 @@ void Cmd_BSPToSMD_Lightmap( void )
 		return;
 	}
 
-	for(Uint32 i = 0; i < NB_BAKED_VERTEXLIGHT_LAYERS; i++)
+	for(UInt32 i = 0; i < NB_BAKED_VERTEXLIGHT_LAYERS; i++)
 		delete[] pvertexlightdatapointers[i];
 
 	// alloc lightmap data ptrs
-	Uint32 lightmapdatasize = 0;
-	Uint32 lightmappixelsize = lightmapWidth*lightmapHeight;
+	UInt32 lightmapdatasize = 0;
+	UInt32 lightmappixelsize = lightmapWidth*lightmapHeight;
 	color32_t* plightmap = new color32_t[lightmappixelsize];
-	for(Uint32 i = 0; i < lightmappixelsize; i++)
+	for(UInt32 i = 0; i < lightmappixelsize; i++)
 		plightmap[i] = color32_t(0, 0, 0, 255);
 
 	// alloc ambient lightmap's data
-	Uint32 amblightdatasize = 0;
+	UInt32 amblightdatasize = 0;
 	color32_t* pambientlightmap = new color32_t[lightmapWidth*lightmapHeight];
-	for(Uint32 i = 0; i < lightmappixelsize; i++)
+	for(UInt32 i = 0; i < lightmappixelsize; i++)
 		pambientlightmap[i] = color32_t(0, 0, 0, 255);
 
 	// alloc diffuse lightmap's data
-	Uint32 diffuselightdatasize = 0;
+	UInt32 diffuselightdatasize = 0;
 	color32_t* pdiffuselightmap = new color32_t[lightmapWidth*lightmapHeight];
-	for(Uint32 i = 0; i < lightmappixelsize; i++)
+	for(UInt32 i = 0; i < lightmappixelsize; i++)
 		pdiffuselightmap[i] = color32_t(0, 0, 0, 255);
 
 	// alloc lightvec lightmap's data
-	Uint32 lightvecsdatasize = 0;
+	UInt32 lightvecsdatasize = 0;
 	color32_t* plightvecslightmap = new color32_t[lightmapWidth*lightmapHeight];
-	for(Uint32 i = 0; i < lightmappixelsize; i++)
+	for(UInt32 i = 0; i < lightmappixelsize; i++)
 		plightvecslightmap[i] = color32_t(0, 0, 0, 255);
 
 	// Process the surfaces
-	for(Uint32 j = 0; j < ens.pworld->numsurfaces; j++)
+	for(UInt32 j = 0; j < ens.pworld->numsurfaces; j++)
 	{
 		const msurface_t* psurface = &ens.pworld->psurfaces[j];
 		if(psurface->flags & (SURF_DRAWSKY|SURF_DRAWTURB))
@@ -5349,11 +5349,11 @@ void Cmd_BSPToSMD_Lightmap( void )
 			continue;
 
 		// Determine sizes
-		Uint32 xsize = (psurface->extents[0] / psurface->lightmapdivider)+1;
-		Uint32 ysize = (psurface->extents[1] / psurface->lightmapdivider)+1;
-		Uint32 size = xsize*ysize;
+		UInt32 xsize = (psurface->extents[0] / psurface->lightmapdivider)+1;
+		UInt32 ysize = (psurface->extents[1] / psurface->lightmapdivider)+1;
+		UInt32 size = xsize*ysize;
 
-		Uint32 paddingAmount = clamp(g_pCvarLightmapPadding->GetValue(), 0, MAX_LIGHTMAP_PADDING);
+		UInt32 paddingAmount = Clamp(g_pCvarLightmapPadding->GetValue(), 0, MAX_LIGHTMAP_PADDING);
 
 		// Build the base lightmap
 		color24_t* psrc = reinterpret_cast<color24_t*>(plmapdatapointers[SURF_LIGHTMAP_DEFAULT] + psurface->lightoffset);
@@ -5385,8 +5385,8 @@ void Cmd_BSPToSMD_Lightmap( void )
 	filepath.clear();
 	filepath << lightmapfilebasename << "_default.tga";
 
-	Uint32 compressionPercentage = 0;
-	const byte* pwritedata = reinterpret_cast<const byte*>(plightmap);
+	UInt32 compressionPercentage = 0;
+	const Byte* pwritedata = reinterpret_cast<const Byte*>(plightmap);
 	if(TGA_Write(pwritedata, 4, lightmapWidth, lightmapHeight, filepath.c_str(), FL_GetInterface(), Con_Printf, &compressionPercentage))
 		Con_Printf("Wrote '%s'(%d percent compression).\n", filepath.c_str(), compressionPercentage);
 
@@ -5395,7 +5395,7 @@ void Cmd_BSPToSMD_Lightmap( void )
 		filepath.clear();
 		filepath << lightmapfilebasename << "_ambient.tga";
 
-		pwritedata = reinterpret_cast<const byte*>(pambientlightmap);
+		pwritedata = reinterpret_cast<const Byte*>(pambientlightmap);
 		if(TGA_Write(pwritedata, 4, lightmapWidth, lightmapHeight, filepath.c_str(), FL_GetInterface(), Con_Printf, &compressionPercentage))
 			Con_Printf("Exported %s(%d percent compression).\n", filepath.c_str(), compressionPercentage);
 	}
@@ -5405,7 +5405,7 @@ void Cmd_BSPToSMD_Lightmap( void )
 		filepath.clear();
 		filepath << lightmapfilebasename << "_diffuse.tga";
 
-		pwritedata = reinterpret_cast<const byte*>(pdiffuselightmap);
+		pwritedata = reinterpret_cast<const Byte*>(pdiffuselightmap);
 		if(TGA_Write(pwritedata, 4, lightmapWidth, lightmapHeight, filepath.c_str(), FL_GetInterface(), Con_Printf, &compressionPercentage))
 			Con_Printf("Exported %s(%d percent compression).\n", filepath.c_str(), compressionPercentage);
 	}
@@ -5415,12 +5415,12 @@ void Cmd_BSPToSMD_Lightmap( void )
 		filepath.clear();
 		filepath << lightmapfilebasename << "_lightvecs.tga";
 
-		pwritedata = reinterpret_cast<const byte*>(plightvecslightmap);
+		pwritedata = reinterpret_cast<const Byte*>(plightvecslightmap);
 		if(TGA_Write(pwritedata, 4, lightmapWidth, lightmapHeight, filepath.c_str(), FL_GetInterface(), Con_Printf, &compressionPercentage))
 			Con_Printf("Exported %s(%d percent compression).\n", filepath.c_str(), compressionPercentage);
 	}
 
-	for(Uint32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
+	for(UInt32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
 		delete[] plmapdatapointers[i];
 
 	delete[] plightmap;
@@ -5437,17 +5437,17 @@ void Cmd_TimeRefresh( void )
 	glDrawBuffer(GL_FRONT);
 	glFinish();
 
-	Double beginTime = Sys_FloatTime();
+	double beginTime = Sys_FloatTime();
 
-	Float prevAngle = rns.view.params.v_angles[YAW];
+	float prevAngle = rns.view.params.v_angles[YAW];
 
-	for(Uint32 i = 0; i < 128; i++)
+	for(UInt32 i = 0; i < 128; i++)
 	{
 		glViewport(0, 0, rns.screenwidth, rns.screenheight);
 		glClearColor(GL_ZERO, GL_ZERO, GL_ZERO, GL_ZERO);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-		rns.view.params.v_angles[YAW] = (static_cast<Float>(i)/128.0f) * 360.0f;
+		rns.view.params.v_angles[YAW] = (static_cast<float>(i)/128.0f) * 360.0f;
 		R_Draw(rns.view.params);
 
 		// Increment frame counter
@@ -5457,13 +5457,13 @@ void Cmd_TimeRefresh( void )
 
 	glFinish();
 
-	Double endTime = Sys_FloatTime();
-	Double duration = endTime - beginTime;
-	Float fps = 128.0f / duration;
+	double endTime = Sys_FloatTime();
+	double duration = endTime - beginTime;
+	float fps = 128.0f / duration;
 
 	rns.view.params.v_angles[YAW] = prevAngle;
 
-	Con_Printf("%f seconds(%f fps)\n", static_cast<Float>(duration), fps);
+	Con_Printf("%f seconds(%f fps)\n", static_cast<float>(duration), fps);
 
 	glDrawBuffer(GL_BACK);
 
@@ -5497,7 +5497,7 @@ void Cmd_DetailAuto( void )
 	Common::GetWADList(ens.pworld->pentdata, wadList);
 
 	// Go through all world textures
-	for(Uint32 i = 0; i < ens.pworld->numtextures; i++)
+	for(UInt32 i = 0; i < ens.pworld->numtextures; i++)
 	{
 		mtexture_t* ptexture = &ens.pworld->ptextures[i];
 		CString texname = ptexture->name;
@@ -5505,7 +5505,7 @@ void Cmd_DetailAuto( void )
 		
 		// Seek it out in the textures list
 		detail_association_t* passoc = nullptr;
-		for(Uint32 j = 0; j < detailTextureAssociationArray.size(); j++)
+		for(UInt32 j = 0; j < detailTextureAssociationArray.size(); j++)
 		{
 			if(!qstrcmp(texname, detailTextureAssociationArray[j]->maptexturename))
 			{
@@ -5522,7 +5522,7 @@ void Cmd_DetailAuto( void )
 
 		// Find original PMF file
 		en_material_t* pmaterial = nullptr;
-		for(Uint32 j = 0; j < wadList.size(); j++)
+		for(UInt32 j = 0; j < wadList.size(); j++)
 		{
 			CString folderPath = WAD_GetWADFolderPath(wadList[j].c_str(), WORLD_TEXTURES_PATH_BASE);
 			CString materialPath = WAD_GetWADTexturePath(folderPath.c_str(), texname.c_str());
@@ -5546,8 +5546,8 @@ void Cmd_DetailAuto( void )
 		// Find associated detail texture
 		detailtexture_t* pdetail = detailTexturesArray[passoc->detailtextureidx];
 
-		pmaterial->dt_scalex = (static_cast<Float>(ptexture->width)/256.0) * (128.0/static_cast<Float>(pdetail->width)*12.0);
-		pmaterial->dt_scaley = (static_cast<Float>(ptexture->height)/256.0) * (128.0/static_cast<Float>(pdetail->height)*12.0);
+		pmaterial->dt_scalex = (static_cast<float>(ptexture->width)/256.0) * (128.0/static_cast<float>(pdetail->width)*12.0);
+		pmaterial->dt_scaley = (static_cast<float>(ptexture->height)/256.0) * (128.0/static_cast<float>(pdetail->height)*12.0);
 
 		CString dtfilepath;
 		dtfilepath << pdetail->filename;
@@ -5560,10 +5560,10 @@ void Cmd_DetailAuto( void )
 		pTextureManager->WritePMFFile(pmaterial);
 	}
 
-	for(Uint32 i = 0; i < detailTexturesArray.size(); i++)
+	for(UInt32 i = 0; i < detailTexturesArray.size(); i++)
 		delete detailTexturesArray[i];
 
-	for(Uint32 i = 0; i < detailTextureAssociationArray.size(); i++)
+	for(UInt32 i = 0; i < detailTextureAssociationArray.size(); i++)
 		delete detailTextureAssociationArray[i];
 
 	// Write list of textures missing detail textures
@@ -5572,7 +5572,7 @@ void Cmd_DetailAuto( void )
 		CString str;
 		str << "World textures missing detail textures: " << NEWLINE;
 
-		for(Uint32 i = 0; i < missingList.size(); i++)
+		for(UInt32 i = 0; i < missingList.size(); i++)
 			str << missingList[i] << NEWLINE;
 
 		// Write to file
@@ -5582,7 +5582,7 @@ void Cmd_DetailAuto( void )
 		CString filepath;
 		filepath << "logs/" << mapname << "_detail_missing.log";
 
-		const byte* pwritedata = reinterpret_cast<const byte*>(str.c_str());
+		const Byte* pwritedata = reinterpret_cast<const Byte*>(str.c_str());
 		FL_WriteFile(pwritedata, str.length(), filepath.c_str());
 
 		Con_Printf("Wrote list of textures without detail texture associations to '%s'.\n", filepath.c_str());
@@ -5606,7 +5606,7 @@ void Cmd_ListDefaultMaterials( void )
 		g_defaultMaterialPMFList.clear();
 
 	// Go through all world textures
-	for(Uint32 i = 0; i < ens.pworld->numtextures; i++)
+	for(UInt32 i = 0; i < ens.pworld->numtextures; i++)
 	{
 		mtexture_t* ptexture = &ens.pworld->ptextures[i];
 		CString texname = ptexture->name;
@@ -5614,7 +5614,7 @@ void Cmd_ListDefaultMaterials( void )
 
 		// Find original PMF file
 		en_material_t* pmaterial = nullptr;
-		for(Uint32 j = 0; j < wadList.size(); j++)
+		for(UInt32 j = 0; j < wadList.size(); j++)
 		{
 			CString folderPath = WAD_GetWADFolderPath(wadList[j].c_str(), WORLD_TEXTURES_PATH_BASE);
 			CString materialPath = WAD_GetWADTexturePath(folderPath.c_str(), texname.c_str());
@@ -5644,7 +5644,7 @@ void Cmd_ListDefaultMaterials( void )
 	// Print to console also
 	Con_Printf("World textures with default material types:\n");
 
-	for(Uint32 i = 0; i < g_defaultMaterialPMFList.size(); i++)
+	for(UInt32 i = 0; i < g_defaultMaterialPMFList.size(); i++)
 	{
 		// Print to file
 		str << g_defaultMaterialPMFList[i] << NEWLINE;
@@ -5660,7 +5660,7 @@ void Cmd_ListDefaultMaterials( void )
 	CString filepath;
 	filepath << "logs/" << mapname << "_default_material.log";
 
-	const byte* pwritedata = reinterpret_cast<const byte*>(str.c_str());
+	const Byte* pwritedata = reinterpret_cast<const Byte*>(str.c_str());
 	FL_WriteFile(pwritedata, str.length(), filepath.c_str());
 
 	Con_Printf("Wrote list of textures with default material type to '%s'.\n", filepath.c_str());
@@ -5686,7 +5686,7 @@ void Cmd_SetTextureMaterialType( void )
 	}
 
 	// Get material type name
-	const Char* pstrMaterialType = gCommands.Cmd_Argv(2);
+	const char* pstrMaterialType = gCommands.Cmd_Argv(2);
 	if(!pstrMaterialType)
 	{
 		Con_EPrintf("r_set_texture_material_type - No material type specified.\n");
@@ -5697,8 +5697,8 @@ void Cmd_SetTextureMaterialType( void )
 	CArray<CString> materialTypesList;
 
 	// Load material script
-	Uint32 filesize = 0;
-	const byte* pfile = FL_LoadFile(MATERIAL_TYPES_FILE_PATH, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = FL_LoadFile(MATERIAL_TYPES_FILE_PATH, &filesize);
 	if(!pfile)
 	{
 		Con_Printf("r_set_texture_material_type - Could not load '%s'.\n", MATERIAL_TYPES_FILE_PATH);
@@ -5708,14 +5708,14 @@ void Cmd_SetTextureMaterialType( void )
 	CString line;
 	CString token;
 
-	const Char* pstr = reinterpret_cast<const Char*>(pfile);
+	const char* pstr = reinterpret_cast<const char*>(pfile);
 	while(pstr)
 	{
 		// Read the line
 		pstr = Common::ReadLine(pstr, line);
 
 		// Read first token
-		const Char* plstr = Common::Parse(line.c_str(), token);
+		const char* plstr = Common::Parse(line.c_str(), token);
 		if(!plstr)
 		{
 			Con_Printf("r_set_texture_material_type - Missing second token in '%s'.\n", MATERIAL_TYPES_FILE_PATH);
@@ -5730,7 +5730,7 @@ void Cmd_SetTextureMaterialType( void )
 
 	FL_FreeFile(pfile);
 
-	Uint32 j = 0;
+	UInt32 j = 0;
 	for(; j < materialTypesList.size(); j++)
 	{
 		if(!qstrcicmp(materialTypesList[j], pstrMaterialType))
@@ -5830,16 +5830,16 @@ void Cmd_LoadAllParticleScripts( void )
 			CString path;
 			path << PARTICLE_SCRIPT_PATH << file_data.cFileName;
 
-			const byte* pf = FL_LoadFile(path.c_str());
+			const Byte* pf = FL_LoadFile(path.c_str());
 			if(pf)
 			{
 				CString token;
-				Common::Parse(reinterpret_cast<const Char*>(pf), token);
+				Common::Parse(reinterpret_cast<const char*>(pf), token);
 
 				if(!qstrcmp(token, "$particlescript"))
-					gParticleEngine.PrecacheScript(PART_SCRIPT_SYSTEM, file_data.cFileName, false);
+					gParticleEngine.PrecacheScript(PART_SCRIPT_SYSTEM, file_data.cFileName, nullptr);
 				else
-					gParticleEngine.PrecacheScript(PART_SCRIPT_CLUSTER, file_data.cFileName, false);
+					gParticleEngine.PrecacheScript(PART_SCRIPT_CLUSTER, file_data.cFileName, nullptr);
 			}
 
 		}

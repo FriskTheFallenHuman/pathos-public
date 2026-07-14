@@ -48,43 +48,43 @@ public:
 
 public:
 	// Loads a flex script
-	const flexscript_t* LoadScript( const Char* pscriptname );
+	const flexscript_t* LoadScript( const char* pscriptname );
 
 	// Sets a script for a VBM file
-	void SetScript( const vbmheader_t* pvbm, flexstate_t* pstate, Float time, const Char* pscriptname );
+	void SetScript( const vbmheader_t* pvbm, flexstate_t* pstate, float time, const char* pscriptname );
 	// Updates values for a flex script
-	void UpdateValues( Float cur_time, Float health, Int32 mouthopen, flexstate_t* pstate, bool scripting );
+	void UpdateValues( float cur_time, float health, Int32 mouthopen, flexstate_t* pstate, bool scripting );
 
 	// Gets a controller index for a flex
-	static Int32 GetControllerIndex( const flexscript_t* pscript, const Char* name );
+	static Int32 GetControllerIndex( const flexscript_t* pscript, const char* name );
 	// Gets a fixed flex's controller index
-	static Int32 GetFixedFlexIndex( const Char* pstrname );
+	static Int32 GetFixedFlexIndex( const char* pstrname );
 
 	// Sets flex mapping based on VBM data
 	static void SetFlexMappings( const vbmheader_t* pvbm, flexstate_t* pstate );
 	// Sets a controller's name
-	static bool SetControllerName( const flexscript_t* pscript, flexcontroller_t* pcontroller, const Char* pstrname );
+	static bool SetControllerName( const flexscript_t* pscript, flexcontroller_t* pcontroller, const char* pstrname );
 
 	// Gets the error message
-	const Char* GetError( void ) const { return m_errorString.c_str(); }
+	const char* GetError( void ) const { return m_errorString.c_str(); }
 
 public:
 	// Loads an association script
-	bool LoadAssociationScript( flextypes_t npcType, const Char* pscriptname );
+	bool LoadAssociationScript( flextypes_t npcType, const char* pscriptname );
 
 	// Gets an AI script based on type and AI state
-	const Char* GetAIScript( flextypes_t npcType, flexaistates_t aiState );
+	const char* GetAIScript( flextypes_t npcType, flexaistates_t aiState );
 	// Retreives a script for a sentence
-	const Char* GetSentenceScript( const Char* pstrSentence );
+	const char* GetSentenceScript( const char* pstrSentence );
 
 private:
 	// Sets mouth value
 	void SetMouth( Int32 mouthopen, flexstate_t* pstate );
 	// Calculates blinking
-	void Blink( Float cur_time, Float health, flexstate_t* pstate );
+	void Blink( float cur_time, float health, flexstate_t* pstate );
 	
 	// Sets the error string
-	void SetError( const Char *fmt, ... );
+	void SetError( const char *fmt, ... );
 
 private:
 	// Array of flex scripts tied to npcs and AI states
@@ -97,7 +97,7 @@ private:
 	// Cache of flex scripts
 	CArray<flexscript_t*> m_scriptCache;
 	// Current mouth value
-	Float m_mouthValue;
+	float m_mouthValue;
 
 	// Error string if any
 	CString m_errorString;

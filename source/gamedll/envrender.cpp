@@ -54,9 +54,9 @@ bool CEnvRender::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvRender::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvRender::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
-	const Char* pstrTargetName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTargetName = gd_engfuncs.pfnGetString(m_pFields->target);
 	if(!pstrTargetName || !qstrlen(pstrTargetName))
 		return;
 

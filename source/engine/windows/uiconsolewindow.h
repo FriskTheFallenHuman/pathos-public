@@ -28,7 +28,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 
 private:
 	// Console window pointer
@@ -52,7 +52,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) { };
+	virtual void PerformAction( float param ) { };
 	// Handles a special key event
 	virtual bool KeyEvent( Int32 button, Int16 mod, bool keyDown );
 
@@ -73,18 +73,18 @@ class CUIConsoleWindow : public CUIWindow
 {
 private:
 	// Window description file
-	static const Char WINDOW_DESC_FILE[];
+	static const char WINDOW_DESC_FILE[];
 	// Window object name
-	static const Char WINDOW_OBJ_NAME[];
+	static const char WINDOW_OBJ_NAME[];
 	// Execute button object name
-	static const Char EXECUTE_BUTTON_OBJ_NAME[];
+	static const char EXECUTE_BUTTON_OBJ_NAME[];
 	// Input tab object name
-	static const Char INPUT_TAB_OBJ_NAME[];
+	static const char INPUT_TAB_OBJ_NAME[];
 	// History tab object name
-	static const Char HISTORY_TAB_OBJ_NAME[];
+	static const char HISTORY_TAB_OBJ_NAME[];
 
 private:
-	CUIConsoleWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIConsoleWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 public:
 	~CUIConsoleWindow( void );
 
@@ -101,7 +101,7 @@ public:
 	virtual void Execute( void );
 
 	// Sets the history text
-	virtual void SetHistoryText( const Char* pstrText );
+	virtual void SetHistoryText( const char* pstrText );
 	// Saves the currently present input
 	virtual void SaveInputText( void );
 	// Restores the input text from the container
@@ -109,7 +109,7 @@ public:
 	// Clears the input text from the container
 	virtual void ClearInputText( void );
 	// Sets the input text for the container
-	virtual void SetInputText( const Char* pstrText );
+	virtual void SetInputText( const char* pstrText );
 
 	// Retrieves the best input choice from the console list
 	virtual void GetNextBestInputChoice( void );
@@ -131,18 +131,18 @@ public:
 
 	// Saved input text
 	CString m_savedInput;
-	// TRUE if input was saved
+	// true if input was saved
 	bool m_inputWasSaved;
 
 	// Tabbing filter string
 	CString m_tabbingFilter;
-	// TRUE if tabbing filter was set
+	// true if tabbing filter was set
 	bool m_tabbingFilterSet;
 
 	// Previous resolution width
-	Uint32 m_prevResolutionWidth;
+	UInt32 m_prevResolutionWidth;
 	// Previous resolution height
-	Uint32 m_prevResolutionHeight;
+	UInt32 m_prevResolutionHeight;
 
 	// Current instance
 	static CUIConsoleWindow* m_pInstance;

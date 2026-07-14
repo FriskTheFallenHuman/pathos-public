@@ -45,7 +45,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) = 0;
+	virtual void PerformAction( float param ) = 0;
 	// Handles a special key event
 	virtual bool KeyEvent( Int32 button, Int16 mod, bool keyDown ) { return false; }
 	// Handles a mouse button event
@@ -92,7 +92,7 @@ public:
 	};
 
 public:
-	CUIObject( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIObject( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUIObject( void );
 
 public:
@@ -102,16 +102,16 @@ public:
 	void removeChild( CUIObject* pChild ) { m_childrenArray.erase_object(pChild); }
 
 	// Returns the number of children
-	Uint32 getNbChildren( void ) const { return m_childrenArray.size(); }
+	UInt32 getNbChildren( void ) const { return m_childrenArray.size(); }
 	// Gets a child by it's index
-	CUIObject* getChildByIndex( Uint32 idx );
+	CUIObject* getChildByIndex( UInt32 idx );
 
 	// Sets the parent, and also adds the element to the parent's children list
 	void setParent( CUIObject* pParent );
 	// Returns a pointer to the parent
 	CUIObject* getParent( void ) { return m_pParent; }
 	// Gets the size of the element
-	virtual void getSize( Uint32& width, Uint32& height );
+	virtual void getSize( UInt32& width, UInt32& height );
 
 	// Sets the input focus object on the parent window
 	virtual void setWindowInputFocusObject( CUIObject* pFocusObject );
@@ -119,12 +119,12 @@ public:
 	// Sets the width of the element
 	virtual void setWidth( Int32 width ) { m_width = _min(0, width); }
 	// Gets the width of the element
-	virtual Uint32 getWidth( void ) { return m_width; }
+	virtual UInt32 getWidth( void ) { return m_width; }
 
 	// Sets the height of the element
 	virtual void setHeight( Int32 height ) { m_height = _min(0, height); }
 	// Gets the height of the element
-	virtual Uint32 getHeight( void ) { return m_height; }
+	virtual UInt32 getHeight( void ) { return m_height; }
 
 	// Sets the position of the element relative to parent's
 	virtual void setPosition( Int32 xpos, Int32 ypos, bool setBase = false );
@@ -142,7 +142,7 @@ public:
 	// Sets alpha value for the element
 	virtual void setAlpha( Int32 alpha, bool recursive = false );
 	// Sets the color for the element
-	virtual void setColor( Uint32 r, Uint32 g, Uint32 b, Int32 a = -1, bool recursive = false );
+	virtual void setColor( UInt32 r, UInt32 g, UInt32 b, Int32 a = -1, bool recursive = false );
 
 	// Sets the visibility of the element
 	virtual void setVisible( bool visible ) { m_isVisible = visible; }
@@ -178,10 +178,10 @@ public:
 	virtual void adjustPosition( void );
 
 	// Sets the scroller offset value(only for text tabs/lists
-	virtual void setOffsetValue( Float offset ) { };
+	virtual void setOffsetValue( float offset ) { };
 
 	// Tells if the proposed parent size is valid for us
-	virtual bool isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 adjX, Int32 adjY );
+	virtual bool isParentSizeValid( UInt32 testWidth, UInt32 testHeight, Int32 adjX, Int32 adjY );
 	// Tells if a child element should be queried on size checks
 	virtual bool considerElementOnResize( CUIObject* pObject ) { return true; }
 
@@ -194,7 +194,7 @@ public:
 	// Retrieves the focus state
 	virtual bool getFocusState( void ) const { return false; }
 	// Returns the full range's size
-	virtual Uint32 getFullRange( void ) { return 0; }
+	virtual UInt32 getFullRange( void ) { return 0; }
 
 	// Updates text on text tabs
 	virtual void updateRangeSize( void ) { };
@@ -205,15 +205,15 @@ public:
 
 	// Returns window owner of this element
 	virtual CUIObject* getParentWindow( void );
-	// TRUE if parent is window
+	// true if parent is window
 	virtual bool isWindow( void ) { return false; }
-	// TRUE if window is in focus
+	// true if window is in focus
 	virtual bool isInFocus( void ) { return false; }
 
 	// Sets object name
-	void setObjectName( const Char* pstrName ) { m_objName = pstrName; }
+	void setObjectName( const char* pstrName ) { m_objName = pstrName; }
 	// Retreives the object's name
-	const Char* getObjectName( void ) const { return m_objName.c_str(); }
+	const char* getObjectName( void ) const { return m_objName.c_str(); }
 
 protected:
 	// Sets the sizes of the element
@@ -235,13 +235,13 @@ protected:
 	CArray<CUIObject*> m_childrenArray;
 
 	// Width of the element
-	Uint32 m_width;
+	UInt32 m_width;
 	// Original width
-	Uint32 m_baseWidth;
+	UInt32 m_baseWidth;
 	// Height of the element
-	Uint32 m_height;
+	UInt32 m_height;
 	// Original height
-	Uint32 m_baseHeight;
+	UInt32 m_baseHeight;
 
 	// X position relative to parent's position
 	Int32 m_originX;
@@ -255,7 +255,7 @@ protected:
 	// Color and alpha values
 	color32_t m_color;
 
-	// TRUE if visible
+	// true if visible
 	bool m_isVisible;
 
 	// UI engine function pointers
@@ -271,7 +271,7 @@ CUIInteractiveObject
 class CUIInteractiveObject : public CUIObject
 {
 public:
-	CUIInteractiveObject( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIInteractiveObject( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUIInteractiveObject( void );
 
 public:
@@ -290,7 +290,7 @@ CUITexturedObject
 class CUITexturedObject : public CUIObject
 {
 public:
-	CUITexturedObject( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUITexturedObject( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUITexturedObject( void );
 
 	// Sets the default texture to use
@@ -322,12 +322,12 @@ CUISurface
 class CUISurface : public CUIObject
 {
 public:
-	CUISurface( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUISurface( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUISurface( void );
 
 public:
 	// Loads the schema, and creates the sub-elements
-	virtual bool init( const Char* pstrSchemaName );
+	virtual bool init( const char* pstrSchemaName );
 	// Sets the bottom border's elements
 	virtual bool initBottomElements( void );
 	// Sets the top border's elements
@@ -341,7 +341,7 @@ public:
 	// Queries if the element is resizable
 	virtual bool isResizable( void ) override { return true; }
 	// Tells if the proposed parent size is valid for us
-	virtual bool isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 adjX, Int32 adjY ) override;
+	virtual bool isParentSizeValid( UInt32 testWidth, UInt32 testHeight, Int32 adjX, Int32 adjY ) override;
 	// Tells if a child element should be queried on size checks
 	virtual bool considerElementOnResize( CUIObject* pObject ) override;
 
@@ -356,7 +356,7 @@ public:
 
 protected:
 	// Creates a single schema sub-object
-	virtual CUITexturedObject* createObject( const ui_schemeinfo_t* pscheme, const Char* objectName );
+	virtual CUITexturedObject* createObject( const ui_schemeinfo_t* pscheme, const char* objectName );
 
 protected:
 	// Background UI element
@@ -414,7 +414,7 @@ public:
 			virtual ~CUIWindowCloseAction( void ) { };
 			
 		public:
-			virtual void PerformAction( Float param ) override;
+			virtual void PerformAction( float param ) override;
 
 		private:
 			// Window that created this
@@ -422,13 +422,13 @@ public:
 	};
 
 public:
-	CUIWindow( Int32 winFlags, Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIWindow( Int32 winFlags, Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUIWindow( void );
 
 	// Loads the schema, and creates the sub-elements
-	virtual bool init( const Char* pstrSchemaName ) override;
+	virtual bool init( const char* pstrSchemaName ) override;
 	// Sets the title text
-	void setTitle( const Char* pstrTitle, const font_set_t* pTitleFont, Uint32 insetX = 0, Uint32 insetY = 0 );
+	void setTitle( const char* pstrTitle, const font_set_t* pTitleFont, UInt32 insetX = 0, UInt32 insetY = 0 );
 	// Moves the element by x and y amount
 	virtual void move( Int32 x, Int32 y ) override;
 
@@ -438,9 +438,9 @@ public:
 	virtual CUIObject* getInputFocusObject( void ) { return m_pInputFocusObject; }
 
 	// Sets the focus index
-	virtual void setFocusIndex( Uint32 focusIndex ) { m_focusIndex = focusIndex; }
+	virtual void setFocusIndex( UInt32 focusIndex ) { m_focusIndex = focusIndex; }
 	// Retrieves the focus index of this window
-	virtual Uint32 getFocusIndex( void ) { return m_focusIndex; }
+	virtual UInt32 getFocusIndex( void ) { return m_focusIndex; }
 	// Sets the focus state
 	virtual void setFocusState( bool inFocus ) { m_inFocus = inFocus; }
 	// Retrieves the focus state
@@ -457,9 +457,9 @@ public:
 	virtual void setWindowFlags( Int32 flags ) { m_winFlags |= flags; }
 	// Returns the flags for the window
 	virtual Int32 getWindowFlags( void ) { return m_winFlags; }
-	// TRUE if parent is window
+	// true if parent is window
 	virtual bool isWindow( void ) override { return true; }
-	// TRUE if window is in focus
+	// true if window is in focus
 	virtual bool isInFocus( void ) override { return m_inFocus; }
 
 	// Called on GL initialization
@@ -473,7 +473,7 @@ protected:
 	// Current object in input focus
 	CUIObject* m_pInputFocusObject;
 	// Click index on which this window achieved focus
-	Uint32 m_focusIndex;
+	UInt32 m_focusIndex;
 	// True if we're in focus
 	bool m_inFocus;
 };
@@ -487,19 +487,19 @@ CUIText
 class CUIText : public CUIObject
 {
 public:
-	CUIText( Int32 flags, const font_set_t* pFont, const Char* pstrText, Int32 originx, Int32 originy, Uint32 maxWidth = 0 );
+	CUIText( Int32 flags, const font_set_t* pFont, const char* pstrText, Int32 originx, Int32 originy, UInt32 maxWidth = 0 );
 	virtual ~CUIText( void );
 
 public:
 	// Sets the text to display
-	void setText( const Char* pstrText );
+	void setText( const char* pstrText );
 	// Returns the text displayed
-	const Char* getText( void ) const { return m_string.c_str(); }
+	const char* getText( void ) const { return m_string.c_str(); }
 	// Sets the font for the text to be used
 	void setFont( struct font_set_t* pfont ) { m_pFont = pfont; }
 
 	// Sets the displayed text
-	void setDisplayText( const Char* pstrText );
+	void setDisplayText( const char* pstrText );
 
 public:
 	// Draws the element
@@ -515,7 +515,7 @@ protected:
 	// Font set used
 	const font_set_t* m_pFont;
 	// Max width of the text object
-	Uint32 m_maxTextWidth;
+	UInt32 m_maxTextWidth;
 };
 
 /*
@@ -527,7 +527,7 @@ CUIDragger
 class CUIDragger : public CUIObject
 {
 public:
-	CUIDragger( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIDragger( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUIDragger( void );
 
 public:
@@ -543,7 +543,7 @@ public:
 	// Queries vif the element is interactive
 	virtual bool isResizable( void ) override { return true; }
 	// Tells if the proposed parent size is valid for us
-	virtual bool isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 adjX, Int32 adjY ) override;
+	virtual bool isParentSizeValid( UInt32 testWidth, UInt32 testHeight, Int32 adjX, Int32 adjY ) override;
 
 	// Tells if the element is being clicked on
 	virtual bool isClickedOn( void ) override { return m_isClickedOn; }
@@ -569,7 +569,7 @@ CUIResizer
 class CUIResizer : public CUIDragger
 {
 public:
-	CUIResizer( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIResizer( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUIResizer( void );
 
 public:
@@ -586,9 +586,9 @@ CUIButton
 class CUIButton : public CUISurface
 {
 public:
-	CUIButton( Int32 flags, const Char* pstrText, const font_set_t* pFont, CUICallbackEvent* pAction, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
-	CUIButton( Int32 flags, const ui_schemeobject_t* pScheme, CUICallbackEvent* pAction, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
-	CUIButton( Int32 flags, CUICallbackEvent* pAction, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIButton( Int32 flags, const char* pstrText, const font_set_t* pFont, CUICallbackEvent* pAction, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
+	CUIButton( Int32 flags, const ui_schemeobject_t* pScheme, CUICallbackEvent* pAction, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
+	CUIButton( Int32 flags, CUICallbackEvent* pAction, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUIButton( void );
 
 public:
@@ -614,11 +614,11 @@ public:
 protected:
 	// Can be text or an icon
 	CUIObject* m_pDisplay;
-	// TRUE if we're clicked
+	// true if we're clicked
 	bool m_isClickedOn;
 	// Button event class
 	CUICallbackEvent* m_pAction;
-	// TRUE if the button is disabled
+	// true if the button is disabled
 	bool m_isDisabled;
 };
 
@@ -631,23 +631,23 @@ CUITextTab
 class CUITextTab : public CUISurface
 {
 public:
-	CUITextTab( Int32 flags, const font_set_t* pFont, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUITextTab( Int32 flags, const font_set_t* pFont, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUITextTab( void );
 
 public:
 	// Sets the source text array to draw from
-	virtual void setText( const Char* pstrText );
+	virtual void setText( const char* pstrText );
 	// Draws the text on the UI object
 	virtual bool draw( void ) override;
 	// Loads the schema, and creates the sub-elements
-	virtual bool init( const Char* pstrSchemaName ) override;
+	virtual bool init( const char* pstrSchemaName ) override;
 
 	// Queries vif the element is interactive
 	virtual bool isInteractive( void ) override { return true; }
 	// Sets the scroller offset value(only for text tabs/lists
-	virtual void setOffsetValue( Float offset ) override;
+	virtual void setOffsetValue( float offset ) override;
 	// Specifies the text inset
-	virtual void setTextInset( Uint32 inset ) { m_inset = inset; }
+	virtual void setTextInset( UInt32 inset ) { m_inset = inset; }
 
 	// Handles a mouse button event
 	virtual bool mouseWheelEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool keyDown, Int32 scroll ) override;
@@ -657,15 +657,15 @@ public:
 
 protected:
 	// Text to display
-	const Char* m_pText;
+	const char* m_pText;
 	// Font set used
 	const font_set_t* m_pFont;
 	// Scroller object
 	CUIScroller* m_pScroller;
 	// Text offset
-	Uint32 m_textOffset;
+	UInt32 m_textOffset;
 	// Text inset
-	Uint32 m_inset;
+	UInt32 m_inset;
 };
 
 /*
@@ -677,7 +677,7 @@ CUITextInputTab
 class CUITextInputTab : public CUISurface
 {
 public:
-	CUITextInputTab( Int32 flags, CUICallbackEvent* pAction, const font_set_t* pFont, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUITextInputTab( Int32 flags, CUICallbackEvent* pAction, const font_set_t* pFont, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUITextInputTab( void );
 
 public:
@@ -691,11 +691,11 @@ public:
 	virtual void think( void ) override;
 
 	// Specifies the text inset
-	virtual void setTextInset( Uint32 inset ) { m_inset = inset; }
+	virtual void setTextInset( UInt32 inset ) { m_inset = inset; }
 	// Returns the buffer's contents
-	virtual const Char* getText( void ) { return m_szBuffer; }
+	virtual const char* getText( void ) { return m_szBuffer; }
 	// Sets the buffer's contents
-	virtual void setText( const Char* pstrText );
+	virtual void setText( const char* pstrText );
 	// Clears the buffer
 	virtual void clearText( void );
 
@@ -703,16 +703,16 @@ protected:
 	// Font set used
 	const font_set_t* m_pFont;
 	// Next marker blink time
-	Float m_nextBlinkTime;
+	float m_nextBlinkTime;
 	// Boolean for market
 	bool m_drawMarker;
 	// Text inset on x axis
-	Uint32 m_inset;
+	UInt32 m_inset;
 
 	// Current input string
-	Char m_szBuffer[MAX_INPUT_LENGTH+1];
+	char m_szBuffer[MAX_INPUT_LENGTH+1];
 	// Marker position
-	Uint32 m_inputPosition;
+	UInt32 m_inputPosition;
 
 	// Callback handler
 	CUICallbackEvent* m_pAction;
@@ -727,7 +727,7 @@ CUIDragButton
 class CUIDragButton : public CUIButton
 {
 public:
-	CUIDragButton( Int32 flags, ui_scroller_align_t alignment, CUICallbackEvent* pAction, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIDragButton( Int32 flags, ui_scroller_align_t alignment, CUICallbackEvent* pAction, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUIDragButton( void );
 
 public:
@@ -745,16 +745,16 @@ public:
 	virtual bool isResizable( void ) override { return false; }
 
 	// Sets the position of the button
-	virtual void setPosition( Float position );
+	virtual void setPosition( float position );
 	// Gets the position of the button
-	virtual Double getPosition( void );
+	virtual double getPosition( void );
 	// Adjusts the position of the button
 	virtual bool adjPosition( Int32 adjAmt, bool isMouseDrag, bool callEvent = true );
 
 	// Sets the length of the button
-	virtual void setLength( Uint32 length );
+	virtual void setLength( UInt32 length );
 	// Gets the length of the button
-	virtual Uint32 getLength( void );
+	virtual UInt32 getLength( void );
 
 	// Repositions the element according to alignment after the parent is set
 	virtual void adjustPosition( void ) override;
@@ -774,9 +774,9 @@ protected:
 	Int32 m_endInset;
 
 	// Current position of the slider
-	Double m_position;
+	double m_position;
 	// Last parent length the position was set on
-	Uint32 m_lastParentLength;
+	UInt32 m_lastParentLength;
 };
 
 /*
@@ -792,7 +792,7 @@ public:
 	class CUIScrollerArrowBtnAction : public CUICallbackEvent
 	{
 		public:
-			CUIScrollerArrowBtnAction( CUIScroller* pScroller, Int32 direction, Uint32 jumpSize ):
+			CUIScrollerArrowBtnAction( CUIScroller* pScroller, Int32 direction, UInt32 jumpSize ):
 				m_pScroller(pScroller),
 				m_direction(direction),
 				m_jumpSize(jumpSize)
@@ -800,7 +800,7 @@ public:
 			virtual ~CUIScrollerArrowBtnAction( void ) { };
 			
 		public:
-			virtual void PerformAction( Float param ) override;
+			virtual void PerformAction( float param ) override;
 
 		private:
 			// Window that created this
@@ -808,7 +808,7 @@ public:
 			// Direction sign
 			Int32 m_direction;
 			// Jump size
-			Uint32 m_jumpSize;
+			UInt32 m_jumpSize;
 	};
 	// Dragger button action
 	class CUIScrollerDragBtnAction : public CUICallbackEvent
@@ -820,21 +820,21 @@ public:
 			virtual ~CUIScrollerDragBtnAction( void ) { };
 			
 		public:
-			virtual void PerformAction( Float param ) override;
+			virtual void PerformAction( float param ) override;
 
 		private:
 			// Window that created this
 			CUIScroller* m_pScroller;
 	};
 public:
-	CUIScroller( Int32 flags, ui_scroller_align_t alignment, Uint32 unitSize, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIScroller( Int32 flags, ui_scroller_align_t alignment, UInt32 unitSize, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUIScroller( void );
 
 public:
 	// Loads the schema, and creates the sub-elements
-	virtual bool init( const Char* pstrSchemaName );
+	virtual bool init( const char* pstrSchemaName );
 	// Tells if the proposed parent size is valid for us
-	virtual bool isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 adjX, Int32 adjY ) override;
+	virtual bool isParentSizeValid( UInt32 testWidth, UInt32 testHeight, Int32 adjX, Int32 adjY ) override;
 	// Tells if a child element should be queried on size checks
 	virtual bool considerElementOnResize( CUIObject* pObject ) override;
 
@@ -844,9 +844,9 @@ public:
 	virtual bool isInteractive( void ) override { return true; }
 
 	// Sets the full range's size
-	virtual void setFullRange( Uint32 fullRangeSize );
+	virtual void setFullRange( UInt32 fullRangeSize );
 	// Returns the full range's size
-	virtual Uint32 getFullRange( void ) override { return m_fullRangeSize; }
+	virtual UInt32 getFullRange( void ) override { return m_fullRangeSize; }
 	// Readjusts the scroll drag button's position and size
 	virtual void readjustDragButton( void );
 
@@ -872,11 +872,11 @@ protected:
 	ui_scroller_align_t m_alignment;
 
 	// Total area to consider
-	Uint32 m_fullRangeSize;
+	UInt32 m_fullRangeSize;
 	// Previous range we considered
-	Uint32 m_prevFullRangeSize;
+	UInt32 m_prevFullRangeSize;
 	// Size of a single jump unit
-	Uint32 m_unitSize;
+	UInt32 m_unitSize;
 
 	// Scheme object
 	const ui_schemeinfo_t* m_pScheme;
@@ -892,12 +892,12 @@ class CUITabLabel : public CUIButton
 {
 public:
 	// Width of a tab label
-	static const Uint32 TAB_LABEL_HEIGHT;
+	static const UInt32 TAB_LABEL_HEIGHT;
 	// Height of a tab label
-	static const Uint32 TAB_LABEL_WIDTH;
+	static const UInt32 TAB_LABEL_WIDTH;
 
 public:
-	CUITabLabel( Int32 flags, const Char* pstrLabelTitle, const font_set_t* pFont, CUICallbackEvent* pAction, Int32 originx, Int32 originy );
+	CUITabLabel( Int32 flags, const char* pstrLabelTitle, const font_set_t* pFont, CUICallbackEvent* pAction, Int32 originx, Int32 originy );
 	~CUITabLabel( void );
 
 public:
@@ -920,7 +920,7 @@ CUITabBody
 class CUITabBody : public CUISurface
 {
 public:
-	CUITabBody( Int32 flags, CUITabLabel* pTabLabel, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUITabBody( Int32 flags, CUITabLabel* pTabLabel, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	~CUITabBody( void );
 
 	// Queries if the element is interactive
@@ -976,29 +976,29 @@ private:
 	class CUITabSelectCallback : public CUICallbackEvent
 	{
 		public:
-			CUITabSelectCallback( CUITabList* pList, Uint32 tabIndex ):
+			CUITabSelectCallback( CUITabList* pList, UInt32 tabIndex ):
 				m_tabIndex(tabIndex),
 				m_pTabListObject(pList)
 			{ };
 			virtual ~CUITabSelectCallback( void ) { };
 			
 		public:
-			virtual void PerformAction( Float param ) override { m_pTabListObject->showTab(m_tabIndex); }
+			virtual void PerformAction( float param ) override { m_pTabListObject->showTab(m_tabIndex); }
 
 		private:
 			// Index of tab to activate
-			Uint32 m_tabIndex;
+			UInt32 m_tabIndex;
 			// Window that created this
 			CUITabList* m_pTabListObject;
 	};
 
 public:
-	CUITabList( Int32 flags, CUICallbackEvent* pSelectEvent, const font_set_t* pFont, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUITabList( Int32 flags, CUICallbackEvent* pSelectEvent, const font_set_t* pFont, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	~CUITabList( void );
 
 public:
 	// Creates a tab object
-	CUITabBody* createTab( const Char* pstrName );
+	CUITabBody* createTab( const char* pstrName );
 
 	// Queries if the element is interactive
 	virtual bool isInteractive( void ) override { return true; }
@@ -1006,11 +1006,11 @@ public:
 	virtual bool isResizable( void ) override { return false; }
 
 	// Returns the number of tabs
-	virtual Uint32 getNbTabs( void ) { return m_pTabsArray.size(); }
+	virtual UInt32 getNbTabs( void ) { return m_pTabsArray.size(); }
 
 private:
 	// Switches to the tab and hides the rest
-	virtual void showTab( Uint32 tabIndex );
+	virtual void showTab( UInt32 tabIndex );
 
 public:
 	// Array of tab body-label pairs
@@ -1030,12 +1030,12 @@ CUIScrollableSurface
 class CUIScrollableSurface : public CUIObject
 {
 public:
-	CUIScrollableSurface( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIScrollableSurface( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUIScrollableSurface( void );
 
 public:
 	// Loads the schema, and creates the sub-elements
-	virtual bool init( const Char* pstrSchemaName );
+	virtual bool init( const char* pstrSchemaName );
 
 	// Queries if the element is interactive
 	virtual bool isInteractive( void ) override { return true; }
@@ -1043,7 +1043,7 @@ public:
 	virtual bool isResizable( void ) override { return true; }
 
 	// Sets the scroller offset value(only for text tabs/lists
-	virtual void setOffsetValue( Float offset ) override;
+	virtual void setOffsetValue( float offset ) override;
 	// Adjusts the element's size by x and y amount
 	virtual bool adjustSize( Int32 x, Int32 y ) override;
 
@@ -1072,9 +1072,9 @@ protected:
 	// Scroller object
 	CUIScroller* m_pScroller;
 	// Offset value
-	Float m_scrollOffset;
+	float m_scrollOffset;
 	// Base Y offset
-	Uint32 m_baseYOffset;
+	UInt32 m_baseYOffset;
 	// Font set
 	const font_set_t* m_pFont;
 };
@@ -1088,29 +1088,29 @@ CUIList
 class CUIList : public CUIScrollableSurface
 {
 public:
-	CUIList( Int32 flags, const font_set_t* pFont, Uint32 rowHeight, Uint32 nbColumns, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIList( Int32 flags, const font_set_t* pFont, UInt32 rowHeight, UInt32 nbColumns, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUIList( void );
 
 public:
 	// Initializes the element
-	virtual bool init( const Char* pstrSchemaName ) override;
+	virtual bool init( const char* pstrSchemaName ) override;
 
 	// Tells if an element should be offset
 	virtual bool shouldShiftChild( CUIObject* pChild ) override;
 
 	// Sets the text for a header column
-	virtual void setHeaderColumnName( Uint32 index, const Char* pstrName );
+	virtual void setHeaderColumnName( UInt32 index, const char* pstrName );
 	// Creates a row element and returns it's pointer
-	virtual CUIListRow* createNewRow( CUICallbackEvent* pEvent, Uint32 textInset );
+	virtual CUIListRow* createNewRow( CUICallbackEvent* pEvent, UInt32 textInset );
 	// Creates a row element and returns it's pointer
-	virtual void createSeparator( Uint32 textInset, const Char* pstrName, Uint32 height );
+	virtual void createSeparator( UInt32 textInset, const char* pstrName, UInt32 height );
 
 	// Sets highlighting on a row
-	virtual void setHighlightOnRow( Uint32 index, bool isHighlighted );
+	virtual void setHighlightOnRow( UInt32 index, bool isHighlighted );
 	// Sets highlighting on the column of a row
 	virtual void setHighlightOnRowColumn( Int32 columnIndex );
 	// Gets the text on the column of a row
-	virtual CUIObject* getRowColumnObject( Uint32 rowIndex, Uint32 columnIndex );
+	virtual CUIObject* getRowColumnObject( UInt32 rowIndex, UInt32 columnIndex );
 	// Returns the number of rows in the list
 	virtual Int32 getNbRows( void ) { return static_cast<Int32>(m_rowsArray.size()); }
 
@@ -1121,9 +1121,9 @@ public:
 
 protected:
 	// Number of columns in a row
-	Uint32 m_nbColumns;
+	UInt32 m_nbColumns;
 	// Height of a row
-	Uint32 m_rowHeight;
+	UInt32 m_rowHeight;
 	// Optional header element
 	CUIListHeader* m_pHeader;
 	
@@ -1133,7 +1133,7 @@ protected:
 	CArray<CUIListSeparator*> m_separatorsArray;
 
 	// Combined height of list elements
-	Uint32 m_listHeight;
+	UInt32 m_listHeight;
 	// Last highlighted element
 	CUIListRow* m_pHighlightedRow;
 	// Font set
@@ -1162,14 +1162,14 @@ public:
 	};
 
 public:
-	CUIListHeader( Int32 flags, const font_set_t* pFont, Uint32 numColumns, Uint32 width, Uint32 height );
+	CUIListHeader( Int32 flags, const font_set_t* pFont, UInt32 numColumns, UInt32 width, UInt32 height );
 	~CUIListHeader( void );
 
 public:
 	// Loads the schema, and creates the sub-elements
-	virtual bool init( const Char* pstrSchemaName );
+	virtual bool init( const char* pstrSchemaName );
 	// Sets the name of a column
-	virtual void setColumnName( Uint32 index, const Char* pstrName );
+	virtual void setColumnName( UInt32 index, const char* pstrName );
 	// Queries if the element is interactive
 	virtual bool isInteractive( void ) override { return false; }
 
@@ -1189,18 +1189,18 @@ CUIListRow
 class CUIListRow : public CUIObject
 {
 public:
-	CUIListRow( Int32 flags, Uint32 rowIndex, Uint32 textInset, CUIListHeader* pHeader, CUICallbackEvent* pEvent, Uint32 numColumns, Uint32 rowOffs, Uint32 width, Uint32 height );
+	CUIListRow( Int32 flags, UInt32 rowIndex, UInt32 textInset, CUIListHeader* pHeader, CUICallbackEvent* pEvent, UInt32 numColumns, UInt32 rowOffs, UInt32 width, UInt32 height );
 	~CUIListRow( void );
 
 public:
 	// Queries if the element is interactive
 	virtual bool isInteractive( void ) override { return true; }
 	// Sets the text on a column
-	virtual void setColumnContents( Uint32 index, CUIObject* pObject );
+	virtual void setColumnContents( UInt32 index, CUIObject* pObject );
 	// Gets the text on a column
-	virtual CUIObject* getColumnContents( Uint32 index );
+	virtual CUIObject* getColumnContents( UInt32 index );
 	// Sets the text color
-	virtual void setColumnColor( byte r, byte g, byte b );
+	virtual void setColumnColor( Byte r, Byte g, Byte b );
 
 	// Sets the highlight status on the element
 	virtual void setHighlight( bool highlighted ) { m_isHighlighted = highlighted; }
@@ -1211,13 +1211,13 @@ public:
 	virtual bool draw( void ) override;
 
 	// Returns the row index
-	virtual Uint32 getIndex( void ) { return m_rowIndex; }
+	virtual UInt32 getIndex( void ) { return m_rowIndex; }
 	// Handles a mouse button event
 	virtual bool mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool keyDown ) override;
 
 public:
 	// Index of this row object
-	Uint32 m_rowIndex;
+	UInt32 m_rowIndex;
 	// List header object
 	CUIListHeader* m_pHeader;
 	// Texts for the columns
@@ -1227,7 +1227,7 @@ public:
 	// Callback event tied to this row
 	CUICallbackEvent* m_pEvent;
 
-	// TRUE if we're being highlighted
+	// true if we're being highlighted
 	bool m_isHighlighted;
 	// Index of the highlighted column
 	Int32 m_highlightedColumnIdx;
@@ -1242,7 +1242,7 @@ CUIListSeparator
 class CUIListSeparator : public CUIListRow
 {
 public:
-	CUIListSeparator( Int32 flags, Uint32 textInset, Uint32 rowOffs, Uint32 width, Uint32 height );
+	CUIListSeparator( Int32 flags, UInt32 textInset, UInt32 rowOffs, UInt32 width, UInt32 height );
 	~CUIListSeparator( void );
 
 public:
@@ -1271,7 +1271,7 @@ private:
 			virtual ~CUIDropDownButtonEvent( void ) { };
 			
 		public:
-			virtual void PerformAction( Float param ) override;
+			virtual void PerformAction( float param ) override;
 
 		private:
 			// Window that created this
@@ -1281,7 +1281,7 @@ private:
 	class CUIDropDownRowClickEvent : public CUICallbackEvent
 	{
 		public:
-			CUIDropDownRowClickEvent( CUIDropDownList* pList, Uint32 rowIndex ):
+			CUIDropDownRowClickEvent( CUIDropDownList* pList, UInt32 rowIndex ):
 				m_rowIndex(rowIndex),
 				m_pList(pList),
 				m_wasClickedOn(false)
@@ -1289,26 +1289,26 @@ private:
 			virtual ~CUIDropDownRowClickEvent( void ) { };
 			
 		public:
-			virtual void PerformAction( Float param ) override { };
+			virtual void PerformAction( float param ) override { };
 			virtual bool MouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool keyDown ) override;
 
 		private:
 			// Index of the row tied to this event
-			Uint32 m_rowIndex;
+			UInt32 m_rowIndex;
 			// Window that created this
 			CUIDropDownList* m_pList;
-			// TRUE if we got clicked on
+			// true if we got clicked on
 			bool m_wasClickedOn;
 	};
 
 public:
 	// Default width for the dropdown list
-	static const Uint32 DROPDOWN_LIST_WIDTH;
+	static const UInt32 DROPDOWN_LIST_WIDTH;
 	// Default width for the dropdown list
-	static const Uint32 DROPDOWN_LIST_HEIGHT;
+	static const UInt32 DROPDOWN_LIST_HEIGHT;
 
 public:
-	CUIDropDownList( Int32 flags, CUICallbackEvent* pEvent, CUICallbackEvent* pListToggleEvent, const font_set_t* pFont, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIDropDownList( Int32 flags, CUICallbackEvent* pEvent, CUICallbackEvent* pListToggleEvent, const font_set_t* pFont, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	~CUIDropDownList( void );
 
 public:
@@ -1317,7 +1317,7 @@ public:
 	// Queries if the element is resizable
 	virtual bool isResizable( void ) override { return false; }
 	// Loads the schema, and creates the sub-elements
-	virtual bool init( const Char* pstrSchemaName ) override;
+	virtual bool init( const char* pstrSchemaName ) override;
 	// Handles a mouse button event
 	virtual bool mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool keyDown ) override;
 	// Requests that other tab objects be closed
@@ -1331,14 +1331,14 @@ public:
 	// Clears the list
 	virtual void clearList( void ) { m_pDropdownList->clearList(); }
 	// Returns the list size
-	virtual Uint32 getListSize( void ) { return m_pDropdownList->getNbRows(); }
+	virtual UInt32 getListSize( void ) { return m_pDropdownList->getNbRows(); }
 
 	// Sets the current value
 	virtual void setSelection( Int32 rowIndex );
 	// Adds a choice to the list
-	virtual void addChoice( const Char* pstrText );
+	virtual void addChoice( const char* pstrText );
 	// Manages a selection event
-	virtual void manageSelectionEvent( Uint32 rowIndex );
+	virtual void manageSelectionEvent( UInt32 rowIndex );
 
 protected:
 	// Text displaying the current value
@@ -1368,14 +1368,14 @@ CUITickBox
 class CUITickBox : public CUIButton
 {
 public:
-	CUITickBox( Int32 flags, CUICallbackEvent* pAction, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUITickBox( Int32 flags, CUICallbackEvent* pAction, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUITickBox( void );
 
 public:
 	// Sets the text
-	virtual void setText( const Char* pstrText, const font_set_t* pFont, Uint32 textOffset );
+	virtual void setText( const char* pstrText, const font_set_t* pFont, UInt32 textOffset );
 	// Loads the schema, and creates the sub-elements
-	virtual bool init( const Char* pstrSchemaName ) override;
+	virtual bool init( const char* pstrSchemaName ) override;
 	// Sets the state of the tick box
 	virtual void setState( bool isEnabled );
 	// Handles a mouse button event
@@ -1407,7 +1407,7 @@ public:
 			virtual ~CUISliderDragBtnAction( void ) { };
 			
 		public:
-			virtual void PerformAction( Float param ) override;
+			virtual void PerformAction( float param ) override;
 
 		private:
 			// Window that created this
@@ -1415,7 +1415,7 @@ public:
 	};
 
 public:
-	CUISlider( Int32 flags, CUICallbackEvent* pEvent, Uint32 width, Uint32 height, Int32 originx, Int32 originy, Float minValue, Float maxValue, Float markerdistance );
+	CUISlider( Int32 flags, CUICallbackEvent* pEvent, UInt32 width, UInt32 height, Int32 originx, Int32 originy, float minValue, float maxValue, float markerdistance );
 	virtual ~CUISlider( void );
 
 public:
@@ -1424,24 +1424,24 @@ public:
 	// Queries if the element is interactive
 	virtual bool isInteractive( void ) override { return true; }
 	// Loads the schema, and creates the sub-elements
-	virtual bool init( const Char* pstrSchemaName );
+	virtual bool init( const char* pstrSchemaName );
 	
 	// Retreives the drag button object
 	virtual CUIDragButton* getSliderButton( void ) { return m_pSliderButton; }
 	// Sets the value of the slider based on the position
-	virtual void setValueFromPosition( Double position );
+	virtual void setValueFromPosition( double position );
 	// Sets position and value based on 0-1 range
-	virtual void setValue( Float value );
+	virtual void setValue( float value );
 
 private:
 	// Minimum value
-	Float m_minValue;
+	float m_minValue;
 	// Maximum value
-	Float m_maxValue;
+	float m_maxValue;
 	// Distance between markers
-	Float m_markerDistance;
+	float m_markerDistance;
 	// Current value
-	Float m_value;
+	float m_value;
 
 private:
 	// Callback event
@@ -1465,18 +1465,18 @@ CUIProgressBar
 class CUIProgressBar : public CUISurface
 {
 public:
-	CUIProgressBar( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIProgressBar( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CUIProgressBar( void );
 
 public:
 	// Draws the text on the UI object
 	virtual bool draw( void ) override;
 	// Sets the meter value
-	virtual void setValue( Float value );
+	virtual void setValue( float value );
 
 private:
 	// Meter value
-	Float m_meterValue;
+	float m_meterValue;
 };
 
 #endif //UIELEMENTS_H

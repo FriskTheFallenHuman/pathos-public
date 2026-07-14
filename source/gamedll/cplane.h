@@ -27,6 +27,6 @@ private:
 	// Normal of the plane
 	Vector m_planeNormal;
 	// Plane distance
-	Float m_planeDistance;
+	float m_planeDistance;
 };
 #endif //CPLANE_H

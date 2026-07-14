@@ -83,9 +83,9 @@ bool CEnvSetSequence::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CEnvSetSequence::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSetSequence::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
-	const Char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
 
 	edict_t* pedict = Util::FindEntityByTargetName(nullptr, pstrEntityName);
 	if(!pedict)
@@ -96,7 +96,7 @@ void CEnvSetSequence::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, us
 
 	CBaseEntity* pEntity = CBaseEntity::GetClass(pedict);
 
-	const Char* pstrSequenceName = gd_engfuncs.pfnGetString(m_pFields->message);
+	const char* pstrSequenceName = gd_engfuncs.pfnGetString(m_pFields->message);
 	if(pstrSequenceName)
 	{
 		Int32 sequenceIndex = pEntity->FindSequence(pstrSequenceName);
@@ -112,7 +112,7 @@ void CEnvSetSequence::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, us
 
 		if(m_pFields->target != NO_STRING_VALUE)
 		{
-			Float sequenceEndTime = pEntity->GetSequenceTime(sequenceIndex);
+			float sequenceEndTime = pEntity->GetSequenceTime(sequenceIndex);
 			m_pState->nextthink = g_pGameVars->time + sequenceEndTime;
 			SetThink(&CEnvSetSequence::TriggerThink);
 		}
@@ -128,7 +128,7 @@ void CEnvSetSequence::TriggerThink( void )
 	if(m_seqDoneTarget == NO_STRING_VALUE)
 		return;
 
-	const Char* pstrName = gd_engfuncs.pfnGetString(m_seqDoneTarget);
+	const char* pstrName = gd_engfuncs.pfnGetString(m_seqDoneTarget);
 	Util::FireTargets(pstrName, this, this, USE_TOGGLE, 0);
 
 	m_pState->nextthink = 0;

@@ -65,7 +65,7 @@ void CFuncTrainCopy::InitEntity( void )
 		return;
 	}
 
-	const Char* pstrCopyTargetName = gd_engfuncs.pfnGetString(m_pFields->netname);
+	const char* pstrCopyTargetName = gd_engfuncs.pfnGetString(m_pFields->netname);
 	edict_t* pCopyEdict = Util::FindEntityByTargetName(nullptr, pstrCopyTargetName);
 	if(!pCopyEdict)
 	{
@@ -89,7 +89,7 @@ void CFuncTrainCopy::InitEntity( void )
 		return;
 	}
 
-	const Char* pstrModelName = pCopyEntity->GetModelName();
+	const char* pstrModelName = pCopyEntity->GetModelName();
 	m_pFields->modelname = gd_engfuncs.pfnAllocString(pCopyEntity->GetModelName());
 
 	if(!SetModel(pstrModelName))

@@ -33,23 +33,23 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	
 public:
-	Float GetAmplitude( void );
-	Float GetFrequency( void );
-	Float GetDuration( void );
-	Float GetRadius( void );
+	float GetAmplitude( void );
+	float GetFrequency( void );
+	float GetDuration( void );
+	float GetRadius( void );
 
-	void SetAmplitude( Float amplitude );
-	void SetFrequency( Float frequency );
-	void SetDuration( Float duration );
-	void SetRadius( Float radius );
+	void SetAmplitude( float amplitude );
+	void SetFrequency( float frequency );
+	void SetDuration( float duration );
+	void SetRadius( float radius );
 
 private:
-	Float m_amplitude;
-	Float m_frequency;
-	Float m_duration;
-	Float m_radius;
+	float m_amplitude;
+	float m_frequency;
+	float m_duration;
+	float m_radius;
 };
 #endif //ENVSHAKE_H

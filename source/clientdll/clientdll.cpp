@@ -7,10 +7,6 @@ All Rights Reserved.
 ===============================================
 */
 
-#ifdef USE_VLD
-#include <vld.h>
-#endif
-
 #include "includes.h"
 
 #include "vector.h"
@@ -63,7 +59,7 @@ CPlayerMovement gMovement;
 // Step sound object on client
 CStepSound g_stepSound;
 
-// TRUE if we're executing a level change when ClientGameReset is called
+// true if we're executing a level change when ClientGameReset is called
 bool g_isLevelChangeReset = false;
 
 //
@@ -275,14 +271,14 @@ void ClientInitStepSound( void )
 {
 	// Load the file
 	Uint32 filesize = 0;
-	const byte* pfile = cl_filefuncs.pfnLoadFile(FOOTSTEP_SCRIPT_FILE, &filesize);
+	const Byte* pfile = cl_filefuncs.pfnLoadFile(FOOTSTEP_SCRIPT_FILE, &filesize);
 	if(!pfile)
 	{
 		cl_engfuncs.pfnCon_Printf("%s - Could not load '%s'.\n", FOOTSTEP_SCRIPT_FILE);
 		return;
 	}
 
-	if(!g_stepSound.Init(reinterpret_cast<const Char*>(pfile), filesize))
+	if(!g_stepSound.Init(reinterpret_cast<const char*>(pfile), filesize))
 		cl_engfuncs.pfnCon_EPrintf("%s - Failed to initialize '%s': %s.\n", __FUNCTION__, FOOTSTEP_SCRIPT_FILE, g_stepSound.GetInfoString().c_str());
 
 	if(!g_stepSound.IsInfoStringEmpty())
@@ -480,7 +476,7 @@ void CL_AddToTouched( entindex_t hitent, trace_t& trace, const Vector& velocity 
 // @brief
 //
 //=============================================
-void CL_PM_PlaySound( entindex_t entindex, Int32 channel, const Char* psample, Float volume, Float attenuation, Int32 pitch, Int32 flags )
+void CL_PM_PlaySound( entindex_t entindex, Int32 channel, const char* psample, float volume, float attenuation, Int32 pitch, Int32 flags )
 {
 	cl_engfuncs.pfnPlayEntitySound(entindex, channel, psample, volume, attenuation, pitch, flags, 0);
 }
@@ -489,7 +485,7 @@ void CL_PM_PlaySound( entindex_t entindex, Int32 channel, const Char* psample, F
 // @brief
 //
 //=============================================
-void CL_PM_PlayStepSound( entindex_t entindex, const Char* pstrMaterialName, bool stepleft, Float volume, const Vector& origin )
+void CL_PM_PlayStepSound( entindex_t entindex, const char* pstrMaterialName, bool stepleft, float volume, const Vector& origin )
 {
 	// Retreive the step sound to be played
 	CStepSound::foot_t foot = stepleft ? CStepSound::FOOT_LEFT : CStepSound::FOOT_RIGHT;
@@ -534,7 +530,7 @@ void CL_WindowFocusRegained( void )
 // @brief
 //
 //=============================================
-bool CL_AddSubtitle( const Char* pstrSubtitleName, Float duration )
+bool CL_AddSubtitle( const char* pstrSubtitleName, float duration )
 {
 	return gHUD.AddSubtitle(pstrSubtitleName, duration);
 }
@@ -543,7 +539,7 @@ bool CL_AddSubtitle( const Char* pstrSubtitleName, Float duration )
 // @brief
 //
 //=============================================
-void CL_RemoveSubtitle( const Char* pstrSubtitleName )
+void CL_RemoveSubtitle( const char* pstrSubtitleName )
 {
 	gHUD.RemoveSubtitle(pstrSubtitleName);
 }

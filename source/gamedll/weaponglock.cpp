@@ -15,7 +15,7 @@ All Rights Reserved.
 #include "game.h"
 
 // Sequence names for weapon
-const Char* CWeaponGlock::m_sequenceNames[CWeaponGlock::NUM_WEAPON_ANIMATIONS] = 
+const char* CWeaponGlock::m_sequenceNames[CWeaponGlock::NUM_WEAPON_ANIMATIONS] = 
 {
 	"idle1",
 	"idle1_empty",
@@ -43,7 +43,7 @@ const Char* CWeaponGlock::m_sequenceNames[CWeaponGlock::NUM_WEAPON_ANIMATIONS] =
 };
 
 // Weapon view model
-const Char CWeaponGlock::WEAPON_VIEWMODEL[] = "models/v_glock.mdl";
+const char CWeaponGlock::WEAPON_VIEWMODEL[] = "models/v_glock.mdl";
 // Weapon weight
 const Int32 CWeaponGlock::WEAPON_WEIGHT = 20;
 // Weapon slot
@@ -51,37 +51,37 @@ const Int32 CWeaponGlock::WEAPON_SLOT = 1;
 // Weapon slot position
 const Int32 CWeaponGlock::WEAPON_SLOT_POSITION = 0;
 // Default ammo for weapon
-const Uint32 CWeaponGlock::WEAPON_DEFAULT_GIVE = 12;
+const UInt32 CWeaponGlock::WEAPON_DEFAULT_GIVE = 12;
 // Max clip capacity for weapon
-const Uint32 CWeaponGlock::WEAPON_MAX_CLIP = 17;
+const UInt32 CWeaponGlock::WEAPON_MAX_CLIP = 17;
 // Weapon cone id
-const Uint32 CWeaponGlock::WEAPON_CONE_ID = 1;
+const UInt32 CWeaponGlock::WEAPON_CONE_ID = 1;
 
 // w_ model groups
-const Uint32 CWeaponGlock::WGLOCK_SL_GROUP_INDEX = 1;
-const Uint32 CWeaponGlock::WGLOCK_SL_OFF = 0;
-const Uint32 CWeaponGlock::WGLOCK_SL_ON = 1;
+const UInt32 CWeaponGlock::WGLOCK_SL_GROUP_INDEX = 1;
+const UInt32 CWeaponGlock::WGLOCK_SL_OFF = 0;
+const UInt32 CWeaponGlock::WGLOCK_SL_ON = 1;
 
-const Uint32 CWeaponGlock::WGLOCK_FL_GROUP_INDEX = 2;
-const Uint32 CWeaponGlock::WGLOCK_FL_OFF = 0;
-const Uint32 CWeaponGlock::WGLOCK_FL_ON = 1;
+const UInt32 CWeaponGlock::WGLOCK_FL_GROUP_INDEX = 2;
+const UInt32 CWeaponGlock::WGLOCK_FL_OFF = 0;
+const UInt32 CWeaponGlock::WGLOCK_FL_ON = 1;
 
 // v_ model groups
-const Uint32 CWeaponGlock::VGLOCK_SL_GROUP_INDEX = 2;
-const Uint32 CWeaponGlock::VGLOCK_SL_OFF = 0;
-const Uint32 CWeaponGlock::VGLOCK_SL_ON = 1;
+const UInt32 CWeaponGlock::VGLOCK_SL_GROUP_INDEX = 2;
+const UInt32 CWeaponGlock::VGLOCK_SL_OFF = 0;
+const UInt32 CWeaponGlock::VGLOCK_SL_ON = 1;
 
-const Uint32 CWeaponGlock::VGLOCK_FL_GROUP_INDEX = 1;
-const Uint32 CWeaponGlock::VGLOCK_FL_OFF = 0;
-const Uint32 CWeaponGlock::VGLOCK_FL_ON = 1;
+const UInt32 CWeaponGlock::VGLOCK_FL_GROUP_INDEX = 1;
+const UInt32 CWeaponGlock::VGLOCK_FL_OFF = 0;
+const UInt32 CWeaponGlock::VGLOCK_FL_ON = 1;
 
 // Recoil degrade speed
-const Float CWeaponGlock::WEAPON_RECOIL_DEGRADE = 0.8;
+const float CWeaponGlock::WEAPON_RECOIL_DEGRADE = 0.8;
 
 // Silencer item name
-const Char CWeaponGlock::SILENCER_ENTITY_NAME[] = "item_glock_silencer";
+const char CWeaponGlock::SILENCER_ENTITY_NAME[] = "item_glock_silencer";
 // Flashlight item name
-const Char CWeaponGlock::FLASHLIGHT_ENTITY_NAME[] = "item_glock_flashlight";
+const char CWeaponGlock::FLASHLIGHT_ENTITY_NAME[] = "item_glock_flashlight";
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(weapon_glock, CWeaponGlock);
@@ -215,7 +215,7 @@ bool CWeaponGlock::Deploy( void )
 	if(m_isFlashlightActive)
 		m_pPlayer->TurnFlashlightOn(false);
 
-	Uint32 animationIndex;
+	UInt32 animationIndex;
 	if(!m_firstDraw || !m_clip)
 	{
 		if(!m_clip)
@@ -243,9 +243,9 @@ bool CWeaponGlock::Deploy( void )
 //=============================================
 void CWeaponGlock::Holster( void )
 {
-	Uint32 animationIndex = (!m_clip) ? GLOCK_HOLSTER_EMPTY : GLOCK_HOLSTER;
+	UInt32 animationIndex = (!m_clip) ? GLOCK_HOLSTER_EMPTY : GLOCK_HOLSTER;
 
-	const Char* pstrSequenceName = m_sequenceNames[animationIndex];
+	const char* pstrSequenceName = m_sequenceNames[animationIndex];
 	m_nextThinkTime = g_pGameVars->time + GetSequenceTime(pstrSequenceName);
 	SetWeaponAnimation(pstrSequenceName);
 
@@ -301,7 +301,7 @@ void CWeaponGlock::PrimaryAttack( void )
 	m_pPlayer->ApplyDirectAxisPunch( 2, Common::RandomFloat( -1.25, 1.25 ) );
 
 	// Set animation
-	Uint32 animationIndex;
+	UInt32 animationIndex;
 	if(m_isSilenced)
 		animationIndex = (m_clip == 0) ? GLOCK_SHOOT_EMPTY_SILENCED : GLOCK_SHOOT_SILENCED;
 	else
@@ -375,8 +375,8 @@ void CWeaponGlock::WeaponSpecialFunction( void )
 		return;
 
 	// Set animation
-	Uint32 animationIndex;
-	Float silencerTime;
+	UInt32 animationIndex;
+	float silencerTime;
 
 	if(m_isSilenced)
 	{
@@ -409,7 +409,7 @@ void CWeaponGlock::Reload( void )
 	if(m_clip == WEAPON_MAX_CLIP || !m_pPlayer->GetAmmoCount(m_ammoType))
 		return;
 
-	Uint32 animationIndex = (m_clip == 0) ? GLOCK_RELOAD : GLOCK_RELOAD_NOT_EMPTY;
+	UInt32 animationIndex = (m_clip == 0) ? GLOCK_RELOAD : GLOCK_RELOAD_NOT_EMPTY;
 	DefaultReload(WEAPON_MAX_CLIP, m_sequenceNames[animationIndex]);
 }
 
@@ -443,8 +443,8 @@ void CWeaponGlock::Idle( void )
 	if (m_nextIdleTime > g_pGameVars->time)
 		return;
 
-	Float timeMultiplier;
-	Uint32 sequenceIndex;
+	float timeMultiplier;
+	UInt32 sequenceIndex;
 
 	if(!m_playedFidgetAnimation && Common::RandomFloat(0.0, 1.0) >= 0.8)
 	{
@@ -459,7 +459,7 @@ void CWeaponGlock::Idle( void )
 		m_playedFidgetAnimation = false;
 	}
 
-	Float sequenceTime = GetSequenceTime(m_sequenceNames[sequenceIndex]);
+	float sequenceTime = GetSequenceTime(m_sequenceNames[sequenceIndex]);
 	m_nextIdleTime = g_pGameVars->time + sequenceTime * timeMultiplier;
 
 	SetWeaponAnimation( m_sequenceNames[sequenceIndex] );
@@ -469,7 +469,7 @@ void CWeaponGlock::Idle( void )
 // @brief
 //
 //=============================================
-Float CWeaponGlock::GetRecoilDegradeFactor( void )
+float CWeaponGlock::GetRecoilDegradeFactor( void )
 {
 	return WEAPON_RECOIL_DEGRADE;
 }
@@ -493,7 +493,7 @@ void CWeaponGlock::PostThink( void )
 
 	if(m_hasFlashlight && !m_isFlashlightEquipped)
 	{
-		Uint32 animationIndex = (m_clip == 0) ? GLOCK_ADD_FLASHLIGHT_EMPTY : GLOCK_ADD_FLASHLIGHT;
+		UInt32 animationIndex = (m_clip == 0) ? GLOCK_ADD_FLASHLIGHT_EMPTY : GLOCK_ADD_FLASHLIGHT;
 		m_isFlashlightEquipped = true;
 
 		SetViewModelBodyGroup(VGLOCK_FL_GROUP_INDEX, VGLOCK_FL_ON);

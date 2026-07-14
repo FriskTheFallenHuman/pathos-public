@@ -18,13 +18,13 @@ All Rights Reserved.
 #include "r_common.h"
 
 // Edge size 
-const Float CHUDDraw::HUD_EDGE_SIZE = 4;
+const float CHUDDraw::HUD_EDGE_SIZE = 4;
 // Number of verts in VBO for body
-const Uint32 CHUDDraw::NUM_BODY_VERTEXES = 30;
+const UInt32 CHUDDraw::NUM_BODY_VERTEXES = 30;
 // Number of verts in VBO for a quad
-const Uint32 CHUDDraw::NUM_QUAD_VERTEXES = 6;
+const UInt32 CHUDDraw::NUM_QUAD_VERTEXES = 6;
 // Number of verts in VBO
-const Uint32 CHUDDraw::NUM_TOTAL_VERTEXES = CHUDDraw::NUM_BODY_VERTEXES + CHUDDraw::NUM_QUAD_VERTEXES;
+const UInt32 CHUDDraw::NUM_TOTAL_VERTEXES = CHUDDraw::NUM_BODY_VERTEXES + CHUDDraw::NUM_QUAD_VERTEXES;
 
 // Class object definition
 CHUDDraw gHUDDraw;
@@ -39,7 +39,7 @@ CHUDDraw::CHUDDraw( void ):
 	m_screenWidth(0),
 	m_screenHeight(0)
 {
-	for(Uint32 i = 0; i < 4; i++)
+	for(UInt32 i = 0; i < 4; i++)
 		m_alphaMod[i] = 0;
 }
 
@@ -209,7 +209,7 @@ void CHUDDraw::ConstructQuad( hud_vertex_t *pvertexes )
 //=============================================
 void CHUDDraw::ConstructBody( hud_vertex_t *pvertexes ) const
 {
-	Float flaspect = (Float)m_screenHeight/BASE_RESOLUTION_Y;
+	float flaspect = (float)m_screenHeight/BASE_RESOLUTION_Y;
 
 	// left border
 	hud_vertex_t *pquad = pvertexes;
@@ -408,7 +408,7 @@ bool CHUDDraw::SetupDraw( void )
 	CMatrix modelview;
 	modelview.LoadIdentity();
 	modelview.Ortho(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO, 0.1, 100);
-	modelview.Scale(1.0f/(Float)m_screenWidth, 1.0f/(Float)m_screenHeight, 1.0);
+	modelview.Scale(1.0f/(float)m_screenWidth, 1.0f/(float)m_screenHeight, 1.0);
 
 	if(!m_pShader->EnableShader())
 		return false;
@@ -427,7 +427,7 @@ bool CHUDDraw::SetupDraw( void )
 	// Reset color
 	m_color.r = m_color.g = m_color.b = m_color.a = 255;
 
-	for(Uint32 i = 0; i < 4; i++)
+	for(UInt32 i = 0; i < 4; i++)
 		m_alphaMod[i] = 255;
 
 	return true;
@@ -502,7 +502,7 @@ bool CHUDDraw::DrawQuad( en_texture_t *ptexture )
 // @brief
 //
 //=============================================
-bool CHUDDraw::DrawText( const Vector& color, Float alpha, Float x, Float y, const Char *sztext, const font_set_t *pfont )
+bool CHUDDraw::DrawText( const Vector& color, float alpha, float x, float y, const char *sztext, const font_set_t *pfont )
 {
 	FinishDraw();
 
@@ -520,7 +520,7 @@ bool CHUDDraw::DrawText( const Vector& color, Float alpha, Float x, Float y, con
 //
 //
 //=============================================
-void CHUDDraw::SetColor( byte r, byte g, byte b, byte a )
+void CHUDDraw::SetColor( Byte r, Byte g, Byte b, Byte a )
 {
 	m_color.r = r;
 	m_color.g = g;
@@ -532,7 +532,7 @@ void CHUDDraw::SetColor( byte r, byte g, byte b, byte a )
 //
 //
 //=============================================
-void CHUDDraw::SetColor( const Vector& rgb, byte a )
+void CHUDDraw::SetColor( const Vector& rgb, Byte a )
 {
 	m_color.r = rgb.x;
 	m_color.g = rgb.y;
@@ -544,7 +544,7 @@ void CHUDDraw::SetColor( const Vector& rgb, byte a )
 //
 //
 //=============================================
-void CHUDDraw::SetAlphaMod( byte a1, byte a2, byte a3, byte a4 )
+void CHUDDraw::SetAlphaMod( Byte a1, Byte a2, Byte a3, Byte a4 )
 {
 	m_alphaMod[0] = a1;
 	m_alphaMod[1] = a2;
@@ -556,7 +556,7 @@ void CHUDDraw::SetAlphaMod( byte a1, byte a2, byte a3, byte a4 )
 //
 //
 //=============================================
-void CHUDDraw::SetOrigin( Float x, Float y ) 
+void CHUDDraw::SetOrigin( float x, float y ) 
 {
 	m_pShader->SetUniform2f(m_attribs.u_origin, x, y);
 }
@@ -565,7 +565,7 @@ void CHUDDraw::SetOrigin( Float x, Float y )
 //
 //
 //=============================================
-void CHUDDraw::SetSize( Float x, Float y )
+void CHUDDraw::SetSize( float x, float y )
 {
 	m_pShader->SetUniform2f(m_attribs.u_size, x, y);
 }
@@ -574,9 +574,9 @@ void CHUDDraw::SetSize( Float x, Float y )
 // @brief
 //
 //=============================================
-Float CHUDDraw::ScaleX( Float x ) const
+float CHUDDraw::ScaleX( float x ) const
 {
-	Float flaspect = (Float)m_screenHeight/(Float)BASE_RESOLUTION_Y;
+	float flaspect = (float)m_screenHeight/(float)BASE_RESOLUTION_Y;
 	return x*flaspect;
 }
 
@@ -584,9 +584,9 @@ Float CHUDDraw::ScaleX( Float x ) const
 // @brief
 //
 //=============================================
-Float CHUDDraw::ScaleXRelative( Float x ) const
+float CHUDDraw::ScaleXRelative( float x ) const
 {
-	Float flaspect = (Float)m_screenWidth/(Float)BASE_RESOLUTION_X;
+	float flaspect = (float)m_screenWidth/(float)BASE_RESOLUTION_X;
 	return x*flaspect;
 }
 
@@ -594,9 +594,9 @@ Float CHUDDraw::ScaleXRelative( Float x ) const
 // @brief
 //
 //=============================================
-Float CHUDDraw::ScaleY( Float y ) const
+float CHUDDraw::ScaleY( float y ) const
 {
-	Float flaspect = (Float)m_screenHeight/(Float)BASE_RESOLUTION_Y;
+	float flaspect = (float)m_screenHeight/(float)BASE_RESOLUTION_Y;
 	return y*flaspect;
 }
 
@@ -616,7 +616,7 @@ bool CHUDDraw::HasError( void ) const
 // @brief Returns the error message
 //
 //=============================================
-const Char* CHUDDraw::GetError( void ) const
+const char* CHUDDraw::GetError( void ) const
 {
 	if(!m_pShader)
 		return "";

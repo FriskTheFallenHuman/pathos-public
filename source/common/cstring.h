@@ -10,8 +10,6 @@ All Rights Reserved.
 #ifndef CSTRING_H
 #define CSTRING_H
 
-#include <functional>
-
 #include "cstringpool.h"
 
 /*
@@ -34,118 +32,118 @@ public:
 
 private:
 	// Empty string character
-	static Char EMPTY_STRING[];
+	static char EMPTY_STRING[];
 
 public:
 	CString();
-	CString( const Char* pstr );
+	CString( const char* pstr );
 	CString( const CString& str );
-	CString( const Char* pstr, Uint32 length );
-	CString( byte flags );
+	CString( const char* pstr, Uint32 length );
+	CString( Byte flags );
 	~CString();
 	
 public:
 	// Assignment operator
 	CString& operator=(const CString& str);
 	// Comparison operator
-	inline bool operator==(const Char* pstr) const;
+	DO_INLINE bool operator==(const char* pstr) const;
 	// Comparison operator
-	inline bool operator==(const CString& str) const;
+	DO_INLINE bool operator==(const CString& str) const;
 
 	// Comparison operator
-	inline bool operator<(const Char* pstr) const;
+	DO_INLINE bool operator<(const char* pstr) const;
 	// Comparison operator
-	inline bool operator<(const CString& str) const;
+	DO_INLINE bool operator<(const CString& str) const;
 
 	// Comparison operator
-	inline bool operator>(const Char* pstr) const;
+	DO_INLINE bool operator>(const char* pstr) const;
 	// Comparison operator
-	inline bool operator>(const CString& str) const;
+	DO_INLINE bool operator>(const CString& str) const;
 
 	// Byte shift operator
-	inline CString& operator<<(const Char* pstr);
+	DO_INLINE CString& operator<<(const char* pstr);
 	// Byte shift operator
-	inline CString& operator<<(const CString& str);
+	DO_INLINE CString& operator<<(const CString& str);
 	// Byte shift operator
-	inline CString& operator<<(Char c);
+	DO_INLINE CString& operator<<(char c);
 	// Byte shift operator
-	inline CString& operator<<(Int32 i);
+	DO_INLINE CString& operator<<(Int32 i);
 	// Byte shift operator
-	inline CString& operator<<(Uint32 i);
+	DO_INLINE CString& operator<<(Uint32 i);
 	// Byte shift operator
-	inline CString& operator<<(Float f);
+	DO_INLINE CString& operator<<(float f);
 	// Byte shift operator
-	inline CString& operator<<(Double d);
+	DO_INLINE CString& operator<<(double d);
 	// Plus equal operator
-	inline CString& operator+=(const Char* pstr);
+	DO_INLINE CString& operator+=(const char* pstr);
 	// Plus equal operator
-	inline CString& operator+=(const CString& str);
+	DO_INLINE CString& operator+=(const CString& str);
 	// Plus equal operator
-	inline CString& operator+=(Char c);
+	DO_INLINE CString& operator+=(char c);
 	// Plus equal operator
-	inline CString& operator+=(Int32 i);
+	DO_INLINE CString& operator+=(Int32 i);
 	// Plus equal operator
-	inline CString& operator+=(Uint32 i);
+	DO_INLINE CString& operator+=(Uint32 i);
 	// Plus equal operator
-	inline CString& operator+=(Float f);
+	DO_INLINE CString& operator+=(float f);
 	// Plus equal operator
-	inline CString& operator+=(Double d);
+	DO_INLINE CString& operator+=(double d);
 	// Plus operator
-	inline CString operator+(const Char* pstr);
+	DO_INLINE CString operator+(const char* pstr);
 	// Plus operator
-	inline CString operator+(const CString& str);
+	DO_INLINE CString operator+(const CString& str);
 	// Plus operator
-	inline CString operator+(Char c);
+	DO_INLINE CString operator+(char c);
 	// Plus operator
-	inline CString operator+(Int32 i);
+	DO_INLINE CString operator+(Int32 i);
 	// Plus operator
-	inline CString operator+(Uint32 i);
+	DO_INLINE CString operator+(Uint32 i);
 	// Plus operator
-	inline CString operator+(Float f);
+	DO_INLINE CString operator+(float f);
 	// Plus operator
-	inline CString operator+(Double d);
+	DO_INLINE CString operator+(double d);
 	// Indexing operator
-	inline Char operator[] (Uint32 n) const;
+	DO_INLINE char operator[] (Uint32 n) const;
 
 public:
 	// Returns the raw string
-	inline const Char* c_str( void ) const;
+	DO_INLINE const char* c_str( void ) const;
 	// Returns the string length
-	inline Uint32 length( void ) const;
+	DO_INLINE Uint32 length( void ) const;
 	// Returns if the string is empty
-	inline bool empty( void ) const;
+	DO_INLINE bool empty( void ) const;
 	// Returns if the string is empty
-	inline void clear( void );
+	DO_INLINE void clear( void );
 	// Assigns a string to use
-	inline void assign( const Char* pstr, Uint32 num );
+	DO_INLINE void assign( const char* pstr, Uint32 num );
 	// Finds the first occurrence of a string in the string
-	inline Int32 find( Uint32 offset, const Char* psubstr, bool caseinsensitive = false );
+	DO_INLINE Int32 find( Uint32 offset, const char* psubstr, bool caseinsensitive = false );
 	// Erases part of the string
-	inline void erase( Uint32 begin, Uint32 numremove );
+	DO_INLINE void erase( Uint32 begin, Uint32 numremove );
 	// Converts characters to lowercase
-	inline void tolower( void );
+	DO_INLINE void tolower( void );
 	// Inserts a substrinct into the string
-	inline void insert( Uint32 begin, const Char* pstrsubstr );
+	DO_INLINE void insert( Uint32 begin, const char* pstrsubstr );
 	// Replaces slashes with PATH_SLASH_CHAR
-	inline void replaceslashes( void );
+	DO_INLINE void replaceslashes( void );
 
 public:
 	// Appends a string to the current one
-	void Append( const Char* psrc );
+	void Append( const char* psrc );
 	// Appends a string to the current one
-	void Append( Char c );
+	void Append( char c );
 	// Appends a string to the current one
 	void Append( Int32 i );
 	// Appends a string to the current one
 	void Append( Uint32 i );
 	// Appends a string to the current one
-	void Append( Float f );
+	void Append( float f );
 	// Appends a string to the current one
-	void Append( Double d );
+	void Append( double d );
 
 public:
 	// Sets data for the string
-	virtual void setdata( const Char* pString );
+	virtual void setdata( const char* pString );
 
 private:
 	// Ensures work buffer is of adequate size
@@ -153,17 +151,17 @@ private:
 
 private:
 	// Pointer to string
-	const Char* m_pString;
+	const char* m_pString;
 	// Length of the string
 	Uint32 m_stringLength;
 	// Link to current string link in pool
 	CStringPool::cachestring_t* m_pPoolCacheEntry;
 	// Flags for string
-	byte m_flags;
+	Byte m_flags;
 
 private:
 	// Work buffer
-	static Char* g_pWorkBuffer;
+	static char* g_pWorkBuffer;
 	// Work buffer size
 	static Uint32 g_workBufferSize;
 	// Work buffer mutex
@@ -180,12 +178,12 @@ struct std::hash<CString>
 {
 	std::size_t operator()( const CString& k ) const
 	{
-		return std::hash<const Char*>()(k.c_str());
+		return std::hash<const char*>()(k.c_str());
 	}
 };
 
 // For adding strings together
-extern inline CString operator + ( const CString& lhs, const CString& rhs );
+extern DO_INLINE CString operator + ( const CString& lhs, const CString& rhs );
 
 #include "cstring_inline.hpp"
 #endif // CSTRING_H

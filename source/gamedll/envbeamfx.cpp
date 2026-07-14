@@ -185,7 +185,7 @@ bool CEnvBeamFX::KeyValue( const keyvalue_t& kv )
 // @brief Calls use function
 //
 //=============================================
-void CEnvBeamFX::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvBeamFX::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!m_repeatMaxDelay)
 	{
@@ -250,10 +250,10 @@ void CEnvBeamFX::CreateEffect( void )
 {
 	Vector endPosition = m_pState->origin;
 
-	Float realDuration = m_life * 0.1;
+	float realDuration = m_life * 0.1;
 	endPosition.z += m_beamRadius * (1 / realDuration);
 
-	const Char* pstrModelName = gd_engfuncs.pfnGetString(m_spriteModelName);
+	const char* pstrModelName = gd_engfuncs.pfnGetString(m_spriteModelName);
 	if(!pstrModelName)
 		return;
 

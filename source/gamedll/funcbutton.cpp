@@ -13,17 +13,17 @@ All Rights Reserved.
 #include "funcdoor.h"
 
 // Locked sound wait time
-const Float CFuncButton::LOCKED_SOUND_WAIT_TIME = 0.5;
+const float CFuncButton::LOCKED_SOUND_WAIT_TIME = 0.5;
 // Default button speed
-const Float CFuncButton::DEFAULT_SPEED = 40;
+const float CFuncButton::DEFAULT_SPEED = 40;
 // Default button wait time
-const Float CFuncButton::DEFAULT_WAIT_TIME = 1.0;
+const float CFuncButton::DEFAULT_WAIT_TIME = 1.0;
 // Default button lip value
-const Float CFuncButton::DEFAULT_LIP_VALUE = 4.0;
+const float CFuncButton::DEFAULT_LIP_VALUE = 4.0;
 // Legacy button sound count
-const Uint32 CFuncButton::NUM_LEGACY_BUTTON_SOUNDS = 27;
+const UInt32 CFuncButton::NUM_LEGACY_BUTTON_SOUNDS = 27;
 // Legacy button sounds
-const Char* CFuncButton::LEGACY_BUTTON_SOUNDS[NUM_LEGACY_BUTTON_SOUNDS] = 
+const char* CFuncButton::LEGACY_BUTTON_SOUNDS[NUM_LEGACY_BUTTON_SOUNDS] = 
 {
 	"common/null.wav",
 	"buttons/button1.wav",
@@ -251,7 +251,7 @@ bool CFuncButton::Spawn( void )
 // @brief
 //
 //=============================================
-void CFuncButton::ButtonUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncButton::ButtonUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Don't toggle if moving
 	if(m_toggleState == TSTATE_GOING_UP || m_toggleState == TSTATE_GOING_DOWN)
@@ -292,10 +292,10 @@ void CFuncButton::SetDelayOnPairs( void )
 	if(!pstrPairName || !qstrlen(pstrPairName))
 		return;
 
-	Float waitTime = m_waitTime;
+	float waitTime = m_waitTime;
 	if(HasSpawnFlag(FL_MOVE) && !m_stayPushed)
 	{
-		Float travelTime = (m_position1 - m_position2).Length()/m_pState->speed;
+		float travelTime = (m_position1 - m_position2).Length()/m_pState->speed;
 		waitTime += travelTime;
 	}
 
@@ -321,7 +321,7 @@ void CFuncButton::SetDelayOnPairs( void )
 // @brief
 //
 //=============================================
-void CFuncButton::SetPairedButtonDelay( Float delayTime )
+void CFuncButton::SetPairedButtonDelay( float delayTime )
 {
 	if(m_stayPushed)
 		m_toggleState = TSTATE_AT_TOP;
@@ -390,7 +390,7 @@ void CFuncButton::SetSpawnProperties( void )
 	m_position1 = m_pState->origin;
 
 	// -2 is because the mins/maxs is padded by 1 on both sides
-	static const Float correction = 0;
+	static const float correction = 0;
 	m_position2 = m_position1 + (
 		m_pState->movedir * (fabs( m_pState->movedir.x * (m_pState->size.x-correction) ) 
 		+ fabs( m_pState->movedir.y * (m_pState->size.y-correction) ) 
@@ -420,7 +420,7 @@ void CFuncButton::SparkThink( void )
 	CString soundfile;
 	soundfile << "misc/spark" << (Int32)Common::RandomLong(1, 6) << ".wav";
 
-	Float volume = Common::RandomFloat(0.1, 0.6);
+	float volume = Common::RandomFloat(0.1, 0.6);
 	Util::EmitAmbientSound(m_pState->origin, soundfile.c_str(), volume);
 
 	Vector position = (m_pState->absmin+m_pState->absmax)*0.5;
@@ -509,7 +509,7 @@ void CFuncButton::ReturnBack( void )
 	// Re-trigger multisources(why does HL need this?)
 	if(m_pFields->target != NO_STRING_VALUE)
 	{
-		const Char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
+		const char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
 		if(pstrTarget && qstrlen(pstrTarget) > 0)
 		{
 			edict_t* pedict = nullptr;
@@ -657,7 +657,7 @@ usableobject_type_t CFuncButton::GetUsableObjectType( void )
 	bool hasValidTarget = false;
 	if(m_pFields->target != NO_STRING_VALUE)
 	{
-		const Char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
+		const char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
 		if(qstrcicmp(pstrTarget, "null"))
 		{
 			edict_t* pedict = Util::FindEntityByTargetName(nullptr, pstrTarget);
@@ -669,7 +669,7 @@ usableobject_type_t CFuncButton::GetUsableObjectType( void )
 	bool isTargetedByChangeTarget = false;
 	if(!hasValidTarget)
 	{
-		const Char* pstrTargetName = GetTargetName();
+		const char* pstrTargetName = GetTargetName();
 		edict_t* pedict = nullptr;
 		while(true)
 		{

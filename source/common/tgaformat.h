@@ -24,17 +24,17 @@ enum tga_datatype_t
 
 struct tga_header_t
 {
-	byte	idlength;
-	byte	colourmaptype;
-	byte	datatypecode;
-	byte	colourmaporigin[2]; //how come you have short ints there?
-	byte	colourmaplength[2];
-	byte	colourmapdepth;
-	byte	x_origin[2];
-	byte	y_origin[2];
-	byte	width[2];
-	byte	height[2];
-	byte	bitsperpixel;
-	byte	imagedescriptor;
+	Byte	idlength;
+	Byte	colourmaptype;
+	Byte	datatypecode;
+	Byte	colourmaporigin[2]; //how come you have short ints there?
+	Byte	colourmaplength[2];
+	Byte	colourmapdepth;
+	Byte	x_origin[2];
+	Byte	y_origin[2];
+	Byte	width[2];
+	Byte	height[2];
+	Byte	bitsperpixel;
+	Byte	imagedescriptor;
 };
 #endif //TGAFORMAT_H

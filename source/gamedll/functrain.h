@@ -20,9 +20,9 @@ class CFuncTrain : public CPlatTrainEntity
 {
 public:
 	// Default train speed
-	static const Float DEFAULT_SPEED;
+	static const float DEFAULT_SPEED;
 	// Default train volume
-	static const Float DEFAULT_VOLUME;
+	static const float DEFAULT_VOLUME;
 	// Train center correction offset
 	static const Vector TRAIN_CENTER_OFFSET;
 
@@ -49,11 +49,11 @@ public:
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	virtual void InitEntity( void ) override;
 	virtual void OnOverrideEntity( void ) override;
-	virtual void Reroute( CBaseEntity* pTarget, Float speed ) override;
+	virtual void Reroute( CBaseEntity* pTarget, float speed ) override;
 	virtual void MoveTrainToPathCorner( CBaseEntity* pPathCorner, CBaseEntity* pTargetingPathCorner ) override;
 	virtual bool IsFuncTrainEntity( void ) override { return true; }
 
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void CallBlocked( CBaseEntity* pBlocker ) override;
 
 public:

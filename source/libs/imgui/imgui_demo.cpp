@@ -1069,7 +1069,7 @@ static void DemoWindowWidgetsBasic()
                 "USER:\n"
                 "Hold Shift or use mouse to select text.\n"
                 "Ctrl+Left/Right to word jump.\n"
-                "Ctrl+A or Double-Click to select all.\n"
+                "Ctrl+A or double-Click to select all.\n"
                 "Ctrl+X,Ctrl+C,Ctrl+V for clipboard.\n"
                 "Ctrl+Z to undo, Ctrl+Y/Ctrl+Shift+Z to redo.\n"
                 "Escape to revert.\n\n"
@@ -1110,7 +1110,7 @@ static void DemoWindowWidgetsBasic()
             ImGui::SameLine(); HelpMarker(
                 "Click and drag to edit value.\n"
                 "Hold Shift/Alt for faster/slower edit.\n"
-                "Double-Click or Ctrl+Click to input value.");
+                "double-Click or Ctrl+Click to input value.");
             ImGui::DragInt("drag int 0..100", &i2, 1, 0, 100, "%d%%", ImGuiSliderFlags_AlwaysClamp);
             ImGui::DragInt("drag int wrap 100..200", &i3, 1, 100, 200, "%d", ImGuiSliderFlags_WrapAround);
 
@@ -1286,7 +1286,7 @@ static void DemoWindowWidgetsColorAndPickers()
         ImGui::ColorEdit4("MyColor##2", (float*)&color, ImGuiColorEditFlags_DisplayHSV | base_flags);
 
         IMGUI_DEMO_MARKER("Widgets/Color/ColorEdit (float display)");
-        ImGui::Text("Color widget with Float Display:");
+        ImGui::Text("Color widget with float Display:");
         ImGui::ColorEdit4("MyColor##2f", (float*)&color, ImGuiColorEditFlags_Float | base_flags);
 
         IMGUI_DEMO_MARKER("Widgets/Color/ColorButton (with Picker)");
@@ -1421,7 +1421,7 @@ static void DemoWindowWidgetsColorAndPickers()
             "encouraging you to persistently save values that aren't forward-compatible.");
         if (ImGui::Button("Default: Uint8 + HSV + Hue Bar"))
             ImGui::SetColorEditOptions(ImGuiColorEditFlags_Uint8 | ImGuiColorEditFlags_DisplayHSV | ImGuiColorEditFlags_PickerHueBar);
-        if (ImGui::Button("Default: Float + HDR + Hue Wheel"))
+        if (ImGui::Button("Default: float + HDR + Hue Wheel"))
             ImGui::SetColorEditOptions(ImGuiColorEditFlags_Float | ImGuiColorEditFlags_HDR | ImGuiColorEditFlags_PickerHueWheel);
 
         // Always display a small version of both types of pickers
@@ -2809,7 +2809,7 @@ struct ExampleDualListBox
                             // FIXME-MULTISELECT: Dual List Box: Transfer focus
                             if (ImGui::IsKeyPressed(ImGuiKey_Enter) || ImGui::IsKeyPressed(ImGuiKey_KeypadEnter))
                                 request_move_selected = side;
-                            if (ImGui::IsMouseDoubleClicked(0)) // FIXME-MULTISELECT: Double-click on multi-selection?
+                            if (ImGui::IsMouseDoubleClicked(0)) // FIXME-MULTISELECT: double-click on multi-selection?
                                 request_move_selected = side;
                         }
                     }
@@ -4586,7 +4586,7 @@ static void DemoWindowLayout()
         // Child 3: manual-resize
         ImGui::SeparatorText("Manual-resize");
         {
-            HelpMarker("Drag bottom border to resize. Double-click bottom border to auto-fit to vertical contents.");
+            HelpMarker("Drag bottom border to resize. double-click bottom border to auto-fit to vertical contents.");
             //if (ImGui::Button("Set Height to 200"))
             //    ImGui::SetNextWindowSize(ImVec2(-FLT_MIN, 200.0f));
 
@@ -6087,7 +6087,7 @@ static void DemoWindowTables()
         HelpMarker(
             "Using _Resizable + _SizingFixedFit flags.\n"
             "Fixed-width columns generally makes more sense if you want to use horizontal scrolling.\n\n"
-            "Double-click a column border to auto-fit the column to its contents.");
+            "double-click a column border to auto-fit the column to its contents.");
         PushStyleCompact();
         static ImGuiTableFlags flags = ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_Resizable | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV | ImGuiTableFlags_ContextMenuInBody;
         ImGui::CheckboxFlags("ImGuiTableFlags_NoHostExtendX", &flags, ImGuiTableFlags_NoHostExtendX);
@@ -8909,7 +8909,7 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
 void ImGui::ShowUserGuide()
 {
     ImGuiIO& io = GetIO();
-    BulletText("Double-click on title bar to collapse window.");
+    BulletText("double-click on title bar to collapse window.");
     BulletText(
         "Click and drag on lower corner or border to resize window.\n"
         "(double-click to auto fit window to its contents)");

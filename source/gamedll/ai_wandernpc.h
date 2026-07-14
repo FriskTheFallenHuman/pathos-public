@@ -53,25 +53,25 @@ class CWanderNPC : public CTalkNPC
 {
 public:
 	// Speed at which tiredness fades
-	static const Float WANDERNPC_REST_SPEED;
+	static const float WANDERNPC_REST_SPEED;
 	// Time after which we'll try to find the player to talk to him
-	static const Float WANDERNPC_PLAYER_ABSENCE_TIME_TRESHOLD;
+	static const float WANDERNPC_PLAYER_ABSENCE_TIME_TRESHOLD;
 	// Amount of tiredness after which we'll try to sit down to rest
-	static const Float WANDERNPC_TIREDNESS_TRESHOLD;
+	static const float WANDERNPC_TIREDNESS_TRESHOLD;
 	// Maximum tiredness we're willing to take
-	static const Float WANDERNPC_TIREDNESS_LIMIT;
+	static const float WANDERNPC_TIREDNESS_LIMIT;
 	// Speed at which the NPC tires
-	static const Float WANDERNPC_TIRE_SPEED;
+	static const float WANDERNPC_TIRE_SPEED;
 	// Distance at which the player is considered to be "close"
-	static const Float WANDERNPC_PLAYER_CLOSE_DISTANCE;
+	static const float WANDERNPC_PLAYER_CLOSE_DISTANCE;
 	// Minimum distance between node destinations for wander npcs
-	static const Float WANDERNPC_MIN_DESTINATION_DISTANCE;
+	static const float WANDERNPC_MIN_DESTINATION_DISTANCE;
 	// Minimum distance to a wander spot
-	static const Float WANDERNPC_MIN_WANDER_DISTANCE;
+	static const float WANDERNPC_MIN_WANDER_DISTANCE;
 	// Maximum distance to a wander spot
-	static const Float WANDERNPC_MAX_WANDER_DISTANCE;
+	static const float WANDERNPC_MAX_WANDER_DISTANCE;
 	// Max retries before we give up on finding a destination
-	static const Uint32 WANDERNPC_MAX_RETRIES;
+	static const UInt32 WANDERNPC_MAX_RETRIES;
 
 public:
 	explicit CWanderNPC( edict_t* pedict );
@@ -120,17 +120,17 @@ public:
 
 public:
 	// Finds a wander destination
-	bool FindWanderDestination( wandernpc_dest_type_t type, Uint32 numTries );
+	bool FindWanderDestination( wandernpc_dest_type_t type, UInt32 numTries );
 	// Tells if a node is available for wandering
 	bool IsWanderNodeAvailable( Int32 nodeIndex ) const;
 
 protected:
 	// Time until we wander again
-	Double m_nextWanderTime;
+	double m_nextWanderTime;
 	// Last time we saw the player
-	Double m_wanderLastPlayerSightTime;
+	double m_wanderLastPlayerSightTime;
 	// Tiredness factor
-	Float m_tirednessFactor;
+	float m_tirednessFactor;
 
 	// Node region name(if any)
 	string_t m_nodeRegionName;
@@ -139,9 +139,9 @@ protected:
 	// Last player origin we checked at
 	Vector m_lastWanderPlayerOrigin;
 
-	// TRUE if resting
+	// true if resting
 	bool m_isResting;
-	// TRUE if npc should wander
+	// true if npc should wander
 	bool m_shouldWander;
 };
 #endif //AI_WANDERNPC_H

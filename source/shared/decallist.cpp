@@ -32,14 +32,14 @@ CDecalList::~CDecalList( void )
 //====================================
 //
 //====================================
-bool CDecalList::LoadDecalList( const Char* pfile, Uint32 isize )
+bool CDecalList::LoadDecalList( const char* pfile, UInt32 isize )
 {
 	// Clear this
 	if(!m_errorString.empty())
 		m_errorString.clear();
 
-	Char token[MAX_PARSE_LENGTH];
-	const Char* pscan = pfile;
+	char token[MAX_PARSE_LENGTH];
+	const char* pscan = pfile;
 	while( pscan && (pscan - pfile) < isize )
 	{
 		pscan = Common::Parse(pscan, token);
@@ -108,10 +108,10 @@ bool CDecalList::LoadDecalList( const Char* pfile, Uint32 isize )
 	}
 
 	// Set group pts for the entries
-	for(Uint32 i = 0; i < m_decalGroupsArray.size(); i++)
+	for(UInt32 i = 0; i < m_decalGroupsArray.size(); i++)
 	{
 		decalgroup_t *pgroup = &m_decalGroupsArray[i];
-		for(Uint32 j = 0; j < pgroup->entries.size(); j++)
+		for(UInt32 j = 0; j < pgroup->entries.size(); j++)
 			pgroup->entries[j].pgroup = pgroup;
 	}
 
@@ -132,9 +132,9 @@ void CDecalList::Clear( void )
 //====================================
 //
 //====================================
-decalgroupentry_t *CDecalList::GetRandom( const Char *szgroupname )
+decalgroupentry_t *CDecalList::GetRandom( const char *szgroupname )
 {
-	for(Uint32 i = 0; i < m_decalGroupsArray.size(); i++)
+	for(UInt32 i = 0; i < m_decalGroupsArray.size(); i++)
 	{
 		if(!qstrcmp(m_decalGroupsArray[i].name, szgroupname))
 		{
@@ -152,12 +152,12 @@ decalgroupentry_t *CDecalList::GetRandom( const Char *szgroupname )
 //====================================
 //
 //====================================
-decalgroupentry_t *CDecalList::GetByName( const Char *szdecalname )
+decalgroupentry_t *CDecalList::GetByName( const char *szdecalname )
 {
-	for(Uint32 i = 0; i < m_decalGroupsArray.size(); i++)
+	for(UInt32 i = 0; i < m_decalGroupsArray.size(); i++)
 	{
 		decalgroup_t *pgroup = &m_decalGroupsArray[i];
-		for(Uint32 j = 0; j < pgroup->entries.size(); j++)
+		for(UInt32 j = 0; j < pgroup->entries.size(); j++)
 		{
 			if(!qstrcmp(pgroup->entries[j].name, szdecalname))
 			{
@@ -173,9 +173,9 @@ decalgroupentry_t *CDecalList::GetByName( const Char *szdecalname )
 //====================================
 //
 //====================================
-decalgroup_t* CDecalList::GetGroup( const Char *szgroupname )
+decalgroup_t* CDecalList::GetGroup( const char *szgroupname )
 {
-	for(Uint32 i = 0; i < m_decalGroupsArray.size(); i++)
+	for(UInt32 i = 0; i < m_decalGroupsArray.size(); i++)
 	{
 		decalgroup_t *pgroup = &m_decalGroupsArray[i];
 		if(!qstrcmp(pgroup->name, szgroupname))
@@ -188,7 +188,7 @@ decalgroup_t* CDecalList::GetGroup( const Char *szgroupname )
 //====================================
 //
 //====================================
-decalgroup_t* CDecalList::GetGroup( Uint32 index )
+decalgroup_t* CDecalList::GetGroup( UInt32 index )
 {
 	if(index >= m_decalGroupsArray.size())
 		return nullptr;
@@ -199,7 +199,7 @@ decalgroup_t* CDecalList::GetGroup( Uint32 index )
 //====================================
 //
 //====================================
-Uint32 CDecalList::GetNbGroups( void ) const
+UInt32 CDecalList::GetNbGroups( void ) const
 {
 	return m_decalGroupsArray.size();
 }

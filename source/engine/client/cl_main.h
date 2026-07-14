@@ -10,8 +10,6 @@ All Rights Reserved.
 #ifndef CL_MAIN_H
 #define CL_MAIN_H
 
-#include <unordered_map>
-
 #include "sv_shared.h"
 #include "cldll_interface.h"
 #include "cl_entity.h"
@@ -44,23 +42,23 @@ extern CCVar* g_pCvarName;
 extern CCVar* g_pCvarPredictiton;
 
 // Usercmd history allocation size
-static constexpr Uint32 USERCMD_HISTORY_ALLOC_SIZE = 1024;
+static constexpr UInt32 USERCMD_HISTORY_ALLOC_SIZE = 1024;
 // Extrainfo allocation size
-static constexpr Uint32 EXTRAINFO_ALLOC_SIZE = 128;
+static constexpr UInt32 EXTRAINFO_ALLOC_SIZE = 128;
 // Max entity lights
-static constexpr Uint32 MAX_ENTITY_LIGHTS = 256;
+static constexpr UInt32 MAX_ENTITY_LIGHTS = 256;
 // Particle blocker alloc size
-static constexpr Uint32 PARTICLEBLOCKER_ALLOC_SIZE = 16;
+static constexpr UInt32 PARTICLEBLOCKER_ALLOC_SIZE = 16;
 
 // Server dll path
 #ifdef _64BUILD
-static const Char CLIENT_DLL_PATH[] = "dlls/client_x64.dll";
+static const char CLIENT_DLL_PATH[] = "dlls/client_x64.dll";
 #else
-static const Char CLIENT_DLL_PATH[] = "dlls/client_x86.dll";
+static const char CLIENT_DLL_PATH[] = "dlls/client_x86.dll";
 #endif
 
 // Datatype for ClientDLLInit function in the game dll
-typedef bool (*pfnClientDLLInit_t)( Uint32 version, cldll_funcs_t& dllFuncs, const trace_interface_t& traceFuncs, const file_interface_t& fileFuncs, const cldll_engfuncs_t& engFuncs, const cl_efxapi_t& efxAPI, const r_interface_t& renderFuncs );
+typedef bool (*pfnClientDLLInit_t)( UInt32 version, cldll_funcs_t& dllFuncs, const trace_interface_t& traceFuncs, const file_interface_t& fileFuncs, const cldll_engfuncs_t& engFuncs, const cl_efxapi_t& efxAPI, const r_interface_t& renderFuncs );
 
 enum clconnstate_t
 {
@@ -99,7 +97,7 @@ struct cl_resource_t
 	Int32 fileid;
 	// Server-side index for sounds
 	Int32 svindex;
-	// TRUE if missing
+	// true if missing
 	bool missing;
 };
 
@@ -120,7 +118,7 @@ struct cl_download_t
 };
 
 // Datatype for uermsg read function on client(doesn't need edict ptr)
-typedef bool (*pfnCLUserMsg_t)( const Char* pstrName, const byte* pdata, Uint32 msgsize );
+typedef bool (*pfnCLUserMsg_t)( const char* pstrName, const Byte* pdata, UInt32 msgsize );
 
 struct cl_usermsgfunction_t
 {
@@ -132,7 +130,7 @@ struct cl_usermsgfunction_t
 	// Message name
 	CString name;
 	// Server-side ID
-	Uint32 id;
+	UInt32 id;
 
 	// pointer to function
 	pfnCLUserMsg_t pfnReadMsg;
@@ -149,12 +147,12 @@ struct cl_net_t
 		pnet(nullptr)
 		{}
 
-	// TRUE if we're attempting to connect
+	// true if we're attempting to connect
 	bool connecting;
 	// Number of times we tried to connect
 	Int32 numretries;
 	// Next time until we retry
-	Float nextretrytime;
+	float nextretrytime;
 
 	// Holds any active downloads
 	cl_download_t download;
@@ -165,9 +163,9 @@ struct cl_net_t
 	// List of resources
 	CLinkedList<cl_resource_t> resourcestlist;
 	// Number of missing resources
-	Uint32 nummissingresources;
+	UInt32 nummissingresources;
 	// Number of downloaded resources
-	Uint32 numdownloadedresources;
+	UInt32 numdownloadedresources;
 
 	// Decal cache array
 	CArray<decalcache_t> decalcache;
@@ -192,7 +190,7 @@ struct entitylight_t
 		attachment(-1)
 		{}
 
-	Double die;
+	double die;
 	Int32 key;
 	Int32 attachment;
 
@@ -229,7 +227,7 @@ struct clientstate_t
 	}
 
 	// client index on server
-	Uint32 clientindex;
+	UInt32 clientindex;
 	// Client's state
 	clconnstate_t cl_state;
 	// true if we got any client data
@@ -244,19 +242,19 @@ struct clientstate_t
 	bool hasplayerentitydata;
 
 	// Time we pinged the server
-	Double cl_pingtime;
+	double cl_pingtime;
 	// Current time
-	Double cl_time;
+	double cl_time;
 	// Previous frame's time
-	Double cl_oldtime;
+	double cl_oldtime;
 	// Server client time
-	Double cl_clsvtime;
+	double cl_clsvtime;
 	// frametime
-	Double frametime;
+	double frametime;
 	// Parse count for client
-	Uint64 parsecount;
+	UInt64 parsecount;
 	// Frame count for client processing
-	Uint64 framecount;
+	UInt64 framecount;
 
 	// entities array
 	CArray<cl_entity_t> entities;
@@ -271,7 +269,7 @@ struct clientstate_t
 	// extrainfos for entities
 	CArray<entity_extrainfo_t*> entityextrainfos;
 	// Number of extrainfos in use
-	Uint32 numextrainfos;
+	UInt32 numextrainfos;
 
 	// Client related data
 	clientinfo_t clinfo;
@@ -280,16 +278,16 @@ struct clientstate_t
 	cl_net_t netinfo;
 
 	// Max clients on server
-	Uint32 maxclients;
+	UInt32 maxclients;
 
 	// Last sent usercmd index
-	Uint64 curusercmdidx;
+	UInt64 curusercmdidx;
 	// Last usercmd sent to server
 	usercmd_t cmd;
 	// Usercmd history
 	CArray<usercmd_t> usercmdhistory;
 	// Number of kept usercmds
-	Uint32 usercmdhistorynum;
+	UInt32 usercmdhistorynum;
 
 	// Client DLL handle
 	void* pdllhandle;
@@ -308,12 +306,12 @@ struct clientstate_t
 	// association of map textures/material scripts
 	CArray<maptexturematerial_t> mapmaterialfiles;
 	// material name->index mappings
-	std::unordered_map<CString, Uint32> mapmaterialfilesnamemap;
+	std::unordered_map<CString, UInt32> mapmaterialfilesnamemap;
 
 	// association of map textures/material scripts
 	CArray<CArray<maptexturematerial_t>> modelmaterialfilesarray;
 	// material name->index mappings
-	CArray<std::unordered_map<CString, Uint32>> modelmaterialfilesnamemaparray;
+	CArray<std::unordered_map<CString, UInt32>> modelmaterialfilesnamemaparray;
 
 	// Entity lights
 	entitylight_t entitylights[MAX_ENTITY_LIGHTS];
@@ -333,7 +331,7 @@ extern void CL_UpdateSound( void );
 extern void CL_SendCmd( void );
 extern bool CL_InitGame( void );
 
-extern bool CL_EstablishConnection( const Char* pstrhost, bool reconnect = false );
+extern bool CL_EstablishConnection( const char* pstrhost, bool reconnect = false );
 extern void CL_Disconnect( bool clearserver = true, bool clearloadingplaque = true );
 extern void CL_InitCommands( void );
 
@@ -342,7 +340,7 @@ extern bool CL_CanPlayGameSounds( void );
 extern bool CL_IsHostClient( void );
 extern bool CL_CheckGameReady( void );
 
-extern void CL_CleanUserCmdHistory( Uint64 lastsvusercmdindex );
+extern void CL_CleanUserCmdHistory( UInt64 lastsvusercmdindex );
 extern void CL_SendHeartbeat( bool prompt );
 
 extern entity_extrainfo_t* CL_GetEntityExtraData( cl_entity_t* pentity );
@@ -352,16 +350,16 @@ extern void CL_ResetLighting( void );
 extern bool CL_AddTempEntity( cl_entity_t *entity );
 extern void CL_ClearEntities( void );
 
-extern void CL_ServerCommand( const Char* pstrCommand );
-extern void CL_ClientCommand( const Char* pstrCommand );
+extern void CL_ServerCommand( const char* pstrCommand );
+extern void CL_ClientCommand( const char* pstrCommand );
 
-extern void CL_PrecacheFlexScript( enum flextypes_t npctype, const Char* pstrscript );
-extern void CL_SetFlexScript( entindex_t entindex, const Char* pstrscript );
+extern void CL_PrecacheFlexScript( enum flextypes_t npctype, const char* pstrscript );
+extern void CL_SetFlexScript( entindex_t entindex, const char* pstrscript );
 extern void CL_LinkMapTextureMaterials( CArray<CString>& wadList );
 extern void CL_LinkModelTextureMaterials( void );
 extern void CL_UpdateAttachments( cl_entity_t* pentity );
 
-extern Uint32 CL_GetMaxClients( void );
+extern UInt32 CL_GetMaxClients( void );
 extern void CL_UpdateEntityLights( void );
 extern void CL_UpdateParentedEntities( void );
 extern void CL_NotifyLevelChange( void );

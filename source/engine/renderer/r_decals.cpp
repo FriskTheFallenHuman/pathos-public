@@ -36,9 +36,9 @@ All Rights Reserved.
 //
 
 // Distance which decals trace against
-const Float CDecalManager::DECAL_CHECK_DIST = 1;
+const float CDecalManager::DECAL_CHECK_DIST = 1;
 // Decal texture folder path
-const Char CDecalManager::DECAL_TEXTURE_PATH[] = "decals/";
+const char CDecalManager::DECAL_TEXTURE_PATH[] = "decals/";
 
 // Class object
 CDecalManager gDecals;
@@ -74,8 +74,8 @@ void CDecalManager::Init( void )
 //====================================
 bool CDecalManager::InitGame( void )
 {
-	Uint32 filesize = 0;
-	const Char* pfile = reinterpret_cast<const Char*>(FL_LoadFile(DECAL_LIST_FILE_PATH, &filesize));
+	UInt32 filesize = 0;
+	const char* pfile = reinterpret_cast<const char*>(FL_LoadFile(DECAL_LIST_FILE_PATH, &filesize));
 	if(!pfile)
 	{
 		Con_WPrintf("Could not load decal list file '%s'.\n", DECAL_LIST_FILE_PATH);
@@ -93,7 +93,7 @@ bool CDecalManager::InitGame( void )
 
 	if(!cls.netinfo.decalcache.empty())
 	{
-		for(Uint32 i = 0; i < cls.netinfo.decalcache.size(); i++)
+		for(UInt32 i = 0; i < cls.netinfo.decalcache.size(); i++)
 		{
 			const decalcache_t& cache = cls.netinfo.decalcache[i];
 
@@ -153,7 +153,7 @@ bool CDecalManager::DrawBogusDecals( void )
 	pDraw->SetProjection(rns.view.projection.GetMatrix());
 	pDraw->SetModelview(rns.view.modelview.GetMatrix());
 
-	constexpr Float axisLength = 32.0f;
+	constexpr float axisLength = 32.0f;
 
 	glLineWidth(2.0f);
 
@@ -170,7 +170,7 @@ bool CDecalManager::DrawBogusDecals( void )
 		{
 			// Only if distance is less than 512
 			Vector position = m_bogusDecalsList.get();
-			Float distance = (rns.view.v_origin - position).Length();
+			float distance = (rns.view.v_origin - position).Length();
 			if(distance < 512)
 				nodepthtest = true;
 		}
@@ -182,7 +182,7 @@ bool CDecalManager::DrawBogusDecals( void )
 
 		pDraw->Begin(CBasicDraw::DRAW_LINES);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			Vector direction;
 			switch(i)
@@ -253,7 +253,7 @@ void CDecalManager::FindLeaf( cached_decal_t *pdecal )
 //====================================
 //
 //====================================
-void CDecalManager::AddCached( decalgroupentry_t* pentry, const Char *pstrname, const Vector& origin, const Vector& normal, Int32 flags, entindex_t entityindex, Float life, Float fadetime, Float growthtime )
+void CDecalManager::AddCached( decalgroupentry_t* pentry, const char *pstrname, const Vector& origin, const Vector& normal, Int32 flags, entindex_t entityindex, float life, float fadetime, float growthtime )
 {
 	if(flags & FL_DECAL_BOGUS)
 	{
@@ -470,13 +470,13 @@ void CDecalManager::DecalPacketVBMEntities( cached_decal_t& decal )
 	float radius = decal.pentry->xsize > decal.pentry->ysize ? decal.pentry->xsize : decal.pentry->ysize;
 
 	Vector mins, maxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		mins[i] = decal.origin[i] - radius;
 		maxs[i] = decal.origin[i] + radius;
 	}
 
-	for(Uint32 i = 0; i < cls.numentities; i++)
+	for(UInt32 i = 0; i < cls.numentities; i++)
 	{
 		cl_entity_t* pvisentity = &cls.entities[i];
 		if(!pvisentity->pmodel || pvisentity->pmodel->type != MOD_VBM)
@@ -531,7 +531,7 @@ void CDecalManager::SendDecalToServer( cached_decal_t& decal )
 
 	CL_ClientUserMessageBegin(m_spawnClientDecalMsgId);
 	CL_Msg_WriteUint16(flags);
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		CL_Msg_WriteFloat(decal.origin[i]);
 	CL_Msg_WriteString(decal.pentry->name.c_str());
 	CL_ClientUserMessageEnd();
@@ -540,7 +540,7 @@ void CDecalManager::SendDecalToServer( cached_decal_t& decal )
 //====================================
 //
 //====================================
-void CDecalManager::PrecacheGroup( const Char *szgroupname )
+void CDecalManager::PrecacheGroup( const char *szgroupname )
 {
 	decalgroup_t *pgroup = m_decalList.GetGroup(szgroupname);
 	if(!pgroup)
@@ -549,7 +549,7 @@ void CDecalManager::PrecacheGroup( const Char *szgroupname )
 		return;
 	}
 
-	for(Uint32 i = 0; i < pgroup->entries.size(); i++)
+	for(UInt32 i = 0; i < pgroup->entries.size(); i++)
 	{
 		decalgroupentry_t *pentry = &pgroup->entries[i];
 
@@ -561,16 +561,16 @@ void CDecalManager::PrecacheGroup( const Char *szgroupname )
 //====================================
 //
 //====================================
-void CDecalManager::PrecacheTexture( const Char *sztexturename )
+void CDecalManager::PrecacheTexture( const char *sztexturename )
 {
-	Uint32 nbGroups = m_decalList.GetNbGroups();
-	for(Uint32 i = 0; i < nbGroups; i++)
+	UInt32 nbGroups = m_decalList.GetNbGroups();
+	for(UInt32 i = 0; i < nbGroups; i++)
 	{
 		decalgroup_t* pgroup = m_decalList.GetGroup(i);
 		if(!pgroup)
 			continue;
 
-		for(Uint32 j = 0; j < pgroup->entries.size(); j++)
+		for(UInt32 j = 0; j < pgroup->entries.size(); j++)
 		{
 			decalgroupentry_t *pentry = &pgroup->entries[j];
 
@@ -590,7 +590,7 @@ void FindIntersectionPoint( const Vector &p1, const Vector &p2, const Vector &no
 {
 	Vector planevec;
 	Vector linevec;
-	Float planedist, linedist;
+	float planedist, linedist;
 
 	Math::VectorSubtract( planepoint, p1, planevec );
 	Math::VectorSubtract( p2, p1, linevec );
@@ -610,12 +610,12 @@ void FindIntersectionPoint( const Vector &p1, const Vector &p2, const Vector &no
 //====================================
 //
 //====================================
-Uint32 Decal_ClipPolygon( const Vector *arrIn, Int32 numpoints, const Vector& normal, const Vector& planepoint, Vector *arrOut )
+UInt32 Decal_ClipPolygon( const Vector *arrIn, Int32 numpoints, const Vector& normal, const Vector& planepoint, Vector *arrOut )
 {
 	Int32 cur, prev;
 	Int32 first = -1;
 	Int32 outCur = 0;
-	Float dots[64];
+	float dots[64];
 
 	for (Int32 i = 0; i < numpoints; i++)
 	{

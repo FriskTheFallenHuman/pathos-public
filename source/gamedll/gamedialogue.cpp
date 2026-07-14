@@ -111,7 +111,7 @@ void CGameDialogue::Precache( void )
 // @brief
 //
 //=============================================
-void CGameDialogue::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CGameDialogue::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!m_isActive)
 	{
@@ -185,7 +185,7 @@ void CGameDialogue::DialogueThink( void )
 		Math::AngleVectors(pPlayer->GetViewAngles(), &vecPlayerForward, nullptr, nullptr);
 		vecPlayerForward = vecPlayerForward.Normalize();
 
-		Float dotProduct = Math::DotProduct( vecPlayerForward, vecDirToPlayer );
+		float dotProduct = Math::DotProduct( vecPlayerForward, vecDirToPlayer );
 		if ( dotProduct < 0.8 )
 		{
 			SetThink( &CGameDialogue::DialogueThink );
@@ -229,7 +229,7 @@ void CGameDialogue::SendInitMessage( const CBaseEntity* pPlayer )
 		return;
 	}
 
-	const Char* pstrFilepath = gd_engfuncs.pfnGetString(m_pFields->message);
+	const char* pstrFilepath = gd_engfuncs.pfnGetString(m_pFields->message);
 	gd_engfuncs.pfnPlayEntitySound(pPlayer->GetEntityIndex(), pstrFilepath, SND_FL_DIALOGUE, SND_CHAN_VOICE, VOL_NORM, ATTN_NONE, PITCH_NORM, (g_pGameVars->time - m_beginTime), pPlayer->GetClientIndex());
 }
 
@@ -237,7 +237,7 @@ void CGameDialogue::SendInitMessage( const CBaseEntity* pPlayer )
 // @brief
 //
 //=============================================
-CGameDialogue* CGameDialogue::CreateDialogue( const Char* pstrPath, const Vector& origin, Float radius, bool visibleOnly )
+CGameDialogue* CGameDialogue::CreateDialogue( const char* pstrPath, const Vector& origin, float radius, bool visibleOnly )
 {
 	edict_t *pEntity = gd_engfuncs.pfnCreateEntity("game_dialogue");
 	if(!pEntity)

@@ -33,10 +33,10 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual Float GetDelay( void ) override;
+	virtual float GetDelay( void ) override;
 	virtual bool IsPathCornerEntity( void ) const override { return true; }
 
 public:
-	Float m_waitTime;
+	float m_waitTime;
 };
 #endif //PATHCORNER_H

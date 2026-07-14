@@ -14,7 +14,7 @@ All Rights Reserved.
 #include "functracktrain.h"
 
 // Default damage dealt by this entity
-const Float CFuncTrackAutoChangeRC::DEFAULT_DAMAGE_DEALT = 1500;
+const float CFuncTrackAutoChangeRC::DEFAULT_DAMAGE_DEALT = 1500;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(func_trackautochange_rc, CFuncTrackAutoChangeRC);
@@ -40,7 +40,7 @@ CFuncTrackAutoChangeRC::~CFuncTrackAutoChangeRC( void )
 // @brief
 //
 //=============================================
-void CFuncTrackAutoChangeRC::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncTrackAutoChangeRC::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!IsUseEnabled())
 		return;
@@ -71,7 +71,7 @@ void CFuncTrackAutoChangeRC::CallUse( CBaseEntity* pActivator, CBaseEntity* pCal
 //=============================================
 void CFuncTrackAutoChangeRC::CallBlocked( CBaseEntity* pBlocker )
 {
-	Float damageDealt = m_damageDealt > 0 ? m_damageDealt : DEFAULT_DAMAGE_DEALT;
+	float damageDealt = m_damageDealt > 0 ? m_damageDealt : DEFAULT_DAMAGE_DEALT;
 	pBlocker->TakeDamage(this, pBlocker, damageDealt, DMG_CRUSH);
 }
 

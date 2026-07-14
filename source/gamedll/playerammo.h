@@ -35,7 +35,7 @@ public:
 	virtual void SetSpawnProperties( void ) = 0;
 	virtual Int32 GetAmmoAmount( void ) = 0;
 	virtual Int32 GetMaxAmmo( void ) = 0;
-	virtual const Char* GetAmmoTypeName( void ) = 0;
+	virtual const char* GetAmmoTypeName( void ) = 0;
 
 public:
 	void EXPORTFN DefaultTouch( CBaseEntity* pOther );

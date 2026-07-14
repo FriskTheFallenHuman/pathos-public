@@ -22,21 +22,21 @@ class CGameUITextWindow : public CGameUIWindow
 {
 public:
 	// Text inset for the text tab
-	static const Uint32 TEXTWINDOW_TEXT_TAB_TEXT_INSET;
+	static const UInt32 TEXTWINDOW_TEXT_TAB_TEXT_INSET;
 	// Title text default schema set name
-	static const Char TEXTWINDOW_TITLE_TEXTSCHEMA_NAME[];
+	static const char TEXTWINDOW_TITLE_TEXTSCHEMA_NAME[];
 	// Text default font schema name
-	static const Char TEXTWINDOW_TEXTSCHEMA_NAME[];
+	static const char TEXTWINDOW_TEXTSCHEMA_NAME[];
 
 public:
-	explicit CGameUITextWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
+	explicit CGameUITextWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
 	~CGameUITextWindow();
 
 public:
 	// Initializes the window
 	void init( void ) override { };
 	// Initializes the data
-	bool initData( const Char* pstrtextfilepath, const Char* pstrPassCode );
+	bool initData( const char* pstrtextfilepath, const char* pstrPassCode );
 	// Returns the current window information
 	void getInformation( CString& textfilepath, CString& passcode ) const;
 	// Returns the type of the window
@@ -56,7 +56,7 @@ public:
 
 public:
 	// Processes a text document and returns it's data
-	static bool ProcessTextFile( const Char* pstrFilePath, const CString passCode, CString& titleText, CString& titletextschema, color32_t& titletextcolor, CString& textschema, color32_t& textcolor, CString& documentText );
+	static bool ProcessTextFile( const char* pstrFilePath, const CString passCode, CString& titleText, CString& titletextschema, color32_t& titletextcolor, CString& textschema, color32_t& textcolor, CString& documentText );
 
 private:
 	// Title text object
@@ -87,7 +87,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) override;
+	virtual void PerformAction( float param ) override;
 	// Handles a special key event
 	virtual bool KeyEvent( Int32 button, Int16 mod, bool keyDown ) override { return false; }
 	// Handles a mouse button event

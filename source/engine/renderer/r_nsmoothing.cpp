@@ -12,21 +12,21 @@ All Rights Reserved.
 #include "system.h"
 
 // max block size for allocating vertexes
-const Float CNormalSmoothing::CNM_ALLOCSIZE = 32;
+const float CNormalSmoothing::CNM_ALLOCSIZE = 32;
 // Max depth of node generation
-const Uint32 CNormalSmoothing::MAX_NODE_DEPTH = 12;
+const UInt32 CNormalSmoothing::MAX_NODE_DEPTH = 12;
 
 //=============================================
 // @brief
 //
 //=============================================
-CNormalSmoothing::CNormalSmoothing( const Vector& worldMins, const Vector& worldMaxs, Uint32 numvertexes, Float blendangle ):
+CNormalSmoothing::CNormalSmoothing( const Vector& worldMins, const Vector& worldMaxs, UInt32 numvertexes, float blendangle ):
 	m_pVertexIdxMapping(nullptr),
 	m_pVertexGrpMapping(nullptr),
 	m_numVertexes(numvertexes),
 	m_normalBlend(0)
 {
-	m_pVertexIdxMapping = new Uint32[m_numVertexes];
+	m_pVertexIdxMapping = new UInt32[m_numVertexes];
 	memset(m_pVertexIdxMapping, 0, sizeof(int)*m_numVertexes);
 
 	m_pVertexGrpMapping = new vertexgroup_t*[m_numVertexes];
@@ -58,11 +58,11 @@ CNormalSmoothing::~CNormalSmoothing()
 
 	if(!m_vertexGroupPtrsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_vertexGroupPtrsArray.size(); i++)
+		for(UInt32 i = 0; i < m_vertexGroupPtrsArray.size(); i++)
 			delete m_vertexGroupPtrsArray[i];
 	}
 
-	for(Uint32 i = 0; i < m_vertexNodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_vertexNodesArray.size(); i++)
 		delete m_vertexNodesArray[i];
 }
 
@@ -136,7 +136,7 @@ CNormalSmoothing::vertexnode_t* CNormalSmoothing::RecursiveAddVertex( vertexnode
 	{
 		vertexgroup_t* pgroup = pnode->pgroup;
 
-		Uint32 i = 0;
+		UInt32 i = 0;
 		for(; i < pgroup->numvertexes; i++)
 		{
 			vertex_t& vertex = pgroup->vertexes[i];
@@ -180,7 +180,7 @@ CNormalSmoothing::vertexnode_t* CNormalSmoothing::RecursiveAddVertex( vertexnode
 // @brief
 //
 //=============================================
-void CNormalSmoothing::ManageVertex( const Vector& origin, const Vector& normal, Uint32 index )
+void CNormalSmoothing::ManageVertex( const Vector& origin, const Vector& normal, UInt32 index )
 {
 	if(index > m_numVertexes)
 		return;
@@ -201,7 +201,7 @@ void CNormalSmoothing::ManageVertex( const Vector& origin, const Vector& normal,
 // @brief
 //
 //=============================================
-const Vector* CNormalSmoothing::GetVertexNormal( Uint32 index )
+const Vector* CNormalSmoothing::GetVertexNormal( UInt32 index )
 {
 	if(index > m_numVertexes)
 		return nullptr;
@@ -210,7 +210,7 @@ const Vector* CNormalSmoothing::GetVertexNormal( Uint32 index )
 	if(!pgroup)
 		return nullptr;
 
-	Uint32 vertexidx = m_pVertexIdxMapping[index];
+	UInt32 vertexidx = m_pVertexIdxMapping[index];
 	const vertex_t& vertex = pgroup->vertexes[vertexidx];
 
 	return &vertex.normal;

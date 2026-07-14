@@ -13,6 +13,6 @@ All Rights Reserved.
 #include "sprformat.h"
 
 // Loads a sprite
-extern msprite_t* Sprite_Load( const byte* pfile, Uint32 filesize );
-extern const mspriteframe_t* Sprite_GetFrame( const msprite_t* psprite, Uint32 frame, Float time );
+extern msprite_t* Sprite_Load( const Byte* pfile, UInt32 filesize );
+extern const mspriteframe_t* Sprite_GetFrame( const msprite_t* psprite, UInt32 frame, float time );
 #endif //SPRITE_H

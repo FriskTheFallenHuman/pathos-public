@@ -100,7 +100,7 @@ bool CEnvPosWorld::Spawn( void )
 	// Manage custom sky texture
 	if(m_skyTextureName != NO_STRING_VALUE)
 	{
-		const Char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_skyTextureName);
+		const char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_skyTextureName);
 		if(pstrSkyTexture)
 			m_skyTextureSetIndex = gSkyTextureSets.RegisterSkyTextureSet(pstrSkyTexture);
 	}
@@ -120,7 +120,7 @@ bool CEnvPosWorld::Restore( void )
 	// Manage custom sky texture
 	if(m_skyTextureName != NO_STRING_VALUE)
 	{
-		const Char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_skyTextureName);
+		const char* pstrSkyTexture = gd_engfuncs.pfnGetString(m_skyTextureName);
 		if(pstrSkyTexture)
 			m_skyTextureSetIndex = gSkyTextureSets.RegisterSkyTextureSet(pstrSkyTexture);
 	}
@@ -132,7 +132,7 @@ bool CEnvPosWorld::Restore( void )
 // @brief
 //
 //=============================================
-void CEnvPosWorld::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvPosWorld::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool prevstate = m_isActive;
 	switch(useMode)
@@ -173,14 +173,14 @@ void CEnvPosWorld::SendInitMessage( const CBaseEntity* pPlayer )
 
 	if(m_isActive)
 	{
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteFloat(m_pState->origin[i]);
 
 		gd_engfuncs.pfnMsgWriteSmallFloat(m_pState->health);
 		gd_engfuncs.pfnMsgWriteFloat(m_fogStartDist);
 		gd_engfuncs.pfnMsgWriteFloat(m_fogEndDist);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteByte(m_pState->rendercolor[i]);
 
 		gd_engfuncs.pfnMsgWriteByte(m_dontAffectSky);

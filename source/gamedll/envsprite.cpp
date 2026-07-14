@@ -175,7 +175,7 @@ void CEnvSprite::InitEntity( void )
 	if(m_attachEntity == NO_STRING_VALUE)
 		return;
 
-	const Char* pstrEntityName = gd_engfuncs.pfnGetString(m_attachEntity);
+	const char* pstrEntityName = gd_engfuncs.pfnGetString(m_attachEntity);
 	edict_t* pedict = Util::FindEntityByTargetName(nullptr, pstrEntityName);
 	if(!pedict || Util::IsNullEntity(pedict))
 	{
@@ -215,7 +215,7 @@ Int32 CEnvSprite::GetEntityFlags( void )
 // @brief
 //
 //=============================================
-void CEnvSprite::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSprite::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool isOn = (m_pState->effects & EF_NODRAW) ? false : true;
 	if(ShouldToggle(useMode, isOn))
@@ -233,7 +233,7 @@ void CEnvSprite::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode
 //=============================================
 void CEnvSprite::AnimateThink( void )
 {
-	Double delta = g_pGameVars->time - m_lastAnimTime;
+	double delta = g_pGameVars->time - m_lastAnimTime;
 	Animate(m_pState->framerate * delta);
 
 	m_pState->nextthink = g_pGameVars->time + 0.1;
@@ -246,7 +246,7 @@ void CEnvSprite::AnimateThink( void )
 //=============================================
 void CEnvSprite::ExpandThink( void )
 {
-	Double delta = g_pGameVars->time - m_lastAnimTime;
+	double delta = g_pGameVars->time - m_lastAnimTime;
 	m_pState->scale += m_pState->speed * delta;
 	m_pState->renderamt -= m_pState->health * delta;
 
@@ -285,7 +285,7 @@ void CEnvSprite::AnimateOnceThink( void )
 // @brief
 //
 //=============================================
-void CEnvSprite::Animate( Float frameadd )
+void CEnvSprite::Animate( float frameadd )
 {
 	m_pState->frame += frameadd;
 	if(m_pState->frame > m_maxFrame)
@@ -307,7 +307,7 @@ void CEnvSprite::Animate( Float frameadd )
 // @brief
 //
 //=============================================
-void CEnvSprite::AnimateAndDie( Float framerate )
+void CEnvSprite::AnimateAndDie( float framerate )
 {
 	SetThink(&CEnvSprite::AnimateOnceThink);
 	m_pState->framerate = framerate;
@@ -319,7 +319,7 @@ void CEnvSprite::AnimateAndDie( Float framerate )
 // @brief
 //
 //=============================================
-void CEnvSprite::Expand( Float scalespeed, Float fadespeed )
+void CEnvSprite::Expand( float scalespeed, float fadespeed )
 {
 	m_pState->speed = scalespeed;
 	m_pState->health = fadespeed;
@@ -333,7 +333,7 @@ void CEnvSprite::Expand( Float scalespeed, Float fadespeed )
 // @brief
 //
 //=============================================
-void CEnvSprite::SpriteInit( const Char* pstrSpriteName, const Vector& origin )
+void CEnvSprite::SpriteInit( const char* pstrSpriteName, const Vector& origin )
 {
 	m_pFields->modelname = gd_engfuncs.pfnAllocString(pstrSpriteName);
 	m_pState->origin = origin;
@@ -415,7 +415,7 @@ void CEnvSprite::TurnOn( void )
 // @brief
 //
 //=============================================
-Float CEnvSprite::GetMaxFrame( void ) const
+float CEnvSprite::GetMaxFrame( void ) const
 {
 	return m_maxFrame;
 }
@@ -424,7 +424,7 @@ Float CEnvSprite::GetMaxFrame( void ) const
 // @brief
 //
 //=============================================
-CEnvSprite* CEnvSprite::CreateSprite( const Char* pstrSpriteName, const Vector& origin, bool animate )
+CEnvSprite* CEnvSprite::CreateSprite( const char* pstrSpriteName, const Vector& origin, bool animate )
 {
 	CEnvSprite* pEntity = reinterpret_cast<CEnvSprite*>(CBaseEntity::CreateEntity("env_sprite", origin, ZERO_VECTOR, nullptr));
 	pEntity->SpriteInit(pstrSpriteName, origin);

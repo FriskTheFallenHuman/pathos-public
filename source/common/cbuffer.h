@@ -27,26 +27,26 @@ public:
 
 public:
 	// Appends data to the buffer
-	inline bool append( const void* pdata, Uint32 datasize );
+	DO_INLINE bool append( const void* pdata, Uint32 datasize );
 	// Returns the buffer pointer
-	inline void*& getbufferdata( void );
+	DO_INLINE void*& getbufferdata( void );
 	// Retreives the writing offset into the buffer data
-	inline Uint32 getdatasize( void ) const;
+	DO_INLINE Uint32 getdatasize( void ) const;
 	// Retreives the buffer array size
-	inline Uint32 getbuffersize( void ) const;
+	DO_INLINE Uint32 getbuffersize( void ) const;
 	// Resets the writing position to zero
-	inline void reset( void );
+	DO_INLINE void reset( void );
 
 	// Adds a pointer to the list
-	inline void addpointer( void** ptr );
+	DO_INLINE void addpointer( void** ptr );
 	// Removes a pointer from the list
-	inline void removepointer( void** ptr );
+	DO_INLINE void removepointer( void** ptr );
 	// Removes a pointer from the list
-	inline void removepointer( const void** ptr );
+	DO_INLINE void removepointer( const void** ptr );
 
 private:
 	// initializes the buffer
-	inline void initbuffer( void );
+	DO_INLINE void initbuffer( void );
 
 public:
 	// Pointer to buffer

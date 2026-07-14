@@ -20,17 +20,17 @@ class CUINewGameWindow : public CUIWindow
 {
 public:
 	// Window description file
-	static const Char WINDOW_DESC_FILE[];
+	static const char WINDOW_DESC_FILE[];
 	// Window object name
-	static const Char WINDOW_OBJ_NAME[];
+	static const char WINDOW_OBJ_NAME[];
 	// Cancel button object name
-	static const Char CANCEL_BUTTON_OBJ_NAME[];
+	static const char CANCEL_BUTTON_OBJ_NAME[];
 	// 'Easy' button object name
-	static const Char NEW_GAME_EASY_BUTTON_OBJ_NAME[];
+	static const char NEW_GAME_EASY_BUTTON_OBJ_NAME[];
 	// 'Normal' button object name
-	static const Char NEW_GAME_NORMAL_BUTTON_OBJ_NAME[];
+	static const char NEW_GAME_NORMAL_BUTTON_OBJ_NAME[];
 	// 'Hard' button object name
-	static const Char NEW_GAME_HARD_BUTTON_OBJ_NAME[];
+	static const char NEW_GAME_HARD_BUTTON_OBJ_NAME[];
 
 public:
 	enum buttonId_t
@@ -42,7 +42,7 @@ public:
 	};
 
 private:
-	CUINewGameWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUINewGameWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 public:
 	~CUINewGameWindow( void );
 
@@ -60,7 +60,7 @@ public:
 	// The settings window cannot be resized
 	virtual bool isResizable( void ) { return false; }
 	// Manages a button press event
-	virtual void buttonPressed( Uint32 buttonId );
+	virtual void buttonPressed( UInt32 buttonId );
 
 public:
 	// Current instance
@@ -76,7 +76,7 @@ CUINewGameWindowButtonEvent
 class CUINewGameWindowButtonEvent : public CUICallbackEvent
 {
 public:
-	CUINewGameWindowButtonEvent( CUINewGameWindow* pWindow, Uint32 buttonId ):
+	CUINewGameWindowButtonEvent( CUINewGameWindow* pWindow, UInt32 buttonId ):
 		m_buttonId(buttonId),
 		m_pWindow(pWindow)
 	{ };
@@ -84,11 +84,11 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) { m_pWindow->buttonPressed( m_buttonId ); }
+	virtual void PerformAction( float param ) { m_pWindow->buttonPressed( m_buttonId ); }
 
 protected:
 	// Button id
-	Uint32 m_buttonId;
+	UInt32 m_buttonId;
 	// Window that created this
 	CUINewGameWindow* m_pWindow;
 };

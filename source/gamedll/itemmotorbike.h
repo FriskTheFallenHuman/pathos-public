@@ -19,13 +19,13 @@ class CItemMotorBike : public CAnimatingEntity
 {
 public:
 	// Trashed bike animation name
-	static const Char BIKE_ANIMATION_TRASHED_NAME[];
+	static const char BIKE_ANIMATION_TRASHED_NAME[];
 	// Enter bike animation name
-	static const Char BIKE_ANIMATION_ENTER_NAME[];
+	static const char BIKE_ANIMATION_ENTER_NAME[];
 	// Exit bike animation name
-	static const Char BIKE_ANIMATION_LEAVE_NAME[];
+	static const char BIKE_ANIMATION_LEAVE_NAME[];
 	// Motorbike model name
-	static const Char BIKE_MODELNAME[];
+	static const char BIKE_MODELNAME[];
 
 public:
 	explicit CItemMotorBike( edict_t* pedict );
@@ -35,23 +35,23 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void Precache( void ) override;
 	virtual void DeclareSaveFields( void ) override;
-	virtual void TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
+	virtual void TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
 	virtual bool Restore( void ) override;
 	virtual Int32 GetEntityFlags( void ) override { return (CAnimatingEntity::GetEntityFlags() | FL_ENTITY_PLAYER_USABLE | FL_ENTITY_TRANSITION); }
 	virtual bool ShouldSetBoundsOnRestore( void ) override { return false; }
 
 public:
-	void EXPORTFN UseBike( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	void EXPORTFN UseBike( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 
 	void PlayerEnter( CBaseEntity* pEntity );
 	void PlayerLeave( void );
 	void SetFollow( void );
 
-	Double GetLeaveTime( void );
-	Double GetEnterTime( void );
+	double GetLeaveTime( void );
+	double GetEnterTime( void );
 
 public:
-	// TRUE if trashed
+	// true if trashed
 	bool m_isTrashed;
 	// Player using this bike
 	CBaseEntity* m_pPlayer;

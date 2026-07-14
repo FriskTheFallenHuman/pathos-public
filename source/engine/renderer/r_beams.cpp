@@ -36,17 +36,17 @@ All Rights Reserved.
 //
 
 // Number of beams allocated at once
-const Uint32 CBeamRenderer::BEAM_ALLOC_SIZE = 128;
+const UInt32 CBeamRenderer::BEAM_ALLOC_SIZE = 128;
 // Number of beam positions allocated at once
-const Uint32 CBeamRenderer::BEAM_POSITIONS_ALLOC_SIZE = 4096;
+const UInt32 CBeamRenderer::BEAM_POSITIONS_ALLOC_SIZE = 4096;
 // Distance at which a new beam position is allocated for BEAMFOLLOW
-const Float CBeamRenderer::BEAM_POSITION_SEGMENT_DISTANCE = 32.0f;
+const float CBeamRenderer::BEAM_POSITION_SEGMENT_DISTANCE = 32.0f;
 // Minimum number of beam segments
-const Uint32 CBeamRenderer::MIN_NB_BEAM_SEGMENTS = 3;
+const UInt32 CBeamRenderer::MIN_NB_BEAM_SEGMENTS = 3;
 // Fraction of length at which end/start fades
-const Float CBeamRenderer::BEAM_FADE_FRACTION = 0.1;
+const float CBeamRenderer::BEAM_FADE_FRACTION = 0.1;
 // Distance between light checks for vapor trail
-const Float CBeamRenderer::VAPORTRAIL_LIGHTCHECK_DISTANCE = 16;
+const float CBeamRenderer::VAPORTRAIL_LIGHTCHECK_DISTANCE = 16;
 
 // Object definition
 CBeamRenderer gBeamRenderer;
@@ -175,7 +175,7 @@ void CBeamRenderer::FreeActiveBeams( void )
 //====================================
 void CBeamRenderer::AllocateBeams( void )
 {
-	for(Uint32 i = 0; i < BEAM_ALLOC_SIZE; i++)
+	for(UInt32 i = 0; i < BEAM_ALLOC_SIZE; i++)
 	{
 		beam_t* pnew = new beam_t;
 
@@ -292,7 +292,7 @@ void CBeamRenderer::FreeActiveBeamPositions( beam_t* pbeam )
 //====================================
 void CBeamRenderer::AllocateBeamPositions( void )
 {
-	for(Uint32 i = 0; i < BEAM_ALLOC_SIZE; i++)
+	for(UInt32 i = 0; i < BEAM_ALLOC_SIZE; i++)
 	{
 		beam_position_t* pnew = new beam_position_t;
 
@@ -369,7 +369,7 @@ bool CBeamRenderer::CullBeam( beam_t* pbeam, const Vector& src, const Vector& en
 		return false;
 
 	Vector mins, maxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(src[i] < end[i])
 		{
@@ -520,19 +520,19 @@ void CBeamRenderer::DrawBeamSegments( void )
 		return;
 
 	// Cap at max
-	Uint32 _numsegments = m_pCurrentBeam->numsegments;
+	UInt32 _numsegments = m_pCurrentBeam->numsegments;
 	if(_numsegments > MAX_BEAM_SEGMENTS)
 		_numsegments = MAX_BEAM_SEGMENTS;
 
-	Float length = m_pCurrentBeam->delta.Length() * 0.01;
+	float length = m_pCurrentBeam->delta.Length() * 0.01;
 	if(length < 0.5)
 		length = 0.5;
 
-	Float div = 1.0f / (_numsegments - 1);
-	Float step = length*div;
-	Float tcy1 = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
+	float div = 1.0f / (_numsegments - 1);
+	float step = length*div;
+	float tcy1 = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
 
-	Float _scale;
+	float _scale;
 	if(m_pCurrentBeam->flags & FL_BEAM_SINENOISE)
 	{
 		if(_numsegments < 16)
@@ -567,7 +567,7 @@ void CBeamRenderer::DrawBeamSegments( void )
 	Math::VectorMA(m_pCurrentBeam->source, -m_pCurrentBeam->width, normal, coord1_2);
 
 	// Resample the noise waveform
-	Int32 noisestep = static_cast<Int32>(static_cast<Float>(MAX_BEAM_SEGMENTS) * div * 65536.0f);
+	Int32 noisestep = static_cast<Int32>(static_cast<float>(MAX_BEAM_SEGMENTS) * div * 65536.0f);
 
 	Int32 noiseindex;
 	if(m_pCurrentBeam->flags & FL_BEAM_SINENOISE)
@@ -575,7 +575,7 @@ void CBeamRenderer::DrawBeamSegments( void )
 	else
 		noiseindex = noisestep;
 
-	Float brightness1;
+	float brightness1;
 	if(m_pCurrentBeam->flags & FL_BEAM_SHADEIN || !(m_pCurrentBeam->flags & FL_BEAM_NO_FADE))
 		brightness1 = 0.0f;
 	else
@@ -591,11 +591,11 @@ void CBeamRenderer::DrawBeamSegments( void )
 
 	m_pBasicDraw->Begin(CBasicDraw::DRAW_QUADS);
 
-	for(Uint32 i = 1; i < _numsegments; i++)
+	for(UInt32 i = 1; i < _numsegments; i++)
 	{
-		Float fraction = i * div;
+		float fraction = i * div;
 
-		Float brightness2 = 1.0;
+		float brightness2 = 1.0;
 		if(m_pCurrentBeam->flags & FL_BEAM_SHADEIN)
 		{
 			// Fade from start to end
@@ -609,9 +609,9 @@ void CBeamRenderer::DrawBeamSegments( void )
 		else if(!(m_pCurrentBeam->flags & FL_BEAM_NO_FADE))
 		{
 			// Apply some small fade to the end and beginning
-			Float endsfraction = static_cast<Float>(i - 1) / static_cast<Float>(_numsegments - 2);
-			Float startfade = clamp(endsfraction / BEAM_FADE_FRACTION, 0.0, 1.0);
-			Float endfade = clamp((1.0 - endsfraction) / BEAM_FADE_FRACTION, 0.0, 1.0);
+			float endsfraction = static_cast<float>(i - 1) / static_cast<float>(_numsegments - 2);
+			float startfade = Clamp(endsfraction / BEAM_FADE_FRACTION, 0.0, 1.0);
+			float endfade = Clamp((1.0 - endsfraction) / BEAM_FADE_FRACTION, 0.0, 1.0);
 			brightness2 *= startfade * endfade;
 		}
 		else
@@ -641,7 +641,7 @@ void CBeamRenderer::DrawBeamSegments( void )
 		Math::VectorMA(start, -m_pCurrentBeam->width, normal, coord2_2);
 
 		// Calculate texcoord
-		Float tcy2 = tcy1 + step;
+		float tcy2 = tcy1 + step;
 
 		// Draw as a quad
 		m_pBasicDraw->Brightness1f(brightness1);
@@ -675,26 +675,26 @@ void CBeamRenderer::DrawBeamSegments( void )
 //====================================
 //
 //====================================
-void CBeamRenderer::DrawBeamTesla( const Vector& src, const Vector& delta, Float width, Float endwidth, Int32 flags )
+void CBeamRenderer::DrawBeamTesla( const Vector& src, const Vector& delta, float width, float endwidth, Int32 flags )
 {
 	// Don't draw invalid beams
 	if(m_pCurrentBeam->numsegments < 2)
 		return;
 
 	// Cap at max
-	Uint32 _numsegments = m_pCurrentBeam->numsegments;
+	UInt32 _numsegments = m_pCurrentBeam->numsegments;
 	if(_numsegments > MAX_BEAM_SEGMENTS)
 		_numsegments = MAX_BEAM_SEGMENTS;
 
-	Float length = delta.Length() * 0.01;
+	float length = delta.Length() * 0.01;
 	if(length < 0.5)
 		length = 0.5;
 
-	Float div = 1.0f / (_numsegments - 1);
-	Float step = length*div;
-	Float tcy1 = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
+	float div = 1.0f / (_numsegments - 1);
+	float step = length*div;
+	float tcy1 = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
 
-	Float _scale;
+	float _scale;
 	if(flags & FL_BEAM_SINENOISE)
 	{
 		if(_numsegments < 16)
@@ -729,7 +729,7 @@ void CBeamRenderer::DrawBeamTesla( const Vector& src, const Vector& delta, Float
 	Math::VectorMA(src, -width, normal, coord1_2);
 
 	// Resample the noise waveform
-	Int32 noisestep = static_cast<Int32>(static_cast<Float>(MAX_BEAM_SEGMENTS) * div * 65536.0f);
+	Int32 noisestep = static_cast<Int32>(static_cast<float>(MAX_BEAM_SEGMENTS) * div * 65536.0f);
 
 	Int32 noiseindex;
 	if(flags & FL_BEAM_SINENOISE)
@@ -737,7 +737,7 @@ void CBeamRenderer::DrawBeamTesla( const Vector& src, const Vector& delta, Float
 	else
 		noiseindex = noisestep;
 
-	Float brightness1;
+	float brightness1;
 	if(flags & FL_BEAM_SHADEIN || !(flags & FL_BEAM_NO_FADE))
 		brightness1 = 0.0f;
 	else
@@ -746,9 +746,9 @@ void CBeamRenderer::DrawBeamTesla( const Vector& src, const Vector& delta, Float
 	R_ValidateShader(m_pBasicDraw);
 
 	// Number of branches
-	Uint32 numbranches = 0;
-	Float branchwidth = 0;
-	Float branchendwidth = 0;
+	UInt32 numbranches = 0;
+	float branchwidth = 0;
+	float branchendwidth = 0;
 	Vector branchstart, branchend;
 
 	Vector beamforward = delta;
@@ -758,11 +758,11 @@ void CBeamRenderer::DrawBeamTesla( const Vector& src, const Vector& delta, Float
 	Math::GetUpRight(beamforward, beamright, beamup);
 
 	m_pBasicDraw->Begin(CBasicDraw::DRAW_QUADS);
-	for(Uint32 i = 1; i < _numsegments; i++)
+	for(UInt32 i = 1; i < _numsegments; i++)
 	{
-		Float fraction = i * div;
+		float fraction = i * div;
 
-		Float brightness2 = 1.0;
+		float brightness2 = 1.0;
 		if(flags & FL_BEAM_SHADEIN)
 		{
 			// Fade from start to end
@@ -776,9 +776,9 @@ void CBeamRenderer::DrawBeamTesla( const Vector& src, const Vector& delta, Float
 		else if(!(flags & FL_BEAM_NO_FADE))
 		{
 			// Apply some small fade to the end and beginning
-			Float endsfraction = static_cast<Float>(i - 1) / static_cast<Float>(_numsegments - 2);
-			Float startfade = clamp(endsfraction / BEAM_FADE_FRACTION, 0.0, 1.0);
-			Float endfade = clamp((1.0 - endsfraction) / BEAM_FADE_FRACTION, 0.0, 1.0);
+			float endsfraction = static_cast<float>(i - 1) / static_cast<float>(_numsegments - 2);
+			float startfade = Clamp(endsfraction / BEAM_FADE_FRACTION, 0.0, 1.0);
+			float endfade = Clamp((1.0 - endsfraction) / BEAM_FADE_FRACTION, 0.0, 1.0);
 			brightness2 *= startfade * endfade;
 		}
 		else
@@ -803,13 +803,13 @@ void CBeamRenderer::DrawBeamTesla( const Vector& src, const Vector& delta, Float
 		Math::VectorMA(normal, -tmp[1], rns.view.v_right, normal);
 
 		// Calculate segment width
-		Float segmentwidth;
+		float segmentwidth;
 		if(endwidth == width)
 			segmentwidth = width*2;
 		else
 			segmentwidth = ((fraction * (endwidth-width))+width)*2;
 
-		for(Uint32 j = 0; j < numbranches; j++)
+		for(UInt32 j = 0; j < numbranches; j++)
 			segmentwidth *= 0.5;
 
 		// Calculate final coordinates
@@ -818,7 +818,7 @@ void CBeamRenderer::DrawBeamTesla( const Vector& src, const Vector& delta, Float
 		Math::VectorMA(start, -segmentwidth, normal, coord2_2);
 
 		// Calculate texcoord
-		Float tcy2 = tcy1 + step;
+		float tcy2 = tcy1 + step;
 
 		// Draw as a quad
 		m_pBasicDraw->Brightness1f(brightness1);
@@ -845,7 +845,7 @@ void CBeamRenderer::DrawBeamTesla( const Vector& src, const Vector& delta, Float
 		coord1_1 = coord2_1;
 		coord1_2 = coord2_2;
 
-		if(i == static_cast<Uint32>(m_pCurrentBeam->numsegments * 0.5))
+		if(i == static_cast<UInt32>(m_pCurrentBeam->numsegments * 0.5))
 		{
 			branchwidth = segmentwidth  * 0.25;
 			if(branchwidth > 0.25)
@@ -857,7 +857,7 @@ void CBeamRenderer::DrawBeamTesla( const Vector& src, const Vector& delta, Float
 				branchend -= branchstart;
 
 				branchendwidth = endwidth;
-				for(Uint32 j = 0; j < numbranches; j++)
+				for(UInt32 j = 0; j < numbranches; j++)
 					branchendwidth *= 0.5;
 			}
 		}
@@ -882,34 +882,34 @@ void CBeamRenderer::DrawBeamTorus( void )
 		return;
 
 	// Cap at max
-	Uint32 _numsegments = m_pCurrentBeam->numsegments;
+	UInt32 _numsegments = m_pCurrentBeam->numsegments;
 	if(_numsegments > MAX_BEAM_SEGMENTS)
 		_numsegments = MAX_BEAM_SEGMENTS;
 
-	Float length = m_pCurrentBeam->delta.Length() * 0.01;
+	float length = m_pCurrentBeam->delta.Length() * 0.01;
 	if(length < 0.5)
 		length = 0.5;
 
-	Float div = 1.0f / (_numsegments - 1);
-	Float step = length*div;
-	Float last = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
-	const Float _scale = m_pCurrentBeam->amplitude * length;
+	float div = 1.0f / (_numsegments - 1);
+	float step = length*div;
+	float last = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
+	const float _scale = m_pCurrentBeam->amplitude * length;
 
 	// Resample the noise waveform
-	Int32 noisestep = static_cast<Int32>(static_cast<Float>(MAX_BEAM_SEGMENTS) * div * 65536.0f);
+	Int32 noisestep = static_cast<Int32>(static_cast<float>(MAX_BEAM_SEGMENTS) * div * 65536.0f);
 	Int32 noiseindex = 0;
 
 	R_ValidateShader(m_pBasicDraw);
 
 	m_pBasicDraw->Begin(CBasicDraw::DRAW_QUADS);
 
-	Float tc1y = 0;
+	float tc1y = 0;
 	Vector screenlast, coord1_1, coord1_2;
-	for(Uint32 i = 0; i < (_numsegments + 1); i++)
+	for(UInt32 i = 0; i < (_numsegments + 1); i++)
 	{
-		Float frac = i * div;
-		Float s = SDL_sinf(frac * 2 * M_PI);
-		Float c = SDL_cosf(frac * 2 * M_PI);
+		float frac = i * div;
+		float s = SDL_sinf(frac * 2 * M_PI);
+		float c = SDL_cosf(frac * 2 * M_PI);
 
 		Vector start;
 		start[0] = s * m_pCurrentBeam->frequency * m_pCurrentBeam->delta[2] + m_pCurrentBeam->source[0];
@@ -939,7 +939,7 @@ void CBeamRenderer::DrawBeamTorus( void )
 			Math::VectorMA(start, -m_pCurrentBeam->width, normal, coord2_2);
 
 			last = last + step;
-			Float tc2y = last;
+			float tc2y = last;
 
 			if(i > 1)
 			{
@@ -981,38 +981,38 @@ void CBeamRenderer::DrawBeamDisk( void )
 		return;
 
 	// Cap at max
-	Uint32 _numsegments = m_pCurrentBeam->numsegments;
+	UInt32 _numsegments = m_pCurrentBeam->numsegments;
 	if(_numsegments > MAX_BEAM_SEGMENTS)
 		_numsegments = MAX_BEAM_SEGMENTS;
 
-	Float length = m_pCurrentBeam->delta.Length() * 0.01;
+	float length = m_pCurrentBeam->delta.Length() * 0.01;
 	if(length < 0.5)
 		length = 0.5;
 
-	Float div = 1.0f / (_numsegments - 1);
-	Float step = length*div;
-	Float last = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
-	Float w = m_pCurrentBeam->frequency * m_pCurrentBeam->delta[2];
+	float div = 1.0f / (_numsegments - 1);
+	float step = length*div;
+	float last = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
+	float w = m_pCurrentBeam->frequency * m_pCurrentBeam->delta[2];
 
 	R_ValidateShader(m_pBasicDraw);
 
 	m_pBasicDraw->Begin(CBasicDraw::DRAW_QUADS);
 
-	Float tc1y = 0;
+	float tc1y = 0;
 	Vector coord1_1, coord1_2;
-	for(Uint32 i = 0; i < _numsegments; i++)
+	for(UInt32 i = 0; i < _numsegments; i++)
 	{
-		Float frac = i * div;
-		Float v = (frac+frac)*M_PI;
-		Float s = SDL_sinf(v);
-		Float c = SDL_cosf(v);
+		float frac = i * div;
+		float v = (frac+frac)*M_PI;
+		float s = SDL_sinf(v);
+		float c = SDL_cosf(v);
 
 		Vector coord2_1, coord2_2;
 		coord2_1 = m_pCurrentBeam->source;
 		coord2_2[0] = s * w + m_pCurrentBeam->source[0];
 		coord2_2[1] = c * w + m_pCurrentBeam->source[1];
 		coord2_2[2] = m_pCurrentBeam->source[2];
-		Float tc2y = last;
+		float tc2y = last;
 		
 		if(i > 0)
 		{
@@ -1050,31 +1050,31 @@ void CBeamRenderer::DrawBeamCylinder( void )
 		return;
 
 	// Cap at max
-	Uint32 _numsegments = m_pCurrentBeam->numsegments;
+	UInt32 _numsegments = m_pCurrentBeam->numsegments;
 	if(_numsegments > MAX_BEAM_SEGMENTS)
 		_numsegments = MAX_BEAM_SEGMENTS;
 
-	Float length = m_pCurrentBeam->delta.Length() * 0.01;
+	float length = m_pCurrentBeam->delta.Length() * 0.01;
 	if(length < 0.5)
 		length = 0.5;
 
-	Float div = 1.0f / (_numsegments - 1);
-	Float step = length*div;
-	Float last = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
+	float div = 1.0f / (_numsegments - 1);
+	float step = length*div;
+	float last = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
 
 	R_ValidateShader(m_pBasicDraw);
 
 	m_pBasicDraw->Begin(CBasicDraw::DRAW_QUADS);
 
-	Float tc1y = 0;
+	float tc1y = 0;
 	Vector coord1_1, coord1_2;
-	for(Uint32 i = 0; i < (_numsegments + 1); i++)
+	for(UInt32 i = 0; i < (_numsegments + 1); i++)
 	{
-		Float frac = i*div;
-		Float v = frac * 2 * M_PI;
+		float frac = i*div;
+		float v = frac * 2 * M_PI;
 
-		Float s = SDL_sin(v);
-		Float c = SDL_cos(v);
+		float s = SDL_sin(v);
+		float c = SDL_cos(v);
 
 		Vector coord2_1;
 		coord2_1[0] = s * m_pCurrentBeam->frequency * m_pCurrentBeam->delta[2] + m_pCurrentBeam->source[0];
@@ -1086,7 +1086,7 @@ void CBeamRenderer::DrawBeamCylinder( void )
 		coord2_2[1] = c * m_pCurrentBeam->frequency * (m_pCurrentBeam->delta[2] + m_pCurrentBeam->width) + m_pCurrentBeam->source[1];
 		coord2_2[2] = m_pCurrentBeam->source[2] - m_pCurrentBeam->width;
 
-		Float tc2y = last;
+		float tc2y = last;
 
 		if(i > 1)
 		{
@@ -1124,18 +1124,18 @@ void CBeamRenderer::DrawBeamRing( void )
 		return;
 
 	// Cap at max
-	Uint32 _numsegments = m_pCurrentBeam->numsegments;
+	UInt32 _numsegments = m_pCurrentBeam->numsegments;
 	if(_numsegments > MAX_BEAM_SEGMENTS * 8)
 		_numsegments = MAX_BEAM_SEGMENTS * 8;
 
-	Float length = m_pCurrentBeam->delta.Length() * M_PI * 0.01;
+	float length = m_pCurrentBeam->delta.Length() * M_PI * 0.01;
 	if(length < 0.5)
 		length = 0.5;
 
-	Float div = 1.0f / (_numsegments - 1);
-	Float step = length * div / 8.0f;
-	Float last = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
-	Float scale = m_pCurrentBeam->amplitude * length / 8.0f;
+	float div = 1.0f / (_numsegments - 1);
+	float step = length * div / 8.0f;
+	float last = SDL_fmod(m_pCurrentBeam->frequency*m_pCurrentBeam->speed, 1.0);
+	float scale = m_pCurrentBeam->amplitude * length / 8.0f;
 
 	Int32 noisestep = static_cast<Int32>(MAX_BEAM_SEGMENTS * div * 65536.0f) * 8;
 	Int32 noiseindex = 0;
@@ -1145,7 +1145,7 @@ void CBeamRenderer::DrawBeamRing( void )
 	Math::VectorAdd(m_pCurrentBeam->source, _delta, center);
 
 	Vector xaxis = m_pCurrentBeam->delta;
-	Float radius = xaxis.Length();
+	float radius = xaxis.Length();
 
 	Vector last1;
 	last1[0] = last1[1] = radius;
@@ -1173,18 +1173,18 @@ void CBeamRenderer::DrawBeamRing( void )
 
 	m_pBasicDraw->Begin(CBasicDraw::DRAW_QUADS);
 
-	Float tc1y = 0;
+	float tc1y = 0;
 	Vector screenlast;
 	Vector coord1_1, coord1_2;
-	for(Uint32 i = 0; i < _numsegments + 1; i++)
+	for(UInt32 i = 0; i < _numsegments + 1; i++)
 	{
-		Float frac = i * div;
+		float frac = i * div;
 
-		Float x = SDL_sinf(frac*2*M_PI);
-		Float y = SDL_cosf(frac*2*M_PI);
+		float x = SDL_sinf(frac*2*M_PI);
+		float y = SDL_cosf(frac*2*M_PI);
 
 		Vector start;
-		for(Uint32 k = 0; k < 3; k++)
+		for(UInt32 k = 0; k < 3; k++)
 			start[k] = xaxis[k] * x + yaxis[k] * y + center[k];
 
 		// Apply noise if any
@@ -1369,7 +1369,7 @@ void CBeamRenderer::DrawBeam( beam_t* pbeam )
 		Vector difference;
 		Math::VectorSubtract(m_pCurrentBeam->target, m_pCurrentBeam->source, difference);
 
-		Float difflength = difference.Length();
+		float difflength = difference.Length();
 		if(difflength > 0.0000001)
 			m_pCurrentBeam->delta = difference;
 
@@ -1402,7 +1402,7 @@ void CBeamRenderer::DrawBeam( beam_t* pbeam )
 		if(m_pCurrentBeam->transparency)
 			m_pCurrentBeam->transparency = 1.0f - (m_pCurrentBeam->frequency/m_pCurrentBeam->transparency);
 
-		Float alpha;
+		float alpha;
 		if(m_pCurrentBeam->flags & FL_BEAM_FADEIN)
 			alpha = m_pCurrentBeam->transparency;
 		else if(m_pCurrentBeam->flags & FL_BEAM_FADEOUT)
@@ -1484,13 +1484,13 @@ void CBeamRenderer::DrawBeamFollow( void )
 	pnext = m_pCurrentBeam->ppositions;
 	beam_position_t *pnew = nullptr;
 
-	Float distance = 0;
+	float distance = 0;
 	if(m_pCurrentBeam->flags & FL_BEAM_STARTENTITY)
 	{
 		if(pnext)
 		{
 			// Check if the distance is big enough to allocate
-			Float length = (pnext->position - m_pCurrentBeam->source).Length();
+			float length = (pnext->position - m_pCurrentBeam->source).Length();
 			if(length >= BEAM_POSITION_SEGMENT_DISTANCE)
 				pnew = AllocBeamPosition(m_pCurrentBeam);
 		}
@@ -1540,13 +1540,13 @@ void CBeamRenderer::DrawBeamFollow( void )
 	Math::VectorMA(delta, m_pCurrentBeam->width, normal, coord1_1);
 	Math::VectorMA(delta, -m_pCurrentBeam->width, normal, coord1_2);
 
-	Float last = 0.0f;
-	Float step = 1.0f;
+	float last = 0.0f;
+	float step = 1.0f;
 
-	Float div = 1.0/m_pCurrentBeam->lifetime;
+	float div = 1.0/m_pCurrentBeam->lifetime;
 	distance = (pnext->position-delta).Length();
-	Float fraction = distance / BEAM_POSITION_SEGMENT_DISTANCE;
-	fraction = clamp(fraction, 0, 2) * div;
+	float fraction = distance / BEAM_POSITION_SEGMENT_DISTANCE;
+	fraction = Clamp(fraction, 0, 2) * div;
 
 	R_ValidateShader(m_pBasicDraw);
 
@@ -1555,8 +1555,8 @@ void CBeamRenderer::DrawBeamFollow( void )
 	while(pnext)
 	{
 		// Remember the coordinates for rendering
-		Float brightness1 = fraction;
-		Float tc1y = last;
+		float brightness1 = fraction;
+		float tc1y = last;
 
 		R_WorldToScreenTransform(m_modelViewProjectionMatrix, pnext->position, screenstart);
 		Math::VectorSubtract(screenstart, screenlast, tmp);
@@ -1573,7 +1573,7 @@ void CBeamRenderer::DrawBeamFollow( void )
 		last += step;
 
 		if(pnext->pnext)
-			fraction = clamp(pnext->life - rns.time, 0, 2)*div;
+			fraction = Clamp(pnext->life - rns.time, 0, 2)*div;
 		else
 			fraction = 0;
 
@@ -1616,7 +1616,7 @@ void CBeamRenderer::DrawBeamFollow( void )
 //====================================
 //
 //====================================
-void CBeamRenderer::DrawBeamVaporTrail( Float fadealpha )
+void CBeamRenderer::DrawBeamVaporTrail( float fadealpha )
 {
 	// Release any dead positions
 	beam_position_t* pnext = m_pCurrentBeam->ppositions;
@@ -1662,19 +1662,19 @@ void CBeamRenderer::DrawBeamVaporTrail( Float fadealpha )
 	Math::VectorMA(delta, -m_pCurrentBeam->width, normal, coord1_2);
 	Vector lastposition = delta;
 
-	Float last = 0.0f;
-	Float step = 1.0f;
+	float last = 0.0f;
+	float step = 1.0f;
 
-	Float div = 1.0/m_pCurrentBeam->lifetime;
-	Float fraction = (m_pCurrentBeam->die - rns.time)*div;
+	float div = 1.0/m_pCurrentBeam->lifetime;
+	float fraction = (m_pCurrentBeam->die - rns.time)*div;
 
 	// Create the segments
-	Uint32 segmentIndex = 0;
+	UInt32 segmentIndex = 0;
 	while(pnext)
 	{
 		// Remember the coordinates for rendering
-		Float brightness1 = fraction;
-		Float tc1y = last;
+		float brightness1 = fraction;
+		float tc1y = last;
 
 		R_WorldToScreenTransform(m_modelViewProjectionMatrix, pnext->position, screenstart);
 		Math::VectorSubtract(screenstart, screenlast, tmp);
@@ -1723,7 +1723,7 @@ void CBeamRenderer::DrawBeamVaporTrail( Float fadealpha )
 	lastseg.coord2 = coord1_2;
 	lastseg.center = lastposition;
 
-	Float blendfactor;
+	float blendfactor;
 	if(!m_pCurrentBeam->colorfadetime)
 	{
 		// No blending, just draw lightmapped beam
@@ -1773,7 +1773,7 @@ void CBeamRenderer::DrawBeamVaporTrail( Float fadealpha )
 //====================================
 //
 //====================================
-void CBeamRenderer::DrawVaporTrailSegments( const CArray<beamsegment_t>& segments, Vector color, Float alpha, bool takelighting, Float fadealpha )
+void CBeamRenderer::DrawVaporTrailSegments( const CArray<beamsegment_t>& segments, Vector color, float alpha, bool takelighting, float fadealpha )
 {
 	Vector color1, color2;
 	if(!takelighting)
@@ -1786,7 +1786,7 @@ void CBeamRenderer::DrawVaporTrailSegments( const CArray<beamsegment_t>& segment
 
 	m_pBasicDraw->Begin(CBasicDraw::DRAW_QUADS);
 
-	for(Uint32 i = 1; i < segments.size(); i++)
+	for(UInt32 i = 1; i < segments.size(); i++)
 	{
 		beamsegment_t& seg1 = segments[i-1];
 		beamsegment_t& seg2 = segments[i];
@@ -1932,11 +1932,11 @@ void CBeamRenderer::AddBeamEntity( cl_entity_t* pentity )
 
 	// Set the beam entity up. This needs to be called each frame, in case the server entity changes
 	// in some way
-	Float speed = pentity->curstate.fuser1 * 0.1;
-	Float amplitude = pentity->curstate.fuser2 * 0.01;
-	Float width = pentity->curstate.scale;
-	Float noisespeed = pentity->curstate.fuser3 * 0.1;
-	Float brightness = R_RenderFxBlend(pentity)/255.0f;
+	float speed = pentity->curstate.fuser1 * 0.1;
+	float amplitude = pentity->curstate.fuser2 * 0.01;
+	float width = pentity->curstate.scale;
+	float noisespeed = pentity->curstate.fuser3 * 0.1;
+	float brightness = R_RenderFxBlend(pentity)/255.0f;
 	Int32 beamflags = pentity->curstate.iuser2;
 
 	// Get start/end position
@@ -1999,7 +1999,7 @@ void CBeamRenderer::AddBeamEntity( cl_entity_t* pentity )
 //====================================
 //
 //====================================
-bool CBeamRenderer::BeamSetup( beam_t* pbeam, const Vector& src, const Vector& end, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Int32 flags )
+bool CBeamRenderer::BeamSetup( beam_t* pbeam, const Vector& src, const Vector& end, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, Int32 flags )
 {
 	cache_model_t* pmodel = gModelCache.GetModelByIndex(modelindex);
 	if(!pmodel)
@@ -2042,11 +2042,11 @@ bool CBeamRenderer::BeamSetup( beam_t* pbeam, const Vector& src, const Vector& e
 	if(!pbeam->noisespeed)
 		pbeam->noisespeed = 1.0;
 
-	Float length = pbeam->delta.Length();
+	float length = pbeam->delta.Length();
 	if(amplitude >= 0.5)
-		pbeam->numsegments = static_cast<Uint32>(length * 0.25 + 3.0);
+		pbeam->numsegments = static_cast<UInt32>(length * 0.25 + 3.0);
 	else
-		pbeam->numsegments = static_cast<Uint32>(length * 0.075 + 3.0);
+		pbeam->numsegments = static_cast<UInt32>(length * 0.075 + 3.0);
 
 	if(pbeam->numsegments < MIN_NB_BEAM_SEGMENTS)
 		pbeam->numsegments = MIN_NB_BEAM_SEGMENTS;
@@ -2057,7 +2057,7 @@ bool CBeamRenderer::BeamSetup( beam_t* pbeam, const Vector& src, const Vector& e
 //====================================
 //
 //====================================
-beam_t* CBeamRenderer::BeamLightning( const Vector& src, const Vector& end, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Int32 flags )
+beam_t* CBeamRenderer::BeamLightning( const Vector& src, const Vector& end, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, Int32 flags )
 {
 	beam_t* pbeam = AllocBeam();
 	if(!pbeam)
@@ -2075,7 +2075,7 @@ beam_t* CBeamRenderer::BeamLightning( const Vector& src, const Vector& end, Int3
 //====================================
 //
 //====================================
-beam_t* CBeamRenderer::BeamCirclePoints( beam_types_t type, const Vector& src, const Vector& end, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Uint32 startframe, Float framerate, Float r, Float g, Float b, Int32 flags )
+beam_t* CBeamRenderer::BeamCirclePoints( beam_types_t type, const Vector& src, const Vector& end, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, UInt32 startframe, float framerate, float r, float g, float b, Int32 flags )
 {
 	beam_t* pbeam = BeamLightning(src, end, modelindex, life, width, amplitude, brightness, speed, noisespeed, flags);
 	if(!pbeam)
@@ -2092,7 +2092,7 @@ beam_t* CBeamRenderer::BeamCirclePoints( beam_types_t type, const Vector& src, c
 //====================================
 //
 //====================================
-beam_t* CBeamRenderer::BeamEntityPoint( entindex_t startentity, Int32 attachment, const Vector& end, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Uint32 startframe, Float framerate, Float r, Float g, Float b, Int32 flags )
+beam_t* CBeamRenderer::BeamEntityPoint( entindex_t startentity, Int32 attachment, const Vector& end, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, UInt32 startframe, float framerate, float r, float g, float b, Int32 flags )
 {
 	cl_entity_t* pentity = GetBeamAttachmentEntity(startentity);
 	if(pentity && (!life || pentity->pmodel))
@@ -2120,7 +2120,7 @@ beam_t* CBeamRenderer::BeamEntityPoint( entindex_t startentity, Int32 attachment
 //====================================
 //
 //====================================
-beam_t* CBeamRenderer::BeamEntities( entindex_t startentity, entindex_t endentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Uint32 startframe, Float framerate, Float r, Float g, Float b, Int32 flags )
+beam_t* CBeamRenderer::BeamEntities( entindex_t startentity, entindex_t endentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, UInt32 startframe, float framerate, float r, float g, float b, Int32 flags )
 {
 	cl_entity_t* pstartentity = GetBeamAttachmentEntity(startentity);
 	if(!pstartentity)
@@ -2155,7 +2155,7 @@ beam_t* CBeamRenderer::BeamEntities( entindex_t startentity, entindex_t endentit
 //====================================
 //
 //====================================
-beam_t* CBeamRenderer::BeamFollow( entindex_t startentity, Int32 attachment, Int32 modelindex, Float life, Float width, Float brightness, Float r, Float g, Float b )
+beam_t* CBeamRenderer::BeamFollow( entindex_t startentity, Int32 attachment, Int32 modelindex, float life, float width, float brightness, float r, float g, float b )
 {
 	cl_entity_t* pstartentity = GetBeamAttachmentEntity(startentity);
 	if(!pstartentity)
@@ -2178,7 +2178,7 @@ beam_t* CBeamRenderer::BeamFollow( entindex_t startentity, Int32 attachment, Int
 //====================================
 //
 //====================================
-beam_t* CBeamRenderer::BeamVaporTrail( const Vector& src, const Vector& end, Int32 modelindex1, Int32 modelindex2, Float colorfadedelay, Float colorfadetime, Float life, Float width, Float brightness, Float r1, Float g1, Float b1, Float r2, Float g2, Float b2, Int32 flags )
+beam_t* CBeamRenderer::BeamVaporTrail( const Vector& src, const Vector& end, Int32 modelindex1, Int32 modelindex2, float colorfadedelay, float colorfadetime, float life, float width, float brightness, float r1, float g1, float b1, float r2, float g2, float b2, Int32 flags )
 {
 	beam_t* pbeam = BeamLightning(src, end, modelindex1, life, width, 0, brightness, 1.0, 1.0, flags);
 	if(!pbeam)
@@ -2193,14 +2193,14 @@ beam_t* CBeamRenderer::BeamVaporTrail( const Vector& src, const Vector& end, Int
 
 	SetBeamAttributes(pbeam, r1, g1, b1, 1.0, 0);
 
-	Float division = 16; // Every 16 units
-	Float beamlength = (src - end).Length();
-	Uint32 divisions = beamlength / static_cast<Float>(division);
+	float division = 16; // Every 16 units
+	float beamlength = (src - end).Length();
+	UInt32 divisions = beamlength / static_cast<float>(division);
 
 	pbeam->drawsegments.resize(divisions+1);
 
-	Float fraction = 1.0f/divisions;
-	for(Float f = 0; f <= 1.0; f += fraction)
+	float fraction = 1.0f/divisions;
+	for(float f = 0; f <= 1.0; f += fraction)
 	{
 		beam_position_t* p = AllocBeamPosition(pbeam);
 		p->position = src * (1.0 - f) + end * f;
@@ -2223,7 +2223,7 @@ beam_t* CBeamRenderer::BeamVaporTrail( const Vector& src, const Vector& end, Int
 //====================================
 //
 //====================================
-beam_t* CBeamRenderer::BeamPoints( const Vector& src, const Vector& end, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Uint32 startframe, Float framerate, Float r, Float g, Float b, Int32 flags )
+beam_t* CBeamRenderer::BeamPoints( const Vector& src, const Vector& end, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, UInt32 startframe, float framerate, float r, float g, float b, Int32 flags )
 {
 	beam_t* pbeam = BeamLightning(src, end, modelindex, life, width, amplitude, brightness, speed, noisespeed, flags);
 	if(!pbeam)
@@ -2239,7 +2239,7 @@ beam_t* CBeamRenderer::BeamPoints( const Vector& src, const Vector& end, Int32 m
 //====================================
 //
 //====================================
-beam_t* CBeamRenderer::BeamRing( entindex_t startentity, entindex_t endentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Uint32 startframe, Float framerate, Float r, Float g, Float b, Int32 flags )
+beam_t* CBeamRenderer::BeamRing( entindex_t startentity, entindex_t endentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, UInt32 startframe, float framerate, float r, float g, float b, Int32 flags )
 {
 	cl_entity_t* pstartentity = GetBeamAttachmentEntity(startentity);
 	if(!pstartentity)
@@ -2274,10 +2274,10 @@ beam_t* CBeamRenderer::BeamRing( entindex_t startentity, entindex_t endentity, I
 //====================================
 //
 //====================================
-void CBeamRenderer::SetBeamAttributes( beam_t* pbeam, Float r, Float g, Float b, Float framerate, Uint32 startframe )
+void CBeamRenderer::SetBeamAttributes( beam_t* pbeam, float r, float g, float b, float framerate, UInt32 startframe )
 {
 	pbeam->framerate = framerate;
-	pbeam->frame = static_cast<Float>(startframe);
+	pbeam->frame = static_cast<float>(startframe);
 	pbeam->color1.x = r;
 	pbeam->color1.y = g;
 	pbeam->color1.z = b;
@@ -2286,46 +2286,46 @@ void CBeamRenderer::SetBeamAttributes( beam_t* pbeam, Float r, Float g, Float b,
 //====================================
 //
 //====================================
-void CBeamRenderer::ApplySegmentNoise( Vector& start, Uint32 beamindex, Uint32 i, Float scale, Uint32 numsegments, const Vector& up, const Vector& right, Int32 flags )
+void CBeamRenderer::ApplySegmentNoise( Vector& start, UInt32 beamindex, UInt32 i, float scale, UInt32 numsegments, const Vector& up, const Vector& right, Int32 flags )
 {
 	if(scale <= 0)
 		return;
 
 	// Calculate noise based on distance from center
-	Float noiseamount;
-	Uint32 halfsegcnt = static_cast<Uint32>(numsegments*0.5);
+	float noiseamount;
+	UInt32 halfsegcnt = static_cast<UInt32>(numsegments*0.5);
 	if(i < halfsegcnt)
-		noiseamount = static_cast<Float>(i) / static_cast<Float>(halfsegcnt);
+		noiseamount = static_cast<float>(i) / static_cast<float>(halfsegcnt);
 	else
-		noiseamount = 1.0 - (static_cast<Float>(i-halfsegcnt) / static_cast<Float>(halfsegcnt));
+		noiseamount = 1.0 - (static_cast<float>(i-halfsegcnt) / static_cast<float>(halfsegcnt));
 
 	// Scale up noise amount a bit
 	noiseamount = (noiseamount * sqrt(noiseamount))*10;
 
 	// Speed factor is based on beam count
-	Float speed;
+	float speed;
 	if(flags & FL_BEAM_VARIABLE_NOISE)
 		speed = ((beamindex % 4) + 1) * 0.05;
 	else
 		speed = 0;
 
 	// Beam direction
-	Float dir;
+	float dir;
 	if(flags & FL_BEAM_VARIABLE_DIR)
 		dir = (beamindex % 2) == 0 ? -1 : 1;
 	else
 		dir = 1;
 
 	// Beam noise step
-	Float noisestep;
+	float noisestep;
 	if(flags & FL_BEAM_VARIABLE_NOISE)
-		noisestep = static_cast<Float>(beamindex) * 2;
+		noisestep = static_cast<float>(beamindex) * 2;
 	else
 		noisestep = 0;
 
 	// Calculate noise on up vector
-	Math::VectorMA(start, SDL_sin(static_cast<Float>(i)*0.15 + (rns.time*dir) * 20 * (1.0 + speed) + noisestep)*noiseamount*scale, up, start);
+	Math::VectorMA(start, SDL_sin(static_cast<float>(i)*0.15 + (rns.time*dir) * 20 * (1.0 + speed) + noisestep)*noiseamount*scale, up, start);
 
 	// Calculate noise on right vector
-	Math::VectorMA(start, SDL_cos(static_cast<Float>(i)*0.25 + (rns.time*dir) * 30 * (1.0 + speed) + noisestep)*noiseamount*scale, right, start);
+	Math::VectorMA(start, SDL_cos(static_cast<float>(i)*0.25 + (rns.time*dir) * 30 * (1.0 + speed) + noisestep)*noiseamount*scale, right, start);
 }

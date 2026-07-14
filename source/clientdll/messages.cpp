@@ -20,9 +20,9 @@ CScreenMessages gMessages;
 static const Int32 MSG_BORDER_INSET = 10;
 
 // Filename of titles file
-const Char CScreenMessages::TITLES_FILENAME[] = "titles.txt";
+const char CScreenMessages::TITLES_FILENAME[] = "titles.txt";
 // Font set schema name for this clas
-const Char CScreenMessages::MESSAGES_FONT_SCHEMA_FILENAME[] = "titles";
+const char CScreenMessages::MESSAGES_FONT_SCHEMA_FILENAME[] = "titles";
 
 //====================================
 //
@@ -64,7 +64,7 @@ void CScreenMessages::Shutdown( void )
 //====================================
 bool CScreenMessages::InitGame( void )
 {
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	// Read titles file
@@ -86,7 +86,7 @@ void CScreenMessages::ClearGame( void )
 
 	if(!m_messageDefinitonsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_messageDefinitonsArray.size(); i++)
+		for(UInt32 i = 0; i < m_messageDefinitonsArray.size(); i++)
 			delete m_messageDefinitonsArray[i];
 
 		m_messageDefinitonsArray.clear();
@@ -126,7 +126,7 @@ void CScreenMessages::ReadjustMessageSizes( void )
 	if(m_messageDefinitonsArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_messageDefinitonsArray.size(); i++)
+	for(UInt32 i = 0; i < m_messageDefinitonsArray.size(); i++)
 	{
 		scrmessage_t* pmsg = m_messageDefinitonsArray[i];
 		ReadjustMessage(pmsg);
@@ -153,7 +153,7 @@ void CScreenMessages::ReadjustMessage( scrmessage_t* pmsg )
 	pmsg->width = 0;
 	pmsg->height = 0;
 			
-	for(Uint32 j = 0; j < pmsg->lines.size(); j++)
+	for(UInt32 j = 0; j < pmsg->lines.size(); j++)
 	{
 		msgline_t* pline = &pmsg->lines[j];
 
@@ -161,10 +161,10 @@ void CScreenMessages::ReadjustMessage( scrmessage_t* pmsg )
 		pline->height = pmsg->pfontset->maxheight;
 		pline->yoffset = pmsg->height;
 
-		const Char* pstr = pline->text.c_str();
+		const char* pstr = pline->text.c_str();
 		while(*pstr)
 		{
-			Uint32 charidx = clamp(*pstr, 0, 255);
+			UInt32 charidx = Clamp(*pstr, 0, 255);
 			pstr++;
 
 			pline->width += pmsg->pfontset->glyphs[charidx].advancex;
@@ -182,42 +182,42 @@ void CScreenMessages::ReadjustMessage( scrmessage_t* pmsg )
 //====================================
 void CScreenMessages::ReadTitlesFile( void )
 {
-	const Char* pfile = reinterpret_cast<const Char*>(cl_filefuncs.pfnLoadFile(TITLES_FILENAME, nullptr));
+	const char* pfile = reinterpret_cast<const char*>(cl_filefuncs.pfnLoadFile(TITLES_FILENAME, nullptr));
 	if(!pfile)
 	{
 		cl_engfuncs.pfnCon_EPrintf("%s - Failed to load '%s'.\n", __FUNCTION__, TITLES_FILENAME);
 		return;
 	}
 
-	Float positionx = 0;
-	Float positiony = 0;
+	float positionx = 0;
+	float positiony = 0;
 	color24_t color1;
 	color24_t color2;
-	Float fadein = 0;
-	Float fadeout = 0;
-	Float holdtime = 0;
-	Float fxtime = 0;
+	float fadein = 0;
+	float fadeout = 0;
+	float holdtime = 0;
+	float fxtime = 0;
 	effects_t effect = EFFECT_UNDEFINED;
 	CString schemaname;
 
-	static Char name[MAX_PARSE_LENGTH];
-	static Char line[MAX_LINE_LENGTH];
+	static char name[MAX_PARSE_LENGTH];
+	static char line[MAX_LINE_LENGTH];
 
-	const Char* pstr = pfile;
+	const char* pstr = pfile;
 	while(pstr)
 	{
 		// Read the line
 		pstr = Common::ReadLine(pstr, line);
 
-		static Char token[MAX_PARSE_LENGTH];
-		const Char* pchar = Common::Parse(line, token);
+		static char token[MAX_PARSE_LENGTH];
+		const char* pchar = Common::Parse(line, token);
 		if(!qstrlen(token))
 			continue;
 
 		// Manage special tokens
 		if(!qstrcmp(token, "{"))
 		{
-			const Char* pstrend = qstrstr(pstr, "}");
+			const char* pstrend = qstrstr(pstr, "}");
 			if(!pstrend)
 			{
 				cl_engfuncs.pfnCon_Printf("%s - Missing '}' bracket in '%s'.\n", __FUNCTION__, TITLES_FILENAME);
@@ -271,13 +271,13 @@ void CScreenMessages::ReadTitlesFile( void )
 				pnew->pfontset = m_pFontSet;
 
 			if(pnew->xposition != -1)
-				pnew->xposition = clamp(pnew->xposition, 0.0, 1.0);
+				pnew->xposition = Clamp(pnew->xposition, 0.0, 1.0);
 			if(pnew->xposition != -1)
-				pnew->yposition = clamp(pnew->xposition, 0.0, 1.0);
+				pnew->yposition = Clamp(pnew->xposition, 0.0, 1.0);
 
 			// Assing the message contents
 			CString msgtext;
-			Uint32 num = (pstrend - pstr);
+			UInt32 num = (pstrend - pstr);
 			msgtext.assign(pstr, num);
 
 			// Process the msg text
@@ -303,7 +303,7 @@ void CScreenMessages::ReadTitlesFile( void )
 			}
 
 			// Read in the first value
-			static Char value[MAX_PARSE_LENGTH];
+			static char value[MAX_PARSE_LENGTH];
 			pchar = Common::Parse(pchar, value);
 			if(!qstrlen(value))
 			{
@@ -363,7 +363,7 @@ void CScreenMessages::ReadTitlesFile( void )
 				color24_t& dest = (!qstrcmp(token, "$color1")) ? color1 : color2;
 
 				// Set R component
-				dest.r = clamp(SDL_atoi(value), 0, 255);
+				dest.r = Clamp(SDL_atoi(value), 0, 255);
 
 				// Parse the G component
 				pchar = Common::Parse(pchar, value);
@@ -374,7 +374,7 @@ void CScreenMessages::ReadTitlesFile( void )
 				}
 
 				// Set G component
-				dest.g = clamp(SDL_atoi(value), 0, 255);
+				dest.g = Clamp(SDL_atoi(value), 0, 255);
 
 				// Parse the B component
 				pchar = Common::Parse(pchar, value);
@@ -385,7 +385,7 @@ void CScreenMessages::ReadTitlesFile( void )
 				}
 
 				// Set G component
-				dest.b = clamp(SDL_atoi(value), 0, 255);
+				dest.b = Clamp(SDL_atoi(value), 0, 255);
 			}
 			else if(!qstrcmp(token, "$fadein"))
 			{
@@ -443,10 +443,10 @@ void CScreenMessages::CalculateMessageLifetime( scrmessage_t& msg )
 	case EFFECT_WRITEOUT:
 		{
 			// Calculate number of visible characters
-			Uint32 numvisiblechars = 0;
-			for(Uint32 i = 0; i < msg.lines.size(); i++)
+			UInt32 numvisiblechars = 0;
+			for(UInt32 i = 0; i < msg.lines.size(); i++)
 			{
-				const Char* pstr = msg.lines[i].text.c_str();
+				const char* pstr = msg.lines[i].text.c_str();
 				while(*pstr)
 				{
 					if(!SDL_isspace(*pstr))
@@ -471,7 +471,7 @@ void CScreenMessages::CalculateMessageLifetime( scrmessage_t& msg )
 //====================================
 //
 //====================================
-void CScreenMessages::ProcessMessageText( const font_set_t* pset, scrmessage_t& msg, const Char* pstrMessageText )
+void CScreenMessages::ProcessMessageText( const font_set_t* pset, scrmessage_t& msg, const char* pstrMessageText )
 {
 	// Just to be safe
 	if(!msg.lines.empty())
@@ -481,8 +481,8 @@ void CScreenMessages::ProcessMessageText( const font_set_t* pset, scrmessage_t& 
 		return;
 
 	// Count the newlines
-	Uint32 nblines = 0;
-	const Char* pstr = pstrMessageText;
+	UInt32 nblines = 0;
+	const char* pstr = pstrMessageText;
 	while(*pstr)
 	{
 		if(*pstr == '\n')
@@ -502,8 +502,8 @@ void CScreenMessages::ProcessMessageText( const font_set_t* pset, scrmessage_t& 
 	nblines = 0;
 
 	// Craft the line entries
-	Uint32 nbchars = 0;
-	static Char line[MAX_LINE_LENGTH];
+	UInt32 nbchars = 0;
+	static char line[MAX_LINE_LENGTH];
 	pstr = pstrMessageText;
 	while(pstr)
 	{
@@ -525,13 +525,13 @@ void CScreenMessages::ProcessMessageText( const font_set_t* pset, scrmessage_t& 
 		newline.charoffset = nbchars;
 		newline.yoffset = msg.height;
 
-		const Char* ppstr = line;
+		const char* ppstr = line;
 		while(*ppstr)
 		{
 			if(!SDL_isspace(*ppstr))
 				nbchars++;
 
-			Uint32 charidx = clamp(*ppstr, 0, 255);
+			UInt32 charidx = Clamp(*ppstr, 0, 255);
 			ppstr++;
 
 			newline.width += pset->glyphs[charidx].advancex;
@@ -553,7 +553,7 @@ void CScreenMessages::ProcessMessageText( const font_set_t* pset, scrmessage_t& 
 //====================================
 //
 //====================================
-void CScreenMessages::ShowMessage( const Char* pstrMessageName )
+void CScreenMessages::ShowMessage( const char* pstrMessageName )
 {
 	// Make sure this is the only custom one drawn
 	m_drawnMessagesList.begin();
@@ -571,7 +571,7 @@ void CScreenMessages::ShowMessage( const Char* pstrMessageName )
 
 	// Locate the message definition
 	scrmessage_t* pmsg = nullptr;
-	for(Uint32 i = 0; i < m_messageDefinitonsArray.size(); i++)
+	for(UInt32 i = 0; i < m_messageDefinitonsArray.size(); i++)
 	{
 		if(!qstrcmp(m_messageDefinitonsArray[i]->name, pstrMessageName))
 		{
@@ -597,7 +597,7 @@ void CScreenMessages::ShowMessage( const Char* pstrMessageName )
 //====================================
 //
 //====================================
-void CScreenMessages::ShowMessage( const Char* pstrMessageText, Float fadein, Float fadeout, Float fxtime, Float holdtime, effects_t effect, Int32 channel, Float xposition, Float yposition, const color24_t& color1, const color24_t& color2 )
+void CScreenMessages::ShowMessage( const char* pstrMessageText, float fadein, float fadeout, float fxtime, float holdtime, effects_t effect, Int32 channel, float xposition, float yposition, const color24_t& color1, const color24_t& color2 )
 {
 	// Make sure this is the only custom one drawn
 	m_drawnMessagesList.begin();
@@ -626,9 +626,9 @@ void CScreenMessages::ShowMessage( const Char* pstrMessageText, Float fadein, Fl
 	m_customMessage.name.clear();
 
 	if(m_customMessage.xposition != -1)
-		m_customMessage.xposition = clamp(m_customMessage.xposition, 0.0, 1.0);
+		m_customMessage.xposition = Clamp(m_customMessage.xposition, 0.0, 1.0);
 	if(m_customMessage.xposition != -1)
-		m_customMessage.yposition = clamp(m_customMessage.xposition, 0.0, 1.0);
+		m_customMessage.yposition = Clamp(m_customMessage.xposition, 0.0, 1.0);
 
 	// Process the text
 	ProcessMessageText(m_pFontSet, m_customMessage, pstrMessageText);
@@ -650,7 +650,7 @@ bool CScreenMessages::DrawMessages( void )
 		return true;
 
 	// Get current time
-	Double time = cl_engfuncs.pfnGetClientTime();
+	double time = cl_engfuncs.pfnGetClientTime();
 
 	// Draw each message
 	m_drawnMessagesList.begin();
@@ -685,7 +685,7 @@ bool CScreenMessages::DrawMessages( void )
 //====================================
 //
 //====================================
-void CScreenMessages::GetTextXPosition( Double time, const font_set_t* pset, displaymsg_t& msg, msgline_t& line, Int32& xcoord )
+void CScreenMessages::GetTextXPosition( double time, const font_set_t* pset, displaymsg_t& msg, msgline_t& line, Int32& xcoord )
 {
 	// Non-centered position is simpler
 	if(msg.pmsg->xposition != -1)
@@ -704,23 +704,23 @@ void CScreenMessages::GetTextXPosition( Double time, const font_set_t* pset, dis
 	}
 
 	// Determine the width of the line
-	Uint32 linewidth = 0;
+	UInt32 linewidth = 0;
 	if(msg.pmsg->effect == EFFECT_WRITEOUT)
 	{
-		Uint32 charnum = 0;
-		const Char* pstr = line.text.c_str();
+		UInt32 charnum = 0;
+		const char* pstr = line.text.c_str();
 		while(*pstr)
 		{
 			if(!SDL_isspace(*pstr))
 			{
-				Float chartime = msg.time + (line.charoffset + charnum)*msg.pmsg->fadein;
+				float chartime = msg.time + (line.charoffset + charnum)*msg.pmsg->fadein;
 				if(chartime > time)
 					break;
 
 				charnum++;
 			}
 
-			Uint32 charidx = clamp(*pstr, 0, 255);
+			UInt32 charidx = Clamp(*pstr, 0, 255);
 			linewidth += pset->glyphs[charidx].advancex;
 			pstr++;
 		}
@@ -740,7 +740,7 @@ void CScreenMessages::GetTextXPosition( Double time, const font_set_t* pset, dis
 //====================================
 bool CScreenMessages::DrawMessage( displaymsg_t& msg )
 {
-	Double time = cl_engfuncs.pfnGetClientTime();
+	double time = cl_engfuncs.pfnGetClientTime();
 
 	// Get ptr to definition
 	scrmessage_t* pmsgdef = msg.pmsg;
@@ -778,13 +778,13 @@ bool CScreenMessages::DrawMessage( displaymsg_t& msg )
 	}
 
 	// Draw line by line
-	for(Uint32 i = 0; i < pmsgdef->lines.size(); i++)
+	for(UInt32 i = 0; i < pmsgdef->lines.size(); i++)
 	{
 		msgline_t &line = pmsgdef->lines[i];
 
 		if(pmsgdef->effect == EFFECT_WRITEOUT)
 		{
-			Float linetime = msg.time + line.charoffset*pmsgdef->fadein;
+			float linetime = msg.time + line.charoffset*pmsgdef->fadein;
 			if(linetime > time)
 				break;
 		}
@@ -792,12 +792,12 @@ bool CScreenMessages::DrawMessage( displaymsg_t& msg )
 		// Get X Position for text
 		GetTextXPosition(time, pset, msg, line, xposition);
 
-		Uint32 charIndex = line.charoffset;
+		UInt32 charIndex = line.charoffset;
 		charXPos = xposition;
 		charYPos = yposition;
 
-		Float alpha = 1.0;
-		Float colorblend = 1.0;
+		float alpha = 1.0;
+		float colorblend = 1.0;
 
 		if(pmsgdef->effect != EFFECT_WRITEOUT)
 		{
@@ -806,7 +806,7 @@ bool CScreenMessages::DrawMessage( displaymsg_t& msg )
 			else if((msg.time + pmsgdef->fadein + pmsgdef->holdtime) <= time)
 				alpha = 1.0 - (time - (msg.time + pmsgdef->fadein + pmsgdef->holdtime))/pmsgdef->fadeout;
 
-			alpha = clamp(alpha, 0.0, 1.0);
+			alpha = Clamp(alpha, 0.0, 1.0);
 
 			switch(pmsgdef->effect)
 			{
@@ -823,12 +823,12 @@ bool CScreenMessages::DrawMessage( displaymsg_t& msg )
 		}
 
 		// Draw character by character
-		const Char* pstr = line.text.c_str();
+		const char* pstr = line.text.c_str();
 		while(*pstr)
 		{
 			if(pmsgdef->effect == EFFECT_WRITEOUT)
 			{
-				Float chartime = msg.time + charIndex*pmsgdef->fadein;
+				float chartime = msg.time + charIndex*pmsgdef->fadein;
 				if(chartime > time)
 					break;
 
@@ -839,17 +839,17 @@ bool CScreenMessages::DrawMessage( displaymsg_t& msg )
 				else
 					alpha = 1.0 - ((time-(msg.die-pmsgdef->fadeout))/pmsgdef->fadeout);
 
-				alpha = clamp(alpha, 0.0, 1.0);
+				alpha = Clamp(alpha, 0.0, 1.0);
 
 				if(pmsgdef->fxtime > 0)
 				{
-					Float delta = time-chartime;
+					float delta = time-chartime;
 					if(delta > pmsgdef->fxtime)
 						colorblend = 1.0;
 					else
 						colorblend = 1.0 - (delta*(1.0/pmsgdef->fxtime));
 
-						clamp(colorblend, 0.0, 1.0);
+						Clamp(colorblend, 0.0, 1.0);
 					}
 					else
 						colorblend = 1.0;
@@ -867,7 +867,7 @@ bool CScreenMessages::DrawMessage( displaymsg_t& msg )
 				return false;
 			}
 
-			Uint32 charidx = clamp(*pstr, 0, 255);
+			UInt32 charidx = Clamp(*pstr, 0, 255);
 			charXPos += pset->glyphs[charidx].advancex;
 
 			if(!SDL_isspace(*pstr))
@@ -889,12 +889,12 @@ bool CScreenMessages::DrawMessage( displaymsg_t& msg )
 		if(((Int64)SDL_floor(time*2)) % 2 == 1)
 			return true;
 
-		Float fadetime = msg.die - msg.pmsg->fadeout;
+		float fadetime = msg.die - msg.pmsg->fadeout;
 
-		Float alpha = 1.0;
+		float alpha = 1.0;
 		if(fadetime < time)
 		{
-			Float fadedelta = time - fadetime;
+			float fadedelta = time - fadetime;
 			alpha = 1.0 - (fadedelta/msg.pmsg->fadeout);
 		}
 
@@ -918,16 +918,16 @@ bool CScreenMessages::DrawMessage( displaymsg_t& msg )
 		cl_renderfuncs.pfnBasicDrawSetModelView(modelview.GetMatrix());
 		cl_renderfuncs.pfnBasicDrawSetProjection(projection.GetMatrix());
 
-		Float xsize = 6.0f/(Float)m_screenWidth;
-		Float ysize = 6.0f/(Float)m_screenHeight;
+		float xsize = 6.0f/(float)m_screenWidth;
+		float ysize = 6.0f/(float)m_screenHeight;
 
-		Float xpos = (Float)charXPos/(Float)m_screenWidth;
-		Float ypos = (Float)charYPos/(Float)m_screenHeight;
+		float xpos = (float)charXPos/(float)m_screenWidth;
+		float ypos = (float)charYPos/(float)m_screenHeight;
 		ypos -= ysize;
 
-		Vector color((Float)msg.pmsg->color1.r/255.0f,
-			(Float)msg.pmsg->color1.g/255.0f,
-			(Float)msg.pmsg->color1.b/255.0f);
+		Vector color((float)msg.pmsg->color1.r/255.0f,
+			(float)msg.pmsg->color1.g/255.0f,
+			(float)msg.pmsg->color1.b/255.0f);
 
 		cl_renderfuncs.pfnBasicDrawBegin(CBasicDraw::DRAW_TRIANGLES);
 

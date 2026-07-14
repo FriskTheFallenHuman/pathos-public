@@ -78,7 +78,7 @@ bool CTriggerEntity::IsMasterTriggered( void )
 {
 	if(m_masterEntityName != NO_STRING_VALUE)
 	{
-		const Char* pstrMasterName = gd_engfuncs.pfnGetString(m_masterEntityName);
+		const char* pstrMasterName = gd_engfuncs.pfnGetString(m_masterEntityName);
 		if(!Util::IsMasterTriggered(pstrMasterName, m_activator, this))
 			return false;
 	}
@@ -101,7 +101,7 @@ bool CTriggerEntity::CheckFilterFlags( CBaseEntity* pOther, bool noclients, bool
 	{
 		if(m_filterEntityName != NO_STRING_VALUE && !pOther->IsPlayer())
 		{
-			const Char* pstrFilterName = gd_engfuncs.pfnGetString(m_filterEntityName);
+			const char* pstrFilterName = gd_engfuncs.pfnGetString(m_filterEntityName);
 			if(qstrcmp(pstrFilterName, pOther->GetTargetName()))
 				return false;
 		}

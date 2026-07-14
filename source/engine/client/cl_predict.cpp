@@ -55,7 +55,7 @@ void CL_RunPrediction( void )
 		if(cls.usercmdhistorynum > 0)
 		{
 			// Only predict on last player cmd
-			Uint32 lastcmdidx = cls.usercmdhistorynum-1;
+			UInt32 lastcmdidx = cls.usercmdhistorynum-1;
 			usercmd_t& latestcmd = cls.usercmdhistory[lastcmdidx];
 
 			CL_PredictPlayer(latestcmd, cls.pminfo, true, pplayer);
@@ -66,7 +66,7 @@ void CL_RunPrediction( void )
 	}
 
 	// Run each saved usercmd to predict everything
-	for(Uint32 i = 0; i < cls.usercmdhistorynum; i++)
+	for(UInt32 i = 0; i < cls.usercmdhistorynum; i++)
 	{
 		usercmd_t& cmd = cls.usercmdhistory[i];
 

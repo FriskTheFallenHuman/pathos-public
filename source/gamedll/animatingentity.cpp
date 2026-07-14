@@ -62,7 +62,7 @@ bool CAnimatingEntity::Spawn( void )
 
 	if(m_pFields->modelname == NO_STRING_VALUE)
 	{
-		const Char* pstrclassname = gd_engfuncs.pfnGetString(m_pFields->classname);
+		const char* pstrclassname = gd_engfuncs.pfnGetString(m_pFields->classname);
 		const Vector& origin = m_pState->origin;
 
 		gd_engfuncs.pfnCon_Printf("Animated entity '%s' with no model set at %.0f %.0f %.0f.\n", pstrclassname, origin[0], origin[1], origin[2]);
@@ -70,7 +70,7 @@ bool CAnimatingEntity::Spawn( void )
 	}
 	
 	// Set the model
-	const Char* pstrModelName = gd_engfuncs.pfnGetString(m_pFields->modelname);
+	const char* pstrModelName = gd_engfuncs.pfnGetString(m_pFields->modelname);
 	if(!SetModel(pstrModelName, false))
 		return false;
 
@@ -127,7 +127,7 @@ void CAnimatingEntity::PrecacheModelSounds( Int32 modelIndex )
 	if(pmodel && pmodel->type == MOD_VBM)
 	{
 		studiohdr_t* phdr = pmodel->getVBMCache()->pstudiohdr;
-		for(Uint32 i = 0; i < phdr->numseq; i++)
+		for(UInt32 i = 0; i < phdr->numseq; i++)
 			PrecacheSequenceSounds(modelIndex, i);
 	}
 }
@@ -136,7 +136,7 @@ void CAnimatingEntity::PrecacheModelSounds( Int32 modelIndex )
 // @brief
 //
 //=============================================
-Float CAnimatingEntity::FrameAdvance( Double interval, Double* pAnimFinishTime )
+float CAnimatingEntity::FrameAdvance( double interval, double* pAnimFinishTime )
 {
 	if(!interval)
 	{
@@ -262,8 +262,8 @@ void CAnimatingEntity::PrecacheSequenceSounds( Int32 modelIndex, Int32 sequenceI
 			break;
 		case EVENT_CLIENTDLL_MUZZLEFLASH_2A_USER:
 			{
-				const Char* pstrString = pevent->options;
-				const Char* pstrSeparator = qstrstr(pstrString, ";");
+				const char* pstrString = pevent->options;
+				const char* pstrSeparator = qstrstr(pstrString, ";");
 				if (!pstrSeparator)
 				{
 					gd_engfuncs.pfnCon_Printf("%s - Event option string '%s' is missing ';' separator in sequence '%s' of model '%s'.\n", __FUNCTION__, pstrString, pseqdesc->label, pmodel->name.c_str());
@@ -300,7 +300,7 @@ void CAnimatingEntity::PrecacheSequenceSounds( Int32 modelIndex, Int32 sequenceI
 // @brief
 //
 //=============================================
-void CAnimatingEntity::PrecacheSequenceSounds( const Char* pstrSequenceName )
+void CAnimatingEntity::PrecacheSequenceSounds( const char* pstrSequenceName )
 {
 	Int32 sequenceIndex = FindSequence(pstrSequenceName);
 	if(sequenceIndex == NO_SEQUENCE_VALUE)
@@ -346,7 +346,7 @@ void CAnimatingEntity::ResetSequenceInfo( void )
 // @brief
 //
 //=============================================
-Uint32 CAnimatingEntity::GetSequenceNumber( void )
+UInt32 CAnimatingEntity::GetSequenceNumber( void )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)
@@ -446,7 +446,7 @@ Int32 CAnimatingEntity::FindSequence( const char* pstrsequencename )
 // @brief
 //
 //=============================================
-Float CAnimatingEntity::GetSequenceTime( Int32 sequenceIndex )
+float CAnimatingEntity::GetSequenceTime( Int32 sequenceIndex )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)
@@ -484,7 +484,7 @@ Float CAnimatingEntity::GetSequenceTime( Int32 sequenceIndex )
 // @brief
 //
 //=============================================
-Int32 CAnimatingEntity::FindTransition( Uint32 endingsequence, Uint32 goalsequence, Int32* pdirection )
+Int32 CAnimatingEntity::FindTransition( UInt32 endingsequence, UInt32 goalsequence, Int32* pdirection )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)
@@ -541,7 +541,7 @@ void CAnimatingEntity::InitBoneControllers( void )
 // @brief
 //
 //=============================================
-Float CAnimatingEntity::SetBoneController( Int32 controllerindex, Float value )
+float CAnimatingEntity::SetBoneController( Int32 controllerindex, float value )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)
@@ -598,7 +598,7 @@ void CAnimatingEntity::ManageAnimationEvents( void )
 	if(!pseqdesc->numevents)
 		return;
 
-	Float frame = VBM_EstimateFrame(pseqdesc, g_pGameVars->time, m_pState->frame, m_pState->animtime, m_pState->framerate, m_pState->effects);
+	float frame = VBM_EstimateFrame(pseqdesc, g_pGameVars->time, m_pState->frame, m_pState->animtime, m_pState->framerate, m_pState->effects);
 
 	// Fixes first-frame event bug
 	if(!frame)
@@ -678,7 +678,7 @@ Int32 CAnimatingEntity::GetSequenceFlags( void )
 // @brief
 //
 //=============================================
-Uint32 CAnimatingEntity::GetNumFrames( void )
+UInt32 CAnimatingEntity::GetNumFrames( void )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)
@@ -762,7 +762,7 @@ Int32 CAnimatingEntity::GetVBMModelFlags( void )
 // @brief
 //
 //=============================================
-void CAnimatingEntity::GetAttachment( Uint32 attachmentindex, Vector& origin )
+void CAnimatingEntity::GetAttachment( UInt32 attachmentindex, Vector& origin )
 {
 	gd_engfuncs.pfnGetAttachment(m_pEdict, attachmentindex, origin);
 }
@@ -771,7 +771,7 @@ void CAnimatingEntity::GetAttachment( Uint32 attachmentindex, Vector& origin )
 // @brief
 //
 //=============================================
-bool CAnimatingEntity::GetBonePosition( Uint32 boneindex, Vector& origin )
+bool CAnimatingEntity::GetBonePosition( UInt32 boneindex, Vector& origin )
 {
 	return gd_engfuncs.pfnGetBonePositionByIndex(m_pEdict, boneindex, origin);
 }
@@ -780,7 +780,7 @@ bool CAnimatingEntity::GetBonePosition( Uint32 boneindex, Vector& origin )
 // @brief
 //
 //=============================================
-bool CAnimatingEntity::GetBonePosition( const Char* pstrbonename, Vector& origin )
+bool CAnimatingEntity::GetBonePosition( const char* pstrbonename, Vector& origin )
 {
 	return gd_engfuncs.pfnGetBonePositionByName(m_pEdict, pstrbonename, origin);
 }
@@ -789,7 +789,7 @@ bool CAnimatingEntity::GetBonePosition( const Char* pstrbonename, Vector& origin
 // @brief
 //
 //=============================================
-Int32 CAnimatingEntity::GetBoneIndex( const Char* pstrbonename )
+Int32 CAnimatingEntity::GetBoneIndex( const char* pstrbonename )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)
@@ -813,7 +813,7 @@ Int32 CAnimatingEntity::GetBoneIndex( const Char* pstrbonename )
 		return 0;
 	}
 
-	for(Uint32 i = 0; i < pstudiohdr->numbones; i++)
+	for(UInt32 i = 0; i < pstudiohdr->numbones; i++)
 	{
 		const mstudiobone_t* pbone = pstudiohdr->getBone(i);
 		if(!qstrcmp(pbone->name, pstrbonename))
@@ -827,7 +827,7 @@ Int32 CAnimatingEntity::GetBoneIndex( const Char* pstrbonename )
 // @brief Returns the bodygroup index by name
 //
 //=============================================
-Int32 CAnimatingEntity::GetBodyGroupIndexByName( const Char* pstrBodygroupName )
+Int32 CAnimatingEntity::GetBodyGroupIndexByName( const char* pstrBodygroupName )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)
@@ -849,7 +849,7 @@ Int32 CAnimatingEntity::GetBodyGroupIndexByName( const Char* pstrBodygroupName )
 // @brief Returns the submodel index in a bodygroup by name
 //
 //=============================================
-Int32 CAnimatingEntity::GetSubmodelIndexByName( Int32 bodygroupindex, const Char* pstrSubmodelName )
+Int32 CAnimatingEntity::GetSubmodelIndexByName( Int32 bodygroupindex, const char* pstrSubmodelName )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)
@@ -945,7 +945,7 @@ bool CAnimatingEntity::SetSequence( Int32 sequenceIndex )
 // @brief
 //
 //=============================================
-bool CAnimatingEntity::SetSequence( const Char* pstrSequenceName )
+bool CAnimatingEntity::SetSequence( const char* pstrSequenceName )
 {
 	Int32 sequenceIndex = FindSequence(pstrSequenceName);
 	if(sequenceIndex == NO_SEQUENCE_VALUE)
@@ -962,7 +962,7 @@ bool CAnimatingEntity::SetSequence( const Char* pstrSequenceName )
 // @brief
 //
 //=============================================
-bool CAnimatingEntity::IsSequenceLooped( const Char* pstrSequenceName )
+bool CAnimatingEntity::IsSequenceLooped( const char* pstrSequenceName )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)
@@ -998,7 +998,7 @@ bool CAnimatingEntity::IsSequenceLooped( const Char* pstrSequenceName )
 // @brief
 //
 //=============================================
-Float CAnimatingEntity::GetSequenceTime( const Char* pstrsequencename )
+float CAnimatingEntity::GetSequenceTime( const char* pstrsequencename )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)
@@ -1067,7 +1067,7 @@ bool CAnimatingEntity::GetSequenceBox( entity_state_t& state, Vector& mins, Vect
 
 	Vector vTemp;
 	static Vector vBounds[8];
-	for (Uint32 i = 0; i < 8; i++)
+	for (UInt32 i = 0; i < 8; i++)
 	{
 		if ( i & 1 ) vTemp[0] = seqmins[0];
 		else vTemp[0] = seqmaxs[0];
@@ -1081,10 +1081,10 @@ bool CAnimatingEntity::GetSequenceBox( entity_state_t& state, Vector& mins, Vect
 	Vector angles = state.angles;
 	angles[PITCH] *= -1;
 
-	Float rotationmatrix[3][4];
+	float rotationmatrix[3][4];
 	Math::AngleMatrix(angles, rotationmatrix);
 
-	for (Uint32 i = 0; i < 8; i++ )
+	for (UInt32 i = 0; i < 8; i++ )
 	{
 		Math::VectorCopy(vBounds[i], vTemp);
 		Math::VectorRotate(vTemp, rotationmatrix, vBounds[i]);
@@ -1093,7 +1093,7 @@ bool CAnimatingEntity::GetSequenceBox( entity_state_t& state, Vector& mins, Vect
 	// Set the bounding box
 	Vector vMins = NULL_MINS;
 	Vector vMaxs = NULL_MAXS;
-	for(Uint32 i = 0; i < 8; i++)
+	for(UInt32 i = 0; i < 8; i++)
 	{
 		// Mins
 		if(vBounds[i][0] < vMins[0]) vMins[0] = vBounds[i][0];
@@ -1118,8 +1118,8 @@ bool CAnimatingEntity::GetSequenceBox( entity_state_t& state, Vector& mins, Vect
 			if(pbonecontroller->type & STUDIO_RLOOP)
 				continue;
 
-			Uint32 iIndex = pbonecontroller->index;
-			Float flValue = state.controllers[iIndex]/255.0;
+			UInt32 iIndex = pbonecontroller->index;
+			float flValue = state.controllers[iIndex]/255.0;
 		
 			if (flValue < 0) flValue = 0;
 			if (flValue > 1) flValue = 1;
@@ -1144,7 +1144,7 @@ bool CAnimatingEntity::GetSequenceBox( entity_state_t& state, Vector& mins, Vect
 // @brief
 //
 //=============================================
-bool CAnimatingEntity::ExtractBoundingBox( entity_state_t& state, Uint32 sequence, Vector& mins, Vector& maxs )
+bool CAnimatingEntity::ExtractBoundingBox( entity_state_t& state, UInt32 sequence, Vector& mins, Vector& maxs )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(state.modelindex);
 	if(!pmodel)
@@ -1166,7 +1166,7 @@ bool CAnimatingEntity::ExtractBoundingBox( entity_state_t& state, Uint32 sequenc
 // @brief Sets sequence blending
 //
 //=============================================
-Float CAnimatingEntity::SetBlending( Int32 blenderIndex, Float value )
+float CAnimatingEntity::SetBlending( Int32 blenderIndex, float value )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)
@@ -1188,7 +1188,7 @@ Float CAnimatingEntity::SetBlending( Int32 blenderIndex, Float value )
 // @brief Returns the number of sequence blenders
 //
 //=============================================
-Uint32 CAnimatingEntity::GetNbBlenders( void )
+UInt32 CAnimatingEntity::GetNbBlenders( void )
 {
 	const cache_model_t* pmodel = gd_engfuncs.pfnGetModel(m_pState->modelindex);
 	if(!pmodel)

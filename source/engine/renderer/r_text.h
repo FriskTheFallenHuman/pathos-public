@@ -31,7 +31,7 @@ struct fontsetglinfo_t
 	}
 
 	struct en_texalloc_t* palloc;
-	Uint32 index_offset_outline;
+	UInt32 index_offset_outline;
 
 	class CVBO *pvbo;
 };
@@ -46,8 +46,8 @@ struct font_vertex_t
 	}
 
 	vec4_t position;
-	Float texcoord[2];
-	byte padding[8];
+	float texcoord[2];
+	Byte padding[8];
 };
 
 struct line_chunk_t
@@ -58,8 +58,8 @@ struct line_chunk_t
 		{}
 
 	color24_t color;
-	const Char* pstringbegin;
-	Uint32 length;
+	const char* pstringbegin;
+	UInt32 length;
 };
 
 struct line_t
@@ -104,7 +104,7 @@ class CText
 {
 private:
 	// Font set base directory
-	static const Char FONT_DIRECTORY[];
+	static const char FONT_DIRECTORY[];
 
 public:
 	CText( void );
@@ -131,20 +131,20 @@ public:
 	const font_set_t* GetDefaultFont( void ) const { return m_pDefaultSet; }
 
 	// Loads a font set
-	const font_set_t *LoadFont( const Char *pstrFilename, Int32 fontSize, bool outline = false, const color32_t* poutlinecolor = nullptr, Uint32 outlineradius = 0 );
+	const font_set_t *LoadFont( const char *pstrFilename, Int32 fontSize, bool outline = false, const color32_t* poutlinecolor = nullptr, UInt32 outlineradius = 0 );
 	// Draws a single string on the screen
-	bool DrawString( const Char *pstrString, Int32 x, Int32 y, bool reverse = false, Uint32 lineoffset = 0, Uint32 minlineheight = 0, Uint32 xoffset = 0 );
+	bool DrawString( const char *pstrString, Int32 x, Int32 y, bool reverse = false, UInt32 lineoffset = 0, UInt32 minlineheight = 0, UInt32 xoffset = 0 );
 	// Draws a string using faster routines without newlining or bounds checks
-	bool DrawSimpleString( const Char *pstrString, Int32 x, Int32 y, Int32 maxlenght = 0 );
+	bool DrawSimpleString( const char *pstrString, Int32 x, Int32 y, Int32 maxlenght = 0 );
 	// Draws a single character on the screen
-	bool DrawChar( Char character, Int32 x, Int32 y, Uint32 r, Uint32 g, Uint32 b, Uint32 a );
+	bool DrawChar( char character, Int32 x, Int32 y, UInt32 r, UInt32 g, UInt32 b, UInt32 a );
 	// Sets the font color
-	void SetColor( Uint32 r, Uint32 g, Uint32 b, Uint32 a );
+	void SetColor( UInt32 r, UInt32 g, UInt32 b, UInt32 a );
 
 	// Sets the drawing rectangle bounds
 	void SetRectangle( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int32 insetx, Int32 insety );
 	// Returns the size of a string in pixels
-	static void GetStringSize( const font_set_t *pset, const Char *pstring, Uint32 *width, Uint32 *height = nullptr, Int32 *ymin = nullptr );
+	static void GetStringSize( const font_set_t *pset, const char *pstring, UInt32 *width, UInt32 *height = nullptr, Int32 *ymin = nullptr );
 
 	// Binds a specific font set
 	bool BindSet( const font_set_t *pset );
@@ -152,22 +152,22 @@ public:
 	void UnBindCurrentSet( void );
 
 	// Estimates the height of a string drawn onscreen
-	Int32 EstimateHeight( const font_set_t *pFontSet, const Char *pstrString, Uint32 minlineheight = 0 );
+	Int32 EstimateHeight( const font_set_t *pFontSet, const char *pstrString, UInt32 minlineheight = 0 );
 
 	// Returns the shader's error message
-	const Char* GetShaderError( void );
+	const char* GetShaderError( void );
 	// Tells if the shader has an error
 	bool HasError( void );
 
 private:
 	// Returns the ideal resolution for a font set texture
-	static void GetIdealSizes( Uint32 fontsize, Uint32 *resx, Uint32 *resy, Uint32 *glyphsize, Uint32 *padding );
+	static void GetIdealSizes( UInt32 fontsize, UInt32 *resx, UInt32 *resy, UInt32 *glyphsize, UInt32 *padding );
 	// Tells if the string should be newlined
-	bool ShouldNewline( Int32 offsx, Int32 x, const font_set_t *pfont, const Char *pstring );
+	bool ShouldNewline( Int32 offsx, Int32 x, const font_set_t *pfont, const char *pstring );
 	// Renders glyphs for a font set
-	bool RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyph_t* pglyphs, const stbtt_fontinfo* pfont, Int32 fontsize, Uint32 sizex, Uint32 yoffset, Uint32 basesizey, Uint32 sizey, Uint32 glyphsize, Uint32 padding, Uint32 bufferoffset, bool outline, byte* poutbuffer, Uint32 outlineradius );
+	bool RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyph_t* pglyphs, const stbtt_fontinfo* pfont, Int32 fontsize, UInt32 sizex, UInt32 yoffset, UInt32 basesizey, UInt32 sizey, UInt32 glyphsize, UInt32 padding, UInt32 bufferoffset, bool outline, Byte* poutbuffer, UInt32 outlineradius );
 	// Draws simple string characters
-	void DrawSimpleStringChars( const Char* pstrString, const font_glyph_t* pglyphs, Int32 x, Int32 y, Int32 r, Int32 g, Int32 b, Int32 a, Int32 maxlenght, bool outline, Int32* padvancex = nullptr, Int32* padvancey = nullptr );
+	void DrawSimpleStringChars( const char* pstrString, const font_glyph_t* pglyphs, Int32 x, Int32 y, Int32 r, Int32 g, Int32 b, Int32 a, Int32 maxlenght, bool outline, Int32* padvancex = nullptr, Int32* padvancey = nullptr );
 
 private:
 
@@ -191,7 +191,7 @@ private:
 
 	// Colors for rendering
 	color32_t m_textColor;
-	// TRUE if shader was enabled
+	// true if shader was enabled
 	bool m_isActive;
 
 private:

@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "envbeverage.h"
 
 // Default number of cans in an env_beverage
-const Uint32 CEnvBeverage::DEFAULT_NB_BEVERAGES = 10;
+const UInt32 CEnvBeverage::DEFAULT_NB_BEVERAGES = 10;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(env_beverage, CEnvBeverage);
@@ -63,7 +63,7 @@ bool CEnvBeverage::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvBeverage::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvBeverage::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_pState->frags != 0 || m_pState->health <= 0)
 		return;

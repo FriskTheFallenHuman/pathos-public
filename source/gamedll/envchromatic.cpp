@@ -128,7 +128,7 @@ void CEnvChromatic::SendInitMessage( const CBaseEntity* pPlayer )
 // @brief
 //
 //=============================================
-void CEnvChromatic::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvChromatic::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
     if(HasSpawnFlag(FL_GLOBAL_EFFECT))
     {

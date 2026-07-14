@@ -37,57 +37,57 @@ public:
 	// View offset for npc
 	static const Vector NPC_VIEW_OFFSET;
 	// Yaw speed for npc
-	static const Uint32 NPC_YAW_SPEED;
+	static const UInt32 NPC_YAW_SPEED;
 	// Kick distance for NPC
-	static const Float NPC_KICK_DISTANCE;
+	static const float NPC_KICK_DISTANCE;
 	// Kick treshold distance for NPC
-	static const Float NPC_KICK_TRESHOLD_DISTANCE;
+	static const float NPC_KICK_TRESHOLD_DISTANCE;
 	// Attachment for weapon
-	static const Uint32 NPC_WEAPON_ATTACHMENT_INDEX;
+	static const UInt32 NPC_WEAPON_ATTACHMENT_INDEX;
 	// Gun position offset when standing
 	static const Vector NPC_GUN_POSITION_STANDING_OFFSET;
 	// Gun position offset when crouching
 	static const Vector NPC_GUN_POSITION_CROUCHING_OFFSET;
 	// Clip size for Sig552
-	static const Uint32 NPC_SIG552_CLIP_SIZE;
+	static const UInt32 NPC_SIG552_CLIP_SIZE;
 	// Clip size for shotgun
-	static const Uint32 NPC_SHOTGUN_CLIP_SIZE;
+	static const UInt32 NPC_SHOTGUN_CLIP_SIZE;
 	// Clip size for M249 SAW
-	static const Uint32 NPC_M249_CLIP_SIZE;
+	static const UInt32 NPC_M249_CLIP_SIZE;
 	// Clip size for TRG42
-	static const Uint32 NPC_TRG42_CLIP_SIZE;
+	static const UInt32 NPC_TRG42_CLIP_SIZE;
 	// Grenade explode delay
-	static const Float NPC_GRENADE_EXPLODE_DELAY;
+	static const float NPC_GRENADE_EXPLODE_DELAY;
 	// Next grenade check delay
-	static const Float NPC_GRENADE_CHECK_DELAY;
+	static const float NPC_GRENADE_CHECK_DELAY;
 	// NPC weapon sound radius
-	static const Float NPC_WEAPON_SOUND_RADIUS;
+	static const float NPC_WEAPON_SOUND_RADIUS;
 	// NPC weapon sound duration
-	static const Float NPC_WEAPON_SOUND_DURATION;
+	static const float NPC_WEAPON_SOUND_DURATION;
 	// NPC helmet health
-	static const Float NPC_HELMET_HEALTH;
+	static const float NPC_HELMET_HEALTH;
 	// How much of the damage the helmet takes
-	static const Float NPC_HELMET_DMG_TAKE;
+	static const float NPC_HELMET_DMG_TAKE;
 	// How much of the damage the helmet absorbs
-	static const Float NPC_HELMET_DMG_ABSORB;
+	static const float NPC_HELMET_DMG_ABSORB;
 	// Minimum enemy distance for support type
-	static const Float NPC_MIN_ENEMY_DISTANCE;
+	static const float NPC_MIN_ENEMY_DISTANCE;
 	// Maximum tactical position distance for support type
-	static const Float NPC_MAX_TACTICALPOS_DISTANCE;
+	static const float NPC_MAX_TACTICALPOS_DISTANCE;
 	// Minimum distance at which we'll throw grenades with a visible enemy
-	static const Float NPC_MIN_GRENADE_DISTANCE;
+	static const float NPC_MIN_GRENADE_DISTANCE;
 	// Max grenades on a clone soldier
-	static const Uint32 NPC_NUM_GRENADES;
+	static const UInt32 NPC_NUM_GRENADES;
 	// Max look distance
-	static const Float NPC_MAX_LOOK_DISTANCE;
+	static const float NPC_MAX_LOOK_DISTANCE;
 	// Max normal firing distance
-	static const Float NPC_MAX_FIRING_DISTANCE;
+	static const float NPC_MAX_FIRING_DISTANCE;
 	// Max normal firing distance for shotgunner
-	static const Float NPC_MAX_SHOTGUNNER_FIRING_DISTANCE;
+	static const float NPC_MAX_SHOTGUNNER_FIRING_DISTANCE;
 	// Precise firing distance
-	static const Float NPC_PRECISE_FIRING_DISTANCE;
+	static const float NPC_PRECISE_FIRING_DISTANCE;
 	// Minimum ambush distance
-	static const Float NPC_MIN_AMBUSH_DISTANCE_DISTANCE;
+	static const float NPC_MIN_AMBUSH_DISTANCE_DISTANCE;
 
 	// Question types
 	enum npc_question_types_t
@@ -146,39 +146,39 @@ public:
 	};
 
 	// Array of clone soldier sentences
-	static const Char* NPC_SENTENCES[NUM_NPC_SENTENCES];
+	static const char* NPC_SENTENCES[NUM_NPC_SENTENCES];
 
 	// Model name for the npc
-	static const Char NPC_MODEL_NAME[];
+	static const char NPC_MODEL_NAME[];
 
 	// Pain sound pattern
-	static const Char NPC_PAIN_SOUND_PATTERN[];
+	static const char NPC_PAIN_SOUND_PATTERN[];
 	// Number of pain sounds
-	static const Uint32 NPC_NB_PAIN_SOUNDS;
+	static const UInt32 NPC_NB_PAIN_SOUNDS;
 	// Death sound pattern
-	static const Char NPC_DEATH_SOUND_PATTERN[];
+	static const char NPC_DEATH_SOUND_PATTERN[];
 	// Number of death sounds
-	static const Uint32 NPC_NB_DEATH_SOUNDS;
+	static const UInt32 NPC_NB_DEATH_SOUNDS;
 
 	// Bodygroup name for heads
-	static const Char NPC_BODYGROUP_HEADS_NAME[];
+	static const char NPC_BODYGROUP_HEADS_NAME[];
 	// Submodel name for normal head
-	static const Char NPC_SUBMODEL_HEAD_NORMAL_NAME[];
+	static const char NPC_SUBMODEL_HEAD_NORMAL_NAME[];
 	// Submodel name for decapitated head
-	static const Char NPC_SUBMODEL_HEAD_DECAPITATED_NAME[];
+	static const char NPC_SUBMODEL_HEAD_DECAPITATED_NAME[];
 
 	// Bodygroup name for weapons
-	static const Char NPC_BODYGROUP_WEAPONS_NAME[];
+	static const char NPC_BODYGROUP_WEAPONS_NAME[];
 	// Submodel name for sig552 weapon
-	static const Char NPC_SUBMODEL_WEAPON_SIG552_NAME[];
+	static const char NPC_SUBMODEL_WEAPON_SIG552_NAME[];
 	// Submodel name for shotgun weapon
-	static const Char NPC_SUBMODEL_WEAPON_SHOTGUN_NAME[];
+	static const char NPC_SUBMODEL_WEAPON_SHOTGUN_NAME[];
 	// Submodel name for m249 weapon
-	static const Char NPC_SUBMODEL_WEAPON_M249_NAME[];
+	static const char NPC_SUBMODEL_WEAPON_M249_NAME[];
 	// Submodel name for trg42 weapon
-	static const Char NPC_SUBMODEL_WEAPON_TRG42_NAME[];
+	static const char NPC_SUBMODEL_WEAPON_TRG42_NAME[];
 	// Submodel name for blank weapon
-	static const Char NPC_SUBMODEL_WEAPON_BLANK_NAME[];
+	static const char NPC_SUBMODEL_WEAPON_BLANK_NAME[];
 
 public:
 	explicit CNPCCloneSoldier( edict_t* pedict );
@@ -200,7 +200,7 @@ public:
 	virtual void HandleAnimationEvent( const mstudioevent_t* pevent ) override;
 
 	// Handles damage calculation for a hitscan
-	virtual void TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
+	virtual void TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
 
 	// Returns a sequence for an activity type
 	virtual Int32 FindActivity( Int32 activity ) override;
@@ -211,15 +211,15 @@ public:
 	virtual void SetPathBlocked( CBaseEntity* pBlockedEntity, const Vector& destination ) override;
 
 	// Tells how many grenades this NPC has
-	virtual Uint32 GetNumGrenades( void ) override;
+	virtual UInt32 GetNumGrenades( void ) override;
 	// Sets grenade count on NPC
-	virtual void SetNumGrenades( Uint32 numGrenades ) override;
+	virtual void SetNumGrenades( UInt32 numGrenades ) override;
 
 public:
 	// Sets the ideal yaw speed
 	virtual void SetYawSpeed( void ) override;
 	// Returns the sound mask for the NPC
-	virtual Uint64 GetSoundMask( void ) override;
+	virtual UInt64 GetSoundMask( void ) override;
 
 	// Returns the ideal schedule
 	virtual const CAISchedule* GetSchedule( void ) override;
@@ -241,16 +241,16 @@ public:
 	// Tells if we can check the attacks
 	virtual bool CanCheckAttacks( void ) const override;
 	// Checks if we can do range attack 1
-	virtual bool CheckRangeAttack1( Float dp, Float distance ) override;
+	virtual bool CheckRangeAttack1( float dp, float distance ) override;
 	// Checks if we can do range attack 2
-	virtual bool CheckRangeAttack2( Float dp, Float distance ) override;
+	virtual bool CheckRangeAttack2( float dp, float distance ) override;
 	// Checks if we can do melee attack 1
-	virtual bool CheckMeleeAttack1( Float dp, Float distance ) override;
+	virtual bool CheckMeleeAttack1( float dp, float distance ) override;
 
 	// Tells if the NPC can do crouching
 	virtual bool CanCrouch( void ) override { return true; }
 	// Returns the firing cone used
-	const Uint32 GetFiringCone( bool attenuateByFog = false ) override;
+	const UInt32 GetFiringCone( bool attenuateByFog = false ) override;
 
 	// Starts a task
 	virtual void StartTask( const ai_task_t* pTask ) override;
@@ -271,7 +271,7 @@ public:
 	virtual void InitSquad( void ) override;
 
 	// Returns the voice pitch
-	virtual Uint32 GetVoicePitch( void ) override;
+	virtual UInt32 GetVoicePitch( void ) override;
 
 	// Sets task as failed
 	virtual void SetTaskFailed( bool allowRetry = true ) override;
@@ -282,7 +282,7 @@ public:
 	virtual void PreScheduleThink( void ) override;
 
 	// Returns the reaction time
-	virtual Float GetReactionTime( void ) override;
+	virtual float GetReactionTime( void ) override;
 
 	// Return bullet type used by NPC
 	virtual bullet_types_t GetBulletType( void ) override;
@@ -295,11 +295,11 @@ public:
 	void SpeakSentence( void );
 
 	// Builds a route to a tactical position
-	bool BuildTacticalRoute( CBaseEntity* pTargetEntity, const Vector& threatPosition, const Vector& threatAngles, const Vector& viewOffset, Float minDistance, Float maxDistance, bool& isPartialCover );
+	bool BuildTacticalRoute( CBaseEntity* pTargetEntity, const Vector& threatPosition, const Vector& threatAngles, const Vector& viewOffset, float minDistance, float maxDistance, bool& isPartialCover );
 	// Builds a route to an ambush position
-	bool BuildAmbushRoute( bool isObscured, const Vector& threatPosition, const Vector& threatAngles, const Vector& viewOffset, Float minDistance, Float maxDistance );
+	bool BuildAmbushRoute( bool isObscured, const Vector& threatPosition, const Vector& threatAngles, const Vector& viewOffset, float minDistance, float maxDistance );
 	// Finds a nearby cover position from the enemy's view
-	bool BuildNearbyHidingPosition( CBaseEntity* pTargetEntity, const Vector& threatPosition, const Vector& viewOffset, Float minDistance, Float maxDistance );
+	bool BuildNearbyHidingPosition( CBaseEntity* pTargetEntity, const Vector& threatPosition, const Vector& viewOffset, float minDistance, float maxDistance );
 
 	// Returns a schedule for a combat state
 	const CAISchedule* GetCombatSchedule( void );
@@ -318,35 +318,35 @@ public:
 
 private:
 	// Next time we can moan in pain
-	Double m_nextPainTime;
+	double m_nextPainTime;
 	// Next grenade check time
-	Double m_nextGrenadeCheckTime;
+	double m_nextGrenadeCheckTime;
 	// Next sweep time
-	Double m_nextSweepTime;
+	double m_nextSweepTime;
 	// Helmet health
-	Float m_helmetHealth;
+	float m_helmetHealth;
 	// Precise firing distance
-	Float m_preciseDistance;
+	float m_preciseDistance;
 	// Tactical firing position coverage
-	Float m_tacticalCoverage;
+	float m_tacticalCoverage;
 
-	// TRUE if we can throw a grenade
+	// true if we can throw a grenade
 	bool m_tossGrenade;
 	// TRUe if standing to shoot
 	bool m_isStanding;
-	// TRUE if we should ignore attack chance while moving
+	// true if we should ignore attack chance while moving
 	bool m_takeAttackChance;
-	// TRUE if we're doing precise aiming
+	// true if we're doing precise aiming
 	bool m_isPreciseAiming;
 
 	// Last sentence said
 	Int32 m_sentence;
 	// Voice pitch
-	Uint32 m_voicePitch;
+	UInt32 m_voicePitch;
 	// Attack type
 	Int32 m_attackType;
 	// Number of grenades
-	Uint32 m_numGrenades;
+	UInt32 m_numGrenades;
 
 private:
 	// Heads bodygroup index
@@ -373,6 +373,6 @@ private:
 	// Question asked
 	static npc_question_types_t g_questionAsked;
 	// Time until we talk again
-	static Double g_talkWaitTime;
+	static double g_talkWaitTime;
 };
 #endif //NPCCLONESOLDIER_H

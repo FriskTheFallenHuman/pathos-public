@@ -27,7 +27,7 @@ All Rights Reserved.
 class Vector;
 
 // Default number of filter frames
-static const Char DEFAULT_NB_FILTER_FRAMES[] = "2";
+static const char DEFAULT_NB_FILTER_FRAMES[] = "2";
 
 // Mouse filter info structure
 m_filter_info_t g_mouseFilterInfo;
@@ -120,7 +120,7 @@ void Cmd_Impulse( void )
 void CL_KeyDown( kbutton_t& btn )
 {
 	Int32 keyCode = SDL_SCANCODE_UNKNOWN;
-	const Char* pstrKey = cl_engfuncs.pfnCmd_Argv(1);
+	const char* pstrKey = cl_engfuncs.pfnCmd_Argv(1);
 
 	// Typed manually, continous down
 	if(pstrKey[0] == '\0')
@@ -129,7 +129,7 @@ void CL_KeyDown( kbutton_t& btn )
 		keyCode = SDL_atoi(pstrKey);
 
 	// If it's already down
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for(; i < MAX_INPUT_KEYS; i++)
 	{
 		if(btn.buttons[i] == keyCode)
@@ -144,10 +144,10 @@ void CL_KeyDown( kbutton_t& btn )
 
 	if(i == MAX_INPUT_KEYS)
 	{
-		const Char* pstrBind = cl_engfuncs.pfnCmd_Argv(0);
-		Char c1 = (Char)SDL_GetKeyFromScancode((SDL_Scancode)btn.buttons[0]);
-		Char c2 = (Char)SDL_GetKeyFromScancode((SDL_Scancode)btn.buttons[1]);
-		Char c3 = (Char)SDL_GetKeyFromScancode((SDL_Scancode)keyCode);
+		const char* pstrBind = cl_engfuncs.pfnCmd_Argv(0);
+		char c1 = (char)SDL_GetKeyFromScancode((SDL_Scancode)btn.buttons[0]);
+		char c2 = (char)SDL_GetKeyFromScancode((SDL_Scancode)btn.buttons[1]);
+		char c3 = (char)SDL_GetKeyFromScancode((SDL_Scancode)keyCode);
 
 		cl_engfuncs.pfnCon_DPrintf("Three keys pressed simultaneously for bind '%s': '%c', '%c', '%c'.\n", pstrBind, c1, c2, c3);
 	}
@@ -165,7 +165,7 @@ void CL_KeyDown( kbutton_t& btn )
 void CL_KeyUp( kbutton_t& btn, bool isReset )
 {
 	Int32 keyCode = SDL_SCANCODE_UNKNOWN;
-	const Char* pstrKey = nullptr;
+	const char* pstrKey = nullptr;
 	if(!isReset)
 		pstrKey = cl_engfuncs.pfnCmd_Argv(1);
 
@@ -173,7 +173,7 @@ void CL_KeyUp( kbutton_t& btn, bool isReset )
 	if(!pstrKey || pstrKey[0] == '\0')
 	{
 		// Unstick all keys
-		for(Uint32 i = 0; i < MAX_INPUT_KEYS; i++)
+		for(UInt32 i = 0; i < MAX_INPUT_KEYS; i++)
 			btn.buttons[i] = SDL_SCANCODE_UNKNOWN;
 
 		btn.state = KS_IUP;
@@ -183,7 +183,7 @@ void CL_KeyUp( kbutton_t& btn, bool isReset )
 	// Get key from the second parameter
 	keyCode = SDL_atoi(pstrKey);
 
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for(; i < MAX_INPUT_KEYS; i++)
 	{
 		if(btn.buttons[i] == keyCode)
@@ -213,10 +213,10 @@ void CL_KeyUp( kbutton_t& btn, bool isReset )
 //=============================================
 //
 //=============================================
-Float CL_KeyState( kbutton_t& btn )
+float CL_KeyState( kbutton_t& btn )
 {
 	// Value to return
-	Float value = 0;
+	float value = 0;
 
 	bool impDown = (btn.state & KS_IDOWN) ? true : false;
 	bool impUp = (btn.state & KS_IUP) ? true : false;
@@ -249,14 +249,14 @@ void CL_MouseFilterFramesCvarCallback( CCVar* pCVar )
 	{
 		const char* pstrCvarName = pCVar->GetName();
 		cl_engfuncs.pfnCon_Printf("Invalid setting '%d' specified for cvar '%s'.\n", numFilterFrames, pstrCvarName);
-		cl_engfuncs.pfnSetCVarFloat(pstrCvarName, (Float)MOUSE_FILTER_MIN_FRAMES);
+		cl_engfuncs.pfnSetCVarFloat(pstrCvarName, (float)MOUSE_FILTER_MIN_FRAMES);
 		numFilterFrames = MOUSE_FILTER_MIN_FRAMES;
 	}
 	else if(numFilterFrames > MOUSE_FILTER_MAX_FRAMES)
 	{
 		const char* pstrCvarName = pCVar->GetName();
 		cl_engfuncs.pfnCon_Printf("Invalid setting '%d' specified for cvar '%s'.\n", numFilterFrames, pstrCvarName);
-		cl_engfuncs.pfnSetCVarFloat(pstrCvarName, (Float)MOUSE_FILTER_MAX_FRAMES);
+		cl_engfuncs.pfnSetCVarFloat(pstrCvarName, (float)MOUSE_FILTER_MAX_FRAMES);
 		numFilterFrames = MOUSE_FILTER_MAX_FRAMES;
 	}
 
@@ -538,7 +538,7 @@ bool CL_IsParalyzed( void )
 //=============================================
 //
 //=============================================
-Float CL_GetSideSpeed( bool isNoClipping )
+float CL_GetSideSpeed( bool isNoClipping )
 {
 	if(isNoClipping)
 		return PLAYER_NOCLIP_SPEED;
@@ -549,7 +549,7 @@ Float CL_GetSideSpeed( bool isNoClipping )
 //=============================================
 //
 //=============================================
-Float CL_GetForwardSpeed( bool isNoClipping )
+float CL_GetForwardSpeed( bool isNoClipping )
 {
 	if(isNoClipping)
 		return PLAYER_NOCLIP_SPEED;
@@ -560,7 +560,7 @@ Float CL_GetForwardSpeed( bool isNoClipping )
 //=============================================
 //
 //=============================================
-Float CL_GetBackSpeed( bool isNoClipping )
+float CL_GetBackSpeed( bool isNoClipping )
 {
 	if(isNoClipping)
 		return PLAYER_NOCLIP_SPEED;
@@ -578,7 +578,7 @@ void CL_CreateMove( usercmd_t& cmd )
 	// Check for noclip
 	bool isNoClipping = CL_IsNoClipping();
 
-	Float maxspeed = 0;
+	float maxspeed = 0;
 	if(!CL_IsParalyzed())
 	{
 		if(gMotorBike.IsActive())
@@ -613,13 +613,13 @@ void CL_CreateMove( usercmd_t& cmd )
 	// Cap at maxspeed
 	if(maxspeed != 0)
 	{
-		Float fmov = SDL_sqrt((cmd.forwardmove*cmd.forwardmove)
+		float fmov = SDL_sqrt((cmd.forwardmove*cmd.forwardmove)
 			+ (cmd.sidemove*cmd.sidemove)
 			+ (cmd.upmove*cmd.upmove));
 
 		if(fmov > maxspeed)
 		{
-			Float ratio = maxspeed/fmov;
+			float ratio = maxspeed/fmov;
 			cmd.forwardmove *= ratio;
 			cmd.sidemove *= ratio;
 			cmd.upmove *= ratio;
@@ -665,9 +665,9 @@ void CL_AddMouseMove( usercmd_t& cmd )
 	// Shift filter frames
 	if(g_mouseFilterInfo.numframes > 0)
 	{
-		Uint32 count = g_mouseFilterInfo.filterframes.size() - 1;
+		UInt32 count = g_mouseFilterInfo.filterframes.size() - 1;
 
-		for(Uint32 i = count; i > 0; i--)
+		for(UInt32 i = count; i > 0; i--)
 			g_mouseFilterInfo.filterframes[i] = g_mouseFilterInfo.filterframes[i - 1];
 	}
 
@@ -679,38 +679,38 @@ void CL_AddMouseMove( usercmd_t& cmd )
 		g_mouseFilterInfo.numframes++;
 
 	// Determine mouse movement
-	Float mouseX, mouseY;
+	float mouseX, mouseY;
 	if(g_pCvarFilterMouse->GetValue() > 0)
 	{
 		// Filter frames depends on FPS
-		static Double lasttime = 0;
-		Double curtime = cl_engfuncs.pfnGetEngineTime();
-		Double frametime = curtime - lasttime;
+		static double lasttime = 0;
+		double curtime = cl_engfuncs.pfnGetEngineTime();
+		double frametime = curtime - lasttime;
 		lasttime = curtime;
 
 		if(frametime > 1.0)
 			frametime = 0;
 
 		// Reference FPS is 60 fps
-		const Uint32 referenceFPS = 60;
-		Uint32 fpsCount = 1.0f / frametime;
+		const UInt32 referenceFPS = 60;
+		UInt32 fpsCount = 1.0f / frametime;
 		if(fpsCount > referenceFPS)
 			fpsCount = referenceFPS;
 		
-		Uint32 filterFrameCount = (static_cast<Float>(fpsCount) / static_cast<Float>(referenceFPS)) * g_mouseFilterInfo.numframes;
+		UInt32 filterFrameCount = (static_cast<float>(fpsCount) / static_cast<float>(referenceFPS)) * g_mouseFilterInfo.numframes;
 		if(filterFrameCount < 1)
 			filterFrameCount = 1;
 
 		mouseX = 0;
 		mouseY = 0;
-		for(Uint32 i = 0; i < filterFrameCount; i++)
+		for(UInt32 i = 0; i < filterFrameCount; i++)
 		{
-			mouseX += (Float)g_mouseFilterInfo.filterframes[i].mousex;
-			mouseY += (Float)g_mouseFilterInfo.filterframes[i].mousey;
+			mouseX += (float)g_mouseFilterInfo.filterframes[i].mousex;
+			mouseY += (float)g_mouseFilterInfo.filterframes[i].mousey;
 		}
 
-		mouseX = mouseX / (Float)filterFrameCount;
-		mouseY = mouseY / (Float)filterFrameCount;
+		mouseX = mouseX / (float)filterFrameCount;
+		mouseY = mouseY / (float)filterFrameCount;
 	}
 	else
 	{
@@ -721,12 +721,12 @@ void CL_AddMouseMove( usercmd_t& cmd )
 	// Adjust for zooming
 	if(gDefaultView.GetFOV() != g_pCvarReferenceFOV->GetValue())
 	{
-		Float adjScale = gDefaultView.GetFOV()/g_pCvarReferenceFOV->GetValue();
+		float adjScale = gDefaultView.GetFOV()/g_pCvarReferenceFOV->GetValue();
 		mouseX *= adjScale;
 		mouseY *= adjScale;
 	}
 
-	Float sensitivity = g_pCvarSensitivity->GetValue() * 0.1;
+	float sensitivity = g_pCvarSensitivity->GetValue() * 0.1;
 	if(sensitivity > 0)
 	{
 		mouseX *= sensitivity;
@@ -737,8 +737,8 @@ void CL_AddMouseMove( usercmd_t& cmd )
 		mouseY = -mouseY;
 
 	// Calculate final movement
-	Float mouseMoveYaw = g_pCvarMouseYaw->GetValue() * mouseX;
-	Float mouseMovePitch = g_pCvarMousePitch->GetValue() * mouseY;
+	float mouseMoveYaw = g_pCvarMouseYaw->GetValue() * mouseX;
+	float mouseMovePitch = g_pCvarMousePitch->GetValue() * mouseY;
 	if(!CL_IsParalyzed())
 	{
 		if(gLadder.IsActive())
@@ -756,11 +756,11 @@ void CL_AddMouseMove( usercmd_t& cmd )
 			cmd.viewangles[YAW] -= mouseMoveYaw;
 			cmd.viewangles[PITCH] += mouseMovePitch;
 
-			Float pitchdown = g_pCvarMousePitchDown->GetValue();
+			float pitchdown = g_pCvarMousePitchDown->GetValue();
 			if(cmd.viewangles[PITCH] > pitchdown)
 				cmd.viewangles[PITCH] = pitchdown;
 
-			Float pitchup = g_pCvarMousePitchUp->GetValue();
+			float pitchup = g_pCvarMousePitchUp->GetValue();
 			if(cmd.viewangles[PITCH] < -pitchup)
 				cmd.viewangles[PITCH] = -pitchup;
 		}

@@ -85,7 +85,7 @@ void CPortalManager::ClearGame( void )
 {
 	if(!m_portalsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_portalsArray.size(); i++)
+		for(UInt32 i = 0; i < m_portalsArray.size(); i++)
 		{
 			if(!m_portalsArray[i]->surfaces.empty())
 				m_portalsArray[i]->surfaces.clear();
@@ -176,7 +176,7 @@ bool CPortalManager::InitGL( void )
 
 	if (!m_portalsArray.empty())
 	{
-		for (Uint32 i = 0; i < m_portalsArray.size(); i++)
+		for (UInt32 i = 0; i < m_portalsArray.size(); i++)
 		{
 			if (!CreatePortalTexture(m_portalsArray[i]))
 			{
@@ -196,7 +196,7 @@ void CPortalManager::ClearGL( void )
 {
 	if (!m_portalsArray.empty())
 	{
-		for (Uint32 i = 0; i < m_portalsArray.size(); i++)
+		for (UInt32 i = 0; i < m_portalsArray.size(); i++)
 		{
 			cl_portal_t* pportal = m_portalsArray[i];
 			if (pportal->pfbo)
@@ -315,7 +315,7 @@ void CPortalManager::AllocNewPortal( cl_entity_t* pentity )
 	
 	// Collect the drawing surfaces we'll use
 	const brushmodel_t* pbrushmodel = pentity->pmodel->getBrushmodel();
-	for(Uint32 i = 0; i < pbrushmodel->nummodelsurfaces; i++)
+	for(UInt32 i = 0; i < pbrushmodel->nummodelsurfaces; i++)
 	{
 		msurface_t* psurf = &pbrushmodel->psurfaces[pbrushmodel->firstmodelsurface + i];
 		mtexinfo_t *ptexinfo = psurf->ptexinfo;
@@ -330,11 +330,11 @@ void CPortalManager::AllocNewPortal( cl_entity_t* pentity )
 	pportal->mins = NULL_MINS;
 	pportal->maxs = NULL_MAXS;
 
-	for(Uint32 k = 0; k < pportal->surfaces.size(); k++)
+	for(UInt32 k = 0; k < pportal->surfaces.size(); k++)
 	{
 		msurface_t* psurf = pportal->surfaces[k];
 
-		for(Uint32 i = 0; i < psurf->numedges; i++)
+		for(UInt32 i = 0; i < psurf->numedges; i++)
 		{
 			Vector vertexpos;
 			Int32 e_index = ens.pworld->psurfedges[psurf->firstedge+i];
@@ -343,7 +343,7 @@ void CPortalManager::AllocNewPortal( cl_entity_t* pentity )
 			else
 				Math::VectorCopy(ens.pworld->pvertexes[ens.pworld->pedges[-e_index].vertexes[1]].origin, vertexpos);
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 			{
 				// mins
 				if(pportal->mins[j] > vertexpos[j])
@@ -357,7 +357,7 @@ void CPortalManager::AllocNewPortal( cl_entity_t* pentity )
 	}
 
 	// Pad it out by one unit
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		pportal->mins[i] -= 1;
 		pportal->maxs[i] += 1;
@@ -378,8 +378,8 @@ void CPortalManager::AllocNewPortal( cl_entity_t* pentity )
 	pportal->origin[2] = (pportal->mins[2] + pportal->maxs[2]) * 0.5f;
 
 	// Set up VBO data
-	Uint32 numverts = 0;
-	for(Uint32 i = 0; i < pportal->surfaces.size(); i++)
+	UInt32 numverts = 0;
+	for(UInt32 i = 0; i < pportal->surfaces.size(); i++)
 	{
 		msurface_t* psurf = pportal->surfaces[i];
 		numverts += 3+(psurf->numedges-3)*3;
@@ -390,13 +390,13 @@ void CPortalManager::AllocNewPortal( cl_entity_t* pentity )
 	// Set the vertex data
 	Vector vertexes[3];
 
-	Uint32 dstvertindex = 0;
-	for(Uint32 i = 0; i < pportal->surfaces.size(); i++)
+	UInt32 dstvertindex = 0;
+	for(UInt32 i = 0; i < pportal->surfaces.size(); i++)
 	{
 		msurface_t* psurf = pportal->surfaces[i];
 
-		Uint32 srcvertindex = 0;
-		for(Uint32 j = 0; j < 3; j++, dstvertindex++, srcvertindex++)
+		UInt32 srcvertindex = 0;
+		for(UInt32 j = 0; j < 3; j++, dstvertindex++, srcvertindex++)
 		{
 			Vector vertexpos;
 			Int32 e_index = ens.pworld->psurfedges[psurf->firstedge+srcvertindex];
@@ -407,13 +407,13 @@ void CPortalManager::AllocNewPortal( cl_entity_t* pentity )
 
 			Math::VectorCopy(vertexpos, vertexes[j]);
 
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 				pvertexes[dstvertindex].origin[k] = vertexes[j][k];
 
 			pvertexes[dstvertindex].origin[3] = 1.0;
 		}
 
-		for(Uint32 j = 0; j < (psurf->numedges-3); j++, srcvertindex++)
+		for(UInt32 j = 0; j < (psurf->numedges-3); j++, srcvertindex++)
 		{
 			Vector vertexpos;
 			Int32 e_index = ens.pworld->psurfedges[psurf->firstedge+srcvertindex];
@@ -425,9 +425,9 @@ void CPortalManager::AllocNewPortal( cl_entity_t* pentity )
 			Math::VectorCopy(vertexes[2], vertexes[1]);
 			Math::VectorCopy(vertexpos, vertexes[2]);
 
-			for(Uint32 k = 0; k < 3; k++, dstvertindex++)
+			for(UInt32 k = 0; k < 3; k++, dstvertindex++)
 			{
-				for(Uint32 l = 0; l < 3; l++)
+				for(UInt32 l = 0; l < 3; l++)
 					pvertexes[dstvertindex].origin[l] = vertexes[k][l];
 
 				pvertexes[dstvertindex].origin[3] = 1.0; 
@@ -463,7 +463,7 @@ bool CPortalManager::DrawPortalPasses( void )
 
 	// number of rendered portal passes
 	m_numPortalsDrawn = 0;
-	Uint32 numoptimized = 0;
+	UInt32 numoptimized = 0;
 
 	// Set viewport
 	glViewport(GL_ZERO, GL_ZERO, rns.view.params.screenwidth, rns.view.params.screenheight);
@@ -474,7 +474,7 @@ bool CPortalManager::DrawPortalPasses( void )
 	// error tracking
 	bool result = true;
 
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t *pentity = rns.objects.pvisents_unsorted[i];
 
@@ -528,9 +528,9 @@ bool CPortalManager::DrawPortalPasses( void )
 //====================================
 //
 //====================================
-cl_portal_t* CPortalManager::GetMatchingPortal( Uint32 currentindex, CFrustum& frustum )
+cl_portal_t* CPortalManager::GetMatchingPortal( UInt32 currentindex, CFrustum& frustum )
 {
-	for(Uint32 i = 0; i < currentindex; i++)
+	for(UInt32 i = 0; i < currentindex; i++)
 	{
 		cl_entity_t *pentity = rns.objects.pvisents_unsorted[i];
 
@@ -623,7 +623,7 @@ bool CPortalManager::SetupPortalPass( void )
 	if(pEnvPosPortalEntity->curstate.renderamt > 0)
 	{
 		Vector vmins, vmaxs;
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			vmins[i] = pEnvPosPortalEntity->curstate.origin[i] - pEnvPosPortalEntity->curstate.renderamt;
 			vmaxs[i] = pEnvPosPortalEntity->curstate.origin[i] + pEnvPosPortalEntity->curstate.renderamt;
@@ -655,7 +655,7 @@ void CPortalManager::FinishPortalPass( void )
 	}
 
 	// Get the aiment
-	Uint32 envPosPortalEntityIndex = m_pCurrentPortal->pentity->curstate.aiment;
+	UInt32 envPosPortalEntityIndex = m_pCurrentPortal->pentity->curstate.aiment;
 	cl_entity_t* pEnvPosPortalEntity = CL_GetEntityByIndex(envPosPortalEntityIndex);
 	if(!pEnvPosPortalEntity)
 		return;
@@ -694,7 +694,7 @@ bool CPortalManager::DrawPortals( void )
 	{
 		result = m_pShader->SetDeterminator(m_attribs.d_fog, 1, false);
 		m_pShader->SetUniform3f(m_attribs.u_fogcolor, rns.fog.settings.color[0], rns.fog.settings.color[1], rns.fog.settings.color[2]);
-		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<Float>(rns.fog.settings.end)-static_cast<Float>(rns.fog.settings.start)));
+		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<float>(rns.fog.settings.end)-static_cast<float>(rns.fog.settings.start)));
 	}
 	else
 	{
@@ -708,7 +708,7 @@ bool CPortalManager::DrawPortals( void )
 		return false;
 	}
 
-	result = m_pShader->SetDeterminator(m_attribs.d_rectangle, rns.fboused ? FALSE : TRUE);
+	result = m_pShader->SetDeterminator(m_attribs.d_rectangle, rns.fboused ? false : true);
 	if (!result)
 	{
 		Sys_ErrorPopup("Shader error: %s.", m_pShader->GetError());
@@ -735,7 +735,7 @@ bool CPortalManager::DrawPortals( void )
 	m_pShader->SetUniformMatrix4fv(m_attribs.u_modelview, rns.view.modelview.GetMatrix());
 	m_pShader->SetUniformMatrix4fv(m_attribs.u_projection, rns.view.projection.GetMatrix());
 
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t *pentity = rns.objects.pvisents_unsorted[i];
 
@@ -765,7 +765,7 @@ bool CPortalManager::DrawPortals( void )
 		m_pShader->DrawArrays(GL_TRIANGLES, m_pCurrentPortal->start_vertex, m_pCurrentPortal->num_vertexes);
 
 		// Set framecount for decals
-		for(Uint32 j = 0; j < m_pCurrentPortal->surfaces.size(); j++)
+		for(UInt32 j = 0; j < m_pCurrentPortal->surfaces.size(); j++)
 			m_pCurrentPortal->surfaces[j]->visframe = cls.framecount;
 	}
 

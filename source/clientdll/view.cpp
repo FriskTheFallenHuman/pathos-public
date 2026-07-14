@@ -32,23 +32,23 @@ All Rights Reserved.
 #include "clshared.h"
 
 // Flashlight fade speed
-const Float CDefaultView::FLASHLIGHT_FADE_SPEED = 3.5;
+const float CDefaultView::FLASHLIGHT_FADE_SPEED = 3.5;
 // Flashlight sprite file
-const Char CDefaultView::FLASHLIGHT_SPRITE_FILE[] = "sprites/flare1.spr";
+const char CDefaultView::FLASHLIGHT_SPRITE_FILE[] = "sprites/flare1.spr";
 
 // Values for view model lag calculations
-const Float CDefaultView::VIEWMODEL_LAG_MULT = 0.4f;
-const Float CDefaultView::VIEWMODEL_LAG_SPEED = 5;
+const float CDefaultView::VIEWMODEL_LAG_MULT = 0.4f;
+const float CDefaultView::VIEWMODEL_LAG_SPEED = 5;
 
 // Values for view bob calculations
-const Float CDefaultView::BOB_CYCLE_MIN = 1.0f;
-const Float CDefaultView::BOB_CYCLE_MAX = 0.45f;
-const Float CDefaultView::BOB = 0.002f;
-const Float CDefaultView::BOB_UP = 0.5f;
+const float CDefaultView::BOB_CYCLE_MIN = 1.0f;
+const float CDefaultView::BOB_CYCLE_MAX = 0.45f;
+const float CDefaultView::BOB = 0.002f;
+const float CDefaultView::BOB_UP = 0.5f;
 
 // Values for stair step smoothing
-const Float CDefaultView::V_SM_REF_VEL = 210;// DO NOT set this lower
-const Float CDefaultView::V_SM_BLEND_VEL = 100;
+const float CDefaultView::V_SM_REF_VEL = 210;// DO NOT set this lower
+const float CDefaultView::V_SM_BLEND_VEL = 100;
 
 // View origin
 Vector g_viewOrigin;
@@ -100,7 +100,7 @@ CDefaultView::CDefaultView( void ):
 	m_pCvarViewYOffset(nullptr),
 	m_pCvarViewZOffset(nullptr)
 {
-	for(Uint32 i = 0; i < MAX_PLAYERS; i++)
+	for(UInt32 i = 0; i < MAX_PLAYERS; i++)
 	{
 		m_tacticalLightStrengths[i] = 0;
 		m_shoulderLightStrengths[i] = 0;
@@ -183,7 +183,7 @@ void CDefaultView::ClearGame( void )
 	m_viewModelLastFacing.Clear();
 
 	// Reset flashlights
-	for(Uint32 i = 0; i < MAX_PLAYERS; i++)
+	for(UInt32 i = 0; i < MAX_PLAYERS; i++)
 	{
 		m_tacticalLightStrengths[i] = 0;
 		m_shoulderLightStrengths[i] = 0;
@@ -225,17 +225,17 @@ void CDefaultView::ResetViewModelLag( void )
 //====================================
 //
 //====================================
-Float CDefaultView::EstimateStepTime( cl_entity_t* pplayer, ref_params_t& params )
+float CDefaultView::EstimateStepTime( cl_entity_t* pplayer, ref_params_t& params )
 {
-	Float speed = params.pl_velocity.Length2D();
-	Float height = pplayer->curstate.maxs[2] - pplayer->curstate.mins[2];
+	float speed = params.pl_velocity.Length2D();
+	float height = pplayer->curstate.maxs[2] - pplayer->curstate.mins[2];
 
 	Vector center, knee, feet;
 	Math::VectorCopy(params.pl_origin, center);
 	Math::VectorSubtract(params.pl_origin, Vector(0, 0, 0.3 * height), knee);
 	Math::VectorSubtract(params.pl_origin, Vector(0, 0, 0.5 * height), feet);
 
-	Float steptime = 0;
+	float steptime = 0;
 	if(cl_tracefuncs.pfnPointContents(knee, nullptr, false) == CONTENTS_WATER)
 	{
 		steptime = STEPTIME_WATER;
@@ -265,18 +265,18 @@ Float CDefaultView::EstimateStepTime( cl_entity_t* pplayer, ref_params_t& params
 void CDefaultView::CalcBob( cl_entity_t* pplayer, ref_params_t& params )
 {
 	Vector velocity = params.pl_velocity;
-	Float speed = velocity.Length2D();
+	float speed = velocity.Length2D();
 
 	// Estimate step time, we need half
-	Float steptime = EstimateStepTime(pplayer, params) * 0.5;
-	speed = clamp(speed, -steptime, steptime);
+	float steptime = EstimateStepTime(pplayer, params) * 0.5;
+	speed = Clamp(speed, -steptime, steptime);
 
-	Float boboffset = Common::RemapValue(speed, 0, steptime, 0.0f, 1.0f);
+	float boboffset = Common::RemapValue(speed, 0, steptime, 0.0f, 1.0f);
 	m_bobTime += (params.time - m_lastBobTime) * boboffset;
 	m_lastBobTime = params.time;
 
 	// Calculate vertical bob
-	Float cycle = m_bobTime - SDL_floor(m_bobTime/BOB_CYCLE_MAX)*BOB_CYCLE_MAX;
+	float cycle = m_bobTime - SDL_floor(m_bobTime/BOB_CYCLE_MAX)*BOB_CYCLE_MAX;
 	cycle /= BOB_CYCLE_MAX;
 
 	if(cycle < BOB_UP)
@@ -284,11 +284,11 @@ void CDefaultView::CalcBob( cl_entity_t* pplayer, ref_params_t& params )
 	else
 		cycle = M_PI + M_PI*(cycle-BOB_UP)/(1.0-BOB_UP);
 
-	Float viewBobScale = m_pCvarViewBob->GetValue();
+	float viewBobScale = m_pCvarViewBob->GetValue();
 
 	m_verticalBob = speed*0.005f;
 	m_verticalBob = m_verticalBob*0.3 + m_verticalBob*0.7*SDL_sin(cycle);
-	m_verticalBob = clamp(m_verticalBob, -7.0f, 4.0f);
+	m_verticalBob = Clamp(m_verticalBob, -7.0f, 4.0f);
 	m_verticalBob *= viewBobScale;
 
 	// Calculate lateral bob
@@ -302,7 +302,7 @@ void CDefaultView::CalcBob( cl_entity_t* pplayer, ref_params_t& params )
 
 	m_lateralBob = speed*0.005f;
 	m_lateralBob = m_lateralBob*0.3f + m_lateralBob*0.7*SDL_sin(cycle);
-	m_lateralBob = clamp(m_lateralBob, -7.0f, 4.0f);
+	m_lateralBob = Clamp(m_lateralBob, -7.0f, 4.0f);
 	m_lateralBob *= viewBobScale;
 }
 
@@ -350,7 +350,7 @@ void CDefaultView::CalcViewModelLag( const ref_params_t& params, Vector& origin,
 	}
 
 	// Set last time
-	Double frametime = params.time - m_flLastViewModelLagTime;
+	double frametime = params.time - m_flLastViewModelLagTime;
 	m_flLastViewModelLagTime = params.time;
 	
 	if(frametime <= 0)
@@ -369,7 +369,7 @@ void CDefaultView::CalcViewModelLag( const ref_params_t& params, Vector& origin,
 	Math::VectorMA(origin, 2.5, diff*-1, origin);
 	Math::AngleVectors(orig_angles, &forward, &right, &up);
 
-	Float pitch = orig_angles[PITCH];
+	float pitch = orig_angles[PITCH];
 	if(pitch > 180.0f)
 		pitch -= 360.0f;
 	else if(pitch < -180.0f)
@@ -383,16 +383,16 @@ void CDefaultView::CalcViewModelLag( const ref_params_t& params, Vector& origin,
 //=============================================
 //
 //=============================================
-Float CDefaultView::CalcRoll( const Vector& angles, const Vector& velocity, Float rollangle, Float rollspeed )
+float CDefaultView::CalcRoll( const Vector& angles, const Vector& velocity, float rollangle, float rollspeed )
 {
 	Vector forward, right, up;
 	Math::AngleVectors(angles, &forward, &right, &up);
 	
-	Float side = Math::DotProduct(velocity, right);
-	Float sign = sgn(side);
+	float side = Math::DotProduct(velocity, right);
+	float sign = sgn(side);
 	side = SDL_fabs(side);
 
-	Float value = rollangle;
+	float value = rollangle;
 	if(side < rollspeed)
 		side = side * value / rollspeed;
 	else
@@ -430,21 +430,21 @@ void CDefaultView::AddIdle( cl_entity_t* pplayer, ref_params_t& params )
 	if(m_breathingTime == -1)
 		m_breathingTime = params.time;
 
-	Float time = params.time - m_breathingTime;
-	Float zadd = SDL_sin(time*2.0) * 0.1;
+	float time = params.time - m_breathingTime;
+	float zadd = SDL_sin(time*2.0) * 0.1;
 	params.v_origin.z += zadd;
 }
 
 //=============================================
 //
 //=============================================
-Float CDefaultView::CalcSmoothRolling( Float cur_roll, Float target_roll, Float speed, Double frametime )
+float CDefaultView::CalcSmoothRolling( float cur_roll, float target_roll, float speed, double frametime )
 {
 	if(cur_roll == target_roll)
 		return cur_roll;
 
-	Float moveamount = target_roll - cur_roll;
-	Float turnspeed = speed * 0.1 * frametime;
+	float moveamount = target_roll - cur_roll;
+	float turnspeed = speed * 0.1 * frametime;
 
 	if(target_roll > cur_roll)
 	{
@@ -482,7 +482,7 @@ void CDefaultView::CalcViewRoll( cl_entity_t* pplayer, ref_params_t& params )
 	if(pplayer->curstate.movetype == MOVETYPE_NOCLIP)
 		return;
 
-	Float targetroll = CalcRoll(params.v_angles, params.pl_velocity, m_pCvarRollAngle->GetValue(), m_pCvarRollSpeed->GetValue()) * 4;
+	float targetroll = CalcRoll(params.v_angles, params.pl_velocity, m_pCvarRollAngle->GetValue(), m_pCvarRollSpeed->GetValue()) * 4;
 	m_currentViewRoll = CalcSmoothRolling( m_currentViewRoll, targetroll, m_pCvarRollSpeed->GetValue(), params.frametime );
 	params.v_angles[ROLL] += m_currentViewRoll;
 
@@ -514,12 +514,12 @@ void CDefaultView::CalcLeaning( cl_entity_t* pplayer, cl_entity_t *pviewmodel, r
 			Math::VectorCopy(m_curLeanAngles, m_prevLeanAngles);
 			Math::VectorCopy(m_curLeanOffset, m_prevLeanOffset);
 			m_leanTime = params.time;
-			m_leaningState = TRUE;
+			m_leaningState = true;
 		}
 
 		// Determine directions
-		Float leanUp = 0;
-		Float leanSide = 0;
+		float leanUp = 0;
+		float leanSide = 0;
 
 		if( params.pcmd->buttons & IN_MOVELEFT )
 			leanSide -= 1.0;
@@ -555,7 +555,7 @@ void CDefaultView::CalcLeaning( cl_entity_t* pplayer, cl_entity_t *pviewmodel, r
 		trace_t ptrace_cp;
 		cl_tracefuncs.pfnPlayerTrace(params.v_origin, Vector(params.v_origin)+m_idealLeanOffset+v_forward*4, FL_TRACE_NORMAL, HULL_POINT, NO_ENTITY_INDEX, ptrace_cp);
 
-		Double flTraceFraction = 1.0;
+		double flTraceFraction = 1.0;
 		if(ptrace.fraction != 1.0)
 			flTraceFraction = ptrace.fraction*0.75;
 		else if(ptrace_cp.fraction != 1.0)
@@ -566,8 +566,8 @@ void CDefaultView::CalcLeaning( cl_entity_t* pplayer, cl_entity_t *pviewmodel, r
 		m_idealLeanAngles[PITCH] = leanUp*6;
 
 		// Calculate fraction
-		Float time = clamp((params.time - m_leanTime), 0.0, LEAN_TIME );
-		Float leanFraction = Common::SplineFraction( time, (1.0/LEAN_TIME) );
+		float time = Clamp((params.time - m_leanTime), 0.0, LEAN_TIME );
+		float leanFraction = Common::SplineFraction( time, (1.0/LEAN_TIME) );
 
 		// It must be recalculated every frame
 		if(leanFraction > 1.0)
@@ -591,14 +591,14 @@ void CDefaultView::CalcLeaning( cl_entity_t* pplayer, cl_entity_t *pviewmodel, r
 			Math::VectorCopy(m_curLeanOffset, m_prevLeanOffset);
 			Math::VectorClear(m_idealLeanOffset);
 			m_leanTime = params.time;
-			m_leaningState = FALSE;
+			m_leaningState = false;
 		}
 
 		if(m_leanTime)
 		{
 			// Calculate lean interpolation
-			Float time = clamp((params.time - m_leanTime), 0.0, LEAN_TIME );
-			Float leanFraction = Common::SplineFraction( time, (1.0/LEAN_TIME) );
+			float time = Clamp((params.time - m_leanTime), 0.0, LEAN_TIME );
+			float leanFraction = Common::SplineFraction( time, (1.0/LEAN_TIME) );
 
 			if(leanFraction >= 1.0)
 			{
@@ -618,7 +618,7 @@ void CDefaultView::CalcLeaning( cl_entity_t* pplayer, cl_entity_t *pviewmodel, r
 			trace_t ptrace_cp;
 			cl_tracefuncs.pfnPlayerTrace(params.v_origin, Vector(params.v_origin)+m_idealLeanOffset+v_forward*4, FL_TRACE_NORMAL, HULL_POINT, NO_ENTITY_INDEX, ptrace_cp);
 
-			Float flTraceFraction = 1.0;
+			float flTraceFraction = 1.0;
 			if(ptrace.fraction != 1.0)
 				flTraceFraction = ptrace.fraction*0.75;
 			else if(ptrace_cp.fraction != 1.0)
@@ -664,8 +664,8 @@ void CDefaultView::SmoothSteps( cl_entity_t* pplayer, cl_entity_t* pviewmodel, r
 	if(pground && pground->prevstate.origin.z != pground->curstate.origin.z
 		&& pground->curstate.msg_time == pplayer->curstate.msg_time)
 	{
-		Float flzdiff = pground->curstate.origin.z - pground->prevstate.origin.z;
-		Float moveDist = (pground->curstate.origin-pground->prevstate.origin).Length();
+		float flzdiff = pground->curstate.origin.z - pground->prevstate.origin.z;
+		float moveDist = (pground->curstate.origin-pground->prevstate.origin).Length();
 
 		// Skip if it's gone beyond STEPSIZE*2, probably the groundent teleported
 		if( abs(flzdiff) > params.pmovevars->stepsize || moveDist > params.pmovevars->stepsize*2 )
@@ -677,7 +677,7 @@ void CDefaultView::SmoothSteps( cl_entity_t* pplayer, cl_entity_t* pviewmodel, r
 	// Only if we allow smoothing at all
 	if (params.smoothsteps && params.onground != NO_ENTITY_INDEX && params.pl_origin[2] != m_prevStepSmoothZ)
 	{
-		Float steptime = params.time - m_lastStepSmoothTime;
+		float steptime = params.time - m_lastStepSmoothTime;
 		if (steptime < 0)
 			steptime = 0;
 
@@ -762,8 +762,8 @@ void CDefaultView::CalcSwimFloat( cl_entity_t* pplayer, ref_params_t& params )
 	}
 
 	// Add in as a sine wave
-	Double floatTime = params.time - m_lastSwimFloatTime;
-	Double floatAdd = SDL_sin(floatTime*2)*2;
+	double floatTime = params.time - m_lastSwimFloatTime;
+	double floatAdd = SDL_sin(floatTime*2)*2;
 	if(floatAdd < 0)
 		floatAdd *= 0.25;
 
@@ -825,17 +825,17 @@ void CDefaultView::CalcRefDef( ref_params_t& params )
 	gShake.ApplyShake(params.v_origin, params.v_angles, 1.0);
 
 	// Shift origin a bit
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		params.v_origin[i] += 1.0/32;
 
 	// Check for waterdist
 	if(params.waterlevel >= WATERLEVEL_MID)
 	{
-		Float wateroffset = 0;
+		float wateroffset = 0;
 		Vector point = params.v_origin;
 
 		// Use pointcontents to determine water pos
-		for(Float dist = 0.1; dist < params.pmovevars->waterdist; dist += 0.1)
+		for(float dist = 0.1; dist < params.pmovevars->waterdist; dist += 0.1)
 		{
 			if(cl_tracefuncs.pfnPointContents(point, nullptr, false) == CONTENTS_WATER)
 				break;
@@ -844,16 +844,16 @@ void CDefaultView::CalcRefDef( ref_params_t& params )
 		}
 
 		// Round to one digit
-		Float planeheight = SDL_floor(point[2]*10)/10.0f;
+		float planeheight = SDL_floor(point[2]*10)/10.0f;
 		if(params.waterlevel < WATERLEVEL_FULL)
 		{
-			Float minheight = planeheight + params.pmovevars->waterdist;
+			float minheight = planeheight + params.pmovevars->waterdist;
 			if(minheight > params.v_origin[2])
 				wateroffset = minheight - params.v_origin[2];
 		}
 		else
 		{
-			Float maxheight = planeheight - params.pmovevars->waterdist;
+			float maxheight = planeheight - params.pmovevars->waterdist;
 			if(maxheight < params.v_origin[2])
 				wateroffset = -(params.v_origin[2] - maxheight);
 		}
@@ -933,7 +933,7 @@ Vector CDefaultView::GetLeanOffset( void ) const
 //=============================================
 //
 //=============================================
-void CDefaultView::SetFOV( Float newFOV )
+void CDefaultView::SetFOV( float newFOV )
 {
 	if(!newFOV)
 		m_fovValue = m_pCvarReferenceFOV->GetValue();
@@ -944,7 +944,7 @@ void CDefaultView::SetFOV( Float newFOV )
 //=============================================
 //
 //=============================================
-void CDefaultView::SetFOVOverride( Float overrideFOV )
+void CDefaultView::SetFOVOverride( float overrideFOV )
 {
 	// Set override value
 	m_fovOverrideValue = overrideFOV;
@@ -970,7 +970,7 @@ void CDefaultView::CalculateFOV( ref_params_t& params )
 		else
 		{
 			// Calculate fraction
-			Float frac = params.time - m_fovBlendTime;
+			float frac = params.time - m_fovBlendTime;
 			frac /= m_fovBlendDelta;
 
 			if(frac >= 1.0)
@@ -983,7 +983,7 @@ void CDefaultView::CalculateFOV( ref_params_t& params )
 			else
 			{
 				// Calculate FOV value
-				Float fovValue = m_prevFOVValue*(1.0-frac)+m_desiredFOVValue*frac;
+				float fovValue = m_prevFOVValue*(1.0-frac)+m_desiredFOVValue*frac;
 				SetFOVOverride(fovValue);
 			}
 		}
@@ -996,7 +996,7 @@ void CDefaultView::CalculateFOV( ref_params_t& params )
 //=============================================
 //
 //=============================================
-void CDefaultView::SetFOVZoom( Float desiredFOV, Float blenddelta )
+void CDefaultView::SetFOVZoom( float desiredFOV, float blenddelta )
 {
 	// Save previous FOV
 	if(m_fovOverrideValue)
@@ -1013,12 +1013,12 @@ void CDefaultView::SetFOVZoom( Float desiredFOV, Float blenddelta )
 //=============================================
 //
 //=============================================
-void CDefaultView::SetupFlashlightForType( const ref_params_t& params, Float* pstrengths, Int32 effectbit )
+void CDefaultView::SetupFlashlightForType( const ref_params_t& params, float* pstrengths, Int32 effectbit )
 {
 	Vector vAngles, vOrigin;
 
-	Uint32 maxclients = cl_engfuncs.pfnGetMaxClients();
-	for(Uint32 i = 0; i < maxclients; i++)
+	UInt32 maxclients = cl_engfuncs.pfnGetMaxClients();
+	for(UInt32 i = 0; i < maxclients; i++)
 	{
 		cl_entity_t *pEntity = cl_engfuncs.pfnGetEntityByIndex(i+1);
 
@@ -1112,8 +1112,8 @@ void CDefaultView::SetupFlashlightForType( const ref_params_t& params, Float* ps
 			vAngles[PITCH] = -vAngles[PITCH];
 		}
 
-		Float cone_size = (effectbit & EF_SHOULDERLIGHT) ? 50 : 40;
-		Float radius = (effectbit & EF_SHOULDERLIGHT) ? 1400 : 800;
+		float cone_size = (effectbit & EF_SHOULDERLIGHT) ? 50 : 40;
+		float radius = (effectbit & EF_SHOULDERLIGHT) ? 1400 : 800;
 
 		Int32 lightkey = pEntity->entindex;
 		Int32 lightsubkey = (effectbit & EF_SHOULDERLIGHT) ? 0 : 1;
@@ -1142,7 +1142,7 @@ void CDefaultView::SetupFlashlightForType( const ref_params_t& params, Float* ps
 			Math::AngleVectors(vAngles, &forward);
 
 			// Set base target value
-			Float dimLightTargetStrength = 0;
+			float dimLightTargetStrength = 0;
 
 			// First check if view to flashlight origin is blocked. If it is, then intensity is at maximum
 			trace_t tr;
@@ -1162,12 +1162,12 @@ void CDefaultView::SetupFlashlightForType( const ref_params_t& params, Float* ps
 				cl_tracefuncs.pfnPlayerTrace(vOrigin, traceEnd, FL_TRACE_NORMAL, HULL_POINT, pEntity->entindex, tr);
 				if(!tr.noHit())
 				{
-					Float fraction = tr.fraction;
+					float fraction = tr.fraction;
 					if(fraction > 1.0)
 						fraction = 1.0;
 
-					static const Float DIMLIGHT_MIN_DISTANCE = 64.0f;
-					Float minFraction = (DIMLIGHT_MIN_DISTANCE / radius);
+					static const float DIMLIGHT_MIN_DISTANCE = 64.0f;
+					float minFraction = (DIMLIGHT_MIN_DISTANCE / radius);
 					// Set target strength
 					dimLightTargetStrength = (1.0 - fraction) / (1.0 - minFraction);
 					if(dimLightTargetStrength > 1.0)
@@ -1211,7 +1211,7 @@ void CDefaultView::SetupFlashlightForType( const ref_params_t& params, Float* ps
 			if(pdlight_dim)
 				pdlight_dim->lightstyle = 6;
 
-			Float strength = gHUD.GetFlashlightBattery()/25.0f;
+			float strength = gHUD.GetFlashlightBattery()/25.0f;
 			Math::VectorScale(pdlight->color, strength, pdlight->color);
 		}
 		else
@@ -1246,7 +1246,7 @@ void CDefaultView::SetupFlashlights( const ref_params_t& params )
 //=============================================
 //
 //=============================================
-Float CDefaultView::GetFOV( void ) const
+float CDefaultView::GetFOV( void ) const
 {
 	if(m_fovOverrideValue)
 		return m_fovOverrideValue;
@@ -1273,7 +1273,7 @@ entindex_t CDefaultView::GetViewEntity( void ) const
 //=============================================
 //
 //=============================================
-void CDefaultView::SetAutoAim( Float autoAimX, Float autoAimY )
+void CDefaultView::SetAutoAim( float autoAimX, float autoAimY )
 {
 	m_idealAutoAimVector[0] = autoAimX;
 	m_idealAutoAimVector[1] = autoAimY;

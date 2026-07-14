@@ -28,9 +28,9 @@ struct cable_vertex_t
 	Vector vpoint;
 	vec4_t color;
 
-	Float texcoord[2];
-	Float width;
-	byte padding[8];
+	float texcoord[2];
+	float width;
+	Byte padding[8];
 };
 
 struct cable_attribs
@@ -92,11 +92,11 @@ struct cable_object_t
 
 	Int32 start_vertex;
 	Int32 num_vertexes;
-	Float falldepth;
-	Float width;
+	float falldepth;
+	float width;
 
-	CArray<Uint32> leafnums;
-	Uint32 numleafs;
+	CArray<UInt32> leafnums;
+	UInt32 numleafs;
 };
 
 /*
@@ -133,7 +133,7 @@ public:
 
 public:
 	// Adds a new cable object
-	void AddCable( const Vector& start, const Vector& end, Uint32 depth, Uint32 width, Uint32 numsegments );
+	void AddCable( const Vector& start, const Vector& end, UInt32 depth, UInt32 width, UInt32 numsegments );
 
 private:
 	// Crafts VBO data for a cable

@@ -70,7 +70,7 @@ bool CEnvFade::KeyValue( const keyvalue_t& kv )
 	else if(!qstrcmp(kv.keyname, "layer"))
 	{
 		m_layer = SDL_atoi(kv.value);
-		m_layer = clamp(m_layer, 0, (MAX_FADE_LAYERS-1));
+		m_layer = Clamp(m_layer, 0, (MAX_FADE_LAYERS-1));
 		return true;
 	}
 	else
@@ -96,7 +96,7 @@ bool CEnvFade::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvFade::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvFade::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	Int32 flags = 0;
 	if(!HasSpawnFlag(FL_FADE_IN))
@@ -171,7 +171,7 @@ void CEnvFade::SendInitMessage( const CBaseEntity* pPlayer )
 	if(HasSpawnFlag(FL_FADE_STAYOUT))
 		flags |= FL_FADE_STAYOUT;
 
-	Float timeoffset = g_pGameVars->time - m_useTime;
+	float timeoffset = g_pGameVars->time - m_useTime;
 	Util::ScreenFadeAllPlayers(m_pState->rendercolor, 
 		m_duration, 
 		m_holdtime, 

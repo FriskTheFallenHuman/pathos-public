@@ -26,9 +26,9 @@ struct gamevars_t
 		predict_player(0)
 		{}
 
-	Double time;
-	Double frametime;
-	Double gametime;
+	double time;
+	double frametime;
+	double gametime;
 
 	bool paused;
 	bool force_retouch;

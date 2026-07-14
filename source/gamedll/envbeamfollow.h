@@ -31,15 +31,15 @@ public:
 	// Manages keyvalues
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	// Calls use function
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 private:
 	// Sprite model name
 	string_t m_spriteModelName;
 	// Lifetime of beam
-	Float m_life;
+	float m_life;
 	// Beam width
-	Float m_width;
+	float m_width;
 	// Attachment index
 	Int32 m_attachment;
 };

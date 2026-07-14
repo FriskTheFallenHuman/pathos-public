@@ -43,7 +43,7 @@ void CGlobalState::Clear( void )
 // @brief
 //
 //=============================================
-void CGlobalState::SetGlobalState( const Char* pstrglobalstate, globalstate_state_t state )
+void CGlobalState::SetGlobalState( const char* pstrglobalstate, globalstate_state_t state )
 {
 	if(!m_globalStatesList.empty())
 	{
@@ -81,7 +81,7 @@ void CGlobalState::SetGlobalState( const Char* pstrglobalstate, globalstate_stat
 // @brief
 //
 //=============================================
-void CGlobalState::DeleteGlobalState( const Char* pstrglobalstate )
+void CGlobalState::DeleteGlobalState( const char* pstrglobalstate )
 {
 	if(m_globalStatesList.empty())
 		return;
@@ -104,7 +104,7 @@ void CGlobalState::DeleteGlobalState( const Char* pstrglobalstate )
 // @brief
 //
 //=============================================
-const globalstate_t* CGlobalState::GetGlobalState( const Char* pstrglobalstate )
+const globalstate_t* CGlobalState::GetGlobalState( const char* pstrglobalstate )
 {
 	if(m_globalStatesList.empty())
 		return nullptr;
@@ -126,7 +126,7 @@ const globalstate_t* CGlobalState::GetGlobalState( const Char* pstrglobalstate )
 // @brief
 //
 //=============================================
-globalstate_state_t CGlobalState::GetState( const Char* pstrglobalstate )
+globalstate_state_t CGlobalState::GetState( const char* pstrglobalstate )
 {
 	const globalstate_t* pstate = GetGlobalState(pstrglobalstate);
 	if(pstate)
@@ -139,7 +139,7 @@ globalstate_state_t CGlobalState::GetState( const Char* pstrglobalstate )
 // @brief
 //
 //=============================================
-bool CGlobalState::IsGlobalStatePresent( const Char* pstrglobalstate )
+bool CGlobalState::IsGlobalStatePresent( const char* pstrglobalstate )
 {
 	if(m_globalStatesList.empty())
 		return false;
@@ -161,7 +161,7 @@ bool CGlobalState::IsGlobalStatePresent( const Char* pstrglobalstate )
 // @brief
 //
 //=============================================
-void CGlobalState::UpdateGlobalStateMapName( const Char* pstrglobalstate )
+void CGlobalState::UpdateGlobalStateMapName( const char* pstrglobalstate )
 {
 	if(m_globalStatesList.empty())
 		return;
@@ -186,7 +186,7 @@ void CGlobalState::UpdateGlobalStateMapName( const Char* pstrglobalstate )
 // @brief
 //
 //=============================================
-Uint32 CGlobalState::GetNbGlobalStates( void )
+UInt32 CGlobalState::GetNbGlobalStates( void )
 {
 	return m_globalStatesList.size();
 }
@@ -200,7 +200,7 @@ void CGlobalState::SaveGlobalStates( void )
 	if(m_globalStatesList.empty())
 		return;
 
-	Uint32 index = 0;
+	UInt32 index = 0;
 	m_globalStatesList.begin();
 	while(!m_globalStatesList.end())
 	{
@@ -216,7 +216,7 @@ void CGlobalState::SaveGlobalStates( void )
 // @brief
 //
 //=============================================
-void CGlobalState::ReadGlobalStateData( const Char* pstrglobalname, const Char* pstrlevelname, globalstate_state_t state )
+void CGlobalState::ReadGlobalStateData( const char* pstrglobalname, const char* pstrlevelname, globalstate_state_t state )
 {
 	m_globalStatesList.begin();
 	while(!m_globalStatesList.end())
@@ -253,7 +253,7 @@ void CGlobalState::Dump( void )
 
 	gd_engfuncs.pfnCon_Printf("%d global states:\n", (Int32)m_globalStatesList.size());
 	
-	Uint32 index = 0;
+	UInt32 index = 0;
 	m_globalStatesList.begin();
 	while(!m_globalStatesList.end())
 	{
@@ -284,7 +284,7 @@ void CGlobalState::Dump( void )
 // @brief
 //
 //=============================================
-Uint32 GetNbGlobalStates( void )
+UInt32 GetNbGlobalStates( void )
 {
 	return gGlobalStates.GetNbGlobalStates();
 }
@@ -302,7 +302,7 @@ void SaveGlobalStates( void )
 // @brief
 //
 //=============================================
-void ReadGlobalStateData( const Char* pstrglobalname, const Char* pstrlevelname, enum globalstate_state_t state )
+void ReadGlobalStateData( const char* pstrglobalname, const char* pstrlevelname, enum globalstate_state_t state )
 {
 	gGlobalStates.ReadGlobalStateData(pstrglobalname, pstrlevelname, state);
 }

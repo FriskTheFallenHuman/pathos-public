@@ -50,7 +50,7 @@ struct ammoinfo_t
 		{}
 
 	CString name;
-	Uint32 id;
+	UInt32 id;
 };
 
 //=============================================
@@ -105,19 +105,19 @@ public:
 	bool ExtractClipAmmo( CPlayerWeapon* pWeapon );
 
 	// Sets the viewmodel weapon animation
-	void SetWeaponAnimation( const Char* pstrsequence, Int64 body = NO_BODY_VALUE, Int32 skin = NO_SKIN_VALUE, bool blend = true );
+	void SetWeaponAnimation( const char* pstrsequence, Int64 body = NO_BODY_VALUE, Int32 skin = NO_SKIN_VALUE, bool blend = true );
 
 	// Returns the firing cone
 	Vector GetCone( void );
 
 	// Adds ammo to player
-	virtual bool AddAmmo( Int32 count, const Char* pstrname, Int32 maxclip, Int32 maxcarry, CBaseEntity* pWeapon );
+	virtual bool AddAmmo( Int32 count, const char* pstrname, Int32 maxclip, Int32 maxcarry, CBaseEntity* pWeapon );
 
 public:
 	// Performs deployment of a weapon
-	bool DefaultDeploy( const Char* pstrviewmodel, const Char* pstrsequence, Int64 body = NO_BODY_VALUE, Int32 skin = NO_SKIN_VALUE );
+	bool DefaultDeploy( const char* pstrviewmodel, const char* pstrsequence, Int64 body = NO_BODY_VALUE, Int32 skin = NO_SKIN_VALUE );
 	// Performs reload of a weapon
-	bool DefaultReload( Int32 clipsize, const Char* pstrsequence, Int64 body = NO_BODY_VALUE, Int32 skin = NO_SKIN_VALUE, bool blendanimation = true );
+	bool DefaultReload( Int32 clipsize, const char* pstrsequence, Int64 body = NO_BODY_VALUE, Int32 skin = NO_SKIN_VALUE, bool blendanimation = true );
 
 public:
 	// Destroys the weapon
@@ -149,11 +149,11 @@ public:
 	// Flags weapon to be dropped
 	virtual void FlagDrop( void ) { m_dropWeapon = true; }
 	// Returns weapon's next think time
-	virtual Double GetWeaponNextThinkTime( void ) const { return m_nextThinkTime; }
+	virtual double GetWeaponNextThinkTime( void ) const { return m_nextThinkTime; }
 	// Tells if the entity is a weapon
 	virtual bool IsWeapon( void ) const override { return true; }
 	// Set default ammo value
-	virtual void SetDefaultAmmo( Uint32 ammoCount ) override { m_defaultAmmo = ammoCount; }
+	virtual void SetDefaultAmmo( UInt32 ammoCount ) override { m_defaultAmmo = ammoCount; }
 
 public:
 	// Performs post-think functions
@@ -236,11 +236,11 @@ public:
 	// Returns the weapon id
 	Int32 GetId( void ) const;
 	// Returns the ammo type name
-	const Char* GetAmmoTypeName( void );
+	const char* GetAmmoTypeName( void );
 	// Returns the max ammo for the weapon
 	Int32 GetMaxAmmo( void );
 	// Returns the weapon name
-	const Char* GetWeaponName( void );
+	const char* GetWeaponName( void );
 	// Returns the max clip capacity
 	virtual Int32 GetMaxClip( void ) const;
 	// Returns the weapon's weight
@@ -248,7 +248,7 @@ public:
 	// Returns the weapon flags
 	Int32 GetWeaponFlags( void );
 	// Returns the cone used
-	virtual Uint32 GetConeIndex( void );
+	virtual UInt32 GetConeIndex( void );
 	// Returns the HUD position
 	Int32 GetHUDPosition( void );
 	// Returns the HUD slot
@@ -267,19 +267,19 @@ public:
 	// Degrades the recoil
 	void DegradeRecoil( void );
 	// Adds to the recoil
-	void AddRecoil( Float recoil );
+	void AddRecoil( float recoil );
 	// Sets the view model's bodygroup
 	void SetViewModelBodyGroup( Int32 group, Int32 value );
 
 	// Applies weapon kickback velocity to player
-	void ApplyWeaponKickbackVelocity( const Vector& forwardVector, Float velMin, Float velMax );
+	void ApplyWeaponKickbackVelocity( const Vector& forwardVector, float velMin, float velMax );
 
 	// Returns the recoil degradation speed
-	virtual Float GetRecoilDegradeFactor( void ) { return DEFAULT_RECOIL_DEGRADE; }
+	virtual float GetRecoilDegradeFactor( void ) { return DEFAULT_RECOIL_DEGRADE; }
 	// Returns the recoil max limit
-	virtual Float GetRecoilLimit( void ) { return DEFAULT_RECOIL_LIMIT; }
+	virtual float GetRecoilLimit( void ) { return DEFAULT_RECOIL_LIMIT; }
 	// Returns the autoaim degrees
-	virtual Float GetAutoAimDegrees( void );
+	virtual float GetAutoAimDegrees( void );
 
 	// Returns next weapon in linked list
 	CPlayerWeapon* GetNextWeapon( void );
@@ -292,11 +292,11 @@ public:
 	// Called from weapon constructor
 	static void RegisterWeapon( CBaseEntity* pWeapon );
 	// Called from weapon constructor
-	static void RegisterAmmoType( const Char* pstrAmmoTypeName );
+	static void RegisterAmmoType( const char* pstrAmmoTypeName );
 	// Clears info arrays
 	static void ClearWeaponInfos( void );
 	// Retrieves ammo index for an ammo type
-	static Int32 GetAmmoTypeIndex( const Char* pstrAmmoTypeName );
+	static Int32 GetAmmoTypeIndex( const char* pstrAmmoTypeName );
 	// Returns a weapon definition for an id
 	static weaponinfo_t& GetWeaponInfo( weaponid_t weaponid );
 
@@ -323,20 +323,20 @@ protected:
 	bool	m_hasDual;
 	// True if this is the first time we draw the weapon
 	bool	m_firstDraw;
-	// TRUE if the last animation was played was a fidget one
+	// true if the last animation was played was a fidget one
 	bool	m_playedFidgetAnimation;
 
 protected:
 	// Next time until weapon can think
-	Double	m_nextThinkTime;
+	double	m_nextThinkTime;
 	// Next time we can use any attacks
-	Double	m_nextAttackTime;
+	double	m_nextAttackTime;
 	// Next time we can idle
-	Double	m_nextIdleTime;
+	double	m_nextIdleTime;
 	// Reload duration
-	Double	m_reloadTime;
+	double	m_reloadTime;
 	// Reload delay time
-	Double	m_reloadDisabledTime;
+	double	m_reloadDisabledTime;
 
 	// Ammo type
 	Int32	m_ammoType;
@@ -375,10 +375,10 @@ protected:
 	// Ammo the player gets when picking up the gun
 	Int32	m_defaultAmmo;
 	// Recoil multiplier
-	Float	m_recoilMultiplier;
+	float	m_recoilMultiplier;
 	// Last attack button pressed
 	Int32 m_lastAttackButtonPressed;
 };
 
-extern void Weapon_Precache( const Char* pstrClassname );
+extern void Weapon_Precache( const char* pstrClassname );
 #endif //PLAYERWEAPON_H

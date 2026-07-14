@@ -20,7 +20,7 @@ All Rights Reserved.
 
 struct file_interface_t;
 
-extern bool BMP_Load(const char* pstrFilename, const byte* pfile, byte*& pdata, Uint32& width, Uint32& height, Uint32& bpp, Uint32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn);
-extern bool BMP_Load8Bit_Original(const char* pstrFilename, const byte* pfile, byte*& ppalette, byte*& pdata, Uint32& width, Uint32& height, Uint32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn);
+extern bool BMP_Load(const char* pstrFilename, const Byte* pfile, Byte*& pdata, UInt32& width, UInt32& height, UInt32& bpp, UInt32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn);
+extern bool BMP_Load8Bit_Original(const char* pstrFilename, const Byte* pfile, Byte*& ppalette, Byte*& pdata, UInt32& width, UInt32& height, UInt32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn);
 
 #endif // BMP_H

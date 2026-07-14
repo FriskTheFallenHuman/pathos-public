@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "com_math.h"
 
 // Bogus range value
-static const Float BOGUS_RANGE = 8192;
+static const float BOGUS_RANGE = 8192;
 
 //===============================================
 // @brief
@@ -26,7 +26,7 @@ CWinding::CWinding( void )
 // @brief
 //
 //===============================================
-CWinding::CWinding( Uint32 nbpoints )
+CWinding::CWinding( UInt32 nbpoints )
 {
 	m_vertexArray.resize(nbpoints);
 }
@@ -35,11 +35,11 @@ CWinding::CWinding( Uint32 nbpoints )
 // @brief
 //
 //===============================================
-CWinding::CWinding( const Vector* ppoints, Uint32 nbpoints )
+CWinding::CWinding( const Vector* ppoints, UInt32 nbpoints )
 {
 	m_vertexArray.resize(nbpoints);
 
-	for(Uint32 i = 0; i < nbpoints; i++)
+	for(UInt32 i = 0; i < nbpoints; i++)
 		m_vertexArray[i] = ppoints[i];
 }
 
@@ -47,14 +47,14 @@ CWinding::CWinding( const Vector* ppoints, Uint32 nbpoints )
 // @brief
 //
 //===============================================
-CWinding::CWinding( const Vector& normal, Float distance, Float planesize )
+CWinding::CWinding( const Vector& normal, float distance, float planesize )
 {
 	// Find the major axis
-	Float max = -BOGUS_RANGE;
+	float max = -BOGUS_RANGE;
 	Int32 majorAxis = NO_POSITION;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
-		Float val = SDL_fabs(normal[i]);
+		float val = SDL_fabs(normal[i]);
 		if(val > max)
 		{
 			majorAxis = i;
@@ -72,7 +72,7 @@ CWinding::CWinding( const Vector& normal, Float distance, Float planesize )
 	else
 		up[0] = 1;
 
-	Float value = Math::DotProduct(up, normal);
+	float value = Math::DotProduct(up, normal);
 	Math::VectorMA(up, -value, normal, up);
 	up.Normalize();
 
@@ -139,7 +139,7 @@ bool CWinding::operator==( const CWinding& src )
 	if(m_vertexArray.size() != src.m_vertexArray.size())
 		return false;
 
-	for(Uint32 i = 0; i < m_vertexArray.size(); i++)
+	for(UInt32 i = 0; i < m_vertexArray.size(); i++)
 	{
 		if(m_vertexArray[i] != src.m_vertexArray[i])
 			return false;
@@ -157,10 +157,10 @@ void CWinding::RemoveColinearPoints( void )
 	CArray<Vector> newPoints;
 	newPoints.reserve(m_vertexArray.size());
 
-	for(Uint32 i = 0; i < m_vertexArray.size(); i++)
+	for(UInt32 i = 0; i < m_vertexArray.size(); i++)
 	{
-		Uint32 j = (i+1) % m_vertexArray.size();
-		Uint32 k = (i+m_vertexArray.size()-1) % m_vertexArray.size();
+		UInt32 j = (i+1) % m_vertexArray.size();
+		UInt32 k = (i+m_vertexArray.size()-1) % m_vertexArray.size();
 
 		Vector v1;
 		Math::VectorSubtract(m_vertexArray[j], m_vertexArray[i], v1);
@@ -202,10 +202,10 @@ void CWinding::CalcPlane( void )
 // @brief Returns the area of the winding
 //
 //===============================================
-Float CWinding::GetArea( void )
+float CWinding::GetArea( void )
 {
-	Float total = 0;
-	for(Uint32 i = 2; i < m_vertexArray.size(); i++)
+	float total = 0;
+	for(UInt32 i = 2; i < m_vertexArray.size(); i++)
 	{
 		Vector d1, d2, cross;
 		Math::VectorSubtract(m_vertexArray[i-1], m_vertexArray[0], d1);
@@ -237,10 +237,10 @@ void CWinding::CalcBounds( void )
 	m_mins = NULL_MINS;
 	m_maxs = NULL_MAXS;
 
-	for(Uint32 i = 0; i < m_vertexArray.size(); i++)
+	for(UInt32 i = 0; i < m_vertexArray.size(); i++)
 	{
 		Vector& v = m_vertexArray[i];
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			if(v[j] < m_mins[j])
 				m_mins[j] = v[j];
@@ -258,28 +258,28 @@ void CWinding::CalcBounds( void )
 Vector CWinding::GetCenter( void )
 {
 	Vector center;
-	for(Uint32 i = 0; i < m_vertexArray.size(); i++)
+	for(UInt32 i = 0; i < m_vertexArray.size(); i++)
 		center += m_vertexArray[i];
 
-	return center * (1.0 / static_cast<Float>(m_vertexArray.size()));
+	return center * (1.0 / static_cast<float>(m_vertexArray.size()));
 }
 
 //===============================================
 // @brief Clips winding
 //
 //===============================================
-void CWinding::Clip( const Vector& normal, const Float& distance, CWinding*& ptrfront, CWinding*& ptrback )
+void CWinding::Clip( const Vector& normal, const float& distance, CWinding*& ptrfront, CWinding*& ptrback )
 {
-	Uint32 counts[SIDE_NB] = { 0 };
+	UInt32 counts[SIDE_NB] = { 0 };
 
-	Uint32 mypointnb = m_vertexArray.size();
-	CArray<Float> distances(mypointnb+1);
+	UInt32 mypointnb = m_vertexArray.size();
+	CArray<float> distances(mypointnb+1);
 	CArray<planeside_t> sides(mypointnb+1);
 
 	// Determine where on the splitting plane the points are located
-	for(Uint32 i = 0; i < mypointnb; i++)
+	for(UInt32 i = 0; i < mypointnb; i++)
 	{
-		Float dp = Math::DotProduct(m_vertexArray[i], normal);
+		float dp = Math::DotProduct(m_vertexArray[i], normal);
 		dp -= distance;
 
 		distances[i] = dp;
@@ -308,14 +308,14 @@ void CWinding::Clip( const Vector& normal, const Float& distance, CWinding*& ptr
 		return;
 	}
 
-	Uint32 pointsalloc = mypointnb + 4;
-	Uint32 nbback = 0;
+	UInt32 pointsalloc = mypointnb + 4;
+	UInt32 nbback = 0;
 	CArray<Vector> backpoints(pointsalloc);
 
-	Uint32 nbfront = 0;
+	UInt32 nbfront = 0;
 	CArray<Vector> frontpoints(pointsalloc);
 
-	for(Uint32 i = 0; i < mypointnb; i++)
+	for(UInt32 i = 0; i < mypointnb; i++)
 	{
 		Vector p1 = m_vertexArray[i];
 		if(sides[i] == SIDE_ON)
@@ -358,12 +358,12 @@ void CWinding::Clip( const Vector& normal, const Float& distance, CWinding*& ptr
 			if(sides[i+1] == SIDE_ON || sides[i+1] == sides[i])
 				continue;
 
-			Uint32 index = (i + 1) % mypointnb;
+			UInt32 index = (i + 1) % mypointnb;
 			Vector p2 = m_vertexArray[index];
-			Float dp = distances[i] / (distances[i] - distances[i+1]);
+			float dp = distances[i] / (distances[i] - distances[i+1]);
 
 			Vector middle;
-			for(Uint32 j = 0; j < 3; i++)
+			for(UInt32 j = 0; j < 3; i++)
 			{
 				if(normal[j] == 1)
 					middle[j] = distance;
@@ -398,7 +398,7 @@ void CWinding::Clip( const Vector& normal, const Float& distance, CWinding*& ptr
 // @brief Chop winding by plane, and return the front part
 //
 //===============================================
-CWinding* CWinding::Chop( const Vector& normal, Float distance )
+CWinding* CWinding::Chop( const Vector& normal, float distance )
 {
 	CWinding* pfront;
 	CWinding* pback;
@@ -425,21 +425,21 @@ bool CWinding::IsValid( void )
 	// Re-calculate plane
 	CalcPlane();
 
-	for(Uint32 i = 0; i < m_vertexArray.size(); i++)
+	for(UInt32 i = 0; i < m_vertexArray.size(); i++)
 	{
 		Vector p1 = m_vertexArray[i];
 
 		// Check if we're over the bogus range
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			if(p1[j] > BOGUS_RANGE || p1[j] < -BOGUS_RANGE)
 				return false;
 		}
 
-		Uint32 j = (i + 1) == m_vertexArray.size() ? 0 : (i + 1);
+		UInt32 j = (i + 1) == m_vertexArray.size() ? 0 : (i + 1);
 
 		// Check if the vertex is off the plane
-		Float dp = Math::DotProduct(p1, m_planeNormal) - m_planeDistance;
+		float dp = Math::DotProduct(p1, m_planeNormal) - m_planeDistance;
 		if(dp < -ON_EPSILON || dp > ON_EPSILON)
 			return false;
 
@@ -455,7 +455,7 @@ bool CWinding::IsValid( void )
 		Math::CrossProduct(m_planeNormal, direction, edgenormal);
 		edgenormal.Normalize();
 
-		Float edgedist = Math::DotProduct(p1, edgenormal);
+		float edgedist = Math::DotProduct(p1, edgenormal);
 		edgedist += ON_EPSILON;
 
 		for(j = 0; j < m_vertexArray.size(); j++)
@@ -477,14 +477,14 @@ bool CWinding::IsValid( void )
 // @brief Tell what side of the plane the winding is on
 //
 //===============================================
-planeside_t CWinding::OnPlaneSide( const Vector& normal, Float distance )
+planeside_t CWinding::OnPlaneSide( const Vector& normal, float distance )
 {
 	bool front = false;
 	bool back = false;
 
-	for(Uint32 i = 0; i < m_vertexArray.size(); i++)
+	for(UInt32 i = 0; i < m_vertexArray.size(); i++)
 	{
-		Float dp = Math::DotProduct(m_vertexArray[i], normal) - distance;
+		float dp = Math::DotProduct(m_vertexArray[i], normal) - distance;
 		if(dp < -ON_EPSILON)
 		{
 			if(front)

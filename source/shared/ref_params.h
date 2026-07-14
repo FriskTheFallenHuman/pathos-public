@@ -50,9 +50,9 @@ struct ref_params_t
 	Vector v_height;
 
 	// Client frametime
-	Double frametime;
+	double frametime;
 	// Client time
-	Double time;
+	double time;
 
 	// Tells if game is paused
 	bool paused;
@@ -72,15 +72,15 @@ struct ref_params_t
 	// player's punchangles
 	Vector pl_punchangle;
 	// player's ideal pitch
-	Float idealpitch;
+	float idealpitch;
 
 	// View size in degrees
-	Float viewsize;
+	float viewsize;
 
 	// screen width
-	Float screenwidth;
+	float screenwidth;
 	// screen height
-	Float screenheight;
+	float screenheight;
 
 	// Last usercmd predicted
 	const usercmd_t* pcmd;

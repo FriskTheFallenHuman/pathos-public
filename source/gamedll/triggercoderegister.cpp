@@ -103,7 +103,7 @@ bool CTriggerCodeRegister::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerCodeRegister::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerCodeRegister::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pEntity;
@@ -115,8 +115,8 @@ void CTriggerCodeRegister::CallUse( CBaseEntity* pActivator, CBaseEntity* pCalle
 	if(!pEntity || !pEntity->IsPlayer())
 		return;
 
-	const Char* pstrCodeId = gd_engfuncs.pfnGetString(m_codeId);
-	const Char* pstrCode = gd_engfuncs.pfnGetString(m_code);
+	const char* pstrCodeId = gd_engfuncs.pfnGetString(m_codeId);
+	const char* pstrCode = gd_engfuncs.pfnGetString(m_code);
 
 	pEntity->AddPasscode(pstrCodeId, pstrCode); 
 }

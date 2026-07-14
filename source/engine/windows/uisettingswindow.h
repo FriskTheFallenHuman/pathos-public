@@ -40,7 +40,7 @@ CUISliderAdjustEvent
 class CUISliderAdjustEvent : public CUISettingsEventBase
 {
 public:
-	CUISliderAdjustEvent( CUISettingsWindow* pWindow, const Char* pstrCVarName, bool isInteger = false ):
+	CUISliderAdjustEvent( CUISettingsWindow* pWindow, const char* pstrCVarName, bool isInteger = false ):
 		CUISettingsEventBase(pWindow),
 		m_cvarName(pstrCVarName),
 		m_isInteger(isInteger)
@@ -49,12 +49,12 @@ public:
 			
 public:
 	// Performs the action tied to this event
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 
 protected:
 	// CVar name that this toggles
 	CString m_cvarName;
-	// TRUE if value is integer
+	// true if value is integer
 	bool m_isInteger;
 };
 
@@ -67,7 +67,7 @@ CUITickBoxEvent
 class CUITickBoxEvent : public CUISettingsEventBase
 {
 public:
-	CUITickBoxEvent( CUISettingsWindow* pWindow, const Char* pstrCVarName ):
+	CUITickBoxEvent( CUISettingsWindow* pWindow, const char* pstrCVarName ):
 		CUISettingsEventBase(pWindow),
 		m_cvarName(pstrCVarName)
 	{ };
@@ -75,7 +75,7 @@ public:
 			
 public:
 	// Performs the action tied to this event
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 
 protected:
 	// CVar name that this toggles
@@ -91,18 +91,18 @@ CUIScrollSurfaceDropListToggleEvent
 class CUIScrollSurfaceDropListToggleEvent : public CUISettingsEventBase
 {
 public:
-	CUIScrollSurfaceDropListToggleEvent( CUISettingsWindow* pWindow, Uint32 rowIndex ):
+	CUIScrollSurfaceDropListToggleEvent( CUISettingsWindow* pWindow, UInt32 rowIndex ):
 		CUISettingsEventBase(pWindow),
 		m_rowIndex(rowIndex)
 	{ };
 	virtual ~CUIScrollSurfaceDropListToggleEvent( void ) { };
 			
 public:
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 
 protected:
 	// Row index
-	Uint32 m_rowIndex;
+	UInt32 m_rowIndex;
 };
 
 /*
@@ -114,18 +114,18 @@ CUIScrollSurfaceDropListSelectEvent
 class CUIScrollSurfaceDropListSelectEvent : public CUISettingsEventBase
 {
 public:
-	CUIScrollSurfaceDropListSelectEvent( CUISettingsWindow* pWindow, Uint32 rowIndex ):
+	CUIScrollSurfaceDropListSelectEvent( CUISettingsWindow* pWindow, UInt32 rowIndex ):
 		CUISettingsEventBase(pWindow),
 		m_rowIndex(rowIndex)
 	{ };
 	virtual ~CUIScrollSurfaceDropListSelectEvent( void ) { };
 			
 public:
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 
 protected:
 	// Row index
-	Uint32 m_rowIndex;
+	UInt32 m_rowIndex;
 };
 
 /*
@@ -143,7 +143,7 @@ public:
 	virtual ~CUISettingsCancelEvent( void ) { };
 			
 public:
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -161,7 +161,7 @@ public:
 	virtual ~CUISettingsApplyEvent( void ) { };
 			
 public:
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -182,18 +182,18 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) { };
+	virtual void PerformAction( float param ) { };
 	// Handles a mouse button event
 	virtual bool MouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool keyDown );
 
 	// Sets the row index
-	virtual void SetRowIndex( Uint32 rowIndex ) { m_rowIndex = rowIndex; }
+	virtual void SetRowIndex( UInt32 rowIndex ) { m_rowIndex = rowIndex; }
 
 protected:
 	// Index of the row tied to this event
 	Int32 m_rowIndex;
 	// Last time this was clicked on
-	Float m_lastClickTime;
+	float m_lastClickTime;
 };
 
 /*
@@ -212,7 +212,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -231,7 +231,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -250,7 +250,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -269,7 +269,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -288,7 +288,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -307,7 +307,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -326,7 +326,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -345,7 +345,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -364,7 +364,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -383,7 +383,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -402,7 +402,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 };
 
 /*
@@ -435,8 +435,8 @@ private:
 
 		CArray<adv_choice_t> choices;
 
-		Float minvalue;
-		Float maxvalue;
+		float minvalue;
+		float maxvalue;
 
 		CString defaultvalue;
 	};
@@ -451,163 +451,163 @@ private:
 
 public:
 	// Window description file
-	static const Char WINDOW_DESC_FILE[];
+	static const char WINDOW_DESC_FILE[];
 	// Window object name
-	static const Char WINDOW_OBJ_NAME[];
+	static const char WINDOW_OBJ_NAME[];
 	// Apply button object name
-	static const Char APPLY_BUTTON_OBJ_NAME[];
+	static const char APPLY_BUTTON_OBJ_NAME[];
 	// Cancel button object name
-	static const Char CANCEL_BUTTON_OBJ_NAME[];
+	static const char CANCEL_BUTTON_OBJ_NAME[];
 	// Settings tab object name
-	static const Char SETTINGS_TAB_OBJ_NAME[];
+	static const char SETTINGS_TAB_OBJ_NAME[];
 	// Binds list tab object name
-	static const Char BINDSTAB_LIST_OBJ_NAME[];
+	static const char BINDSTAB_LIST_OBJ_NAME[];
 	// Binds tab clear button object name
-	static const Char BINDSTAB_CLEAR_BTN_OBJ_NAME[];
+	static const char BINDSTAB_CLEAR_BTN_OBJ_NAME[];
 	// Binds tab bind button object name
-	static const Char BINDSTAB_BIND_BTN_OBJ_NAME[];
+	static const char BINDSTAB_BIND_BTN_OBJ_NAME[];
 	// Binds tab restore defaults button object name
-	static const Char BINDSTAB_RESTORE_DEFAULTS_BTN_OBJ_NAME[];
+	static const char BINDSTAB_RESTORE_DEFAULTS_BTN_OBJ_NAME[];
 	// Video tab display device label object name
-	static const Char VIDEOTAB_DISPLAY_DEVICE_LABEL_OBJ_NAME[];
+	static const char VIDEOTAB_DISPLAY_DEVICE_LABEL_OBJ_NAME[];
 	// Video tab display device label object name
-	static const Char VIDEOTAB_RESOLUTION_LABEL_OBJ_NAME[];
+	static const char VIDEOTAB_RESOLUTION_LABEL_OBJ_NAME[];
 	// Video tab display device label object name
-	static const Char VIDEOTAB_WINDOW_MODE_LABEL_OBJ_NAME[];
+	static const char VIDEOTAB_WINDOW_MODE_LABEL_OBJ_NAME[];
 	// Video tab anisotropy label object name
-	static const Char VIDEOTAB_ANISOTROPY_LABEL_OBJ_NAME[];
+	static const char VIDEOTAB_ANISOTROPY_LABEL_OBJ_NAME[];
 	// Video tab antialias label object name
-	static const Char VIDEOTAB_ANTIALIAS_LABEL_OBJ_NAME[];
+	static const char VIDEOTAB_ANTIALIAS_LABEL_OBJ_NAME[];
 	// Video tab vertical sync label object name
-	static const Char VIDEOTAB_VERTICAL_SYNC_LABEL_OBJ_NAME[];
+	static const char VIDEOTAB_VERTICAL_SYNC_LABEL_OBJ_NAME[];
 	// Advance tab list object name
-	static const Char ADVANCED_TAB_LIST_OBJ_NAME[];
+	static const char ADVANCED_TAB_LIST_OBJ_NAME[];
 	// Video tab display device dropdown list object name
-	static const Char VIDEOTAB_DISPLAY_DEVICE_LIST_OBJ_NAME[];
+	static const char VIDEOTAB_DISPLAY_DEVICE_LIST_OBJ_NAME[];
 	// Video tab display resolution dropdown list object name
-	static const Char VIDEOTAB_DISPLAY_RESOLUTION_LIST_OBJ_NAME[];
+	static const char VIDEOTAB_DISPLAY_RESOLUTION_LIST_OBJ_NAME[];
 	// Video tab display resolution dropdown list object name
-	static const Char VIDEOTAB_DISPLAY_WINDOWMODE_LIST_OBJ_NAME[];
+	static const char VIDEOTAB_DISPLAY_WINDOWMODE_LIST_OBJ_NAME[];
 	// Video tab display gamma label object name
-	static const Char VIDEOTAB_GAMMA_LABEL_OBJ_NAME[];
+	static const char VIDEOTAB_GAMMA_LABEL_OBJ_NAME[];
 	// Video tab display gamma slider object name
-	static const Char VIDEOTAB_GAMMA_SLIDER_OBJ_NAME[];
+	static const char VIDEOTAB_GAMMA_SLIDER_OBJ_NAME[];
 	// Video tab anisotropy dropdown list object name
-	static const Char VIDEOTAB_ANISOTROPY_LIST_OBJ_NAME[];
+	static const char VIDEOTAB_ANISOTROPY_LIST_OBJ_NAME[];
 	// Video tab antialiasing dropdown list object name
-	static const Char VIDEOTAB_ANTIALIAS_LIST_OBJ_NAME[];
+	static const char VIDEOTAB_ANTIALIAS_LIST_OBJ_NAME[];
 	// Video tab vertical sync dropdown list object name
-	static const Char VIDEOTAB_VERTICAL_SYNC_LIST_OBJ_NAME[];
+	static const char VIDEOTAB_VERTICAL_SYNC_LIST_OBJ_NAME[];
 	// Video tab framebuffer object label object name
-	static const Char VIDEOTAB_FRAMEBUFFER_OBJECTS_LABEL_OBJ_NAME[];
+	static const char VIDEOTAB_FRAMEBUFFER_OBJECTS_LABEL_OBJ_NAME[];
 	// Video tab framebuffer object dropdown list object name
-	static const Char VIDEOTAB_FRAMEBUFFER_OBJECTS_LIST_OBJ_NAME[];
+	static const char VIDEOTAB_FRAMEBUFFER_OBJECTS_LIST_OBJ_NAME[];
 	// Video tab high dynamic range label object name
-	static const Char VIDEOTAB_HIGH_DYNAMIC_RANGE_LABEL_OBJ_NAME[];
+	static const char VIDEOTAB_HIGH_DYNAMIC_RANGE_LABEL_OBJ_NAME[];
 	// Video tab high dynamic range dropdown list object name
-	static const Char VIDEOTAB_HIGH_DYNAMIC_RANGE_LIST_OBJ_NAME[];
+	static const char VIDEOTAB_HIGH_DYNAMIC_RANGE_LIST_OBJ_NAME[];
 	// Advanced tab options list file
-	static const Char ADVANCED_DESC_FILE[];
+	static const char ADVANCED_DESC_FILE[];
 	// Scrollable options surface label object
-	static const Char SCROLLSURFACE_OPTION_LABEL_OBJ_NAME[];
+	static const char SCROLLSURFACE_OPTION_LABEL_OBJ_NAME[];
 	// Scrollable options surface list object
-	static const Char SCROLLSURFACE_OPTION_LIST_OBJ_NAME[];
+	static const char SCROLLSURFACE_OPTION_LIST_OBJ_NAME[];
 	// Scrollable options surface tab object
-	static const Char SCROLLSURFACE_OPTION_TAB_OBJ_NAME[];
+	static const char SCROLLSURFACE_OPTION_TAB_OBJ_NAME[];
 
 	// "Reverse Mouse" tickbox object name
-	static const Char MOUSE_TAB_REVERSE_MOUSE_BOX_OBJ_NAME[];
+	static const char MOUSE_TAB_REVERSE_MOUSE_BOX_OBJ_NAME[];
 	// "Reverse Mouse" label object name
-	static const Char MOUSE_TAB_REVERSE_MOUSE_LABEL_OBJ_NAME[];
+	static const char MOUSE_TAB_REVERSE_MOUSE_LABEL_OBJ_NAME[];
 	// Auto-aim tickbox object name
-	static const Char MOUSE_TAB_FILTER_MOUSE_BOX_OBJ_NAME[];
+	static const char MOUSE_TAB_FILTER_MOUSE_BOX_OBJ_NAME[];
 	// Auto-aim label object name
-	static const Char MOUSE_TAB_FILTER_MOUSE_LABEL_OBJ_NAME[];
+	static const char MOUSE_TAB_FILTER_MOUSE_LABEL_OBJ_NAME[];
 	// Auto-aim tickbox object name
-	static const Char MOUSE_TAB_AUTOAIM_BOX_OBJ_NAME[];
+	static const char MOUSE_TAB_AUTOAIM_BOX_OBJ_NAME[];
 	// Auto-aim label object name
-	static const Char MOUSE_TAB_AUTOAIM_LABEL_OBJ_NAME[];
+	static const char MOUSE_TAB_AUTOAIM_LABEL_OBJ_NAME[];
 	// Raw input tickbox object name
-	static const Char MOUSE_TAB_RAWINPUT_BOX_OBJ_NAME[];
+	static const char MOUSE_TAB_RAWINPUT_BOX_OBJ_NAME[];
 	// Raw input label object name
-	static const Char MOUSE_TAB_RAWINPUT_LABEL_OBJ_NAME[];
+	static const char MOUSE_TAB_RAWINPUT_LABEL_OBJ_NAME[];
 	// Mouse sensitivity slider object name
-	static const Char MOUSE_TAB_SENSITIVITY_SLIDER_OBJ_NAME[];
+	static const char MOUSE_TAB_SENSITIVITY_SLIDER_OBJ_NAME[];
 	// Mouse sensitivity slider object name
-	static const Char MOUSE_TAB_SENSITIVITY_LABEL_OBJ_NAME[];
+	static const char MOUSE_TAB_SENSITIVITY_LABEL_OBJ_NAME[];
 	// Mouse sensitivity value tab object name
-	static const Char MOUSE_TAB_SENSITIVITY_TAB_OBJ_NAME[];
+	static const char MOUSE_TAB_SENSITIVITY_TAB_OBJ_NAME[];
 	// Mouse sensitivity value text object name
-	static const Char MOUSE_TAB_SENSITIVITY_TEXT_OBJ_NAME[];
+	static const char MOUSE_TAB_SENSITIVITY_TEXT_OBJ_NAME[];
 	// Mouse filter frames slider object name
-	static const Char MOUSE_TAB_FILTER_FRAMES_SLIDER_OBJ_NAME[];
+	static const char MOUSE_TAB_FILTER_FRAMES_SLIDER_OBJ_NAME[];
 	// Mouse filter frames slider object name
-	static const Char MOUSE_TAB_FILTER_FRAMES_LABEL_OBJ_NAME[];
+	static const char MOUSE_TAB_FILTER_FRAMES_LABEL_OBJ_NAME[];
 	// Mouse filter frames value tab object name
-	static const Char MOUSE_TAB_FILTER_FRAMES_TAB_OBJ_NAME[];
+	static const char MOUSE_TAB_FILTER_FRAMES_TAB_OBJ_NAME[];
 	// Mouse filter frames value text object name
-	static const Char MOUSE_TAB_FILTER_FRAMES_TEXT_OBJ_NAME[];
+	static const char MOUSE_TAB_FILTER_FRAMES_TEXT_OBJ_NAME[];
 	// Mouse sensitivity value tab object name
-	static const Char AUDIO_TAB_MASTER_VOLUME_LABEL_OBJ_NAME[];
+	static const char AUDIO_TAB_MASTER_VOLUME_LABEL_OBJ_NAME[];
 	// Mouse sensitivity value text object name
-	static const Char AUDIO_TAB_MASTER_VOLUME_SLIDER_OBJ_NAME[];
+	static const char AUDIO_TAB_MASTER_VOLUME_SLIDER_OBJ_NAME[];
 	// Game volume label object name
-	static const Char AUDIO_TAB_GAME_VOLUME_LABEL_OBJ_NAME[];
+	static const char AUDIO_TAB_GAME_VOLUME_LABEL_OBJ_NAME[];
 	// Game volume slider object name
-	static const Char AUDIO_TAB_GAME_VOLUME_SLIDER_OBJ_NAME[];
+	static const char AUDIO_TAB_GAME_VOLUME_SLIDER_OBJ_NAME[];
 	// Mouse sensitivity value tab object name
-	static const Char AUDIO_TAB_MUSIC_VOLUME_LABEL_OBJ_NAME[];
+	static const char AUDIO_TAB_MUSIC_VOLUME_LABEL_OBJ_NAME[];
 	// Mouse sensitivity value text object name
-	static const Char AUDIO_TAB_MUSIC_VOLUME_SLIDER_OBJ_NAME[];
+	static const char AUDIO_TAB_MUSIC_VOLUME_SLIDER_OBJ_NAME[];
 	// Sound occlusion text object name
-	static const Char AUDIO_TAB_OCCLUSION_LABEL_OBJ_NAME[];
+	static const char AUDIO_TAB_OCCLUSION_LABEL_OBJ_NAME[];
 	// Sound occlusion tick box object name
-	static const Char AUDIO_TAB_OCCLUSION_TICKBOX_OBJ_NAME[];
+	static const char AUDIO_TAB_OCCLUSION_TICKBOX_OBJ_NAME[];
 	// HRTF text object name
-	static const Char AUDIO_TAB_HRTF_LABEL_OBJ_NAME[];
+	static const char AUDIO_TAB_HRTF_LABEL_OBJ_NAME[];
 	// HRTF tick box object name
-	static const Char AUDIO_TAB_HRTF_TICKBOX_OBJ_NAME[];
+	static const char AUDIO_TAB_HRTF_TICKBOX_OBJ_NAME[];
 	// Subtitles text object name
-	static const Char AUDIO_TAB_SUBTITLES_LABEL_OBJ_NAME[];
+	static const char AUDIO_TAB_SUBTITLES_LABEL_OBJ_NAME[];
 	// Subtitles tick box object name
-	static const Char AUDIO_TAB_SUBTITLES_TICKBOX_OBJ_NAME[];
+	static const char AUDIO_TAB_SUBTITLES_TICKBOX_OBJ_NAME[];
 	// Binds file path
-	static const Char BINDS_FILE_PATH[];
+	static const char BINDS_FILE_PATH[];
 
 	// View bob slider object name
-	static const Char GAMEPLAY_TAB_VIEWBOB_SLIDER_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_VIEWBOB_SLIDER_OBJ_NAME[];
 	// View boby slider object name
-	static const Char GAMEPLAY_TAB_VIEWBOB_LABEL_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_VIEWBOB_LABEL_OBJ_NAME[];
 	// View bob value tab object name
-	static const Char GAMEPLAY_TAB_VIEWBOB_TAB_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_VIEWBOB_TAB_OBJ_NAME[];
 	// View bob value text object name
-	static const Char GAMEPLAY_TAB_VIEWBOB_TEXT_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_VIEWBOB_TEXT_OBJ_NAME[];
 
 	// View roll slider object name
-	static const Char GAMEPLAY_TAB_VIEWROLL_SLIDER_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_VIEWROLL_SLIDER_OBJ_NAME[];
 	// View roll slider object name
-	static const Char GAMEPLAY_TAB_VIEWROLL_LABEL_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_VIEWROLL_LABEL_OBJ_NAME[];
 	// View roll value tab object name
-	static const Char GAMEPLAY_TAB_VIEWROLL_TAB_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_VIEWROLL_TAB_OBJ_NAME[];
 	// Gameplay tab list object name
-	static const Char GAMEPLAY_TAB_LIST_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_LIST_OBJ_NAME[];
 	// View roll value text object name
-	static const Char GAMEPLAY_TAB_VIEWROLL_TEXT_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_VIEWROLL_TEXT_OBJ_NAME[];
 
 	// FOV slider object name
-	static const Char GAMEPLAY_TAB_FOV_SLIDER_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_FOV_SLIDER_OBJ_NAME[];
 	// FOV slider object name
-	static const Char GAMEPLAY_TAB_FOV_LABEL_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_FOV_LABEL_OBJ_NAME[];
 	// FOV value tab object name
-	static const Char GAMEPLAY_TAB_FOV_TAB_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_FOV_TAB_OBJ_NAME[];
 	// FOV value text object name
-	static const Char GAMEPLAY_TAB_FOV_TEXT_OBJ_NAME[];
+	static const char GAMEPLAY_TAB_FOV_TEXT_OBJ_NAME[];
 
 	// Gameplay tab options list file
-	static const Char GAMEPLAY_DESC_FILE[];
+	static const char GAMEPLAY_DESC_FILE[];
 
 private:
-	CUISettingsWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUISettingsWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 public:
 	~CUISettingsWindow( void );
 
@@ -631,7 +631,7 @@ public:
 	void BindSelectedKey( void );
 
 	// Manages a changed tick box
-	void CVarChanged( const Char* pstrCvarName, Float value );
+	void CVarChanged( const char* pstrCvarName, float value );
 
 private:
 	// Sets up the Binds tab
@@ -666,13 +666,13 @@ private:
 	void ResetBindsList( void );
 
 	// Sets the binding for a key on a row
-	virtual void SetBind( const Char* pstrKeyname, const Char* pstrBind );
+	virtual void SetBind( const char* pstrKeyname, const char* pstrBind );
 
 public:
 	// Sets focus on a particular row
-	void SetFocusOnBindsRow( Uint32 rowIndex );
+	void SetFocusOnBindsRow( UInt32 rowIndex );
 	// Enters bind mode
-	void EnterBindMode( Uint32 rowIndex );
+	void EnterBindMode( UInt32 rowIndex );
 	// Leaves bind mode
 	void LeaveBindMode( void );
 	// Restores default key binds
@@ -690,32 +690,32 @@ private:
 
 private:
 	// Adds a checkbox object
-	bool AddTickBox( CUITabBody* pTab, const ui_windowdescription_t* pWinDesc, const ui_objectinfo_t* pTabObject, const CString& tickBoxObjectName, const CString& labelObjectName, const CString& cvarName, const Char* pstrConfigGrpName = nullptr, const Char* pstrConfigValueName = nullptr );
+	bool AddTickBox( CUITabBody* pTab, const ui_windowdescription_t* pWinDesc, const ui_objectinfo_t* pTabObject, const CString& tickBoxObjectName, const CString& labelObjectName, const CString& cvarName, const char* pstrConfigGrpName = nullptr, const char* pstrConfigValueName = nullptr );
 	// Loads a scrollable options list
-	bool LoadScrollableOptionsList( CUITabBody* pTab, const ui_windowdescription_t* pWinDesc, const ui_objectinfo_t* pTabObject, const Char* pstrTabObjectName, const Char* pstrOptionsFilename );
+	bool LoadScrollableOptionsList( CUITabBody* pTab, const ui_windowdescription_t* pWinDesc, const ui_objectinfo_t* pTabObject, const char* pstrTabObjectName, const char* pstrOptionsFilename );
 
 public:
 	// Selects a resolution
-	void AdvancedOptionSelect( Uint32 rowIndex, Uint32 selectionIndex );
+	void AdvancedOptionSelect( UInt32 rowIndex, UInt32 selectionIndex );
 	// Sets mouse sensitivity tab text
-	void SetMouseSensitivityTabText( const Char* pstrText );
+	void SetMouseSensitivityTabText( const char* pstrText );
 	// Sets mouse filter frames tab text
-	void SetMouseFilterFramesTabText( const Char* pstrText );
+	void SetMouseFilterFramesTabText( const char* pstrText );
 
 	// Sets view roll tab text
-	void SetViewBobTabText( const Char* pstrText );
+	void SetViewBobTabText( const char* pstrText );
 	// Sets view roll tab text
-	void SetViewRollTabText( const Char* pstrText );
+	void SetViewRollTabText( const char* pstrText );
 	// Sets FOV tab text
-	void SetFOVTabText( const Char* pstrText );
+	void SetFOVTabText( const char* pstrText );
 
 public:
 	// Toggles ontop flag for a row in the Advanced Options tab
-	void SetAdvancedOptionFocus( Uint32 rowIndex, bool isOpen );
+	void SetAdvancedOptionFocus( UInt32 rowIndex, bool isOpen );
 
 private:
 	// Adds a pending setting to be executed later
-	void AddPendingSetting( const Char* pstrId, const Char* pstrCmd );
+	void AddPendingSetting( const char* pstrId, const char* pstrCmd );
 
 public:
 	// Loads the schema, and creates the sub-elements
@@ -744,7 +744,7 @@ private:
 	CUIList* m_pBindsList;
 	// Binds list info object
 	const ui_objectinfo_t* m_pBindsListInfo;
-	// TRUE if we're in key bind mode
+	// true if we're in key bind mode
 	bool m_isInBindMode;
 	// Row we're about to bind a key to
 	Int32 m_bindRowIndex;
@@ -761,7 +761,7 @@ private:
 	Int32 m_currentTabIndex;
 	// Array of commands to run on "Apply"
 	CArray<setting_t> m_queuedCommandsArray;
-	// TRUE if we need to reset next frame
+	// true if we need to reset next frame
 	bool m_bReset;
 
 	// Current display device index
@@ -771,7 +771,7 @@ private:
 	// Current MSAA setting
 	Int32 m_msaaIndex;
 
-	// TRUE if we need to reset the video
+	// true if we need to reset the video
 	bool m_bResetVideo;
 
 private:

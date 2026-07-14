@@ -104,7 +104,7 @@ bool CGameTimer::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CGameTimer::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CGameTimer::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	CBaseEntity* pPlayer;
 	if(pActivator && pActivator->IsPlayer())

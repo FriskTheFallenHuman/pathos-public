@@ -33,17 +33,17 @@ struct tempentity_t
 
 	Int32 flags;
 
-	Float die;
-	Float framemax;
-	Float flickertime;
+	float die;
+	float framemax;
+	float flickertime;
 
 	Vector add;
 
-	Float fadespeed;
-	Float startrenderamt;
-	Float bouncefactor;
-	Float buoyancy;
-	Float waterfriction;
+	float fadespeed;
+	float startrenderamt;
+	float bouncefactor;
+	float buoyancy;
+	float waterfriction;
 	Int32 soundtype;
 	Int32 prevcontents;
 

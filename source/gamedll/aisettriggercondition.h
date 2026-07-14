@@ -19,7 +19,7 @@ class CAISetTriggerCondition : public CPointEntity
 {
 public:
 	// Number of AI condition triggers
-	static const Uint32 NUM_CONDITION_TRIGGERS;
+	static const UInt32 NUM_CONDITION_TRIGGERS;
 
 public:
 	explicit CAISetTriggerCondition( edict_t* pedict );
@@ -29,7 +29,7 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	
 public:
 	Int32 m_triggerCondition;

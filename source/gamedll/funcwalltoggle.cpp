@@ -113,7 +113,7 @@ bool CFuncWallToggle::IsOn( void ) const
 // @brief
 //
 //=============================================
-void CFuncWallToggle::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncWallToggle::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool state = IsOn();
 	if(ShouldToggle(useMode, state))

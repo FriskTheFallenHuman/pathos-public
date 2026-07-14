@@ -21,36 +21,36 @@ All Rights Reserved.
 #include "gameuitextwindow.h"
 
 // Object x inset for login window
-const Uint32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TAB_X_INSET = 30;
+const UInt32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TAB_X_INSET = 30;
 // Object y inset for login window
-const Uint32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TAB_Y_INSET = 60;
+const UInt32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TAB_Y_INSET = 60;
 // Object y spacing for login window
-const Uint32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TAB_Y_SPACING = 20;
+const UInt32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TAB_Y_SPACING = 20;
 // Object x spacing for login window
-const Uint32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TAB_X_SPACING = 80;
+const UInt32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TAB_X_SPACING = 80;
 // Text inset for objectives window
-const Uint32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TAB_TEXT_INSET = 10;
+const UInt32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TAB_TEXT_INSET = 10;
 // Default text color
 const color32_t CGameUIDocumentsWindow::DOCUMENTSWINDOW_TEXT_COLOR = color32_t(255, 255, 255, 255);
 // Height of the title surface
-const Uint32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TITLE_SURFACE_HEIGHT = 50;
+const UInt32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_TITLE_SURFACE_HEIGHT = 50;
 // Height of the main surface
-const Uint32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_MAIN_SURFACE_HEIGHT = 550;
+const UInt32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_MAIN_SURFACE_HEIGHT = 550;
 // Height of the bottom button surface
-const Uint32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_BOTTOM_BUTTON_SURFACE_HEIGHT = 100;
+const UInt32 CGameUIDocumentsWindow::DOCUMENTSWINDOW_BOTTOM_BUTTON_SURFACE_HEIGHT = 100;
 // Base script name
-const Char CGameUIDocumentsWindow::DOCUMENTSWINDOW_SCRIPT_NAME[] = "defaults.txt";
+const char CGameUIDocumentsWindow::DOCUMENTSWINDOW_SCRIPT_NAME[] = "defaults.txt";
 // Color of highlighted buttons for this window
 const color32_t CGameUIDocumentsWindow::DOCUMENTSWINDOW_BUTTON_NEW_COLOR = color32_t(0, 255, 0, 100);
 // Title text default schema set name
-const Char CGameUIDocumentsWindow::DOCUMENTSWINDOW_TITLE_TEXTSCHEMA_NAME[] = "documentstitle";
+const char CGameUIDocumentsWindow::DOCUMENTSWINDOW_TITLE_TEXTSCHEMA_NAME[] = "documentstitle";
 // Text default font schema name
-const Char CGameUIDocumentsWindow::DOCUMENTSWINDOW_TEXTSCHEMA_NAME[] = "documentstext";
+const char CGameUIDocumentsWindow::DOCUMENTSWINDOW_TEXTSCHEMA_NAME[] = "documentstext";
 
 //====================================
 //
 //====================================
-CGameUIDocumentsWindow::CGameUIDocumentsWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUIDocumentsWindow::CGameUIDocumentsWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIWindow(flags, originX, originY, width, height),
 	m_pExitButton(nullptr),
 	m_pCurrentDocument(nullptr),
@@ -76,7 +76,7 @@ CGameUIDocumentsWindow::~CGameUIDocumentsWindow( void )
 {
 	if(!m_documentsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_documentsArray.size(); i++)
+		for(UInt32 i = 0; i < m_documentsArray.size(); i++)
 			delete m_documentsArray[i];
 
 		m_documentsArray.clear();
@@ -89,18 +89,18 @@ CGameUIDocumentsWindow::~CGameUIDocumentsWindow( void )
 void CGameUIDocumentsWindow::init( void )
 {
 	// Init basic window elements
-	Uint32 verticalbarheight, middlebarwidth, barThickness;
+	UInt32 verticalbarheight, middlebarwidth, barThickness;
 	CGameUIWindow::initBackground(verticalbarheight, middlebarwidth, barThickness);
 
-	Uint32 tabTopInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_TOP_INSET);
-	Uint32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
-	Uint32 tabSideInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_SIDE_INSET);
-	Uint32 mainTabMaxWidth = gHUDDraw.ScaleX(GAMEUIWINDOW_MAIN_TAB_MAX_WIDTH);
-	Uint32 titleSurfaceHeight = gHUDDraw.ScaleY(DOCUMENTSWINDOW_TITLE_SURFACE_HEIGHT);
-	Uint32 mainSurfaceHeight = gHUDDraw.ScaleY(DOCUMENTSWINDOW_MAIN_SURFACE_HEIGHT);
-	Uint32 bottomButtonSurfaceHeight = gHUDDraw.ScaleY(DOCUMENTSWINDOW_BOTTOM_BUTTON_SURFACE_HEIGHT);
-	Uint32 tabXSpacing = gHUDDraw.ScaleX(DOCUMENTSWINDOW_TAB_X_SPACING);
-	Uint32 textInset = gHUDDraw.ScaleY(CGameUITextWindow::TEXTWINDOW_TEXT_TAB_TEXT_INSET);
+	UInt32 tabTopInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_TOP_INSET);
+	UInt32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
+	UInt32 tabSideInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_SIDE_INSET);
+	UInt32 mainTabMaxWidth = gHUDDraw.ScaleX(GAMEUIWINDOW_MAIN_TAB_MAX_WIDTH);
+	UInt32 titleSurfaceHeight = gHUDDraw.ScaleY(DOCUMENTSWINDOW_TITLE_SURFACE_HEIGHT);
+	UInt32 mainSurfaceHeight = gHUDDraw.ScaleY(DOCUMENTSWINDOW_MAIN_SURFACE_HEIGHT);
+	UInt32 bottomButtonSurfaceHeight = gHUDDraw.ScaleY(DOCUMENTSWINDOW_BOTTOM_BUTTON_SURFACE_HEIGHT);
+	UInt32 tabXSpacing = gHUDDraw.ScaleX(DOCUMENTSWINDOW_TAB_X_SPACING);
+	UInt32 textInset = gHUDDraw.ScaleY(CGameUITextWindow::TEXTWINDOW_TEXT_TAB_TEXT_INSET);
 
 	m_usedEdgeThickness = gHUDDraw.ScaleX(GAMEUIWINDOW_EDGE_THICKNESS);
 	m_tabYSpacing = gHUDDraw.ScaleY(DOCUMENTSWINDOW_TAB_Y_SPACING);
@@ -111,7 +111,7 @@ void CGameUIDocumentsWindow::init( void )
 	//
 
 	// Get the title font
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	// Get the title font used
@@ -212,8 +212,8 @@ void CGameUIDocumentsWindow::init( void )
 	m_pTextReaderObjectsArray.push_back(m_pReaderTitleText);
 
 	// Create the buttons
-	Uint32 buttonWidth = m_buttonWidth = m_tabWidth - 2*tabXSpacing;
-	Uint32 buttonHeight = bottomButtonSurfaceHeight - m_tabYSpacing * 2;
+	UInt32 buttonWidth = m_buttonWidth = m_tabWidth - 2*tabXSpacing;
+	UInt32 buttonHeight = bottomButtonSurfaceHeight - m_tabYSpacing * 2;
 
 	m_buttonHeight = (mainSurfaceHeight - m_tabYSpacing * 7)/6;
 
@@ -258,14 +258,14 @@ void CGameUIDocumentsWindow::init( void )
 //====================================
 //
 //====================================
-bool CGameUIDocumentsWindow::initData( const CArray<CString>& textFilesArray, const Char* pstrActiveFileName )
+bool CGameUIDocumentsWindow::initData( const CArray<CString>& textFilesArray, const char* pstrActiveFileName )
 {
 	Int32 buttonXPos = m_buttonXPos;
 	Int32 buttonYPos = m_buttonYPos;
 
 	// Track separately to avoid issues if a file is missing/bad
-	Uint32 nbAdded = 0;
-	for(Uint32 i = 0; i < textFilesArray.size(); i++)
+	UInt32 nbAdded = 0;
+	for(UInt32 i = 0; i < textFilesArray.size(); i++)
 	{
 		CString textFileEntry = textFilesArray[i];
 
@@ -276,7 +276,7 @@ bool CGameUIDocumentsWindow::initData( const CArray<CString>& textFilesArray, co
 		Int32 semicolonPosition = textFileEntry.find(0, ";");
 		if(semicolonPosition != CString::CSTRING_NO_POSITION)
 		{
-			Uint32 codeLength = textFileEntry.length() - semicolonPosition - 1;
+			UInt32 codeLength = textFileEntry.length() - semicolonPosition - 1;
 			textFileCode.assign(textFileEntry.c_str() + semicolonPosition + 1, codeLength);
 			textFilePath.assign(textFileEntry.c_str(), semicolonPosition);
 		}
@@ -288,7 +288,7 @@ bool CGameUIDocumentsWindow::initData( const CArray<CString>& textFilesArray, co
 
 		// See if we already have this loaded
 		textdocumentinfo_t* pDocument = nullptr;
-		for(Uint32 j = 0; j < m_documentsArray.size(); j++)
+		for(UInt32 j = 0; j < m_documentsArray.size(); j++)
 		{
 			textdocumentinfo_t* pCheck = m_documentsArray[j];
 			if(!qstrcmp(pCheck->filePath, textFilePath))
@@ -338,7 +338,7 @@ bool CGameUIDocumentsWindow::initData( const CArray<CString>& textFilesArray, co
 		}
 
 		// Assign button contents and such
-		Uint32 addIndex = nbAdded;
+		UInt32 addIndex = nbAdded;
 		m_buttonsArray.resize(nbAdded + 1);
 		nbAdded++;
 
@@ -369,7 +369,7 @@ bool CGameUIDocumentsWindow::initData( const CArray<CString>& textFilesArray, co
 
 	if(pstrActiveFileName)
 	{
-		for(Uint32 i = 0; i < m_documentsArray.size(); i++)
+		for(UInt32 i = 0; i < m_documentsArray.size(); i++)
 		{
 			textdocumentinfo_t* pInfo = m_documentsArray[i];
 			if(!qstrcmp(pInfo->filePath, pstrActiveFileName))
@@ -396,7 +396,7 @@ bool CGameUIDocumentsWindow::initData( const CArray<CString>& textFilesArray, co
 void CGameUIDocumentsWindow::getInformation( CArray<CString>& textFilesArray, CString& pstrActiveFileName ) const
 {
 	// The buttons array will contain all of the original document list
-	for(Uint32 i = 0; i < m_buttonsArray.size(); i++)
+	for(UInt32 i = 0; i < m_buttonsArray.size(); i++)
 		textFilesArray.push_back(m_buttonsArray[i].pDocumentInfo->documentEntry);
 
 	if(m_pCurrentDocument)
@@ -440,13 +440,13 @@ void CGameUIDocumentsWindow::SetActiveDocument( textdocumentinfo_t* pDocument )
 {
 	if(!pDocument)
 	{
-		for(Uint32 i = 0; i < m_pListingObjectsArray.size(); i++)
+		for(UInt32 i = 0; i < m_pListingObjectsArray.size(); i++)
 		{
 			m_pListingObjectsArray[i]->setVisible(true);
 			m_pListingObjectsArray[i]->setDisabled(false);
 		}
 
-		for(Uint32 i = 0; i < m_pTextReaderObjectsArray.size(); i++)
+		for(UInt32 i = 0; i < m_pTextReaderObjectsArray.size(); i++)
 		{
 			m_pTextReaderObjectsArray[i]->setVisible(false);
 			m_pTextReaderObjectsArray[i]->setDisabled(true);
@@ -454,13 +454,13 @@ void CGameUIDocumentsWindow::SetActiveDocument( textdocumentinfo_t* pDocument )
 	}
 	else
 	{
-		for(Uint32 i = 0; i < m_pListingObjectsArray.size(); i++)
+		for(UInt32 i = 0; i < m_pListingObjectsArray.size(); i++)
 		{
 			m_pListingObjectsArray[i]->setVisible(false);
 			m_pListingObjectsArray[i]->setDisabled(true);
 		}
 
-		for(Uint32 i = 0; i < m_pTextReaderObjectsArray.size(); i++)
+		for(UInt32 i = 0; i < m_pTextReaderObjectsArray.size(); i++)
 		{
 			m_pTextReaderObjectsArray[i]->setVisible(true);
 			m_pTextReaderObjectsArray[i]->setDisabled(false);
@@ -469,7 +469,7 @@ void CGameUIDocumentsWindow::SetActiveDocument( textdocumentinfo_t* pDocument )
 		CString textschema = pDocument->textSchema;
 		CString titletextschema = pDocument->titleTextSchema;
 
-		Uint32 screenWidth, screenHeight;
+		UInt32 screenWidth, screenHeight;
 		cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 		// Load font if not default
@@ -490,7 +490,7 @@ void CGameUIDocumentsWindow::SetActiveDocument( textdocumentinfo_t* pDocument )
 		// Assign the contents
 		m_pReaderTextTab->setTextColor(pDocument->textColor);
 		m_pReaderTextTab->setFontSet(pfontset);
-		m_pReaderTextTab->initData(reinterpret_cast<const byte*>(pDocument->documentText.c_str()), pDocument->documentText.length());
+		m_pReaderTextTab->initData(reinterpret_cast<const Byte*>(pDocument->documentText.c_str()), pDocument->documentText.length());
 
 		if(!pDocument->documentTitle.empty())
 		{
@@ -507,7 +507,7 @@ void CGameUIDocumentsWindow::SetActiveDocument( textdocumentinfo_t* pDocument )
 //====================================
 //
 //====================================
-void CGameUIDocumentsWindowButtonCallbackEvent::PerformAction( Float param )
+void CGameUIDocumentsWindowButtonCallbackEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;

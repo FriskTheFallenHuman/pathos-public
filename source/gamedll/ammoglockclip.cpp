@@ -63,7 +63,7 @@ Int32 CAmmoGlockClip::GetMaxAmmo( void )
 // @brief
 //
 //=============================================
-const Char* CAmmoGlockClip::GetAmmoTypeName( void )
+const char* CAmmoGlockClip::GetAmmoTypeName( void )
 {
 	return AMMOTYPE_9MM_NAME;
 }

@@ -17,7 +17,7 @@ All Rights Reserved.
 //=============================================
 //
 //=============================================
-Int32 UserMSG_RegisterUserMessage( CArray<usermsg_t>& usermsgarray, const Char* pstrMsgName, Int32 msgsize )
+Int32 UserMSG_RegisterUserMessage( CArray<usermsg_t>& usermsgarray, const char* pstrMsgName, Int32 msgsize )
 {
 	// Make sure it's not called on an active game
 	if(ens.gamestate == GAME_RUNNING)
@@ -27,7 +27,7 @@ Int32 UserMSG_RegisterUserMessage( CArray<usermsg_t>& usermsgarray, const Char* 
 	}
 
 	// See if it's already registered
-	for(Uint32 i = 0; i < usermsgarray.size(); i++)
+	for(UInt32 i = 0; i < usermsgarray.size(); i++)
 	{
 		if(!qstrcmp(usermsgarray[i].name, pstrMsgName))
 		{
@@ -86,31 +86,31 @@ void UserMSG_UserMessageBegin( CArray<usermsg_t>& usermsgarray, usermsgdata_t& m
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_CheckBuffer( usermsgdata_t& msgdata, Uint32 size )
+void UserMSG_Msg_CheckBuffer( usermsgdata_t& msgdata, UInt32 size )
 {
-	Uint32 finalSize = msgdata.msgsize + size;
+	UInt32 finalSize = msgdata.msgsize + size;
 	if(finalSize < msgdata.bufsize)
 		return;
 
 	// Determine alloc size needed
 	Int32 multiplier = 1;
-	Uint32 memNeeded = finalSize - (msgdata.bufsize - msgdata.msgsize);
+	UInt32 memNeeded = finalSize - (msgdata.bufsize - msgdata.msgsize);
 	if(memNeeded > USERMSG_ALLOC_SIZE)
 	{
-		Float nbTimes = (static_cast<Float>(memNeeded)/ static_cast<Float>(USERMSG_ALLOC_SIZE));
+		float nbTimes = (static_cast<float>(memNeeded)/ static_cast<float>(USERMSG_ALLOC_SIZE));
 		multiplier = static_cast<Int32>(SDL_ceil(nbTimes));
 	}
 
 	// Resize the message data buffer
-	void* pnewbuffer = Common::ResizeArray(msgdata.pmsgbuffer, sizeof(byte), msgdata.bufsize, USERMSG_ALLOC_SIZE*multiplier);
-	msgdata.pmsgbuffer = static_cast<byte*>(pnewbuffer);
+	void* pnewbuffer = Common::ResizeArray(msgdata.pmsgbuffer, sizeof(Byte), msgdata.bufsize, USERMSG_ALLOC_SIZE*multiplier);
+	msgdata.pmsgbuffer = static_cast<Byte*>(pnewbuffer);
 	msgdata.bufsize = msgdata.bufsize + USERMSG_ALLOC_SIZE*multiplier;
 }
 
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_WriteByte( usermsgdata_t& msgdata, byte value )
+void UserMSG_Msg_WriteByte( usermsgdata_t& msgdata, Byte value )
 {
 	if(msgdata.pusermsg == nullptr)
 	{
@@ -118,19 +118,19 @@ void UserMSG_Msg_WriteByte( usermsgdata_t& msgdata, byte value )
 		return;
 	}
 
-	UserMSG_Msg_CheckBuffer(msgdata, sizeof(byte));
+	UserMSG_Msg_CheckBuffer(msgdata, sizeof(Byte));
 
-	byte* pdata = msgdata.pmsgbuffer 
+	Byte* pdata = msgdata.pmsgbuffer 
 		+ msgdata.msgsize;
 
 	*pdata = value;
-	msgdata.msgsize += sizeof(byte);
+	msgdata.msgsize += sizeof(Byte);
 }
 
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_WriteChar( usermsgdata_t& msgdata, Char value )
+void UserMSG_Msg_WriteChar( usermsgdata_t& msgdata, char value )
 {
 	if(msgdata.pusermsg == nullptr)
 	{
@@ -140,11 +140,11 @@ void UserMSG_Msg_WriteChar( usermsgdata_t& msgdata, Char value )
 
 	UserMSG_Msg_CheckBuffer(msgdata, sizeof(value));
 
-	Char* pdata = reinterpret_cast<Char*>(msgdata.pmsgbuffer)
+	char* pdata = reinterpret_cast<char*>(msgdata.pmsgbuffer)
 		+ msgdata.msgsize;
 
 	*pdata = value;
-	msgdata.msgsize += sizeof(byte);
+	msgdata.msgsize += sizeof(Byte);
 }
 
 //=============================================
@@ -160,7 +160,7 @@ void UserMSG_Msg_WriteInt16( usermsgdata_t& msgdata, Int16 value )
 
 	UserMSG_Msg_CheckBuffer(msgdata, sizeof(Int16));
 
-	byte* pdata = msgdata.pmsgbuffer 
+	Byte* pdata = msgdata.pmsgbuffer 
 		+ msgdata.msgsize;
 
 	memcpy(pdata, &value, sizeof(Int16));
@@ -170,7 +170,7 @@ void UserMSG_Msg_WriteInt16( usermsgdata_t& msgdata, Int16 value )
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_WriteUint16( usermsgdata_t& msgdata, Uint16 value )
+void UserMSG_Msg_WriteUint16( usermsgdata_t& msgdata, UInt16 value )
 {
 	if(msgdata.pusermsg == nullptr)
 	{
@@ -178,13 +178,13 @@ void UserMSG_Msg_WriteUint16( usermsgdata_t& msgdata, Uint16 value )
 		return;
 	}
 
-	UserMSG_Msg_CheckBuffer(msgdata, sizeof(Uint16));
+	UserMSG_Msg_CheckBuffer(msgdata, sizeof(UInt16));
 
-	byte* pdata = msgdata.pmsgbuffer 
+	Byte* pdata = msgdata.pmsgbuffer 
 		+ msgdata.msgsize;
 
-	memcpy(pdata, &value, sizeof(Uint16));
-	msgdata.msgsize += sizeof(Uint16);
+	memcpy(pdata, &value, sizeof(UInt16));
+	msgdata.msgsize += sizeof(UInt16);
 }
 
 //=============================================
@@ -200,7 +200,7 @@ void UserMSG_Msg_WriteInt32( usermsgdata_t& msgdata, Int32 value )
 
 	UserMSG_Msg_CheckBuffer(msgdata, sizeof(Int32));
 
-	byte* pdata = msgdata.pmsgbuffer 
+	Byte* pdata = msgdata.pmsgbuffer 
 		+ msgdata.msgsize;
 
 	memcpy(pdata, &value, sizeof(Int32));
@@ -210,7 +210,7 @@ void UserMSG_Msg_WriteInt32( usermsgdata_t& msgdata, Int32 value )
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_WriteUint32( usermsgdata_t& msgdata, Uint32 value )
+void UserMSG_Msg_WriteUint32( usermsgdata_t& msgdata, UInt32 value )
 {
 	if(msgdata.pusermsg == nullptr)
 	{
@@ -218,13 +218,13 @@ void UserMSG_Msg_WriteUint32( usermsgdata_t& msgdata, Uint32 value )
 		return;
 	}
 
-	UserMSG_Msg_CheckBuffer(msgdata, sizeof(Uint32));
+	UserMSG_Msg_CheckBuffer(msgdata, sizeof(UInt32));
 
-	byte* pdata = msgdata.pmsgbuffer 
+	Byte* pdata = msgdata.pmsgbuffer 
 		+ msgdata.msgsize;
 
-	memcpy(pdata, &value, sizeof(Uint32));
-	msgdata.msgsize += sizeof(Uint32);
+	memcpy(pdata, &value, sizeof(UInt32));
+	msgdata.msgsize += sizeof(UInt32);
 }
 
 //=============================================
@@ -240,7 +240,7 @@ void UserMSG_Msg_WriteInt64( usermsgdata_t& msgdata, Int64 value )
 
 	UserMSG_Msg_CheckBuffer(msgdata, sizeof(Int64));
 
-	byte* pdata = msgdata.pmsgbuffer 
+	Byte* pdata = msgdata.pmsgbuffer 
 		+ msgdata.msgsize;
 
 	memcpy(pdata, &value, sizeof(Int64));
@@ -250,7 +250,7 @@ void UserMSG_Msg_WriteInt64( usermsgdata_t& msgdata, Int64 value )
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_WriteUint64( usermsgdata_t& msgdata, Uint64 value )
+void UserMSG_Msg_WriteUint64( usermsgdata_t& msgdata, UInt64 value )
 {
 	if(msgdata.pusermsg == nullptr)
 	{
@@ -258,19 +258,19 @@ void UserMSG_Msg_WriteUint64( usermsgdata_t& msgdata, Uint64 value )
 		return;
 	}
 
-	UserMSG_Msg_CheckBuffer(msgdata, sizeof(Uint64));
+	UserMSG_Msg_CheckBuffer(msgdata, sizeof(UInt64));
 
-	byte* pdata = msgdata.pmsgbuffer 
+	Byte* pdata = msgdata.pmsgbuffer 
 		+ msgdata.msgsize;
 
-	memcpy(pdata, &value, sizeof(Uint64));
-	msgdata.msgsize += sizeof(Uint64);
+	memcpy(pdata, &value, sizeof(UInt64));
+	msgdata.msgsize += sizeof(UInt64);
 }
 
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_WriteSmallFloat( usermsgdata_t& msgdata, Float value )
+void UserMSG_Msg_WriteSmallFloat( usermsgdata_t& msgdata, float value )
 {
 	Int16 intvalue = static_cast<Int16>(SDL_floor(value * 8));
 	UserMSG_Msg_WriteInt16(msgdata, intvalue);
@@ -279,7 +279,7 @@ void UserMSG_Msg_WriteSmallFloat( usermsgdata_t& msgdata, Float value )
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_WriteFloat( usermsgdata_t& msgdata, Float value )
+void UserMSG_Msg_WriteFloat( usermsgdata_t& msgdata, float value )
 {
 	if(msgdata.pusermsg == nullptr)
 	{
@@ -287,20 +287,20 @@ void UserMSG_Msg_WriteFloat( usermsgdata_t& msgdata, Float value )
 		return;
 	}
 
-	UserMSG_Msg_CheckBuffer(msgdata, sizeof(Float));
+	UserMSG_Msg_CheckBuffer(msgdata, sizeof(float));
 
-	byte* pdata = msgdata.pmsgbuffer 
+	Byte* pdata = msgdata.pmsgbuffer 
 		+ msgdata.msgsize;
 
-	memcpy(pdata, &value, sizeof(Float));
+	memcpy(pdata, &value, sizeof(float));
 
-	msgdata.msgsize += sizeof(Float);
+	msgdata.msgsize += sizeof(float);
 }
 
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_WriteDouble( usermsgdata_t& msgdata, Double value )
+void UserMSG_Msg_WriteDouble( usermsgdata_t& msgdata, double value )
 {
 	if(msgdata.pusermsg == nullptr)
 	{
@@ -308,20 +308,20 @@ void UserMSG_Msg_WriteDouble( usermsgdata_t& msgdata, Double value )
 		return;
 	}
 
-	UserMSG_Msg_CheckBuffer(msgdata, sizeof(Double));
+	UserMSG_Msg_CheckBuffer(msgdata, sizeof(double));
 
-	byte* pdata = msgdata.pmsgbuffer 
+	Byte* pdata = msgdata.pmsgbuffer 
 		+ msgdata.msgsize;
 
-	memcpy(pdata, &value, sizeof(Double));
+	memcpy(pdata, &value, sizeof(double));
 
-	msgdata.msgsize += sizeof(Double);
+	msgdata.msgsize += sizeof(double);
 }
 
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_WriteBuffer( usermsgdata_t& msgdata, const byte* pdata, Uint32 size )
+void UserMSG_Msg_WriteBuffer( usermsgdata_t& msgdata, const Byte* pdata, UInt32 size )
 {
 	if(msgdata.pusermsg == nullptr)
 	{
@@ -331,10 +331,10 @@ void UserMSG_Msg_WriteBuffer( usermsgdata_t& msgdata, const byte* pdata, Uint32 
 
 	UserMSG_Msg_CheckBuffer(msgdata, size);
 
-	byte* pdest = msgdata.pmsgbuffer 
+	Byte* pdest = msgdata.pmsgbuffer 
 		+ msgdata.msgsize;
 
-	for(Uint32 i = 0; i < size; i++)
+	for(UInt32 i = 0; i < size; i++)
 		pdest[i] = pdata[i];
 		
 	msgdata.msgsize += size;
@@ -343,7 +343,7 @@ void UserMSG_Msg_WriteBuffer( usermsgdata_t& msgdata, const byte* pdata, Uint32 
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_WriteString( usermsgdata_t& msgdata, const Char* pstrstring )
+void UserMSG_Msg_WriteString( usermsgdata_t& msgdata, const char* pstrstring )
 {
 	if(msgdata.pusermsg == nullptr)
 	{
@@ -358,7 +358,7 @@ void UserMSG_Msg_WriteString( usermsgdata_t& msgdata, const Char* pstrstring )
 
 		// Check for size
 		UserMSG_Msg_CheckBuffer(msgdata, 1);
-		byte* pdest = msgdata.pmsgbuffer 
+		Byte* pdest = msgdata.pmsgbuffer 
 			+ msgdata.msgsize;
 
 		*pdest = '\0';
@@ -367,17 +367,17 @@ void UserMSG_Msg_WriteString( usermsgdata_t& msgdata, const Char* pstrstring )
 	}
 
 	// Write string length
-	Uint32 strlength = qstrlen(pstrstring)+1;
+	UInt32 strlength = qstrlen(pstrstring)+1;
 	UserMSG_Msg_WriteUint16(msgdata, strlength);
 
 	// Check buffer and write
 	UserMSG_Msg_CheckBuffer(msgdata, strlength);
 
-	byte* pdest = msgdata.pmsgbuffer 
+	Byte* pdest = msgdata.pmsgbuffer 
 		+ msgdata.msgsize;
 
-	for(Uint32 i = 0; i < strlength; i++)
-		pdest[i] = static_cast<byte>(pstrstring[i]);
+	for(UInt32 i = 0; i < strlength; i++)
+		pdest[i] = static_cast<Byte>(pstrstring[i]);
 		
 	msgdata.msgsize += strlength;
 }
@@ -394,7 +394,7 @@ void UserMSG_Msg_WriteEntindex( usermsgdata_t& msgdata, entindex_t entindex )
 //=============================================
 //
 //=============================================
-void UserMSG_Msg_WriteBitSet( usermsgdata_t& msgdata, const byte* pdataarray, Uint32 numbits, Uint32 numbytes )
+void UserMSG_Msg_WriteBitSet( usermsgdata_t& msgdata, const Byte* pdataarray, UInt32 numbits, UInt32 numbytes )
 {
 	if(msgdata.pusermsg == nullptr)
 	{

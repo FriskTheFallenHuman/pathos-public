@@ -123,7 +123,7 @@ bool CTriggerNPCPull::Spawn( void )
 void CTriggerNPCPull::InitEntity( void )
 {
 	// Find brushmodel that defines our mins/maxs for pulling
-	const Char* pstrTargetEntity = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTargetEntity = gd_engfuncs.pfnGetString(m_pFields->target);
 	edict_t* pEdict = Util::FindEntityByTargetName(nullptr, pstrTargetEntity);
 	if(!pEdict || Util::IsNullEntity(pEdict))
 	{
@@ -141,7 +141,7 @@ void CTriggerNPCPull::InitEntity( void )
 	pEntity->FlagForRemoval();
 
 	// Find point entity that defines the final pull position
-	const Char* pstrFinalPositionEntity = gd_engfuncs.pfnGetString(m_pFields->netname);
+	const char* pstrFinalPositionEntity = gd_engfuncs.pfnGetString(m_pFields->netname);
 	pEdict = Util::FindEntityByTargetName(nullptr, pstrFinalPositionEntity);
 	if(!pEdict || Util::IsNullEntity(pEdict))
 	{
@@ -157,7 +157,7 @@ void CTriggerNPCPull::InitEntity( void )
 // @brief
 //
 //=============================================
-void CTriggerNPCPull::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerNPCPull::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool desiredStatus = false;
 	switch(useMode)
@@ -235,7 +235,7 @@ void CTriggerNPCPull::ClearNPCs( void )
 //=============================================
 void CTriggerNPCPull::PullThink( void )
 {
-	Float pullForce = 1.0;
+	float pullForce = 1.0;
 	if(m_beginTime && m_fullForceTime > 0)
 	{
 		if(m_beginTime + m_fullForceTime > g_pGameVars->time)
@@ -403,8 +403,8 @@ bool CTriggerNPCPull::GetPullVector( CBaseEntity* pEntity, Vector& outVector, Ve
 	}
 
 	// NPC is being directly blocked by an object, so try to pull him upwards
-	Float checkDistance = 16;
-	Float maxDistance = 512;
+	float checkDistance = 16;
+	float maxDistance = 512;
 	while(checkDistance <= maxDistance)
 	{
 		Vector testPosition = npcPosition + Vector(0, 0, 1) * checkDistance;

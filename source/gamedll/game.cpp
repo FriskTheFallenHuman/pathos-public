@@ -31,7 +31,7 @@ All Rights Reserved.
 #include "tracer.h"
 
 // Path to impact effects script
-static const Char MATERIAL_DEFINITIONS_SCRIPT_PATH[] = "scripts/materialdefs.txt";
+static const char MATERIAL_DEFINITIONS_SCRIPT_PATH[] = "scripts/materialdefs.txt";
 
 // Cheats cvar
 CCVar* g_pCvarCheats = nullptr;
@@ -60,15 +60,15 @@ CFlexManager* g_pFlexManager = nullptr;
 CSentencesFile* g_pSentencesFile = nullptr;
 
 // Max impact positions per FireBullets instance
-static const Uint32 IMPACT_POSITION_MAX = 32;
+static const UInt32 IMPACT_POSITION_MAX = 32;
 // Max penetrations by NPCs per frame
-static const Uint32 MAX_NPC_FRAME_PENETRATIONS = 8;
+static const UInt32 MAX_NPC_FRAME_PENETRATIONS = 8;
 
 // Smoke sprite precache index
 Int32 g_smokeSpriteIndex = NO_PRECACHE;
 
 // Counter for penetrations by NPCs
-Uint32 g_nbNPCPenetrations = 0;
+UInt32 g_nbNPCPenetrations = 0;
 
 //=============================================
 // @brief
@@ -114,7 +114,7 @@ bool InitGameObjects( void )
 //=============================================
 bool InitSentences( void )
 {
-	const byte* pfile = gd_filefuncs.pfnLoadFile(SENTENCES_FILE_PATH, nullptr);
+	const Byte* pfile = gd_filefuncs.pfnLoadFile(SENTENCES_FILE_PATH, nullptr);
 	if(!pfile)
 	{
 		gd_engfuncs.pfnCon_Printf("%s - Could not load '%s'.\n", __FUNCTION__, SENTENCES_FILE_PATH);
@@ -130,8 +130,8 @@ bool InitSentences( void )
 	gd_filefuncs.pfnFreeFile(pfile);
 
 	// Print any warnings
-	Uint32 warningNb = g_pSentencesFile->GetNbWarnings();
-	for(Uint32 i = 0; i < warningNb; i++)
+	UInt32 warningNb = g_pSentencesFile->GetNbWarnings();
+	for(UInt32 i = 0; i < warningNb; i++)
 		gd_engfuncs.pfnCon_Printf(g_pSentencesFile->GetWarning(i));
 
 	if(!result)
@@ -219,8 +219,8 @@ void ClearGame( void )
 //=============================================
 bool InitDecalList( void )
 {
-	Uint32 filesize = 0;
-	const Char* pfile = reinterpret_cast<const Char*>(gd_filefuncs.pfnLoadFile(DECAL_LIST_FILE_PATH, &filesize));
+	UInt32 filesize = 0;
+	const char* pfile = reinterpret_cast<const char*>(gd_filefuncs.pfnLoadFile(DECAL_LIST_FILE_PATH, &filesize));
 	if(!pfile)
 	{
 		gd_engfuncs.pfnCon_WPrintf("Could not load decal list file '%s'.\n", DECAL_LIST_FILE_PATH);
@@ -244,7 +244,7 @@ bool InitDecalList( void )
 //=============================================
 bool InitMaterialDefinitions( void )
 {
-	const byte* pfile = gd_filefuncs.pfnLoadFile(MATERIAL_DEFINITIONS_SCRIPT_PATH, nullptr);
+	const Byte* pfile = gd_filefuncs.pfnLoadFile(MATERIAL_DEFINITIONS_SCRIPT_PATH, nullptr);
 	if(!pfile)
 	{
 		gd_engfuncs.pfnCon_EPrintf("%s - Failed to load '%s'.\n", __FUNCTION__, MATERIAL_DEFINITIONS_SCRIPT_PATH);
@@ -252,7 +252,7 @@ bool InitMaterialDefinitions( void )
 	}
 	
 	// Try to initialize the class
-	bool result = gMaterialDefinitions.Init(reinterpret_cast<const Char*>(pfile));
+	bool result = gMaterialDefinitions.Init(reinterpret_cast<const char*>(pfile));
 	gd_filefuncs.pfnFreeFile(pfile);
 
 	if(!result)
@@ -262,14 +262,14 @@ bool InitMaterialDefinitions( void )
 	}
 
 	// Precache the effects
-	Uint32 nbeffects = gMaterialDefinitions.GetNbDefinitions();
-	for(Uint32 i = 0; i < nbeffects; i++)
+	UInt32 nbeffects = gMaterialDefinitions.GetNbDefinitions();
+	for(UInt32 i = 0; i < nbeffects; i++)
 	{
 		const CMaterialDefinitions::materialdefinition_t* pdefinition = gMaterialDefinitions.GetDefinition(i);
 
 		if(!pdefinition->sounds.empty())
 		{
-			for(Uint32 j = 0; j < pdefinition->sounds.size(); j++)
+			for(UInt32 j = 0; j < pdefinition->sounds.size(); j++)
 				gd_engfuncs.pfnPrecacheSound(pdefinition->sounds[j].c_str());
 		}
 
@@ -471,14 +471,14 @@ void PrecachePlayerItems( void )
 void RadiusDamage( const Vector& vecPosition, 
 	CBaseEntity* pInflictor, 
 	CBaseEntity* pAttacker,
-	Float damageDealt,
-	Float damageRadius,
+	float damageDealt,
+	float damageRadius,
 	Int32 classToIgnore,
 	Int32 damageFlags,
 	CBaseEntity* pGibEntity,
 	CPlayerWeapon* pWeapon )
 {
-	Float falloff;
+	float falloff;
 	if(damageRadius)
 		falloff = damageDealt/damageRadius;
 	else
@@ -527,7 +527,7 @@ void RadiusDamage( const Vector& vecPosition,
 			tr.fraction = 0;
 		}
 
-		Float adjustedDmg = (explodePosition-tr.endpos).Length()*falloff;
+		float adjustedDmg = (explodePosition-tr.endpos).Length()*falloff;
 		adjustedDmg = damageDealt - adjustedDmg;
 		if(adjustedDmg < 0)
 			adjustedDmg = 0;
@@ -619,7 +619,7 @@ void CreateGunshotDecal( const Vector& decalPosition,
 		Vector traceStart = decalPosition + planeNormal * 4;
 		Vector traceEnd = decalPosition - planeNormal * 4;
 
-		const Char* pstrTextureName = gd_tracefuncs.pfnTraceTexture(pEntity->GetEntityIndex(), traceStart, traceEnd);
+		const char* pstrTextureName = gd_tracefuncs.pfnTraceTexture(pEntity->GetEntityIndex(), traceStart, traceEnd);
 		if(!pstrTextureName || !qstrlen(pstrTextureName))
 			return;
 
@@ -643,8 +643,8 @@ void CreateGunshotDecal( const Vector& decalPosition,
 //=============================================
 bool ShootTrace( const Vector& gunPosition, const Vector& endPos, const Vector& shootDirection, 
 	CBaseEntity* pAttacker, CBaseEntity* pIgnoreEntity, CBaseEntity* pWeapon, 
-	Float damage, Float dmgMultiplier, Int32 dmgFlags, bullet_types_t bulletType, Int32& hitgroup, trace_t &tr,
-	Vector* pImpactPositions, Uint32& numImpactPositions, bool isPenetrationShot, bool isRicochetShot, CBaseEntity* pTraceModel)
+	float damage, float dmgMultiplier, Int32 dmgFlags, bullet_types_t bulletType, Int32& hitgroup, trace_t &tr,
+	Vector* pImpactPositions, UInt32& numImpactPositions, bool isPenetrationShot, bool isRicochetShot, CBaseEntity* pTraceModel)
 {
 	if(pTraceModel)
 		Util::TraceModel(pTraceModel, gunPosition, endPos, true, HULL_POINT, tr);
@@ -712,7 +712,7 @@ bool ShootTrace( const Vector& gunPosition, const Vector& endPos, const Vector& 
 		}
 
 		// Apply damage
-		Float dmg = gSkillData.GetSkillCVarSetting(skillCvarIndex) * dmgMultiplier;
+		float dmg = gSkillData.GetSkillCVarSetting(skillCvarIndex) * dmgMultiplier;
 
 		// Apply any multipliers
 		if(pWeapon)
@@ -724,12 +724,12 @@ bool ShootTrace( const Vector& gunPosition, const Vector& endPos, const Vector& 
 		if(bulletType == BULLET_NPC_BUCKSHOT)
 		{
 			// Min distance for sound spam
-			const Float minImpactSoundDistance = 128;
+			const float minImpactSoundDistance = 128;
 
-			Uint32 i = 0;
+			UInt32 i = 0;
 			for(; i < numImpactPositions; i++)
 			{
-				Float distance = (pImpactPositions[i] - tr.endpos).Length();
+				float distance = (pImpactPositions[i] - tr.endpos).Length();
 				if(distance < minImpactSoundDistance)
 					break;
 			}
@@ -777,18 +777,18 @@ void SpawnTracer( const Vector& gunTracePosition, const Vector& tracerEndPos, CB
 	}
 
 	Vector dirVector = (tracerEndPos - tracerOrigin);
-	Float dirLength = dirVector.Length();
+	float dirLength = dirVector.Length();
 	dirVector.Normalize();
 
-	Float tracerSpeed;
+	float tracerSpeed;
 	if(pAttacker->IsPlayer())
 	{
-		const Float tracerDistMax = 2048;
-		const Float tracerSpeedMin = 1200;
-		const Float tracerDistMin = 256;
+		const float tracerDistMax = 2048;
+		const float tracerSpeedMin = 1200;
+		const float tracerDistMin = 256;
 
-		Float fraction = (dirLength-tracerDistMin)/(tracerDistMax-tracerDistMin);
-		fraction = clamp(fraction, 0.0, 1.0);
+		float fraction = (dirLength-tracerDistMin)/(tracerDistMax-tracerDistMin);
+		fraction = Clamp(fraction, 0.0, 1.0);
 
 		tracerSpeed = (1.0 - fraction) * tracerSpeedMin + fraction * tracerDistMax;
 	}
@@ -798,7 +798,7 @@ void SpawnTracer( const Vector& gunTracePosition, const Vector& tracerEndPos, CB
 		tracerSpeed = 6000;
 	}
 
-	Float lifetime = dirLength / tracerSpeed;
+	float lifetime = dirLength / tracerSpeed;
 	Vector velocity = dirVector * tracerSpeed;
 
 	Util::CreateTracer(tracerOrigin, velocity, Vector(204, 204, 102), 255, 4, 2, lifetime, TRACER_NORMAL);
@@ -808,16 +808,16 @@ void SpawnTracer( const Vector& gunTracePosition, const Vector& tracerEndPos, CB
 // @brief
 //
 //=============================================
-void FireBullets( Uint32 nbshots, 
+void FireBullets( UInt32 nbshots, 
 	const Vector& gunPosition, 
 	const Vector& aimForward, 
 	const Vector& aimRight, 
 	const Vector& aimUp, 
 	const Vector& spread, 
-	Float distance, 
+	float distance, 
 	bullet_types_t bulletType, 
 	Int32 tracerFrequency, 
-	Float damage, 
+	float damage, 
 	CBaseEntity* pAttacker,
 	CBaseEntity* pWeapon,
 	bool mirrorTracer )
@@ -851,10 +851,10 @@ void FireBullets( Uint32 nbshots,
 
 	// For reducing sound spam
 	static Vector impactPositions[IMPACT_POSITION_MAX];
-	Uint32 numImpactPositions = 0;
+	UInt32 numImpactPositions = 0;
 
 	// Spawn eachbullet now
-	for(Uint32 i = 0; i < nbshots; i++)
+	for(UInt32 i = 0; i < nbshots; i++)
 	{
 		Vector shootDirection;
 		Vector gunTracePosition;
@@ -863,7 +863,7 @@ void FireBullets( Uint32 nbshots,
 		// Remember per-shot
 		Int32 shotDmgFlags = dmgFlags;
 
-		Float x, y, z;
+		float x, y, z;
 		do
 		{
 			x = Common::RandomFloat(-0.5, 0.5) + Common::RandomFloat(-0.5, 0.5);
@@ -893,11 +893,11 @@ void FireBullets( Uint32 nbshots,
 		if(shootResult)
 		{
 			// Number of ricochets
-			Uint32 numRicochets = 0;
+			UInt32 numRicochets = 0;
 			// Number of penetrations
-			Uint32 numPenetrations = 0;
+			UInt32 numPenetrations = 0;
 			// Damage multiplier for penetration shots
-			Float dmgMultiplier = 1.0;
+			float dmgMultiplier = 1.0;
 			// Chance of penetration
 			Int32 penetrationChance = -1;
 
@@ -925,7 +925,7 @@ void FireBullets( Uint32 nbshots,
 				if(pHitEntity->IsBrushModel() || pHitEntity->IsWorldSpawn())
 				{
 					// Get material type at entry
-					const Char* pstrTextureName = Util::TraceTexture(pHitEntity->GetEntityIndex(), tr.endpos, tr.plane.normal);
+					const char* pstrTextureName = Util::TraceTexture(pHitEntity->GetEntityIndex(), tr.endpos, tr.plane.normal);
 					if(!pstrTextureName)
 						break;
 
@@ -983,18 +983,18 @@ void FireBullets( Uint32 nbshots,
 						&& Common::RandomLong(1, pRicochetInfo->ricochetchance) != 1)
 					{
 						// Get dot product between surface normal and bullet vector
-						Float surfDot = Math::DotProduct(-shootDirection, tr.plane.normal);
+						float surfDot = Math::DotProduct(-shootDirection, tr.plane.normal);
 						if (surfDot < pRicochetInfo->maxangle)
 						{
 							// Determine deviation
-							Float maxDevination = pRicochetInfo->maxdeviation;
+							float maxDevination = pRicochetInfo->maxdeviation;
 							Vector deviation(Common::RandomFloat(-maxDevination, maxDevination) * 0.5,
 								Common::RandomFloat(-maxDevination, maxDevination) * 0.5,
 								Common::RandomFloat(-maxDevination, maxDevination) * 0.5);
 
 							// Reflect bullet direction off wall
 							Vector newDirection;
-							Float proj = Math::DotProduct(shootDirection, tr.plane.normal);
+							float proj = Math::DotProduct(shootDirection, tr.plane.normal);
 							Math::VectorMA(shootDirection, -proj * 2, tr.plane.normal, newDirection);
 							Math::VectorAdd(newDirection, deviation, shootDirection);
 							Math::VectorNormalize(shootDirection);
@@ -1064,7 +1064,7 @@ void FireBullets( Uint32 nbshots,
 
 						Vector startPosition;
 						Vector endPosition = tr.endpos;
-						for (Float ldistance = 4.0f; ldistance <= pPenetrationInfo->penetrationdepth; ldistance += 4.0f)
+						for (float ldistance = 4.0f; ldistance <= pPenetrationInfo->penetrationdepth; ldistance += 4.0f)
 						{
 							startPosition = tr.endpos + shootDirection * ldistance;
 							if (pHitEntity->IsBrushModel() || pHitEntity->IsWorldSpawn())
@@ -1083,12 +1083,12 @@ void FireBullets( Uint32 nbshots,
 						if (bulletType == BULLET_NPC_BUCKSHOT)
 						{
 							// Min distance for sound spam
-							const Float minImpactSoundDistance = 128;
+							const float minImpactSoundDistance = 128;
 
-							Uint32 j = 0;
+							UInt32 j = 0;
 							for (; j < numImpactPositions; j++)
 							{
-								Float sndDistance = (impactPositions[j] - tr.endpos).Length();
+								float sndDistance = (impactPositions[j] - tr.endpos).Length();
 								if (sndDistance < minImpactSoundDistance)
 									break;
 							}

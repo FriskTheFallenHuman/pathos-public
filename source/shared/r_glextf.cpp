@@ -118,9 +118,9 @@ CGLExtF::~CGLExtF ( void )
 // @brief Loads an OpenGL function's address
 //
 // @param pstrName Function name
-// @return TRUE if all functions were loaded, FALSE otherwise
+// @return true if all functions were loaded, false otherwise
 //=============================================
-void* CGLExtF::GetFunction( const Char* pstrName, bool setFailureCode )
+void* CGLExtF::GetFunction( const char* pstrName, bool setFailureCode )
 {
 	void* pfn = SDL_GL_GetProcAddress(pstrName);
 	if(setFailureCode && !pfn)
@@ -141,7 +141,7 @@ void* CGLExtF::GetFunction( const Char* pstrName, bool setFailureCode )
 //=============================================
 // @brief Loads the external GL functions
 //
-// @return TRUE if all functions were loaded, FALSE otherwise
+// @return true if all functions were loaded, false otherwise
 //=============================================
 bool CGLExtF::GetFunctions ( void )
 {

@@ -62,11 +62,11 @@ public:
 	// Creates random sparks
 	void BeamSparks( const Vector& start, const Vector& end );
 	// Picks a random entity with the targetname
-	CBaseEntity* GetRandomTargetName( const Char* pstrName );
+	CBaseEntity* GetRandomTargetName( const char* pstrName );
 	// Deals beam damage
 	void BeamDamage( trace_t& tr );
 	// Initializes a beam
-	bool BeamInit( const Char* pstrSpriteName, Float width );
+	bool BeamInit( const char* pstrSpriteName, float width );
 	// Initializes a points beam
 	void BeamInitPoints( const Vector& start, const Vector& end );
 	// Initializes a beam connecting two entities
@@ -76,93 +76,93 @@ public:
 
 public:
 	// Sets the beam type
-	inline void SetBeamType( beam_msgtype_t type );
+	DO_INLINE void SetBeamType( beam_msgtype_t type );
 	// Returns the beam type
-	inline beam_msgtype_t GetBeamType( void ) const;
+	DO_INLINE beam_msgtype_t GetBeamType( void ) const;
 	// Sets a beam flag
-	inline void SetBeamFlags( Int32 flags );
+	DO_INLINE void SetBeamFlags( Int32 flags );
 	// Returns the beam flags
-	inline Int32 GetBeamFlags( void ) const;
+	DO_INLINE Int32 GetBeamFlags( void ) const;
 	// Sets the start position
-	inline void SetBeamStartPosition( const Vector& position );
+	DO_INLINE void SetBeamStartPosition( const Vector& position );
 	// Returns the beam's starting position
-	inline const Vector& GetBeamStartPosition( void ) const;
+	DO_INLINE const Vector& GetBeamStartPosition( void ) const;
 	// Sets the end position
-	inline void SetBeamEndPosition( const Vector& position );
+	DO_INLINE void SetBeamEndPosition( const Vector& position );
 	// Returns the beam's starting position
-	inline const Vector& GetBeamEndPosition( void ) const;
+	DO_INLINE const Vector& GetBeamEndPosition( void ) const;
 
 	// Sets the start entity attachment
-	inline void SetBeamStartEntityAttachment( Int32 attachmentindex );
+	DO_INLINE void SetBeamStartEntityAttachment( Int32 attachmentindex );
 	// Returns the start entity attachment
-	inline Int32 GetBeamStartEntityAttachment( void );
+	DO_INLINE Int32 GetBeamStartEntityAttachment( void );
 	// Sets the end entity attachment
-	inline void SetBeamEndEntityAttachment( Int32 attachmentindex );
+	DO_INLINE void SetBeamEndEntityAttachment( Int32 attachmentindex );
 	// Returns the end entity attachment
-	inline Int32 GetBeamEndEntityAttachment( void );
+	DO_INLINE Int32 GetBeamEndEntityAttachment( void );
 
 	// Sets the start entity
-	inline void SetBeamStartEntity( CBaseEntity* pEntity );
+	DO_INLINE void SetBeamStartEntity( CBaseEntity* pEntity );
 	// Returns the start entity index
-	inline CBaseEntity* GetBeamStartEntity( void );
+	DO_INLINE CBaseEntity* GetBeamStartEntity( void );
 	// Sets the end entity
-	inline void SetBeamEndEntity( CBaseEntity* pEntity );
+	DO_INLINE void SetBeamEndEntity( CBaseEntity* pEntity );
 	// Returns the start entity index
-	inline CBaseEntity* GetBeamEndEntity( void );
+	DO_INLINE CBaseEntity* GetBeamEndEntity( void );
 
 	// Sets the texture of the beam
-	inline bool SetBeamTexture( Int32 spriteindex );
+	DO_INLINE bool SetBeamTexture( Int32 spriteindex );
 	// Sets the texture of the beam
-	inline bool SetBeamTexture( const Char* pstrSpriteName );
+	DO_INLINE bool SetBeamTexture( const char* pstrSpriteName );
 	// Returns the sprite index
-	inline Int32 GetBeamTexture( void ) const;
+	DO_INLINE Int32 GetBeamTexture( void ) const;
 	// Sets the width of the beam
-	inline void SetBeamWidth( Float width );
+	DO_INLINE void SetBeamWidth( float width );
 	// Returns the beam width
-	inline Float GetBeamWidth( void ) const;
+	DO_INLINE float GetBeamWidth( void ) const;
 	// Sets the amplitude of the beam
-	inline void SetBeamAmplitude( Float amplitude );
+	DO_INLINE void SetBeamAmplitude( float amplitude );
 	// Returns the beam amplitude
-	inline Float GetBeamAmplitude( void ) const;
+	DO_INLINE float GetBeamAmplitude( void ) const;
 	// Sets the color of the beam
-	inline void SetBeamColor( Int32 r, Int32 g, Int32 b );
+	DO_INLINE void SetBeamColor( Int32 r, Int32 g, Int32 b );
 	// Returns the beam color
-	inline const Vector& GetBeamColor( void ) const;
+	DO_INLINE const Vector& GetBeamColor( void ) const;
 	// Sets the brightness of the beam
-	inline void SetBeamBrightness( Float brightness );
+	DO_INLINE void SetBeamBrightness( float brightness );
 	// Returns the beam brightness
-	inline Float GetBeamBrightness( void ) const;
+	DO_INLINE float GetBeamBrightness( void ) const;
 	// Sets the current frame
-	inline void SetBeamFrame( Float frame );
+	DO_INLINE void SetBeamFrame( float frame );
 	// Returns the beam frame
-	inline Float GetBeamFrame( void ) const;
+	DO_INLINE float GetBeamFrame( void ) const;
 	// Sets the scroll rate
-	inline void SetBeamScrollRate( Float speed );
+	DO_INLINE void SetBeamScrollRate( float speed );
 	// Returns the scroll rate
-	inline Float GetBeamScrollRate( void ) const;
+	DO_INLINE float GetBeamScrollRate( void ) const;
 	// Sets the noise speed
-	inline void SetBeamNoiseSpeed( Float speed );
+	DO_INLINE void SetBeamNoiseSpeed( float speed );
 	// Returns the noise speed
-	inline Float GetBeamNoiseSpeed( void ) const;
+	DO_INLINE float GetBeamNoiseSpeed( void ) const;
 
 	// Sets the beam to die after the given amount of time
-	inline void LiveForTime( Float time );
+	DO_INLINE void LiveForTime( float time );
 	// Deal instant damage
-	inline void BeamDamageInstant( trace_t& tr, Float damage );
+	DO_INLINE void BeamDamageInstant( trace_t& tr, float damage );
 
 public:
 	// Creates a beam object
-	static CBeam* CreateBeam( const Char* pstrSpriteName, Float width );
+	static CBeam* CreateBeam( const char* pstrSpriteName, float width );
 
 protected:
 	// Last time we were animated
-	Double m_lastTime;
+	double m_lastTime;
 	// Max frame count
-	Float m_maxFrame;
+	float m_maxFrame;
 	// Damage dealt
-	Float m_beamDamage;
+	float m_beamDamage;
 	// Last damage time
-	Double m_dmgTime;
+	double m_dmgTime;
 	// Start entity
 	CEntityHandle m_startEntity;
 	// End entity

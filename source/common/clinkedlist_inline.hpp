@@ -14,7 +14,7 @@ All Rights Reserved.
 // @brief Default constructor
 //
 //=============================================
-template <typename T> inline CLinkedList<T>::CLinkedList():
+template <typename T> DO_INLINE CLinkedList<T>::CLinkedList():
 	m_pLinkHead(nullptr),
 	m_pLinkTail(nullptr),
 	m_numLinks(0)
@@ -26,7 +26,7 @@ template <typename T> inline CLinkedList<T>::CLinkedList():
 //
 // @param src Source list object
 //=============================================
-template <typename T> inline CLinkedList<T>::CLinkedList( CLinkedList& src ):
+template <typename T> DO_INLINE CLinkedList<T>::CLinkedList( CLinkedList& src ):
 	m_pLinkHead(nullptr),
 	m_pLinkTail(nullptr),
 	m_numLinks(0)
@@ -46,7 +46,7 @@ template <typename T> inline CLinkedList<T>::CLinkedList( CLinkedList& src ):
 // @brief Destructor
 //
 //=============================================
-template <typename T> inline CLinkedList<T>::~CLinkedList()
+template <typename T> DO_INLINE CLinkedList<T>::~CLinkedList()
 {
 	clear();
 }
@@ -57,7 +57,7 @@ template <typename T> inline CLinkedList<T>::~CLinkedList()
 // @param T Element to add
 // @return Link object in the chain with the element added
 //=============================================
-template <typename T> inline typename CLinkedList<T>::link_t* CLinkedList<T>::add( const T element )
+template <typename T> DO_INLINE typename CLinkedList<T>::link_t* CLinkedList<T>::add( const T element )
 {
 	typename CLinkedList<T>::link_t* pNew = new typename CLinkedList<T>::link_t;
 	
@@ -84,7 +84,7 @@ template <typename T> inline typename CLinkedList<T>::link_t* CLinkedList<T>::ad
 // @param T Element to add
 // @return Link object in the chain with the element added
 //=============================================
-template <typename T> inline typename CLinkedList<T>::link_t* CLinkedList<T>::radd( const T element )
+template <typename T> DO_INLINE typename CLinkedList<T>::link_t* CLinkedList<T>::radd( const T element )
 {
 	typename CLinkedList<T>::link_t* pNew = new typename CLinkedList<T>::link_t;
 	
@@ -112,7 +112,7 @@ template <typename T> inline typename CLinkedList<T>::link_t* CLinkedList<T>::ra
 // @param T Element to add
 // @return Link object in the chain with the element added
 //=============================================
-template <typename T> inline typename CLinkedList<T>::link_t* CLinkedList<T>::insert_before( typename CLinkedList<T>::link_t* link, const T element )
+template <typename T> DO_INLINE typename CLinkedList<T>::link_t* CLinkedList<T>::insert_before( typename CLinkedList<T>::link_t* link, const T element )
 {
 	typename CLinkedList<T>::link_t* pNew = new typename CLinkedList<T>::link_t;
 
@@ -141,7 +141,7 @@ template <typename T> inline typename CLinkedList<T>::link_t* CLinkedList<T>::in
 // @param T Element to add
 // @return Link object in the chain with the element added
 //=============================================
-template <typename T> inline typename CLinkedList<T>::link_t* CLinkedList<T>::insert_after( typename CLinkedList<T>::link_t* link, const T element )
+template <typename T> DO_INLINE typename CLinkedList<T>::link_t* CLinkedList<T>::insert_after( typename CLinkedList<T>::link_t* link, const T element )
 {
 	typename CLinkedList<T>::link_t* pNew = new typename CLinkedList<T>::link_t;
 
@@ -168,7 +168,7 @@ template <typename T> inline typename CLinkedList<T>::link_t* CLinkedList<T>::in
 //
 // @param link Pointer to link to remove
 //=============================================
-template <typename T> inline void CLinkedList<T>::remove( typename const CLinkedList<T>::link_t* link )
+template <typename T> DO_INLINE void CLinkedList<T>::remove( const typename CLinkedList<T>::link_t* link )
 {
 	if(link == m_iterator.plink)
 	{
@@ -204,9 +204,9 @@ template <typename T> inline void CLinkedList<T>::remove( typename const CLinked
 // @brief Removes an element from the linked list
 //
 // @param link Pointer to element to remove
-// @param TRUE if it was found, FALSE otherwise
+// @param true if it was found, false otherwise
 //=============================================
-template <typename T> inline bool CLinkedList<T>::remove( const T element )
+template <typename T> DO_INLINE bool CLinkedList<T>::remove( const T element )
 {
 	if(!m_pLinkHead)
 		return false;
@@ -231,7 +231,7 @@ template <typename T> inline bool CLinkedList<T>::remove( const T element )
 //
 // @return Iterator for current element
 //=============================================
-template <typename T> inline typename CLinkedList<T>::link_t* CLinkedList<T>::get_link( void )
+template <typename T> DO_INLINE typename CLinkedList<T>::link_t* CLinkedList<T>::get_link( void )
 {
 	return m_iterator.plink;
 }
@@ -241,7 +241,7 @@ template <typename T> inline typename CLinkedList<T>::link_t* CLinkedList<T>::ge
 //
 // @return Reference to the current element
 //=============================================
-template <typename T> inline typename T& CLinkedList<T>::get( void )
+template <typename T> DO_INLINE T& CLinkedList<T>::get( void )
 {
 	return m_iterator.plink->_val;
 }
@@ -250,7 +250,7 @@ template <typename T> inline typename T& CLinkedList<T>::get( void )
 // @brief Resets the iterator to the head link
 //
 //=============================================
-template <typename T> inline void CLinkedList<T>::begin( void )
+template <typename T> DO_INLINE void CLinkedList<T>::begin( void )
 {
 	m_iterator.plink = m_pLinkHead;
 	m_iterator.skipnext = false;
@@ -260,7 +260,7 @@ template <typename T> inline void CLinkedList<T>::begin( void )
 // @brief Resets the iterator to the link provided
 //
 //=============================================
-template <typename T> inline void CLinkedList<T>::begin( link_t* link )
+template <typename T> DO_INLINE void CLinkedList<T>::begin( link_t* link )
 {
 	m_iterator.plink = link;
 	m_iterator.skipnext = false;
@@ -270,7 +270,7 @@ template <typename T> inline void CLinkedList<T>::begin( link_t* link )
 // @brief Resets the iterator to the back link
 //
 //=============================================
-template <typename T> inline void CLinkedList<T>::rbegin( void )
+template <typename T> DO_INLINE void CLinkedList<T>::rbegin( void )
 {
 	m_iterator.plink = m_pLinkTail;
 	m_iterator.skipnext = false;
@@ -279,9 +279,9 @@ template <typename T> inline void CLinkedList<T>::rbegin( void )
 //=============================================
 // @brief Tells if we've reached the end
 //
-// @return FALSE if we still have a valid link, FALSE otherwise
+// @return false if we still have a valid link, false otherwise
 //=============================================
-template <typename T> inline bool CLinkedList<T>::end( void ) const
+template <typename T> DO_INLINE bool CLinkedList<T>::end( void ) const
 {
 	return (!m_iterator.plink ? true : false);
 }
@@ -290,7 +290,7 @@ template <typename T> inline bool CLinkedList<T>::end( void ) const
 // @brief Moves onto the next link in the chain
 //
 //=============================================
-template <typename T> inline void CLinkedList<T>::next( void )
+template <typename T> DO_INLINE void CLinkedList<T>::next( void )
 {
 	if(!m_iterator.plink)
 		return;
@@ -308,7 +308,7 @@ template <typename T> inline void CLinkedList<T>::next( void )
 // @brief Moves onto the previous link in the chain
 //
 //=============================================
-template <typename T> inline void CLinkedList<T>::prev( void )
+template <typename T> DO_INLINE void CLinkedList<T>::prev( void )
 {
 	if(!m_iterator.plink)
 		return;
@@ -326,7 +326,7 @@ template <typename T> inline void CLinkedList<T>::prev( void )
 // @brief Clears the linked list
 //
 //=============================================
-template <typename T> inline void CLinkedList<T>::clear( void )
+template <typename T> DO_INLINE void CLinkedList<T>::clear( void )
 {
 	if(!m_pLinkHead)
 		return;
@@ -349,9 +349,9 @@ template <typename T> inline void CLinkedList<T>::clear( void )
 //=============================================
 // @brief Tells if the list is empty
 //
-// @return TRUE if the list is empty, FALSE otherwise
+// @return true if the list is empty, false otherwise
 //=============================================
-template <typename T> inline bool CLinkedList<T>::empty( void ) const
+template <typename T> DO_INLINE bool CLinkedList<T>::empty( void ) const
 {
 	return (!m_pLinkHead) ? true : false;
 }
@@ -361,7 +361,7 @@ template <typename T> inline bool CLinkedList<T>::empty( void ) const
 //
 // @return Number of elements in the list
 //=============================================
-template <typename T> inline Uint32 CLinkedList<T>::size( void ) const
+template <typename T> DO_INLINE Uint32 CLinkedList<T>::size( void ) const
 {
 	return m_numLinks;
 }
@@ -370,7 +370,7 @@ template <typename T> inline Uint32 CLinkedList<T>::size( void ) const
 // @brief Pushes the current iterator into the iterator stack
 //
 //=============================================
-template <typename T> inline void CLinkedList<T>::push_iterator( void )
+template <typename T> DO_INLINE void CLinkedList<T>::push_iterator( void )
 {
 	m_pushedIteratorsArray.push_back(m_iterator);
 }
@@ -379,7 +379,7 @@ template <typename T> inline void CLinkedList<T>::push_iterator( void )
 // @brief Pops the previous iterator from the iterator stack
 //
 //=============================================
-template <typename T> inline void CLinkedList<T>::pop_iterator( void )
+template <typename T> DO_INLINE void CLinkedList<T>::pop_iterator( void )
 {
 	assert(!m_pushedIteratorsArray.empty());
 
@@ -395,7 +395,7 @@ template <typename T> inline void CLinkedList<T>::pop_iterator( void )
 // @param src Source chain from which to add elements
 // @return Reference to resulting CLinkedList object(this object)
 //=============================================
-template <typename T> inline CLinkedList<T>& CLinkedList<T>::operator=( const CLinkedList<T>& src )
+template <typename T> DO_INLINE CLinkedList<T>& CLinkedList<T>::operator=( const CLinkedList<T>& src )
 {
 	if(!empty())
 		clear();

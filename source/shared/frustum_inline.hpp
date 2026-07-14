@@ -14,10 +14,10 @@ All Rights Reserved.
 // @brief
 //
 //=============================================
-inline Uint32 BoxOnPlaneSide( const Vector& mins, const Vector& maxs, const plane_t* pplane )
+DO_INLINE UInt32 BoxOnPlaneSide( const Vector& mins, const Vector& maxs, const plane_t* pplane )
 {
-	Float dist1;
-	Float dist2;
+	float dist1;
+	float dist2;
 
 	switch(pplane->signbits)
 	{
@@ -59,7 +59,7 @@ inline Uint32 BoxOnPlaneSide( const Vector& mins, const Vector& maxs, const plan
 		break;
 	}
 
-	Uint32 sides = 0;
+	UInt32 sides = 0;
 	if(dist1 >= pplane->dist)
 		sides = 1;
 	if(dist2 < pplane->dist)
@@ -72,19 +72,19 @@ inline Uint32 BoxOnPlaneSide( const Vector& mins, const Vector& maxs, const plan
 // @brief
 //
 //=============================================
-inline void RotatePointAroundVector( const Vector& dir, const Vector& point, Float deg, Vector& dest )
+DO_INLINE void RotatePointAroundVector( const Vector& dir, const Vector& point, float deg, Vector& dest )
 {
-	Float halfrad = DEG2RAD(deg)/2;
-	Float sine = SDL_sin(halfrad);
+	float halfrad = DEG2RAD(deg)/2;
+	float sine = SDL_sin(halfrad);
 
 	Vector q;
 	Math::VectorScale(dir, sine, q);
-	Float q3 = SDL_cos(halfrad);
+	float q3 = SDL_cos(halfrad);
 
 	Vector t;
 	Math::CrossProduct(q, point, t);
 	Math::VectorMA(t, q3, point, t);
-	Float t3 = Math::DotProduct(q, point);
+	float t3 = Math::DotProduct(q, point);
 
 	Math::CrossProduct(q, t, dest);
 	Math::VectorMA(dest, t3, q, dest);
@@ -95,12 +95,12 @@ inline void RotatePointAroundVector( const Vector& dir, const Vector& point, Flo
 // @brief
 //
 //=============================================
-inline Float GetXFOVFromY( Float fovY, Float ratio )
+DO_INLINE float GetXFOVFromY( float fovY, float ratio )
 {
-	Float halfradians = fovY * (0.5f * M_PI / 180.0f);
-	Float t = SDL_tan(halfradians) * ratio;
+	float halfradians = fovY * (0.5f * M_PI / 180.0f);
+	float t = SDL_tan(halfradians) * ratio;
 
-	Float fovX = ((180.0f / M_PI) * SDL_atan(t)) * 2.0f;
+	float fovX = ((180.0f / M_PI) * SDL_atan(t)) * 2.0f;
 	return fovX;
 }
 #endif //FRUSTUM_INLINE_HPP

@@ -221,7 +221,7 @@ bool CEnvTracerEffect::KeyValue( const keyvalue_t& kv )
 // @brief Calls use function
 //
 //=============================================
-void CEnvTracerEffect::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvTracerEffect::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_maxRepeatDelay > 0)
 	{
@@ -282,7 +282,7 @@ void CEnvTracerEffect::RepeatThink( void )
 // @brief Get direction
 //
 //=============================================
-Vector CEnvTracerEffect::GetDirection( Float* plength )
+Vector CEnvTracerEffect::GetDirection( float* plength )
 {
 	if(m_pFields->target == NO_STRING_VALUE)
 	{
@@ -293,7 +293,7 @@ Vector CEnvTracerEffect::GetDirection( Float* plength )
 	}
 	else
 	{
-		const Char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
+		const char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
 		edict_t* pEdict = Util::FindEntityByTargetName(nullptr, pstrTarget);
 		if(!pEdict)
 		{
@@ -333,11 +333,11 @@ void CEnvTracerEffect::CreateEffect( void )
 				break;
 			}
 
-			Float length;
+			float length;
 			Vector forward = GetDirection(&length);
-			for(Uint32 i = 0; i < m_tracerCount; i++)
+			for(UInt32 i = 0; i < m_tracerCount; i++)
 			{
-				Float speed;
+				float speed;
 				if(m_maxVelocity > 0 && m_minVelocity < m_maxVelocity)
 					speed = Common::RandomFloat(m_minVelocity, m_maxVelocity);
 				else
@@ -345,7 +345,7 @@ void CEnvTracerEffect::CreateEffect( void )
 
 				Vector velocity = forward * speed;
 
-				Float life;
+				float life;
 				if(m_minLifetime <= 0 && m_maxLifetime <= 0)
 				{
 					// If minlife is zero, then life comes from distance travelled

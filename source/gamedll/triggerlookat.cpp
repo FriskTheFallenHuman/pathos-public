@@ -101,7 +101,7 @@ bool CTriggerLookAt::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerLookAt::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerLookAt::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_isActive)
 		return;
@@ -121,7 +121,7 @@ void CTriggerLookAt::LookAtThink( void )
 
 	if( m_radius > 0 )
 	{
-		Float flDist = (m_pState->origin - pPlayer->GetOrigin()).Length();
+		float flDist = (m_pState->origin - pPlayer->GetOrigin()).Length();
 		if(flDist > m_radius)
 		{
 			if(m_accumulatedTime)
@@ -156,7 +156,7 @@ void CTriggerLookAt::LookAtThink( void )
 	Math::AngleVectors(pPlayer->GetViewAngles(), &vecPlayerForward, nullptr, nullptr);
 	vecPlayerForward = vecPlayerForward.Normalize();
 
-	Float dotProduct = Math::DotProduct( vecPlayerForward, vecDirToPlayer );
+	float dotProduct = Math::DotProduct( vecPlayerForward, vecDirToPlayer );
 	if ( dotProduct < 0.8 )	// +/- 15 degrees or so
 	{
 		if(m_accumulatedTime)

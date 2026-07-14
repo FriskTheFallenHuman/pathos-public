@@ -10,19 +10,19 @@ All Rights Reserved.
 #ifndef BIKE_SHARED_H
 #define BIKE_SHARED_H
 
-static const Double BIKE_ENTER_TIME							= 0.75;	// time for lerping in
-static const Double BIKE_LEAVE_TIME							= 1;	// time it takes to lerp out
+static const double BIKE_ENTER_TIME							= 0.75;	// time for lerping in
+static const double BIKE_LEAVE_TIME							= 1;	// time it takes to lerp out
 
-static const Float MOTORBIKE_ACCELERATION					= 150;
-static const Float MOTORBIKE_DECELERATION					= 200;
-static const Float MOTORBIKE_BRAKE_DECELERATION				= 650;
+static const float MOTORBIKE_ACCELERATION					= 150;
+static const float MOTORBIKE_DECELERATION					= 200;
+static const float MOTORBIKE_BRAKE_DECELERATION				= 650;
 
-static const Float MOTORBIKE_FATAL_COLLISON_SPEED			= 650;
-static const Float MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED	= 180;
-static const Float MOTORBIKE_MINIMUM_KNOCK_SPEED			= 30;
+static const float MOTORBIKE_FATAL_COLLISON_SPEED			= 650;
+static const float MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED	= 180;
+static const float MOTORBIKE_MINIMUM_KNOCK_SPEED			= 30;
 
-static const Float MOTORBIKE_FRONT_WHEEL_DISTANCE			= 48;
-static const Float MOTORBIKE_BACK_WHEEL_DISTANCE			= 24;
+static const float MOTORBIKE_FRONT_WHEEL_DISTANCE			= 48;
+static const float MOTORBIKE_BACK_WHEEL_DISTANCE			= 24;
 
 enum bike_anims_t
 {

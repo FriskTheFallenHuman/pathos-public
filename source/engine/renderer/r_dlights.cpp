@@ -35,9 +35,9 @@ All Rights Reserved.
 #include "file.h"
 
 // Minimum shadowmap size
-const Uint32 CDynamicLightManager::SHADOWMAP_MIN_SIZE = 128;
+const UInt32 CDynamicLightManager::SHADOWMAP_MIN_SIZE = 128;
 // Time until an unused shadowmap is freed
-const Float CDynamicLightManager::SHADOWMAP_RELEASE_DELAY = 15;
+const float CDynamicLightManager::SHADOWMAP_RELEASE_DELAY = 15;
 
 // Class object
 CDynamicLightManager gDynamicLights;
@@ -487,7 +487,7 @@ shadowmap_t *CDynamicLightManager::AllocProjectiveShadowMap( bool allocblitmap )
 	if(allocblitmap && rns.fboblitsupported && m_pCvarShadowmapBlit->GetValue() >= 1)
 	{
 		if(!CreateShadowmapBlitFBOs((*pshadowmap), GetShadowmapSize(), 1))
-			return false;
+			return nullptr;
 	}
 
 	m_projectivePoolList.add(pshadowmap);
@@ -530,7 +530,7 @@ shadowmap_t *CDynamicLightManager::AllocCubemapShadowMap( bool allocblitmap )
 	if(allocblitmap && rns.fboblitsupported && m_pCvarShadowmapBlit->GetValue() >= 1)
 	{
 		if(!CreateShadowmapBlitFBOs((*pshadowmap), GetCubeShadowmapSize(), 6))
-			return false;
+			return nullptr;
 	}
 
 	m_cubemapPoolList.add(pshadowmap);
@@ -632,12 +632,12 @@ void CDynamicLightManager::ClearCubemapShadowMap( shadowmap_t *psm )
 //====================================
 //
 //====================================
-bool CDynamicLightManager::CreateShadowmapBlitFBOs( shadowmap_t& shadowmap, Uint32 shadowmapSize, Uint32 numFBO )
+bool CDynamicLightManager::CreateShadowmapBlitFBOs( shadowmap_t& shadowmap, UInt32 shadowmapSize, UInt32 numFBO )
 {
 	if(!shadowmap.pblitfboarray.empty())
 		ReleaseShadowmapBlitFBOs(shadowmap);
 
-	for(Uint32 i = 0; i < numFBO; i++)
+	for(UInt32 i = 0; i < numFBO; i++)
 	{
 		fbobind_t* pfbo = new fbobind_t();
 		shadowmap.pblitfboarray.push_back(pfbo);
@@ -679,7 +679,7 @@ void CDynamicLightManager::ReleaseShadowmapBlitFBOs( shadowmap_t& shadowmap )
 	if(shadowmap.pblitfboarray.empty())
 		return;
 
-	for(Uint32 i = 0; i < shadowmap.pblitfboarray.size(); i++)
+	for(UInt32 i = 0; i < shadowmap.pblitfboarray.size(); i++)
 	{
 		fbobind_t* pfbobind = shadowmap.pblitfboarray[i];
 
@@ -1042,7 +1042,7 @@ bool CDynamicLightManager::DrawProjectivePass( cl_dlight_t *dl, cl_entity_t** pv
 		gGLExtF.glBindFramebuffer(GL_READ_FRAMEBUFFER, dl->pshadowmap->pblitfboarray[0]->fboid);
 		gGLExtF.glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_renderFBO.fboid);
 
-		Uint32 shadowmapSize = GetShadowmapSize();
+		UInt32 shadowmapSize = GetShadowmapSize();
 
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glDrawBuffer(GL_COLOR_ATTACHMENT0);
@@ -1072,7 +1072,7 @@ bool CDynamicLightManager::DrawProjectivePass( cl_dlight_t *dl, cl_entity_t** pv
 	glCullFace(GL_FRONT);
 	glDisable(GL_BLEND);
 
-	Float flSize = tan((M_PI/360) * dl->cone_size);
+	float flSize = tan((M_PI/360) * dl->cone_size);
 	rns.view.projection.PushMatrix();
 	rns.view.projection.LoadIdentity();
 	rns.view.projection.SetFrustum(-flSize, flSize, -flSize, flSize, 1, dl->radius);
@@ -1231,7 +1231,7 @@ bool CDynamicLightManager::DrawCubemapPass( cl_dlight_t *dl, Vector vangles, Int
 		gGLExtF.glBindFramebuffer(GL_READ_FRAMEBUFFER, dl->psmcubemap->pblitfboarray[index]->fboid);
 		gGLExtF.glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_cubeRenderFBO.fboid);
 
-		Uint32 shadowmapSize = GetCubeShadowmapSize();
+		UInt32 shadowmapSize = GetCubeShadowmapSize();
 
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glDrawBuffer(GL_COLOR_ATTACHMENT0);
@@ -1260,7 +1260,7 @@ bool CDynamicLightManager::DrawCubemapPass( cl_dlight_t *dl, Vector vangles, Int
 	glCullFace(GL_FRONT);
 	glDisable(GL_BLEND);
 
-	Float flSize = tan((M_PI/360) * 90);
+	float flSize = tan((M_PI/360) * 90);
 	rns.view.projection.PushMatrix();
 	rns.view.projection.LoadIdentity();
 	rns.view.projection.SetFrustum(-flSize, flSize, -flSize, flSize, 1, dl->radius);
@@ -1480,7 +1480,7 @@ bool CDynamicLightManager::Update( void )
 			Vector(pdl->radius, pdl->radius, pdl->radius).Length());
 
 		// Update mins/maxs
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			pdl->mins[i] = pdl->origin[i] - pdl->radius;
 			pdl->maxs[i] = pdl->origin[i] + pdl->radius;
@@ -1859,7 +1859,7 @@ bool CDynamicLightManager::ShouldRedrawShadowMap( cl_dlight_t *dl, dlight_scenei
 	bool bRedraw = false; 
 
 	// check if a new entity has been added to the list
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t* pvisentity = rns.objects.pvisents[i];
 		if(!pvisentity->pmodel)
@@ -1929,7 +1929,7 @@ bool CDynamicLightManager::ShouldRedrawShadowMap( cl_dlight_t *dl, dlight_scenei
 		}
 
 		// Check if this entity is already present in the list
-		Uint32 j = 0;
+		UInt32 j = 0;
 		if(!psceneinfo->pvisents.empty())
 		{
 			for(; j < psceneinfo->numvisents; j++)
@@ -1958,7 +1958,7 @@ bool CDynamicLightManager::ShouldRedrawShadowMap( cl_dlight_t *dl, dlight_scenei
 
 	cl_entity_t* plocalplayer = CL_GetLocalPlayer();
 
-	for(Uint32 i = 0; i < psceneinfo->numvisents; i++)
+	for(UInt32 i = 0; i < psceneinfo->numvisents; i++)
 	{
 		cl_entity_t* pentity = psceneinfo->pvisents[i];
 		if(pentity->curstate.effects & EF_CLIENTENT)
@@ -1968,7 +1968,7 @@ bool CDynamicLightManager::ShouldRedrawShadowMap( cl_dlight_t *dl, dlight_scenei
 		// WARNING - This check needs to be first!
 		if(pentity->curstate.msg_num != plocalplayer->curstate.msg_num)
 		{
-			for(Uint32 j = i; j < (psceneinfo->numvisents-1); j++)
+			for(UInt32 j = i; j < (psceneinfo->numvisents-1); j++)
 				psceneinfo->pvisents[j] = psceneinfo->pvisents[j+1];
 
 			// Subtract from counts

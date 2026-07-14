@@ -10,10 +10,6 @@ All Rights Reserved.
 #ifndef CSTRINGPOOL_H
 #define CSTRINGPOOL_H
 
-#include <string>
-#include <unordered_map>
-#include <mutex>
-
 #include "carray.h"
 #include "clinkedlist.h"
 #include "crc32.h"
@@ -68,15 +64,15 @@ public:
 
 public:
 	// Find an existing string, and if found, increase it's refcount
-	inline cachestring_t* GetExistingString( const Char* pstrString );
+	DO_INLINE cachestring_t* GetExistingString( const char* pstrString );
 	// Add new string to the pool or increments an existing one's refcount
-	inline cachestring_t* AddString( const Char* pstrString );
+	DO_INLINE cachestring_t* AddString( const char* pstrString );
 	// Removes an instance of a string used
-	inline void RemoveString( cachestring_t* pCacheEntry );
+	DO_INLINE void RemoveString( cachestring_t* pCacheEntry );
 
 public:
 	// Retrieve the current instance of the pool
-	inline static CStringPool* Instance( void );
+	DO_INLINE static CStringPool* Instance( void );
 
 private:
 	// Map to individual elements

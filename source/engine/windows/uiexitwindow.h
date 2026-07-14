@@ -22,19 +22,19 @@ class CUIExitWindow : public CUIWindow
 {
 public:
 	// Window description file
-	static const Char WINDOW_DESC_FILE[];
+	static const char WINDOW_DESC_FILE[];
 	// Window object name
-	static const Char WINDOW_OBJ_NAME[];
+	static const char WINDOW_OBJ_NAME[];
 	// Cancel button object name
-	static const Char CANCEL_BUTTON_OBJ_NAME[];
+	static const char CANCEL_BUTTON_OBJ_NAME[];
 	// Save and Quit button object name
-	static const Char SAVE_AND_QUIT_BUTTON_OBJ_NAME[];
+	static const char SAVE_AND_QUIT_BUTTON_OBJ_NAME[];
 	// Quit button object name
-	static const Char QUIT_BUTTON_OBJ_NAME[];
+	static const char QUIT_BUTTON_OBJ_NAME[];
 	// Quit game text object name
-	static const Char QUIT_TEXT_OBJ_NAME[];
+	static const char QUIT_TEXT_OBJ_NAME[];
 	// In-game quit game text object name
-	static const Char INGAME_QUIT_TEXT_OBJ_NAME[];
+	static const char INGAME_QUIT_TEXT_OBJ_NAME[];
 
 public:
 	enum buttonId_t
@@ -45,7 +45,7 @@ public:
 	};
 
 private:
-	CUIExitWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIExitWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 public:
 	~CUIExitWindow( void );
 
@@ -63,7 +63,7 @@ public:
 	// The settings window cannot be resized
 	virtual bool isResizable( void ) { return false; }
 	// Manages a button press event
-	virtual void buttonPressed( Uint32 buttonId );
+	virtual void buttonPressed( UInt32 buttonId );
 
 public:
 	// Current instance
@@ -79,7 +79,7 @@ CUIExitWindowEvent
 class CUIExitWindowEvent : public CUICallbackEvent
 {
 public:
-	CUIExitWindowEvent( CUIExitWindow* pWindow, Uint32 buttonId ):
+	CUIExitWindowEvent( CUIExitWindow* pWindow, UInt32 buttonId ):
 		m_buttonId(buttonId),
 		m_pWindow(pWindow)
 	{ };
@@ -87,11 +87,11 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) { m_pWindow->buttonPressed( m_buttonId ); }
+	virtual void PerformAction( float param ) { m_pWindow->buttonPressed( m_buttonId ); }
 
 protected:
 	// Button id
-	Uint32 m_buttonId;
+	UInt32 m_buttonId;
 	// Window that created this
 	CUIExitWindow* m_pWindow;
 };

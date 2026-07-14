@@ -72,24 +72,24 @@ public:
 	
 public:
 	// Array of turret sounds
-	static const Char* TURRET_SOUNDS[NB_TURRET_SOUNDS];
+	static const char* TURRET_SOUNDS[NB_TURRET_SOUNDS];
 	// Turret glow sprite name
-	static const Char TURRET_GLOW_SPRITE_NAME[];
+	static const char TURRET_GLOW_SPRITE_NAME[];
 
 	// Metal impact sound pattern
-	static const Char TURRET_METAL_IMPACT_SOUND_PATTERN[];
+	static const char TURRET_METAL_IMPACT_SOUND_PATTERN[];
 	// Number of Metal impact sounds
-	static const Uint32 TURRET_NB_METAL_IMPACT_SOUNDS;
+	static const UInt32 TURRET_NB_METAL_IMPACT_SOUNDS;
 	// Metal impact particle script
-	static const Char TURRET_METAL_IMPACT_PARTICLE_SCRIPT[];
+	static const char TURRET_METAL_IMPACT_PARTICLE_SCRIPT[];
 	// Impact decal name
-	static const Char TURRET_IMPACT_DECAL_NAME[];
+	static const char TURRET_IMPACT_DECAL_NAME[];
 	// Maximum firing range of turret
-	static const Float TURRET_MAX_RANGE;
+	static const float TURRET_MAX_RANGE;
 	// Default turn rate
-	static const Float TURRET_DEFAULT_TURN_RATE;
+	static const float TURRET_DEFAULT_TURN_RATE;
 	// Default max wait time
-	static const Float TURRET_DEFAULT_MAX_WAIT_TIME;
+	static const float TURRET_DEFAULT_MAX_WAIT_TIME;
 
 public:
 	explicit CTurretNPC( edict_t* pedict );
@@ -106,9 +106,9 @@ public:
 	virtual void DeclareSaveFields( void ) override;
 
 	// Makes the entity take on damage
-	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags ) override;
+	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags ) override;
 	// Handles damage calculation for a hitscan
-	virtual void TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
+	virtual void TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
 
 	// Returns the classification
 	virtual Int32 GetClassification( void ) const override;
@@ -120,11 +120,11 @@ public:
 	// Sets the ideal yaw speed
 	virtual void SetYawSpeed( void ) override { };
 	// Returns the sound mask for the NPC
-	virtual Uint64 GetSoundMask( void ) override { return AI_SOUND_NONE; };
+	virtual UInt64 GetSoundMask( void ) override { return AI_SOUND_NONE; };
 
 public:
 	// Calls use function
-	void EXPORTFN TurretUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	void EXPORTFN TurretUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 
 	// Called when active
 	void EXPORTFN ActiveThink( void );
@@ -170,7 +170,7 @@ public:
 
 protected:
 	// Maximum time to spin the barrel without targets
-	Float m_maxSpinTime;
+	float m_maxSpinTime;
 	// Spin state
 	Int32 m_spinState;
 
@@ -180,46 +180,46 @@ protected:
 	Int32 m_eyeBrightness;
 
 	// Deploy height
-	Float m_deployHeight;
+	float m_deployHeight;
 	// Retract height
-	Float m_retractHeight;
+	float m_retractHeight;
 	// Minimum pitch
 	Int32 m_minPitch;
 
 	// Base turn rate
 	Int32 m_baseTurnRate;
 	// Turn rate
-	Float m_turnRate;
+	float m_turnRate;
 	// Orientation
 	Int32 m_orientation;
-	// TRUE if on
+	// true if on
 	bool m_isOn;
-	// TRUE if going berserk
+	// true if going berserk
 	bool m_isBerserk;
-	// TRUE if we should auto-start
+	// true if we should auto-start
 	bool m_shouldAutoStart;
 
 	// Last sight position
 	Vector m_lastSightPosition;
 	// Last sight time
-	Double m_lastSightTime;
+	double m_lastSightTime;
 	// Max wait time
-	Float m_maxWaitTime;
+	float m_maxWaitTime;
 	// Search speed
 	Int32 m_searchSpeed;
 
 	// Start yaw
-	Float m_startYaw;
+	float m_startYaw;
 	// Current angles
 	Vector m_currentAngles;
 	// Goal angles
 	Vector m_goalAngles;
 
 	// Ping time
-	Double m_pingTime;
+	double m_pingTime;
 	// Spinup time
-	Double m_spinUpTime;
+	double m_spinUpTime;
 	// Last time we took damage
-	Double m_damageTime;
+	double m_damageTime;
 };
 #endif //AI_TURRETNPC_H

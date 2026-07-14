@@ -55,25 +55,25 @@ class CMotorBike
 {
 public:
 	// Turn angle
-	static const Float MOTORBIKE_TURN_ANGLE;
+	static const float MOTORBIKE_TURN_ANGLE;
 	// View max deviation
-	static const Float MOTORBIKE_MAX_ADD;
+	static const float MOTORBIKE_MAX_ADD;
 	// Mouse move timeout
-	static const Float MOUSEMOVE_TIMEOUT;
+	static const float MOUSEMOVE_TIMEOUT;
 	// Mouse move timeout blend time
-	static const Float MOUSEMOVE_TIMEOUT_BLEND;
+	static const float MOUSEMOVE_TIMEOUT_BLEND;
 	// Surface align time
-	static const Double ANGLE_ALIGN_TIME_ON_GROUND;
+	static const double ANGLE_ALIGN_TIME_ON_GROUND;
 	// Surface align time
-	static const Double ANGLE_ALIGN_TIME_IN_AIR;
+	static const double ANGLE_ALIGN_TIME_IN_AIR;
 	// Wheel blend time
-	static const Double WHEEL_BLEND_TIME;
+	static const double WHEEL_BLEND_TIME;
 	// Motorbike volume
-	static const Float MOTORBIKE_VOLUME;
+	static const float MOTORBIKE_VOLUME;
 	// Motorbike model name
-	static const Char MOTORBIKE_MODEL_NAME[];
+	static const char MOTORBIKE_MODEL_NAME[];
 	// Motorbike sequence names(this needs to line up with bike_anims_t
-	static const Char* MOTORBIKE_ANIM_NAMES[NB_BIKE_ANIMS];
+	static const char* MOTORBIKE_ANIM_NAMES[NB_BIKE_ANIMS];
 
 public:
 	CMotorBike( void );
@@ -97,9 +97,9 @@ public:
 	cl_entity_t *GetBikeEntity ( void );
 
 	// Returns the turn amount
-	Float GetTurnAmount( void );
+	float GetTurnAmount( void );
 	// Returns the acceleration
-	Float GetAcceleration( void ) const;
+	float GetAcceleration( void ) const;
 
 	// Calculares view
 	void CalcRefDef( ref_params_t& params );
@@ -109,11 +109,11 @@ public:
 	// Performs think functions
 	void Think( void );
 	// Handles mouse movement
-	void MouseMove( Float mousex, Float mousey );
+	void MouseMove( float mousex, float mousey );
 
 public:
 	// Processes a motorbike usermsg
-	void ProcessMessage( const byte* pdata, Uint32 msgsize );
+	void ProcessMessage( const Byte* pdata, UInt32 msgsize );
 
 	// Gets the view origin and angles
 	void GetViewInfo( Vector& origin, Vector& angles );
@@ -122,7 +122,7 @@ private:
 	// Sets the sequence
 	void SetSequence( Int32 sequence );
 	// Returns the sequence time
-	Float SequenceTime( Int32 sequence ) const;
+	float SequenceTime( Int32 sequence ) const;
 
 	// Handles input
 	void HandleInput( void );
@@ -149,7 +149,7 @@ private:
 	// Updates ground orientation
 	void UpdateAngles( void );
 	// Calculates ground angles
-	void GetIdealUpVector( Vector& outup, Double* pblendtime );
+	void GetIdealUpVector( Vector& outup, double* pblendtime );
 	
 private:
 	// The entity which we render
@@ -164,17 +164,17 @@ private:
 	const cache_model_t	*m_pBikeModel;
 
 	// Current time
-	Double				m_time;
+	double				m_time;
 
 	// Cvar for turn roll
 	CCVar*				m_pCvarTurnRoll;
 
 private:
 	// Actual acceleration
-	Float				m_acceleration;
+	float				m_acceleration;
 
 	// For direction estimation
-	Double				m_lastInputTime;
+	double				m_lastInputTime;
 
 	// Previous ground entity
 	Int32				m_prevPlayerGroundEntity;
@@ -182,12 +182,12 @@ private:
 	// handles exiting/entering and main state
 	bike_sv_states_t	m_serverStatus;
 	bike_sv_states_t	m_activeServerStatus;
-	Double				m_nextUpdateTime;
+	double				m_nextUpdateTime;
 
 	// animation state at the momment
 	bike_states_t		m_animState;
 	bike_states_t		m_idealAnimState;
-	Double				m_nextSequenceTime;
+	double				m_nextSequenceTime;
 
 	// should be taken from vuser
 	Vector				m_exitOrigin;
@@ -211,18 +211,18 @@ private:
 	Vector				m_lerpEndAngles;
 	Vector				m_lerpEndOrigin;
 
-	Double				m_lerpBeginTime;
-	Double				m_lerpEndTime;
+	double				m_lerpBeginTime;
+	double				m_lerpEndTime;
 
 	// Sounds
-	Double				m_soundTime;
+	double				m_soundTime;
 	bike_sounds_t		m_soundState;
 
-	Float				m_direction;
-	Float				m_prevDirection;
+	float				m_direction;
+	float				m_prevDirection;
 
-	Float				m_wheelAngle;
-	Float				m_prevWheelAngle;
+	float				m_wheelAngle;
+	float				m_prevWheelAngle;
 
 	bool				m_playBrakeSound;
 
@@ -232,15 +232,15 @@ private:
 	// For turning around in our limited cone
 	Vector				m_deviationAngles;
 	Vector				m_addDeviationAngles;
-	Double				m_lastMouseMove;
+	double				m_lastMouseMove;
 
 	// Variables for ground orientation
 	Vector				m_currentBikeUpVector;
 	Vector				m_idealBikeUpVector;
 	Vector				m_prevBikeUpVector;
 
-	Double				m_angleBlendTime;
-	Double				m_angleBlendDuration;
+	double				m_angleBlendTime;
+	double				m_angleBlendDuration;
 };
 extern CMotorBike gMotorBike;
 #endif

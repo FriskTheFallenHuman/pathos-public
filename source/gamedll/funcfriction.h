@@ -29,6 +29,6 @@ public:
 	virtual Int32 GetEntityFlags( void ) override { return CBaseEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION; }
 
 private:
-	Float m_frictionModifier;
+	float m_frictionModifier;
 };
 #endif //FUNCFRICTION_H

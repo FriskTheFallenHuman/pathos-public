@@ -27,23 +27,23 @@ class CDefaultView
 {
 public:
 	// Flashlight fade speed
-	static const Float FLASHLIGHT_FADE_SPEED;
+	static const float FLASHLIGHT_FADE_SPEED;
 	// Flashlight sprite file
-	static const Char FLASHLIGHT_SPRITE_FILE[];
+	static const char FLASHLIGHT_SPRITE_FILE[];
 
 	// Values for view model lag calculations
-	static const Float VIEWMODEL_LAG_MULT;
-	static const Float VIEWMODEL_LAG_SPEED;
+	static const float VIEWMODEL_LAG_MULT;
+	static const float VIEWMODEL_LAG_SPEED;
 
 	// Values for view bob calculations
-	static const Float BOB_CYCLE_MIN;
-	static const Float BOB_CYCLE_MAX;
-	static const Float BOB;
-	static const Float BOB_UP;
+	static const float BOB_CYCLE_MIN;
+	static const float BOB_CYCLE_MAX;
+	static const float BOB;
+	static const float BOB_UP;
 
 	// Values for stair step smoothing
-	static const Float V_SM_REF_VEL;
-	static const Float V_SM_BLEND_VEL;
+	static const float V_SM_REF_VEL;
+	static const float V_SM_BLEND_VEL;
 
 public:
 	CDefaultView();
@@ -75,16 +75,16 @@ public:
 	void CalcViewModelAngle( cl_entity_t* pviewmodel, const ref_params_t& params );
 
 	// Sets the FOV value
-	void SetFOV( Float newFOV );
+	void SetFOV( float newFOV );
 	// Sets the FOV override value
-	void SetFOVOverride( Float overrideFOV );
+	void SetFOVOverride( float overrideFOV );
 	// Sets the fov zoom
-	void SetFOVZoom( Float desiredFOV, Float blenddelta );
+	void SetFOVZoom( float desiredFOV, float blenddelta );
 
 	// Blends field of view values
 	void CalculateFOV( ref_params_t& params );
 	// Returns the current FOV value
-	Float GetFOV( void ) const;
+	float GetFOV( void ) const;
 
 	// Sets up all player flashlight types
 	void SetupFlashlights( const ref_params_t& params );
@@ -95,22 +95,22 @@ public:
 	entindex_t GetViewEntity( void ) const;
 
 	// Updates autoaim
-	void SetAutoAim( Float autoAimX, Float autoAimY );
+	void SetAutoAim( float autoAimX, float autoAimY );
 
 private:
 	// Calculates the view bob
 	void CalcBob( cl_entity_t* pplayer, ref_params_t& params );
 	// Calculates view roll
-	static Float CalcRoll( const Vector& angles, const Vector& velocity, Float rollangle, Float rollspeed );
+	static float CalcRoll( const Vector& angles, const Vector& velocity, float rollangle, float rollspeed );
 	// Calculates interpolated rolling
-	static Float CalcSmoothRolling( Float cur_roll, Float target_roll, Float speed, Double frametime );
+	static float CalcSmoothRolling( float cur_roll, float target_roll, float speed, double frametime );
 	// Calculates view rolling
 	void CalcViewRoll( cl_entity_t* pplayer, ref_params_t& params );
 	// Calculates leaning
 	void CalcLeaning( cl_entity_t* pplayer, cl_entity_t *pviewmodel, ref_params_t& params );
 
 	// Estimates footstep time
-	static Float EstimateStepTime( cl_entity_t* pplayer, ref_params_t& params );
+	static float EstimateStepTime( cl_entity_t* pplayer, ref_params_t& params );
 	// Smooths out up-down steps
 	void SmoothSteps( cl_entity_t* pplayer, cl_entity_t* pviewmodel, ref_params_t& params );
 
@@ -125,31 +125,31 @@ private:
 	void CalcSwimFloat( cl_entity_t* pplayer, ref_params_t& params );
 
 	// Sets up player flashlights
-	void SetupFlashlightForType( const ref_params_t& params, Float* pstrengths, Int32 effectbit );
+	void SetupFlashlightForType( const ref_params_t& params, float* pstrengths, Int32 effectbit );
 
 private:
 	// Bob time
-	Double m_bobTime;
+	double m_bobTime;
 	// Last bob time
-	Double m_lastBobTime;
+	double m_lastBobTime;
 	// Vertical bob amount
-	Float m_verticalBob;
+	float m_verticalBob;
 	// Lateral bob amount
-	Float m_lateralBob;
+	float m_lateralBob;
 
 	// Last facing of view model
 	Vector m_viewModelLastFacing;
 	// Last viewmodel lag time
-	Double m_flLastViewModelLagTime;
+	double m_flLastViewModelLagTime;
 
 	// Time we started breathing
-	Double m_breathingTime;
+	double m_breathingTime;
 
 	// Current view roll
-	Float m_currentViewRoll;
+	float m_currentViewRoll;
 
 	// Last lean time
-	Double m_leanTime;
+	double m_leanTime;
 	// Previous buttons when calculating leaning
 	Int32 m_prevLeanButtons;
 	// Previous player flags
@@ -168,34 +168,34 @@ private:
 	Vector m_curLeanOffset;
 
 	// Last time we calculated step smoothing
-	Double m_lastStepSmoothTime;
+	double m_lastStepSmoothTime;
 	// Last Z value used for step smoothing
-	Float m_prevStepSmoothZ;
+	float m_prevStepSmoothZ;
 	// Stair-step smoothing speed
-	Float m_stepSmoothSpeed;
+	float m_stepSmoothSpeed;
 	// Last origin at step smoothing
 	Vector m_lastStepSmoothOrigin;
 	// Last view offset used in step smoothing
 	Vector m_lastStepSmoothViewOffset;
 
 	// Last swim float time
-	Double m_lastSwimFloatTime;
+	double m_lastSwimFloatTime;
 
 private:
 	// Current field of view value
-	Float m_fovValue;
+	float m_fovValue;
 	// FOV override value
-	Float m_fovOverrideValue;
+	float m_fovOverrideValue;
 
 	// FOV previous value
-	Float m_prevFOVValue;
+	float m_prevFOVValue;
 	// FOV desired value
-	Float m_desiredFOVValue;
+	float m_desiredFOVValue;
 
 	// Blend duration for FOV
-	Float m_fovBlendDelta;
+	float m_fovBlendDelta;
 	// FOV blend time
-	Double m_fovBlendTime;
+	double m_fovBlendTime;
 
 private:
 	// Ideal autoaim vector
@@ -205,11 +205,11 @@ private:
 
 private:
 	// Tactical flashlight strengths
-	Float m_tacticalLightStrengths[MAX_PLAYERS];
+	float m_tacticalLightStrengths[MAX_PLAYERS];
 	// Shoulder flashlight strengths
-	Float m_shoulderLightStrengths[MAX_PLAYERS];
+	float m_shoulderLightStrengths[MAX_PLAYERS];
 	// Local player's dimlight strength
-	Float m_localPlayerDimLightStrength;
+	float m_localPlayerDimLightStrength;
 
 	// Flashlight sprite model
 	const cache_model_t* m_pFlashlightSprite;

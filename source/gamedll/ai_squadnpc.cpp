@@ -13,13 +13,13 @@ All Rights Reserved.
 #include "cplane.h"
 
 // Number of slots
-const Uint32 CSquadNPC::NUM_SLOTS = 5;
+const UInt32 CSquadNPC::NUM_SLOTS = 5;
 // Search radius for squad members to recruit
-const Float CSquadNPC::SQUADINIT_SEARCH_RADIUS = 1024;
+const float CSquadNPC::SQUADINIT_SEARCH_RADIUS = 1024;
 // Radius to check for cover validation
-const Float CSquadNPC::COVER_VALIDATE_RADIUS = 128;
+const float CSquadNPC::COVER_VALIDATE_RADIUS = 128;
 // Elude time for enemies
-const Float CSquadNPC::ENEMY_ELUDE_TIME = 5;
+const float CSquadNPC::ENEMY_ELUDE_TIME = 5;
 
 //==========================================================================
 //
@@ -35,10 +35,10 @@ ai_task_t taskListScheduleSquadNPCFoundEnemy[] =
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
 	AITASK(AI_TASK_FACE_ENEMY,					0),
-	AITASK(AI_TASK_PLAY_SEQUENCE_FACE_ENEMY,	(Float)ACT_SIGNAL1)
+	AITASK(AI_TASK_PLAY_SEQUENCE_FACE_ENEMY,	(float)ACT_SIGNAL1)
 };
 
-Uint32 interruptBitsScheduleSquadNPCFoundEnemy[] =
+UInt32 interruptBitsScheduleSquadNPCFoundEnemy[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_HEAR_SOUND
@@ -64,13 +64,13 @@ const CAISchedule scheduleSquadNPCFoundEnemy(
 ai_task_t taskListScheduleSquadNPCCombatFace[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_FACE_ENEMY,					0),
 	AITASK(AI_TASK_WAIT,						1.5),
-	AITASK(AI_TASK_SET_SCHEDULE,				(Float)AI_SCHED_SWEEP)
+	AITASK(AI_TASK_SET_SCHEDULE,				(float)AI_SCHED_SWEEP)
 };
 
-Uint32 interruptBitsScheduleSquadNPCCombatFace[] =
+UInt32 interruptBitsScheduleSquadNPCCombatFace[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -104,10 +104,10 @@ ai_task_t taskListScheduleSquadNPCSignalSuppressingFire[] =
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
 	AITASK(AI_TASK_FACE_IDEAL,					0),
-	AITASK(AI_TASK_PLAY_SEQUENCE_FACE_ENEMY,	(Float)ACT_SIGNAL2)
+	AITASK(AI_TASK_PLAY_SEQUENCE_FACE_ENEMY,	(float)ACT_SIGNAL2)
 };
 
-Uint32 interruptBitsScheduleSquadNPCSignalSuppressingFire[] =
+UInt32 interruptBitsScheduleSquadNPCSignalSuppressingFire[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_ENEMY_DEAD,
@@ -137,17 +137,17 @@ const CAISchedule scheduleSquadNPCSignalSuppressingFire(
 ai_task_t taskListScheduleSquadNPCTakeCover[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(Float)AI_SQUADNPC_SCHED_TAKE_COVER_FAILED),
+	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(float)AI_SQUADNPC_SCHED_TAKE_COVER_FAILED),
 	AITASK(AI_TASK_WAIT,						0.2f),
 	AITASK(AI_TASK_FIND_COVER_FROM_ENEMY,		0),
 	AITASK(AI_TASK_RUN_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
-	AITASK(AI_TASK_REMEMBER,					(Float)AI_MEMORY_IN_COVER),
+	AITASK(AI_TASK_REMEMBER,					(float)AI_MEMORY_IN_COVER),
 	AITASK(AI_TASK_FACE_ENEMY,					0),
-	AITASK(AI_TASK_SET_SCHEDULE,				(Float)AI_SCHED_WAIT_FACE_ENEMY)
+	AITASK(AI_TASK_SET_SCHEDULE,				(float)AI_SCHED_WAIT_FACE_ENEMY)
 };
 
-Uint32 interruptBitsScheduleSquadNPCTakeCover[] =
+UInt32 interruptBitsScheduleSquadNPCTakeCover[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_IN_DANGER
@@ -227,7 +227,7 @@ void CSquadNPC::InitSquad( void )
 		if(!HasSpawnFlag(CBaseNPC::FL_NPC_SQUADLEADER))
 			return;
 
-		Uint32 squadSize = SquadRecruit(SQUADINIT_SEARCH_RADIUS, (MAX_SQUAD_MEMBERS-1));
+		UInt32 squadSize = SquadRecruit(SQUADINIT_SEARCH_RADIUS, (MAX_SQUAD_MEMBERS-1));
 		if(squadSize > 1)
 		{
 			CString classificationName;
@@ -263,7 +263,7 @@ void CSquadNPC::InitSquad( void )
 
 	// Try to join an existing squad
 	Vector mins, maxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		mins[i] = m_pState->origin[i] - SQUADINIT_SEARCH_RADIUS;
 		maxs[i] = m_pState->origin[i] + SQUADINIT_SEARCH_RADIUS;
@@ -414,7 +414,7 @@ void CSquadNPC::ForgetPlayer( CBaseEntity* pPlayer )
 {
 	if(IsSquadLeader())
 	{
-		for(Uint32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
+		for(UInt32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
 		{
 			CBaseEntity* pMember = GetSquadMember(i);
 			if(!pMember || pMember == this)
@@ -534,7 +534,7 @@ CBaseEntity* CSquadNPC::GetSquadLeader( void )
 // @brief Returns the squad slots
 //
 //=============================================
-Uint64 CSquadNPC::GetSquadSlots( void )
+UInt64 CSquadNPC::GetSquadSlots( void )
 {
 	return m_squadSlots;
 }
@@ -543,7 +543,7 @@ Uint64 CSquadNPC::GetSquadSlots( void )
 // @brief Returns the squad slots
 //
 //=============================================
-void CSquadNPC::SetSquadSlots( Uint64 squadSlots )
+void CSquadNPC::SetSquadSlots( UInt64 squadSlots )
 {
 	m_squadSlots = squadSlots;
 }
@@ -558,7 +558,7 @@ void CSquadNPC::VacateSlot( void )
 		return;
 
 	CBaseEntity* pSquadLeader = GetSquadLeader();
-	Uint64 squadLeaderSlots = pSquadLeader->GetSquadSlots();
+	UInt64 squadLeaderSlots = pSquadLeader->GetSquadSlots();
 	squadLeaderSlots &= ~m_mySlot;
 
 	pSquadLeader->SetSquadSlots(squadLeaderSlots);
@@ -569,7 +569,7 @@ void CSquadNPC::VacateSlot( void )
 // @brief Tells if we can occupy a given slot, and occupies if possible
 //
 //=============================================
-bool CSquadNPC::OccupySlot( Uint64 desiredSlots )
+bool CSquadNPC::OccupySlot( UInt64 desiredSlots )
 {
 	if(!IsInSquad())
 		return true;
@@ -582,13 +582,13 @@ bool CSquadNPC::OccupySlot( Uint64 desiredSlots )
 
 	CBaseEntity* pSquadLeader = GetSquadLeader();
 
-	Uint64 squadLeaderSlots = pSquadLeader->GetSquadSlots();
+	UInt64 squadLeaderSlots = pSquadLeader->GetSquadSlots();
 	if(!(desiredSlots ^ squadLeaderSlots))
 		return false;
 
-	for(Uint32 i = 0; i < NUM_SLOTS; i++)
+	for(UInt32 i = 0; i < NUM_SLOTS; i++)
 	{
-		Uint64 slotMask = (1ULL<<i);
+		UInt64 slotMask = (1ULL<<i);
 		if((desiredSlots & slotMask) && !(squadLeaderSlots & slotMask))
 		{
 			pSquadLeader->SetSquadSlots((squadLeaderSlots|slotMask));
@@ -613,7 +613,7 @@ bool CSquadNPC::IsInSquad( void ) const
 // @brief Tries to recruit any squad members
 //
 //=============================================
-Uint32 CSquadNPC::SquadRecruit( Float searchRadius, Uint32 maxMembers )
+UInt32 CSquadNPC::SquadRecruit( float searchRadius, UInt32 maxMembers )
 {
 	if(IsInSquad())
 		return 0;
@@ -622,7 +622,7 @@ Uint32 CSquadNPC::SquadRecruit( Float searchRadius, Uint32 maxMembers )
 		return 0;
 
 	m_squadLeaderNPC = this;
-	Uint32 nbSquadMembers = 1;
+	UInt32 nbSquadMembers = 1;
 
 	if(HasNetname())
 	{
@@ -649,7 +649,7 @@ Uint32 CSquadNPC::SquadRecruit( Float searchRadius, Uint32 maxMembers )
 	else
 	{
 		Vector mins, maxs;
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			mins[i] = m_pState->origin[i] - searchRadius;
 			maxs[i] = m_pState->origin[i] + searchRadius;
@@ -696,7 +696,7 @@ Uint32 CSquadNPC::SquadRecruit( Float searchRadius, Uint32 maxMembers )
 // @brief Returns the number of squad members
 //
 //=============================================
-Uint32 CSquadNPC::GetNbSquadMembers( void )
+UInt32 CSquadNPC::GetNbSquadMembers( void )
 {
 	if(!IsInSquad())
 		return 0;
@@ -708,8 +708,8 @@ Uint32 CSquadNPC::GetNbSquadMembers( void )
 		return 0;
 	}
 
-	Uint32 memberCount = 0;
-	for(Uint32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
+	UInt32 memberCount = 0;
+	for(UInt32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
 	{
 		CBaseEntity* pMember = pSquadLeader->GetSquadMember(i);
 		if(pMember)
@@ -734,7 +734,7 @@ void CSquadNPC::RemoveNPCFromSquad( CBaseEntity* pRemoveNPC )
 	if(pRemoveNPC == GetSquadLeader())
 	{
 		// if the squad leader is removed, then disband the squad
-		for(Uint32 i = 0; i < (MAX_SQUAD_MEMBERS-1); i++)
+		for(UInt32 i = 0; i < (MAX_SQUAD_MEMBERS-1); i++)
 		{
 			if(m_squadMembers[i])
 			{
@@ -771,7 +771,7 @@ void CSquadNPC::SetSquadLeader( CBaseEntity* pSquadLeader )
 //=============================================
 void CSquadNPC::RemoveSquadMember( CBaseEntity* pRemoveNPC )
 {
-	for(Uint32 i = 0; i < (MAX_SQUAD_MEMBERS-1); i++)
+	for(UInt32 i = 0; i < (MAX_SQUAD_MEMBERS-1); i++)
 	{
 		if(m_squadMembers[i] == reinterpret_cast<const CBaseEntity*>(pRemoveNPC))
 		{
@@ -811,7 +811,7 @@ void CSquadNPC::SetSquadEnemy( CBaseEntity* pEnemy )
 	}
 
 	// Copy to rest of squad
-	for(Uint32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
+	for(UInt32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
 	{
 		CBaseEntity* pMember = pSquadLeader->GetSquadMember(i);
 		if(!pMember || pMember == this)
@@ -824,7 +824,7 @@ void CSquadNPC::SetSquadEnemy( CBaseEntity* pEnemy )
 			if(pMemberEnemy != nullptr && pMemberEnemy->IsAlive())
 			{
 				// Remember previous enemy
-				Double enemyLastSightTime;
+				double enemyLastSightTime;
 				Vector enemyLKP, enemyLKA;
 				pMember->GetEnemyInfo(enemyLKP, enemyLKA, enemyLastSightTime);
 				pMember->PushEnemy(pMemberEnemy, enemyLKP, enemyLKA, enemyLastSightTime);
@@ -865,7 +865,7 @@ void CSquadNPC::CopySquadEnemyInfo( void )
 	if(pLeader == this)
 		return;
 
-	Double enemyLastSightTime;
+	double enemyLastSightTime;
 	Vector enemyPosition, enemyAngles;
 	pLeader->GetEnemyInfo(enemyPosition, enemyAngles, enemyLastSightTime);
 
@@ -894,7 +894,7 @@ bool CSquadNPC::IsSquadSplitOnEnemies( void )
 		return false;
 	}
 
-	for(Uint32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
+	for(UInt32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
 	{
 		CBaseEntity* pMember = pSquadLeader->GetSquadMember(i);
 		if(!pMember)
@@ -912,10 +912,10 @@ bool CSquadNPC::IsSquadSplitOnEnemies( void )
 // @brief Tells if a squad member is in range
 //
 //=============================================
-bool CSquadNPC::IsSquadMemberInRange( const Vector& position, Float distance )
+bool CSquadNPC::IsSquadMemberInRange( const Vector& position, float distance )
 {
 	Vector mins, maxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		mins[i] = position[i] - distance;
 		maxs[i] = position[i] + distance;
@@ -928,7 +928,7 @@ bool CSquadNPC::IsSquadMemberInRange( const Vector& position, Float distance )
 		return false;
 	}
 
-	for(Uint32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
+	for(UInt32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
 	{
 		CBaseEntity* pMember = pSquadLeader->GetSquadMember(i);
 		if(!pMember || pMember == this)
@@ -956,7 +956,7 @@ bool CSquadNPC::IsVisibleBySquadMembers( void )
 
 	trace_t tr;
 	Vector start = GetEyePosition();
-	for(Uint32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
+	for(UInt32 i = 0; i < MAX_SQUAD_MEMBERS; i++)
 	{
 		CBaseEntity* pMember = pSquadLeader->GetSquadMember(i);
 		if(!pMember || pMember == this)
@@ -975,7 +975,7 @@ bool CSquadNPC::IsVisibleBySquadMembers( void )
 // @brief Tells if we can toss a grenade
 //
 //=============================================
-bool CSquadNPC::CheckGrenadeToss( Double& nextGrenadeCheckTime, bool &tossGrenade, Vector& grenadeTossVelocity )
+bool CSquadNPC::CheckGrenadeToss( double& nextGrenadeCheckTime, bool &tossGrenade, Vector& grenadeTossVelocity )
 {
 	if(nextGrenadeCheckTime > g_pGameVars->time)
 	{
@@ -1016,7 +1016,7 @@ bool CSquadNPC::CheckGrenadeToss( Double& nextGrenadeCheckTime, bool &tossGrenad
 		targetVector = m_enemyLastKnownPosition;
 
 	// Do not blow teammates up
-	Float grenadeDamageRadius = gSkillData.GetSkillCVarSetting(g_skillcvars.skillGrenadeRadius);
+	float grenadeDamageRadius = gSkillData.GetSkillCVarSetting(g_skillcvars.skillGrenadeRadius);
 	if(IsInSquad() && IsSquadMemberInRange(targetVector, grenadeDamageRadius))
 	{
 		nextGrenadeCheckTime = g_pGameVars->time + 1;
@@ -1051,7 +1051,7 @@ bool CSquadNPC::CheckGrenadeToss( Double& nextGrenadeCheckTime, bool &tossGrenad
 // @brief Returns the squad leader
 //
 //=============================================
-CBaseEntity* CSquadNPC::GetSquadMember( Uint32 index )
+CBaseEntity* CSquadNPC::GetSquadMember( UInt32 index )
 {
 	if(index >= (MAX_SQUAD_MEMBERS-1))
 		return this;
@@ -1075,7 +1075,7 @@ bool CSquadNPC::AddToSquad( CBaseEntity* pAddNPC )
 	}
 
 	// Avoid adding a squad member twice
-	for(Uint32 i = 0; i < (MAX_SQUAD_MEMBERS-1); i++)
+	for(UInt32 i = 0; i < (MAX_SQUAD_MEMBERS-1); i++)
 	{
 		if(m_squadMembers[i] == reinterpret_cast<const CBaseEntity*>(pAddNPC))
 		{
@@ -1084,7 +1084,7 @@ bool CSquadNPC::AddToSquad( CBaseEntity* pAddNPC )
 		}
 	}
 
-	for(Uint32 i = 0; i < (MAX_SQUAD_MEMBERS-1); i++)
+	for(UInt32 i = 0; i < (MAX_SQUAD_MEMBERS-1); i++)
 	{
 		// If a slot is empty, add a squad member
 		if(!m_squadMembers[i])

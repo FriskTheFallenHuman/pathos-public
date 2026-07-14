@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "skytexturesets.h"
 
 // Max skybox sets
-const Uint32 CSkyTextureSets::MAX_SKYBOX_TEXTURE_SETS = 32;
+const UInt32 CSkyTextureSets::MAX_SKYBOX_TEXTURE_SETS = 32;
 
 CSkyTextureSets gSkyTextureSets;
 
@@ -46,7 +46,7 @@ void CSkyTextureSets::Reset( void )
 // @brief
 //
 //=============================================
-Int32 CSkyTextureSets::RegisterSkyTextureSet( const Char* pstrSkyTextureName )
+Int32 CSkyTextureSets::RegisterSkyTextureSet( const char* pstrSkyTextureName )
 {
 	for(Int32 i = 0; i < (Int32)m_skyTextureNamesArray.size(); i++)
 	{
@@ -74,7 +74,7 @@ void CSkyTextureSets::RegisterSets( edict_t* pPlayer )
 	if(m_skyTextureNamesArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_skyTextureNamesArray.size(); i++)
+	for(UInt32 i = 0; i < m_skyTextureNamesArray.size(); i++)
 	{
 		if(pPlayer)
 			gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.addskytextureset, nullptr, pPlayer);

@@ -20,13 +20,13 @@ All Rights Reserved.
 // the original project I had for a custom engine.
 
 // Default bind file filename
-const Char CConfig::DEFAULT_BINDS_FILENAME[] = "default.cfg";
+const char CConfig::DEFAULT_BINDS_FILENAME[] = "default.cfg";
 // System config filename
-const Char CConfig::SYSTEM_CONFIG_FILENAME[] = "system.cfg";
+const char CConfig::SYSTEM_CONFIG_FILENAME[] = "system.cfg";
 // System config filename
-const Char CConfig::USER_CONFIG_FILENAME[] = "config.cfg";
+const char CConfig::USER_CONFIG_FILENAME[] = "config.cfg";
 // Name of the group that holds keybinds
-const Char CConfig::USER_CONFIG_GRP_NAME[] = "UserConfig";
+const char CConfig::USER_CONFIG_GRP_NAME[] = "UserConfig";
 
 //
 // Console commands
@@ -51,7 +51,7 @@ CConfig::CConfig( void ):
 //=============================================
 CConfig::~CConfig( void )
 {
-	for(Uint32 i = 0; i < m_configGroups.size(); i++)
+	for(UInt32 i = 0; i < m_configGroups.size(); i++)
 		delete m_configGroups[i];
 }
 
@@ -76,7 +76,7 @@ void CConfig::Init( void )
 //=============================================
 void CConfig::PostThink( void )
 {
-	for(Uint32 i = 0; i < m_configGroups.size(); i++)
+	for(UInt32 i = 0; i < m_configGroups.size(); i++)
 	{
 		if(!m_configGroups[i]->updatefile)
 			continue;
@@ -116,7 +116,7 @@ void CConfig::ResetStatus( void )
 // Class: CConfig
 // Function: SetValue
 //=============================================
-bool CConfig::SetValue( conf_group_t* pgroup, const Char* field, Int32 value, bool archive )
+bool CConfig::SetValue( conf_group_t* pgroup, const char* field, Int32 value, bool archive )
 {
 	ResetStatus();
 
@@ -152,7 +152,7 @@ bool CConfig::SetValue( conf_group_t* pgroup, const Char* field, Int32 value, bo
 // Class: CConfig
 // Function: SetValue
 //=============================================
-bool CConfig::SetValue( const Char* grpName, const Char* field, Int32 value, bool archive )
+bool CConfig::SetValue( const char* grpName, const char* field, Int32 value, bool archive )
 {
 	ResetStatus();
 	conf_group_t* pgrp = FindGroup(grpName);
@@ -169,7 +169,7 @@ bool CConfig::SetValue( const Char* grpName, const Char* field, Int32 value, boo
 // Class: CConfig
 // Function: SetValue
 //=============================================
-bool CConfig::SetValue( conf_group_t* pgroup, const Char* field, Float value, bool archive )
+bool CConfig::SetValue( conf_group_t* pgroup, const char* field, float value, bool archive )
 {
 	ResetStatus();
 
@@ -205,7 +205,7 @@ bool CConfig::SetValue( conf_group_t* pgroup, const Char* field, Float value, bo
 // Class: CConfig
 // Function: SetValue
 //=============================================
-bool CConfig::SetValue( const Char* grpName, const Char* field, Float value, bool archive )
+bool CConfig::SetValue( const char* grpName, const char* field, float value, bool archive )
 {
 	ResetStatus();
 	conf_group_t* pgrp = FindGroup(grpName);
@@ -222,7 +222,7 @@ bool CConfig::SetValue( const Char* grpName, const Char* field, Float value, boo
 // Class: CConfig
 // Function: SetValue
 //=============================================
-bool CConfig::SetValue( conf_group_t* pgroup, const Char* field, const Char* value, bool archive, field_type_t type )
+bool CConfig::SetValue( conf_group_t* pgroup, const char* field, const char* value, bool archive, field_type_t type )
 {
 	ResetStatus();
 
@@ -265,7 +265,7 @@ bool CConfig::SetValue( conf_group_t* pgroup, const Char* field, const Char* val
 // Class: CConfig
 // Function: SetValue
 //=============================================
-bool CConfig::SetValue( const Char* grpName, const Char* field, const Char* value, bool archive, field_type_t type )
+bool CConfig::SetValue( const char* grpName, const char* field, const char* value, bool archive, field_type_t type )
 {
 	ResetStatus();
 	conf_group_t* pgrp = FindGroup(grpName);
@@ -282,9 +282,9 @@ bool CConfig::SetValue( const Char* grpName, const Char* field, const Char* valu
 // Class: CConfig
 // Function: DeleteField
 //=============================================
-bool CConfig::DeleteField( conf_group_t* pgroup, const Char* name )
+bool CConfig::DeleteField( conf_group_t* pgroup, const char* name )
 {
-	for(Uint32 i = 0; i < pgroup->fields.size(); i++)
+	for(UInt32 i = 0; i < pgroup->fields.size(); i++)
 	{
 		if(!qstrcicmp(pgroup->fields[i].name, name))
 		{
@@ -301,7 +301,7 @@ bool CConfig::DeleteField( conf_group_t* pgroup, const Char* name )
 // Class: CConfig
 // Function: DeleteField
 //=============================================
-bool CConfig::DeleteField( const Char* grpName, const Char* name )
+bool CConfig::DeleteField( const char* grpName, const char* name )
 {
 	ResetStatus();
 	conf_group_t* pgrp = FindGroup(grpName);
@@ -318,7 +318,7 @@ bool CConfig::DeleteField( const Char* grpName, const Char* name )
 // Class: CConfig
 // Function: GetInt
 //=============================================
-const Int32 CConfig::GetInt( conf_group_t* pgroup, const Char* field )
+const Int32 CConfig::GetInt( conf_group_t* pgroup, const char* field )
 {
 	ResetStatus();
 
@@ -340,7 +340,7 @@ const Int32 CConfig::GetInt( conf_group_t* pgroup, const Char* field )
 // Class: CConfig
 // Function: GetFloat
 //=============================================
-const Float CConfig::GetFloat( conf_group_t* pgroup, const Char* field )
+const float CConfig::GetFloat( conf_group_t* pgroup, const char* field )
 {
 	ResetStatus();
 
@@ -362,7 +362,7 @@ const Float CConfig::GetFloat( conf_group_t* pgroup, const Char* field )
 // Class: CConfig
 // Function: GetString
 //=============================================
-const Char* CConfig::GetString( conf_group_t* pgroup, const Char* field )
+const char* CConfig::GetString( conf_group_t* pgroup, const char* field )
 {
 	ResetStatus();
 
@@ -384,9 +384,9 @@ const Char* CConfig::GetString( conf_group_t* pgroup, const Char* field )
 // Class: CConfig
 // Function: FindGroup
 //=============================================
-conf_group_t* CConfig::FindGroup( const Char* name )
+conf_group_t* CConfig::FindGroup( const char* name )
 {
-	for(Uint32 i = 0; i < m_configGroups.size(); i++)
+	for(UInt32 i = 0; i < m_configGroups.size(); i++)
 	{
 		if(!qstrcicmp(name, m_configGroups[i]->name))
 			return m_configGroups[i];
@@ -399,9 +399,9 @@ conf_group_t* CConfig::FindGroup( const Char* name )
 // Class: CConfig
 // Function: FindField
 //=============================================
-conf_field_t* CConfig::FindField( conf_group_t* pgroup, const Char* field )
+conf_field_t* CConfig::FindField( conf_group_t* pgroup, const char* field )
 {
-	for(Uint32 i = 0; i < pgroup->fields.size(); i++)
+	for(UInt32 i = 0; i < pgroup->fields.size(); i++)
 	{
 		if(!qstrcicmp(pgroup->fields[i].name, field))
 			return &pgroup->fields[i];
@@ -415,7 +415,7 @@ conf_field_t* CConfig::FindField( conf_group_t* pgroup, const Char* field )
 // Class: CConfig
 // Function: CreateGroup
 //=============================================
-conf_group_t* CConfig::CreateGroup( const Char* name, const Char* pstrFilename, group_type_t type )
+conf_group_t* CConfig::CreateGroup( const char* name, const char* pstrFilename, group_type_t type )
 {
 	// No such group, make a new one
 	conf_group_t* newGroup = new conf_group_t;
@@ -432,7 +432,7 @@ conf_group_t* CConfig::CreateGroup( const Char* name, const Char* pstrFilename, 
 // Class: CConfig
 // Function: CreateField
 //=============================================
-conf_field_t* CConfig::CreateField( conf_group_t* pgroup, const Char* name, field_type_t type )
+conf_field_t* CConfig::CreateField( conf_group_t* pgroup, const char* name, field_type_t type )
 {
 	conf_field_t newField;
 	newField.name = name;
@@ -446,7 +446,7 @@ conf_field_t* CConfig::CreateField( conf_group_t* pgroup, const Char* name, fiel
 // Class: CConfig
 // Function: WriteConfigFile
 //=============================================
-void CConfig::WriteConfigFile( conf_group_t* pgroup, const Char* pstrFilename ) const
+void CConfig::WriteConfigFile( conf_group_t* pgroup, const char* pstrFilename ) const
 {
 	CString ssOutFile;
 
@@ -461,13 +461,13 @@ void CConfig::WriteConfigFile( conf_group_t* pgroup, const Char* pstrFilename ) 
 	}
 
 	// Find every config group that uses this file
-	for(Uint32 i = 0; i < m_configGroups.size(); i++)
+	for(UInt32 i = 0; i < m_configGroups.size(); i++)
 	{
 		conf_group_t* confGroup = m_configGroups[i];
 		if(qstrcicmp(confGroup->filename, pstrFilename))
 			continue;
 
-		for(Uint32 j = 0; j < confGroup->fields.size(); j++)
+		for(UInt32 j = 0; j < confGroup->fields.size(); j++)
 		{
 			conf_field_t* confField = &confGroup->fields[j];
 
@@ -513,12 +513,12 @@ void CConfig::WriteConfigFile( conf_group_t* pgroup, const Char* pstrFilename ) 
 
 	if(pgroup->type == CONF_GRP_SYSTEM)
 	{
-		if(!FL_WriteFileRoot(reinterpret_cast<const byte*>(ssOutFile.c_str()), ssOutFile.length(), pstrFilename))
+		if(!FL_WriteFileRoot(reinterpret_cast<const Byte*>(ssOutFile.c_str()), ssOutFile.length(), pstrFilename))
 			Con_EPrintf("Failed to write config file.\n");
 	}
 	else
 	{
-		if(!FL_WriteFile(reinterpret_cast<const byte*>(ssOutFile.c_str()), ssOutFile.length(), pstrFilename))
+		if(!FL_WriteFile(reinterpret_cast<const Byte*>(ssOutFile.c_str()), ssOutFile.length(), pstrFilename))
 			Con_EPrintf("Failed to write config file.\n");
 	}
 }
@@ -529,8 +529,8 @@ void CConfig::WriteConfigFile( conf_group_t* pgroup, const Char* pstrFilename ) 
 //=============================================
 void CConfig::ReadSystemConfigFile( void )
 {
-	Uint32 fileSize = 0;
-	const byte *confFile = FL_LoadFileFromRoot(SYSTEM_CONFIG_FILENAME, &fileSize);
+	UInt32 fileSize = 0;
+	const Byte *confFile = FL_LoadFileFromRoot(SYSTEM_CONFIG_FILENAME, &fileSize);
 
 	if(!confFile || !fileSize)
 		return;
@@ -539,8 +539,8 @@ void CConfig::ReadSystemConfigFile( void )
 	CString strFieldName;
 	CString strValue;
 
-	Uint32 numLines = 0;
-	const Char *pchar = reinterpret_cast<const Char *>(confFile);
+	UInt32 numLines = 0;
+	const char *pchar = reinterpret_cast<const char *>(confFile);
 	while(pchar)
 	{
 		// Read the entire line in
@@ -550,7 +550,7 @@ void CConfig::ReadSystemConfigFile( void )
 			break;
 
 		// Get group
-		const Char* curParse = Common::Parse(line.c_str(), strGroupName, ".");
+		const char* curParse = Common::Parse(line.c_str(), strGroupName, ".");
 		if(!curParse || strGroupName.empty())
 			break;
 
@@ -581,7 +581,7 @@ void CConfig::ReadSystemConfigFile( void )
 
 		// Default to int
 		field_type_t stype = CONF_FIELD_INT;
-		for(Uint32 i = 0; i < strValue.length(); i++)
+		for(UInt32 i = 0; i < strValue.length(); i++)
 		{
 			if(!SDL_isdigit(static_cast<Uchar>(strValue[i])) && (strValue[i] != '.' || stype == CONF_FIELD_FLOAT))
 			{
@@ -606,7 +606,7 @@ void CConfig::ReadSystemConfigFile( void )
 		if(stype == CONF_FIELD_INT)
 			SetValue(pgrp, strFieldName.c_str(), SDL_atoi(strValue.c_str()), true);
 		else if(stype == CONF_FIELD_FLOAT)
-			SetValue(pgrp, strFieldName.c_str(), static_cast<Float>(SDL_atof(strValue.c_str()), true));
+			SetValue(pgrp, strFieldName.c_str(), static_cast<float>(SDL_atof(strValue.c_str()), true));
 		else if(stype == CONF_FIELD_STRING)
 			SetValue(pgrp, strFieldName.c_str(), strValue.c_str(), true);
 
@@ -620,14 +620,14 @@ void CConfig::ReadSystemConfigFile( void )
 // Class: CConfig
 // Function: ReadUserConfigFile
 //=============================================
-void CConfig::ReadUserConfigFile( const Char* pstrFilename )
+void CConfig::ReadUserConfigFile( const char* pstrFilename )
 {
-	Uint32 fileSize = 0;
-	const byte *confFile = FL_LoadFile(pstrFilename, &fileSize);
+	UInt32 fileSize = 0;
+	const Byte *confFile = FL_LoadFile(pstrFilename, &fileSize);
 	if(!confFile)
 		return;
 
-	const Char *pchar = reinterpret_cast<const Char *>(confFile);
+	const char *pchar = reinterpret_cast<const char *>(confFile);
 	while(pchar)
 	{
 		// Read the entire line in
@@ -645,7 +645,7 @@ void CConfig::ReadUserConfigFile( const Char* pstrFilename )
 			CString token;
 			Common::Parse(line.c_str(), token);
 
-			Uint32 i = 0;
+			UInt32 i = 0;
 			for(; i < ens.overwrittencvars.size(); i++)
 			{
 				if(!qstrcmp(ens.overwrittencvars[i], token.c_str()))
@@ -674,7 +674,7 @@ void CConfig::CmdExecuteScript( void )
 {
 	if(gCommands.Cmd_Argc() != 2)
 	{
-		const Char* pstrFnName = gCommands.Cmd_Argv(0);
+		const char* pstrFnName = gCommands.Cmd_Argv(0);
 		Con_Printf("%s usage: <config file name>\n", pstrFnName);
 		return;
 	}

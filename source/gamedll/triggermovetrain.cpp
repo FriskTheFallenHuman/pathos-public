@@ -83,9 +83,9 @@ bool CTriggerMoveTrain::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerMoveTrain::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerMoveTrain::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
-	const Char* pstrPathCornerName = gd_engfuncs.pfnGetString(m_targetPathName);
+	const char* pstrPathCornerName = gd_engfuncs.pfnGetString(m_targetPathName);
 	if(!pstrPathCornerName || !qstrlen(pstrPathCornerName))
 		return; // Spawn will already have warned about this
 
@@ -117,7 +117,7 @@ void CTriggerMoveTrain::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, 
 	}
 
 	// Get target train's name
-	const Char* pstrTargetTrainName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTargetTrainName = gd_engfuncs.pfnGetString(m_pFields->target);
 	if(!pstrTargetTrainName || !qstrlen(pstrTargetTrainName))
 		return;
 

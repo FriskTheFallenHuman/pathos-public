@@ -11,10 +11,6 @@ All Rights Reserved.
 #ifndef R_TEXTURES_H
 #define R_TEXTURES_H
 
-#include <string>
-#include <unordered_map>
-#include <map>
-
 #include "common.h"
 #include "textures_shared.h"
 #include "file_interface.h"
@@ -43,14 +39,14 @@ public:
 
 public:
 	// Default value for specular scale
-	static const Float DEFAULT_SPECFACTOR;
+	static const float DEFAULT_SPECFACTOR;
 	// Default phong exponent value
-	static const Float DEFAULT_PHONG_EXP;
+	static const float DEFAULT_PHONG_EXP;
 	// Anisotropy off value
-	static const Uint32 ANISOTROPY_OFF_VALUE;
+	static const UInt32 ANISOTROPY_OFF_VALUE;
 
 	// Extensions of the texture formats used
-	static const Char* TEXTURE_FORMAT_EXTENSIONS[];
+	static const char* TEXTURE_FORMAT_EXTENSIONS[];
 
 private:
 	// Map key type for the textures list hash
@@ -77,7 +73,7 @@ public:
 	// Deletes binds for all textures on a resource level
 	void DeleteTextures( rs_level_t level, bool keepentry = true );
 	// Removes a single texture
-	void DeleteTexture( const Char *pstrFilename );
+	void DeleteTexture( const char *pstrFilename );
 	// Removes a single texture
 	void DeleteTexture( en_texture_t* ptexture );
 	// Deletes materials on a resource level
@@ -88,15 +84,15 @@ public:
 	void ReloadResources( void );
 
 	// Seeks out a texture by name on a resource level
-	en_texture_t* FindTexture( const Char* pstrFilename, rs_level_t level );
+	en_texture_t* FindTexture( const char* pstrFilename, rs_level_t level );
 	// Loads a texture
-	en_texture_t* LoadTexture( const Char* pstrFilename, rs_level_t level, Int32 flags = TX_FL_NONE, const GLint* pborder = nullptr );
+	en_texture_t* LoadTexture( const char* pstrFilename, rs_level_t level, Int32 flags = TX_FL_NONE, const GLint* pborder = nullptr );
 	// Loads a texture from memory
-	en_texture_t* LoadFromMemory( const Char* pstrTextureName, rs_level_t level, Int32 flags, const byte* pdata, Uint32 width, Uint32 height, Uint32 bpp, Uint32 datasize = 0 );
+	en_texture_t* LoadFromMemory( const char* pstrTextureName, rs_level_t level, Int32 flags, const Byte* pdata, UInt32 width, UInt32 height, UInt32 bpp, UInt32 datasize = 0 );
 	// Loads the paletted texture from memory
-	en_texture_t* LoadPallettedTexture( const Char* pstrFilename, rs_level_t level, const byte *pdata, const color24_t *ppal, Uint32 width, Uint32 height, Int32 flags );
+	en_texture_t* LoadPallettedTexture( const char* pstrFilename, rs_level_t level, const Byte *pdata, const color24_t *ppal, UInt32 width, UInt32 height, Int32 flags );
 	// Loads a material script
-	en_material_t* LoadMaterialScript( const Char* pstrFilename, rs_level_t level, bool prompt = true, bool isloadingfromalias = false );
+	en_material_t* LoadMaterialScript( const char* pstrFilename, rs_level_t level, bool prompt = true, bool isloadingfromalias = false );
 
 	// Allocates an OpenGL texture index
 	en_texalloc_t* GenTextureIndex( rs_level_t level );
@@ -106,16 +102,16 @@ public:
 	en_material_t* GetDummyMaterial( void ) { return m_pDummyMaterial; };
 
 	// Seeks out a texture by name on a resource level
-	en_material_t* FindMaterialScript( const Char* pstrFilename, rs_level_t level );
+	en_material_t* FindMaterialScript( const char* pstrFilename, rs_level_t level );
 	// Finds the material by it's index
 	en_material_t* FindMaterialScriptByIndex( Int32 index );
 
 	// Returns the anisotropy value at a setting index
-	Int32 GetAnisotropySettingValue( Uint32 settingIndex );
+	Int32 GetAnisotropySettingValue( UInt32 settingIndex );
 	// Returns the number of anisotropy setting
-	Uint32 GetNbAnisotropySettings( void ) const;
+	UInt32 GetNbAnisotropySettings( void ) const;
 	// Updates anisotropy settings
-	void UpdateAnisotropySettings( Float cvarValue );
+	void UpdateAnisotropySettings( float cvarValue );
 	// Populates the anisotropy list
 	void PopulateAnisotropyList( void );
 
@@ -134,9 +130,9 @@ private:
 	// Frees all textures on the specified resource level
 	void DeleteBinds( rs_level_t level );
 	// Returns the texture type for a type string
-	static mt_texture_t GetTextureType( const Char* pstrTypename );
+	static mt_texture_t GetTextureType( const char* pstrTypename );
 	// Returns the format for a filename extension
-	static texture_format_t GetFormat( const Char* pstrFilename );
+	static texture_format_t GetFormat( const char* pstrFilename );
 
 	// Allocates a new texture object
 	en_texture_t* AllocTexture( const HashResourceTypeKey_t& key );
@@ -147,7 +143,7 @@ private:
 	void ResetMaterialsIndexArray( void );
 
 	// Loads a texture file and retrieves it's type
-	const byte* LoadFile( const Char* pstrFileName, texture_format_t& outFormat );
+	const Byte* LoadFile( const char* pstrFileName, texture_format_t& outFormat );
 
 private:
 	// Array of loaded textures

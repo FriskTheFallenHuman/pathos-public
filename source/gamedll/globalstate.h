@@ -37,17 +37,17 @@ public:
 	void Clear( void );
 	void Dump( void );
 
-	void SetGlobalState( const Char* pstrglobalstate, globalstate_state_t state );
-	void DeleteGlobalState( const Char* pstrglobalstate );
-	const globalstate_t* GetGlobalState( const Char* pstrglobalstate );
-	globalstate_state_t GetState( const Char* pstrglobalstate );
-	bool IsGlobalStatePresent( const Char* pstrglobalstate );
-	void UpdateGlobalStateMapName( const Char* pstrglobalstate );
+	void SetGlobalState( const char* pstrglobalstate, globalstate_state_t state );
+	void DeleteGlobalState( const char* pstrglobalstate );
+	const globalstate_t* GetGlobalState( const char* pstrglobalstate );
+	globalstate_state_t GetState( const char* pstrglobalstate );
+	bool IsGlobalStatePresent( const char* pstrglobalstate );
+	void UpdateGlobalStateMapName( const char* pstrglobalstate );
 
 public:
-	Uint32 GetNbGlobalStates( void );
+	UInt32 GetNbGlobalStates( void );
 	void SaveGlobalStates( void );
-	void ReadGlobalStateData( const Char* pstrglobalname, const Char* pstrlevelname, globalstate_state_t state );
+	void ReadGlobalStateData( const char* pstrglobalname, const char* pstrlevelname, globalstate_state_t state );
 
 public:
 	CLinkedList<globalstate_t> m_globalStatesList;
@@ -55,7 +55,7 @@ public:
 
 extern CGlobalState gGlobalStates;
 
-extern Uint32 GetNbGlobalStates( void );
+extern UInt32 GetNbGlobalStates( void );
 extern void SaveGlobalStates( void );
-extern void ReadGlobalStateData( const Char* pstrglobalname, const Char* pstrlevelname, globalstate_state_t state );
+extern void ReadGlobalStateData( const char* pstrglobalname, const char* pstrlevelname, globalstate_state_t state );
 #endif //GLOBALSTATE_H

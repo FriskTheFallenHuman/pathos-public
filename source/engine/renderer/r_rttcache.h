@@ -28,12 +28,12 @@ struct rtt_texture_t
 	Int32 index;
 	struct en_texalloc_t* palloc;
 
-	Uint32 width;
-	Uint32 height;
+	UInt32 width;
+	UInt32 height;
 	bool rectangle;
 	GLenum internalformat;
 
-	Double freetime;
+	double freetime;
 
 	rs_level_t level;
 };
@@ -46,7 +46,7 @@ class CRenderToTextureCache
 {
 public:
 	// Time until an unused texture is freed
-	static const Float TEXTURE_RELEASE_DELAY;
+	static const float TEXTURE_RELEASE_DELAY;
 
 public:
 	CRenderToTextureCache( void );
@@ -62,7 +62,7 @@ public:
 	void InitGL( void );
 
 	// Allocates a render-to-texture object
-	rtt_texture_t* Alloc( Uint32 width, Uint32 height, bool rectangle = false, GLenum internalformat = GL_RGBA, rs_level_t level = RS_GAME_LEVEL );
+	rtt_texture_t* Alloc( UInt32 width, UInt32 height, bool rectangle = false, GLenum internalformat = GL_RGBA, rs_level_t level = RS_GAME_LEVEL );
 	// Releases a render-to-texture object
 	void Free( rtt_texture_t* ptexture );
 	// Deletes a render-to-texture object
@@ -79,7 +79,7 @@ private:
 	// Cache link
 	CLinkedList<rtt_texture_t*> m_pCacheHeader;
 	// Number of allocates RTTs
-	Uint32 m_iNumAllocated;
+	UInt32 m_iNumAllocated;
 };
 extern CRenderToTextureCache gRTTCache;
 #endif

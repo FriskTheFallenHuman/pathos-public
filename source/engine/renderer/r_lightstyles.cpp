@@ -15,11 +15,11 @@ All Rights Reserved.
 #include "r_lightstyles.h"
 
 // Custom lightstyle start index(for dynamic lights)
-const Uint32 CLightStyleManager::CUSTOM_LIGHTSTYLE_START_INDEX = 255;
+const UInt32 CLightStyleManager::CUSTOM_LIGHTSTYLE_START_INDEX = 255;
 // Default lightstyle framerate
-const Char CLightStyleManager::DEFAULT_LIGHTSTYLE_FRAMERATE = 10;
+const char CLightStyleManager::DEFAULT_LIGHTSTYLE_FRAMERATE = 10;
 // Maximum lightstyle string length
-const Uint32 CLightStyleManager::MAX_STYLESTRING = 64;
+const UInt32 CLightStyleManager::MAX_STYLESTRING = 64;
 
 // Object definition
 CLightStyleManager gLightStyles;
@@ -85,7 +85,7 @@ void CLightStyleManager::ResetStyles( void )
 //====================================
 //
 //====================================
-void CLightStyleManager::AddCustomLightStyle( Uint32 index, Int32 framerate, bool interpolate, const Char* pstring )
+void CLightStyleManager::AddCustomLightStyle( UInt32 index, Int32 framerate, bool interpolate, const char* pstring )
 {
 	if(index < CUSTOM_LIGHTSTYLE_START_INDEX)
 	{
@@ -93,20 +93,20 @@ void CLightStyleManager::AddCustomLightStyle( Uint32 index, Int32 framerate, boo
 		return;
 	}
 
-	Uint32 length = qstrlen(pstring);
+	UInt32 length = qstrlen(pstring);
 	if(length+1 >= MAX_STYLESTRING)
 	{
 		Con_Printf("Error: Lightstyle with index %d is too long.\n", index);
 		return;
 	}
 
-	Uint32 insertPosition = m_lightStyles.size();
+	UInt32 insertPosition = m_lightStyles.size();
 	m_lightStyles.resize(m_lightStyles.size()+1);
 	lightstyle_t& style = m_lightStyles[insertPosition];
 
 	style.map.resize(length+1);
 	
-	for(Uint32 i = 0; i < length; i++)
+	for(UInt32 i = 0; i < length; i++)
 		style.map[i] = pstring[i];
 
 	style.map[length] = '\0';
@@ -127,7 +127,7 @@ void CLightStyleManager::AddCustomLightStyle( Uint32 index, Int32 framerate, boo
 //====================================
 //
 //====================================
-void CLightStyleManager::SetLightStyle( Uint32 index, Int32 framerate, bool interpolate, const Char* pstring )
+void CLightStyleManager::SetLightStyle( UInt32 index, Int32 framerate, bool interpolate, const char* pstring )
 {
 	if(index >= CUSTOM_LIGHTSTYLE_START_INDEX)
 	{
@@ -135,20 +135,20 @@ void CLightStyleManager::SetLightStyle( Uint32 index, Int32 framerate, bool inte
 		return;
 	}
 
-	Uint32 length = qstrlen(pstring);
+	UInt32 length = qstrlen(pstring);
 	if(length+1 >= MAX_STYLESTRING)
 	{
 		Con_Printf("Error: Lightstyle with index %d is too long.\n", index);
 		return;
 	}
 
-	Uint32 insertPosition = m_lightStyles.size();
+	UInt32 insertPosition = m_lightStyles.size();
 	m_lightStyles.resize(m_lightStyles.size()+1);
 	lightstyle_t& style = m_lightStyles[insertPosition];
 
 	style.map.resize(length+1);
 	
-	for(Uint32 i = 0; i < length; i++)
+	for(UInt32 i = 0; i < length; i++)
 		style.map[i] = pstring[i];
 
 	style.map[length] = '\0';
@@ -171,7 +171,7 @@ void CLightStyleManager::SetLightStyle( Uint32 index, Int32 framerate, bool inte
 //====================================
 void CLightStyleManager::AnimateStyles( void )
 {
-	for(Uint32 i = 0; i < m_lightStyles.size(); i++)
+	for(UInt32 i = 0; i < m_lightStyles.size(); i++)
 	{
 		lightstyle_t& style = m_lightStyles[i];
 		if(!style.length)
@@ -180,7 +180,7 @@ void CLightStyleManager::AnimateStyles( void )
 			continue;
 		}
 
-		Float frame = (rns.time*style.framerate);
+		float frame = (rns.time*style.framerate);
 		Int32 i1 = static_cast<Int32>(frame) % style.length;
 		while(style.map[i1] == ';')
 		{
@@ -192,7 +192,7 @@ void CLightStyleManager::AnimateStyles( void )
 
 		if(style.interp && style.map[i2] != ';')
 		{
-			const Float interp = frame - SDL_floor(frame);
+			const float interp = frame - SDL_floor(frame);
 
 			Int32 v1 = (style.map[i1] - 'a')*22;
 			if(v1 < 0)
@@ -202,7 +202,7 @@ void CLightStyleManager::AnimateStyles( void )
 			if(v2 < 0)
 				v2 = 0;
 
-			m_lightStyleValues[style.index] = ((static_cast<Float>(v1))*(1.0-interp)) + ((static_cast<Float>(v2))*interp);
+			m_lightStyleValues[style.index] = ((static_cast<float>(v1))*(1.0-interp)) + ((static_cast<float>(v2))*interp);
 			m_lightStyleValues[style.index] = m_lightStyleValues[style.index] / 256.0f;
 		}
 		else
@@ -214,7 +214,7 @@ void CLightStyleManager::AnimateStyles( void )
 			if(v < 0)
 				v = 0;
 
-			m_lightStyleValues[style.index] = static_cast<Float>(v)/256.0f;
+			m_lightStyleValues[style.index] = static_cast<float>(v)/256.0f;
 		}
 	}
 }
@@ -240,7 +240,7 @@ void CLightStyleManager::ApplyLightStyle( cl_dlight_t* dl, Vector& color )
 //====================================
 //
 //====================================
-CArray<Float>* CLightStyleManager::GetLightStyleValuesArray( void ) 
+CArray<float>* CLightStyleManager::GetLightStyleValuesArray( void ) 
 { 
 	return &m_lightStyleValues; 
 }
@@ -248,7 +248,7 @@ CArray<Float>* CLightStyleManager::GetLightStyleValuesArray( void )
 //====================================
 //
 //====================================
-Float CLightStyleManager::GetLightStyleValue( Uint32 styleIndex )
+float CLightStyleManager::GetLightStyleValue( UInt32 styleIndex )
 {
 	if(styleIndex >= m_lightStyleValues.size())
 		return 0;

@@ -11,7 +11,7 @@ All Rights Reserved.
 #define FUNCROTATING_H
 
 // Number of fan sound options
-static const Uint32 NUM_FAN_SOUND_OPTIONS = 6;
+static const UInt32 NUM_FAN_SOUND_OPTIONS = 6;
 
 //=============================================
 //
@@ -20,13 +20,13 @@ class CFuncRotating : public CBaseEntity
 {
 public:
 	// Array of fan sounds
-	static const Char* g_pFanSounds[NUM_FAN_SOUND_OPTIONS];
+	static const char* g_pFanSounds[NUM_FAN_SOUND_OPTIONS];
 
 public:
 	// Fan minimum pitch
-	static const Float FAN_MIN_PITCH;
+	static const float FAN_MIN_PITCH;
 	// Fan maximum pitch
-	static const Float FAN_MAX_PITCH;
+	static const float FAN_MAX_PITCH;
 
 public:
 	enum
@@ -61,7 +61,7 @@ public:
 	virtual void Precache( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	virtual void CallBlocked( CBaseEntity* pOther ) override;
-	virtual void CallUse( CBaseEntity* pacticator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pacticator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 	virtual Int32 GetEntityFlags( void ) override { return CBaseEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION; }
 	virtual void DeclareSaveFields( void ) override;
@@ -77,13 +77,13 @@ public:
 	void EXPORTFN RotateThink( void );
 
 protected:
-	Float m_fanFriction;
-	Float m_fanAttenuation;
-	Float m_volume;
-	Float m_pitch;
-	Float m_damage;
+	float m_fanFriction;
+	float m_fanAttenuation;
+	float m_volume;
+	float m_pitch;
+	float m_damage;
 	Int32 m_sounds;
-	Double m_lastThinkTime;
+	double m_lastThinkTime;
 	Int32 m_fanState;
 
 	string_t m_fanSound;

@@ -97,7 +97,7 @@ Int32 VBM_FindSequenceWithHeaviestActivity( const cache_model_t* pmodel, Int32 a
 // @brief
 //
 //=============================================
-void VBM_GetSequenceInfo( const cache_model_t* pmodel, Int32 sequence, Float* pframerate, Float* pgroundspeed )
+void VBM_GetSequenceInfo( const cache_model_t* pmodel, Int32 sequence, float* pframerate, float* pgroundspeed )
 {
 	if(pmodel->type != MOD_VBM)
 	{
@@ -149,7 +149,7 @@ void VBM_GetSequenceInfo( const cache_model_t* pmodel, Int32 sequence, Float* pf
 	{
 		if(pseqdesc->numframes > 1)
 		{
-			Float groundspeed = SDL_sqrt(Math::DotProduct(pseqdesc->linearmovement, pseqdesc->linearmovement));
+			float groundspeed = SDL_sqrt(Math::DotProduct(pseqdesc->linearmovement, pseqdesc->linearmovement));
 			(*pgroundspeed) = groundspeed*pseqdesc->fps/(pseqdesc->numframes-1);
 		}
 		else
@@ -197,7 +197,7 @@ Int32 VBM_GetSequenceFlags( const cache_model_t* pmodel, Int32 sequence )
 // @brief
 //
 //=============================================
-Float VBM_SetBlending( const cache_model_t* pmodel, Uint32 blendingindex, Int32 sequence, Float value, Float* pblending )
+float VBM_SetBlending( const cache_model_t* pmodel, UInt32 blendingindex, Int32 sequence, float value, float* pblending )
 {
 	if(blendingindex >= MAX_BLENDING)
 	{
@@ -247,8 +247,8 @@ Float VBM_SetBlending( const cache_model_t* pmodel, Uint32 blendingindex, Int32 
 		}
 	}
 
-	Float controllersetting = 255*(value - pseqdesc->blendstart[blendingindex])/(pseqdesc->blendend[blendingindex]-pseqdesc->blendstart[blendingindex]);
-	controllersetting = clamp(controllersetting, 0, 255);
+	float controllersetting = 255*(value - pseqdesc->blendstart[blendingindex])/(pseqdesc->blendend[blendingindex]-pseqdesc->blendstart[blendingindex]);
+	controllersetting = Clamp(controllersetting, 0, 255);
 	pblending[blendingindex] = controllersetting;
 
 	return controllersetting*(1.0/255.0)*(pseqdesc->blendend[blendingindex]-pseqdesc->blendstart[blendingindex])+pseqdesc->blendstart[blendingindex];
@@ -258,7 +258,7 @@ Float VBM_SetBlending( const cache_model_t* pmodel, Uint32 blendingindex, Int32 
 // @brief
 //
 //=============================================
-Uint32 VBM_GetNumSequenceBlenders( const cache_model_t* pmodel, Int32 sequence )
+UInt32 VBM_GetNumSequenceBlenders( const cache_model_t* pmodel, Int32 sequence )
 {
 	if(pmodel->type != MOD_VBM)
 	{
@@ -282,7 +282,7 @@ Uint32 VBM_GetNumSequenceBlenders( const cache_model_t* pmodel, Int32 sequence )
 	}
 
 	const mstudioseqdesc_t* pseqdesc = pstudiohdr->getSequence(sequence);
-	return (Uint32)pseqdesc->numblends;
+	return (UInt32)pseqdesc->numblends;
 }
 
 //=============================================
@@ -313,7 +313,7 @@ void VBM_GetEyePosition( const cache_model_t* pmodel, Vector& eyeposition )
 // @brief
 //
 //=============================================
-void VBM_PrecacheSequenceResources( const cache_model_t* pmodel, const Char* pstrsequencename )
+void VBM_PrecacheSequenceResources( const cache_model_t* pmodel, const char* pstrsequencename )
 {
 	if(pmodel->type != MOD_VBM)
 	{
@@ -393,7 +393,7 @@ Int32 VBM_FindTransition( const cache_model_t* pmodel, Int32 endanim, Int32 goal
 		return goalanim;
 	}
 
-	const mstudioseqdesc_t* pseqdesc = reinterpret_cast<const mstudioseqdesc_t*>(reinterpret_cast<const byte*>(pstudiohdr) + pstudiohdr->seqindex);
+	const mstudioseqdesc_t* pseqdesc = reinterpret_cast<const mstudioseqdesc_t*>(reinterpret_cast<const Byte*>(pstudiohdr) + pstudiohdr->seqindex);
 	if(pseqdesc[endanim].entrynode == 0 || pseqdesc[goalanim].entrynode == 0)
 		return goalanim;
 
@@ -404,7 +404,7 @@ Int32 VBM_FindTransition( const cache_model_t* pmodel, Int32 endanim, Int32 goal
 		return goalanim;
 	}
 
-	byte* ptransition = (reinterpret_cast<byte*>(pstudiohdr) + pstudiohdr->transitionindex);
+	Byte* ptransition = (reinterpret_cast<Byte*>(pstudiohdr) + pstudiohdr->transitionindex);
 	Int32 internnode = ptransition[(endnode-1)*pstudiohdr->numtransitions+(pseqdesc[goalanim].entrynode-1)];
 	if(internnode == 0)
 		return goalanim;
@@ -469,7 +469,7 @@ void VBM_SetBodyGroup( const cache_model_t* pmodel, Int32 groupindex, Int32 valu
 // @brief
 //
 //=============================================
-Int32 VBM_GetBodyGroupIndexByName( const cache_model_t* pmodel, const Char* pstrBodyGroupName )
+Int32 VBM_GetBodyGroupIndexByName( const cache_model_t* pmodel, const char* pstrBodyGroupName )
 {
 	if(pmodel->type != MOD_VBM)
 	{
@@ -501,7 +501,7 @@ Int32 VBM_GetBodyGroupIndexByName( const cache_model_t* pmodel, const Char* pstr
 // @brief
 //
 //=============================================
-Int32 VBM_GetSubmodelIndexByName( const cache_model_t* pmodel, Int32 bodyGroupIndex, const Char* pstrSubmodelName )
+Int32 VBM_GetSubmodelIndexByName( const cache_model_t* pmodel, Int32 bodyGroupIndex, const char* pstrSubmodelName )
 {
 	if(pmodel->type != MOD_VBM)
 	{
@@ -525,10 +525,10 @@ Int32 VBM_GetSubmodelIndexByName( const cache_model_t* pmodel, Int32 bodyGroupIn
 	}
 
 	CString submodelName(pstrSubmodelName);
-	Uint32 maxlength = sizeof(vbmsubmodel_t::name);
+	UInt32 maxlength = sizeof(vbmsubmodel_t::name);
 	if(submodelName.length() >= maxlength)
 	{
-		Uint32 numRemove = submodelName.length() - (maxlength-1);
+		UInt32 numRemove = submodelName.length() - (maxlength-1);
 		submodelName.erase(maxlength-1, numRemove);
 	}
 
@@ -583,7 +583,7 @@ Int32 VBM_GetBodyGroupValue( const cache_model_t* pmodel, Int32 groupindex, Int6
 // @brief
 //
 //=============================================
-Uint32 VBM_GetNumSequenceFrames( const cache_model_t* pmodel, Int32 sequence )
+UInt32 VBM_GetNumSequenceFrames( const cache_model_t* pmodel, Int32 sequence )
 {
 	if(pmodel->type != MOD_VBM)
 	{
@@ -618,7 +618,7 @@ Uint32 VBM_GetNumSequenceFrames( const cache_model_t* pmodel, Int32 sequence )
 // @brief
 //
 //=============================================
-Uint32 VBM_GetSequenceNumber( const cache_model_t* pmodel )
+UInt32 VBM_GetSequenceNumber( const cache_model_t* pmodel )
 {
 	if(pmodel->type != MOD_VBM)
 	{

@@ -25,7 +25,7 @@ All Rights Reserved.
 //=============================================
 //
 //=============================================
-bool SV_SetModel( edict_t* pedict, const Char* pstrFilepath, bool setbounds )
+bool SV_SetModel( edict_t* pedict, const char* pstrFilepath, bool setbounds )
 {
 	if(!pstrFilepath || !qstrlen(pstrFilepath))
 	{
@@ -97,7 +97,7 @@ bool SV_SetModel( edict_t* pedict, const Char* pstrFilepath, bool setbounds )
 //=============================================
 void SV_SetMinsMaxs( edict_t* pedict, const Vector& mins, const Vector& maxs )
 {
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(mins[i] > maxs[i])
 		{
@@ -129,7 +129,7 @@ void SV_SetMinsMaxs( edict_t* pedict, const Vector& mins, const Vector& maxs )
 //=============================================
 void SV_SetSize( edict_t* pedict, const Vector& size )
 {
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		pedict->state.mins[i] = size[i] + 1;
 		pedict->state.maxs[i] = -size[i] - 1;
@@ -168,7 +168,7 @@ void SV_AddToTouched( entindex_t hitent, trace_t& trace, const Vector& velocity 
 	if(hitent == NO_ENTITY_INDEX)
 		return;
 
-	for(Uint32 i = 0; i < svs.numpmovetraces; i++)
+	for(UInt32 i = 0; i < svs.numpmovetraces; i++)
 	{
 		if(svs.pmovetraces[i].hitentity == hitent)
 			return;
@@ -211,10 +211,10 @@ edict_t* SV_GetEdictByIndex( entindex_t entindex )
 //=============================================
 //
 //=============================================
-bool SV_InitPrivateData( edict_t* pedict, const Char* pstrClassname )
+bool SV_InitPrivateData( edict_t* pedict, const char* pstrClassname )
 {
 	// Init the gamedll interface
-	pfnPrivateData_t pfn = static_cast<pfnPrivateData_t>(SDL_LoadFunction(svs.pdllhandle, pstrClassname));
+	pfnPrivateData_t pfn = reinterpret_cast<pfnPrivateData_t>(SDL_LoadFunction(svs.pdllhandle, pstrClassname));
 	if(!pfn)
 		return false;
 
@@ -227,7 +227,7 @@ bool SV_InitPrivateData( edict_t* pedict, const Char* pstrClassname )
 //=============================================
 //
 //=============================================
-edict_t* SV_CreateEntity( const Char* pstrClassName )
+edict_t* SV_CreateEntity( const char* pstrClassName )
 {
 	if(ens.gamestate == GAME_INACTIVE)
 	{
@@ -300,7 +300,7 @@ bool SV_DropToFloor( edict_t* pentity )
 //=============================================
 //
 //=============================================
-bool SV_NPC_WalkMove( edict_t* pentity, Float yaw, Float dist, walkmove_t movemode )
+bool SV_NPC_WalkMove( edict_t* pentity, float yaw, float dist, walkmove_t movemode )
 {
 	if(!(pentity->state.flags & (FL_SWIM|FL_FLY|FL_ONGROUND)))
 		return false;

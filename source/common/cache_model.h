@@ -117,8 +117,8 @@ struct cache_model_t
 	// Model type
 	cmodel_type_t type;
 	// Index into cache
-	Uint32 cacheindex;
-	// TRUE if model was loaded into GL
+	UInt32 cacheindex;
+	// true if model was loaded into GL
 	bool isloaded;
 
 	// Mins of the model
@@ -126,7 +126,7 @@ struct cache_model_t
 	// Maxs of the model
 	Vector maxs;
 	// Radius of the model
-	Float radius;
+	float radius;
 
 	// Pointer to cache data
 	void *pcachedata;

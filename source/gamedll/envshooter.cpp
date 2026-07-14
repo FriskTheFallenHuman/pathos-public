@@ -98,7 +98,7 @@ void CEnvShooter::Precache( void )
 	if(m_modelName == NO_STRING_VALUE)
 		return;
 
-	const Char* pstrModelname = gd_engfuncs.pfnGetString(m_modelName);
+	const char* pstrModelname = gd_engfuncs.pfnGetString(m_modelName);
 	m_gibModelIndex = gd_engfuncs.pfnPrecacheModel(pstrModelname);
 
 	if(m_gibModelIndex != NO_PRECACHE)
@@ -141,7 +141,7 @@ CGib* CEnvShooter::CreateGib( void )
 
 	if(m_nbBodyVariations > CGib::GIB_SKULL)
 	{
-		Uint32 randomGibsBegin = CGib::GIB_SKULL+1;
+		UInt32 randomGibsBegin = CGib::GIB_SKULL+1;
 		pGib->SetBody(Common::RandomLong(randomGibsBegin, CGib::NB_GIBS-randomGibsBegin));
 	}
 

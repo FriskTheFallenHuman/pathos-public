@@ -124,7 +124,7 @@ void CEnvFilmGrain::SendInitMessage( const CBaseEntity* pPlayer )
 //=============================================
 // @brief
 //=============================================
-void CEnvFilmGrain::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvFilmGrain::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
     if(HasSpawnFlag(FL_GLOBAL_EFFECT))
     {

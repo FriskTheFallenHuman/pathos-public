@@ -19,7 +19,7 @@ class CEnvFunnel : public CPointEntity
 {
 public:
 	// The default sprite model
-	static const Char DEFAULT_SPRITE_NAME[];
+	static const char DEFAULT_SPRITE_NAME[];
 
 public:
 	enum
@@ -37,7 +37,7 @@ public:
 	virtual void Precache( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	
 private:
 	string_t m_spriteName;

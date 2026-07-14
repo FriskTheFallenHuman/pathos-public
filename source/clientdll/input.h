@@ -13,7 +13,7 @@ All Rights Reserved.
 #include "usercmd.h"
 
 // Max keys a command can be bound to
-static const Uint32 MAX_INPUT_KEYS = 2;
+static const UInt32 MAX_INPUT_KEYS = 2;
 
 enum key_states_t
 {
@@ -31,7 +31,7 @@ struct kbutton_t
 	kbutton_t():
 		state(KS_UP)
 	{
-		for(Uint32 i = 0; i < MAX_INPUT_KEYS; i++)
+		for(UInt32 i = 0; i < MAX_INPUT_KEYS; i++)
 			buttons[i] = SDL_SCANCODE_UNKNOWN;
 	}
 
@@ -57,7 +57,7 @@ struct m_filter_info_t
 		{}
 
 	CArray<m_filterframe_t> filterframes;
-	Uint32 numframes;
+	UInt32 numframes;
 };
 
 extern kbutton_t cmd_lean;
@@ -81,7 +81,7 @@ extern kbutton_t cmd_heal;
 // Functions for client input
 extern void CL_KeyDown( kbutton_t& btn );
 extern void CL_KeyUp( kbutton_t& btn, bool isReset = false );
-extern Float CL_KeyState( kbutton_t& btn );
+extern float CL_KeyState( kbutton_t& btn );
 
 extern void CL_InitInput( void );
 extern void CL_ShutdownInput( void );

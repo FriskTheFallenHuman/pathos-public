@@ -13,9 +13,9 @@ All Rights Reserved.
 #include "constants.h"
 
 // Used for custom rendermode types
-static constexpr Uint32 RENDERMODE_BITMASK = 255;
+static constexpr UInt32 RENDERMODE_BITMASK = 255;
 // Max lightstyles affecting an entity
-static constexpr Uint32 MAX_ENTITY_STYLES = 4;
+static constexpr UInt32 MAX_ENTITY_STYLES = 4;
 
 enum movetype_t
 {
@@ -98,43 +98,43 @@ enum waterlevel_t
 };
 
 
-static constexpr Uint64 FL_NONE				= 0;
-static constexpr Uint64 FL_KILLME			= (1ULL<<0);
-static constexpr Uint64 FL_BASEVELOCITY		= (1ULL<<1);
-static constexpr Uint64 FL_ONGROUND			= (1ULL<<2);
-static constexpr Uint64 FL_CONVEYOR			= (1ULL<<3);
-static constexpr Uint64 FL_ALWAYSTHINK		= (1ULL<<4);
-static constexpr Uint64 FL_NPC_CLIP			= (1ULL<<5);
-static constexpr Uint64 FL_WORLDBRUSH		= (1ULL<<6);
-static constexpr Uint64 FL_NPC				= (1ULL<<7);
-static constexpr Uint64 FL_CLIENT			= (1ULL<<8);
-static constexpr Uint64 FL_FLOAT			= (1ULL<<9);
-static constexpr Uint64 FL_FLY				= (1ULL<<10);
-static constexpr Uint64 FL_SWIM				= (1ULL<<11);
-static constexpr Uint64 FL_INWATER			= (1ULL<<12);
-static constexpr Uint64 FL_WATERJUMP		= (1ULL<<13);
-static constexpr Uint64 FL_DORMANT			= (1ULL<<14);
-static constexpr Uint64 FL_DUCKING			= (1ULL<<15);
-static constexpr Uint64 FL_FROZEN			= (1ULL<<16);
-static constexpr Uint64 FL_GRABBED			= (1ULL<<17);
-static constexpr Uint64 FL_ON_LADDER		= (1ULL<<18);
-static constexpr Uint64 FL_DEAD				= (1ULL<<19);
-static constexpr Uint64 FL_ON_BIKE			= (1ULL<<20);
-static constexpr Uint64 FL_NO_SPRINT		= (1ULL<<21);
-static constexpr Uint64 FL_SLOWMOVE			= (1ULL<<22);
-static constexpr Uint64 FL_GODMODE			= (1ULL<<23);
-static constexpr Uint64 FL_NOTARGET			= (1ULL<<24);
-static constexpr Uint64 FL_PARENTED			= (1ULL<<25);
-static constexpr Uint64 FL_INITIALIZE		= (1ULL<<26);
-static constexpr Uint64 FL_REMOVE_ON_SPAWN	= (1ULL<<27);
-static constexpr Uint64 FL_PMOVE_IGNORE		= (1ULL<<28);
-static constexpr Uint64 FL_PARTIALGROUND	= (1ULL<<29);
-static constexpr Uint64 FL_GRAPH_ENTITY		= (1ULL<<30);
-static constexpr Uint64 FL_PARALYZED		= (1ULL<<31);
-static constexpr Uint64 FL_NO_HITBOX_TRACE	= (1ULL<<32);
-static constexpr Uint64 FL_PARTICLE_BLOCKER	= (1ULL<<33);
-static constexpr Uint64 FL_NO_JUMPING		= (1ULL<<34);
-static constexpr Uint64 FL_DRAINED_STAMINA	= (1ULL<<35);
+static constexpr UInt64 FL_NONE				= 0;
+static constexpr UInt64 FL_KILLME			= (1ULL<<0);
+static constexpr UInt64 FL_BASEVELOCITY		= (1ULL<<1);
+static constexpr UInt64 FL_ONGROUND			= (1ULL<<2);
+static constexpr UInt64 FL_CONVEYOR			= (1ULL<<3);
+static constexpr UInt64 FL_ALWAYSTHINK		= (1ULL<<4);
+static constexpr UInt64 FL_NPC_CLIP			= (1ULL<<5);
+static constexpr UInt64 FL_WORLDBRUSH		= (1ULL<<6);
+static constexpr UInt64 FL_NPC				= (1ULL<<7);
+static constexpr UInt64 FL_CLIENT			= (1ULL<<8);
+static constexpr UInt64 FL_FLOAT			= (1ULL<<9);
+static constexpr UInt64 FL_FLY				= (1ULL<<10);
+static constexpr UInt64 FL_SWIM				= (1ULL<<11);
+static constexpr UInt64 FL_INWATER			= (1ULL<<12);
+static constexpr UInt64 FL_WATERJUMP		= (1ULL<<13);
+static constexpr UInt64 FL_DORMANT			= (1ULL<<14);
+static constexpr UInt64 FL_DUCKING			= (1ULL<<15);
+static constexpr UInt64 FL_FROZEN			= (1ULL<<16);
+static constexpr UInt64 FL_GRABBED			= (1ULL<<17);
+static constexpr UInt64 FL_ON_LADDER		= (1ULL<<18);
+static constexpr UInt64 FL_DEAD				= (1ULL<<19);
+static constexpr UInt64 FL_ON_BIKE			= (1ULL<<20);
+static constexpr UInt64 FL_NO_SPRINT		= (1ULL<<21);
+static constexpr UInt64 FL_SLOWMOVE			= (1ULL<<22);
+static constexpr UInt64 FL_GODMODE			= (1ULL<<23);
+static constexpr UInt64 FL_NOTARGET			= (1ULL<<24);
+static constexpr UInt64 FL_PARENTED			= (1ULL<<25);
+static constexpr UInt64 FL_INITIALIZE		= (1ULL<<26);
+static constexpr UInt64 FL_REMOVE_ON_SPAWN	= (1ULL<<27);
+static constexpr UInt64 FL_PMOVE_IGNORE		= (1ULL<<28);
+static constexpr UInt64 FL_PARTIALGROUND	= (1ULL<<29);
+static constexpr UInt64 FL_GRAPH_ENTITY		= (1ULL<<30);
+static constexpr UInt64 FL_PARALYZED		= (1ULL<<31);
+static constexpr UInt64 FL_NO_HITBOX_TRACE	= (1ULL<<32);
+static constexpr UInt64 FL_PARTICLE_BLOCKER	= (1ULL<<33);
+static constexpr UInt64 FL_NO_JUMPING		= (1ULL<<34);
+static constexpr UInt64 FL_DRAINED_STAMINA	= (1ULL<<35);
 
 enum entstate_bits_t
 {
@@ -260,13 +260,13 @@ struct entity_state_t
 		memset(blending, 0, sizeof(blending));
 		
 		vlight_styles[0] = 0;
-		for(Uint32 i = 1; i < MAX_ENTITY_STYLES; i++)
+		for(UInt32 i = 1; i < MAX_ENTITY_STYLES; i++)
 			vlight_styles[i] = 255;
 	}
 
 	entindex_t entindex;
-	Uint64 msg_num;
-	Double msg_time;
+	UInt64 msg_num;
+	double msg_time;
 
 	Vector movedir;
 	Vector origin;
@@ -276,7 +276,7 @@ struct entity_state_t
 	Vector velocity;
 	Vector avelocity;
 	Vector basevelocity;
-	Float fallvelocity;
+	float fallvelocity;
 
 	Vector punchangles;
 	Vector punchamount;
@@ -289,19 +289,19 @@ struct entity_state_t
 	bool fixangles;
 	bool addavelocity;
 
-	Float idealpitch;
-	Float pitchspeed;
+	float idealpitch;
+	float pitchspeed;
 
-	Float idealyaw;
-	Float yawspeed;
+	float idealyaw;
+	float yawspeed;
 
-	Float speed;
-	Float stamina;
+	float speed;
+	float stamina;
 
 	Int32 modelindex;
 
 	Int32 vlight_vbo_index;
-	byte vlight_styles[MAX_ENTITY_STYLES];
+	Byte vlight_styles[MAX_ENTITY_STYLES];
 
 	Vector absmin;
 	Vector absmax;
@@ -309,8 +309,8 @@ struct entity_state_t
 	Vector maxs;
 	Vector size;
 
-	Double ltime;
-	Double nextthink;
+	double ltime;
+	double nextthink;
 
 	Int32 movetype;
 	Int32 solid;
@@ -319,39 +319,39 @@ struct entity_state_t
 	Int64 body;
 	Int64 effects;
 
-	Float gravity;
-	Float friction;
+	float gravity;
+	float friction;
 
 	Int32 sequence;
 	Int32 gaitsequence;
 
-	Float frame;
-	Float gaitframe;
-	Double animtime;
-	Double gaitanimtime;
-	Float framerate;
+	float frame;
+	float gaitframe;
+	double animtime;
+	double gaitanimtime;
+	float framerate;
 
-	Float gaityaw;
+	float gaityaw;
 	Int32 renderframe;
 
-	Float controllers[MAX_CONTROLLERS];
-	Float blending[MAX_BLENDING];
+	float controllers[MAX_CONTROLLERS];
+	float blending[MAX_BLENDING];
 
-	Float scale;
+	float scale;
 
 	Int32 rendertype;
 
 	Int32 rendermode;
-	Float renderamt;
+	float renderamt;
 	Vector rendercolor;
 	Int32 renderfx;
 	Vector lightorigin;
-	Uint32 numsegments;
+	UInt32 numsegments;
 
-	Float health;
-	Float maxhealth;
+	float health;
+	float maxhealth;
 	Int32 takedamage;
-	Float armorvalue;
+	float armorvalue;
 	Int32 deadstate;
 
 	Int32 frags;
@@ -369,22 +369,22 @@ struct entity_state_t
 	entindex_t groundent;
 
 	Int64 spawnflags;
-	Uint64 flags;
+	UInt64 flags;
 
 	Int32 waterlevel;
 	Int32 watertype;
-	Float waterjumptime;
+	float waterjumptime;
 
-	Float maxspeed;
-	Float fov;
+	float maxspeed;
+	float fov;
 
 	bool induck;
 	Int32 timestepsound;
 	Int32 swimtime;
-	Float ducktime;
+	float ducktime;
 	bool stepleft;
-	Float dmgtaken;
-	Float planezcap;
+	float dmgtaken;
+	float planezcap;
 
 	Int32 groupinfo;
 
@@ -399,10 +399,10 @@ struct entity_state_t
 	Int32 iuser7;
 	Int32 iuser8;
 
-	Float fuser1;
-	Float fuser2;
-	Float fuser3;
-	Float fuser4;
+	float fuser1;
+	float fuser2;
+	float fuser3;
+	float fuser4;
 
 	Vector vuser1;
 	Vector vuser2;

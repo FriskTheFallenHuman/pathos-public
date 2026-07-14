@@ -36,20 +36,20 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	
 private:
 	void EXPORTFN SpawnThink( void );
 
 private:
-	Float m_radius;
-	Uint32 m_tracerCount;
-	Float m_life;
-	Float m_duration;
-	Double m_lastSpawnTime;
-	Uint32 m_spawnCount;
-	Double m_spawnBeginTime;
-	Float m_tracerLength;
-	Float m_tracerWidth;
+	float m_radius;
+	UInt32 m_tracerCount;
+	float m_life;
+	float m_duration;
+	double m_lastSpawnTime;
+	UInt32 m_spawnCount;
+	double m_spawnBeginTime;
+	float m_tracerLength;
+	float m_tracerWidth;
 };
 #endif //ENVIMPLOSION_H

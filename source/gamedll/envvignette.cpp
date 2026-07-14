@@ -140,7 +140,7 @@ void CEnvVignette::SendInitMessage( const CBaseEntity* pPlayer )
 // @brief
 //
 //=============================================
-void CEnvVignette::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvVignette::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
     if(HasSpawnFlag(FL_GLOBAL_EFFECT))
     {

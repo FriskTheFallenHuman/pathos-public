@@ -35,7 +35,7 @@ CMathCounter::CMathCounter( edict_t* pedict ) :
     m_operationOnTrigger(ADD),
     m_operationOffTrigger(ADD)
 {
-    for(Uint32 i = 0; i < NB_USEMODES; i++)
+    for(UInt32 i = 0; i < NB_USEMODES; i++)
         m_incrementValues[i] = DEFAULT_START_VALUE;
 }
 
@@ -62,8 +62,7 @@ void CMathCounter::DeclareSaveFields( void )
     DeclareSaveField(DEFINE_DATA_FIELD(CMathCounter, m_operationOnTrigger, EFIELD_UINT32));
     DeclareSaveField(DEFINE_DATA_FIELD(CMathCounter, m_operationOffTrigger, EFIELD_UINT32));
 
-    for(Uint32 i = 0; i < NB_USEMODES; i++)
-        DeclareSaveField(DEFINE_DATA_FIELD(CMathCounter, m_incrementValues[i], EFIELD_INT32));
+    DeclareSaveField(DEFINE_DATA_FIELD_ARRAY(CMathCounter, m_incrementValues, EFIELD_INT32, NB_USEMODES));
 }
 
 //=============================================
@@ -187,12 +186,12 @@ void CMathCounter::IncrementValue( operation_t operation, Int32 increment )
 //=============================================
 // @brief Call the use function
 //=============================================
-void CMathCounter::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CMathCounter::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
     m_activator = pActivator;
 
     Int32 increment;
-    Uint32 operation;
+    UInt32 operation;
     switch (useMode)
     {
     case USE_ON:

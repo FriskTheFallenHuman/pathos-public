@@ -60,7 +60,7 @@ void CTriggerSaveWeapons::DeclareSaveFields( void )
 // @brief
 //
 //=============================================
-void CTriggerSaveWeapons::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerSaveWeapons::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!m_pPlayer)
 	{

@@ -15,9 +15,9 @@ All Rights Reserved.
 //
 // @param pdata Pointer to data
 // @param datasize Size of data to append
-// @return TRUE if buffer was resized, FALSE otherwise
+// @return true if buffer was resized, false otherwise
 //=============================================
-inline bool CBuffer::append( const void* pdata, Uint32 datasize )
+DO_INLINE bool CBuffer::append( const void* pdata, Uint32 datasize )
 {
 	bool wasresized = false;
 	const Uint32 finalSize = m_bufferDataPosition + datasize;
@@ -26,12 +26,12 @@ inline bool CBuffer::append( const void* pdata, Uint32 datasize )
 		CArray<Int64> pointerOffsetsArray;
 		if(!m_pointersArray.empty())
 		{
-			const byte* pbaseptr = static_cast<byte*>(m_pBufferData);
+			const Byte* pbaseptr = static_cast<Byte*>(m_pBufferData);
 
 			pointerOffsetsArray.resize(m_pointersArray.size());
 			for(Uint32 i = 0; i < m_pointersArray.size(); i++)
 			{
-				const byte* pointer = static_cast<byte*>(*m_pointersArray[i]);
+				const Byte* pointer = static_cast<Byte*>(*m_pointersArray[i]);
 				Int64 offset = pointer - pbaseptr;
 				pointerOffsetsArray[i] = offset;
 			}
@@ -41,18 +41,18 @@ inline bool CBuffer::append( const void* pdata, Uint32 datasize )
 		const Uint32 memNeeded = finalSize - (m_bufferSize - m_bufferDataPosition);
 		if(memNeeded > m_bufferAllocSize)
 		{
-			const Float nbTimes = static_cast<Float>(static_cast<Float>(memNeeded/(Float)m_bufferAllocSize));
+			const float nbTimes = static_cast<float>(static_cast<float>(memNeeded/(float)m_bufferAllocSize));
 			multiplier = static_cast<Int32>(ceil(nbTimes));
 		}
 
 		// Resize the message data buffer
-		m_pBufferData = Common::ResizeArray(m_pBufferData, sizeof(byte), m_bufferSize, m_bufferAllocSize*multiplier);
+		m_pBufferData = Common::ResizeArray(m_pBufferData, sizeof(Byte), m_bufferSize, m_bufferAllocSize*multiplier);
 		m_bufferSize = m_bufferSize + m_bufferAllocSize*multiplier;
 
 		// Restore pointers
 		if(!pointerOffsetsArray.empty())
 		{
-			byte* pbaseptr = static_cast<byte*>(m_pBufferData);
+			Byte* pbaseptr = static_cast<Byte*>(m_pBufferData);
 			for(Uint32 i = 0; i < pointerOffsetsArray.size(); i++)
 			{
 				void* pfinal = pbaseptr + pointerOffsetsArray[i];
@@ -66,8 +66,8 @@ inline bool CBuffer::append( const void* pdata, Uint32 datasize )
 	if(pdata)
 	{
 		// Only write data if the pointer is not null, otherwise just reserve it
-		byte *pdest = static_cast<byte*>(m_pBufferData) + m_bufferDataPosition;
-		memcpy(pdest, pdata, sizeof(byte)*datasize);
+		Byte *pdest = static_cast<Byte*>(m_pBufferData) + m_bufferDataPosition;
+		memcpy(pdest, pdata, sizeof(Byte)*datasize);
 	}
 
 	// Add to offset
@@ -80,7 +80,7 @@ inline bool CBuffer::append( const void* pdata, Uint32 datasize )
 //
 // @return Reference to data pointer
 //=============================================
-inline void*& CBuffer::getbufferdata( void )
+DO_INLINE void*& CBuffer::getbufferdata( void )
 {
 	return m_pBufferData;
 }
@@ -90,7 +90,7 @@ inline void*& CBuffer::getbufferdata( void )
 //
 // @return Current writind position
 //=============================================
-inline Uint32 CBuffer::getdatasize( void ) const
+DO_INLINE Uint32 CBuffer::getdatasize( void ) const
 {
 	return m_bufferDataPosition;
 }
@@ -100,7 +100,7 @@ inline Uint32 CBuffer::getdatasize( void ) const
 //
 // @return Current allocated buffer size
 //=============================================
-inline Uint32 CBuffer::getbuffersize( void ) const
+DO_INLINE Uint32 CBuffer::getbuffersize( void ) const
 {
 	return m_bufferSize;
 }
@@ -109,7 +109,7 @@ inline Uint32 CBuffer::getbuffersize( void ) const
 // @brief Resets the writing position to zero
 //
 //=============================================
-inline void CBuffer::reset( void )
+DO_INLINE void CBuffer::reset( void )
 {
 	m_bufferDataPosition = 0;
 }
@@ -119,13 +119,13 @@ inline void CBuffer::reset( void )
 //
 // @param ptr Pointer that is to be added
 //=============================================
-inline void CBuffer::addpointer( void** ptr )
+DO_INLINE void CBuffer::addpointer( void** ptr )
 {
 	if (!ptr || !(*ptr))
 		return;
 
-	const byte* pbaseptr = static_cast<byte*>(m_pBufferData);
-	const byte* pointer = static_cast<byte*>(*ptr);
+	const Byte* pbaseptr = static_cast<Byte*>(m_pBufferData);
+	const Byte* pointer = static_cast<Byte*>(*ptr);
 
 	const Int64 offset = (pointer - pbaseptr);
 	if(offset < 0 || offset > m_bufferSize)
@@ -145,7 +145,7 @@ inline void CBuffer::addpointer( void** ptr )
 //
 // @param ptr Pointer to remove
 //=============================================
-inline void CBuffer::removepointer( const void** ptr )
+DO_INLINE void CBuffer::removepointer( const void** ptr )
 {
 	for(Uint32 i = 0; i < m_pointersArray.size(); i++)
 	{
@@ -162,7 +162,7 @@ inline void CBuffer::removepointer( const void** ptr )
 //
 // @param ptr Pointer to remove
 //=============================================
-inline void CBuffer::removepointer( void** ptr )
+DO_INLINE void CBuffer::removepointer( void** ptr )
 {
 	for(Uint32 i = 0; i < m_pointersArray.size(); i++)
 	{
@@ -178,10 +178,10 @@ inline void CBuffer::removepointer( void** ptr )
 // @brief Initializes the buffer with the allocation size
 //
 //=============================================
-inline void CBuffer::initbuffer( void )
+DO_INLINE void CBuffer::initbuffer( void )
 {
-	m_pBufferData = new byte[m_bufferAllocSize];
-	memset(m_pBufferData, 0, sizeof(byte)*m_bufferAllocSize);
+	m_pBufferData = new Byte[m_bufferAllocSize];
+	memset(m_pBufferData, 0, sizeof(Byte)*m_bufferAllocSize);
 
 	m_bufferSize = m_bufferAllocSize;
 }

@@ -45,7 +45,7 @@ CFileCache::~CFileCache( void )
 // @brief Loads a file into memory
 //
 //=============================================
-const byte* CFileCache::LoadFile( const Char* pstrpath, Uint32* psize )
+const Byte* CFileCache::LoadFile( const char* pstrpath, UInt32* psize )
 {
 	FileCacheMap_t::iterator it = m_fileCacheMap.find(pstrpath);
 	if(it != m_fileCacheMap.end())
@@ -66,7 +66,7 @@ const byte* CFileCache::LoadFile( const Char* pstrpath, Uint32* psize )
 		Int32 size = static_cast<Int32>(SDL_RWtell(pf));
 		SDL_RWseek(pf, 0, RW_SEEK_SET);
 
-		byte* pbuffer = new byte[size+1];
+		Byte* pbuffer = new Byte[size+1];
 		size_t numbytes = SDL_RWread(pf, pbuffer, 1, size);
 		SDL_RWclose(pf);
 
@@ -89,7 +89,7 @@ const byte* CFileCache::LoadFile( const Char* pstrpath, Uint32* psize )
 			*psize = size;
 
 		it = m_fileCacheMap.insert(std::pair<CString, file_t*>(pstrpath, pnew)).first;
-		std::pair<FilePtrCacheIteratorMap_t::iterator, bool> result = m_filePtrCacheIteratorMap.insert(std::pair<const byte*, FileCacheMap_t::iterator>(pnew->pfile, it));
+		std::pair<FilePtrCacheIteratorMap_t::iterator, bool> result = m_filePtrCacheIteratorMap.insert(std::pair<const Byte*, FileCacheMap_t::iterator>(pnew->pfile, it));
 		if(!result.second)
 			Con_EPrintf("%s - Iterator for '%s' already inside file pointer->cache iterator map.\n", __FUNCTION__, pstrpath);
 
@@ -104,7 +104,7 @@ const byte* CFileCache::LoadFile( const Char* pstrpath, Uint32* psize )
 //=============================================
 bool CFileCache::FreeFile( const void* pfile )
 {
-	const byte* pfileptr = reinterpret_cast<const byte*>(pfile);
+	const Byte* pfileptr = reinterpret_cast<const Byte*>(pfile);
 	FilePtrCacheIteratorMap_t::iterator it = m_filePtrCacheIteratorMap.find(pfileptr);
 	if(it == m_filePtrCacheIteratorMap.end())
 	{
@@ -144,12 +144,12 @@ void CFileCache::Dump( void )
 
 	Con_Printf("Number of files loaded: %d.\n", m_fileCacheMap.size());
 
-	Uint32 index = 0;
+	UInt32 index = 0;
 	FileCacheMap_t::iterator it = m_fileCacheMap.begin();
 	while(it != m_fileCacheMap.end())
 	{
 		file_t* pfile = it->second;
-		Float sizemb = static_cast<Float>(pfile->filesize) / 1024.0f * 1024.0f;
+		float sizemb = static_cast<float>(pfile->filesize) / 1024.0f * 1024.0f;
 
 		Con_Printf("\t%d - File '%s', size: %.2f mb, reference count: %d.\n", index, it->first.c_str(), sizemb, pfile->refcount);
 		index++;
@@ -181,9 +181,9 @@ file_interface_t ENGINE_FILE_FUNCTIONS =
 // @param size Size of data to be written
 // @param pstrpath Path to write the file to
 // @param append If true, the data will be appeneded to a file with this name if it already exists
-// @return TRUE if write was successful, FALSE otherwise
+// @return true if write was successful, false otherwise
 //=============================================
-bool FL_WriteFile( const byte* pdata, Uint32 size, const Char* pstrpath, bool append )
+bool FL_WriteFile( const Byte* pdata, UInt32 size, const char* pstrpath, bool append )
 {
 	CString filepath;
 	filepath << ens.gamedir << PATH_SLASH_CHAR << pstrpath;
@@ -232,9 +232,9 @@ bool FL_WriteFile( const byte* pdata, Uint32 size, const Char* pstrpath, bool ap
 // @param size Size of data to be written
 // @param pstrpath Path to write the file to
 // @param append If true, the data will be appeneded to a file with this name if it already exists
-// @return TRUE if write was successful, FALSE otherwise
+// @return true if write was successful, false otherwise
 //=============================================
-bool FL_WriteLogFile( const byte* pdata, Uint32 size, const Char* pstrpath, bool append )
+bool FL_WriteLogFile( const Byte* pdata, UInt32 size, const char* pstrpath, bool append )
 {
 	CString filepath;
 	filepath << ens.gamedir << PATH_SLASH_CHAR << pstrpath;
@@ -259,9 +259,9 @@ bool FL_WriteLogFile( const byte* pdata, Uint32 size, const Char* pstrpath, bool
 // @param size Size of data to be written
 // @param pstrpath Path to write the file to
 // @param append If true, the data will be appeneded to a file with this name if it already exists
-// @return TRUE if write was successful, FALSE otherwise
+// @return true if write was successful, false otherwise
 //=============================================
-bool FL_WriteFileRoot( const byte* pdata, Uint32 size, const Char* pstrpath, bool append )
+bool FL_WriteFileRoot( const Byte* pdata, UInt32 size, const char* pstrpath, bool append )
 {
 	if(ens.pfileiologfile)
 	{
@@ -305,12 +305,12 @@ bool FL_WriteFileRoot( const byte* pdata, Uint32 size, const Char* pstrpath, boo
 // @param psize Pointer to Uint32 to store the size of the file
 // @return Pointer to file data if successfully loaded, nullptr otherwise
 //=============================================
-const byte* FL_LoadFile( const Char* pstrpath, Uint32* psize )
+const Byte* FL_LoadFile( const char* pstrpath, UInt32* psize )
 {
 	CString filepath;
 	filepath << ens.gamedir << PATH_SLASH_CHAR << pstrpath;
 
-	Double timeBegin = 0;
+	double timeBegin = 0;
 	if(ens.pfileiologfile)
 	{
 		timeBegin = Sys_FloatTime();
@@ -330,8 +330,8 @@ const byte* FL_LoadFile( const Char* pstrpath, Uint32* psize )
 		ens.pfileiologfile->Write(str.c_str());
 	}
 
-	Uint32 filesize = 0;
-	const byte* pfile = gFileCache.LoadFile(filepath.c_str(), &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = gFileCache.LoadFile(filepath.c_str(), &filesize);
 	if(!pfile && qstrcmp(ens.gamedir, COMMON_GAMEDIR))
 	{
 		// Try loading from the base dir if it's a mod
@@ -349,11 +349,11 @@ const byte* FL_LoadFile( const Char* pstrpath, Uint32* psize )
 
 	if(ens.pfileiologfile)
 	{
-		Double timeEnd = Sys_FloatTime();
-		Double duration = timeEnd - timeBegin;
+		double timeEnd = Sys_FloatTime();
+		double duration = timeEnd - timeBegin;
 
 		CString str;
-		str << "Read file in " << static_cast<Float>(duration) << " seconds, " << filesize << " bytes." << NEWLINE;
+		str << "Read file in " << static_cast<float>(duration) << " seconds, " << filesize << " bytes." << NEWLINE;
 		ens.pfileiologfile->Write(str.c_str());
 	}
 
@@ -370,9 +370,9 @@ const byte* FL_LoadFile( const Char* pstrpath, Uint32* psize )
 // @param psize Pointer to Uint32 to store the size of the file
 // @return Pointer to file data if successfully loaded, nullptr otherwis
 //=============================================
-const byte* FL_LoadFileFromRoot( const Char* pstrpath, Uint32* psize )
+const Byte* FL_LoadFileFromRoot( const char* pstrpath, UInt32* psize )
 {
-	Double timeBegin = 0;
+	double timeBegin = 0;
 	if(ens.pfileiologfile)
 	{
 		timeBegin = Sys_FloatTime();
@@ -392,8 +392,8 @@ const byte* FL_LoadFileFromRoot( const Char* pstrpath, Uint32* psize )
 		ens.pfileiologfile->Write(str.c_str());
 	}
 	
-	Uint32 filesize = 0;
-	const byte* pfile = gFileCache.LoadFile(pstrpath, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = gFileCache.LoadFile(pstrpath, &filesize);
 	if(!pfile)
 	{
 		SDL_ClearError();
@@ -402,11 +402,11 @@ const byte* FL_LoadFileFromRoot( const Char* pstrpath, Uint32* psize )
 
 	if(ens.pfileiologfile)
 	{
-		Double timeEnd = Sys_FloatTime();
-		Double duration = timeEnd - timeBegin;
+		double timeEnd = Sys_FloatTime();
+		double duration = timeEnd - timeBegin;
 
 		CString str;
-		str << "Read file in " << static_cast<Float>(duration) << " seconds, " << filesize << " bytes." << NEWLINE;
+		str << "Read file in " << static_cast<float>(duration) << " seconds, " << filesize << " bytes." << NEWLINE;
 		ens.pfileiologfile->Write(str.c_str());
 	}
 
@@ -430,9 +430,9 @@ void FL_FreeFile( const void* pfile )
 // @brief Checks if a file exists at the given path
 //
 // @param pstrpath File path to check
-// @return TRUE if file exists, FALSE otherwise
+// @return true if file exists, false otherwise
 //=============================================
-bool FL_FileExists( const Char* pstrpath )
+bool FL_FileExists( const char* pstrpath )
 {
 	if(ens.pfileiologfile)
 	{
@@ -474,9 +474,9 @@ bool FL_FileExists( const Char* pstrpath )
 //=============================================
 // @brief Deletes a directory path starting from the mod folder
 //
-// @return TRUE if successful, FALSE otherwise
+// @return true if successful, false otherwise
 //=============================================
-bool FL_DeleteFile( const Char* pstrpath )
+bool FL_DeleteFile( const char* pstrpath )
 {
 	if(ens.pfileiologfile)
 	{
@@ -513,9 +513,9 @@ bool FL_DeleteFile( const Char* pstrpath )
 //=============================================
 // @brief Deletes a directory path starting from the root folder
 //
-// @return TRUE if successful, FALSE otherwise
+// @return true if successful, false otherwise
 //=============================================
-bool FL_DeleteFileRoot( const Char* pstrpath )
+bool FL_DeleteFileRoot( const char* pstrpath )
 {
 	if(ens.pfileiologfile)
 	{
@@ -547,9 +547,9 @@ bool FL_DeleteFileRoot( const Char* pstrpath )
 // @brief Creates a directory path recirsively
 //
 // @param pstrpath The directory path to create
-// @return TRUE if successful, FALSE otherwise
+// @return true if successful, false otherwise
 //=============================================
-bool FL_CreateDirectory( const Char* pstrpath )
+bool FL_CreateDirectory( const char* pstrpath )
 {
 	if(ens.pfileiologfile)
 	{
@@ -577,15 +577,15 @@ bool FL_CreateDirectory( const Char* pstrpath )
 		CString createpath;
 
 		// Process it per slash
-		const Char* pstr = filepath.c_str();
-		const Char* pstrnextbegin = pstr;
+		const char* pstr = filepath.c_str();
+		const char* pstrnextbegin = pstr;
 		while(*pstr)
 		{
 			pstr++;
 
 			if((*pstr) == PATH_SLASH_CHAR || (*pstr) == '\\' || (*pstr) == '\0')
 			{
-				Uint32 length = (pstr - pstrnextbegin);
+				UInt32 length = (pstr - pstrnextbegin);
 				CString foldername(pstrnextbegin, length);
 
 				createpath << foldername << PATH_SLASH_CHAR;
@@ -676,7 +676,7 @@ Int32 FL_CompareFileDates( const file_dateinfo_t& d1, const file_dateinfo_t& d2 
 // @brief Return the modification date of a file
 //
 //=============================================
-bool FL_GetFileDate( const Char* pstrFile, file_dateinfo_t& dateinfo )
+bool FL_GetFileDate( const char* pstrFile, file_dateinfo_t& dateinfo )
 {
 	CString filepath;
 	filepath << ens.gamedir << PATH_SLASH_CHAR << pstrFile;
@@ -738,7 +738,7 @@ bool FL_GetFileDate( const Char* pstrFile, file_dateinfo_t& dateinfo )
 // @brief Returns the game directory name
 //
 //=============================================
-const Char* FL_GetGameDirectory( void )
+const char* FL_GetGameDirectory( void )
 {
 	return ens.gamedir.c_str();
 }

@@ -17,7 +17,7 @@ class CFuncPendulum : public CBaseEntity
 {
 public:
 	// Default speed for pendulum
-	static const Float DEFAULT_SPEED;
+	static const float DEFAULT_SPEED;
 
 public:
 	enum
@@ -40,7 +40,7 @@ public:
 	virtual void Precache( void ) override { }
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	virtual void CallBlocked( CBaseEntity* pOther ) override;
-	virtual void CallUse( CBaseEntity* pacticator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pacticator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void CallTouch( CBaseEntity* pOther ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual void InitEntity( void ) override;
@@ -53,13 +53,13 @@ public:
 	void EXPORTFN DelayInit( void );
 
 protected:
-	Float m_acceleration;
-	Float m_distance;
-	Double m_time;
-	Float m_dampening;
-	Float m_maxSpeed;
-	Float m_dampSpeed;
-	Float m_damage;
+	float m_acceleration;
+	float m_distance;
+	double m_time;
+	float m_dampening;
+	float m_maxSpeed;
+	float m_dampSpeed;
+	float m_damage;
 
 	Vector m_center;
 	Vector m_start;

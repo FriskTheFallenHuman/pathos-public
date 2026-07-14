@@ -22,6 +22,6 @@ public:
 	virtual ~CEnvRoomType( void );
 
 public:
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 };
 #endif //ENVROOMTYPE_H

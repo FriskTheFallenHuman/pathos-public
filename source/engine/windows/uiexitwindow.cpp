@@ -32,25 +32,25 @@ All Rights Reserved.
 CUIExitWindow* CUIExitWindow::m_pInstance = nullptr;
 
 // Window description file
-const Char CUIExitWindow::WINDOW_DESC_FILE[] = "exitwindow.json";
+const char CUIExitWindow::WINDOW_DESC_FILE[] = "exitwindow.json";
 // Window description file
-const Char CUIExitWindow::WINDOW_OBJ_NAME[] = "ExitWindow";
+const char CUIExitWindow::WINDOW_OBJ_NAME[] = "ExitWindow";
 // Cancel button object name
-const Char CUIExitWindow::CANCEL_BUTTON_OBJ_NAME[] = "CancelButton";
+const char CUIExitWindow::CANCEL_BUTTON_OBJ_NAME[] = "CancelButton";
 // Save and Quit button object name
-const Char CUIExitWindow::SAVE_AND_QUIT_BUTTON_OBJ_NAME[] = "SaveAndQuitButton";
+const char CUIExitWindow::SAVE_AND_QUIT_BUTTON_OBJ_NAME[] = "SaveAndQuitButton";
 // Save and Quit button object name
-const Char CUIExitWindow::QUIT_BUTTON_OBJ_NAME[] = "QuitButton";
+const char CUIExitWindow::QUIT_BUTTON_OBJ_NAME[] = "QuitButton";
 // Quit game text object name
-const Char CUIExitWindow::QUIT_TEXT_OBJ_NAME[] = "QuitText";
+const char CUIExitWindow::QUIT_TEXT_OBJ_NAME[] = "QuitText";
 // In-game quit game text object name
-const Char CUIExitWindow::INGAME_QUIT_TEXT_OBJ_NAME[] = "InGameQuitText";
+const char CUIExitWindow::INGAME_QUIT_TEXT_OBJ_NAME[] = "InGameQuitText";
 
 //=============================================
 // @brief Constructor
 //
 //=============================================
-CUIExitWindow::CUIExitWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIExitWindow::CUIExitWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIWindow(UIW_FL_MENUWINDOW, flags, width, height, originx, originy)
 {
 }
@@ -140,7 +140,7 @@ CUIExitWindow* CUIExitWindow::GetInstance( void )
 bool CUIExitWindow::init( const ui_windowdescription_t* pWinDesc, const ui_objectinfo_t* pWindowObject, bool isIngame )
 {
 	// Retreive schema for the window object
-	const Char* pstrSchemaName = pWindowObject->getSchema().c_str();
+	const char* pstrSchemaName = pWindowObject->getSchema().c_str();
 	if(!CUIWindow::init(pstrSchemaName))
 	{
 		Con_EPrintf("Failed to initialize schema '%s' for console window.\n", pstrSchemaName);
@@ -259,7 +259,7 @@ bool CUIExitWindow::init( const ui_windowdescription_t* pWinDesc, const ui_objec
 // @brief Manages a button event
 //
 //=============================================
-void CUIExitWindow::buttonPressed( Uint32 buttonId )
+void CUIExitWindow::buttonPressed( UInt32 buttonId )
 {
 	switch(buttonId)
 	{

@@ -40,31 +40,31 @@ All Rights Reserved.
 #include "itemdiary.h"
 
 // Player punch treshold for falling
-const Float CPlayerEntity::PLAYER_FALL_VELOCITY_PUNCH_MIN = 350.0f;
+const float CPlayerEntity::PLAYER_FALL_VELOCITY_PUNCH_MIN = 350.0f;
 // Player punch treshold for falling
-const Float CPlayerEntity::PLAYER_FALL_VELOCITY_SAFE_LIMIT = 600.0f;
+const float CPlayerEntity::PLAYER_FALL_VELOCITY_SAFE_LIMIT = 600.0f;
 // Player punch treshold for falling
-const Float CPlayerEntity::PLAYER_FALL_VELOCITY_FATAL = 1024.0f;
+const float CPlayerEntity::PLAYER_FALL_VELOCITY_FATAL = 1024.0f;
 // Player punch treshold for falling
-const Float CPlayerEntity::DAMAGE_FALL_FOR_VELOCITY = 100.0f/(CPlayerEntity::PLAYER_FALL_VELOCITY_FATAL-CPlayerEntity::PLAYER_FALL_VELOCITY_SAFE_LIMIT);
+const float CPlayerEntity::DAMAGE_FALL_FOR_VELOCITY = 100.0f/(CPlayerEntity::PLAYER_FALL_VELOCITY_FATAL-CPlayerEntity::PLAYER_FALL_VELOCITY_SAFE_LIMIT);
 // Player falling velocity limit for producing audible sounds to NPCs
-const Float CPlayerEntity::PLAYER_FALL_SOUND_LIMIT = 128;
+const float CPlayerEntity::PLAYER_FALL_SOUND_LIMIT = 128;
 // Player heal time
-const Double CPlayerEntity::PLAYER_HEAL_TIME		= 2.5;
+const double CPlayerEntity::PLAYER_HEAL_TIME		= 2.5;
 // Player armor damage absorption
-const Float CPlayerEntity::PLAYER_ARMOR_DMG_ABSORB	= 0.6;
+const float CPlayerEntity::PLAYER_ARMOR_DMG_ABSORB	= 0.6;
 // Player armor damage drain
-const Float CPlayerEntity::PLAYER_ARMOR_DMG_DRAIN	= 0.9;
+const float CPlayerEntity::PLAYER_ARMOR_DMG_DRAIN	= 0.9;
 // Player use radius
-const Float CPlayerEntity::PLAYER_USE_RADIUS = 64.0f;
+const float CPlayerEntity::PLAYER_USE_RADIUS = 64.0f;
 // Color of screen fade when hurt
 const color24_t CPlayerEntity::PAIN_SCREENFADE_COLOR = color24_t(170, 4, 4);
 // Time based damage delay
-const Float CPlayerEntity::DROWNRECOVER_HEAL_DELAY = 2.0;
+const float CPlayerEntity::DROWNRECOVER_HEAL_DELAY = 2.0;
 // Time based damage delay
-const Float CPlayerEntity::DROWNRECOVER_MAX_HEAL = 10;
+const float CPlayerEntity::DROWNRECOVER_MAX_HEAL = 10;
 // Time based damage delay
-const Float CPlayerEntity::TIMEBASED_DMG_DELAY	= 0.5;
+const float CPlayerEntity::TIMEBASED_DMG_DELAY	= 0.5;
 // Time based dmg type-dmg bit associations
 const Int32 CPlayerEntity::TIMEBASED_DMG_BITS[NUM_TIMEBASED_DMG] = 
 {
@@ -76,7 +76,7 @@ const Int32 CPlayerEntity::TIMEBASED_DMG_BITS[NUM_TIMEBASED_DMG] =
 };
 
 // Time based dmg type-dmg durations
-const Float CPlayerEntity::TIMEBASED_DMG_DURATIONS[NUM_TIMEBASED_DMG] = 
+const float CPlayerEntity::TIMEBASED_DMG_DURATIONS[NUM_TIMEBASED_DMG] = 
 {
 	2,		//DMG_RADIATION
 	0,		//DMG_DROWNRECOVER - Handled specially
@@ -86,7 +86,7 @@ const Float CPlayerEntity::TIMEBASED_DMG_DURATIONS[NUM_TIMEBASED_DMG] =
 };
 
 // Time based dmg type-damage values
-const Float CPlayerEntity::TIMEBASED_DMG_AMOUNTS[NUM_TIMEBASED_DMG] = 
+const float CPlayerEntity::TIMEBASED_DMG_AMOUNTS[NUM_TIMEBASED_DMG] = 
 {
 	1.0,	//DMG_RADIATION
 	0.0,	//DMG_DROWNRECOVER - Handled specially
@@ -96,9 +96,9 @@ const Float CPlayerEntity::TIMEBASED_DMG_AMOUNTS[NUM_TIMEBASED_DMG] =
 };
 
 // Flashlight toggle sound
-const Char CPlayerEntity::FLASHLIGHT_TOGGLE_SOUND[] = "items/flashlight1.wav";
+const char CPlayerEntity::FLASHLIGHT_TOGGLE_SOUND[] = "items/flashlight1.wav";
 // Flashlight drain time
-const Float CPlayerEntity::FLASHLIGHT_DRAIN_TIME = 1.2;
+const float CPlayerEntity::FLASHLIGHT_DRAIN_TIME = 1.2;
 // Flashlight impulse value
 const Int32 CPlayerEntity::FLASHLIGHT_IMPULSE_VALUE = 100;
 // Player give weapons cheat
@@ -181,31 +181,31 @@ const CPlayerEntity::cheatinfo_t CPlayerEntity::PLAYER_CHEAT_DESCRIPTIONS[] =
 };
 
 // Player drown delay
-const Float CPlayerEntity::PLAYER_DROWN_DELAY_TIME = 30;
+const float CPlayerEntity::PLAYER_DROWN_DELAY_TIME = 30;
 // Player drown damage ramp-up
-const Float CPlayerEntity::PLAYER_DROWN_RAMP_AMOUNT = 5;
+const float CPlayerEntity::PLAYER_DROWN_RAMP_AMOUNT = 5;
 // Player drown damage ramp-up limit
-const Float CPlayerEntity::PLAYER_DROWN_RAMP_LIMIT = 20;
+const float CPlayerEntity::PLAYER_DROWN_RAMP_LIMIT = 20;
 // Player flashlight drain speed
-const Float CPlayerEntity::PLAYER_FLASHLIGHT_DRAIN_TIME = 120; // Two minutes
+const float CPlayerEntity::PLAYER_FLASHLIGHT_DRAIN_TIME = 120; // Two minutes
 // Player shoulder flashlight drain speed
-const Float CPlayerEntity::PLAYER_FLASHLIGHT_DRAIN_TIME_SHOULDERLIGHT = 60; // One minute
+const float CPlayerEntity::PLAYER_FLASHLIGHT_DRAIN_TIME_SHOULDERLIGHT = 60; // One minute
 // Player flashlight drain speed
-const Float CPlayerEntity::PLAYER_FLASHLIGHT_CHARGE_TIME = 20; // Half a minute
+const float CPlayerEntity::PLAYER_FLASHLIGHT_CHARGE_TIME = 20; // Half a minute
 // Max kevlar a player can carry
-const Float CPlayerEntity::MAX_PLAYER_KEVLAR = 100;
+const float CPlayerEntity::MAX_PLAYER_KEVLAR = 100;
 // Player awareness field of view
-const Float CPlayerEntity::PLAYER_NPC_AWARENESS_FIELD_OF_VIEW = 0.5;
+const float CPlayerEntity::PLAYER_NPC_AWARENESS_FIELD_OF_VIEW = 0.5;
 // Max player sound radius
-const Float CPlayerEntity::PLAYER_SOUND_MAX_RADIUS = 2048;
+const float CPlayerEntity::PLAYER_SOUND_MAX_RADIUS = 2048;
 // Sound radius decay speed
-const Float CPlayerEntity::PLAYER_SND_RADIUS_DECAY_SPEED = 512;
+const float CPlayerEntity::PLAYER_SND_RADIUS_DECAY_SPEED = 512;
 // Weapon sound radius decay speed
-const Float CPlayerEntity::PLAYER_WEAPON_SND_RADIUS_DECAY_SPEED = 2048;
+const float CPlayerEntity::PLAYER_WEAPON_SND_RADIUS_DECAY_SPEED = 2048;
 // Weapon flash decay speed
-const Float CPlayerEntity::PLAYER_WEAPON_FLASH_DECAY_SPEED = 256;
+const float CPlayerEntity::PLAYER_WEAPON_FLASH_DECAY_SPEED = 256;
 
-// TRUE if using cheat commands(for debugging purposes)
+// true if using cheat commands(for debugging purposes)
 bool CPlayerEntity::m_cheatCommandUsed = false;
 
 //=============================================
@@ -218,7 +218,7 @@ bool ClientCommand( edict_t* pclient )
 	if(!pClientEntity || !pClientEntity->IsPlayer())
 		return false;
 
-	const Char* pstrCmd = gd_engfuncs.pfnCmd_Argv(0);
+	const char* pstrCmd = gd_engfuncs.pfnCmd_Argv(0);
 
 	if(!qstrcmp(pstrCmd, "say"))
 	{
@@ -272,7 +272,7 @@ bool ClientCommand( edict_t* pclient )
 		}
 		else
 		{
-			const Char* pstrtargetname = gd_engfuncs.pfnCmd_Argv(1);
+			const char* pstrtargetname = gd_engfuncs.pfnCmd_Argv(1);
 			Util::FireTargets(pstrtargetname, pClientEntity, pClientEntity, USE_TOGGLE, 0);
 		}
 		return true;
@@ -317,7 +317,7 @@ bool ClientCommand( edict_t* pclient )
 		}
 
 		daystage_t stage = DAYSTAGE_NORMAL;
-		const Char* pstrValue = gd_engfuncs.pfnCmd_Argv(1);
+		const char* pstrValue = gd_engfuncs.pfnCmd_Argv(1);
 		if(!qstrcmp(pstrValue, "normal"))
 		{
 			stage = DAYSTAGE_NORMAL;
@@ -398,7 +398,7 @@ void CmdEnd( edict_t* pclient )
 // @brief
 //
 //=============================================
-bool ClientConnect( edict_t* pclient, const Char* pname, const Char* paddress, CString& rejectReason )
+bool ClientConnect( edict_t* pclient, const char* pname, const char* paddress, CString& rejectReason )
 {
 	return true;
 }
@@ -416,7 +416,7 @@ void ClientDisconnected( edict_t* pclient )
 // @brief
 //
 //=============================================
-void PM_PlayStepSound( entindex_t entindex, const Char* pstrMaterialName, bool stepleft, Float volume, const Vector& origin )
+void PM_PlayStepSound( entindex_t entindex, const char* pstrMaterialName, bool stepleft, float volume, const Vector& origin )
 {
 	edict_t* pedict = gd_engfuncs.pfnGetEdictByIndex(entindex);
 	if(!pedict || !(pedict->state.flags & FL_CLIENT))
@@ -433,7 +433,7 @@ void PM_PlayStepSound( entindex_t entindex, const Char* pstrMaterialName, bool s
 // @brief
 //
 //=============================================
-void PM_PlaySound( entindex_t entindex, Int32 channel, const Char* psample, Float volume, Float attenuation, Int32 pitch, Int32 flags )
+void PM_PlaySound( entindex_t entindex, Int32 channel, const char* psample, float volume, float attenuation, Int32 pitch, Int32 flags )
 {
 	edict_t* pedict = gd_engfuncs.pfnGetEdictByIndex(entindex);
 	if(!pedict || !(pedict->state.flags & FL_CLIENT))
@@ -581,13 +581,13 @@ CPlayerEntity::CPlayerEntity( edict_t* pedict ):
 	m_filmGrainStrength(0),
 	m_numOverlays(0)
 {
-	for(Uint32 i = 0; i < NUM_TIMEBASED_DMG; i++)
+	for(UInt32 i = 0; i < NUM_TIMEBASED_DMG; i++)
 	{
 		m_timeBasedDmgTime[i] = 0;
 		m_lastTimeBasedDmgTime[i] = 0;
 	}
 
-	for(Uint32 i = 0; i < MAX_AMMO_TYPES; i++)
+	for(UInt32 i = 0; i < MAX_AMMO_TYPES; i++)
 	{
 		m_ammoCounts[i] = 0;
 		m_clientAmmoCounts[i] = 0;
@@ -741,7 +741,7 @@ bool CPlayerEntity::Spawn( void )
 
 	if(!soundsList.empty())
 	{
-		for(Uint32 i = 0; i < soundsList.size(); i++)
+		for(UInt32 i = 0; i < soundsList.size(); i++)
 			gd_engfuncs.pfnPrecacheSound(soundsList[i].c_str());
 	}
 
@@ -774,7 +774,7 @@ bool CPlayerEntity::Spawn( void )
 	// Set basic stuff
 	InitBoneControllers();
 
-	for(Uint32 i = 0; i < MAX_BLENDING; i++)
+	for(UInt32 i = 0; i < MAX_BLENDING; i++)
 		SetBlending(i, 0);
 
 	return true;
@@ -795,7 +795,7 @@ void CPlayerEntity::Precache( void )
 
 	if(!soundsList.empty())
 	{
-		for(Uint32 i = 0; i < soundsList.size(); i++)
+		for(UInt32 i = 0; i < soundsList.size(); i++)
 			gd_engfuncs.pfnPrecacheSound(soundsList[i].c_str());
 	}
 
@@ -822,7 +822,7 @@ void CPlayerEntity::Precache( void )
 	if(m_tapeTrackFile != NO_STRING_VALUE)
 		gd_engfuncs.pfnPrecacheSound(gd_engfuncs.pfnGetString(m_tapeTrackFile));
 
-	for(Uint32 i = 0; i < NB_MUSIC_CHANNELS; i++)
+	for(UInt32 i = 0; i < NB_MUSIC_CHANNELS; i++)
 	{
 		music_data_t& track = m_musicPlaybackInfoArray[i];
 		if(track.filename == NO_STRING_VALUE)
@@ -854,7 +854,7 @@ bool CPlayerEntity::Restore( void )
 
 	if(!soundsList.empty())
 	{
-		for(Uint32 i = 0; i < soundsList.size(); i++)
+		for(UInt32 i = 0; i < soundsList.size(); i++)
 			gd_engfuncs.pfnPrecacheSound(soundsList[i].c_str());
 	}
 
@@ -925,13 +925,13 @@ bool CPlayerEntity::Restore( void )
 				m_pBikeEntity->SetFollow();
 			}
 
-			m_pState->fuser1 = TRUE;
+			m_pState->fuser1 = true;
 			m_pState->fuser2 = m_bikeAcceleration;
 		}
 		else if(m_bikeState == BIKE_SV_LEAVING || m_bikeState == BIKE_SV_LEAVING_LERP || m_bikeState == BIKE_SV_CLEANUP)
 		{
 			m_clientBikeState = m_bikeState = BIKE_SV_INACTIVE;
-			m_pState->fuser1 = FALSE;
+			m_pState->fuser1 = false;
 			SetAiment(nullptr);
 
 			m_pBikeEntity->PlayerLeave();
@@ -960,7 +960,7 @@ bool CPlayerEntity::Restore( void )
 	}
 
 	// Restore music
-	for(Uint32 i = 0; i < NB_MUSIC_CHANNELS; i++)
+	for(UInt32 i = 0; i < NB_MUSIC_CHANNELS; i++)
 	{
 		music_data_t& track = m_musicPlaybackInfoArray[i];
 		if(track.filename == NO_STRING_VALUE)
@@ -975,7 +975,7 @@ bool CPlayerEntity::Restore( void )
 			continue;
 		}
 
-		const Char* pstrFilename = gd_engfuncs.pfnGetString(track.filename);
+		const char* pstrFilename = gd_engfuncs.pfnGetString(track.filename);
 
 		track.duration = gd_engfuncs.pfnGetSoundDuration(pstrFilename, PITCH_NORM);
 		if(!track.duration)
@@ -992,7 +992,7 @@ bool CPlayerEntity::Restore( void )
 		}
 		else
 		{
-			Float timeOffset = g_pGameVars->time - track.begintime;
+			float timeOffset = g_pGameVars->time - track.begintime;
 			gd_engfuncs.pfnPlayMusic(pstrFilename, track.channel, track.flags, timeOffset, 0, m_pEdict->clientindex);
 		}
 	}
@@ -1002,8 +1002,8 @@ bool CPlayerEntity::Restore( void )
 	{
 		if((g_pGameVars->time - m_tapeTrackPlayBeginTime) < m_tapeTrackDuration)
 		{
-			Float timeoffset = g_pGameVars->time - m_tapeTrackPlayBeginTime;
-			Float remaintime = m_tapeTrackDuration - timeoffset;
+			float timeoffset = g_pGameVars->time - m_tapeTrackPlayBeginTime;
+			float remaintime = m_tapeTrackDuration - timeoffset;
 
 			Util::EmitEntitySound(this, gd_engfuncs.pfnGetString(m_tapeTrackFile), SND_CHAN_STREAM, VOL_NORM, ATTN_NORM, PITCH_NORM, (SND_FL_REVERBLESS|SND_FL_DIM_OTHERS_LIGHT), this, timeoffset);
 
@@ -1096,23 +1096,23 @@ bool CPlayerEntity::Restore( void )
 	}
 
 	// Restore any overlays
-	for(Uint32 i = 0; i < m_numOverlays; i++)
+	for(UInt32 i = 0; i < m_numOverlays; i++)
 	{
 		Int32 overlayIndex = m_overlayLayerIndexArray[i];
-		const Char* pstrTextureName = gd_engfuncs.pfnGetString(m_overlayTextureArray[i]);
+		const char* pstrTextureName = gd_engfuncs.pfnGetString(m_overlayTextureArray[i]);
 		Int32 rendermode = m_overlayRenderModeArray[i];
 		Vector rendercolor = m_overlayRenderColorArray[i];
 		Int32 renderamt = m_overlayRenderAmountArray[i];
 		Int32 effect = m_overlayEffectArray[i];
-		Float effectspeed = m_overlayEffectSpeedArray[i];
-		Float effectminalpha = m_overlayEffectMinAlphaArray[i];
+		float effectspeed = m_overlayEffectSpeedArray[i];
+		float effectminalpha = m_overlayEffectMinAlphaArray[i];
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.screenoverlay, nullptr, m_pEdict);
 			gd_engfuncs.pfnMsgWriteByte(overlayIndex);
 			gd_engfuncs.pfnMsgWriteByte(OVERLAY_MSG_SET);
 			gd_engfuncs.pfnMsgWriteString(pstrTextureName);
 			gd_engfuncs.pfnMsgWriteByte(rendermode);
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				gd_engfuncs.pfnMsgWriteByte(rendercolor[j]);
 			gd_engfuncs.pfnMsgWriteByte(renderamt);
 			gd_engfuncs.pfnMsgWriteByte(effect);
@@ -1132,9 +1132,9 @@ bool CPlayerEntity::Restore( void )
 // @brief
 //
 //=============================================
-bool CPlayerEntity::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags )
+bool CPlayerEntity::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags )
 {
-	Float dmgamount = SDL_ceil(amount);
+	float dmgamount = SDL_ceil(amount);
 	if(!dmgamount)
 		return false;
 
@@ -1214,7 +1214,7 @@ bool CPlayerEntity::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker,
 	// Reset counters on time based damages
 	if(pInflictor != this && pAttacker != this)
 	{
-		for(Uint32 i = 0; i < NUM_TIMEBASED_DMG; i++)
+		for(UInt32 i = 0; i < NUM_TIMEBASED_DMG; i++)
 		{
 			if(!(damageFlags & DMG_TIMEBASED_INFLICTED) && (damageFlags & TIMEBASED_DMG_BITS[i]))
 			{
@@ -1278,17 +1278,17 @@ bool CPlayerEntity::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker,
 // @brief
 //
 //=============================================
-void CPlayerEntity::TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
+void CPlayerEntity::TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
 {
 	if(m_pState->takedamage == TAKEDAMAGE_NO)
 		return;
 
-	Float _damage = damage;
+	float _damage = damage;
 	if(!(damageFlags & (DMG_FALL|DMG_DROWN)))
 	{
 		// Calculat drain and absorpotion
-		Float armordrain = PLAYER_ARMOR_DMG_DRAIN * _damage;
-		Float newdamage = PLAYER_ARMOR_DMG_ABSORB * _damage;
+		float armordrain = PLAYER_ARMOR_DMG_DRAIN * _damage;
+		float newdamage = PLAYER_ARMOR_DMG_ABSORB * _damage;
 
 		if(armordrain > m_pState->armorvalue)
 		{
@@ -1303,7 +1303,7 @@ void CPlayerEntity::TraceAttack( CBaseEntity* pAttacker, Float damage, const Vec
 	m_lastImpactedHitGroup = tr.hitgroup;
 
 	// Adjust damage by skill cvars based on hitgroup
-	Float dmgadjust = 1.0;
+	float dmgadjust = 1.0;
 	switch(tr.hitgroup)
 	{
 	case HITGROUP_GENERIC:
@@ -1477,7 +1477,7 @@ void CPlayerEntity::Killed( CBaseEntity* pAttacker, gibbing_t gibbing, deathmode
 		forward.Normalize();
 
 		const Vector& attackDirection = gMultiDamage.GetDamageDirection();
-		Float dp = Math::DotProduct(forward, attackDirection);
+		float dp = Math::DotProduct(forward, attackDirection);
 
 		Vector originOffset;
 		if(m_pState->flags & FL_DUCKING)
@@ -1534,7 +1534,7 @@ Int32 CPlayerEntity::GetIllumination( void )
 	}
 
 	if(m_pState->effects & (EF_DIMLIGHT|EF_SHOULDERLIGHT))
-		return clamp(m_lastIllumination + 64, 0, 255);
+		return Clamp(m_lastIllumination + 64, 0, 255);
 	else
 		return m_lastIllumination;
 }
@@ -1600,7 +1600,7 @@ void CPlayerEntity::DeadThink( void )
 	// Reduce velocity
 	if(m_pState->flags & FL_ONGROUND)
 	{
-		Float forwardvel = m_pState->velocity.Length() - 20;
+		float forwardvel = m_pState->velocity.Length() - 20;
 		if(forwardvel <= 0)
 			m_pState->velocity.Clear();
 		else
@@ -1662,7 +1662,7 @@ Int32 CPlayerEntity::GetClassification( void ) const
 // @brief
 //
 //=============================================
-void CPlayerEntity::SetFallingVelocity( Float velocity )
+void CPlayerEntity::SetFallingVelocity( float velocity )
 {
 	m_pState->fallvelocity = velocity;
 	m_fallingVelocity = velocity;
@@ -1693,13 +1693,13 @@ void CPlayerEntity::PlayerUseThink( void )
 	Math::AngleVectors(m_pState->viewangles, &forward, nullptr, nullptr);
 
 	edict_t* pClosest = nullptr;
-	Float closestdp = VIEW_FIELD_NARROW;
+	float closestdp = VIEW_FIELD_NARROW;
 
 	// Determine mins/maxs
 	Vector mins = m_pState->origin - Vector(PLAYER_USE_RADIUS, PLAYER_USE_RADIUS, PLAYER_USE_RADIUS);
 	Vector maxs = m_pState->origin + Vector(PLAYER_USE_RADIUS, PLAYER_USE_RADIUS, PLAYER_USE_RADIUS);
 
-	Float playerUseDistance = Vector(PLAYER_USE_RADIUS, PLAYER_USE_RADIUS, PLAYER_USE_RADIUS).Length();
+	float playerUseDistance = Vector(PLAYER_USE_RADIUS, PLAYER_USE_RADIUS, PLAYER_USE_RADIUS).Length();
 
 	Vector viewOrigin = m_pState->origin + m_pState->view_offset;
 	
@@ -1766,7 +1766,7 @@ void CPlayerEntity::PlayerUseThink( void )
 
 			Vector vectoobject = (pEntity->GetBrushModelCenter() - GetEyePosition());
 			vectoobject = Util::ClampVectorToBox(vectoobject, pEntity->GetSize() * 0.5);
-			Float dp = Math::DotProduct(vectoobject, forward);
+			float dp = Math::DotProduct(vectoobject, forward);
 			if(dp > closestdp)
 			{
 				pClosest = pedict;
@@ -1792,9 +1792,9 @@ void CPlayerEntity::PlayerUseThink( void )
 
 				gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.hudsetusableobject, nullptr, m_pEdict);
 				gd_engfuncs.pfnMsgWriteByte(m_currentUsableObjectType);
-				for(Uint32 i = 0; i < 3; i++)
+				for(UInt32 i = 0; i < 3; i++)
 					gd_engfuncs.pfnMsgWriteFloat(m_currentUsableObjectMins[i]);
-				for(Uint32 i = 0; i < 3; i++)
+				for(UInt32 i = 0; i < 3; i++)
 					gd_engfuncs.pfnMsgWriteFloat(m_currentUsableObjectMaxs[i]);
 				gd_engfuncs.pfnUserMessageEnd();
 			}
@@ -1833,9 +1833,9 @@ void CPlayerEntity::PlayerUseThink( void )
 
 				gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.hudsetusableobject, nullptr, m_pEdict);
 				gd_engfuncs.pfnMsgWriteByte(m_currentUsableObjectType);
-				for(Uint32 i = 0; i < 3; i++)
+				for(UInt32 i = 0; i < 3; i++)
 					gd_engfuncs.pfnMsgWriteFloat(m_currentUsableObjectMins[i]);
-				for(Uint32 i = 0; i < 3; i++)
+				for(UInt32 i = 0; i < 3; i++)
 					gd_engfuncs.pfnMsgWriteFloat(m_currentUsableObjectMaxs[i]);
 				gd_engfuncs.pfnUserMessageEnd();
 			}
@@ -1925,7 +1925,7 @@ void CPlayerEntity::Jump( void )
 	if(!(m_pState->flags & FL_ONGROUND) || m_pState->groundent == NO_ENTITY_INDEX)
 		return;
 
-	Float staminaDrain = (gSkillData.GetSkillCVarSetting(g_skillcvars.skillStaminaJumpDrain)/100.0f);
+	float staminaDrain = (gSkillData.GetSkillCVarSetting(g_skillcvars.skillStaminaJumpDrain)/100.0f);
 
 	m_pState->stamina -= staminaDrain;
 	if(m_pState->stamina < 0)
@@ -1960,7 +1960,7 @@ void CPlayerEntity::WaterMove( void )
 			gd_engfuncs.pfnPlayEntitySound(GetEntityIndex(), "player/pl_underwater.wav", SND_FL_STOP, SND_CHAN_STATIC, VOL_NORM, ATTN_NORM, PITCH_NORM, 0, GetClientIndex());
 			m_isUnderwaterSoundPlaying = false;
 
-			Float underwaterTime = g_pGameVars->time - m_underwaterTime;
+			float underwaterTime = g_pGameVars->time - m_underwaterTime;
 			m_underwaterTime = 0;
 			m_lastWaterDamage = 0;
 			m_lastWaterDamageTime = 0;
@@ -2336,7 +2336,7 @@ void CPlayerEntity::PreCmdThink( void )
 		m_isHUDVisible = true;
 
 	// Update music playback
-	for(Uint32 i = 0; i < NB_MUSIC_CHANNELS; i++)
+	for(UInt32 i = 0; i < NB_MUSIC_CHANNELS; i++)
 	{
 		music_data_t& track = m_musicPlaybackInfoArray[i];
 
@@ -2366,9 +2366,9 @@ void CPlayerEntity::PostCmdThink( void )
 	if(m_deathMotionBlurTime && m_deathMotionBlurTime <= g_pGameVars->time)
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.motionblur, nullptr, m_pEdict);
-			gd_engfuncs.pfnMsgWriteByte(TRUE);
+			gd_engfuncs.pfnMsgWriteByte(true);
 			gd_engfuncs.pfnMsgWriteSmallFloat(0);
-			gd_engfuncs.pfnMsgWriteByte(FALSE);
+			gd_engfuncs.pfnMsgWriteByte(false);
 		gd_engfuncs.pfnUserMessageEnd();
 
 		m_deathMotionBlurTime = 0;
@@ -2391,7 +2391,7 @@ void CPlayerEntity::PostCmdThink( void )
 		// Apply damage if possible
 		if(m_fallingVelocity > PLAYER_FALL_VELOCITY_SAFE_LIMIT)
 		{
-			Float falldmg = m_fallingVelocity -= PLAYER_FALL_VELOCITY_SAFE_LIMIT;
+			float falldmg = m_fallingVelocity -= PLAYER_FALL_VELOCITY_SAFE_LIMIT;
 			falldmg *= DAMAGE_FALL_FOR_VELOCITY;
 
 			// Play splatter sounds if over health
@@ -2452,7 +2452,7 @@ void CPlayerEntity::UpdatePlayerSound( void )
 {
 	// Set defaults
 	Int32 soundTypeBits = AI_SOUND_NONE;
-	Float soundRadius = 0;
+	float soundRadius = 0;
 
 	if(m_stepSoundRadius)
 	{
@@ -2595,17 +2595,17 @@ void CPlayerEntity::UpdateTimeBasedDamages( void )
 	if(!(m_damageTypes & DMG_TIMEBASED))
 		return;
 
-	for(Uint32 i = 0; i < NUM_TIMEBASED_DMG; i++)
+	for(UInt32 i = 0; i < NUM_TIMEBASED_DMG; i++)
 	{
 		if(!(m_damageTypes & TIMEBASED_DMG_BITS[i]))
 			continue;
 
 		// Get duration
-		Float duration;
+		float duration;
 		if(i == TBD_DROWN_RECOVER)
 		{
 			// Duration depends on drown damage amount
-			Float drowndiff = m_drownDamageAmount-m_drownDamageHealed;
+			float drowndiff = m_drownDamageAmount-m_drownDamageHealed;
 			duration = SDL_ceil(drowndiff / DROWNRECOVER_MAX_HEAL) * DROWNRECOVER_HEAL_DELAY;
 		}
 		else
@@ -2631,7 +2631,7 @@ void CPlayerEntity::UpdateTimeBasedDamages( void )
 
 			if(m_drownDamageAmount > m_drownDamageHealed)
 			{
-				Float healamount = m_drownDamageAmount-m_drownDamageHealed;
+				float healamount = m_drownDamageAmount-m_drownDamageHealed;
 				if(healamount > DROWNRECOVER_MAX_HEAL)
 					healamount = DROWNRECOVER_MAX_HEAL;
 
@@ -2666,7 +2666,7 @@ void CPlayerEntity::UpdateTimeBasedDamages( void )
 				Util::EmitEntitySound(this, soundfile.c_str(), SND_CHAN_ITEM);
 			}
 
-			Float damage = TIMEBASED_DMG_AMOUNTS[i];
+			float damage = TIMEBASED_DMG_AMOUNTS[i];
 			TakeDamage(nullptr, nullptr, damage, (TIMEBASED_DMG_BITS[i]|DMG_TIMEBASED_INFLICTED));
 
 			m_lastTimeBasedDmgTime[i] = g_pGameVars->time;
@@ -2684,7 +2684,7 @@ void CPlayerEntity::SprintThink( void )
 		&& m_pState->buttons & (IN_FORWARD|IN_BACK|IN_MOVELEFT|IN_MOVERIGHT)
 		&& Common::ValueInRange(m_pState->velocity.Length(), PLAYER_EXHAUST_SPEED, PLAYER_NORMAL_SPEED, 50))
 	{
-		Float drainFactor = g_pGameVars->frametime * (m_normalMovementStaminaDrainFactor/100.0f);
+		float drainFactor = g_pGameVars->frametime * (m_normalMovementStaminaDrainFactor/100.0f);
 		m_pState->stamina -= drainFactor;
 		if(m_pState->stamina < 0)
 			m_pState->stamina = 0;
@@ -2693,8 +2693,8 @@ void CPlayerEntity::SprintThink( void )
 		&& m_pState->buttons & (IN_FORWARD|IN_BACK|IN_MOVELEFT|IN_MOVERIGHT)
 		&& (m_pState->velocity.Length() > ((m_pState->flags & FL_DUCKING) ? 50 : PLAYER_EXHAUST_SPEED)))
 	{
-		Float staminadrain = gSkillData.GetSkillCVarSetting(g_skillcvars.skillStaminaSprintDrain);
-		Float drainFactor = g_pGameVars->frametime * (staminadrain/100.0f);
+		float staminadrain = gSkillData.GetSkillCVarSetting(g_skillcvars.skillStaminaSprintDrain);
+		float drainFactor = g_pGameVars->frametime * (staminadrain/100.0f);
 		if(m_sprintStaminaDrainMultiplier > 0)
 			drainFactor *= m_sprintStaminaDrainMultiplier;
 
@@ -2705,7 +2705,7 @@ void CPlayerEntity::SprintThink( void )
 	else if(g_pGameVars->frametime > 0 && m_pState->stamina < 1.0
 		&& (m_normalMovementStaminaDrainFactor <= 0 || !(m_pState->buttons & (IN_FORWARD|IN_BACK|IN_MOVELEFT|IN_MOVERIGHT))))
 	{
-		Float staminagain = gSkillData.GetSkillCVarSetting(g_skillcvars.skillStaminaSprintDrain);
+		float staminagain = gSkillData.GetSkillCVarSetting(g_skillcvars.skillStaminaSprintDrain);
 		m_pState->stamina += g_pGameVars->frametime * (staminagain/100.0f);
 		if(m_pState->stamina > 1.0)
 			m_pState->stamina = 1.0;
@@ -2725,7 +2725,7 @@ void CPlayerEntity::SprintThink( void )
 // @brief
 //
 //=============================================
-void CPlayerEntity::SetStaminaModifiers( Float sprintStaminaDrainMultiplier, Float normalMovementStaminaDrainFactor )
+void CPlayerEntity::SetStaminaModifiers( float sprintStaminaDrainMultiplier, float normalMovementStaminaDrainFactor )
 {
 	if(sprintStaminaDrainMultiplier < 0)
 	{
@@ -2814,7 +2814,7 @@ void CPlayerEntity::UpdateClientData( void )
 	if(m_numMedkits != m_numClientMedkits)
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.hudhealthkit, nullptr, m_pEdict);
-			gd_engfuncs.pfnMsgWriteByte(TRUE);
+			gd_engfuncs.pfnMsgWriteByte(true);
 			gd_engfuncs.pfnMsgWriteByte(m_numMedkits);
 		gd_engfuncs.pfnUserMessageEnd();
 
@@ -2825,7 +2825,7 @@ void CPlayerEntity::UpdateClientData( void )
 	if(m_healProgress != m_clientHealProgress)
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.hudhealthkit, nullptr, m_pEdict);
-			gd_engfuncs.pfnMsgWriteByte(FALSE);
+			gd_engfuncs.pfnMsgWriteByte(false);
 			gd_engfuncs.pfnMsgWriteSmallFloat(m_healProgress*100.0f);
 		gd_engfuncs.pfnUserMessageEnd();
 
@@ -2860,7 +2860,7 @@ void CPlayerEntity::UpdateClientData( void )
 	if(m_pState->stamina != m_clientStamina)
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.hudstamina, nullptr, m_pEdict);
-			gd_engfuncs.pfnMsgWriteByte((Int32)clamp(m_pState->stamina*255, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte((Int32)Clamp(m_pState->stamina*255, 0, 255));
 		gd_engfuncs.pfnUserMessageEnd();
 
 		m_clientStamina = m_pState->stamina;
@@ -2870,7 +2870,7 @@ void CPlayerEntity::UpdateClientData( void )
 	if(m_pState->armorvalue != m_clientKevlar)
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.hudkevlar, nullptr, m_pEdict);
-			gd_engfuncs.pfnMsgWriteByte((Int32)clamp(m_pState->armorvalue, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte((Int32)Clamp(m_pState->armorvalue, 0, 255));
 		gd_engfuncs.pfnUserMessageEnd();
 
 		m_clientKevlar = m_pState->armorvalue;
@@ -2881,7 +2881,7 @@ void CPlayerEntity::UpdateClientData( void )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.setflashlight, nullptr, m_pEdict);
 			gd_engfuncs.pfnMsgWriteByte(IsFlashlightOn());
-			gd_engfuncs.pfnMsgWriteByte((Int32)clamp(m_flashlightBattery*255, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte((Int32)Clamp(m_flashlightBattery*255, 0, 255));
 		gd_engfuncs.pfnUserMessageEnd();
 
 		m_clientFlashlightBattery = m_flashlightBattery;
@@ -2921,7 +2921,7 @@ void CPlayerEntity::UpdateClientData( void )
 		m_forceWeaponUpdate = false;
 
 		// Update all weapon data
-		for(Uint32 i = 0; i < NUM_WEAPONS; i++)
+		for(UInt32 i = 0; i < NUM_WEAPONS; i++)
 		{
 			weaponinfo_t& weapon = CPlayerWeapon::GetWeaponInfo((weaponid_t)i);
 			if(!weapon.id)
@@ -2956,7 +2956,7 @@ void CPlayerEntity::UpdateClientData( void )
 //=============================================
 void CPlayerEntity::SetAnimation( player_animation_t animation )
 {
-	Float speed;
+	float speed;
 	if(m_pState->flags & FL_FROZEN)
 		speed = 0;
 	else
@@ -3119,7 +3119,7 @@ void CPlayerEntity::SetIdealActivity( activity_t activity )
 // @brief
 //
 //=============================================
-void CPlayerEntity::AddPasscode( const Char* pstrid, const Char* pstrpasscode )
+void CPlayerEntity::AddPasscode( const char* pstrid, const char* pstrpasscode )
 {
 	// Make sure there's anything to save
 	if(!pstrid || !qstrlen(pstrid) || !pstrpasscode || !qstrlen(pstrpasscode))
@@ -3133,14 +3133,14 @@ void CPlayerEntity::AddPasscode( const Char* pstrid, const Char* pstrpasscode )
 	}
 
 	// Make sure it's not already in
-	for(Uint32 i = 0; i < m_savedPasscodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_savedPasscodesArray.size(); i++)
 	{
-		const Char* pstrentry = gd_engfuncs.pfnGetString(m_savedPasscodesArray[i]);
-		const Char* pstrseparator = qstrstr(pstrentry, ";");
+		const char* pstrentry = gd_engfuncs.pfnGetString(m_savedPasscodesArray[i]);
+		const char* pstrseparator = qstrstr(pstrentry, ";");
 		if(!pstrseparator)
 			continue; // shouldn't happen
 
-		Uint32 idlength = pstrseparator-pstrentry;
+		UInt32 idlength = pstrseparator-pstrentry;
 		if(!idlength)
 			continue; // again, shouldn't happen
 
@@ -3153,7 +3153,7 @@ void CPlayerEntity::AddPasscode( const Char* pstrid, const Char* pstrpasscode )
 	entry << pstrid << ";" << pstrpasscode;
 
 	// Save it
-	Uint32 insertIndex = m_savedPasscodesArray.size();
+	UInt32 insertIndex = m_savedPasscodesArray.size();
 	m_savedPasscodesArray.resize(m_savedPasscodesArray.size()+1);
 	m_savedPasscodesArray[insertIndex] = gd_engfuncs.pfnAllocString(entry.c_str());
 }
@@ -3162,22 +3162,22 @@ void CPlayerEntity::AddPasscode( const Char* pstrid, const Char* pstrpasscode )
 // @brief
 //
 //=============================================
-const Char* CPlayerEntity::GetPasscodeForId( const Char* pstrid )
+const char* CPlayerEntity::GetPasscodeForId( const char* pstrid )
 {
 	if(!pstrid)
 		return nullptr;
 
-	for(Uint32 i = 0; i < m_savedPasscodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_savedPasscodesArray.size(); i++)
 	{
 		if(m_savedPasscodesArray[i] == NO_STRING_VALUE)
 			continue;
 
-		const Char* pstrentry = gd_engfuncs.pfnGetString(m_savedPasscodesArray[i]);
-		const Char* pstrseparator = qstrstr(pstrentry, ";");
+		const char* pstrentry = gd_engfuncs.pfnGetString(m_savedPasscodesArray[i]);
+		const char* pstrseparator = qstrstr(pstrentry, ";");
 		if(!pstrseparator)
 			continue; // shouldn't happen
 
-		Uint32 idlength = pstrseparator-pstrentry;
+		UInt32 idlength = pstrseparator-pstrentry;
 		if(!idlength)
 			continue; // again, shouldn't happen
 
@@ -3194,17 +3194,17 @@ const Char* CPlayerEntity::GetPasscodeForId( const Char* pstrid )
 //=============================================
 void CPlayerEntity::DumpAllCodes( void )
 {
-	for(Uint32 i = 0; i < m_savedPasscodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_savedPasscodesArray.size(); i++)
 	{
 		if(m_savedPasscodesArray[i] == NO_STRING_VALUE)
 			continue;
 
-		const Char* pstrentry = gd_engfuncs.pfnGetString(m_savedPasscodesArray[i]);
-		const Char* pstrseparator = qstrstr(pstrentry, ";");
+		const char* pstrentry = gd_engfuncs.pfnGetString(m_savedPasscodesArray[i]);
+		const char* pstrseparator = qstrstr(pstrentry, ";");
 		if(!pstrseparator)
 			continue; // shouldn't happen
 
-		Uint32 idlength = pstrseparator-pstrentry;
+		UInt32 idlength = pstrseparator-pstrentry;
 		if(!idlength)
 			continue; // again, shouldn't happen
 
@@ -3219,7 +3219,7 @@ void CPlayerEntity::DumpAllCodes( void )
 // @brief
 //
 //=============================================
-void CPlayerEntity::SpawnKeypadWindow( const Char* pstrid, const Char* pstrkeypadcode, CTriggerKeypad* pkeypad, bool staytillnext )
+void CPlayerEntity::SpawnKeypadWindow( const char* pstrid, const char* pstrkeypadcode, CTriggerKeypad* pkeypad, bool staytillnext )
 {
 	// If id is null, get it from entity
 	CString keypadcode;
@@ -3305,7 +3305,7 @@ void CPlayerEntity::SpawnSubwayWindow( subwayline_t type, CTriggerSubwayControll
 // @brief
 //
 //=============================================
-void CPlayerEntity::SpawnTextWindow( const Char* pstrfilepath, const Char* pstrpasscode, const Char* pstrid )
+void CPlayerEntity::SpawnTextWindow( const char* pstrfilepath, const char* pstrpasscode, const char* pstrid )
 {
 	// Add pass code if present
 	if(pstrpasscode && qstrlen(pstrpasscode) > 0 && pstrid && qstrlen(pstrid) > 0)
@@ -3317,15 +3317,15 @@ void CPlayerEntity::SpawnTextWindow( const Char* pstrfilepath, const Char* pstrp
 		gd_engfuncs.pfnMsgWriteString(pstrfilepath);
 		if(pstrpasscode && qstrlen(pstrpasscode))
 		{
-			gd_engfuncs.pfnMsgWriteByte(TRUE);
+			gd_engfuncs.pfnMsgWriteByte(true);
 			gd_engfuncs.pfnMsgWriteString(pstrpasscode);
 		}
 		else
-			gd_engfuncs.pfnMsgWriteByte(FALSE);
+			gd_engfuncs.pfnMsgWriteByte(false);
 	gd_engfuncs.pfnUserMessageEnd();
 
 	// See if we need to add it to the saved documents array
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for(; i < m_savedDocumentsArray.size(); i++)
 	{
 		CString textFileEntry = gd_engfuncs.pfnGetString(m_savedDocumentsArray[i]);
@@ -3359,7 +3359,7 @@ void CPlayerEntity::SpawnTextWindow( const Char* pstrfilepath, const Char* pstrp
 // @brief
 //
 //=============================================
-void CPlayerEntity::SpawnLoginWindow( const Char* pstruser, const Char* pstrpasscode, const Char* pstrid, CTriggerLogin* plogin, bool staytillnext )
+void CPlayerEntity::SpawnLoginWindow( const char* pstruser, const char* pstrpasscode, const char* pstrid, CTriggerLogin* plogin, bool staytillnext )
 {
 	CString passcode;
 	if(!pstrid || !qstrlen(pstrid))
@@ -3380,7 +3380,7 @@ void CPlayerEntity::SpawnLoginWindow( const Char* pstruser, const Char* pstrpass
 	}
 	else
 	{
-		const Char* _pstrpasscode = GetPasscodeForId(pstrid);
+		const char* _pstrpasscode = GetPasscodeForId(pstrid);
 		if(_pstrpasscode)
 			passcode = _pstrpasscode;
 
@@ -3468,7 +3468,7 @@ void CPlayerEntity::ManageGameUIEvent( CMSGReader& reader )
 		break;
 	case GAMEUIEVENT_SUBWAY_SELECTION:
 		{
-			const Char* pstrDestination = reader.ReadString();
+			const char* pstrDestination = reader.ReadString();
 
 			if(m_pSubwayController)
 			{
@@ -3486,9 +3486,9 @@ void CPlayerEntity::ManageGameUIEvent( CMSGReader& reader )
 		break;
 	case GAMEUIEVENT_READ_OBJECTIVE:
 		{
-			const Char* pstrObjectiveIdentifier = reader.ReadString();
+			const char* pstrObjectiveIdentifier = reader.ReadString();
 
-			for(Uint32 i = 0; i < m_objectivesArray.size(); i++)
+			for(UInt32 i = 0; i < m_objectivesArray.size(); i++)
 			{
 				if(m_objectivesArray[i] == NO_STRING_VALUE)
 					break;
@@ -3513,15 +3513,15 @@ void CPlayerEntity::ManageGameUIEvent( CMSGReader& reader )
 //=============================================
 void CPlayerEntity::InitStepSounds( void )
 {
-	Uint32 filesize = 0;
-	const byte* pfile = gd_filefuncs.pfnLoadFile(FOOTSTEP_SCRIPT_FILE, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = gd_filefuncs.pfnLoadFile(FOOTSTEP_SCRIPT_FILE, &filesize);
 	if(!pfile)
 	{
 		gd_engfuncs.pfnClientPrintf(m_pEdict, "%s - Could not load '%s'.\n", __FUNCTION__, FOOTSTEP_SCRIPT_FILE);
 		return;
 	}
 
-	if(!m_pstepSound.Init(reinterpret_cast<const Char*>(pfile), filesize))
+	if(!m_pstepSound.Init(reinterpret_cast<const char*>(pfile), filesize))
 		gd_engfuncs.pfnClientPrintf(m_pEdict, "%s - Failed to initialize CStepSound with '%s': %s.\n", __FUNCTION__, FOOTSTEP_SCRIPT_FILE, m_pstepSound.GetInfoString().c_str());
 
 	if(!m_pstepSound.IsInfoStringEmpty())
@@ -3534,7 +3534,7 @@ void CPlayerEntity::InitStepSounds( void )
 // @brief
 //
 //=============================================
-void CPlayerEntity::PlayStepSound( const Char* pstrMaterialName, bool stepleft, Float volume, const Vector& origin )
+void CPlayerEntity::PlayStepSound( const char* pstrMaterialName, bool stepleft, float volume, const Vector& origin )
 {
 	// Get appropriate sound
 	CStepSound::foot_t foot = stepleft ? CStepSound::FOOT_LEFT : CStepSound::FOOT_RIGHT;
@@ -3542,7 +3542,7 @@ void CPlayerEntity::PlayStepSound( const Char* pstrMaterialName, bool stepleft, 
 	if(!pSoundsArray || pSoundsArray->empty())
 		return;
 
-	Uint32 irand = Common::RandomLong(0, pSoundsArray->size()-1);
+	UInt32 irand = Common::RandomLong(0, pSoundsArray->size()-1);
 	const CString& sound = (*pSoundsArray)[irand];
 
 	for(Int32 i = 0; i < g_pGameVars->maxclients; i++)
@@ -3555,7 +3555,7 @@ void CPlayerEntity::PlayStepSound( const Char* pstrMaterialName, bool stepleft, 
 	}
 
 	// Update step sound
-	Float soundVolume = 0;
+	float soundVolume = 0;
 	if(m_pState->flags & FL_ONGROUND)
 	{
 		soundVolume = m_pState->velocity.Length()*4;
@@ -3576,7 +3576,7 @@ void CPlayerEntity::PlayStepSound( const Char* pstrMaterialName, bool stepleft, 
 // @brief
 //
 //=============================================
-void CPlayerEntity::PlaySound( Int32 channel, const Char* psample, Float volume, Float attenuation, Int32 pitch, Int32 flags )
+void CPlayerEntity::PlaySound( Int32 channel, const char* psample, float volume, float attenuation, Int32 pitch, Int32 flags )
 {
 	for(Int32 i = 0; i < g_pGameVars->maxclients; i++)
 	{
@@ -3592,9 +3592,9 @@ void CPlayerEntity::PlaySound( Int32 channel, const Char* psample, Float volume,
 // @brief
 //
 //=============================================
-void CPlayerEntity::HostSay( const Char* pstrText, bool teamonly )
+void CPlayerEntity::HostSay( const char* pstrText, bool teamonly )
 {
-	const Char* pstrnetname = gd_engfuncs.pfnGetString(m_pFields->netname);
+	const char* pstrnetname = gd_engfuncs.pfnGetString(m_pFields->netname);
 	if(!pstrnetname)
 		return;
 
@@ -3680,7 +3680,7 @@ void CPlayerEntity::SetIsInDream( bool isindream )
 // @brief
 //
 //=============================================
-void CPlayerEntity::SetSaveGameTitle( const Char* pstrtitle )
+void CPlayerEntity::SetSaveGameTitle( const char* pstrtitle )
 {
 	m_saveGameTitle = gd_engfuncs.pfnAllocString(pstrtitle);
 }
@@ -3689,7 +3689,7 @@ void CPlayerEntity::SetSaveGameTitle( const Char* pstrtitle )
 // @brief
 //
 //=============================================
-const Char* CPlayerEntity::GetSaveGameTitle( void )
+const char* CPlayerEntity::GetSaveGameTitle( void )
 {
 	return gd_engfuncs.pfnGetString(m_saveGameTitle);
 }
@@ -3707,7 +3707,7 @@ void CPlayerEntity::SetRoomType( Int32 roomtype )
 // @brief
 //
 //=============================================
-void CPlayerEntity::SelectWeapon( const Char* pstrWeaponName )
+void CPlayerEntity::SelectWeapon( const char* pstrWeaponName )
 {
 	if(!pstrWeaponName || !qstrlen(pstrWeaponName))
 		return;
@@ -3854,12 +3854,12 @@ bool CPlayerEntity::HasAnyWeapons( void ) const
 // @brief
 //
 //=============================================
-void CPlayerEntity::GiveItemByName( const Char* pstrClassname, const Char* pstrTargetName, Uint32 amount, bool removeunneeded )
+void CPlayerEntity::GiveItemByName( const char* pstrClassname, const char* pstrTargetName, UInt32 amount, bool removeunneeded )
 {
 	if(!AreCheatsEnabled())
 		return;
 
-	for(Uint32 i = 0; i < amount; i++)
+	for(UInt32 i = 0; i < amount; i++)
 	{
 		edict_t* pedict = gd_engfuncs.pfnCreateEntity(pstrClassname);
 		if(Util::IsNullEntity(pedict))
@@ -3997,8 +3997,8 @@ bool CPlayerEntity::TurnFlashlightOn( bool isShoulderLight )
 		m_pState->effects |= EF_DIMLIGHT;
 
 	gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.setflashlight, nullptr, m_pEdict);
-		gd_engfuncs.pfnMsgWriteByte(TRUE);
-		gd_engfuncs.pfnMsgWriteByte((Int32)clamp(m_flashlightBattery*255, 0, 255));
+		gd_engfuncs.pfnMsgWriteByte(true);
+		gd_engfuncs.pfnMsgWriteByte((Int32)Clamp(m_flashlightBattery*255, 0, 255));
 	gd_engfuncs.pfnUserMessageEnd();
 
 	return true;
@@ -4018,8 +4018,8 @@ bool CPlayerEntity::TurnFlashlightOff( bool onlyDimLight, bool onlyShoulderLight
 		m_pState->effects &= ~(EF_SHOULDERLIGHT|EF_DIMLIGHT);
 
 	gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.setflashlight, nullptr, m_pEdict);
-		gd_engfuncs.pfnMsgWriteByte(FALSE);
-		gd_engfuncs.pfnMsgWriteByte((Int32)clamp(m_flashlightBattery*255, 0, 255));
+		gd_engfuncs.pfnMsgWriteByte(false);
+		gd_engfuncs.pfnMsgWriteByte((Int32)Clamp(m_flashlightBattery*255, 0, 255));
 	gd_engfuncs.pfnUserMessageEnd();
 
 	return true;
@@ -4099,13 +4099,13 @@ void CPlayerEntity::ManageCheatImpulseCommands( Int32 impulse )
 
 			if(!tr.noHit() && !tr.startSolid() && !tr.allSolid() && tr.hitentity != NO_ENTITY_INDEX)
 			{
-				const Char* pstrTextureName = Util::TraceTexture(tr.hitentity, tr.endpos, tr.plane.normal);
+				const char* pstrTextureName = Util::TraceTexture(tr.hitentity, tr.endpos, tr.plane.normal);
 				if(pstrTextureName)
 				{
 					edict_t* pentity = gd_engfuncs.pfnGetEdictByIndex(tr.hitentity);
 					if(pentity)
 					{
-						const Char* pstrClassName = gd_engfuncs.pfnGetString(pentity->fields.classname);
+						const char* pstrClassName = gd_engfuncs.pfnGetString(pentity->fields.classname);
 						gd_engfuncs.pfnClientPrintf(m_pEdict, "Entity: %s - Texture %s.\n", pstrClassName, pstrTextureName);
 					}
 				}
@@ -4232,8 +4232,8 @@ void CPlayerEntity::ManageCheatImpulseCommands( Int32 impulse )
 			CBaseEntity* pEntity = Util::FindEntityAtDirection(traceBegin, m_pState->viewangles, m_pEdict);
 			if(pEntity && pEntity->GetTakeDamage() != TAKEDAMAGE_NO)
 			{
-				const Char* pstrClassname = pEntity->GetClassName();
-				const Char* pstrTargetname = pEntity->GetTargetName();
+				const char* pstrClassname = pEntity->GetClassName();
+				const char* pstrTargetname = pEntity->GetTargetName();
 
 				if(pstrTargetname && qstrlen(pstrTargetname))
 					gd_engfuncs.pfnCon_Printf("Removing entity %s with targetname %s.\n", pstrClassname, pstrTargetname);
@@ -4255,10 +4255,10 @@ void CPlayerEntity::ManageCheatImpulseCommands( Int32 impulse )
 			CBaseEntity* pEntity = Util::FindEntityAtDirection(traceBegin, m_pState->viewangles, m_pEdict);
 			if(pEntity)
 			{
-				const Char* pstrClassname = pEntity->GetClassName();
-				const Char* pstrTargetname = pEntity->GetTargetName();
-				const Char* pstrTarget = pEntity->GetTarget();
-				const Char* pstrModelname = pEntity->GetModelName();
+				const char* pstrClassname = pEntity->GetClassName();
+				const char* pstrTargetname = pEntity->GetTargetName();
+				const char* pstrTarget = pEntity->GetTarget();
+				const char* pstrModelname = pEntity->GetModelName();
 
 				CString str;
 				str << "Entity in front - Classname: " << pstrClassname << " - Entity index: " << pEntity->GetEntityIndex();
@@ -4280,7 +4280,7 @@ void CPlayerEntity::ManageCheatImpulseCommands( Int32 impulse )
 // @brief
 //
 //=============================================
-Int32 CPlayerEntity::GiveAmmo( Int32 amount, const Char* pstrammoname, Int32 max, bool display, CBaseEntity* pentity )
+Int32 CPlayerEntity::GiveAmmo( Int32 amount, const char* pstrammoname, Int32 max, bool display, CBaseEntity* pentity )
 {
 	if(!pstrammoname || !qstrlen(pstrammoname))
 		return NO_AMMO_INDEX;
@@ -4335,7 +4335,7 @@ Int32 CPlayerEntity::GetAmmoCount( Int32 ammotype ) const
 // @brief
 //
 //=============================================
-void CPlayerEntity::RemoveAmmo( Int32 ammotype, Uint32 numremove )
+void CPlayerEntity::RemoveAmmo( Int32 ammotype, UInt32 numremove )
 {
 	if(ammotype == NO_AMMO_INDEX)
 		return;
@@ -4363,7 +4363,7 @@ void CPlayerEntity::SetAmmoCount( Int32 ammotype, Int32 ammocount )
 //=============================================
 void CPlayerEntity::UpdateClientAmmoCounts( void )
 {
-	for(Uint32 i = 0; i < MAX_AMMO_TYPES; i++)
+	for(UInt32 i = 0; i < MAX_AMMO_TYPES; i++)
 	{
 		if(m_ammoCounts[i] == m_clientAmmoCounts[i])
 			continue;
@@ -4372,7 +4372,7 @@ void CPlayerEntity::UpdateClientAmmoCounts( void )
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.hudammocount, nullptr, m_pEdict);
 			gd_engfuncs.pfnMsgWriteByte(i);
-			gd_engfuncs.pfnMsgWriteByte(clamp(m_ammoCounts[i], 0, 254)); // 255 is reserved for -1 maxammo
+			gd_engfuncs.pfnMsgWriteByte(Clamp(m_ammoCounts[i], 0, 254)); // 255 is reserved for -1 maxammo
 		gd_engfuncs.pfnUserMessageEnd();
 
 		m_clientAmmoCounts[i] = m_ammoCounts[i];
@@ -4437,7 +4437,7 @@ bool CPlayerEntity::CanHaveWeapon( CPlayerWeapon* pWeapon ) const
 	if(m_pState->deadstate != DEADSTATE_NONE)
 		return false;
 	
-	const Char* pstrAmmoType = pWeapon->GetAmmoTypeName();
+	const char* pstrAmmoType = pWeapon->GetAmmoTypeName();
 	if(qstrlen(pWeapon->GetAmmoTypeName()) > 0)
 	{
 		if(!CanHaveAmmo(pstrAmmoType, pWeapon->GetMaxAmmo()))
@@ -4467,14 +4467,14 @@ bool CPlayerEntity::AddPlayerWeapon( CPlayerWeapon* pWeapon, bool& triggerTarget
 		// Try and extract ammo, but leave gun behind
 		if (pWeapon->GetDefaultAmmo() > 0)
 		{
-			const Char* pstrAddAmmoType = pWeapon->GetAmmoTypeName();
+			const char* pstrAddAmmoType = pWeapon->GetAmmoTypeName();
 			if (pstrAddAmmoType && qstrlen(pstrAddAmmoType))
 			{
 				// See if we can find an equipped weapon with the same ammo type
 				CPlayerWeapon* pPlayerWeapon = m_pWeaponsList;
 				while (pPlayerWeapon)
 				{
-					const Char* pstrAmmoType = pPlayerWeapon->GetAmmoTypeName();
+					const char* pstrAmmoType = pPlayerWeapon->GetAmmoTypeName();
 					if (!qstrcmp(pstrAmmoType, pstrAddAmmoType))
 					{
 						if(!pWeapon->ExtractAmmo(pPlayerWeapon))
@@ -4582,7 +4582,7 @@ bool CPlayerEntity::SwitchToWeapon( CPlayerWeapon* pWeapon )
 // @brief
 //
 //=============================================
-bool CPlayerEntity::CanHaveAmmo( const Char* pstrammotype, Int32 maxammo ) const
+bool CPlayerEntity::CanHaveAmmo( const char* pstrammotype, Int32 maxammo ) const
 {
 	if(!pstrammotype || !qstrlen(pstrammotype))
 		return false;
@@ -4669,7 +4669,7 @@ CPlayerWeapon* CPlayerEntity::GetWeaponList( void )
 // @brief
 //
 //=============================================
-void CPlayerEntity::ApplyAxisPunch( Int32 axis, Float value )
+void CPlayerEntity::ApplyAxisPunch( Int32 axis, float value )
 {
 	assert(axis >= 0 && axis <= 2);
 	m_pState->punchamount[axis] += value;
@@ -4679,7 +4679,7 @@ void CPlayerEntity::ApplyAxisPunch( Int32 axis, Float value )
 // @brief
 //
 //=============================================
-void CPlayerEntity::ApplyDirectAxisPunch( Int32 axis, Float value )
+void CPlayerEntity::ApplyDirectAxisPunch( Int32 axis, float value )
 {
 	assert(axis >= 0 && axis <= 2);
 	m_pState->punchangles[axis] += value;
@@ -4689,7 +4689,7 @@ void CPlayerEntity::ApplyDirectAxisPunch( Int32 axis, Float value )
 // @brief
 //
 //=============================================
-void CPlayerEntity::SetViewModel( const Char* pstrviewmodel )
+void CPlayerEntity::SetViewModel( const char* pstrviewmodel )
 {
 	if(!pstrviewmodel || !qstrlen(pstrviewmodel))
 		m_pFields->viewmodel = NO_STRING_VALUE;
@@ -4711,7 +4711,7 @@ void CPlayerEntity::SetViewModel( const Char* pstrviewmodel )
 // @brief
 //
 //=============================================
-void CPlayerEntity::SetClientViewModel( const Char* pstrviewmodel )
+void CPlayerEntity::SetClientViewModel( const char* pstrviewmodel )
 {
 	if(!pstrviewmodel || !qstrlen(pstrviewmodel))
 		m_clientViewModel = NO_STRING_VALUE;
@@ -4741,7 +4741,7 @@ void CPlayerEntity::SetForceWeaponUpdate( bool update )
 // @brief
 //
 //=============================================
-Uint32 CPlayerEntity::GetClientConeIndex( void ) const
+UInt32 CPlayerEntity::GetClientConeIndex( void ) const
 {
 	return m_clientConeIndex;
 }
@@ -4750,7 +4750,7 @@ Uint32 CPlayerEntity::GetClientConeIndex( void ) const
 // @brief
 //
 //=============================================
-void CPlayerEntity::SetClientConeIndex( Uint32 coneIndex )
+void CPlayerEntity::SetClientConeIndex( UInt32 coneIndex )
 {
 	m_clientConeIndex = coneIndex;
 }
@@ -4810,7 +4810,7 @@ void CPlayerEntity::UseMedkit( void )
 	Util::EmitEntitySound(this, "items/medkit_use.wav", SND_CHAN_VOICE);
 	
 	// Get heal amount
-	Float healamount = gSkillData.GetSkillCVarSetting(g_skillcvars.skillHealthkitHealAmount);
+	float healamount = gSkillData.GetSkillCVarSetting(g_skillcvars.skillHealthkitHealAmount);
 	if(gSkillData.GetSkillLevel() == SKILL_HARD)
 		healamount += Common::RandomLong(-5, 5);
 
@@ -4882,7 +4882,7 @@ void CPlayerEntity::PlayPainSound( void )
 // @brief
 //
 //=============================================
-bool CPlayerEntity::TakeHealth( Float amount, Int32 damageFlags )
+bool CPlayerEntity::TakeHealth( float amount, Int32 damageFlags )
 {
 	if(m_pState->takedamage == TAKEDAMAGE_NO)
 		return false;
@@ -4926,7 +4926,7 @@ void CPlayerEntity::HealThink( void )
 // @brief
 //
 //=============================================
-bool CPlayerEntity::AddMedkit( const Char* pstrClassname, bool noNotice )
+bool CPlayerEntity::AddMedkit( const char* pstrClassname, bool noNotice )
 {
 	if(!pstrClassname || !qstrlen(pstrClassname))
 		return false;
@@ -4952,7 +4952,7 @@ bool CPlayerEntity::AddMedkit( const Char* pstrClassname, bool noNotice )
 // @brief
 //
 //=============================================
-bool CPlayerEntity::AddKevlar( const Char* pstrClassname, bool noNotice )
+bool CPlayerEntity::AddKevlar( const char* pstrClassname, bool noNotice )
 {
 	if(!pstrClassname || !qstrlen(pstrClassname))
 		return false;
@@ -4970,8 +4970,8 @@ bool CPlayerEntity::AddKevlar( const Char* pstrClassname, bool noNotice )
 		gd_engfuncs.pfnUserMessageEnd();
 	}
 
-	Float kevlaradd = gSkillData.GetSkillCVarSetting(g_skillcvars.skillKevlarAmount);
-	Float kevlarmissing = MAX_PLAYER_KEVLAR - m_pState->armorvalue;
+	float kevlaradd = gSkillData.GetSkillCVarSetting(g_skillcvars.skillKevlarAmount);
+	float kevlarmissing = MAX_PLAYER_KEVLAR - m_pState->armorvalue;
 	if(kevlaradd > kevlarmissing)
 		kevlaradd = kevlarmissing;
 
@@ -4983,7 +4983,7 @@ bool CPlayerEntity::AddKevlar( const Char* pstrClassname, bool noNotice )
 // @brief
 //
 //=============================================
-bool CPlayerEntity::AddShoulderLight( const Char* pstrClassname, bool noNotice )
+bool CPlayerEntity::AddShoulderLight( const char* pstrClassname, bool noNotice )
 {
 	if(m_hasShoulderLight)
 		return false;
@@ -5036,7 +5036,7 @@ void CPlayerEntity::RemoveAllWeapons( void )
 	m_pState->weapons = 0;
 	m_numMedkits = 0;
 
-	for(Uint32 i = 0; i < MAX_AMMO_TYPES; i++)
+	for(UInt32 i = 0; i < MAX_AMMO_TYPES; i++)
 		m_ammoCounts[i] = 0;
 
 	// Force client data update
@@ -5135,7 +5135,7 @@ bool CPlayerEntity::CanPickupWeapon( Int32 slot, weaponid_t weaponid )
 	if(!m_pWeaponsList)
 		return true;
 
-	Uint32 nbslotweapons = 0;
+	UInt32 nbslotweapons = 0;
 	CPlayerWeapon* pWeapon = m_pWeaponsList;
 	while(pWeapon)
 	{
@@ -5189,7 +5189,7 @@ bool CPlayerEntity::CanPickupWeapon( Int32 slot, weaponid_t weaponid )
 //=============================================
 void CPlayerEntity::SetWeaponBit( Int64 weaponid )
 {
-	m_pState->weapons |= (1i64<<weaponid);
+	m_pState->weapons |= (static_cast<Int64>(1) << weaponid);
 }
 
 //=============================================
@@ -5198,7 +5198,7 @@ void CPlayerEntity::SetWeaponBit( Int64 weaponid )
 //=============================================
 void CPlayerEntity::RemoveWeaponBit( Int64 weaponid )
 {
-	m_pState->weapons &= ~(1i64<<weaponid);
+	m_pState->weapons &= ~(static_cast<Int64>(1) << weaponid);
 }
 
 //=============================================
@@ -5277,7 +5277,7 @@ void CPlayerEntity::RemoveWeapon( CPlayerWeapon* pWeapon )
 	}
 
 	// Remove bit
-	m_pState->weapons &= ~(1i64<<pWeapon->GetId());
+	m_pState->weapons &= ~(static_cast<Int64>(1) << pWeapon->GetId());
 
 	if(pWeapon == m_pWeaponsList)
 	{
@@ -5306,7 +5306,7 @@ void CPlayerEntity::RemoveWeapon( CPlayerWeapon* pWeapon )
 // @brief
 //
 //=============================================
-bool CPlayerEntity::HasPlayerWeapon( const Char* pstrWeaponClassName ) const
+bool CPlayerEntity::HasPlayerWeapon( const char* pstrWeaponClassName ) const
 {
 	if(!m_pWeaponsList)
 		return false;
@@ -5327,10 +5327,10 @@ bool CPlayerEntity::HasPlayerWeapon( const Char* pstrWeaponClassName ) const
 // @brief
 //
 //=============================================
-const CPlayerWeapon* CPlayerEntity::GetPlayerWeaponByClassName( const Char* pstrWeaponClassName ) const
+const CPlayerWeapon* CPlayerEntity::GetPlayerWeaponByClassName( const char* pstrWeaponClassName ) const
 {
 	if(!m_pWeaponsList)
-		return false;
+		return nullptr;
 
 	CPlayerWeapon* pNext = m_pWeaponsList;
 	while(pNext)
@@ -5341,14 +5341,14 @@ const CPlayerWeapon* CPlayerEntity::GetPlayerWeaponByClassName( const Char* pstr
 		pNext = pNext->GetNextWeapon();
 	}
 
-	return false;
+	return nullptr;
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-void CPlayerEntity::SetWeaponVolume( Uint32 volume )
+void CPlayerEntity::SetWeaponVolume( UInt32 volume )
 {
 	m_weaponSoundRadius = volume;
 }
@@ -5357,7 +5357,7 @@ void CPlayerEntity::SetWeaponVolume( Uint32 volume )
 // @brief
 //
 //=============================================
-void CPlayerEntity::SetWeaponFlashBrightness( Uint32 brightness )
+void CPlayerEntity::SetWeaponFlashBrightness( UInt32 brightness )
 {
 	m_weaponFlashBrightness = brightness;
 }
@@ -5414,8 +5414,8 @@ void CPlayerEntity::EnterLadder( CEnvLadder *pLadder )
 void CPlayerEntity::InitLeaveLadder( ladder_verify_codes_t exitcode )
 {
 	ladder_exitpoints_t iExit = LADDER_EXIT_UNAVAILABLE;
-	Float flLeaveTime = 0;
-	Float flDiff = 0;
+	float flLeaveTime = 0;
+	float flDiff = 0;
 	Vector vOrigin, vAngles;
 
 	if(exitcode == LADDER_VR_MOVE_EXIT_USE)
@@ -5634,7 +5634,7 @@ void CPlayerEntity::LadderThink( void )
 // @brief
 //
 //=============================================
-void CPlayerEntity::SetNPCAwareness( Float awareness, CBaseEntity* pNPC, Float timeoutDelay, bool isLeanAwareness )
+void CPlayerEntity::SetNPCAwareness( float awareness, CBaseEntity* pNPC, float timeoutDelay, bool isLeanAwareness )
 {
 	if(!m_npcAwarenessList.empty())
 	{
@@ -5683,7 +5683,7 @@ void CPlayerEntity::NPCAwarenessThink( void )
 {
 	// Reset this
 	m_highestAwarenessLevel = 0;
-	Double lasthighesttime = 0;
+	double lasthighesttime = 0;
 
 	if(m_npcAwarenessList.empty())
 		return;
@@ -5739,8 +5739,8 @@ void CPlayerEntity::LeanThink( void )
 		}
 
 		// Determine directions
-		Float leanUp = 0;
-		Float leanSide = 0;
+		float leanUp = 0;
+		float leanSide = 0;
 
 		if( m_pState->buttons & IN_MOVELEFT )
 			leanSide -= 1.0;
@@ -5777,7 +5777,7 @@ void CPlayerEntity::LeanThink( void )
 		Util::TraceLine(traceOrg, traceDest1, false, true, m_pEdict, tr);
 		Util::TraceLine(traceOrg, traceDest2, false, true, m_pEdict, tr_cp);
 
-		Float flTraceFraction = 1.0;
+		float flTraceFraction = 1.0;
 		if(tr.fraction != 1.0)
 			flTraceFraction = tr.fraction*0.75;
 		else if(tr_cp.fraction != 1.0)
@@ -5788,8 +5788,8 @@ void CPlayerEntity::LeanThink( void )
 		m_idealLeanAngles[0] = leanUp*6;
 
 		// Calculate fraction
-		Double time = clamp((g_pGameVars->time - m_leanTime), 0.0, LEAN_TIME);
-		Float leanFraction = Common::SplineFraction( time, (1.0/LEAN_TIME) );
+		double time = Clamp((g_pGameVars->time - m_leanTime), 0.0, LEAN_TIME);
+		float leanFraction = Common::SplineFraction( time, (1.0/LEAN_TIME) );
 
 		// It must be recalculated every frame
 		if(leanFraction > 1.0)
@@ -5819,8 +5819,8 @@ void CPlayerEntity::LeanThink( void )
 		if(m_leanTime)
 		{
 			// Calculate lean interpolation
-			Float time = clamp((g_pGameVars->time - m_leanTime), 0.0, LEAN_TIME);
-			Float leanFraction = Common::SplineFraction( time, (1.0/LEAN_TIME) );
+			float time = Clamp((g_pGameVars->time - m_leanTime), 0.0, LEAN_TIME);
+			float leanFraction = Common::SplineFraction( time, (1.0/LEAN_TIME) );
 
 			if(leanFraction >= 1.0)
 			{
@@ -5841,7 +5841,7 @@ void CPlayerEntity::LeanThink( void )
 			Util::TraceLine(traceOrg, traceDest1, false, true, m_pEdict, tr);
 			Util::TraceLine(traceOrg, traceDest2, false, true, m_pEdict, tr);
 
-			Double flTraceFraction = 1.0;
+			double flTraceFraction = 1.0;
 			if(tr.fraction != 1.0)
 				flTraceFraction = tr.fraction*0.75;
 			else if(tr_cp.fraction != 1.0)
@@ -5915,7 +5915,7 @@ void CPlayerEntity::AutoAimThink( void )
 			gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.setautoaimvector, nullptr, m_pEdict);
 				gd_engfuncs.pfnMsgWriteFloat(0);
 				gd_engfuncs.pfnMsgWriteFloat(0);
-				gd_engfuncs.pfnMsgWriteByte(FALSE);
+				gd_engfuncs.pfnMsgWriteByte(false);
 			gd_engfuncs.pfnUserMessageEnd();
 		}
 
@@ -5931,15 +5931,15 @@ void CPlayerEntity::AutoAimThink( void )
 	// Player's water level
 	Int32 playerWaterlevel = m_pState->waterlevel;
 	// Reference distance
-	const Float REFERENCE_DISTANCE = 16384;
+	const float REFERENCE_DISTANCE = 16384;
 	
 	// Last best autoaim target values
-	Float lastBestDotProduct = m_pActiveWeapon->GetAutoAimDegrees();
+	float lastBestDotProduct = m_pActiveWeapon->GetAutoAimDegrees();
 	CBaseEntity* pLastBestEntity = nullptr;
 	Vector lastBestDirection;
 
 	// Go through all entities
-	for(Uint32 i = 0; i < g_pGameVars->numentities; i++)
+	for(UInt32 i = 0; i < g_pGameVars->numentities; i++)
 	{
 		edict_t* pedict = gd_engfuncs.pfnGetEdictByIndex(i);
 		if(Util::IsNullEntity(pedict))
@@ -5960,7 +5960,7 @@ void CPlayerEntity::AutoAimThink( void )
 		if(Math::DotProduct(direction, forward) < 0)
 			continue;
 
-		Float dp = SDL_fabs(Math::DotProduct(direction, right));
+		float dp = SDL_fabs(Math::DotProduct(direction, right));
 		dp += SDL_fabs(Math::DotProduct(direction, up));
 		dp *= 1.0 + 0.2 * ((entityCenter - srcVector).Length() / REFERENCE_DISTANCE);
 		if(dp > lastBestDotProduct)
@@ -5994,7 +5994,7 @@ void CPlayerEntity::AutoAimThink( void )
 	}
 
 	// After setting, limit angles
-	for(Uint32 i = 0; i < 2; i++)
+	for(UInt32 i = 0; i < 2; i++)
 	{
 		// Normalize angles
 		if(m_autoAimVector[i] > 180.0f)
@@ -6015,7 +6015,7 @@ void CPlayerEntity::AutoAimThink( void )
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.setautoaimvector, nullptr, m_pEdict);
 			gd_engfuncs.pfnMsgWriteFloat(m_autoAimVector[0]);
 			gd_engfuncs.pfnMsgWriteFloat(m_autoAimVector[1]);
-			gd_engfuncs.pfnMsgWriteByte(m_isOnTarget ? TRUE : FALSE);
+			gd_engfuncs.pfnMsgWriteByte(m_isOnTarget ? true : false);
 		gd_engfuncs.pfnUserMessageEnd();
 
 		m_lastAutoAimVector = m_autoAimVector;
@@ -6141,8 +6141,8 @@ void CPlayerEntity::DumpCheatCodes( void )
 	if(!AreCheatsEnabled())
 		return;
 
-	Uint32 num = sizeof(CPlayerEntity::PLAYER_CHEAT_DESCRIPTIONS)/sizeof(CPlayerEntity::cheatinfo_t);
-	for(Uint32 i = 0; i < num; i++)
+	UInt32 num = sizeof(CPlayerEntity::PLAYER_CHEAT_DESCRIPTIONS)/sizeof(CPlayerEntity::cheatinfo_t);
+	for(UInt32 i = 0; i < num; i++)
 	{
 		const CPlayerEntity::cheatinfo_t& cheat = CPlayerEntity::PLAYER_CHEAT_DESCRIPTIONS[i];
 		gd_engfuncs.pfnCon_Printf("Cheat: %s - %s.\n", cheat.cheatcode.c_str(), cheat.description.c_str());
@@ -6218,7 +6218,7 @@ void CPlayerEntity::LeaveBike( void )
 		gd_engfuncs.pfnMsgWriteByte(m_bikeState);
 	gd_engfuncs.pfnUserMessageEnd();
 
-	Double fleavetime = m_pBikeEntity->GetLeaveTime();
+	double fleavetime = m_pBikeEntity->GetLeaveTime();
 	m_bikeUpdateTime = g_pGameVars->time + fleavetime;
 }
 
@@ -6241,7 +6241,7 @@ bool CPlayerEntity::FindBikeDropSpot( Vector& angles, Vector& origin )
 	
 	// try left first
 	bool result = false;
-	for(Float dist = 16; dist < 64; dist += 16)
+	for(float dist = 16; dist < 64; dist += 16)
 	{
 		Vector vecSpot = m_pState->origin + right*dist*2.5;
 		Util::TraceHull(vecSpot+Vector(0, 0, 4), vecSpot-Vector(0, 0, 16), false, false, HULL_HUMAN, m_pEdict, tr);
@@ -6259,7 +6259,7 @@ bool CPlayerEntity::FindBikeDropSpot( Vector& angles, Vector& origin )
 
 	if(!result)
 	{
-		for(Float dist = 16; dist < 64; dist += 16)
+		for(float dist = 16; dist < 64; dist += 16)
 		{
 			// try right
 			Vector vecSpot = m_pState->origin - right*dist*2.5;
@@ -6279,7 +6279,7 @@ bool CPlayerEntity::FindBikeDropSpot( Vector& angles, Vector& origin )
 
 	if(!result)
 	{
-		for(Float dist = 16; dist < 64; dist += 16)
+		for(float dist = 16; dist < 64; dist += 16)
 		{
 			// try back
 			Vector vecSpot = m_pState->origin - forward*dist*2.5;
@@ -6333,13 +6333,13 @@ void CPlayerEntity::BikeThink( void )
 				gd_engfuncs.pfnUserMessageEnd();
 
 				m_clientBikeState = m_bikeState = BIKE_SV_ACTIVE;
-				Float flentertime = m_pBikeEntity->GetEnterTime();
+				float flentertime = m_pBikeEntity->GetEnterTime();
 				m_bikeUpdateTime = g_pGameVars->time + flentertime;
 			}
 			else if(m_bikeState == BIKE_SV_ACTIVE)
 			{
 				SetControlEnable(true);
-				m_pState->fuser1 = TRUE;
+				m_pState->fuser1 = true;
 
 				gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.motorbike, nullptr, m_pEdict);
 					gd_engfuncs.pfnMsgWriteByte(m_bikeState);
@@ -6353,9 +6353,9 @@ void CPlayerEntity::BikeThink( void )
 				Vector clDropOrg = m_dropOrigin + VEC_VIEW;
 				gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.motorbike, nullptr, m_pEdict);
 					gd_engfuncs.pfnMsgWriteByte(m_bikeState);
-					for(Uint32 i = 0; i < 3; i++)
+					for(UInt32 i = 0; i < 3; i++)
 						gd_engfuncs.pfnMsgWriteFloat(clDropOrg[i]);
-					for(Uint32 i = 0; i < 3; i++)
+					for(UInt32 i = 0; i < 3; i++)
 						gd_engfuncs.pfnMsgWriteFloat(m_dropAngles[i]);
 				gd_engfuncs.pfnUserMessageEnd();
 			}
@@ -6377,7 +6377,7 @@ void CPlayerEntity::BikeThink( void )
 			else if(m_bikeState == BIKE_SV_CLEANUP)
 			{
 				SetControlEnable(true);
-				m_pState->fuser1 = FALSE;
+				m_pState->fuser1 = false;
 				SetAiment(nullptr);
 				
 				m_pBikeEntity = nullptr;
@@ -6389,9 +6389,9 @@ void CPlayerEntity::BikeThink( void )
 	// Manage collisions
 	if(m_bikeState == BIKE_SV_ACTIVE)
 	{
-		Float flLastVelocity = m_bikeVelocity.Length();
-		Float flVelocity = m_pState->velocity.Length();
-		Float flDiff = abs(flLastVelocity - flVelocity);
+		float flLastVelocity = m_bikeVelocity.Length();
+		float flVelocity = m_pState->velocity.Length();
+		float flDiff = abs(flLastVelocity - flVelocity);
 
 		if( flDiff > MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED )
 		{
@@ -6406,14 +6406,14 @@ void CPlayerEntity::BikeThink( void )
 			if(Math::DotProduct(velDir, tr.plane.normal) < 0.6 && tr.fraction != 1.0)
 			{
 				// Save previous fraction
-				Double groundFraction = tr.fraction;
+				double groundFraction = tr.fraction;
 				Vector raisedOrigin = m_pState->origin + Vector(0, 0, 18);
 				traceEnd = raisedOrigin + m_bikeVelocity * g_pGameVars->frametime;
 				Util::TraceHull(m_pState->origin, traceEnd, false, false, HULL_HUMAN, m_pEdict, tr);
 
 				if(groundFraction >= tr.fraction && flDiff >= MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED)
 				{
-					Float impactDamage = (flDiff-MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED)/(MOTORBIKE_FATAL_COLLISON_SPEED-MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED)*100;
+					float impactDamage = (flDiff-MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED)/(MOTORBIKE_FATAL_COLLISON_SPEED-MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED)*100;
 					TakeDamage(m_pBikeEntity, m_pBikeEntity, impactDamage, DMG_FALL);
 				}
 			}
@@ -6490,7 +6490,7 @@ bool CPlayerEntity::IsInView( const Vector& position ) const
 // @brief
 //
 //=============================================
-void CPlayerEntity::PlayMusic( const Char* pstrFilename, Int32 channel, Float fadeInTime, Int32 flags )
+void CPlayerEntity::PlayMusic( const char* pstrFilename, Int32 channel, float fadeInTime, Int32 flags )
 {
 	if(channel != MUSIC_CHANNEL_ALL && channel < 0
 		|| channel >= NB_MUSIC_CHANNELS && channel != MUSIC_CHANNEL_MENU)
@@ -6576,7 +6576,7 @@ void CPlayerEntity::PlayMusic( const Char* pstrFilename, Int32 channel, Float fa
 // @brief
 //
 //=============================================
-void CPlayerEntity::StopMusic( const Char* pstrFilename, Int32 channel, Float fadeTime )
+void CPlayerEntity::StopMusic( const char* pstrFilename, Int32 channel, float fadeTime )
 {
 	if(channel != MUSIC_CHANNEL_ALL && channel < 0
 		|| channel >= NB_MUSIC_CHANNELS && channel != MUSIC_CHANNEL_MENU)
@@ -6590,7 +6590,7 @@ void CPlayerEntity::StopMusic( const Char* pstrFilename, Int32 channel, Float fa
 	{
 		music_data_t& track = m_musicPlaybackInfoArray[i];
 
-		const Char* pstrTrackName = gd_engfuncs.pfnGetString(track.filename);
+		const char* pstrTrackName = gd_engfuncs.pfnGetString(track.filename);
 		if(channel == MUSIC_CHANNEL_ALL || track.channel == channel && (!pstrFilename || !qstrlen(pstrFilename) || !qstrcmp(pstrTrackName, pstrFilename)))
 		{
 			gd_engfuncs.pfnStopMusic(m_pEdict->clientindex, pstrTrackName, track.channel, fadeTime);
@@ -6633,7 +6633,7 @@ void CPlayerEntity::UnDuckPlayer( void )
 	gd_engfuncs.pfnSetMinsMaxs(m_pEdict, VEC_HULL_MIN, VEC_HULL_MAX);
 	m_pState->view_offset = VEC_VIEW;
 
-	Float offsetZ = SDL_fabs(VEC_HULL_MIN[2]) - SDL_fabs(VEC_DUCK_HULL_MIN[2]);
+	float offsetZ = SDL_fabs(VEC_HULL_MIN[2]) - SDL_fabs(VEC_DUCK_HULL_MIN[2]);
 	m_pState->origin.z += offsetZ;
 
 	gd_engfuncs.pfnSetOrigin(m_pEdict, m_pState->origin);
@@ -6653,7 +6653,7 @@ Vector CPlayerEntity::GetBodyTarget( const Vector& targetingPosition )
 // @brief Begins playback of a tape track
 //
 //=============================================
-void CPlayerEntity::PlaybackTapeTrack( const Char* pstrTrackFilename, Float duration, const Char* pstrPlaybackTitle, const Vector& titleColor, Float titleAlpha )
+void CPlayerEntity::PlaybackTapeTrack( const char* pstrTrackFilename, float duration, const char* pstrPlaybackTitle, const Vector& titleColor, float titleAlpha )
 {
 	CString checkpath;
 	checkpath << SOUND_FOLDER_BASE_PATH << pstrTrackFilename;
@@ -6699,7 +6699,7 @@ void CPlayerEntity::PlaybackTapeTrack( const Char* pstrTrackFilename, Float dura
 // @brief Stops playback of a tape track
 //
 //=============================================
-void CPlayerEntity::StopTapeTrack( const Char* pstrTrackFilename )
+void CPlayerEntity::StopTapeTrack( const char* pstrTrackFilename )
 {
 	if((m_tapeTrackPlayBeginTime+m_tapeTrackDuration) < g_pGameVars->time 
 		|| m_tapeTrackFile == NO_STRING_VALUE 
@@ -6732,7 +6732,7 @@ void CPlayerEntity::StopTapeTrack( const Char* pstrTrackFilename )
 // @brief Begins diary playback
 //
 //=============================================
-void CPlayerEntity::BeginDiaryPlayback( const Char* pstrFilename, Float duration, CBaseEntity* pDiaryEntity )
+void CPlayerEntity::BeginDiaryPlayback( const char* pstrFilename, float duration, CBaseEntity* pDiaryEntity )
 {
 	m_currentDiaryTrackName = gd_engfuncs.pfnAllocString(pstrFilename);
 	m_diaryTrackPlayBeginTime = g_pGameVars->time;
@@ -6802,7 +6802,7 @@ void CPlayerEntity::TapePlaybackThink( void )
 // @brief Sets dialogue duration for player
 //
 //=============================================
-void CPlayerEntity::SetDialogueDuration( Float duration )
+void CPlayerEntity::SetDialogueDuration( float duration )
 {
 	m_dialoguePlaybackTime = g_pGameVars->time + duration;
 }
@@ -6811,14 +6811,14 @@ void CPlayerEntity::SetDialogueDuration( Float duration )
 // @brief Adds a new mission objective
 //
 //=============================================
-void CPlayerEntity::AddMissionObjective( const Char* pstrObjectiveIdentifier, bool notify )
+void CPlayerEntity::AddMissionObjective( const char* pstrObjectiveIdentifier, bool notify )
 {
 	if(!pstrObjectiveIdentifier || !qstrlen(pstrObjectiveIdentifier))
 		return;
 
-	for(Uint32 i = 0; i < m_objectivesArray.size(); i++)
+	for(UInt32 i = 0; i < m_objectivesArray.size(); i++)
 	{
-		const Char* pstrCheckObjective = gd_engfuncs.pfnGetString(m_objectivesArray[i]);
+		const char* pstrCheckObjective = gd_engfuncs.pfnGetString(m_objectivesArray[i]);
 		if(!qstrcmp(pstrCheckObjective, pstrObjectiveIdentifier))
 		{
 			gd_engfuncs.pfnCon_DPrintf("%s - Objective '%s' already in list.\n", __FUNCTION__, pstrObjectiveIdentifier);
@@ -6835,7 +6835,7 @@ void CPlayerEntity::AddMissionObjective( const Char* pstrObjectiveIdentifier, bo
 	m_objectivesArray.resize(m_objectivesArray.size()+1);
 
 	Int32 shiftedNewBitFlags = 0;
-	for(Uint32 i = (m_objectivesArray.size()-1); i > 0; i--)
+	for(UInt32 i = (m_objectivesArray.size()-1); i > 0; i--)
 	{
 		if(m_objectivesArray[i-1] == NO_STRING_VALUE)
 			continue;
@@ -6864,15 +6864,15 @@ void CPlayerEntity::AddMissionObjective( const Char* pstrObjectiveIdentifier, bo
 // @brief Removes a mission objective
 //
 //=============================================
-void CPlayerEntity::RemoveMissionObjective( const Char* pstrObjectiveIdentifier, bool notify )
+void CPlayerEntity::RemoveMissionObjective( const char* pstrObjectiveIdentifier, bool notify )
 {
 	if(!pstrObjectiveIdentifier || !qstrlen(pstrObjectiveIdentifier))
 		return;
 
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for(; i < m_objectivesArray.size(); i++)
 	{
-		const Char* pstrCheckObjective = gd_engfuncs.pfnGetString(m_objectivesArray[i]);
+		const char* pstrCheckObjective = gd_engfuncs.pfnGetString(m_objectivesArray[i]);
 		if(!qstrcmp(pstrCheckObjective, pstrObjectiveIdentifier))
 		{
 			m_objectivesArray[i] = NO_STRING_VALUE;
@@ -6890,7 +6890,7 @@ void CPlayerEntity::RemoveMissionObjective( const Char* pstrObjectiveIdentifier,
 	m_objectivesNewFlags &= ~(1<<i);
 
 	// Re-sort objectives array
-	Uint32 newNbObjectives = 0;
+	UInt32 newNbObjectives = 0;
 	CArray<string_t> sortedObjectivesArray(m_objectivesArray.size()-1);
 	Int32 sortedObjectivesNewFlags = 0;
 
@@ -6932,7 +6932,7 @@ void CPlayerEntity::SpawnObjectivesWindow( void )
 		gd_engfuncs.pfnMsgWriteByte(GAMEUI_OBJECTIVESWINDOW);
 		gd_engfuncs.pfnMsgWriteByte(m_objectivesArray.size());
 		gd_engfuncs.pfnMsgWriteInt32(m_objectivesNewFlags);
-		for(Uint32 i = 0; i < m_objectivesArray.size(); i++)
+		for(UInt32 i = 0; i < m_objectivesArray.size(); i++)
 			gd_engfuncs.pfnMsgWriteString(gd_engfuncs.pfnGetString(m_objectivesArray[i]));
 	gd_engfuncs.pfnUserMessageEnd();
 
@@ -6947,7 +6947,7 @@ void CPlayerEntity::SpawnDocumentsWindow( void )
 {
 	CArray<CString> documentsList;
 
-	for(Uint32 i = 0; i < m_savedDocumentsArray.size(); i++)
+	for(UInt32 i = 0; i < m_savedDocumentsArray.size(); i++)
 	{
 		CString fileEntry = gd_engfuncs.pfnGetString(m_savedDocumentsArray[i]);
 
@@ -6958,11 +6958,11 @@ void CPlayerEntity::SpawnDocumentsWindow( void )
 		{
 			finalEntry.assign(fileEntry.c_str(), semicolonPosition);
 
-			Uint32 codeIdLength = fileEntry.length() - semicolonPosition - 1;
+			UInt32 codeIdLength = fileEntry.length() - semicolonPosition - 1;
 			CString textFileCodeId(fileEntry.c_str() + semicolonPosition + 1, codeIdLength);
 			
 			// Try and find the code in our stored list
-			for(Uint32 j = 0; j < m_savedPasscodesArray.size(); j++)
+			for(UInt32 j = 0; j < m_savedPasscodesArray.size(); j++)
 			{
 				CString storedPassCodeEntry = gd_engfuncs.pfnGetString(m_savedPasscodesArray[j]);
 				semicolonPosition = storedPassCodeEntry.find(0, ";");
@@ -6972,7 +6972,7 @@ void CPlayerEntity::SpawnDocumentsWindow( void )
 				CString storedPassCodeId(storedPassCodeEntry.c_str(), semicolonPosition);
 				if(!qstrcmp(storedPassCodeId, textFileCodeId))
 				{
-					Uint32 codeLength = storedPassCodeEntry.length() - semicolonPosition - 1;
+					UInt32 codeLength = storedPassCodeEntry.length() - semicolonPosition - 1;
 					CString passcode(storedPassCodeEntry.c_str() + semicolonPosition + 1, codeLength);
 					finalEntry << ';' << passcode;
 					break;
@@ -6992,7 +6992,7 @@ void CPlayerEntity::SpawnDocumentsWindow( void )
 	gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.creategameuiwindow, nullptr, m_pEdict);
 		gd_engfuncs.pfnMsgWriteByte(GAMEUI_DOCUMENTSWINDOW);
 		gd_engfuncs.pfnMsgWriteInt16(documentsList.size());
-		for(Uint32 i = 0; i < documentsList.size(); i++)
+		for(UInt32 i = 0; i < documentsList.size(); i++)
 			gd_engfuncs.pfnMsgWriteString(documentsList[i].c_str());
 	gd_engfuncs.pfnUserMessageEnd();
 
@@ -7003,7 +7003,7 @@ void CPlayerEntity::SpawnDocumentsWindow( void )
 // @brief Sets countdown timer
 //
 //=============================================
-void CPlayerEntity::SetCountdownTimer( Float duration, const Char* pstrTitle )
+void CPlayerEntity::SetCountdownTimer( float duration, const char* pstrTitle )
 {
 	if(!duration)
 		return;
@@ -7039,7 +7039,7 @@ void CPlayerEntity::ClearCountdownTimer( void )
 // @brief Sets a global delayed trigger
 //
 //=============================================
-void CPlayerEntity::SetGlobalDelayedTrigger( Float delay, const Char* pstrTargetName )
+void CPlayerEntity::SetGlobalDelayedTrigger( float delay, const char* pstrTargetName )
 {
 	if(!delay || !pstrTargetName || !qstrlen(pstrTargetName))
 		return;
@@ -7078,7 +7078,7 @@ void CPlayerEntity::DelayedGlobalTriggerThink( void )
 // @brief Set motion blur values
 //
 //=============================================
-void CPlayerEntity::SetMotionBlur( bool isActive, Float blurFade )
+void CPlayerEntity::SetMotionBlur( bool isActive, float blurFade )
 {
 	m_isMotionBlurActive = isActive;
 	m_motionBlurFade = blurFade;
@@ -7095,7 +7095,7 @@ void CPlayerEntity::SetMotionBlur( bool isActive, Float blurFade )
 // @brief Set chromatic aberration values
 //
 //=============================================
-void CPlayerEntity::SetChromaticAberration( bool isActive, Float strength )
+void CPlayerEntity::SetChromaticAberration( bool isActive, float strength )
 {
 	m_isChromaticAberrationActive = isActive;
 	m_chromaticAberrationStrength = strength;
@@ -7111,7 +7111,7 @@ void CPlayerEntity::SetChromaticAberration( bool isActive, Float strength )
 // @brief Set chromatic aberration values
 //
 //=============================================
-void CPlayerEntity::SetBlackAndWhite( bool isActive, Float strength )
+void CPlayerEntity::SetBlackAndWhite( bool isActive, float strength )
 {
 	m_isBlackAndWhiteActive = isActive;
 	m_blackAndWhiteStrength = strength;
@@ -7127,7 +7127,7 @@ void CPlayerEntity::SetBlackAndWhite( bool isActive, Float strength )
 // @brief Set vignette effect values
 //
 //=============================================
-void CPlayerEntity::SetVignetteEffect( bool isActive, Float radius, Float strength )
+void CPlayerEntity::SetVignetteEffect( bool isActive, float radius, float strength )
 {
 	m_isVignetteActive = isActive;
 	m_vignetteStrength = strength;
@@ -7147,7 +7147,7 @@ void CPlayerEntity::SetVignetteEffect( bool isActive, Float radius, Float streng
 // @brief Set chromatic aberration values
 //
 //=============================================
-void CPlayerEntity::SetFilmGrain( bool isActive, Float strength )
+void CPlayerEntity::SetFilmGrain( bool isActive, float strength )
 {
 	m_isFilmGrainActive = isActive;
 	m_filmGrainStrength = strength;
@@ -7163,11 +7163,11 @@ void CPlayerEntity::SetFilmGrain( bool isActive, Float strength )
 // @brief Set overlay effect
 //
 //=============================================
-void CPlayerEntity::SetScreenOverlay( Int32 layerindex, const Char* pstrTextureName, overlay_rendermode_t rendermode, const Vector& rendercolor, Float renderamt, overlay_effect_t effect, Float effectspeed, Float effectminalpha, Float fadetime )
+void CPlayerEntity::SetScreenOverlay( Int32 layerindex, const char* pstrTextureName, overlay_rendermode_t rendermode, const Vector& rendercolor, float renderamt, overlay_effect_t effect, float effectspeed, float effectminalpha, float fadetime )
 {
 	// Try and find previous
 	bool prevState;
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for(; i < m_numOverlays; i++)
 	{
 		if(m_overlayLayerIndexArray[i] == layerindex)
@@ -7211,7 +7211,7 @@ void CPlayerEntity::SetScreenOverlay( Int32 layerindex, const Char* pstrTextureN
     gd_engfuncs.pfnMsgWriteByte(OVERLAY_MSG_SET);
 	gd_engfuncs.pfnMsgWriteString(pstrTextureName);
 	gd_engfuncs.pfnMsgWriteByte(rendermode);
-	for(Uint32 j = 0; j < 3; j++)
+	for(UInt32 j = 0; j < 3; j++)
 		gd_engfuncs.pfnMsgWriteByte(rendercolor[j]);
 	gd_engfuncs.pfnMsgWriteByte(renderamt);
 	gd_engfuncs.pfnMsgWriteByte(effect);
@@ -7228,9 +7228,9 @@ void CPlayerEntity::SetScreenOverlay( Int32 layerindex, const Char* pstrTextureN
 // @brief Clears an overlay
 //
 //=============================================
-void CPlayerEntity::ClearOverlay( Int32 layerindex, Float fadetime )
+void CPlayerEntity::ClearOverlay( Int32 layerindex, float fadetime )
 {
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for(; i < m_numOverlays; i++)
 	{
 		if(m_overlayLayerIndexArray[i] == layerindex)

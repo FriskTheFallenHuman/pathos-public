@@ -18,32 +18,32 @@ All Rights Reserved.
 class CAISchedule
 {
 public:
-	CAISchedule( ai_task_t* pTasks, Uint32 nbTasks, const CBitSet& conditionMask, Uint64 soundMask, const Char* pstrName );
-	CAISchedule( ai_task_t* pTasks, Uint32 nbTasks, const CBitSet& conditionMask, const CBitSet& inverseConditionMask, Uint64 soundMask, const Char* pstrName );
-	CAISchedule( ai_task_t* pTasks, Uint32 nbTasks, const CBitSet& conditionMask, const CBitSet& inverseConditionMask, Int32 specialInterruptSchedule, const CBitSet& specialInterruptConditionMask, const CBitSet& specialInterruptExceptionMask, const CBitSet& specialInterruptRequirementMask, Uint64 soundMask, const Char* pstrName );
+	CAISchedule( ai_task_t* pTasks, UInt32 nbTasks, const CBitSet& conditionMask, UInt64 soundMask, const char* pstrName );
+	CAISchedule( ai_task_t* pTasks, UInt32 nbTasks, const CBitSet& conditionMask, const CBitSet& inverseConditionMask, UInt64 soundMask, const char* pstrName );
+	CAISchedule( ai_task_t* pTasks, UInt32 nbTasks, const CBitSet& conditionMask, const CBitSet& inverseConditionMask, Int32 specialInterruptSchedule, const CBitSet& specialInterruptConditionMask, const CBitSet& specialInterruptExceptionMask, const CBitSet& specialInterruptRequirementMask, UInt64 soundMask, const char* pstrName );
 	~CAISchedule();
 
 public:
 	// Returns the number of tasks
-	inline Uint32 GetNumTasks( void ) const;
+	DO_INLINE UInt32 GetNumTasks( void ) const;
 	// Returns a task for an index
-	inline const ai_task_t& GetTaskByIndex( Uint32 index ) const;
+	DO_INLINE const ai_task_t& GetTaskByIndex( UInt32 index ) const;
 	// Returns the condition interrupt mask
-	inline const CBitSet& GetInterruptMask( void ) const;
+	DO_INLINE const CBitSet& GetInterruptMask( void ) const;
 	// Returns the inverse condition interrupt mask
-	inline const CBitSet& GetInverseInterruptMask( void ) const;
+	DO_INLINE const CBitSet& GetInverseInterruptMask( void ) const;
 	// Returns the special interrupt schedule index
-	inline Int32 GetSpecialInterruptScheduleIndex( void ) const;
+	DO_INLINE Int32 GetSpecialInterruptScheduleIndex( void ) const;
 	// Returns the special condition interrupt mask
-	inline const CBitSet& GetSpecialInterruptMask( void ) const;
+	DO_INLINE const CBitSet& GetSpecialInterruptMask( void ) const;
 	// Returns the special condition interrupt exception mask
-	inline const CBitSet& GetSpecialInterruptExceptionMask( void ) const;
+	DO_INLINE const CBitSet& GetSpecialInterruptExceptionMask( void ) const;
 	// Returns the special condition interrupt exception mask
-	inline const CBitSet& GetSpecialInterruptRequirementMask( void ) const;
+	DO_INLINE const CBitSet& GetSpecialInterruptRequirementMask( void ) const;
 	// Returns the smell mask
-	inline Uint64 GetSoundMask( void ) const;
+	DO_INLINE UInt64 GetSoundMask( void ) const;
 	// Returns the name for the task
-	inline const Char* GetName( void ) const;
+	DO_INLINE const char* GetName( void ) const;
 
 private:
 	// Array of tasks
@@ -61,7 +61,7 @@ private:
 	// Special interrupt requirement mask
 	CBitSet m_specialInterruptRequirementMask;
 	// Sound mask
-	Uint64 m_soundMask;
+	UInt64 m_soundMask;
 	// Name of the schedule
 	CString m_scheduleName;
 };

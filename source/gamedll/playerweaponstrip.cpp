@@ -36,7 +36,7 @@ CPlayerWeaponStrip::~CPlayerWeaponStrip( void )
 // @brief
 //
 //=============================================
-void CPlayerWeaponStrip::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CPlayerWeaponStrip::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	CPlayerEntity* pPlayer = nullptr;
 	if(pActivator && pActivator->IsPlayer())

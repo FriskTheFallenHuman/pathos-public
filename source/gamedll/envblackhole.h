@@ -28,7 +28,7 @@ public:
 
 public:
 	virtual bool Spawn( void ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
@@ -38,20 +38,20 @@ public:
 	void EXPORTFN DieThink( void );
 
 protected:
-	// TRUE if black hole is active
+	// true if black hole is active
 	bool m_isActive;
 	// Strength of the pull of the black hole
-	Float m_pullStrength;
+	float m_pullStrength;
 	// Rotation speed
-	Float m_rotationSpeed;
+	float m_rotationSpeed;
 	// Time it takes for the black hole to grow to full size
-	Float m_growthTime;
+	float m_growthTime;
 	// Time it takes for the black hole to shrink and disappear
-	Float m_shrinkTime;
+	float m_shrinkTime;
 	// Lifetime of the black hole
-	Float m_lifeTime;
+	float m_lifeTime;
 	// Time when the black hole was spawned
-	Double m_spawnTime;
+	double m_spawnTime;
 };
 
 #endif //ENVBLACKHOLE_H

@@ -34,11 +34,11 @@ public:
 			}
 
 		Int32 bullettypeindex;
-		Float penetrationdepth;
-		Uint32 maxpenetration;
-		Uint32 penetrationchance;
-		Float damagefalloff;
-		Uint32 chancedecrease;
+		float penetrationdepth;
+		UInt32 maxpenetration;
+		UInt32 penetrationchance;
+		float damagefalloff;
+		UInt32 chancedecrease;
 	};
 
 	struct ricochetinfo_t
@@ -53,11 +53,11 @@ public:
 			{}
 
 		Int32 bullettypeindex;
-		Float maxangle;
-		Float maxdeviation;
-		Uint32 ricochetchance;
-		Uint32 maxricochets;
-		Float ricochetdmgfalloff;
+		float maxangle;
+		float maxdeviation;
+		UInt32 ricochetchance;
+		UInt32 maxricochets;
+		float ricochetdmgfalloff;
 	};
 
 	struct materialdefinition_t
@@ -69,7 +69,7 @@ public:
 
 		const penetration_t* getPenetrationInfo(bullet_types_t bulletType) const
 		{
-			for (Uint32 i = 0; i < penetrationinfos.size(); i++)
+			for (UInt32 i = 0; i < penetrationinfos.size(); i++)
 			{
 				if (penetrationinfos[i].bullettypeindex == bulletType)
 					return &penetrationinfos[i];
@@ -80,7 +80,7 @@ public:
 
 		const ricochetinfo_t* getRicochetInfo(bullet_types_t bulletType) const
 		{
-			for (Uint32 i = 0; i < ricochetinfos.size(); i++)
+			for (UInt32 i = 0; i < ricochetinfos.size(); i++)
 			{
 				if (ricochetinfos[i].bullettypeindex == bulletType)
 					return &ricochetinfos[i];
@@ -104,19 +104,19 @@ public:
 
 public:
 	// Initializes the class
-	bool Init( const Char* pscriptfile );
+	bool Init( const char* pscriptfile );
 	// Clears the class
 	void Clear( void );
 
 	// Gets the impact effect info for a material type
-	const materialdefinition_t* GetDefinitionForMaterial( const Char* pstrmaterialname ) const;
+	const materialdefinition_t* GetDefinitionForMaterial( const char* pstrmaterialname ) const;
 	// Returns the error string
-	const Char* GetError( void ) const { return m_errorString.c_str(); }
+	const char* GetError( void ) const { return m_errorString.c_str(); }
 
 	// Returns the number of effect definitions
-	Uint32 GetNbDefinitions( void ) const;
+	UInt32 GetNbDefinitions( void ) const;
 	// Returns an effect definition
-	const materialdefinition_t* GetDefinition( Uint32 index ) const;
+	const materialdefinition_t* GetDefinition( UInt32 index ) const;
 
 private:
 	// Array of impact effects for materials

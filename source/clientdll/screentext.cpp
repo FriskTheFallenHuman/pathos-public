@@ -20,7 +20,7 @@ All Rights Reserved.
 // Screen text color
 const color32_t CScreenText::SCREENTEXT_COLOR = color32_t(255, 255, 255, 255);
 // Screen text text schema name
-const Char CScreenText::SCREENTEXT_TEXTSCHEME_FILENAME[] = "screentext";
+const char CScreenText::SCREENTEXT_TEXTSCHEME_FILENAME[] = "screentext";
 
 // Object definition
 CScreenText gScreenText;
@@ -66,7 +66,7 @@ void CScreenText::Shutdown( void )
 //=============================================
 bool CScreenText::InitGL( void )
 {
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	m_pFontSet = cl_engfuncs.pfnGetResolutionSchemaFontSet(SCREENTEXT_TEXTSCHEME_FILENAME, screenHeight);
@@ -124,7 +124,7 @@ bool CScreenText::Draw( void )
 		return false;
 	}
 
-	Uint32 scrwidth, scrheight;
+	UInt32 scrwidth, scrheight;
 	cl_renderfuncs.pfnGetScreenSize(scrwidth, scrheight);
 
 	m_messagesList.begin();
@@ -150,7 +150,7 @@ bool CScreenText::Draw( void )
 
 		cl_renderfuncs.pfnSetStringRectangle(xPosition, yPosition, scrwidth - xPosition, scrheight - yPosition, 0, 0);
 
-		Uint32 width, height;
+		UInt32 width, height;
 		cl_renderfuncs.pfnGetStringSize(m_pFontSet, msg.text.c_str(), &width, &height, nullptr);
 		cl_renderfuncs.pfnSetStringRectangle(0, 0, 0, 0, 0, 0);
 		
@@ -175,7 +175,7 @@ bool CScreenText::Draw( void )
 // @brief
 //
 //=============================================
-void CScreenText::AddText( const Char* pstrText, Int32 xcoord, Int32 ycoord, Float lifetime )
+void CScreenText::AddText( const char* pstrText, Int32 xcoord, Int32 ycoord, float lifetime )
 {
 	textmsg_t newmsg;
 	newmsg.xcoord = xcoord;

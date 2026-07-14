@@ -92,7 +92,7 @@ bool CEnvParticleSystem::Restore( void )
 // @brief
 //
 //=============================================
-void CEnvParticleSystem::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvParticleSystem::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool prevstate = m_isActive;
 	if(!HasSpawnFlag(FL_NOT_TOGGLED))
@@ -145,7 +145,7 @@ void CEnvParticleSystem::SendInitMessage( const CBaseEntity* pPlayer )
 
 		gd_engfuncs.pfnMsgWriteInt32(GetEntityIndex());
 		gd_engfuncs.pfnMsgWriteInt32(targetEntityIndex);
-		gd_engfuncs.pfnMsgWriteByte(TRUE);
+		gd_engfuncs.pfnMsgWriteByte(true);
 		gd_engfuncs.pfnUserMessageEnd();
 	}
 	else
@@ -158,10 +158,10 @@ void CEnvParticleSystem::SendInitMessage( const CBaseEntity* pPlayer )
 		else
 			gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createparticlesystem, nullptr, nullptr);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteFloat(m_pState->origin[i]);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteSmallFloat(forward[i]*360.0f);
 
 		Int32 attachmentIndex;
@@ -216,7 +216,7 @@ entindex_t CEnvParticleSystem::GetTargetEntityIndex( void )
 	if(m_pFields->target == NO_STRING_VALUE)
 		return GetEntityIndex();
 
-	const Char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
 	edict_t* pedict = Util::FindEntityByTargetName(nullptr, pstrEntityName);
 	if(!pedict)
 	{

@@ -24,17 +24,17 @@ class CMCDTrace
 {
 public:
 	// Collision epsilon value
-	static const Float COLLISION_EPSILON;
+	static const float COLLISION_EPSILON;
 	// Distance epsilon value
-	static const Float DISTANCE_EPSILON;
+	static const float DISTANCE_EPSILON;
 	// On-plane epsilon value
-	static const Float ONPLANE_EPSILON;
+	static const float ONPLANE_EPSILON;
 	// Invalid fraction value
-	static const Float INVALID_FRACTION;
+	static const float INVALID_FRACTION;
 	// SA epsilon value
-	static const Float SA_EPSILON;
+	static const float SA_EPSILON;
 	// Triangle index alloc size
-	static const Uint32 TRIANGLE_INDEX_ALLOC_SIZE;
+	static const UInt32 TRIANGLE_INDEX_ALLOC_SIZE;
 	// Impact normal vectors
 	static const Vector IMPACT_NORMAL_VECTORS[2][3];
 
@@ -51,21 +51,21 @@ public:
 
 public:
 	// Perform a point-sized traceline against the MCD data
-	bool TraceLinePoint( const Vector& start, const Vector& end, const mcdheader_t* pmcdheader, Uint64 bodyvalue, trace_t& tr );
+	bool TraceLinePoint( const Vector& start, const Vector& end, const mcdheader_t* pmcdheader, UInt64 bodyvalue, trace_t& tr );
 	// Perform an AABB traceline against the MCD data
-	bool TraceLineAABB( const Vector& start, const Vector& end, const Vector& clipHullMins, const Vector& clipHullMaxs, const mcdheader_t* pmcdheader, Uint64 bodyvalue, trace_t& tr );
+	bool TraceLineAABB( const Vector& start, const Vector& end, const Vector& clipHullMins, const Vector& clipHullMaxs, const mcdheader_t* pmcdheader, UInt64 bodyvalue, trace_t& tr );
 	// Return the hit texture name
-	const Char* GetHitTextureName( void ) const { return m_traceHitTextureName.c_str(); }
+	const char* GetHitTextureName( void ) const { return m_traceHitTextureName.c_str(); }
 
 private:
 	// Set up submodel
-	void SetupModel( Uint32 bodypart, Uint64 bodyvalue );
+	void SetupModel( UInt32 bodypart, UInt64 bodyvalue );
 	// Add triangle to thelist
 	void AddBVHNodeTriangles( const mcdbvhnode_t* pbvhnode );
 	// Perform a swept AABB test against a triangle
-	bool SweptAABBTriangleTest( const Vector& start, const Vector& end, const Vector& extents, const mcdvertex_t* pvertexes, const mcdtrimeshtriangle_t* ptriangle, Vector& impactPosition, Vector& impactNormal, Float& planeDistance, Float& fraction );
+	bool SweptAABBTriangleTest( const Vector& start, const Vector& end, const Vector& extents, const mcdvertex_t* pvertexes, const mcdtrimeshtriangle_t* ptriangle, Vector& impactPosition, Vector& impactNormal, float& planeDistance, float& fraction );
 	// Perform a line test against a triangle
-	bool TestLineTriangleIntersect( const Vector& start, const Vector& end, const mcdvertex_t* pvertexes, const mcdtrimeshtriangle_t* ptriangle, Vector& impactNormal, Vector& impactPosition, Float& planeDistance, Float& fraction );
+	bool TestLineTriangleIntersect( const Vector& start, const Vector& end, const mcdvertex_t* pvertexes, const mcdtrimeshtriangle_t* ptriangle, Vector& impactNormal, Vector& impactPosition, float& planeDistance, float& fraction );
 	// Recurse down the tree with a point trace
 	void RecurseTreePointTrace( const Vector& start, const Vector& end, const mcdbvhnode_t* pbvhnode );
 	// Recurse down the tree with a point trace
@@ -81,14 +81,14 @@ private:
 	// Test intersection between plane and AABB
 	bool TestOverlapPlaneAABB( const mcdtrimeshtriangle_t* ptriangle, const Vector& position, const Vector& extents );
 	// Test cross-x edge axis
-	bool AxisTestEdgeCross( axis_t testaxis, Float edge1, Float edge2, Float absedge1, Float absedge2, const Vector& pt1, const Vector& pt2, const Vector& extents );
+	bool AxisTestEdgeCross( axis_t testaxis, float edge1, float edge2, float absedge1, float absedge2, const Vector& pt1, const Vector& pt2, const Vector& extents );
 
 	// Calculate closest extents
 	Vector CalcClosestExtents( const Vector& normal, const Vector& boxExtents );
 	// Calculate closest box point
 	Vector CalcClosestBoxPoint( const Vector& normal, const Vector& start, const Vector& extents );
 	// Resolve ray-plane intersection
-	bool ResolveLinePlaneIntersection( Float startDistance, Float endDistance, const Vector& planeNormal, const Float& planeDistance );
+	bool ResolveLinePlaneIntersection( float startDistance, float endDistance, const Vector& planeNormal, const float& planeDistance );
 
 	// Edge cross axis test
 	bool EdgeCrossAxisTest( axis_t testaxis, const Vector& start, const Vector& end, const Vector& rayvector, const Vector& extents, const Vector& edge, const Vector& pointonedge, const Vector& pointoffedge );
@@ -97,7 +97,7 @@ private:
 	// Array of triangle indexes we touched
 	CArray<Int32> m_triangleIndexesArray;
 	// Number of triangles in array
-	Uint32 m_triangleCount;
+	UInt32 m_triangleCount;
 
 	// Object AABB mins
 	Vector m_mins;
@@ -106,18 +106,18 @@ private:
 	// Normalized direction
 	Vector m_normDirection;
 	// Original distance
-	Float m_baseDistance;
+	float m_baseDistance;
 	// Distance travelled
-	Float m_distance;
+	float m_distance;
 
 	// Current normal used
 	Vector m_currentNormal;
 	// Current plane distance used
-	Float m_currentPlaneDistance;
+	float m_currentPlaneDistance;
 	// Current start fraction
-	Float m_currentStartFraction;
+	float m_currentStartFraction;
 	// Current end fraction
-	Float m_currentEndFraction;
+	float m_currentEndFraction;
 
 	// MCD header pointer
 	const mcdheader_t* m_pMCDHeader;

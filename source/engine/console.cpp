@@ -40,42 +40,42 @@ All Rights Reserved.
 // Log file pointer
 extern CLogFile* g_pLogFile;
 
-extern void SV_ClientPrintf( const struct edict_t* pclient, const Char *fmt, ... );
+extern void SV_ClientPrintf( const struct edict_t* pclient, const char *fmt, ... );
 
 // How much to increase the buffer's size by each time
-const Uint32 CConsole::CONSOLE_BUFFER_CHUNKSIZE = 4096;
+const UInt32 CConsole::CONSOLE_BUFFER_CHUNKSIZE = 4096;
 // Name of the toggleconsole command
-const Char CConsole::TOGGLECONSOLE_CMD_NAME[] = "toggleconsole";
+const char CConsole::TOGGLECONSOLE_CMD_NAME[] = "toggleconsole";
 
 // Max remembered last prints
-const Uint32 CConsole::MAX_DEBUG_PRINTS = 10;
+const UInt32 CConsole::MAX_DEBUG_PRINTS = 10;
 // Print lifetime
-const Float CConsole::DEBUG_PRINT_LIFETIME = 15;
+const float CConsole::DEBUG_PRINT_LIFETIME = 15;
 
 // Print box reference width
-const Uint32 CConsole::PRINT_BOX_REF_X_OFFSET = 10;
+const UInt32 CConsole::PRINT_BOX_REF_X_OFFSET = 10;
 // Print box reference width
-const Uint32 CConsole::PRINT_BOX_REF_Y_OFFSET = 10;
+const UInt32 CConsole::PRINT_BOX_REF_Y_OFFSET = 10;
 // Print box text inset
-const Uint32 CConsole::PRINT_BOX_INSET = 5;
+const UInt32 CConsole::PRINT_BOX_INSET = 5;
 
 // Console reference width
-const Uint32 CConsole::CONSOLE_REF_RESOLUTION_WIDTH = 1920;
+const UInt32 CConsole::CONSOLE_REF_RESOLUTION_WIDTH = 1920;
 // Print box reference height
-const Uint32 CConsole::CONSOLE_REF_RESOLUTION_HEIGHT = 1080;
+const UInt32 CConsole::CONSOLE_REF_RESOLUTION_HEIGHT = 1080;
 
 // Print box reference width
-const Uint32 CConsole::PRINT_BOX_REF_WIDTH = 1895;
+const UInt32 CConsole::PRINT_BOX_REF_WIDTH = 1895;
 // Print box reference width
-const Uint32 CConsole::PRINT_BOX_REF_HEIGHT = 200;
+const UInt32 CConsole::PRINT_BOX_REF_HEIGHT = 200;
 // Print box reference bar thickness
-const Uint32 CConsole::PRINT_BOX_REF_BAR_THICKNESS = 5;
+const UInt32 CConsole::PRINT_BOX_REF_BAR_THICKNESS = 5;
 
 // Print box bar color
 const color32_t CConsole::PRINT_BOX_BAR_COLOR = color32_t(150, 0, 0, 100);
 
 // Text schema name for console text box
-const Char CConsole::TEXTBOX_TEXTSCHEMA_NAME[] = "consolebox";
+const char CConsole::TEXTBOX_TEXTSCHEMA_NAME[] = "consolebox";
 
 // Class definition
 CConsole gConsole;
@@ -103,8 +103,8 @@ CConsole::CConsole( void ):
 	m_pFontSet(nullptr)
 {
 	// Allocate the buffer
-	m_pConsoleBuffer = new Char[CONSOLE_BUFFER_CHUNKSIZE];
-	memset(m_pConsoleBuffer, 0, sizeof(Char)*CONSOLE_BUFFER_CHUNKSIZE);
+	m_pConsoleBuffer = new char[CONSOLE_BUFFER_CHUNKSIZE];
+	memset(m_pConsoleBuffer, 0, sizeof(char)*CONSOLE_BUFFER_CHUNKSIZE);
 	m_bufferSize = CONSOLE_BUFFER_CHUNKSIZE;
 }
 
@@ -126,8 +126,8 @@ CConsole::CConsole( CConsole& src ):
 	m_pCvarDrawHistoryBox(src.m_pCvarDrawHistoryBox)
 {
 	// Allocate the buffer
-	m_pConsoleBuffer = new Char[m_bufferSize];
-	memcpy(m_pConsoleBuffer, src.m_pConsoleBuffer, sizeof(Char)*m_bufferSize);
+	m_pConsoleBuffer = new char[m_bufferSize];
+	memcpy(m_pConsoleBuffer, src.m_pConsoleBuffer, sizeof(char)*m_bufferSize);
 }
 
 //=============================================
@@ -183,8 +183,8 @@ CConsole& CConsole::operator=( CConsole& src )
 	m_pCvarDrawHistoryBox = src.m_pCvarDrawHistoryBox;
 
 	// Allocate the buffer
-	m_pConsoleBuffer = new Char[m_bufferSize];
-	memcpy(m_pConsoleBuffer, src.m_pConsoleBuffer, sizeof(Char)*m_bufferSize);
+	m_pConsoleBuffer = new char[m_bufferSize];
+	memcpy(m_pConsoleBuffer, src.m_pConsoleBuffer, sizeof(char)*m_bufferSize);
 	return *this;
 }
 
@@ -221,22 +221,22 @@ bool CConsole::InitGL( void )
 // @brief Adds text to the history buffer
 //
 //=============================================
-void CConsole::AddTextHistory( const Char* pstrText )
+void CConsole::AddTextHistory( const char* pstrText )
 {
 	if(!pstrText)
 		return;
 
 	// Resize the array if needed
-	Uint32 stringLength = qstrlen(pstrText);
+	UInt32 stringLength = qstrlen(pstrText);
 	if(m_bufferPosition+stringLength+1 > m_bufferSize)
 	{
-		void* pnew = Common::ResizeArray(m_pConsoleBuffer, sizeof(Char), m_bufferSize, CONSOLE_BUFFER_CHUNKSIZE);
-		m_pConsoleBuffer = static_cast<Char*>(pnew);
+		void* pnew = Common::ResizeArray(m_pConsoleBuffer, sizeof(char), m_bufferSize, CONSOLE_BUFFER_CHUNKSIZE);
+		m_pConsoleBuffer = static_cast<char*>(pnew);
 		m_bufferSize += CONSOLE_BUFFER_CHUNKSIZE;
 	}
 
 	// Add it to the buffer
-	memcpy(m_pConsoleBuffer + m_bufferPosition, pstrText, sizeof(Char)*stringLength);
+	memcpy(m_pConsoleBuffer + m_bufferPosition, pstrText, sizeof(char)*stringLength);
 	m_bufferPosition += stringLength;
 
 	// Set terminator
@@ -277,7 +277,7 @@ void CConsole::AddTextHistory( const Char* pstrText )
 // @brief Processes a command input
 //
 //=============================================
-void CConsole::ProcessInput( const Char* pstrText )
+void CConsole::ProcessInput( const char* pstrText )
 {
 	// Add it to the text history
 	CString historyText;
@@ -304,7 +304,7 @@ void CConsole::ProcessInput( const Char* pstrText )
 // @brief Gets the currently iterated input from the history
 //
 //=============================================
-const Char* CConsole::GetCurrentInputHistory( void )
+const char* CConsole::GetCurrentInputHistory( void )
 {
 	if(m_inputHistoryList.empty()
 		|| m_inputHistoryList.end()
@@ -372,7 +372,7 @@ void CConsole::Think( void )
 	{
 		if(gWindow.IsInitialized())
 		{
-			for(Uint32 i = 0; i < m_glDependentCVarCommandsArray.size(); i++)
+			for(UInt32 i = 0; i < m_glDependentCVarCommandsArray.size(); i++)
 			{
 				CString& cmd = m_glDependentCVarCommandsArray[i];
 				gCommands.ExecuteCommand(cmd.c_str(), false);
@@ -388,7 +388,7 @@ void CConsole::Think( void )
 
 	if(!writerThreadPrintsArray.empty())
 	{
-		for(Uint32 i = 0; i < writerThreadPrintsArray.size(); i++)
+		for(UInt32 i = 0; i < writerThreadPrintsArray.size(); i++)
 			Con_Printf(writerThreadPrintsArray[i].c_str());
 	}
 }
@@ -406,13 +406,13 @@ bool CConsole::Draw( void )
 		return true;
 
 	// Get box offsets
-	Float boxXOrigin = R_GetRelativeX(PRINT_BOX_REF_X_OFFSET, CONSOLE_REF_RESOLUTION_WIDTH, rns.screenwidth);
-	Float boxYOrigin = R_GetRelativeY(PRINT_BOX_REF_Y_OFFSET, CONSOLE_REF_RESOLUTION_HEIGHT, rns.screenheight);
+	float boxXOrigin = R_GetRelativeX(PRINT_BOX_REF_X_OFFSET, CONSOLE_REF_RESOLUTION_WIDTH, rns.screenwidth);
+	float boxYOrigin = R_GetRelativeY(PRINT_BOX_REF_Y_OFFSET, CONSOLE_REF_RESOLUTION_HEIGHT, rns.screenheight);
 
 	// Get relative sizes
-	Float boxWidth = R_GetRelativeX(PRINT_BOX_REF_WIDTH, CONSOLE_REF_RESOLUTION_WIDTH, rns.screenwidth);
-	Float boxHeight = R_GetRelativeY(PRINT_BOX_REF_HEIGHT, CONSOLE_REF_RESOLUTION_HEIGHT, rns.screenheight);
-	Float barThickness = R_GetRelativeY(PRINT_BOX_REF_BAR_THICKNESS, CONSOLE_REF_RESOLUTION_HEIGHT, rns.screenheight);
+	float boxWidth = R_GetRelativeX(PRINT_BOX_REF_WIDTH, CONSOLE_REF_RESOLUTION_WIDTH, rns.screenwidth);
+	float boxHeight = R_GetRelativeY(PRINT_BOX_REF_HEIGHT, CONSOLE_REF_RESOLUTION_HEIGHT, rns.screenheight);
+	float barThickness = R_GetRelativeY(PRINT_BOX_REF_BAR_THICKNESS, CONSOLE_REF_RESOLUTION_HEIGHT, rns.screenheight);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -434,21 +434,21 @@ bool CConsole::Draw( void )
 	rns.view.modelview.Scale(1.0f/rns.screenwidth, 1.0f/rns.screenheight, 1.0);
 
 	rns.view.projection.LoadIdentity();
-	rns.view.projection.Ortho(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO, static_cast<Float>(0.1), 100);
+	rns.view.projection.Ortho(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO, static_cast<float>(0.1), 100);
 
 	pDraw->SetModelview(rns.view.modelview.GetMatrix());
 	pDraw->SetProjection(rns.view.projection.GetMatrix());
 
-	pDraw->Color4f(static_cast<Float>(PRINT_BOX_BAR_COLOR.r)/255.0f,
-		static_cast<Float>(PRINT_BOX_BAR_COLOR.g)/255.0f,
-		static_cast<Float>(PRINT_BOX_BAR_COLOR.b)/255.0f,
+	pDraw->Color4f(static_cast<float>(PRINT_BOX_BAR_COLOR.r)/255.0f,
+		static_cast<float>(PRINT_BOX_BAR_COLOR.g)/255.0f,
+		static_cast<float>(PRINT_BOX_BAR_COLOR.b)/255.0f,
 		0.0f);
 
 	// Draw the invisible box
-	Float xCoord = boxXOrigin;
-	Float yCoord = boxYOrigin;
-	Float objWidth = boxWidth;
-	Float objHeight = barThickness;
+	float xCoord = boxXOrigin;
+	float yCoord = boxYOrigin;
+	float objWidth = boxWidth;
+	float objHeight = barThickness;
 
 	xCoord = boxXOrigin + barThickness;
 	yCoord = boxYOrigin + barThickness;
@@ -597,7 +597,7 @@ void CConsole::ToggleConsole( void )
 // @brief Tells if the console is visible
 //
 //=============================================
-CCVar* CConsole::CreateCVar( cvar_type_t type, Int32 flags, const Char* pstrName, const Char* pstrValue, const Char* pstrDescription, pfnCVarCallback_t pfnCallback )
+CCVar* CConsole::CreateCVar( cvar_type_t type, Int32 flags, const char* pstrName, const char* pstrValue, const char* pstrDescription, pfnCVarCallback_t pfnCallback )
 {
 	// See if it's already added
 	CCVar* pCVar = GetCVar(pstrName);
@@ -643,7 +643,7 @@ CCVar* CConsole::CreateCVar( cvar_type_t type, Int32 flags, const Char* pstrName
 		// Make sure the string is valid
 		if(Common::IsNumber(pstrValue))
 		{
-			Float value = SDL_atof(pstrValue);
+			float value = SDL_atof(pstrValue);
 			pCVar->SetValue(value);
 
 			// Save to config if needed
@@ -665,7 +665,7 @@ CCVar* CConsole::CreateCVar( cvar_type_t type, Int32 flags, const Char* pstrName
 // @brief Tells if the console is visible
 //
 //=============================================
-CCVar* CConsole::GetCVar( const Char* pstrName )
+CCVar* CConsole::GetCVar( const char* pstrName )
 {
 	if(m_cvarList.empty())
 		return nullptr;
@@ -687,7 +687,7 @@ CCVar* CConsole::GetCVar( const Char* pstrName )
 // @brief Adds an input option to the ordered list
 //
 //=============================================
-void CConsole::AddInput( input_type_t type, const Char* name, const Char* description )
+void CConsole::AddInput( input_type_t type, const char* name, const char* description )
 {
 	// Check if it's already present
 	m_inputList.begin();
@@ -744,7 +744,7 @@ bool CConsole::ProcessCommand( void )
 		return false;
 
 	// Find the cvar
-	const Char* pstrName = gCommands.Cmd_Argv(0);
+	const char* pstrName = gCommands.Cmd_Argv(0);
 	CCVar* pCVar = GetCVar(pstrName);
 	if(!pCVar)
 		return false;
@@ -753,7 +753,7 @@ bool CConsole::ProcessCommand( void )
 	if((pCVar->GetFlags() & FL_CV_GL_DEPENDENT) && !gWindow.IsInitialized())
 	{
 		CString fullCmd;
-		for(Uint32 i = 0; i < gCommands.Cmd_Argc(); i++)
+		for(UInt32 i = 0; i < gCommands.Cmd_Argc(); i++)
 			fullCmd << " " << gCommands.Cmd_Argv(i);
 
 		m_glDependentCVarCommandsArray.push_back(fullCmd);
@@ -785,7 +785,7 @@ bool CConsole::ProcessCommand( void )
 			return true;
 		}
 
-		const Char* pstrValue = gCommands.Cmd_Argv(1);
+		const char* pstrValue = gCommands.Cmd_Argv(1);
 		if(pCVar->GetType() == CVAR_FLOAT)
 		{
 			Int32 sgn;
@@ -809,7 +809,7 @@ bool CConsole::ProcessCommand( void )
 				return true;
 			}
 
-			Float value = SDL_atof(pstrValue)*sgn;
+			float value = SDL_atof(pstrValue)*sgn;
 			if(!CVarSetFloatValue(pstrName, value))
 				return false;
 		}
@@ -824,7 +824,7 @@ bool CConsole::ProcessCommand( void )
 // @brief Sets the value of a float-type convar
 //
 //=============================================
-bool CConsole::CVarSetFloatValue( const Char* pstrName, Float value )
+bool CConsole::CVarSetFloatValue( const char* pstrName, float value )
 {
 	// Find the cvar
 	CCVar* pCVar = GetCVar(pstrName);
@@ -863,7 +863,7 @@ bool CConsole::CVarSetFloatValue( const Char* pstrName, Float value )
 // @brief Sets the value of a string-type convar
 //
 //=============================================
-bool CConsole::CVarSetStringValue( const Char* pstrName, const Char* pstrValue )
+bool CConsole::CVarSetStringValue( const char* pstrName, const char* pstrValue )
 {
 	// Find the cvar
 	CCVar* pCVar = GetCVar(pstrName);
@@ -900,7 +900,7 @@ bool CConsole::CVarSetStringValue( const Char* pstrName, const Char* pstrValue )
 // @brief Returns the best input choice for a given string
 //
 //=============================================
-const Char* CConsole::GetBestInputChoice( const Char* pstrFilterString, bool retry )
+const char* CConsole::GetBestInputChoice( const char* pstrFilterString, bool retry )
 {
 	if(m_inputList.empty() || !pstrFilterString)
 		return nullptr;
@@ -917,7 +917,7 @@ const Char* CConsole::GetBestInputChoice( const Char* pstrFilterString, bool ret
 		m_inputList.begin();
 
 	// Try to find the next best choice
-	const Char* pstrBestOption = nullptr;
+	const char* pstrBestOption = nullptr;
 	while(!m_inputList.end())
 	{
 		con_input_t& conInput = m_inputList.get();
@@ -986,7 +986,7 @@ void CConsole::CmdInputList( input_type_t type )
 {
 	// Optional filter argument
 	CString strFilter;
-	// TRUE if we need to write to file
+	// true if we need to write to file
 	bool bLog = false;
 
 	CString inputName;
@@ -1003,10 +1003,10 @@ void CConsole::CmdInputList( input_type_t type )
 	}
 
 	// Get the options
-	Uint32 i = 1;
+	UInt32 i = 1;
 	while(i < gCommands.Cmd_Argc())
 	{
-		const Char* pstrArg = gCommands.Cmd_Argv(i);
+		const char* pstrArg = gCommands.Cmd_Argv(i);
 		if(!qstrcmp(pstrArg, "?"))
 		{
 			Con_Printf("%s - Prints a list of %s.\n", cmdName.c_str(), inputName.c_str());
@@ -1053,7 +1053,7 @@ void CConsole::CmdInputList( input_type_t type )
 	}
 
 	// List all the commands
-	Uint32 nbPrinted = 0;
+	UInt32 nbPrinted = 0;
 	m_inputList.begin();
 	while(!m_inputList.end())
 	{
@@ -1066,7 +1066,7 @@ void CConsole::CmdInputList( input_type_t type )
 
 		if(!strFilter.empty())
 		{
-			const Char* pstr = strFilter.c_str();
+			const char* pstr = strFilter.c_str();
 			if(*pstr == '*')
 			{
 				if(!qstrstr(conInput.name.c_str(), pstr+1))
@@ -1115,7 +1115,7 @@ void CConsole::CmdInputList( input_type_t type )
 			filename = "cmdlist.log";
 		}
 
-		const byte* pdata = reinterpret_cast<const byte*>(pfileBuffer->c_str());
+		const Byte* pdata = reinterpret_cast<const Byte*>(pfileBuffer->c_str());
 		FL_WriteFile(pdata, pfileBuffer->length(), filename.c_str());
 
 		delete pfileBuffer;
@@ -1144,7 +1144,7 @@ void CConsole::CmdConDump( void ) const
 
 	// Convert to windows line endings
 	CString fileBuffer;
-	const Char* pstr = m_pConsoleBuffer;
+	const char* pstr = m_pConsoleBuffer;
 	while(pstr)
 	{
 		CString line;
@@ -1156,9 +1156,9 @@ void CConsole::CmdConDump( void ) const
 	}
 
 	// Determine index for the file
-	Uint32 fileIdx = 0;
+	UInt32 fileIdx = 0;
 	CString filePath;
-	while(TRUE)
+	while(true)
 	{
 		filePath.clear();
 		filePath << "condump" << static_cast<Int32>(fileIdx) << ".txt";
@@ -1170,7 +1170,7 @@ void CConsole::CmdConDump( void ) const
 	}
 
 	// Write the file
-	const byte* pdata = reinterpret_cast<const byte*>(fileBuffer.c_str());
+	const Byte* pdata = reinterpret_cast<const Byte*>(fileBuffer.c_str());
 	FL_WriteFile(pdata, fileBuffer.length(), filePath.c_str());
 }
 

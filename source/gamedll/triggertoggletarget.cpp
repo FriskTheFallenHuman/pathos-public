@@ -80,9 +80,9 @@ bool CTriggerToggleTarget::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerToggleTarget::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerToggleTarget::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
-	const Char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
 	edict_t* pedict = Util::FindEntityByTargetName(nullptr, pstrTarget);
 	if(!pedict)
 	{

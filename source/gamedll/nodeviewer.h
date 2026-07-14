@@ -27,7 +27,7 @@ public:
 
 public:
 	// Max nodes
-	static const Uint32 MAX_NODES = 128;
+	static const UInt32 MAX_NODES = 128;
 
 public:
 	explicit CNodeViewer( edict_t* pedict );
@@ -43,12 +43,12 @@ public:
 
 private:
 	Int32 m_baseNode;
-	Uint32 m_numVisited;
+	UInt32 m_numVisited;
 	Int32 m_fromNodes[MAX_NODES];
 	Int32 m_toNodes[MAX_NODES];
 
 	Int32 m_hullType;
-	Uint64 m_nodeType;
+	UInt64 m_nodeType;
 	Vector m_color;
 };
 

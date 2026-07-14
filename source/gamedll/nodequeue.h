@@ -20,7 +20,7 @@ class CNodeQueue
 {
 public:
 	// Max nodes in the queue
-	static const Uint32 MAX_STACK_NODES = 128;
+	static const UInt32 MAX_STACK_NODES = 128;
 
 public:
 	struct queue_t
@@ -31,7 +31,7 @@ public:
 		{}
 
 		Int32 id;
-		Float priority;
+		float priority;
 	};
 public:
 	CNodeQueue( void );
@@ -40,14 +40,14 @@ public:
 public:
 	bool IsEmpty( void ) const;
 	bool IsFull( void ) const;
-	Uint32 GetSize( void ) const;
+	UInt32 GetSize( void ) const;
 
-	void Insert( Int32 value, Float priority );
-	Int32 Remove( Float& priority );
+	void Insert( Int32 value, float priority );
+	Int32 Remove( float& priority );
 
 private:
 	queue_t m_queue[MAX_STACK_NODES];
-	Uint32 m_size;
+	UInt32 m_size;
 
 	Int32 m_head;
 	Int32 m_tail;

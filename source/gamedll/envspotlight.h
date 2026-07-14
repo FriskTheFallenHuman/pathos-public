@@ -27,9 +27,9 @@ public:
 
 private:
 	// Only CEnvSpotlight can call this, not derived/parent classes
-	void SetSpotlightValues( const Vector& origin, const Vector& angles, const Vector& color, Uint32 radius, Uint32 conesize );
+	void SetSpotlightValues( const Vector& origin, const Vector& angles, const Vector& color, UInt32 radius, UInt32 conesize );
 
 public:
-	static CEnvSpotlight* SpawnSpotlight( const Vector& origin, const Vector& angles, const Vector& color, Uint32 radius, Uint32 conesize );
+	static CEnvSpotlight* SpawnSpotlight( const Vector& origin, const Vector& angles, const Vector& color, UInt32 radius, UInt32 conesize );
 };
 #endif //ENVSPOTLIGHT_H

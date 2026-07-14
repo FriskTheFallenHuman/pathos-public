@@ -19,7 +19,7 @@ class CTriggerCamera : public CDelayEntity
 {
 public:
 	// Default angular speed
-	static const Float DEFAULT_ANGULAR_SPEED;
+	static const float DEFAULT_ANGULAR_SPEED;
 
 public:
 	enum
@@ -39,7 +39,7 @@ public:
 	virtual void Precache( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void SendInitMessage( const CBaseEntity* pPlayer ) override;
 
 public:
@@ -54,16 +54,16 @@ private:
 
 	string_t m_sPathEntityName;
 
-	Float m_waitTime;
-	Double m_returnTime;
-	Double m_stopTime;
+	float m_waitTime;
+	double m_returnTime;
+	double m_stopTime;
 
-	Float m_moveDistance;
-	Float m_targetSpeed;
-	Float m_initialSpeed;
-	Float m_acceleration;
-	Float m_deceleration;
-	Float m_angularSpeed;
+	float m_moveDistance;
+	float m_targetSpeed;
+	float m_initialSpeed;
+	float m_acceleration;
+	float m_deceleration;
+	float m_angularSpeed;
 
 	bool m_isActive;
 };

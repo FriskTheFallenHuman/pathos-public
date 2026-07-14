@@ -59,7 +59,7 @@ public:
 	// Manages keyvalues
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	// Calls use function
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 public:
 	// Repeat function
@@ -67,7 +67,7 @@ public:
 	// Spawns the desired effect
 	void CreateEffect( void );
 	// Get direction
-	Vector GetDirection( Float* plength );
+	Vector GetDirection( float* plength );
 
 private:
 	// Beam type
@@ -75,23 +75,23 @@ private:
 	// Particle count
 	Int32 m_tracerCount;
 	// Min repeat delay
-	Float m_minRepeatDelay;
+	float m_minRepeatDelay;
 	// Max repeat delay
-	Float m_maxRepeatDelay;
+	float m_maxRepeatDelay;
 	// Min velocity
-	Float m_minVelocity;
+	float m_minVelocity;
 	// Max velocity
-	Float m_maxVelocity;
+	float m_maxVelocity;
 	// Minimum tracer lifetime
-	Float m_minLifetime;
+	float m_minLifetime;
 	// Minimum tracer lifetime
-	Float m_maxLifetime;
+	float m_maxLifetime;
 	// Tracer length
-	Float m_tracerLength;
+	float m_tracerLength;
 	// Tracer width
-	Float m_tracerWidth;
+	float m_tracerWidth;
 	// Gravity type
-	Uint32 m_tracerGravityType;
+	UInt32 m_tracerGravityType;
 	// True if we're actively repeating
 	bool m_isActive;
 };

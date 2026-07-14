@@ -87,7 +87,7 @@ bool CNPCMaker::Spawn( void )
 	if(!m_classnameHeadSettingsArray.empty() && !m_classnameWeaponSettingsArray.empty())
 	{
 		// Get name of npc
-		const Char* pstrEntityClassName = gd_engfuncs.pfnGetString(m_npcClassName);
+		const char* pstrEntityClassName = gd_engfuncs.pfnGetString(m_npcClassName);
 		if(pstrEntityClassName && qstrlen(pstrEntityClassName))
 		{
 			// Legacy mod support
@@ -101,7 +101,7 @@ bool CNPCMaker::Spawn( void )
 			if(!m_classnameHeadSettingsArray.empty())
 			{
 				// Set head setting
-				for(Uint32 i = 0; i < m_classnameHeadSettingsArray.size(); i++)
+				for(UInt32 i = 0; i < m_classnameHeadSettingsArray.size(); i++)
 				{
 					const classnamesetting_t& setting = m_classnameHeadSettingsArray[i];
 					if(!qstrcmp(setting.classname, makeName))
@@ -118,7 +118,7 @@ bool CNPCMaker::Spawn( void )
 			if(!m_classnameWeaponSettingsArray.empty())
 			{
 				// Set weapon setting
-				for(Uint32 i = 0; i < m_classnameWeaponSettingsArray.size(); i++)
+				for(UInt32 i = 0; i < m_classnameWeaponSettingsArray.size(); i++)
 				{
 					const classnamesetting_t& setting = m_classnameWeaponSettingsArray[i];
 					if(!qstrcmp(setting.classname, makeName))
@@ -208,7 +208,7 @@ bool CNPCMaker::KeyValue( const keyvalue_t& kv )
 	}
 	else if(!qstrncmp(kv.keyname, "weapons_", 8))
 	{
-		const Char* pstrClassnameBit = kv.keyname + 8;
+		const char* pstrClassnameBit = kv.keyname + 8;
 		CString strClassname;
 		strClassname << "npc_" << pstrClassnameBit;
 
@@ -221,7 +221,7 @@ bool CNPCMaker::KeyValue( const keyvalue_t& kv )
 	}
 	else if(!qstrncmp(kv.keyname, "heads_", 6))
 	{
-		const Char* pstrClassnameBit = kv.keyname + 6;
+		const char* pstrClassnameBit = kv.keyname + 6;
 		CString strClassname;
 		strClassname << "npc_" << pstrClassnameBit;
 
@@ -280,7 +280,7 @@ void CNPCMaker::ChildDeathNotice( CBaseEntity* pChild )
 // @brief Called when npcmaker is toggled
 //
 //=============================================
-void CNPCMaker::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CNPCMaker::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool prevState = m_isActive;
 	switch(useMode)
@@ -320,7 +320,7 @@ void CNPCMaker::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemod
 // @brief Called when npcmaker is cyclic
 //
 //=============================================
-void CNPCMaker::CyclicUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CNPCMaker::CyclicUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	CreateNPC(true);
 }
@@ -365,7 +365,7 @@ void CNPCMaker::CreateNPC( bool isCyclic )
 		return;
 
 	// Get name of npc
-	const Char* pstrEntityClassName = gd_engfuncs.pfnGetString(m_npcClassName);
+	const char* pstrEntityClassName = gd_engfuncs.pfnGetString(m_npcClassName);
 	if(!pstrEntityClassName || !qstrlen(pstrEntityClassName))
 		return;
 

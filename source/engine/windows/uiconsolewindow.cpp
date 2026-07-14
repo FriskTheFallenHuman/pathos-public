@@ -33,26 +33,26 @@ All Rights Reserved.
 CUIConsoleWindow* CUIConsoleWindow::m_pInstance = nullptr;
 
 // Console window relative width
-static constexpr Uint32 CONSOLE_RELATIVE_SCREEN_WIDTH = 1920;
+static constexpr UInt32 CONSOLE_RELATIVE_SCREEN_WIDTH = 1920;
 // Console window relative height
-static constexpr Uint32 CONSOLE_RELATIVE_SCREEN_HEIGHT = 1080;
+static constexpr UInt32 CONSOLE_RELATIVE_SCREEN_HEIGHT = 1080;
 
 // Window description file
-const Char CUIConsoleWindow::WINDOW_DESC_FILE[] = "consolewindow.json";
+const char CUIConsoleWindow::WINDOW_DESC_FILE[] = "consolewindow.json";
 // Window description file
-const Char CUIConsoleWindow::WINDOW_OBJ_NAME[] = "ConsoleWindow";
+const char CUIConsoleWindow::WINDOW_OBJ_NAME[] = "ConsoleWindow";
 // Execute button object name
-const Char CUIConsoleWindow::EXECUTE_BUTTON_OBJ_NAME[] = "ExecuteButton";
+const char CUIConsoleWindow::EXECUTE_BUTTON_OBJ_NAME[] = "ExecuteButton";
 // Input tab object name
-const Char CUIConsoleWindow::INPUT_TAB_OBJ_NAME[] = "InputTab";
+const char CUIConsoleWindow::INPUT_TAB_OBJ_NAME[] = "InputTab";
 // History tab object name
-const Char CUIConsoleWindow::HISTORY_TAB_OBJ_NAME[] = "HistoryTab";
+const char CUIConsoleWindow::HISTORY_TAB_OBJ_NAME[] = "HistoryTab";
 
 //=============================================
 // @brief Constructor
 //
 //=============================================
-CUIConsoleWindow::CUIConsoleWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIConsoleWindow::CUIConsoleWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIWindow( (UIW_FL_MENUWINDOW|UIW_FL_CONSOLEWINDOW), flags, width, height, originx, originy ),
 	m_pHistoryTab(nullptr),
 	m_pInputTab(nullptr),
@@ -98,8 +98,8 @@ CUIConsoleWindow* CUIConsoleWindow::CreateInstance( void )
 		return nullptr;
 	}
 
-	Uint32 relativeWidth = R_GetRelativeX(pWindowObject->getWidth(), CONSOLE_RELATIVE_SCREEN_WIDTH, gWindow.GetWidth());
-	Uint32 relativeHeight = R_GetRelativeX(pWindowObject->getHeight(), CONSOLE_RELATIVE_SCREEN_HEIGHT, gWindow.GetHeight());
+	UInt32 relativeWidth = R_GetRelativeX(pWindowObject->getWidth(), CONSOLE_RELATIVE_SCREEN_WIDTH, gWindow.GetWidth());
+	UInt32 relativeHeight = R_GetRelativeX(pWindowObject->getHeight(), CONSOLE_RELATIVE_SCREEN_HEIGHT, gWindow.GetHeight());
 
 	// Position to right of the screen
 	Int32 xOrigin = gWindow.GetWidth() - relativeWidth - 20;
@@ -165,7 +165,7 @@ bool CUIConsoleWindow::init( const ui_windowdescription_t* pWinDesc, const ui_ob
 	m_prevResolutionWidth = gWindow.GetWidth();
 	m_prevResolutionHeight = gWindow.GetHeight();
 
-	const Char* pstrWindowSchemaFile = pWindowObject->getSchema().c_str();
+	const char* pstrWindowSchemaFile = pWindowObject->getSchema().c_str();
 	if(!CUIWindow::init(pstrWindowSchemaFile))
 	{
 		Con_EPrintf("Failed to initialize schema '%s' for console window.\n", pstrWindowSchemaFile);
@@ -274,7 +274,7 @@ bool CUIConsoleWindow::init( const ui_windowdescription_t* pWinDesc, const ui_ob
 	m_pHistoryTab->setTextInset(pHistoryTabObjectInfo->getTextInset());
 
 	// Get current text from the console
-	const Char* pstrHistory = gConsole.GetConsoleHistory();
+	const char* pstrHistory = gConsole.GetConsoleHistory();
 	m_pHistoryTab->setText(pstrHistory);
 
 	return true;
@@ -305,14 +305,14 @@ void CUIConsoleWindow::Execute( void )
 //=============================================
 void CUIConsoleWindow::GetNextBestInputChoice( void )
 {
-	const Char* pstrInput = m_pInputTab->getText();
+	const char* pstrInput = m_pInputTab->getText();
 	if(!m_tabbingFilterSet)
 	{
 		m_tabbingFilter = pstrInput;
 		m_tabbingFilterSet = true;
 	}
 
-	const Char* pstrBestChoice = gConsole.GetBestInputChoice(m_tabbingFilter.c_str());
+	const char* pstrBestChoice = gConsole.GetBestInputChoice(m_tabbingFilter.c_str());
 	if(!pstrBestChoice)
 		return;
 
@@ -338,7 +338,7 @@ void CUIConsoleWindow::ResetTabFilter( void )
 // @brief Sets the history tab contents
 //
 //=============================================
-void CUIConsoleWindow::SetHistoryText( const Char* pstrText )
+void CUIConsoleWindow::SetHistoryText( const char* pstrText )
 {
 	m_pHistoryTab->setText(pstrText);
 }
@@ -384,7 +384,7 @@ void CUIConsoleWindow::ClearInputText( void )
 // @brief Sets the input text for the container
 //
 //=============================================
-void CUIConsoleWindow::SetInputText( const Char* pstrText )
+void CUIConsoleWindow::SetInputText( const char* pstrText )
 {
 	m_pInputTab->setText(pstrText);
 }
@@ -395,14 +395,14 @@ void CUIConsoleWindow::SetInputText( const Char* pstrText )
 //=============================================
 void CUIConsoleWindow::onGLInitialization( void )
 {
-	Uint32 referenceWidth = m_prevResolutionWidth;
+	UInt32 referenceWidth = m_prevResolutionWidth;
 	m_prevResolutionWidth = gWindow.GetWidth();
 
-	Uint32 referenceHeight = m_prevResolutionHeight;
+	UInt32 referenceHeight = m_prevResolutionHeight;
 	m_prevResolutionHeight = gWindow.GetHeight();
 
-	Uint32 newWidth = R_GetRelativeX(m_width, referenceWidth, gWindow.GetWidth());
-	Uint32 newHeight = R_GetRelativeY(m_height, referenceHeight, gWindow.GetHeight());
+	UInt32 newWidth = R_GetRelativeX(m_width, referenceWidth, gWindow.GetWidth());
+	UInt32 newHeight = R_GetRelativeY(m_height, referenceHeight, gWindow.GetHeight());
 
 	Int32 widthAdd = newWidth - m_width;
 	Int32 heightAdd = newHeight - m_height;
@@ -414,7 +414,7 @@ void CUIConsoleWindow::onGLInitialization( void )
 // @brief Destructor
 //
 //=============================================
-void CUIConsoleExecuteCallback::PerformAction( Float param )
+void CUIConsoleExecuteCallback::PerformAction( float param )
 {
 	m_pWindow->Execute();
 }
@@ -459,7 +459,7 @@ bool CUIConsoleKeyEventCallback::KeyEvent( Int32 button, Int16 mod, bool keyDown
 				if(gConsole.IsAtHistoryEnd())
 					gConsole.ResetHistoryIterator();
 
-				const Char* pstrInput = gConsole.GetCurrentInputHistory();
+				const char* pstrInput = gConsole.GetCurrentInputHistory();
 				if(pstrInput)
 				{
 					// Try to save anything
@@ -480,7 +480,7 @@ bool CUIConsoleKeyEventCallback::KeyEvent( Int32 button, Int16 mod, bool keyDown
 				if(m_lastButton != 0 && m_lastButton != button)
 					gConsole.HistoryStepBack();
 
-				const Char* pstrInput = gConsole.GetCurrentInputHistory();
+				const char* pstrInput = gConsole.GetCurrentInputHistory();
 				if(pstrInput)
 				{
 					// Try to save anything

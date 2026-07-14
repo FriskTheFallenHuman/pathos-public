@@ -1618,7 +1618,7 @@ struct ImGuiKeyRoutingTable
 {
     ImGuiKeyRoutingIndex            Index[ImGuiKey_NamedKey_COUNT]; // Index of first entry in Entries[]
     ImVector<ImGuiKeyRoutingData>   Entries;
-    ImVector<ImGuiKeyRoutingData>   EntriesNext;                    // Double-buffer to avoid reallocation (could use a shared buffer)
+    ImVector<ImGuiKeyRoutingData>   EntriesNext;                    // double-buffer to avoid reallocation (could use a shared buffer)
 
     ImGuiKeyRoutingTable()          { Clear(); }
     void Clear()                    { for (int n = 0; n < IM_COUNTOF(Index); n++) Index[n] = -1; Entries.clear(); EntriesNext.clear(); }

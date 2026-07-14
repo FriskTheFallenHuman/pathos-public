@@ -75,8 +75,8 @@ struct beam_position_t
 
 	Vector position;
 	Vector velocity;
-	Float life;
-	Float acceleration;
+	float life;
+	float acceleration;
 	Vector winddirection;
 
 	beam_position_t* pnext;
@@ -93,8 +93,8 @@ struct beamsegment_t
 	Vector center;
 	Vector coord1;
 	Vector coord2;
-	Float tcy;
-	Float brightness;
+	float tcy;
+	float brightness;
 
 	Vector lastlightpos;
 	Vector lastlightcolor;
@@ -145,28 +145,28 @@ struct beam_t
 	Vector target;
 	Vector delta;
 
-	Float transparency;
-	Float frequency;
-	Double spawntime;
-	Double die;
-	Float width;
-	Float amplitude;
-	Float speed;
-	Float noisespeed;
-	Float lifetime;
+	float transparency;
+	float frequency;
+	double spawntime;
+	double die;
+	float width;
+	float amplitude;
+	float speed;
+	float noisespeed;
+	float lifetime;
 
 	Vector color1;
-	Float brightness;
+	float brightness;
 
 	Vector color2;
-	Float colorfadetime;
-	Float colorfadedelay;
+	float colorfadetime;
+	float colorfadedelay;
 
-	Double framerate;
-	Float frame;
+	double framerate;
+	float frame;
 	Int32 framecount;
 
-	Uint32 numsegments;
+	UInt32 numsegments;
 
 	entindex_t startentity_index;
 	Int32 attachment1;
@@ -175,16 +175,16 @@ struct beam_t
 	Int32 modelindex1;
 	Int32 modelindex2;
 
-	Uint32 startentidentifier;
-	Uint32 endentidentifier;
+	UInt32 startentidentifier;
+	UInt32 endentidentifier;
 
 	cl_entity_t* pserverentity;
 
 	beam_position_t* ppositions;
 	CArray<beamsegment_t> drawsegments;
 
-	CArray<Uint32> leafnums;
-	Uint32 numleafs;
+	CArray<UInt32> leafnums;
+	UInt32 numleafs;
 
 	beam_t* pnext;
 	beam_t* pprev;

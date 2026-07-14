@@ -36,11 +36,11 @@ public:
 		}
 
 		CBaseEntity* pentity;
-		Float dmgamount;
+		float dmgamount;
 		Int32 dmgtype;
-		Uint32 hitcount;
+		UInt32 hitcount;
 		
-		Uint32 grouphitcounts[NB_HITGROUPS];
+		UInt32 grouphitcounts[NB_HITGROUPS];
 	};
 
 public:
@@ -51,17 +51,17 @@ public:
 	void Prepare( bullet_types_t bulletType, const Vector& shotOrigin );
 	void Prepare( bullet_types_t bulletType, const Vector& shotOrigin, const Vector& shotDirection );
 	void ApplyDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker );
-	void AddDamage( CBaseEntity* pentity, Float damage, Int32 dmgtype, hitgroups_t hitgroup = HITGROUP_GENERIC );
+	void AddDamage( CBaseEntity* pentity, float damage, Int32 dmgtype, hitgroups_t hitgroup = HITGROUP_GENERIC );
 
 	void SetDamageFlags( Int32 dmgtype );
-	Uint32 GetShotCount( void ) const;
+	UInt32 GetShotCount( void ) const;
 	bullet_types_t GetBulletType( void ) const;
 	const Vector& GetShotDirection( void ) const;
 	const Vector& GetDamageDirection( void ) const;
 	const Vector& GetAttackOrigin( void ) const;
 
-	Uint32 GetEntityHitCount( const CBaseEntity* pEntity );
-	Uint32 GetHitGroupHitCountForEntity( const CBaseEntity* pEntity, hitgroups_t hitgroup );
+	UInt32 GetEntityHitCount( const CBaseEntity* pEntity );
+	UInt32 GetHitGroupHitCountForEntity( const CBaseEntity* pEntity, hitgroups_t hitgroup );
 	hitgroups_t GetHitHighestCountGroupForEntity( const CBaseEntity* pEntity );
 
 private:
@@ -73,7 +73,7 @@ private:
 	// Base damage flags
 	Int32 m_damageFlags;
 	// Number of total shots
-	Uint32 m_nbTotalShots;
+	UInt32 m_nbTotalShots;
 	// Direction of the shot(aka gun's angle)
 	Vector m_shotDirection;
 

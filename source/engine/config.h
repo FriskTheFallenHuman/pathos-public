@@ -46,7 +46,7 @@ struct conf_field_t
 	CString name;
 
 	Int32 value_int;
-	Float value_fl;
+	float value_fl;
 	CString value_str;
 
 	bool archive;
@@ -79,13 +79,13 @@ class CConfig
 {
 public:
 	// Default bind file filename
-	static const Char DEFAULT_BINDS_FILENAME[];
+	static const char DEFAULT_BINDS_FILENAME[];
 	// System config filename
-	static const Char SYSTEM_CONFIG_FILENAME[];
+	static const char SYSTEM_CONFIG_FILENAME[];
 	// System config filename
-	static const Char USER_CONFIG_FILENAME[];
+	static const char USER_CONFIG_FILENAME[];
 	// Name of the group that holds keybinds
-	static const Char USER_CONFIG_GRP_NAME[];
+	static const char USER_CONFIG_GRP_NAME[];
 
 public:
 	CConfig( void );
@@ -97,38 +97,38 @@ public:
 	const cf_status_t GetStatus( void ) const;
 
 public:
-	conf_group_t* FindGroup( const Char* name );
-	conf_group_t* CreateGroup( const Char* name, const Char* pstrFilename, group_type_t type );
-	conf_field_t* CreateField( conf_group_t* pgroup, const Char* name, field_type_t type );
+	conf_group_t* FindGroup( const char* name );
+	conf_group_t* CreateGroup( const char* name, const char* pstrFilename, group_type_t type );
+	conf_field_t* CreateField( conf_group_t* pgroup, const char* name, field_type_t type );
 
-	static bool DeleteField( conf_group_t* pgroup, const Char* name );
-	bool DeleteField( const Char* grpName, const Char* name );
+	static bool DeleteField( conf_group_t* pgroup, const char* name );
+	bool DeleteField( const char* grpName, const char* name );
 
-	bool SetValue( conf_group_t* pgroup, const Char* field, Int32 value, bool archive = false );
-	bool SetValue( const Char* grpName, const Char* field, Int32 value, bool archive = false );
-	bool SetValue( conf_group_t* pgroup, const Char* field, Float value, bool archive = false );
-	bool SetValue( const Char* grpName, const Char* field, Float value, bool archive = false );
-	bool SetValue( conf_group_t* pgroup, const Char* field, const Char* value, bool archive = false, field_type_t type = CONF_FIELD_STRING );
-	bool SetValue( const Char* grpName, const Char* field, const Char* value, bool archive = false, field_type_t type = CONF_FIELD_STRING );
+	bool SetValue( conf_group_t* pgroup, const char* field, Int32 value, bool archive = false );
+	bool SetValue( const char* grpName, const char* field, Int32 value, bool archive = false );
+	bool SetValue( conf_group_t* pgroup, const char* field, float value, bool archive = false );
+	bool SetValue( const char* grpName, const char* field, float value, bool archive = false );
+	bool SetValue( conf_group_t* pgroup, const char* field, const char* value, bool archive = false, field_type_t type = CONF_FIELD_STRING );
+	bool SetValue( const char* grpName, const char* field, const char* value, bool archive = false, field_type_t type = CONF_FIELD_STRING );
 
-	const Int32 GetInt( conf_group_t* pgroup, const Char* field );
-	const Float GetFloat( conf_group_t* pgroup, const Char* field );
-	const Char* GetString( conf_group_t* pgroup, const Char* field );
+	const Int32 GetInt( conf_group_t* pgroup, const char* field );
+	const float GetFloat( conf_group_t* pgroup, const char* field );
+	const char* GetString( conf_group_t* pgroup, const char* field );
 
 public:
 	void CmdExecuteScript( void );
 
 private:
-	void WriteConfigFile( conf_group_t* pgroup, const Char* pstrFilename ) const;
+	void WriteConfigFile( conf_group_t* pgroup, const char* pstrFilename ) const;
 	void ReadSystemConfigFile( void );
-	static void ReadUserConfigFile( const Char* pstrFilename );
+	static void ReadUserConfigFile( const char* pstrFilename );
 
 private:
 	static void FlagRewrite( conf_group_t* pgroup );
 	void ResetStatus( void );
 
 private:
-	conf_field_t* FindField( conf_group_t* pgroup, const Char* field );
+	conf_field_t* FindField( conf_group_t* pgroup, const char* field );
 
 private:
 	// Error status of config class

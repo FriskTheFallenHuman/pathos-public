@@ -15,54 +15,54 @@ All Rights Reserved.
 #include "ai_common.h"
 
 // Glock clip size
-const Uint32 CNPCSecurity::NPC_GLOCK_CLIP_SIZE = 17;
+const UInt32 CNPCSecurity::NPC_GLOCK_CLIP_SIZE = 17;
 // Desert eagle clip size
-const Uint32 CNPCSecurity::NPC_DEAGLE_CLIP_SIZE = 7;
+const UInt32 CNPCSecurity::NPC_DEAGLE_CLIP_SIZE = 7;
 // TRG42 clip size
-const Uint32 CNPCSecurity::NPC_TRG42_CLIP_SIZE = 5;
+const UInt32 CNPCSecurity::NPC_TRG42_CLIP_SIZE = 5;
 // View offset for npc
 const Vector CNPCSecurity::NPC_VIEW_OFFSET = Vector(0, 0, 50);
 // Attachment for weapon
-const Uint32 CNPCSecurity::NPC_WEAPON_ATTACHMENT_INDEX = 0;
+const UInt32 CNPCSecurity::NPC_WEAPON_ATTACHMENT_INDEX = 0;
 // Yaw speed for npc
-const Uint32 CNPCSecurity::NPC_YAW_SPEED = 180;
+const UInt32 CNPCSecurity::NPC_YAW_SPEED = 180;
 // Gun position offset
 const Vector CNPCSecurity::NPC_GUN_POSITION_OFFSET = Vector(0, 0, 60);
 
 // Model name for the npc
-const Char CNPCSecurity::NPC_MODEL_NAME[] = "models/security.mdl";
+const char CNPCSecurity::NPC_MODEL_NAME[] = "models/security.mdl";
 // Pain sound pattern
-const Char CNPCSecurity::NPC_PAIN_SOUND_PATTERN[] = "security/se_pain%d.wav";
+const char CNPCSecurity::NPC_PAIN_SOUND_PATTERN[] = "security/se_pain%d.wav";
 // Number of pain sounds
-const Uint32 CNPCSecurity::NPC_NB_PAIN_SOUNDS = 3;
+const UInt32 CNPCSecurity::NPC_NB_PAIN_SOUNDS = 3;
 // Death sound pattern
-const Char CNPCSecurity::NPC_DEATH_SOUND_PATTERN[] = "security/se_die%d.wav";
+const char CNPCSecurity::NPC_DEATH_SOUND_PATTERN[] = "security/se_die%d.wav";
 // Number of death sounds
-const Uint32 CNPCSecurity::NPC_NB_DEATH_SOUNDS = 3;
+const UInt32 CNPCSecurity::NPC_NB_DEATH_SOUNDS = 3;
 // Sentence prefix for npc
-const Char CNPCSecurity::NPC_SENTENCE_PREFIX[] = "SE";
+const char CNPCSecurity::NPC_SENTENCE_PREFIX[] = "SE";
 
 // Bodygroup name for heads
-const Char CNPCSecurity::NPC_BODYGROUP_HEADS_NAME[] = "heads";
+const char CNPCSecurity::NPC_BODYGROUP_HEADS_NAME[] = "heads";
 // Submodel name for head 1
-const Char CNPCSecurity::NPC_SUBMODEL_HEAD1_NAME[] = "security_head1_reference";
+const char CNPCSecurity::NPC_SUBMODEL_HEAD1_NAME[] = "security_head1_reference";
 // Submodel name for head 2
-const Char CNPCSecurity::NPC_SUBMODEL_HEAD2_NAME[] = "security_head2_reference";
+const char CNPCSecurity::NPC_SUBMODEL_HEAD2_NAME[] = "security_head2_reference";
 
 // Bodygroup name for guns
-const Char CNPCSecurity::NPC_BODYGROUP_WEAPONS_NAME[] = "weapons";
+const char CNPCSecurity::NPC_BODYGROUP_WEAPONS_NAME[] = "weapons";
 // Submodel name for holstered glock
-const Char CNPCSecurity::NPC_SUBMODEL_WEAPON_GLOCK_HOLSTERED_NAME[] = "glock_holster_reference";
+const char CNPCSecurity::NPC_SUBMODEL_WEAPON_GLOCK_HOLSTERED_NAME[] = "glock_holster_reference";
 // Submodel name for holstered desert eagle
-const Char CNPCSecurity::NPC_SUBMODEL_WEAPON_DEAGLE_HOLSTERED_NAME[] = "blank";
+const char CNPCSecurity::NPC_SUBMODEL_WEAPON_DEAGLE_HOLSTERED_NAME[] = "blank";
 // Submodel name for holstered glock
-const Char CNPCSecurity::NPC_SUBMODEL_WEAPON_GLOCK_UNHOLSTERED_NAME[] = "glock_drawn_reference";
+const char CNPCSecurity::NPC_SUBMODEL_WEAPON_GLOCK_UNHOLSTERED_NAME[] = "glock_drawn_reference";
 // Submodel name for holstered desert eagle
-const Char CNPCSecurity::NPC_SUBMODEL_WEAPON_DEAGLE_UNHOLSTERED_NAME[] = "blank";
+const char CNPCSecurity::NPC_SUBMODEL_WEAPON_DEAGLE_UNHOLSTERED_NAME[] = "blank";
 // Submodel name for TRG 42
-const Char CNPCSecurity::NPC_SUBMODEL_WEAPON_TRG42_NAME[] = "blank";
+const char CNPCSecurity::NPC_SUBMODEL_WEAPON_TRG42_NAME[] = "blank";
 // Submodel name for blank weapon
-const Char CNPCSecurity::NPC_SUBMODEL_WEAPON_BLANK_NAME[] = "blank";
+const char CNPCSecurity::NPC_SUBMODEL_WEAPON_BLANK_NAME[] = "blank";
 
 //==========================================================================
 //
@@ -78,10 +78,10 @@ ai_task_t taskListScheduleDrawWeapon[] =
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
 	AITASK(AI_TASK_FACE_ENEMY,					0),
-	AITASK(AI_TASK_PLAY_SEQUENCE_FACE_ENEMY,	(Float)ACT_ARM),
+	AITASK(AI_TASK_PLAY_SEQUENCE_FACE_ENEMY,	(float)ACT_ARM),
 };
 
-Uint32 interruptBitsScheduleDrawWeapon[] =
+UInt32 interruptBitsScheduleDrawWeapon[] =
 {
 	AI_COND_SCHEDULE_DONE
 };
@@ -380,7 +380,7 @@ void CNPCSecurity::HandleAnimationEvent( const mstudioevent_t* pevent )
 		break;
 	case NPC_AE_SHOOT:
 		{
-			const Char* pstrSoundPattern = nullptr;
+			const char* pstrSoundPattern = nullptr;
 			if(m_pState->weapons & NPC_WEAPON_DEAGLE)
 				pstrSoundPattern = NPC_DEAGLE_FIRING_SOUND;
 			else if(m_pState->weapons & NPC_WEAPON_TRG42)
@@ -425,7 +425,7 @@ Int32 CNPCSecurity::FindActivity( Int32 activity )
 // @brief Makes the entity take on damage
 //
 //=============================================
-bool CNPCSecurity::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags )
+bool CNPCSecurity::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags )
 {
 	// Do not take damage from allies
 	if(pAttacker && pAttacker != this && (GetRelationship(pAttacker) == R_ALLY || GetRelationship(pAttacker) == R_NONE))
@@ -503,7 +503,7 @@ void CNPCSecurity::SetYawSpeed( void )
 // @brief Returns the sound mask for the NPC
 //
 //=============================================
-Uint64 CNPCSecurity::GetSoundMask( void )
+UInt64 CNPCSecurity::GetSoundMask( void )
 {
 	return (AI_SOUND_WORLD|AI_SOUND_COMBAT|AI_SOUND_DANGER|AI_SOUND_PLAYER);
 }
@@ -636,7 +636,7 @@ const CAISchedule* CNPCSecurity::GetScheduleByIndex( Int32 scheduleIndex )
 // @brief Checks if we can do range attack 1
 //
 //=============================================
-bool CNPCSecurity::CheckRangeAttack1( Float dp, Float distance )
+bool CNPCSecurity::CheckRangeAttack1( float dp, float distance )
 {
 	if(CheckCondition(AI_COND_ENEMY_OCCLUDED))
 		return false;
@@ -704,7 +704,7 @@ void CNPCSecurity::EmitAlertSound( void )
 // @brief Returns the firing cone used
 //
 //=============================================
-const Uint32 CNPCSecurity::GetFiringCone( bool attenuateByFog )
+const UInt32 CNPCSecurity::GetFiringCone( bool attenuateByFog )
 {
 	Int32 skillCvar;
 	if(m_pState->weapons & NPC_WEAPON_DEAGLE)
@@ -714,7 +714,7 @@ const Uint32 CNPCSecurity::GetFiringCone( bool attenuateByFog )
 	else
 		skillCvar = g_skillcvars.skillSecurityTRG42ConeSize;
 
-	Uint32 coneIndex = (Int32)GetSkillCVarValue(skillCvar);
+	UInt32 coneIndex = (Int32)GetSkillCVarValue(skillCvar);
 	if(attenuateByFog)
 		coneIndex = GetFogAttenuatedFiringCone(coneIndex);
 

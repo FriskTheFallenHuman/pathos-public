@@ -17,7 +17,7 @@ class CSkyTextureSets
 {
 public:
 	// Max skybox sets
-	static const Uint32 MAX_SKYBOX_TEXTURE_SETS;
+	static const UInt32 MAX_SKYBOX_TEXTURE_SETS;
 
 public:
 	CSkyTextureSets( void );
@@ -25,7 +25,7 @@ public:
 
 public:
 	void Reset( void );
-	Int32 RegisterSkyTextureSet( const Char* pstrSkyTextureName );
+	Int32 RegisterSkyTextureSet( const char* pstrSkyTextureName );
 	void RegisterSets( edict_t* pPlayer );
 
 private:

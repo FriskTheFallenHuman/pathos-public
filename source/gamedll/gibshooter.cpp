@@ -132,7 +132,7 @@ bool CGibShooter::Spawn( void )
 // @brief
 //
 //=============================================
-void CGibShooter::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CGibShooter::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	SetThink(&CGibShooter::ShootThink);
 	m_pState->nextthink = g_pGameVars->time + 0.1;
@@ -158,7 +158,7 @@ CGib* CGibShooter::CreateGib( void )
 
 	if(m_nbBodyVariations > CGib::GIB_SKULL)
 	{
-		Uint32 randomGibsBegin = CGib::GIB_SKULL+1;
+		UInt32 randomGibsBegin = CGib::GIB_SKULL+1;
 		pGib->SetBody(Common::RandomLong(randomGibsBegin, CGib::NB_GIBS-randomGibsBegin));
 	}
 
@@ -190,8 +190,8 @@ void CGibShooter::ShootThink( void )
 		pGib->SetAngularVelocity(avelocity);
 
 		// Set think time
-		Double thinktime = pGib->GetNextThinkTime() - g_pGameVars->time;
-		Double lifetime = m_gibLifetime * Common::RandomFloat(0.9, 1.1);
+		double thinktime = pGib->GetNextThinkTime() - g_pGameVars->time;
+		double lifetime = m_gibLifetime * Common::RandomFloat(0.9, 1.1);
 		if(lifetime > thinktime)
 		{
 			pGib->SetNextThink(lifetime);

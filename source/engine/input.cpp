@@ -59,7 +59,7 @@ const CString CInput::MOUSE_WHEEL_NAMES[] = {
 };
 
 // Path to keynames file
-const Char CInput::KEYNAMES_FILE_PATH[] = "scripts/kb_keys.lst";
+const char CInput::KEYNAMES_FILE_PATH[] = "scripts/kb_keys.lst";
 
 //=============================================
 // @brief Constructor
@@ -118,7 +118,7 @@ bool CInput::Init( void )
 bool CInput::LoadKeyNames( void )
 {
 	CString filename = KEYNAMES_FILE_PATH;
-	const Char* pfile = reinterpret_cast<const Char*>(FL_LoadFile(filename.c_str()));
+	const char* pfile = reinterpret_cast<const char*>(FL_LoadFile(filename.c_str()));
 	if(!pfile)
 	{
 		Con_EPrintf("Failed to load key names file.\n");
@@ -127,7 +127,7 @@ bool CInput::LoadKeyNames( void )
 
 	// Process each line
 	Int32 lineNum = 0;
-	const Char *pstr = pfile;
+	const char *pstr = pfile;
 	while(pstr)
 	{
 		CString line;
@@ -149,7 +149,7 @@ bool CInput::LoadKeyNames( void )
 
 		// Read in the key name
 		CString btnName;
-		const Char* ppstr = Common::Parse(line.c_str(), btnName);
+		const char* ppstr = Common::Parse(line.c_str(), btnName);
 		if(!ppstr || btnName.empty())
 		{
 			Con_EPrintf("Line %d in %s is incomplete.\n", lineNum, filename.c_str());
@@ -232,9 +232,9 @@ bool CInput::LoadKeyNames( void )
 			}
 
 			// Set the values
-			color.r = clamp(SDL_atoi(keyColor.c_str()), 0, 255);
-			color.g = clamp(SDL_atoi(keyColorG.c_str()), 0, 255);
-			color.b = clamp(SDL_atoi(keyColorB.c_str()), 0, 255);
+			color.r = Clamp(SDL_atoi(keyColor.c_str()), 0, 255);
+			color.g = Clamp(SDL_atoi(keyColorG.c_str()), 0, 255);
+			color.b = Clamp(SDL_atoi(keyColorB.c_str()), 0, 255);
 		}
 		
 		// Get the scancode from the file
@@ -374,27 +374,10 @@ void CInput::OnSetRawMouse( bool isEnabled )
 	if(m_isCursorVisible)
 		return;
 
-	switch(isEnabled)
+	if(m_relativeMouseModeSet != isEnabled)
 	{
-	case true:
-		{
-			if(!m_relativeMouseModeSet)
-			{
-				SDL_SetRelativeMouseMode(SDL_TRUE);
-				m_relativeMouseModeSet = true;
-			}
-		}
-		break;
-	default:
-	case false:
-		{
-			if(m_relativeMouseModeSet)
-			{
-				SDL_SetRelativeMouseMode(SDL_FALSE);
-				m_relativeMouseModeSet = false;
-			}
-		}
-		break;
+		SDL_SetRelativeMouseMode(isEnabled ? SDL_TRUE : SDL_FALSE);
+		m_relativeMouseModeSet = isEnabled;	
 	}
 }
 
@@ -787,7 +770,7 @@ void CInput::MouseWheelEvent( Int32 button, bool keyDown, Int32 scroll )
 // @brief Resets keys tied to a command
 //
 //=============================================
-void CInput::ResetInputCommand( const Char* name )
+void CInput::ResetInputCommand( const char* name )
 {
 	for(Uint32 i = 0; i < m_keyInfoArray.size(); i++)
 	{
@@ -1001,7 +984,7 @@ void CInput::GetMousePosition( Int32& x, Int32& y )
 // Class: CConfig
 // Function: GetKeynameForBind
 //=============================================
-const Char* CInput::GetKeynameForBind( const Char* pstrBind )
+const char* CInput::GetKeynameForBind( const char* pstrBind )
 {
 	for(Uint32 i = 0; i < m_keyInfoArray.size(); i++)
 	{
@@ -1020,7 +1003,7 @@ const Char* CInput::GetKeynameForBind( const Char* pstrBind )
 // Class: CConfig
 // Function: GetKeynameForScancode
 //=============================================
-const Char* CInput::GetKeynameForScancode( Int32 scancodeIdx )
+const char* CInput::GetKeynameForScancode( Int32 scancodeIdx )
 {
 	assert((Uint32)scancodeIdx < m_keyInfoArray.size());
 	return m_keyInfoArray[scancodeIdx].name.c_str();
@@ -1030,7 +1013,7 @@ const Char* CInput::GetKeynameForScancode( Int32 scancodeIdx )
 // Class: CConfig
 // Function: GetMouseButtonName
 //=============================================
-const Char* CInput::GetMouseButtonName( Int32 button )
+const char* CInput::GetMouseButtonName( Int32 button )
 {
 	assert(button < NB_MOUSE_BTN);
 	Uint32 scancodeIdx = SDL_NUM_SCANCODES + button;
@@ -1041,7 +1024,7 @@ const Char* CInput::GetMouseButtonName( Int32 button )
 // Class: CConfig
 // Function: GetMouseButtonName
 //=============================================
-const Char* CInput::GetMouseWheelEventName( Int32 button )
+const char* CInput::GetMouseWheelEventName( Int32 button )
 {
 	assert(button < NUM_WHEEL_KEYS);
 	Uint32 scancodeIdx = SDL_NUM_SCANCODES + NB_MOUSE_BTN + 1 + button;
@@ -1062,8 +1045,8 @@ void CInput::CmdBindKey( void )
 	}
 
 	// Get the parameters
-	const Char* pstrKeyName = gCommands.Cmd_Argv(1);
-	const Char* pstrCmdName = gCommands.Cmd_Argv(2);
+	const char* pstrKeyName = gCommands.Cmd_Argv(1);
+	const char* pstrCmdName = gCommands.Cmd_Argv(2);
 
 	// Clear key from other binds
 	for(Uint32 i = 0; i < m_keyInfoArray.size(); i++)
@@ -1117,7 +1100,7 @@ void CInput::CmdUnbindKey( void )
 		return;
 	}
 
-	const Char* pstrKeyName = gCommands.Cmd_Argv(1);
+	const char* pstrKeyName = gCommands.Cmd_Argv(1);
 
 	// Find the key
 	Uint32 i = 0;

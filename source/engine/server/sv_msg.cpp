@@ -29,9 +29,9 @@ All Rights Reserved.
 #include "console.h"
 
 // Minimum chunk size is 56 kilobytes
-static constexpr Uint32 MIN_FILECHUNK_SIZE = 57344;
+static constexpr UInt32 MIN_FILECHUNK_SIZE = 57344;
 // Maximum chunk size is 4 megabytes
-static constexpr Uint32 MAX_FILECHUNK_SIZE = 4194304;
+static constexpr UInt32 MAX_FILECHUNK_SIZE = 4194304;
 
 //=============================================
 //
@@ -62,12 +62,12 @@ bool SV_SendClientData( sv_client_t* pclient )
 	if(!pclient->initialized)
 	{
 		// Only skybox name for now
-		const Char* pstrSkyname = g_psv_skyname->GetStrValue();
+		const char* pstrSkyname = g_psv_skyname->GetStrValue();
 		svs.netinfo.pnet->SVC_MessageBegin(MSG_ONE, svc_serverinfo, pclient->pedict);
 			// Skybox information
 			svs.netinfo.pnet->WriteString(pstrSkyname);
 			// Write hull sizes
-			for(Uint32 i = 0; i < MAX_MAP_HULLS; i++)
+			for(UInt32 i = 0; i < MAX_MAP_HULLS; i++)
 			{
 				for(Int32 j = 0; j < 3; j++)
 					svs.netinfo.pnet->WriteFloat(svs.player_mins[i][j]);
@@ -147,7 +147,7 @@ bool SV_SendClientData( sv_client_t* pclient )
 //=============================================
 void SV_UpdateClientData( void )
 {
-	for(Uint32 i = 0; i < svs.maxclients; i++)
+	for(UInt32 i = 0; i < svs.maxclients; i++)
 	{
 		sv_client_t* pclient = &svs.clients[i];
 		if(!pclient->connected)
@@ -192,8 +192,8 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 	if(svs.netinfo.pnet->GetClientState(pclient->index) != NETCL_CONNECTED)
 		return false;
 
-	byte *pPVS = nullptr;
-	byte *pPAS = nullptr;
+	Byte *pPVS = nullptr;
+	Byte *pPAS = nullptr;
 
 	svs.dllfuncs.pfnSetupVisibility(pclient->pedict, pPVS, pPAS);
 
@@ -201,7 +201,7 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 	pclient->packet.numentities = 0;
 
 	// Write other clients first
-	for(Uint32 i = 0; i < svs.maxclients; i++)
+	for(UInt32 i = 0; i < svs.maxclients; i++)
 	{
 		sv_client_t* pcl = &svs.clients[i];
 		if(!pcl->active || !pcl->spawned)
@@ -239,7 +239,7 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 	svs.netinfo.pnet->SVC_MessageBegin(MSG_ONE, svc_packetentities, pclient->pedict);
 	svs.netinfo.pnet->WriteUint32(pclient->packet.numentities);
 
-	for(Uint32 i = 0; i < pclient->packet.numentities; i++)
+	for(UInt32 i = 0; i < pclient->packet.numentities; i++)
 	{
 		entity_state_t& curstate = pclient->packet.entities[i];
 		assert(curstate.entindex < (Int32)pclient->packet.cl_entitystates.size());
@@ -252,7 +252,7 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 		svs.netinfo.pnet->WriteUint32(pedict->identifier);
 
 		// Determine needed updates
-		Uint32 updateMask = 0;
+		UInt32 updateMask = 0;
 		if(!pclient->packet.cl_wasinpacket[curstate.entindex])
 			updateMask |= U_NEW_TO_PACKET;
 
@@ -315,10 +315,10 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 			|| curstate.framerate != clstate.framerate)
 			updateMask |= U_ANIMINFO;
 
-		if(memcmp(curstate.controllers, clstate.controllers, sizeof(Float)*MAX_CONTROLLERS))
+		if(memcmp(curstate.controllers, clstate.controllers, sizeof(float)*MAX_CONTROLLERS))
 			updateMask |= U_CONTROLLERS;
 
-		if(memcmp(curstate.blending, clstate.blending, sizeof(Float)*MAX_BLENDING))
+		if(memcmp(curstate.blending, clstate.blending, sizeof(float)*MAX_BLENDING))
 			updateMask |= U_BLENDING;
 
 		if(curstate.scale != clstate.scale
@@ -396,20 +396,20 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 		// Write origin and angles
 		if(updateMask & U_ORIGIN)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.origin[j]);
 		}
 
 		if(updateMask & U_ANGLES)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.angles[j]);
 		}
 
 		// Write velocities
 		if(updateMask & U_VELOCITY)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.velocity[j]);
 
 			svs.netinfo.pnet->WriteFloat(curstate.fallvelocity);
@@ -417,53 +417,53 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 
 		if(updateMask & U_AVELOCITY)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.avelocity[j]);
 		}
 
 		if(updateMask & U_BASEVELOCITY)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.basevelocity[j]);
 		}
 
 		// Write view related things
 		if(updateMask & U_PUNCHANGLES)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.punchangles[j]);
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.punchamount[j]);
 		}
 
 		if(updateMask & U_VIEWANGLES)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.viewangles[j]);
 		}
 
 		if(updateMask & U_VIEWOFFSET)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.view_offset[j]);
 		}
 
 		// Write endpos/startpos
 		if(updateMask & U_POSITIONS)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.endpos[j]);
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.startpos[j]);
 		}
 
 		// Write mins/maxs
 		if(updateMask & U_MINSMAXS)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.mins[j]);
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.maxs[j]);
 		}
 
@@ -501,13 +501,13 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 
 		if(updateMask & U_CONTROLLERS)
 		{
-			for(Uint32 j = 0; j < MAX_CONTROLLERS; j++)
+			for(UInt32 j = 0; j < MAX_CONTROLLERS; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.controllers[j]);
 		}
 
 		if(updateMask & U_BLENDING)
 		{
-			for(Uint32 j = 0; j < MAX_BLENDING; j++)
+			for(UInt32 j = 0; j < MAX_BLENDING; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.blending[j]);
 		}
 		
@@ -520,10 +520,10 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 			svs.netinfo.pnet->WriteInt32(curstate.renderfx);
 			svs.netinfo.pnet->WriteUint32(curstate.numsegments);
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.rendercolor[j]);
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.lightorigin[j]);
 		}
 
@@ -582,25 +582,25 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 
 		if(updateMask & U_VUSER1)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.vuser1[j]);
 		}
 
 		if(updateMask & U_VUSER2)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.vuser2[j]);
 		}
 
 		if(updateMask & U_VUSER3)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.vuser3[j]);
 		}
 
 		if(updateMask & U_VUSER4)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.vuser4[j]);
 		}
 
@@ -608,7 +608,7 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 		{
 			svs.netinfo.pnet->WriteInt32(curstate.parent);
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				svs.netinfo.pnet->WriteFloat(curstate.parentoffset[j]);
 		}
 
@@ -619,11 +619,11 @@ bool SV_WriteEntitiesToClient( sv_client_t* pclient )
 	svs.netinfo.pnet->SVC_MessageEnd();
 
 	// First mark all as not sent
-	for(Uint32 i = 0; i < gEdicts.GetNbEdicts(); i++)
+	for(UInt32 i = 0; i < gEdicts.GetNbEdicts(); i++)
 		pclient->packet.cl_wasinpacket[i] = false;
 
 	// Then mark ones we did send
-	for(Uint32 i = 0; i < pclient->packet.numentities; i++)
+	for(UInt32 i = 0; i < pclient->packet.numentities; i++)
 	{
 		const entity_state_t& curstate = pclient->packet.entities[i];
 		pclient->packet.cl_wasinpacket[curstate.entindex] = true;
@@ -682,7 +682,7 @@ bool SV_SendResourceLists( sv_client_t& cl )
 
 	// Compile model cache list
 	CArray<CString> modelsList;
-	for(Uint32 i = 0; i < svs.modelcache.size(); i++)
+	for(UInt32 i = 0; i < svs.modelcache.size(); i++)
 	{
 		sv_model_t* pmodel = &svs.modelcache[i];
 		if(!pmodel)
@@ -700,7 +700,7 @@ bool SV_SendResourceLists( sv_client_t& cl )
 		svs.netinfo.pnet->WriteByte(CL_RESOURCE_LIST);
 		svs.netinfo.pnet->WriteByte(RS_LIST_MODELS);
 		svs.netinfo.pnet->WriteUint16(modelsList.size());
-		for(Uint32 i = 0; i < modelsList.size(); i++)
+		for(UInt32 i = 0; i < modelsList.size(); i++)
 			svs.netinfo.pnet->WriteString(modelsList[i].c_str());
 	svs.netinfo.pnet->SVC_MessageEnd();
 
@@ -716,7 +716,7 @@ bool SV_SendResourceLists( sv_client_t& cl )
 	CArray<CString> wadFilesArray;
 	Common::GetWADList(ens.pworld->pentdata, wadFilesArray);
 
-	for(Uint32 i = 0; i < wadFilesArray.size(); i++)
+	for(UInt32 i = 0; i < wadFilesArray.size(); i++)
 	{
 		CString basename;
 		Common::Basename(wadFilesArray[i].c_str(), basename);
@@ -728,7 +728,7 @@ bool SV_SendResourceLists( sv_client_t& cl )
 			SV_PrecacheGeneric(wadfilepath.c_str());
 	}
 
-	for(Uint32 i = 0; i < modelsList.size(); i++)
+	for(UInt32 i = 0; i < modelsList.size(); i++)
 		gModelCache.GatherModelResources(modelsList[i].c_str(), svs.mapmaterialfiles, materialsArray, texturesArray);
 
 	// Send material scripts
@@ -736,7 +736,7 @@ bool SV_SendResourceLists( sv_client_t& cl )
 		svs.netinfo.pnet->WriteByte(CL_RESOURCE_LIST);
 		svs.netinfo.pnet->WriteByte(RS_LIST_MATERIAL_SCRIPTS);
 		svs.netinfo.pnet->WriteUint16(materialsArray.size());
-		for(Uint32 i = 0; i < materialsArray.size(); i++)
+		for(UInt32 i = 0; i < materialsArray.size(); i++)
 			svs.netinfo.pnet->WriteString(materialsArray[i].c_str());
 	svs.netinfo.pnet->SVC_MessageEnd();
 
@@ -745,7 +745,7 @@ bool SV_SendResourceLists( sv_client_t& cl )
 		svs.netinfo.pnet->WriteByte(CL_RESOURCE_LIST);
 		svs.netinfo.pnet->WriteByte(RS_LIST_TEXTURES);
 		svs.netinfo.pnet->WriteUint16(texturesArray.size());
-		for(Uint32 i = 0; i < texturesArray.size(); i++)
+		for(UInt32 i = 0; i < texturesArray.size(); i++)
 			svs.netinfo.pnet->WriteString(texturesArray[i].c_str());
 	svs.netinfo.pnet->SVC_MessageEnd();
 
@@ -754,7 +754,7 @@ bool SV_SendResourceLists( sv_client_t& cl )
 		svs.netinfo.pnet->WriteByte(CL_RESOURCE_LIST);
 		svs.netinfo.pnet->WriteByte(RS_LIST_SOUNDS);
 		svs.netinfo.pnet->WriteUint16(svs.sndcache.size());
-		for(Uint32 i = 0; i < svs.sndcache.size(); i++)
+		for(UInt32 i = 0; i < svs.sndcache.size(); i++)
 		{
 			svs.netinfo.pnet->WriteString(svs.sndcache[i].filepath.c_str());
 			svs.netinfo.pnet->WriteInt16(svs.sndcache[i].sv_index);
@@ -766,7 +766,7 @@ bool SV_SendResourceLists( sv_client_t& cl )
 		svs.netinfo.pnet->WriteByte(CL_RESOURCE_LIST);
 		svs.netinfo.pnet->WriteByte(RS_LIST_GENERIC);
 		svs.netinfo.pnet->WriteUint16(svs.genericsourcesarray.size());
-		for(Uint32 i = 0; i < svs.genericsourcesarray.size(); i++)
+		for(UInt32 i = 0; i < svs.genericsourcesarray.size(); i++)
 			svs.netinfo.pnet->WriteString(svs.genericsourcesarray[i].c_str());
 	svs.netinfo.pnet->SVC_MessageEnd();
 
@@ -775,7 +775,7 @@ bool SV_SendResourceLists( sv_client_t& cl )
 		svs.netinfo.pnet->WriteByte(CL_RESOURCE_LIST);
 		svs.netinfo.pnet->WriteByte(RS_LIST_PARTICLE_SCRIPTS);
 		svs.netinfo.pnet->WriteUint16(svs.particlescache.size());
-		for(Uint32 i = 0; i < svs.particlescache.size(); i++)
+		for(UInt32 i = 0; i < svs.particlescache.size(); i++)
 			svs.netinfo.pnet->WriteString(svs.particlescache[i].scriptpath.c_str());
 	svs.netinfo.pnet->SVC_MessageEnd();
 
@@ -784,7 +784,7 @@ bool SV_SendResourceLists( sv_client_t& cl )
 		svs.netinfo.pnet->WriteByte(CL_RESOURCE_LIST);
 		svs.netinfo.pnet->WriteByte(RS_LIST_DECALS);
 		svs.netinfo.pnet->WriteUint16(svs.decalcache.size());
-		for(Uint32 i = 0; i < svs.decalcache.size(); i++)
+		for(UInt32 i = 0; i < svs.decalcache.size(); i++)
 		{
 			svs.netinfo.pnet->WriteString(svs.decalcache[i].name.c_str());
 			svs.netinfo.pnet->WriteByte(svs.decalcache[i].type);
@@ -795,22 +795,22 @@ bool SV_SendResourceLists( sv_client_t& cl )
 	if(cl.index > 0)
 	{
 		// Skip worldmodel, it's already added
-		for(Uint32 i = 1; i < modelsList.size(); i++)
+		for(UInt32 i = 1; i < modelsList.size(); i++)
 			SV_AddClientConsistencyCheck(cl, RS_TYPE_MODEL, modelsList[i].c_str());
 
-		for(Uint32 i = 0; i < texturesArray.size(); i++)
+		for(UInt32 i = 0; i < texturesArray.size(); i++)
 			SV_AddClientConsistencyCheck(cl, RS_TYPE_TEXTURE, texturesArray[i].c_str());
 
-		for(Uint32 i = 0; i < materialsArray.size(); i++)
+		for(UInt32 i = 0; i < materialsArray.size(); i++)
 			SV_AddClientConsistencyCheck(cl, RS_TYPE_MATERIAL_SCRIPT, materialsArray[i].c_str());
 
-		for(Uint32 i = 0; i < svs.sndcache.size(); i++)
+		for(UInt32 i = 0; i < svs.sndcache.size(); i++)
 			SV_AddClientConsistencyCheck(cl, RS_TYPE_SOUND, svs.sndcache[i].filepath.c_str());
 
-		for(Uint32 i = 0; i < svs.genericsourcesarray.size(); i++)
+		for(UInt32 i = 0; i < svs.genericsourcesarray.size(); i++)
 			SV_AddClientConsistencyCheck(cl, RS_TYPE_GENERIC, svs.genericsourcesarray[i].c_str());
 
-		for(Uint32 i = 0; i < svs.particlescache.size(); i++)
+		for(UInt32 i = 0; i < svs.particlescache.size(); i++)
 			SV_AddClientConsistencyCheck(cl, RS_TYPE_PARTICLE_SCRIPT, svs.particlescache[i].scriptpath.c_str());
 	}
 
@@ -830,7 +830,7 @@ bool SV_SendResourceLists( sv_client_t& cl )
 //=============================================
 //
 //=============================================
-Int32 SV_PrecacheSound( const Char* pstrFilepath )
+Int32 SV_PrecacheSound( const char* pstrFilepath )
 {
 	// Do not allow precaching with an inactive game
 	if(ens.gamestate == GAME_INACTIVE)
@@ -845,7 +845,7 @@ Int32 SV_PrecacheSound( const Char* pstrFilepath )
 		return it->second;
 
 	// Duration of file
-	Float duration = 0;
+	float duration = 0;
 
 	// Make sure the file exists
 	if(pstrFilepath[0] != '!')
@@ -881,11 +881,11 @@ Int32 SV_PrecacheSound( const Char* pstrFilepath )
 	newSound.sv_index = svs.sndcache.size();
 	newSound.duration = duration;
 
-	Uint32 insertindex = svs.sndcache.size();
+	UInt32 insertindex = svs.sndcache.size();
 	svs.sndcache.push_back(newSound);
 
 	// Insert into the map
-	svs.sndcachemap.insert(std::pair<CString, Uint32>(pstrFilepath, insertindex));
+	svs.sndcachemap.insert(std::pair<CString, UInt32>(pstrFilepath, insertindex));
 
 	// Tell local player to precache it
 	sv_client_t* pclient = SV_GetHostClient();
@@ -904,7 +904,7 @@ Int32 SV_PrecacheSound( const Char* pstrFilepath )
 //=============================================
 //
 //=============================================
-bool SV_PrecacheParticleScript( const Char* pstrfilepath, part_script_type_t type )
+bool SV_PrecacheParticleScript( const char* pstrfilepath, part_script_type_t type )
 {
 	CacheNameIndexMap_t::iterator it = svs.particlecachemap.find(pstrfilepath);
 	if(it != svs.particlecachemap.end())
@@ -923,7 +923,7 @@ bool SV_PrecacheParticleScript( const Char* pstrfilepath, part_script_type_t typ
 	newcache.scriptpath = pstrfilepath;
 	newcache.type = type;
 
-	Uint32 insertindex = svs.particlescache.size();
+	UInt32 insertindex = svs.particlescache.size();
 	svs.particlescache.push_back(newcache);
 
 	// Tell local player to precache it
@@ -936,7 +936,7 @@ bool SV_PrecacheParticleScript( const Char* pstrfilepath, part_script_type_t typ
 	svs.netinfo.pnet->SVC_MessageEnd();
 
 	// Insert into name->index map
-	svs.particlecachemap.insert(std::pair<CString, Uint32>(pstrfilepath, insertindex));
+	svs.particlecachemap.insert(std::pair<CString, UInt32>(pstrfilepath, insertindex));
 
 	return true;
 }
@@ -944,7 +944,7 @@ bool SV_PrecacheParticleScript( const Char* pstrfilepath, part_script_type_t typ
 //=============================================
 //
 //=============================================
-void SV_PrecacheDecal( const Char* pstrDecalName )
+void SV_PrecacheDecal( const char* pstrDecalName )
 {
 	DecalCacheMapKey_t key(pstrDecalName, DECAL_CACHE_SINGLE);
 
@@ -956,11 +956,11 @@ void SV_PrecacheDecal( const Char* pstrDecalName )
 	newcache.name = pstrDecalName;
 	newcache.type = DECAL_CACHE_SINGLE;
 
-	Uint32 insertindex = svs.decalcache.size();
+	UInt32 insertindex = svs.decalcache.size();
 	svs.decalcache.push_back(newcache);
 
 	// Insert into index map
-	svs.decalcachemap.insert(std::pair<DecalCacheMapKey_t, Uint32>(key, insertindex));
+	svs.decalcachemap.insert(std::pair<DecalCacheMapKey_t, UInt32>(key, insertindex));
 
 	// Tell local player to precache it
 	sv_client_t* pclient = SV_GetHostClient();
@@ -975,7 +975,7 @@ void SV_PrecacheDecal( const Char* pstrDecalName )
 //=============================================
 //
 //=============================================
-void SV_PrecacheDecalGroup( const Char* pstrDecalName )
+void SV_PrecacheDecalGroup( const char* pstrDecalName )
 {
 	DecalCacheMapKey_t key(pstrDecalName, DECAL_CACHE_GROUP);
 
@@ -987,11 +987,11 @@ void SV_PrecacheDecalGroup( const Char* pstrDecalName )
 	newcache.name = pstrDecalName;
 	newcache.type = DECAL_CACHE_GROUP;
 
-	Uint32 insertindex = svs.decalcache.size();
+	UInt32 insertindex = svs.decalcache.size();
 	svs.decalcache.push_back(newcache);
 
 	// Insert into index map
-	svs.decalcachemap.insert(std::pair<DecalCacheMapKey_t, Uint32>(key, insertindex));
+	svs.decalcachemap.insert(std::pair<DecalCacheMapKey_t, UInt32>(key, insertindex));
 
 	// Tell local player to precache it
 	sv_client_t* pclient = SV_GetHostClient();
@@ -1006,7 +1006,7 @@ void SV_PrecacheDecalGroup( const Char* pstrDecalName )
 //=============================================
 //
 //=============================================
-void SV_PlayEntitySound( entindex_t entindex, const Char* pstrPath, Int32 flags, Int32 channel, Float volume, Float attenuation, Int32 pitch, Float timeoffset, Int32 dest_player )
+void SV_PlayEntitySound( entindex_t entindex, const char* pstrPath, Int32 flags, Int32 channel, float volume, float attenuation, Int32 pitch, float timeoffset, Int32 dest_player )
 {
 	// Do not allow server sound playback with an inactive game
 	if(ens.gamestate == GAME_INACTIVE)
@@ -1055,7 +1055,7 @@ void SV_PlayEntitySound( entindex_t entindex, const Char* pstrPath, Int32 flags,
 	}
 
 	// Cap pitch between 0.5 and 5.0
-	Int32 _pitch = clamp(pitch, MIN_PITCH, MAX_PITCH);
+	Int32 _pitch = Clamp(pitch, MIN_PITCH, MAX_PITCH);
 
 	// Account for sentences
 	Int32 svindex;
@@ -1084,7 +1084,7 @@ void SV_PlayEntitySound( entindex_t entindex, const Char* pstrPath, Int32 flags,
 //=============================================
 //
 //=============================================
-void SV_PlayAmbientSound( entindex_t entindex, const Char* pstrPath, const Vector& origin, Int32 flags, Float volume, Float attenuation, Int32 pitch, Float timeoffset, Int32 dest_player )
+void SV_PlayAmbientSound( entindex_t entindex, const char* pstrPath, const Vector& origin, Int32 flags, float volume, float attenuation, Int32 pitch, float timeoffset, Int32 dest_player )
 {
 	// Do not allow server sound playback with an inactive game
 	if(ens.gamestate == GAME_INACTIVE)
@@ -1133,7 +1133,7 @@ void SV_PlayAmbientSound( entindex_t entindex, const Char* pstrPath, const Vecto
 	}
 
 	// Cap pitch between 0.5 and 5.0
-	Int32 _pitch = clamp(pitch, MIN_PITCH, MAX_PITCH);
+	Int32 _pitch = Clamp(pitch, MIN_PITCH, MAX_PITCH);
 
 	// Account for sentences
 	Int32 svindex;
@@ -1164,7 +1164,7 @@ void SV_PlayAmbientSound( entindex_t entindex, const Char* pstrPath, const Vecto
 //=============================================
 //
 //=============================================
-void SV_ApplySoundEffect( entindex_t entindex, const Char* pstrPath, Int32 channel, snd_effects_t effect, Float duration, Float targetvalue, Int32 dest_player )
+void SV_ApplySoundEffect( entindex_t entindex, const char* pstrPath, Int32 channel, snd_effects_t effect, float duration, float targetvalue, Int32 dest_player )
 {
 	// Do not allow server sound playback with an inactive game
 	if(ens.gamestate == GAME_INACTIVE)
@@ -1277,7 +1277,7 @@ void SV_MuteAllSounds( bool mutesounds )
 //=============================================
 //
 //=============================================
-void SV_PlayMusic( const Char* pstrPath, Int32 channel, Int32 flags, Float timeOffset, Float fadeInTime, Int32 dest_player )
+void SV_PlayMusic( const char* pstrPath, Int32 channel, Int32 flags, float timeOffset, float fadeInTime, Int32 dest_player )
 {
 	if(channel != MUSIC_CHANNEL_ALL && channel < 0
 		|| channel >= NB_MUSIC_CHANNELS && channel != MUSIC_CHANNEL_MENU)
@@ -1335,7 +1335,7 @@ void SV_PlayMusic( const Char* pstrPath, Int32 channel, Int32 flags, Float timeO
 //=============================================
 //
 //=============================================
-void SV_StopMusic( Int32 dest_player, const Char* pstrFilename, Int32 channel, Float fadeTime )
+void SV_StopMusic( Int32 dest_player, const char* pstrFilename, Int32 channel, float fadeTime )
 {
 	if(channel == MUSIC_CHANNEL_MENU)
 	{
@@ -1394,14 +1394,14 @@ void SV_StopMusic( Int32 dest_player, const Char* pstrFilename, Int32 channel, F
 //=============================================
 //
 //=============================================
-bool SV_CheckFileConsistency( sv_client_t& cl, const Char* pstrFilename, const char* pstrHash )
+bool SV_CheckFileConsistency( sv_client_t& cl, const char* pstrFilename, const char* pstrHash )
 {
 	// Remove it from the list of files to be checked
 	cl.consistencylist.remove(pstrFilename);
 
 	// Load the file in and get the MD5 hash
-	Uint32 filesize = 0;
-	const byte* pfile = FL_LoadFile(pstrFilename, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = FL_LoadFile(pstrFilename, &filesize);
 	if(!pfile)
 	{
 		Con_Printf("%s - File %s does not exist.\n", __FUNCTION__, pstrFilename);
@@ -1416,7 +1416,7 @@ bool SV_CheckFileConsistency( sv_client_t& cl, const Char* pstrFilename, const c
 
 #ifndef _DEBUG
 	// See if it's in the enforced list
-	for(Uint32 i = 0; i < svs.netinfo.enforcedfiles.size(); i++)
+	for(UInt32 i = 0; i < svs.netinfo.enforcedfiles.size(); i++)
 	{
 		if(!qstrcmp(svs.netinfo.enforcedfiles[i], pstrFilename))
 			return false;
@@ -1430,7 +1430,7 @@ bool SV_CheckFileConsistency( sv_client_t& cl, const Char* pstrFilename, const c
 //=============================================
 //
 //=============================================
-void SV_AddClientConsistencyCheck( sv_client_t& cl, rs_type_t type, const Char* pstrFilename )
+void SV_AddClientConsistencyCheck( sv_client_t& cl, rs_type_t type, const char* pstrFilename )
 {
 	CString filepath;
 	switch(type)
@@ -1510,7 +1510,7 @@ void SV_ReadUserCmd( sv_client_t& cl )
 	newcmd.msec = reader.ReadByte();
 
 	// Read view angles
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		newcmd.viewangles[i] = reader.ReadFloat();
 
 	newcmd.forwardmove = reader.ReadFloat();
@@ -1532,7 +1532,7 @@ bool SV_ReadClientInfo( sv_client_t& cl )
 	CMSGReader& reader = svs.netinfo.reader;
 
 	// Only contains the client name for now
-	const Char* pstrName = reader.ReadString();
+	const char* pstrName = reader.ReadString();
 
 	if(reader.HasError())
 	{
@@ -1549,7 +1549,7 @@ bool SV_ReadClientInfo( sv_client_t& cl )
 		CString message;
 		message << pstrName << " is joining the game.\n";
 
-		Uint32 sayMsgId = SV_FindUserMessageByName("SayText");
+		UInt32 sayMsgId = SV_FindUserMessageByName("SayText");
 		if(sayMsgId != 0)
 		{
 			CString netname;
@@ -1571,7 +1571,7 @@ bool SV_ReadClientInfo( sv_client_t& cl )
 	if(cl.index > 0)
 	{
 		// Add the enforced files
-		for(Uint32 i = 0; i < svs.netinfo.enforcedfiles.size(); i++)
+		for(UInt32 i = 0; i < svs.netinfo.enforcedfiles.size(); i++)
 			SV_AddClientConsistencyCheck(cl, RS_TYPE_GENERIC, svs.netinfo.enforcedfiles[i].c_str());
 
 		// Send requests for consistency checks on non-hosts
@@ -1596,9 +1596,9 @@ bool SV_ReadClientInfo( sv_client_t& cl )
 //=============================================
 //
 //=============================================
-bool SV_ValidateClientCommand( const Char* pstrCmd )
+bool SV_ValidateClientCommand( const char* pstrCmd )
 {
-	static Char token[MAX_PARSE_LENGTH];
+	static char token[MAX_PARSE_LENGTH];
 	Common::Parse(pstrCmd, token);
 
 	if(gCommands.GetCommandFlags(token) & CMD_FL_CL_RELEVANT)
@@ -1610,7 +1610,7 @@ bool SV_ValidateClientCommand( const Char* pstrCmd )
 //=============================================
 //
 //=============================================
-void SV_ProcessStringCommand( sv_client_t& cl, const Char* pstrCmd )
+void SV_ProcessStringCommand( sv_client_t& cl, const char* pstrCmd )
 {
 	if(!cl.connected)
 		return;
@@ -1673,7 +1673,7 @@ void SV_ClearUpload( sv_client_t& cl )
 		cl.upload.chunkslist.begin();
 		while(!cl.upload.chunkslist.end())
 		{
-			byte* pdata = reinterpret_cast<byte*>(cl.upload.chunkslist.get());
+			Byte* pdata = reinterpret_cast<Byte*>(cl.upload.chunkslist.get());
 			delete[] pdata;
 
 			cl.upload.chunkslist.next();
@@ -1704,7 +1704,7 @@ bool SV_UploadNextChunk( sv_client_t& cl )
 	CLinkedList<filechunk_t*>::link_t *plink = cl.upload.chunkslist.get_link();
 	
 	filechunk_t* pchunk = plink->_val;
-	byte *pdatasrc = reinterpret_cast<byte*>(pchunk) + pchunk->dataoffset;
+	Byte *pdatasrc = reinterpret_cast<Byte*>(pchunk) + pchunk->dataoffset;
 
 	// Send this chunk to the client
 	svs.netinfo.pnet->SVC_MessageBegin(MSG_ONE, svc_resources, cl.pedict);
@@ -1739,11 +1739,11 @@ bool SV_PrepareUpload( sv_client_t& cl )
 	}
 
 	// Split it into parts
-	Uint32 maxchunksize = g_psv_chunksize->GetValue();
+	UInt32 maxchunksize = g_psv_chunksize->GetValue();
 
 	// Read in file path and file id
-	const Char* pstrFilePath = reader.ReadString();
-	Uint32 fileid = reader.ReadUint16();
+	const char* pstrFilePath = reader.ReadString();
+	UInt32 fileid = reader.ReadUint16();
 
 	if(reader.HasError())
 	{
@@ -1752,8 +1752,8 @@ bool SV_PrepareUpload( sv_client_t& cl )
 	}
 
 	// Load the file in and split it into parts
-	Uint32 filesize = 0;
-	const byte* pfile = FL_LoadFile(pstrFilePath, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = FL_LoadFile(pstrFilePath, &filesize);
 	if(!pfile)
 	{
 		Con_EPrintf("%s - Failed to load file '%s'.\n", __FUNCTION__, pstrFilePath);
@@ -1768,8 +1768,8 @@ bool SV_PrepareUpload( sv_client_t& cl )
 	if(filesize <= maxchunksize)
 	{
 		// It'll be a single chunk
-		Uint32 allocsize = sizeof(filechunk_t)+filesize;
-		byte* pchunk = new byte[allocsize];
+		UInt32 allocsize = sizeof(filechunk_t)+filesize;
+		Byte* pchunk = new Byte[allocsize];
 
 		filechunk_t* pheader = reinterpret_cast<filechunk_t*>(pchunk);
 		pheader->chunkindex = 0;
@@ -1777,8 +1777,8 @@ bool SV_PrepareUpload( sv_client_t& cl )
 		pheader->dataoffset = sizeof(filechunk_t);
 		pheader->datasize = filesize;
 
-		byte* pdatadest = pchunk + sizeof(filechunk_t);
-		memcpy(pdatadest, pfile, sizeof(byte)*filesize);
+		Byte* pdatadest = pchunk + sizeof(filechunk_t);
+		memcpy(pdatadest, pfile, sizeof(Byte)*filesize);
 
 		// Add to the list
 		cl.upload.chunkslist.radd(reinterpret_cast<filechunk_t*>(pchunk));
@@ -1786,15 +1786,15 @@ bool SV_PrepareUpload( sv_client_t& cl )
 	else
 	{
 		// Split it into many chunks
-		Uint32 fileoffset = 0;
+		UInt32 fileoffset = 0;
 		while(fileoffset < filesize)
 		{
-			Uint32 chunksize = filesize - fileoffset;
+			UInt32 chunksize = filesize - fileoffset;
 			if(chunksize > maxchunksize)
 				chunksize = maxchunksize;
 
-			Uint32 allocsize = sizeof(filechunk_t)+chunksize;
-			byte* pchunk = new byte[allocsize];
+			UInt32 allocsize = sizeof(filechunk_t)+chunksize;
+			Byte* pchunk = new Byte[allocsize];
 
 			filechunk_t* pheader = reinterpret_cast<filechunk_t*>(pchunk);
 			pheader->chunkindex = cl.upload.chunkslist.size();
@@ -1802,9 +1802,9 @@ bool SV_PrepareUpload( sv_client_t& cl )
 			pheader->dataoffset = sizeof(filechunk_t);
 			pheader->datasize = chunksize;
 
-			const byte *pdatasrc = pfile + fileoffset;
-			byte* pdatadest = pchunk + sizeof(filechunk_t);
-			memcpy(pdatadest, pdatasrc, sizeof(byte)*chunksize);
+			const Byte *pdatasrc = pfile + fileoffset;
+			Byte* pdatadest = pchunk + sizeof(filechunk_t);
+			memcpy(pdatadest, pdatasrc, sizeof(Byte)*chunksize);
 
 			// Add to the list
 			cl.upload.chunkslist.radd(reinterpret_cast<filechunk_t*>(pchunk));
@@ -1871,15 +1871,15 @@ sv_clstate_t SV_ReadClientMessages( sv_client_t& cl )
 		break;
 	}
 
-	Uint32 msgsize = 0;
-	byte* pmsgdata = nullptr;
+	UInt32 msgsize = 0;
+	Byte* pmsgdata = nullptr;
 	while(svs.netinfo.pnet->CLS_GetMessage(cl.index, pmsgdata, msgsize))
 	{
 		// Begin message reading
 		CMSGReader& reader = svs.netinfo.reader;
 		reader.BeginRead(pmsgdata, msgsize);
 
-		byte type = reader.ReadByte();
+		Byte type = reader.ReadByte();
 		switch(type)
 		{
 		case cls_nop:
@@ -1961,8 +1961,8 @@ sv_clstate_t SV_ReadClientMessages( sv_client_t& cl )
 			break;
 		case cls_consistency:
 			{
-				const Char* pstrFilename = reader.ReadString();
-				const Char* pstrHash = reader.ReadString();
+				const char* pstrFilename = reader.ReadString();
+				const char* pstrHash = reader.ReadString();
 
 				if(reader.HasError())
 				{
@@ -1991,7 +1991,7 @@ sv_clstate_t SV_ReadClientMessages( sv_client_t& cl )
 //=============================================
 //
 //=============================================
-void SV_ClientPrintf( const edict_t* pclient, const Char *fmt, ... )
+void SV_ClientPrintf( const edict_t* pclient, const char *fmt, ... )
 {
 	// Write the message
 	msgdest_t dest = (!pclient) ? MSG_ALL : MSG_ONE;
@@ -2009,10 +2009,10 @@ void SV_ClientPrintf( const edict_t* pclient, const Char *fmt, ... )
 	}
 
 	va_list	vArgPtr;
-	Char cMsg[MAX_PARSE_LENGTH];
+	char cMsg[MAX_PARSE_LENGTH];
 	
 	va_start(vArgPtr,fmt);
-	vsprintf_s(cMsg, fmt, vArgPtr);
+	ENGINE_VSPRINTF_S(cMsg, sizeof(cMsg), fmt, vArgPtr);
 	va_end(vArgPtr);
 
 	// Tell the client(s)
@@ -2029,12 +2029,12 @@ void SV_RegisterClientUserMessage( void )
 	CMSGReader& reader = svs.netinfo.reader;
 
 	// Read message info
-	Uint32 msgid = reader.ReadByte();
-	const Char* pstrMsgName = reader.ReadString();
+	UInt32 msgid = reader.ReadByte();
+	const char* pstrMsgName = reader.ReadString();
 
 	// Make sure we don't add it twice, but don't warn
 	// Multiple clients connecting will send this msg
-	for(Uint32 i = 0; i < svs.netinfo.usermsgfunctions.size(); i++)
+	for(UInt32 i = 0; i < svs.netinfo.usermsgfunctions.size(); i++)
 	{
 		if(!qstrcmp(svs.netinfo.usermsgfunctions[i].name, pstrMsgName))
 			return;
@@ -2057,7 +2057,7 @@ void SV_RegisterClientUserMessage( void )
 	usermsgfuncname << "MsgFunc_" << pstrMsgName;
 
 	// Load function pointer
-	pfnSVUserMsg_t pFunction = static_cast<pfnSVUserMsg_t>(SDL_LoadFunction(svs.pdllhandle, usermsgfuncname.c_str()));
+	pfnSVUserMsg_t pFunction = reinterpret_cast<pfnSVUserMsg_t>(SDL_LoadFunction(svs.pdllhandle, usermsgfuncname.c_str()));
 	if(!pFunction)
 	{
 		// Add the entry anyway, but warn the client
@@ -2117,8 +2117,8 @@ void SV_ReadClientUserMessage( sv_client_t& cl )
 		return;
 	}
 
-	Uint16 msgsize = reader.ReadUint16();
-	const byte* pdata = reader.ReadBuffer(msgsize);
+	UInt16 msgsize = reader.ReadUint16();
+	const Byte* pdata = reader.ReadBuffer(msgsize);
 
 	// Call client to read the message contents
 	if(!msg.pfnReadMsg(cl.pedict, msg.name.c_str(), pdata, msgsize))
@@ -2128,7 +2128,7 @@ void SV_ReadClientUserMessage( sv_client_t& cl )
 //=============================================
 //
 //=============================================
-Int32 SV_RegisterUserMessage( const Char* pstrMsgName, Int32 msgsize )
+Int32 SV_RegisterUserMessage( const char* pstrMsgName, Int32 msgsize )
 {
 	return UserMSG_RegisterUserMessage(svs.netinfo.usermsgs, pstrMsgName, msgsize);
 }
@@ -2205,12 +2205,12 @@ void SV_UserMessageEnd( void )
 	}
 
 	// Retreive PVS data for this origin
-	const byte* ppvsdata = nullptr;
+	const Byte* ppvsdata = nullptr;
 	if(pmsgdata->originset)
 		ppvsdata = SV_SetPVS(pmsgdata->pvsorigin);
 
 	// Test for each client if they're in the PVS
-	for(Uint32 i = 0; i < svs.maxclients; i++)
+	for(UInt32 i = 0; i < svs.maxclients; i++)
 	{
 		if(!svs.clients[i].connected)
 			continue;
@@ -2285,7 +2285,7 @@ void SV_ClientRegisterUserMessages( const sv_client_t& cl )
 		return;
 	}
 
-	for(Uint32 i = 0; i < svs.netinfo.usermsgs.size(); i++)
+	for(UInt32 i = 0; i < svs.netinfo.usermsgs.size(); i++)
 	{
 		usermsg_t& msg = svs.netinfo.usermsgs[i];
 
@@ -2300,7 +2300,7 @@ void SV_ClientRegisterUserMessages( const sv_client_t& cl )
 //=============================================
 //
 //=============================================
-void SV_Msg_WriteByte( byte value )
+void SV_Msg_WriteByte( Byte value )
 {
 	if(!svs.netinfo.pcurrentmsg)
 		return;
@@ -2311,7 +2311,7 @@ void SV_Msg_WriteByte( byte value )
 //=============================================
 //
 //=============================================
-void SV_Msg_WriteChar( Char value )
+void SV_Msg_WriteChar( char value )
 {
 	if(!svs.netinfo.pcurrentmsg)
 	{
@@ -2339,7 +2339,7 @@ void SV_Msg_WriteInt16( Int16 value )
 //=============================================
 //
 //=============================================
-void SV_Msg_WriteUint16( Uint16 value )
+void SV_Msg_WriteUint16( UInt16 value )
 {
 	if(!svs.netinfo.pcurrentmsg)
 	{
@@ -2367,7 +2367,7 @@ void SV_Msg_WriteInt32( Int32 value )
 //=============================================
 //
 //=============================================
-void SV_Msg_WriteUint32( Uint32 value )
+void SV_Msg_WriteUint32( UInt32 value )
 {
 	if(!svs.netinfo.pcurrentmsg)
 	{
@@ -2395,7 +2395,7 @@ void SV_Msg_WriteInt64( Int64 value )
 //=============================================
 //
 //=============================================
-void SV_Msg_WriteUint64( Uint64 value )
+void SV_Msg_WriteUint64( UInt64 value )
 {
 	if(!svs.netinfo.pcurrentmsg)
 	{
@@ -2409,7 +2409,7 @@ void SV_Msg_WriteUint64( Uint64 value )
 //=============================================
 //
 //=============================================
-void SV_Msg_WriteSmallFloat( Float value )
+void SV_Msg_WriteSmallFloat( float value )
 {
 	if(!svs.netinfo.pcurrentmsg)
 	{
@@ -2423,7 +2423,7 @@ void SV_Msg_WriteSmallFloat( Float value )
 //=============================================
 //
 //=============================================
-void SV_Msg_WriteFloat( Float value )
+void SV_Msg_WriteFloat( float value )
 {
 	if(!svs.netinfo.pcurrentmsg)
 	{
@@ -2437,7 +2437,7 @@ void SV_Msg_WriteFloat( Float value )
 //=============================================
 //
 //=============================================
-void SV_Msg_WriteDouble( Double value )
+void SV_Msg_WriteDouble( double value )
 {
 	if(!svs.netinfo.pcurrentmsg)
 	{
@@ -2451,7 +2451,7 @@ void SV_Msg_WriteDouble( Double value )
 //=============================================
 //
 //=============================================
-void SV_Msg_WriteBuffer( const byte* pdata, Uint32 size )
+void SV_Msg_WriteBuffer( const Byte* pdata, UInt32 size )
 {
 	if(!svs.netinfo.pcurrentmsg)
 	{
@@ -2465,7 +2465,7 @@ void SV_Msg_WriteBuffer( const byte* pdata, Uint32 size )
 //=============================================
 //
 //=============================================
-void SV_Msg_WriteString( const Char* pstring )
+void SV_Msg_WriteString( const char* pstring )
 {
 	if(!svs.netinfo.pcurrentmsg)
 	{
@@ -2494,7 +2494,7 @@ void SV_Msg_WriteEntindex( entindex_t entindex )
 //=============================================
 //
 //=============================================
-void SV_Msg_WriteBitSet( const byte* pdataarray, Uint32 numbits, Uint32 numbytes )
+void SV_Msg_WriteBitSet( const Byte* pdataarray, UInt32 numbits, UInt32 numbytes )
 {
 	if(!svs.netinfo.pcurrentmsg)
 	{
@@ -2508,9 +2508,9 @@ void SV_Msg_WriteBitSet( const byte* pdataarray, Uint32 numbits, Uint32 numbytes
 //=============================================
 //
 //=============================================
-Uint32 SV_FindUserMessageByName( const Char* pstrName )
+UInt32 SV_FindUserMessageByName( const char* pstrName )
 {
-	for(Uint32 i = 0; i < svs.netinfo.usermsgs.size(); i++)
+	for(UInt32 i = 0; i < svs.netinfo.usermsgs.size(); i++)
 	{
 		if(!qstrcmp(pstrName, svs.netinfo.usermsgs[i].name))
 			return svs.netinfo.usermsgs[i].id;

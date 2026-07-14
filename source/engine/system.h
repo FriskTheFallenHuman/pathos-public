@@ -15,7 +15,7 @@ All Rights Reserved.
 class CCVar;
 
 // Gameinfo file name
-static const Char GAMEINFO_FILENAME[] = "gameinfo.toml";
+static const char GAMEINFO_FILENAME[] = "gameinfo.toml";
 
 // Timescale cvar
 extern CCVar* g_pCvarTimeScale;
@@ -44,11 +44,11 @@ extern void Sys_SetExit( void );
 extern bool Sys_ShouldExit( void );
 
 extern bool Sys_InitFloatTime( void );
-extern Double Sys_FloatTime( void );
+extern double Sys_FloatTime( void );
 
-extern Uint32 Sys_GetFPSLimit( void );
+extern UInt32 Sys_GetFPSLimit( void );
 extern bool Sys_CheckGameDir( const CArray<CString>* argsArray );
-extern bool Sys_LoadDefaultFont( const Char* pstr );
+extern bool Sys_LoadDefaultFont( const char* pstr );
 extern bool Sys_LoadGameInfo( CArray<CString>* argsArray );
 extern bool Sys_IsGameControlActive( void );
 extern void Sys_SetPaused( bool paused, bool print );
@@ -57,20 +57,20 @@ extern void Sys_PollEvents( void );
 extern void Sys_InitCommands( void );
 extern void Sys_InitCVars( void );
 
-extern void Sys_ErrorPopup ( const Char *fmt, ... );
+extern void Sys_ErrorPopup ( const char *fmt, ... );
 extern void Sys_Exit( void );
 
 extern void Sys_WindowFocusLost( void );
 extern void Sys_WindowFocusRegained( void );
 
-extern Int32 Sys_CheckLaunchArgs( const Char* pstrArg );
-extern const Char* Sys_LaunchArgv( Uint32 index );
-extern Uint32 Sys_LaunchArgc( void );
+extern Int32 Sys_CheckLaunchArgs( const char* pstrArg );
+extern const char* Sys_LaunchArgv( UInt32 index );
+extern UInt32 Sys_LaunchArgc( void );
 
-extern void Sys_AddTempFile( const Char* pstrFilepath, rs_level_t level );
+extern void Sys_AddTempFile( const char* pstrFilepath, rs_level_t level );
 extern void Sys_DeleteTempFiles( rs_level_t level );
 
-extern bool Sys_GetDLLExports( const Char* pstrDLLName, void* pDLLHandle, CArray<dll_export_t>& destArray );
+extern bool Sys_GetDLLExports( const char* pstrDLLName, void* pDLLHandle, CArray<dll_export_t>& destArray );
 
 extern CCVar* g_pCVarPort;
 #endif

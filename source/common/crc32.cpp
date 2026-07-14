@@ -16,7 +16,7 @@ All Rights Reserved.
 //
 
 // CRC polynomal tab
-Uint32 CCRC32Hash::CRC32_POLYNOMAL_TAB[CRC32_POLYNOMAL_TAB_SIZE] = {
+UInt32 CCRC32Hash::CRC32_POLYNOMAL_TAB[CRC32_POLYNOMAL_TAB_SIZE] = {
 	0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,
 	0xe963a535, 0x9e6495a3, 0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988,
 	0x09b64c2b, 0x7eb17cbd, 0xe7b82d07, 0x90bf1d91, 0x1db71064, 0x6ab020f2,
@@ -75,7 +75,7 @@ CCRC32Hash::CCRC32Hash():
 // @brief
 //
 //=============================================
-CCRC32Hash::CCRC32Hash( const byte* pbuffer, Uint32 datasize )
+CCRC32Hash::CCRC32Hash( const Byte* pbuffer, UInt32 datasize )
 {
 	GenerateHash(pbuffer, datasize);
 }
@@ -92,13 +92,13 @@ CCRC32Hash::~CCRC32Hash()
 // @brief
 //
 //=============================================
-void CCRC32Hash::GenerateHash( const byte* pbuffer, Uint32 datasize )
+void CCRC32Hash::GenerateHash( const Byte* pbuffer, UInt32 datasize )
 {
 	if(!pbuffer || !datasize)
 		return;
 
-	Uint32 oldcrc32 = 0xFFFFFFFF;
-	for(Uint32 i = 0; i < datasize; i++)
+	UInt32 oldcrc32 = 0xFFFFFFFF;
+	for(UInt32 i = 0; i < datasize; i++)
 		oldcrc32 = UPDC32(pbuffer[i], oldcrc32);
 
 	m_crc32Result = ~oldcrc32;
@@ -108,7 +108,7 @@ void CCRC32Hash::GenerateHash( const byte* pbuffer, Uint32 datasize )
 // @brief
 //
 //=============================================
-Uint32 CCRC32Hash::GetHashResult( void ) const
+UInt32 CCRC32Hash::GetHashResult( void ) const
 {
 	return m_crc32Result;
 }
@@ -117,7 +117,7 @@ Uint32 CCRC32Hash::GetHashResult( void ) const
 // @brief
 //
 //=============================================
-Uint32 CCRC32Hash::UPDC32( byte octet, Uint32 crc )
+UInt32 CCRC32Hash::UPDC32( Byte octet, UInt32 crc )
 {
 	return (CRC32_POLYNOMAL_TAB[((crc) ^ (octet)) & 0xFF] ^ ((crc) >> 8));
 }

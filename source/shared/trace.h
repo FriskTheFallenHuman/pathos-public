@@ -80,7 +80,7 @@ struct trace_t
 
 	Int32 flags;
 
-	Double fraction;
+	double fraction;
 	Vector endpos;
 	plane_t plane;
 	Vector deltavelocity;
@@ -99,7 +99,7 @@ struct trace_interface_t
 	void			(*pfnPlayerTrace)( const Vector& start, const Vector& end, Int32 traceflags, hull_types_t hulltype, Int32 ignore_ent, trace_t& trace );
 	void			(*pfnTraceLine)( const Vector& start, const Vector& end, Int32 traceflags, hull_types_t hulltype, Int32 ignore_ent, trace_t& trace );
 	const hull_t*	(*pfnHullForBSP)( Int32 entity, hull_types_t hulltype, Vector* poffset );
-	Float			(*pfnTraceModel)( Int32 entity, const Vector& start, const Vector& end, hull_types_t hulltype, Int32 flags, trace_t& trace );
-	const Char*		(*pfnTraceTexture)( Int32 groundentity, const Vector& start, const Vector& end );
+	float			(*pfnTraceModel)( Int32 entity, const Vector& start, const Vector& end, hull_types_t hulltype, Int32 flags, trace_t& trace );
+	const char*		(*pfnTraceTexture)( Int32 groundentity, const Vector& start, const Vector& end );
 };
 #endif //TRACE_H

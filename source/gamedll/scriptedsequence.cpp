@@ -14,7 +14,7 @@ All Rights Reserved.
 #include "activity.h"
 
 // Script break condition bits
-const Uint32 CScriptedSequence::SCRIPT_BREAK_CONDITIONS_BITS[] = {AI_COND_LIGHT_DAMAGE, AI_COND_HEAVY_DAMAGE, AI_COND_SEE_ENEMY, AI_COND_HEAR_SOUND, AI_COND_SEE_HOSTILE_NPC};
+const UInt32 CScriptedSequence::SCRIPT_BREAK_CONDITIONS_BITS[] = {AI_COND_LIGHT_DAMAGE, AI_COND_HEAVY_DAMAGE, AI_COND_SEE_ENEMY, AI_COND_HEAR_SOUND, AI_COND_SEE_HOSTILE_NPC};
 // Script break condition bitset
 const CBitSet CScriptedSequence::SCRIPT_BREAK_CONDITIONS(AI_COND_BITSET_SIZE, SCRIPT_BREAK_CONDITIONS_BITS, PT_ARRAYSIZE(SCRIPT_BREAK_CONDITIONS_BITS));
 
@@ -228,7 +228,7 @@ bool CScriptedSequence::Spawn( void )
 // @brief
 //
 //=============================================
-void CScriptedSequence::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CScriptedSequence::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(HasSpawnFlag(FL_TRIGGER_IDLE_FIRST))
 	{
@@ -318,7 +318,7 @@ void CScriptedSequence::InitEntity( void )
 
 	if(m_exitSequence != NO_STRING_VALUE)
 	{
-		const Char* pstrSeqName = gd_engfuncs.pfnGetString(m_exitSequence);
+		const char* pstrSeqName = gd_engfuncs.pfnGetString(m_exitSequence);
 		if(pEntity->IsSequenceLooped(pstrSeqName))
 			Util::EntityConDPrintf(m_pEdict, "Warning - Sequence '%s' specified for loop exit sequence is looped, this can cause animation glitches.\n", pstrSeqName);
 	}
@@ -346,7 +346,7 @@ script_loop_t CScriptedSequence::GetLoopState( void ) const
 // @brief
 //
 //=============================================
-bool CScriptedSequence::StartSequence( CBaseEntity* pNPC, const Char* pstrSequenceName, bool completeOnEmpty )
+bool CScriptedSequence::StartSequence( CBaseEntity* pNPC, const char* pstrSequenceName, bool completeOnEmpty )
 {
 	// If sequence is empty, then finish the scripted_sequence
 	if(!qstrlen(pstrSequenceName) && completeOnEmpty)
@@ -371,7 +371,7 @@ bool CScriptedSequence::StartSequence( CBaseEntity* pNPC, const Char* pstrSequen
 		m_lastSequence = npcSequence;
 	}
 
-	for(Uint32 i = 0; i < pNPC->GetNbBlenders(); i++)
+	for(UInt32 i = 0; i < pNPC->GetNbBlenders(); i++)
 		pNPC->SetBlending(i, 0);
 
 	return true;
@@ -658,7 +658,7 @@ bool CScriptedSequence::FindNPC( void )
 		if(!m_targetEntity)
 		{
 			Vector mins, maxs;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 			{
 				mins[i] = m_pState->origin[i] - m_radius;
 				maxs[i] = m_pState->origin[i] + m_radius;
@@ -686,7 +686,7 @@ bool CScriptedSequence::FindNPC( void )
 	else
 	{
 		Vector mins, maxs;
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			mins[i] = m_pState->origin[i] - m_radius;
 			maxs[i] = m_pState->origin[i] + m_radius;
@@ -793,7 +793,7 @@ bool CScriptedSequence::HasPlaySequence( void ) const
 // @brief
 //
 //=============================================
-const Char* CScriptedSequence::GetPlaySequenceName( void )
+const char* CScriptedSequence::GetPlaySequenceName( void )
 {
 	if(m_playSequence == NO_STRING_VALUE)
 		return nullptr;
@@ -814,7 +814,7 @@ bool CScriptedSequence::HasIdleAnimation( void ) const
 // @brief
 //
 //=============================================
-const Char* CScriptedSequence::GetIdleSequenceName( void )
+const char* CScriptedSequence::GetIdleSequenceName( void )
 {
 	if(m_idleSequence == NO_STRING_VALUE)
 		return nullptr;
@@ -826,7 +826,7 @@ const Char* CScriptedSequence::GetIdleSequenceName( void )
 // @brief
 //
 //=============================================
-const Char* CScriptedSequence::GetLoopSequenceName( void )
+const char* CScriptedSequence::GetLoopSequenceName( void )
 {
 	if(m_loopSequence == NO_STRING_VALUE)
 		return nullptr;
@@ -838,7 +838,7 @@ const Char* CScriptedSequence::GetLoopSequenceName( void )
 // @brief
 //
 //=============================================
-const Char* CScriptedSequence::GetExitSequenceName( void )
+const char* CScriptedSequence::GetExitSequenceName( void )
 {
 	if(m_exitSequence == NO_STRING_VALUE)
 		return nullptr;
@@ -859,9 +859,9 @@ script_loop_t CScriptedSequence::GetLoopState( void )
 // @brief
 //
 //=============================================
-Uint64 CScriptedSequence::GetInterruptSoundMask( void )
+UInt64 CScriptedSequence::GetInterruptSoundMask( void )
 {
-	Uint64 interruptSoundMask = AI_SOUND_NONE;
+	UInt64 interruptSoundMask = AI_SOUND_NONE;
 	if(CanInterrupt() && HasSpawnFlag(FL_SOUNDS_CAN_INTERRUPT))
 	{
 		if(m_customSoundMask)
@@ -950,7 +950,7 @@ void CScriptedSequence::OnScriptedAnimationStart( scripted_sequence_anim_t scrip
 	if(strTarget == NO_STRING_VALUE)
 		return;
 
-	const Char* pstrTarget = gd_engfuncs.pfnGetString(strTarget);
+	const char* pstrTarget = gd_engfuncs.pfnGetString(strTarget);
 	if(!pstrTarget)
 		return;
 

@@ -33,7 +33,7 @@ CNodeIgnoreList::~CNodeIgnoreList( void )
 //=============================================
 void CNodeIgnoreList::AddNode( Int32 nodeIndex )
 {
-	for(Uint32 i = 0; i < m_ignoreNodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_ignoreNodesArray.size(); i++)
 	{
 		if(m_ignoreNodesArray[i] == nodeIndex)
 			return;
@@ -48,7 +48,7 @@ void CNodeIgnoreList::AddNode( Int32 nodeIndex )
 //=============================================
 bool CNodeIgnoreList::IsNodeInList( Int32 nodeIndex ) const
 {
-	for(Uint32 i = 0; i < m_ignoreNodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_ignoreNodesArray.size(); i++)
 	{
 		if(m_ignoreNodesArray[i] == nodeIndex)
 			return true;

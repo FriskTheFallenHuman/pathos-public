@@ -15,13 +15,13 @@ All Rights Reserved.
 #include "player.h"
 
 // Trashed bike animation name
-const Char CItemMotorBike::BIKE_ANIMATION_TRASHED_NAME[] = "trashed";
+const char CItemMotorBike::BIKE_ANIMATION_TRASHED_NAME[] = "trashed";
 // Enter bike animation name
-const Char CItemMotorBike::BIKE_ANIMATION_ENTER_NAME[] = "enter";
+const char CItemMotorBike::BIKE_ANIMATION_ENTER_NAME[] = "enter";
 // Exit bike animation name
-const Char CItemMotorBike::BIKE_ANIMATION_LEAVE_NAME[] = "exit";
+const char CItemMotorBike::BIKE_ANIMATION_LEAVE_NAME[] = "exit";
 // Motorbike model name
-const Char CItemMotorBike::BIKE_MODELNAME[] = "models/motorbike.mdl";
+const char CItemMotorBike::BIKE_MODELNAME[] = "models/motorbike.mdl";
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(item_motorbike, CItemMotorBike);
@@ -118,7 +118,7 @@ void CItemMotorBike::Precache( void )
 // @brief
 //
 //=============================================
-void CItemMotorBike::UseBike( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CItemMotorBike::UseBike( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_isTrashed)
 		return;
@@ -140,7 +140,7 @@ void CItemMotorBike::UseBike( CBaseEntity* pActivator, CBaseEntity* pCaller, use
 		Util::CreateParticles("torchsmoke.json", origin, Vector(0, 0, 1), PART_SCRIPT_SYSTEM);
 
 		CEnvDLight::SpawnLight(m_pState->origin+Vector(0, 0, 16), Vector(250, 192, 20), 300);
-		m_isTrashed = TRUE;
+		m_isTrashed = true;
 	}
 }
 
@@ -148,7 +148,7 @@ void CItemMotorBike::UseBike( CBaseEntity* pActivator, CBaseEntity* pCaller, use
 // @brief
 //
 //=============================================
-void CItemMotorBike::TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
+void CItemMotorBike::TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
 {
 	Util::Ricochet( tr.endpos, tr.plane.normal, true );
 	Util::CreateVBMDecal( tr.endpos, tr.plane.normal, "shot_metal", m_pEdict, FL_DECAL_NORMAL_PERMISSIVE);
@@ -229,7 +229,7 @@ bool CItemMotorBike::Restore( void )
 // @brief
 //
 //=============================================
-Double CItemMotorBike::GetLeaveTime( void )
+double CItemMotorBike::GetLeaveTime( void )
 {
 	return GetSequenceTime(BIKE_ANIMATION_LEAVE_NAME);
 }
@@ -238,7 +238,7 @@ Double CItemMotorBike::GetLeaveTime( void )
 // @brief
 //
 //=============================================
-Double CItemMotorBike::GetEnterTime( void )
+double CItemMotorBike::GetEnterTime( void )
 {
 	return GetSequenceTime(BIKE_ANIMATION_ENTER_NAME);
 }

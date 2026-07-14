@@ -52,7 +52,7 @@ public:
 	Int32 m_lightEnvMode;
 
 private:
-	// TRUE if we have an ALD file present for the map
+	// true if we have an ALD file present for the map
 	static bool g_isALDFilePresent;
 };
 

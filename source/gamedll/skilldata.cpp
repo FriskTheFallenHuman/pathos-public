@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "skilldata.h"
 
 // Skill cvar settings file
-const Char CSkillData::SKILLCVAR_FILE[] = "skill.cfg";
+const char CSkillData::SKILLCVAR_FILE[] = "skill.cfg";
 
 // Object declaration
 CSkillData gSkillData;
@@ -138,10 +138,10 @@ bool CSkillData::InitGame( void )
 // @brief
 //
 //=============================================
-Int32 CSkillData::RegisterSkillCVar( const Char* pstrcvarname )
+Int32 CSkillData::RegisterSkillCVar( const char* pstrcvarname )
 {
 	// Check if it's already present
-	for(Uint32 i = 0; i < m_skillCVarsArray.size(); i++)
+	for(UInt32 i = 0; i < m_skillCVarsArray.size(); i++)
 	{
 		if(!qstrcmp(m_skillCVarsArray[i].cvarbasename, pstrcvarname))
 		{
@@ -179,7 +179,7 @@ Int32 CSkillData::RegisterSkillCVar( const Char* pstrcvarname )
 // @brief
 //
 //=============================================
-Float CSkillData::GetSkillCVarSetting( Int32 skillcvarindex, force_skillcvar_t forceskill )
+float CSkillData::GetSkillCVarSetting( Int32 skillcvarindex, force_skillcvar_t forceskill )
 {
 	if(skillcvarindex < 0 || skillcvarindex > (Int32)m_skillCVarsArray.size())
 	{
@@ -212,7 +212,7 @@ Float CSkillData::GetSkillCVarSetting( Int32 skillcvarindex, force_skillcvar_t f
 		break;
 	}
 
-	Float value;
+	float value;
 	skillcvar_t& skillcvar = m_skillCVarsArray[skillcvarindex];
 	switch(skilllevel)
 	{

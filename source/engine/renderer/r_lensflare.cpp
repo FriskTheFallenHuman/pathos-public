@@ -34,16 +34,16 @@ All Rights Reserved.
 CLensFlareRenderer gLensFlareRenderer;
 
 // Number of glow tracelines
-const Uint32 CLensFlareRenderer::GLOW_NUM_TRACES = 5;
+const UInt32 CLensFlareRenderer::GLOW_NUM_TRACES = 5;
 // Glow interpolation speed
-const Float CLensFlareRenderer::GLOW_INTERP_SPEED = 2;
+const float CLensFlareRenderer::GLOW_INTERP_SPEED = 2;
 // Sun glow default scale
-const Float CLensFlareRenderer::SUN_GLOW_DEFAULT_SCALE = 2.0;
+const float CLensFlareRenderer::SUN_GLOW_DEFAULT_SCALE = 2.0;
 
 // Lens flare texture base path
-const Char CLensFlareRenderer::FLARE_TEXTURE_PATH[] = "general/lensflare";
+const char CLensFlareRenderer::FLARE_TEXTURE_PATH[] = "general/lensflare";
 // Sun glare texture base path
-const Char CLensFlareRenderer::SUNGLARE_TEXTURE_PATH[] = "general/sunglare.dds";
+const char CLensFlareRenderer::SUNGLARE_TEXTURE_PATH[] = "general/sunglare.dds";
 
 // Textures used by each halo
 const Int32 CLensFlareRenderer::FLARE_HALO_TEXTURES[NB_FLARE_HALOS] = { 
@@ -56,7 +56,7 @@ const Int32 CLensFlareRenderer::FLARE_HALO_TEXTURES[NB_FLARE_HALOS] = {
 };
 
 // Scales for each individual halo
-const Float CLensFlareRenderer::FLARE_HALO_SCALES[NB_FLARE_HALOS] = {
+const float CLensFlareRenderer::FLARE_HALO_SCALES[NB_FLARE_HALOS] = {
 	1.0f,
 	0.25f,
 	0.25f,
@@ -66,7 +66,7 @@ const Float CLensFlareRenderer::FLARE_HALO_SCALES[NB_FLARE_HALOS] = {
 };
 
 // Alpha values used by halos
-const Float CLensFlareRenderer::FLARE_HALO_ALPHAS[NB_FLARE_HALOS] = {
+const float CLensFlareRenderer::FLARE_HALO_ALPHAS[NB_FLARE_HALOS] = {
 	1.0f,
 	0.8f,
 	0.5f,
@@ -76,7 +76,7 @@ const Float CLensFlareRenderer::FLARE_HALO_ALPHAS[NB_FLARE_HALOS] = {
 };
 
 // Distance scales used by halos
-const Float CLensFlareRenderer::FLARE_HALO_DIST_SCALES[NB_FLARE_HALOS] = {
+const float CLensFlareRenderer::FLARE_HALO_DIST_SCALES[NB_FLARE_HALOS] = {
 	0.1f,
 	0.2f,
 	0.25f,
@@ -94,7 +94,7 @@ CLensFlareRenderer::CLensFlareRenderer( void ):
 	m_pCvarSunDebugPitch(nullptr),
 	m_pCvarSunDebugRoll(nullptr)
 {
-	for(Uint32 i = 0; i < NB_LENSFLARE_TEXTURES; i++)
+	for(UInt32 i = 0; i < NB_LENSFLARE_TEXTURES; i++)
 		m_pLensFlareTextures[i] = nullptr;
 
 	memset(m_viewMatrix, 0, sizeof(m_viewMatrix));
@@ -133,7 +133,7 @@ bool CLensFlareRenderer::InitGame( void )
 {
 	CTextureManager* pTextureManager = CTextureManager::GetInstance();
 
-	for(Uint32 i = 0; i < NB_LENSFLARE_TEXTURES; i++)
+	for(UInt32 i = 0; i < NB_LENSFLARE_TEXTURES; i++)
 	{
 		CString path(FLARE_TEXTURE_PATH);
 		path << (i+1) << ".dds";
@@ -169,8 +169,8 @@ void CLensFlareRenderer::DrawSunFlare( sunflare_t& sunflare )
 	Vector sunForward;
 	Vector sunAngles;
 	
-	Float sunPitchCvarValue = m_pCvarSunDebugPitch->GetValue();
-	Float sunRollCvarValue = m_pCvarSunDebugRoll->GetValue();
+	float sunPitchCvarValue = m_pCvarSunDebugPitch->GetValue();
+	float sunRollCvarValue = m_pCvarSunDebugRoll->GetValue();
 
 	if(sunPitchCvarValue)
 		sunAngles.x = sunPitchCvarValue;
@@ -212,7 +212,7 @@ bool CLensFlareRenderer::DrawLensFlares( void )
 	m_projectionMatrix.Ortho(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO, 0.1f, 100);
 
 	m_modelViewMatrix.LoadIdentity();
-	m_modelViewMatrix.Scale(1.0f/ static_cast<Float>(rns.screenwidth), 1.0f/ static_cast<Float>(rns.screenheight), 1.0);
+	m_modelViewMatrix.Scale(1.0f/ static_cast<float>(rns.screenwidth), 1.0f/ static_cast<float>(rns.screenheight), 1.0);
 
 	glDisable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
@@ -224,7 +224,7 @@ bool CLensFlareRenderer::DrawLensFlares( void )
 	// Set the view matrix
 	Math::AngleMatrix(rns.view.v_angles, m_viewMatrix);
 
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t* pEntity = rns.objects.pvisents[i];
 
@@ -248,7 +248,7 @@ bool CLensFlareRenderer::DrawLensFlares( void )
 	}
 
 	// Draw sun flares
-	for(Uint32 i = 0; i < m_sunFlaresArray.size(); i++)
+	for(UInt32 i = 0; i < m_sunFlaresArray.size(); i++)
 		DrawSunFlare(m_sunFlaresArray[i]);
 
 	glEnable(GL_CULL_FACE);
@@ -264,16 +264,16 @@ bool CLensFlareRenderer::DrawLensFlares( void )
 //====================================
 //
 //====================================
-bool CLensFlareRenderer::DrawLensFlare( Int32 key, const Vector& origin, const Vector& rendercolor, Float renderamt, Float scale, glowstate_t& glowstate, Int32 renderfx, bool isSun, bool portalSun )
+bool CLensFlareRenderer::DrawLensFlare( Int32 key, const Vector& origin, const Vector& rendercolor, float renderamt, float scale, glowstate_t& glowstate, Int32 renderfx, bool isSun, bool portalSun )
 {
-	Float vOrigin [] = { origin[0], origin[1], origin[2], 1.0 };
+	float vOrigin [] = { origin[0], origin[1], origin[2], 1.0 };
 
 	// Multiply with modelview
-	Float viewPos[4];
+	float viewPos[4];
 	Math::MatMult4(rns.view.modelview.Transpose(), vOrigin, viewPos);
 
 	// Multiply with projection
-	Float screenCoords[4];
+	float screenCoords[4];
 	Math::MatMult4(rns.view.projection.Transpose(), viewPos, screenCoords);
 
 	// See if it's z-clipped
@@ -281,10 +281,10 @@ bool CLensFlareRenderer::DrawLensFlare( Int32 key, const Vector& origin, const V
 		return false;
 
 	// Calculate uniform values
-	Float coordX = (screenCoords[0]/screenCoords[3])*0.5 + 0.5;
+	float coordX = (screenCoords[0]/screenCoords[3])*0.5 + 0.5;
 	coordX *= rns.screenwidth;
 
-	Float coordY = (screenCoords[1]/screenCoords[3])*0.5 + 0.5;
+	float coordY = (screenCoords[1]/screenCoords[3])*0.5 + 0.5;
 	coordY *= rns.screenheight;
 	coordY = coordY;
 
@@ -303,7 +303,7 @@ bool CLensFlareRenderer::DrawLensFlare( Int32 key, const Vector& origin, const V
 	// Position to screen center is inverse of screen position
 	Vector vectorToCenter = screenCenter - screenPosition;
 	// Get length of the vector
-	Float length = vectorToCenter.Length() * 0.8;
+	float length = vectorToCenter.Length() * 0.8;
 
 	Vector directionFromLight = vectorToCenter;
 	Math::VectorNormalize(directionFromLight);
@@ -311,24 +311,24 @@ bool CLensFlareRenderer::DrawLensFlare( Int32 key, const Vector& origin, const V
 	Vector color;
 	Math::VectorScale(rendercolor, 1.0f/255.0f, color);
 
-	Float screenXFadeMins = rns.screenwidth * 0.1;
-	Float screenXFadeMaxs = rns.screenwidth * 0.9;
+	float screenXFadeMins = rns.screenwidth * 0.1;
+	float screenXFadeMaxs = rns.screenwidth * 0.9;
 
-	Float screenYFadeMins = rns.screenheight * 0.1;
-	Float screenYFadeMaxs = rns.screenheight * 0.9;
+	float screenYFadeMins = rns.screenheight * 0.1;
+	float screenYFadeMaxs = rns.screenheight * 0.9;
 
-	Float fadeX = 1.0;
+	float fadeX = 1.0;
 	if(screenPosition.x < rns.screenwidth * 0.1)
-		fadeX = screenPosition.x / static_cast<Float>(screenXFadeMins);
+		fadeX = screenPosition.x / static_cast<float>(screenXFadeMins);
 	else if(screenPosition.x > screenXFadeMaxs)
 		fadeX = 1.0 - ((screenPosition.x - screenXFadeMaxs) / (rns.screenwidth - screenXFadeMaxs));
 
 	if(fadeX < 0)
 		return false;
 
-	Float fadeY = 1.0;
+	float fadeY = 1.0;
 	if(screenPosition.y < rns.screenheight * 0.1)
-		fadeY = screenPosition.y / static_cast<Float>(screenYFadeMins);
+		fadeY = screenPosition.y / static_cast<float>(screenYFadeMins);
 	else if(screenPosition.y > screenYFadeMaxs)
 		fadeY = 1.0 - ((screenPosition.y - screenYFadeMaxs) / (rns.screenheight - screenYFadeMaxs));
 
@@ -338,7 +338,7 @@ bool CLensFlareRenderer::DrawLensFlare( Int32 key, const Vector& origin, const V
 	// Calculate occlusion
 	bool useQueries = (g_pCvarOcclusionQueries->GetValue() >= 1 && (!isSun || !portalSun)) ? true : false;
 	bool traceAll = (g_pCvarTraceGlow->GetValue() >= 1 || renderfx == RenderFx_TraceGlow) ? true : false;
-	Float occlusionFactor = R_CalcOcclusionFactor(origin, key, 
+	float occlusionFactor = R_CalcOcclusionFactor(origin, key, 
 		m_pLensFlareTextures[LF_TEX_CORE]->width, scale, 
 		GLOW_INTERP_SPEED, GLOW_NUM_TRACES, GL_QUERY_LENSFLARES,
 		glowstate, useQueries,
@@ -352,7 +352,7 @@ bool CLensFlareRenderer::DrawLensFlare( Int32 key, const Vector& origin, const V
 	m_pBasicDraw->SetProjection(m_projectionMatrix.GetMatrix());
 	m_pBasicDraw->SetModelview(m_modelViewMatrix.GetMatrix());
 
-	Float mainAlpha = occlusionFactor * fadeX * fadeY * renderamt / 255.0f;
+	float mainAlpha = occlusionFactor * fadeX * fadeY * renderamt / 255.0f;
 
 	glDisable(GL_DEPTH_TEST);
 
@@ -367,7 +367,7 @@ bool CLensFlareRenderer::DrawLensFlare( Int32 key, const Vector& origin, const V
 	DrawQuad(screenPosition, color, m_pLensFlareTextures[LF_TEX_CORE], scale, mainAlpha);
 
 	// Draw other parts
-	for(Uint32 i = 0; i < NB_FLARE_HALOS; i++)
+	for(UInt32 i = 0; i < NB_FLARE_HALOS; i++)
 	{
 		Vector flarePosition = screenPosition + directionFromLight * (length*2*FLARE_HALO_DIST_SCALES[i]);
 		DrawQuad(flarePosition, color, m_pLensFlareTextures[FLARE_HALO_TEXTURES[i]], scale*FLARE_HALO_SCALES[i], mainAlpha*FLARE_HALO_ALPHAS[i]);
@@ -381,16 +381,16 @@ bool CLensFlareRenderer::DrawLensFlare( Int32 key, const Vector& origin, const V
 //====================================
 //
 //====================================
-void CLensFlareRenderer::DrawQuad( const Vector& position, const Vector& color, en_texture_t* ptexture, Float scale, Float alpha )
+void CLensFlareRenderer::DrawQuad( const Vector& position, const Vector& color, en_texture_t* ptexture, float scale, float alpha )
 {
-	Float width = ptexture->width;
-	Float height = ptexture->height;
+	float width = ptexture->width;
+	float height = ptexture->height;
 
-	Float up = height * 0.5;
-	Float down = -up;
+	float up = height * 0.5;
+	float down = -up;
 
-	Float right = width * 0.5;
-	Float left = -right;
+	float right = width * 0.5;
+	float left = -right;
 
 	R_Bind2DTexture(GL_TEXTURE0_ARB, ptexture->palloc->gl_index);
 	R_ValidateShader(m_pBasicDraw);
@@ -464,11 +464,11 @@ void CLensFlareRenderer::DrawFunction( const Vector& origin )
 //====================================
 //
 //====================================
-void CLensFlareRenderer::SetSunFlare( entindex_t entindex, bool active, Float pitch, Float roll, Float scale, const Vector& color, bool portalSunFlare )
+void CLensFlareRenderer::SetSunFlare( entindex_t entindex, bool active, float pitch, float roll, float scale, const Vector& color, bool portalSunFlare )
 {
 	if(!active)
 	{
-		for(Uint32 i = 0; i < m_sunFlaresArray.size(); i++)
+		for(UInt32 i = 0; i < m_sunFlaresArray.size(); i++)
 		{
 			if(m_sunFlaresArray[i].entindex == entindex)
 			{
@@ -479,7 +479,7 @@ void CLensFlareRenderer::SetSunFlare( entindex_t entindex, bool active, Float pi
 	}
 
 	sunflare_t* pflare = nullptr;
-	for(Uint32 i = 0; i < m_sunFlaresArray.size(); i++)
+	for(UInt32 i = 0; i < m_sunFlaresArray.size(); i++)
 	{
 		if(m_sunFlaresArray[i].entindex == entindex)
 		{

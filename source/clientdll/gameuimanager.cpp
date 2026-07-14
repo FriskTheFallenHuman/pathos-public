@@ -27,9 +27,9 @@ All Rights Reserved.
 #include "gameui_shared.h"
 
 // Blur time for background
-const Float CGameUIManager::BACKGROUND_BLUR_TIME = 2.0f;
+const float CGameUIManager::BACKGROUND_BLUR_TIME = 2.0f;
 // Default font schema of the game UI
-const Char CGameUIManager::DEFAULT_TEXT_SCHEMA[] = "gameuidefault";
+const char CGameUIManager::DEFAULT_TEXT_SCHEMA[] = "gameuidefault";
 
 // Object declaration
 CGameUIManager gGameUIManager;
@@ -148,7 +148,7 @@ void CGameUIManager::ClearGame( void )
 //=============================================
 bool CGameUIManager::InitGL( void )
 {
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	m_pFontSet = cl_engfuncs.pfnGetResolutionSchemaFontSet(DEFAULT_TEXT_SCHEMA, screenHeight);
@@ -177,7 +177,7 @@ void CGameUIManager::ClearGL( void )
 //=============================================
 CGameUIWindow* CGameUIManager::SpawnWindow( gameui_windows_t windowtype )
 {
-	Uint32 screenwidth, screenheight;
+	UInt32 screenwidth, screenheight;
 	cl_renderfuncs.pfnGetScreenSize(screenwidth, screenheight);
 
 	Int32 flags = m_pCvarBorders->GetValue() >= 1 ? CGameUIWindow::FL_WINDOW_NONE : CGameUIWindow::FL_WINDOW_NO_BGBORDERS;
@@ -429,15 +429,15 @@ void CGameUIManager::RespawnWindow( void )
 //=============================================
 void CGameUIManager::Think( void )
 {
-	Double engineTime = cl_engfuncs.pfnGetEngineTime();
-	Double clientTime = cl_engfuncs.pfnGetClientTime();
+	double engineTime = cl_engfuncs.pfnGetEngineTime();
+	double clientTime = cl_engfuncs.pfnGetClientTime();
 
 	if(m_pActiveWindow)
 	{
 		// Check for delay remove windows
 		if(m_pActiveWindow->getWindowFlags() & CGameUIWindow::FL_WINDOW_DELAY_REMOVE)
 		{
-			Double removetime = m_pActiveWindow->getWindowRemoveTime();
+			double removetime = m_pActiveWindow->getWindowRemoveTime();
 			if(removetime <= clientTime)
 				DestroyActiveWindow();
 		}
@@ -478,7 +478,7 @@ void CGameUIManager::Think( void )
 		}
 		else
 		{
-			Float bluralpha = 0.0;
+			float bluralpha = 0.0;
 			if(m_isBlurActive)
 				bluralpha = (engineTime - m_blurFadeTime)/BACKGROUND_BLUR_TIME;
 			else
@@ -601,7 +601,7 @@ const CGameUIWindow* CGameUIManager::GetActiveWindow( void )
 // @param pstrFilename Name of the UI scheme file
 // @return Pointer to scheme object
 //=============================================
-ui_schemeinfo_t* CGameUIManager::LoadSchemaFile( const Char* pstrFilename )
+ui_schemeinfo_t* CGameUIManager::LoadSchemaFile( const char* pstrFilename )
 {
 	ui_schemeinfo_t* presult = m_pSchemaManager->LoadSchemaFile(pstrFilename);
 	if(!presult)
@@ -614,10 +614,10 @@ ui_schemeinfo_t* CGameUIManager::LoadSchemaFile( const Char* pstrFilename )
 	}
 	else
 	{
-		Uint32 nbWarnings = m_pSchemaManager->GetNbWarnings();
+		UInt32 nbWarnings = m_pSchemaManager->GetNbWarnings();
 		if(nbWarnings > 0)
 		{
-			for(Uint32 i = 0; i < nbWarnings; i++)
+			for(UInt32 i = 0; i < nbWarnings; i++)
 				cl_engfuncs.pfnCon_Printf(m_pSchemaManager->GetWarning(i).c_str());
 
 			m_pSchemaManager->ClearWarnings();

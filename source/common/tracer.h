@@ -33,11 +33,11 @@ struct tracer_t
 	Vector origin;
 	Vector color;
 	Vector velocity;
-	Float length;
-	Float die;
-	Float alpha;
-	Float masteralpha;
-	Float width;
+	float length;
+	float die;
+	float alpha;
+	float masteralpha;
+	float width;
 	tracer_type_t type;
 
 	tracer_t* pprev;

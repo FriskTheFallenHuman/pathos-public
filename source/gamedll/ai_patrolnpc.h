@@ -53,23 +53,23 @@ class CPatrolNPC : public CSquadNPC
 {
 public:
 	// Max number of patrol failures before the patrol history is flushed
-	static const Uint32 MAX_PATROL_FAILURES;
+	static const UInt32 MAX_PATROL_FAILURES;
 	// Minimum patrol distance
-	static const Float MIN_PATROL_DISTANCE;
+	static const float MIN_PATROL_DISTANCE;
 	// Minimum visible patrol distance
-	static const Float MIN_VISIBLE_PATROL_DISTANCE;
+	static const float MIN_VISIBLE_PATROL_DISTANCE;
 	// Default patrol radius
-	static const Float DEFAULT_PATROL_RADIUS;
+	static const float DEFAULT_PATROL_RADIUS;
 	// Maximum distance a destination can have from the player's position
-	static const Float MAX_PATROL_DEST_PLAYER_DISTANCE;
+	static const float MAX_PATROL_DEST_PLAYER_DISTANCE;
 	// Minimum distance from a budge attempt we'll accept
-	static const Float MIN_BUDGE_MOVE_DISTANCE;
+	static const float MIN_BUDGE_MOVE_DISTANCE;
 	// Distance to which we'll try to budge out of a stuck spot
-	static const Float BUDGE_MOVE_DISTANCE;
+	static const float BUDGE_MOVE_DISTANCE;
 
 public:
 	// Maximum patrol history size
-	static const Uint32 MAX_PATROL_HISTORY = 32;
+	static const UInt32 MAX_PATROL_HISTORY = 32;
 
 public:
 	explicit CPatrolNPC( edict_t* pedict );
@@ -116,13 +116,13 @@ public:
 
 public:
 	// Returns the minimum patrol distance for non-visible destinations
-	virtual Float GetMinimumPatrolDistance( void ) const;
+	virtual float GetMinimumPatrolDistance( void ) const;
 	// Reurns the minimum patrol distance for visible destinations
-	virtual Float GetMinimumVisiblePatrolDistance( void ) const;
+	virtual float GetMinimumVisiblePatrolDistance( void ) const;
 
 public:
 	// Builds a patrol path
-	bool BuildPatrolPath( Float minDistance, Float maxDistance );
+	bool BuildPatrolPath( float minDistance, float maxDistance );
 
 protected:
 	// Tells if NPC should patrol(so non-patrolling npcs that still inherit from this class can override it)
@@ -135,12 +135,12 @@ protected:
 	// History of patrol destinations
 	Vector m_patrolHistoryArray[MAX_PATROL_HISTORY];
 	// Number of entries in patrol history
-	Uint32 m_numPatrolHistory;
+	UInt32 m_numPatrolHistory;
 
 	// Entities that prompted an error
 	CEntityHandle m_squadMembersWithErrorsArray[MAX_SQUAD_MEMBERS-1];
 	// Number of error prompts
-	Uint32 m_numPatrolErrorPrompts;
+	UInt32 m_numPatrolErrorPrompts;
 
 	// Last patrol node of squad leader
 	Int32 m_lastPatrolNodeIndex;
@@ -148,11 +148,11 @@ protected:
 	// My last patrol node index
 	Int32 m_myLastPatrolNodeIndex;
 	// Number of patrol failures
-	Uint32 m_numPatrolFailures;
+	UInt32 m_numPatrolFailures;
 	// Next patrol time
-	Double m_nextPatrolTime;
+	double m_nextPatrolTime;
 	// Max patrol radius
-	Float m_patrolRadius;
+	float m_patrolRadius;
 	// Node region I am restricted to
 	string_t m_nodeRegionName;
 };

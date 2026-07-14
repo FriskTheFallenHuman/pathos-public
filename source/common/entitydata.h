@@ -19,8 +19,8 @@ struct keyvalue_t
 		memset(value, 0, sizeof(value));
 	}
 
-	Char keyname[MAX_PARSE_LENGTH];
-	Char value[MAX_PARSE_LENGTH];
+	char keyname[MAX_PARSE_LENGTH];
+	char value[MAX_PARSE_LENGTH];
 };
 
 struct entitydata_t
@@ -43,7 +43,7 @@ struct entitydata_t
 // @param pstrKeyName Keyvalue name
 // @return Key value contents, or nullptr
 //=============================================
-inline const Char* ValueForKey( const entitydata_t& entity, const Char* pstrKeyName )
+DO_INLINE const char* ValueForKey( const entitydata_t& entity, const char* pstrKeyName )
 {
 	for(Uint32 i = 0; i < entity.values.size(); i++)
 	{

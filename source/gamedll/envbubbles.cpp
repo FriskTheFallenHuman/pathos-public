@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "envbubbles.h"
 
 // Bubble sprite path
-const Char CEnvBubbles::BUBBLE_SPRITE_PATH[] = "sprites/bubble.spr";
+const char CEnvBubbles::BUBBLE_SPRITE_PATH[] = "sprites/bubble.spr";
 // Maximum frequency
 const Int32 CEnvBubbles::MAX_FREQUENCY = 20;
 
@@ -132,7 +132,7 @@ void CEnvBubbles::Precache( void )
 //=============================================
 void CEnvBubbles::BubblingThink( void )
 {
-	Float bubbleHeight = m_pState->absmax[2] - m_pState->absmin[2];
+	float bubbleHeight = m_pState->absmax[2] - m_pState->absmin[2];
 	Util::CreateBubbles(m_pState->absmin, m_pState->absmax, bubbleHeight, m_bubbleSprite, m_density, m_current);
 
 	m_pState->nextthink = g_pGameVars->time + 2.5 - (0.1*m_frequency);
@@ -142,7 +142,7 @@ void CEnvBubbles::BubblingThink( void )
 // @brief
 //
 //=============================================
-void CEnvBubbles::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvBubbles::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{

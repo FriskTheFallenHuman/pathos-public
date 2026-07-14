@@ -106,7 +106,7 @@ bool CAmbientOggStream::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CAmbientOggStream::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CAmbientOggStream::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pEntity;
@@ -119,7 +119,7 @@ void CAmbientOggStream::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, 
 	bool previousState = m_isActive;
 
 	// Get path to file, it's always needed
-	const Char* pstrFilepath = gd_engfuncs.pfnGetString(m_pFields->message);
+	const char* pstrFilepath = gd_engfuncs.pfnGetString(m_pFields->message);
 	if(!pstrFilepath || !qstrlen(pstrFilepath) || HasSpawnFlag(FL_TURN_OFF_OTHER))
 	{
 		// If no file is specified, just terminate any music playing

@@ -81,7 +81,7 @@ bool CMultiSource::Spawn( void )
 // @brief
 //
 //=============================================
-void CMultiSource::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CMultiSource::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{
@@ -110,7 +110,7 @@ void CMultiSource::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemo
 //=============================================
 bool CMultiSource::IsGlobalEnabled( void ) const
 {
-	const Char* pstrGlobalName = gd_engfuncs.pfnGetString(m_globalStateName);
+	const char* pstrGlobalName = gd_engfuncs.pfnGetString(m_globalStateName);
 	if(!pstrGlobalName || !qstrlen(pstrGlobalName))
 		return true;
 

@@ -33,25 +33,25 @@ All Rights Reserved.
 CUIDownloadWindow* CUIDownloadWindow::m_pInstance = nullptr;
 
 // Window description file
-const Char CUIDownloadWindow::WINDOW_DESC_FILE[] = "downloadwindow.json";
+const char CUIDownloadWindow::WINDOW_DESC_FILE[] = "downloadwindow.json";
 // Window description file
-const Char CUIDownloadWindow::WINDOW_OBJ_NAME[] = "DownloadWindow";
+const char CUIDownloadWindow::WINDOW_OBJ_NAME[] = "DownloadWindow";
 // Cancel button object name
-const Char CUIDownloadWindow::CANCEL_BUTTON_OBJ_NAME[] = "CancelButton";
+const char CUIDownloadWindow::CANCEL_BUTTON_OBJ_NAME[] = "CancelButton";
 // Save and Quit button object name
-const Char CUIDownloadWindow::FILE_DOWNLOAD_LABEL_OBJ_NAME[] = "FileDownloadLabel";
+const char CUIDownloadWindow::FILE_DOWNLOAD_LABEL_OBJ_NAME[] = "FileDownloadLabel";
 // Quit button object name
-const Char CUIDownloadWindow::FILE_DOWNLOAD_PROGRESSBAR_OBJ_NAME[] = "FileDownloadProgressBar";
+const char CUIDownloadWindow::FILE_DOWNLOAD_PROGRESSBAR_OBJ_NAME[] = "FileDownloadProgressBar";
 // Save and Quit button object name
-const Char CUIDownloadWindow::TOTAL_PROGRESS_LABEL_OBJ_NAME[] = "TotalProgressLabel";
+const char CUIDownloadWindow::TOTAL_PROGRESS_LABEL_OBJ_NAME[] = "TotalProgressLabel";
 // Quit button object name
-const Char CUIDownloadWindow::TOTAL_PROGRESS_PROGRESSBAR_OBJ_NAME[] = "TotalProgressBar";
+const char CUIDownloadWindow::TOTAL_PROGRESS_PROGRESSBAR_OBJ_NAME[] = "TotalProgressBar";
 
 //=============================================
 // @brief Constructor
 //
 //=============================================
-CUIDownloadWindow::CUIDownloadWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIDownloadWindow::CUIDownloadWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIWindow(UIW_FL_MENUWINDOW|UIW_FL_DOWNLOADWINDOW, flags, width, height, originx, originy),
 	m_pDownloadFileText(nullptr),
 	m_pFileProgressBar(nullptr),
@@ -144,7 +144,7 @@ CUIDownloadWindow* CUIDownloadWindow::GetInstance( void )
 bool CUIDownloadWindow::init( const ui_windowdescription_t* pWinDesc, const ui_objectinfo_t* pWindowObject )
 {
 	// Retreive schema for the window object
-	const Char* pstrSchemaName = pWindowObject->getSchema().c_str();
+	const char* pstrSchemaName = pWindowObject->getSchema().c_str();
 	if(!CUIWindow::init(pstrSchemaName))
 	{
 		Con_EPrintf("Failed to initialize schema '%s' for console window.\n", pstrSchemaName);
@@ -273,7 +273,7 @@ bool CUIDownloadWindow::init( const ui_windowdescription_t* pWinDesc, const ui_o
 // @brief Manages a button event
 //
 //=============================================
-void CUIDownloadWindow::SetFileProgressBar( Float value )
+void CUIDownloadWindow::SetFileProgressBar( float value )
 {
 	if(!m_pFileProgressBar)
 		return;
@@ -285,7 +285,7 @@ void CUIDownloadWindow::SetFileProgressBar( Float value )
 // @brief Manages a button event
 //
 //=============================================
-void CUIDownloadWindow::SetTotalProgressBar( Float value )
+void CUIDownloadWindow::SetTotalProgressBar( float value )
 {
 	if(!m_pTotalProgressBar)
 		return;
@@ -297,7 +297,7 @@ void CUIDownloadWindow::SetTotalProgressBar( Float value )
 // @brief Manages a button event
 //
 //=============================================
-void CUIDownloadWindow::SetDownloadFileName( const Char* pstr )
+void CUIDownloadWindow::SetDownloadFileName( const char* pstr )
 {
 	if(!m_pDownloadFileText)
 		return;

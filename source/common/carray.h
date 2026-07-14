@@ -19,35 +19,35 @@ CArray
 template <typename T> class CArray
 {
 public:
-	inline CArray( void );
-	inline explicit CArray( Uint32 size );
-	inline CArray( const CArray& src );
-	inline CArray( const CArray* pArray );
-	inline ~CArray( void );
+	DO_INLINE CArray( void );
+	DO_INLINE explicit CArray( Uint32 size );
+	DO_INLINE CArray( const CArray& src );
+	DO_INLINE CArray( const CArray* pArray );
+	DO_INLINE ~CArray( void );
 
 public:
 	// Assignment operator
-	inline void operator=( const CArray& src );
+	DO_INLINE void operator=( const CArray& src );
 
 	// Resizes the array
-	inline void resize( Uint32 size );
+	DO_INLINE void resize( Uint32 size );
 	// Resizes the array
-	inline void reserve( Uint32 size );
+	DO_INLINE void reserve( Uint32 size );
 	// Deallocates the array
-	inline void clear( void );
+	DO_INLINE void clear( void );
 	// Returns the size of the array
-	inline Uint32 size( void ) const;
+	DO_INLINE Uint32 size( void ) const;
 	// Returns if the array is empty
-	inline bool empty( void ) const;
+	DO_INLINE bool empty( void ) const;
 	// pushes an element back
-	inline void push_back( const T& element );
+	DO_INLINE void push_back( const T& element );
 	// Erases an element from the array
-	inline void erase( Uint32 index );
+	DO_INLINE void erase( Uint32 index );
 	// Erases an element from the array
-	inline void erase_object( const T& element );
+	DO_INLINE void erase_object( const T& element );
 
 	// Indexing operator
-	inline T& operator[] ( Uint32 n ) const;
+	DO_INLINE T& operator[] ( Uint32 n ) const;
 
 private:
 	// Elements in array

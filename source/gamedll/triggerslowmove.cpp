@@ -91,7 +91,7 @@ bool CTriggerSlowMove::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerSlowMove::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerSlowMove::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pEntity;

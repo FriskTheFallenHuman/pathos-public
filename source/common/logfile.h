@@ -21,43 +21,43 @@ CLogFile
 class CLogFile
 {
 public:
-	typedef void (*pfnConPrintf_t)( const Char *fmt, ... );
+	typedef void (*pfnConPrintf_t)( const char *fmt, ... );
 
 public:
 	// Buffer size
-	static const Uint32 LOG_BUFFER_SIZE;
+	static const UInt32 LOG_BUFFER_SIZE;
 	// Size of buffer for message prints
-	static const Uint32 PRINT_MSG_BUFFER_SIZE;
+	static const UInt32 PRINT_MSG_BUFFER_SIZE;
 
 public:
-	explicit CLogFile( const Char* pstrPath, pfnConPrintf_t pfnConPrintf, file_interface_t& fileInterface, bool deletePrevious = false, bool timeStamps = true );
+	explicit CLogFile( const char* pstrPath, pfnConPrintf_t pfnConPrintf, file_interface_t& fileInterface, bool deletePrevious = false, bool timeStamps = true );
 	~CLogFile();
 
 public:
 	bool Init( void );
 	bool Close( void );
 
-	bool Write( const Char* pstrString );
-	bool Printf( const Char *fmt, ... );
+	bool Write( const char* pstrString );
+	bool Printf( const char *fmt, ... );
 
 private:
 	bool DumpBuffer( void );
-	bool WriteInternal( const Char* pstrString );
+	bool WriteInternal( const char* pstrString );
 
 private:
 	// Path to log file
 	CString m_sLogPath;
 	// Number of lines written
-	Uint32 m_nbLinesWritten;
-	// TRUE if timestamps should be used
+	UInt32 m_nbLinesWritten;
+	// true if timestamps should be used
 	bool m_useTimeStamps;
-	// TRUE if previous log should be deleted
+	// true if previous log should be deleted
 	bool m_deletePreviousLog;
 
 	// Log buffer
-	Char* m_pBuffer;
+	char* m_pBuffer;
 	// Log buffer load
-	Uint32 m_logBufferLoad;
+	UInt32 m_logBufferLoad;
 	// Protective semaphore
 	bool m_writeSemaphore;
 
@@ -67,6 +67,6 @@ private:
 	file_interface_t m_fileInterface;
 
 	// Temporary write buffer
-	Char* m_pTempWriteBuffer;
+	char* m_pTempWriteBuffer;
 };
 #endif //CLOGFILE_H

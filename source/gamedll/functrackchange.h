@@ -22,7 +22,7 @@ class CFuncTrackChange : public CFuncPlatRot
 {
 public:
 	// Blocked alarm sound
-	static const Char BLOCKED_ALARM_SND[];
+	static const char BLOCKED_ALARM_SND[];
 
 public:
 	enum
@@ -49,7 +49,7 @@ public:
 	virtual void Precache( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void OnOverrideEntity( void ) override;
 	virtual void CallTouch( CBaseEntity* pOther ) override;
 	virtual void InitEntity( void ) override;
@@ -70,7 +70,7 @@ public:
 	void EnableUse( void );
 	bool IsUseEnabled( void ) const;
 
-	CPathTrack* FindPathTrack( const Char* pstrTargetname );
+	CPathTrack* FindPathTrack( const char* pstrTargetname );
 
 protected:
 	CPathTrack* m_pTopTrack;

@@ -68,7 +68,7 @@ Vector Weapon_GetConeSize( Int32 coneindex, Vector leanoffset, Vector velocity, 
 	}
 
 	// Add velocity-induced inaccuracy
-	Float spreadadd;
+	float spreadadd;
 	spreadadd = (velocity.Length()*0.1);
 
 	// Add in leaning
@@ -77,7 +77,7 @@ Vector Weapon_GetConeSize( Int32 coneindex, Vector leanoffset, Vector velocity, 
 	// Add in punchangles
 	spreadadd += punchangles.Length()*2;
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		cone[i] += spreadadd / 500.0f;
 
 	return cone;
@@ -87,13 +87,13 @@ Vector Weapon_GetConeSize( Int32 coneindex, Vector leanoffset, Vector velocity, 
 // @brief
 //
 //=============================================
-bool Weapon_CheckAmmoTypeMapConsinstency( void (*pfnCon_Printf)(const Char* fmt, ...) )
+bool Weapon_CheckAmmoTypeMapConsinstency( void (*pfnCon_Printf)(const char* fmt, ...) )
 {
 	// Check consinstency on the bullet type map
 	bool failedConsistencyCheck = false;
 
-	Uint32 bulletMapSize = sizeof(BULLET_TYPE_MAP);
-	Uint32 mapSize = bulletMapSize / sizeof(bullet_typemapping_t);
+	UInt32 bulletMapSize = sizeof(BULLET_TYPE_MAP);
+	UInt32 mapSize = bulletMapSize / sizeof(bullet_typemapping_t);
 	mapSize -= 1; // do not count last empty one
 
 	if (mapSize != NB_BULLET_TYPES)

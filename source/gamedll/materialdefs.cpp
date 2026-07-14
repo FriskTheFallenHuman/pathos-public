@@ -35,7 +35,7 @@ CMaterialDefinitions::~CMaterialDefinitions( void )
 // @brief
 //
 //=============================================
-bool CMaterialDefinitions::Init( const Char* pscriptfile )
+bool CMaterialDefinitions::Init( const char* pscriptfile )
 {
 	if(!pscriptfile)
 	{
@@ -44,7 +44,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 	}
 
 	CString token;
-	const Char* pstr = pscriptfile;
+	const char* pstr = pscriptfile;
 	while(pstr && *pstr)
 	{
 		// Get first token
@@ -230,7 +230,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 						return false;
 					}
 
-					Float penetrationDepth = SDL_atof(token.c_str());
+					float penetrationDepth = SDL_atof(token.c_str());
 					if(penetrationDepth < 0)
 					{
 						m_errorString << "Invalid penetration depth " << penetrationDepth << " specified for bullet type " << bullettypename << " and material " << newdef.materialname << " specified";
@@ -261,7 +261,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 						return false;
 					}
 
-					Uint32 maxPenetration = SDL_atoi(token.c_str());
+					UInt32 maxPenetration = SDL_atoi(token.c_str());
 
 					// Read penetration chance
 					pstr = Common::Parse(pstr, token);
@@ -286,7 +286,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 						return false;
 					}
 
-					Uint32 penetrationChance = SDL_atoi(token.c_str());
+					UInt32 penetrationChance = SDL_atoi(token.c_str());
 
 					// Read penetration damage falloff
 					pstr = Common::Parse(pstr, token);
@@ -311,7 +311,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 						return false;
 					}
 
-					Float penetrationDmgFalloff = SDL_atof(token.c_str());
+					float penetrationDmgFalloff = SDL_atof(token.c_str());
 					if(penetrationDmgFalloff < 0)
 					{
 						m_errorString << "Invalid penetration damage falloff value " << penetrationDmgFalloff << " specified for bullet type " << bullettypename << " and material " << newdef.materialname << " specified";
@@ -342,7 +342,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 						return false;
 					}
 
-					Uint32 penetrationChanceDecrease = SDL_atoi(token.c_str());
+					UInt32 penetrationChanceDecrease = SDL_atoi(token.c_str());
 					if(penetrationChanceDecrease < 0)
 					{
 						m_errorString << "Invalid penetration chance decrease value " << penetrationDmgFalloff << " specified for bullet type " << bullettypename << " and material " << newdef.materialname << " specified";
@@ -351,7 +351,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 					}
 
 					// Otherwise it is a sound file
-					Uint32 newindex = newdef.penetrationinfos.size();
+					UInt32 newindex = newdef.penetrationinfos.size();
 					newdef.penetrationinfos.resize(newdef.penetrationinfos.size() + 1);
 					penetration_t& info = newdef.penetrationinfos[newindex];
 
@@ -441,7 +441,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 						return false;
 					}
 
-					Float maxAngle = SDL_atof(token.c_str());
+					float maxAngle = SDL_atof(token.c_str());
 					if(maxAngle < 0)
 					{
 						m_errorString << "Invalid ricochet max angle " << maxAngle << " specified for bullet type " << bullettypename << " and material " << newdef.materialname << " specified";
@@ -472,7 +472,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 						return false;
 					}
 
-					Float maxRicochetAngleVariation = SDL_atof(token.c_str());
+					float maxRicochetAngleVariation = SDL_atof(token.c_str());
 					if(maxRicochetAngleVariation < 0)
 					{
 						m_errorString << "Invalid ricochet max angle variation value " << maxRicochetAngleVariation << " specified for bullet type " << bullettypename << " and material " << newdef.materialname << " specified";
@@ -503,7 +503,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 						return false;
 					}
 
-					Uint32 ricochetChance = SDL_atoi(token.c_str());
+					UInt32 ricochetChance = SDL_atoi(token.c_str());
 					if(ricochetChance < 0)
 					{
 						m_errorString << "Invalid ricochet chance value " << ricochetChance << " specified for bullet type " << bullettypename << " and material " << newdef.materialname << " specified";
@@ -534,7 +534,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 						return false;
 					}
 
-					Uint32 maxRicochetNb = SDL_atoi(token.c_str());
+					UInt32 maxRicochetNb = SDL_atoi(token.c_str());
 					if(maxRicochetNb < 0)
 					{
 						m_errorString << "Invalid ricochet max nb value " << maxRicochetNb << " specified for bullet type " << bullettypename << " and material " << newdef.materialname << " specified";
@@ -565,7 +565,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 						return false;
 					}
 
-					Float ricochetDmgFalloff = SDL_atof(token.c_str());
+					float ricochetDmgFalloff = SDL_atof(token.c_str());
 					if(ricochetDmgFalloff < 0)
 					{
 						m_errorString << "Invalid ricochet damage falloff value " << maxRicochetAngleVariation << " specified for bullet type " << bullettypename << " and material " << newdef.materialname << " specified";
@@ -574,7 +574,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 					}
 
 					// Otherwise it is a sound file
-					Uint32 newindex = newdef.ricochetinfos.size();
+					UInt32 newindex = newdef.ricochetinfos.size();
 					newdef.ricochetinfos.resize(newdef.ricochetinfos.size() + 1);
 					ricochetinfo_t& info = newdef.ricochetinfos[newindex];
 
@@ -639,7 +639,7 @@ bool CMaterialDefinitions::Init( const Char* pscriptfile )
 	}
 
 	// Make sure "default" is defined
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for(; i < m_materialDefinitionsArray.size(); i++)
 	{
 		if(!qstrcmp(m_materialDefinitionsArray[i].materialname, "default"))
@@ -672,17 +672,17 @@ void CMaterialDefinitions::Clear( void )
 // @brief
 //
 //=============================================
-const CMaterialDefinitions::materialdefinition_t* CMaterialDefinitions::GetDefinitionForMaterial( const Char* pstrmaterialname ) const
+const CMaterialDefinitions::materialdefinition_t* CMaterialDefinitions::GetDefinitionForMaterial( const char* pstrmaterialname ) const
 {
 	// Try to find the effect for this material type
-	for(Uint32 i = 0; i < m_materialDefinitionsArray.size(); i++)
+	for(UInt32 i = 0; i < m_materialDefinitionsArray.size(); i++)
 	{
 		if(!qstrcmp(m_materialDefinitionsArray[i].materialname, pstrmaterialname))
 			return &m_materialDefinitionsArray[i];
 	}
 
 	// Just use default then
-	for(Uint32 i = 0; i < m_materialDefinitionsArray.size(); i++)
+	for(UInt32 i = 0; i < m_materialDefinitionsArray.size(); i++)
 	{
 		if(!qstrcmp(m_materialDefinitionsArray[i].materialname, "default"))
 			return &m_materialDefinitionsArray[i];
@@ -695,7 +695,7 @@ const CMaterialDefinitions::materialdefinition_t* CMaterialDefinitions::GetDefin
 // @brief
 //
 //=============================================
-Uint32 CMaterialDefinitions::GetNbDefinitions( void ) const
+UInt32 CMaterialDefinitions::GetNbDefinitions( void ) const
 {
 	return m_materialDefinitionsArray.size();
 }
@@ -704,7 +704,7 @@ Uint32 CMaterialDefinitions::GetNbDefinitions( void ) const
 // @brief
 //
 //=============================================
-const CMaterialDefinitions::materialdefinition_t* CMaterialDefinitions::GetDefinition( Uint32 index ) const
+const CMaterialDefinitions::materialdefinition_t* CMaterialDefinitions::GetDefinition( UInt32 index ) const
 {
 	assert(index < m_materialDefinitionsArray.size());
 	return &m_materialDefinitionsArray[index];

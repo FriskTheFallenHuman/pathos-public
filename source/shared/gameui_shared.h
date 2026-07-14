@@ -11,15 +11,15 @@ All Rights Reserved.
 #define GAMEUI_SHARED_H
 
 // Base script file path for subway
-static const Char GAMEUI_SCRIPT_BASE_PATH[] = "scripts/gameui/";
+static const char GAMEUI_SCRIPT_BASE_PATH[] = "scripts/gameui/";
 // Subway subfolder name
-static const Char SUBWAYWINDOW_SCRIPT_SUBFOLDER_NAME[] = "subway";
+static const char SUBWAYWINDOW_SCRIPT_SUBFOLDER_NAME[] = "subway";
 
 // Max keypad code length
-static const Uint32 MAX_PASSCODE_LENGTH = 32;
+static const UInt32 MAX_PASSCODE_LENGTH = 32;
 
 // Max objectives a player can have, due to Int32 being used for the new objective flag stuff
-static const Uint64 MAX_PLAYER_OBJECTIVES = 32;
+static const UInt64 MAX_PLAYER_OBJECTIVES = 32;
 
 // Flags for subway
 enum subwayflags_t

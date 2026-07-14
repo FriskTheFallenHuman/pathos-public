@@ -30,18 +30,18 @@ public:
 public:
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	
 public:
 	Int32 m_channel;
-	Float m_positionX;
-	Float m_positionY;
+	float m_positionX;
+	float m_positionY;
 	Int32 m_effect;
 	color32_t m_color1;
 	color32_t m_color2;
-	Float m_fadeInTime;
-	Float m_fadeOutTime;
-	Float m_holdTime;
-	Float m_fxTime;
+	float m_fadeInTime;
+	float m_fadeOutTime;
+	float m_holdTime;
+	float m_fxTime;
 };
 #endif //GAMETEXT_H

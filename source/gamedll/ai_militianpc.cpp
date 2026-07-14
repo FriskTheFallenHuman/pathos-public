@@ -18,7 +18,7 @@ All Rights Reserved.
 #include "sentencesfile.h"
 
 // Array of clone soldier sentences
-const Char* CMilitiaNPC::NPC_SENTENCE_POSTFIXES[NUM_NPC_SENTENCES] = 
+const char* CMilitiaNPC::NPC_SENTENCE_POSTFIXES[NUM_NPC_SENTENCES] = 
 {
 	"_GRENADE",
 	"_ALERT",
@@ -31,7 +31,7 @@ const Char* CMilitiaNPC::NPC_SENTENCE_POSTFIXES[NUM_NPC_SENTENCES] =
 // Question asked
 CMilitiaNPC::npc_question_types_t CMilitiaNPC::g_questionAsked = CMilitiaNPC::NPC_QUESTION_NONE;
 // Time until we talk again
-Double CMilitiaNPC::g_talkWaitTime = 0;
+double CMilitiaNPC::g_talkWaitTime = 0;
 // NPC who asked the question
 CBaseEntity* CMilitiaNPC::g_pAskerNPC = nullptr;
 
@@ -47,7 +47,7 @@ CBaseEntity* CMilitiaNPC::g_pAskerNPC = nullptr;
 //=============================================
 ai_task_t taskListScheduleMilitiaNPCEstablishLineOfFire[] = 
 {
-	AITASK(AI_TASK_SET_FAIL_SCHEDULE,						(Float)AI_SCHED_ELOF_FAIL),
+	AITASK(AI_TASK_SET_FAIL_SCHEDULE,						(float)AI_SCHED_ELOF_FAIL),
 	AITASK(AI_TASK_GET_PATH_TO_ENEMY,						0),
 	AITASK(AI_MILITIANPC_TASK_SPEAK_SENTENCE,				0),
 	AITASK(AI_TASK_RUN_PATH,								0),
@@ -55,7 +55,7 @@ ai_task_t taskListScheduleMilitiaNPCEstablishLineOfFire[] =
 	AITASK(AI_TASK_FACE_ENEMY,								0)
 };
 
-Uint32 interruptBitsScheduleMilitiaNPCEstablishLineOfFire[] =
+UInt32 interruptBitsScheduleMilitiaNPCEstablishLineOfFire[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -72,12 +72,12 @@ Uint32 interruptBitsScheduleMilitiaNPCEstablishLineOfFire[] =
 	AI_COND_SHOOT_VECTOR_VALID
 };
 
-Uint32 specialInterruptBitsScheduleMilitiaNPCEstablishLineOfFire[] =
+UInt32 specialInterruptBitsScheduleMilitiaNPCEstablishLineOfFire[] =
 {
 	AI_COND_SHOOT_VECTOR_VALID
 };
 
-Uint32 specialInterruptExceptionBitsScheduleMilitiaNPCEstablishLineOfFire[] =
+UInt32 specialInterruptExceptionBitsScheduleMilitiaNPCEstablishLineOfFire[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -157,7 +157,7 @@ void CMilitiaNPC::Precache( void )
 
 	if(g_pSentencesFile)
 	{
-		for(Uint32 i = 0; i < NUM_NPC_SENTENCES; i++)
+		for(UInt32 i = 0; i < NUM_NPC_SENTENCES; i++)
 		{
 			CString fullName;
 			fullName << GetSentencePrefix() << NPC_SENTENCE_POSTFIXES[i];
@@ -303,7 +303,7 @@ void CMilitiaNPC::Spoke( void )
 // @brief Returns the voice pitch
 //
 //=============================================
-Uint32 CMilitiaNPC::GetVoicePitch( void )
+UInt32 CMilitiaNPC::GetVoicePitch( void )
 {
 	return m_voicePitch;
 }

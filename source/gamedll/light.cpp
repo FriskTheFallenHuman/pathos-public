@@ -13,7 +13,7 @@ All Rights Reserved.
 #include "lightstyles.h"
 
 // Starting index for switchable lightstyles
-const Uint32 CLight::SWITCHABLE_LIGHT_FIRST_STYLEINDEX = 32;
+const UInt32 CLight::SWITCHABLE_LIGHT_FIRST_STYLEINDEX = 32;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(light, CLight);
@@ -136,7 +136,7 @@ bool CLight::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CLight::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CLight::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool desiredState = false;
 	switch(useMode)
@@ -170,7 +170,7 @@ void CLight::SetCurrentStyle( void )
 		if(m_stylePattern != NO_STRING_VALUE)
 		{
 			// Send the pattern itself
-			const Char* pstrPattern = gd_engfuncs.pfnGetString(m_stylePattern);
+			const char* pstrPattern = gd_engfuncs.pfnGetString(m_stylePattern);
 			gSVLightStyles.SetLightStyle(pstrPattern, m_interpolatePattern, m_patternFramerate, m_styleIndex);
 		}
 		else
@@ -190,7 +190,7 @@ void CLight::SetCurrentStyle( void )
 // @brief
 //
 //=============================================
-bool CLight::ShouldOverrideKeyValue( const Char* pstrKeyValue )
+bool CLight::ShouldOverrideKeyValue( const char* pstrKeyValue )
 {
 	// framerate is handled by this entity specially
 	if(!qstrcmp(pstrKeyValue, "framerate"))

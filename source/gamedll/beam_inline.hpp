@@ -14,7 +14,7 @@ All Rights Reserved.
 // @brief Sets the beam type
 //
 //=============================================
-inline void CBeam::SetBeamType( beam_msgtype_t type )
+DO_INLINE void CBeam::SetBeamType( beam_msgtype_t type )
 {
 	m_pState->iuser1 = type;
 }
@@ -23,7 +23,7 @@ inline void CBeam::SetBeamType( beam_msgtype_t type )
 // @brief Returns the beam type
 //
 //=============================================
-inline beam_msgtype_t CBeam::GetBeamType( void ) const
+DO_INLINE beam_msgtype_t CBeam::GetBeamType( void ) const
 {
 	return (beam_msgtype_t)m_pState->iuser1;
 }
@@ -32,7 +32,7 @@ inline beam_msgtype_t CBeam::GetBeamType( void ) const
 // @brief Sets a beam flag
 //
 //=============================================
-inline void CBeam::SetBeamFlags( Int32 flags )
+DO_INLINE void CBeam::SetBeamFlags( Int32 flags )
 {
 	m_pState->iuser2 = flags;
 }
@@ -41,7 +41,7 @@ inline void CBeam::SetBeamFlags( Int32 flags )
 // @brief Returns the beam flags
 //
 //=============================================
-inline Int32 CBeam::GetBeamFlags( void ) const
+DO_INLINE Int32 CBeam::GetBeamFlags( void ) const
 {
 	return m_pState->iuser2;
 }
@@ -50,7 +50,7 @@ inline Int32 CBeam::GetBeamFlags( void ) const
 // @brief Sets the start position
 //
 //=============================================
-inline void CBeam::SetBeamStartPosition( const Vector& position )
+DO_INLINE void CBeam::SetBeamStartPosition( const Vector& position )
 {
 	m_pState->origin = position;
 }
@@ -59,7 +59,7 @@ inline void CBeam::SetBeamStartPosition( const Vector& position )
 // @brief Returns the beam's starting position
 //
 //=============================================
-inline const Vector& CBeam::GetBeamStartPosition( void ) const
+DO_INLINE const Vector& CBeam::GetBeamStartPosition( void ) const
 {
 	if(GetBeamType() == BEAM_MSG_BEAMENTS && m_startEntity)
 		return m_startEntity->GetOrigin();	
@@ -71,7 +71,7 @@ inline const Vector& CBeam::GetBeamStartPosition( void ) const
 // @brief Sets the end position
 //
 //=============================================
-inline void CBeam::SetBeamEndPosition( const Vector& position )
+DO_INLINE void CBeam::SetBeamEndPosition( const Vector& position )
 {
 	m_pState->vuser1 = position;
 }
@@ -80,7 +80,7 @@ inline void CBeam::SetBeamEndPosition( const Vector& position )
 // @brief Returns the beam's starting position
 //
 //=============================================
-inline const Vector& CBeam::GetBeamEndPosition( void ) const
+DO_INLINE const Vector& CBeam::GetBeamEndPosition( void ) const
 {
 	beam_msgtype_t type = GetBeamType();
 	if(type != BEAM_MSG_BEAMPOINTS && m_endEntity)
@@ -93,7 +93,7 @@ inline const Vector& CBeam::GetBeamEndPosition( void ) const
 // @brief Sets the start entity attachment
 //
 //=============================================
-inline void CBeam::SetBeamStartEntityAttachment( Int32 attachmentindex )
+DO_INLINE void CBeam::SetBeamStartEntityAttachment( Int32 attachmentindex )
 {
 	m_attachment1Index = attachmentindex;
 	m_pState->iuser5 = attachmentindex;
@@ -103,7 +103,7 @@ inline void CBeam::SetBeamStartEntityAttachment( Int32 attachmentindex )
 // @brief Returns the start entity attachment
 //
 //=============================================
-inline Int32 CBeam::GetBeamStartEntityAttachment( void )
+DO_INLINE Int32 CBeam::GetBeamStartEntityAttachment( void )
 {
 	return m_pState->iuser5;
 }
@@ -112,7 +112,7 @@ inline Int32 CBeam::GetBeamStartEntityAttachment( void )
 // @brief Sets the end entity attachment
 //
 //=============================================
-inline void CBeam::SetBeamEndEntityAttachment( Int32 attachmentindex )
+DO_INLINE void CBeam::SetBeamEndEntityAttachment( Int32 attachmentindex )
 {
 	m_attachment2Index = attachmentindex;
 	m_pState->iuser6 = attachmentindex;
@@ -122,7 +122,7 @@ inline void CBeam::SetBeamEndEntityAttachment( Int32 attachmentindex )
 // @brief Returns the end entity attachment
 //
 //=============================================
-inline Int32 CBeam::GetBeamEndEntityAttachment( void )
+DO_INLINE Int32 CBeam::GetBeamEndEntityAttachment( void )
 {
 	return m_pState->iuser5;
 }
@@ -131,7 +131,7 @@ inline Int32 CBeam::GetBeamEndEntityAttachment( void )
 // @brief Sets the start entity
 //
 //=============================================
-inline void CBeam::SetBeamStartEntity( CBaseEntity* pEntity )
+DO_INLINE void CBeam::SetBeamStartEntity( CBaseEntity* pEntity )
 {
 	m_startEntity = pEntity;
 	if(pEntity)
@@ -150,7 +150,7 @@ inline void CBeam::SetBeamStartEntity( CBaseEntity* pEntity )
 // @brief Returns the start entity index
 //
 //=============================================
-inline CBaseEntity* CBeam::GetBeamStartEntity( void )
+DO_INLINE CBaseEntity* CBeam::GetBeamStartEntity( void )
 {
 	return m_startEntity;
 }
@@ -159,7 +159,7 @@ inline CBaseEntity* CBeam::GetBeamStartEntity( void )
 // @brief Sets the end entity
 //
 //=============================================
-inline void CBeam::SetBeamEndEntity( CBaseEntity* pEntity )
+DO_INLINE void CBeam::SetBeamEndEntity( CBaseEntity* pEntity )
 {
 	m_endEntity = pEntity;
 	if(pEntity)
@@ -172,7 +172,7 @@ inline void CBeam::SetBeamEndEntity( CBaseEntity* pEntity )
 // @brief Returns the start entity index
 //
 //=============================================
-inline CBaseEntity* CBeam::GetBeamEndEntity( void )
+DO_INLINE CBaseEntity* CBeam::GetBeamEndEntity( void )
 {
 	return m_endEntity;
 }
@@ -181,7 +181,7 @@ inline CBaseEntity* CBeam::GetBeamEndEntity( void )
 // @brief Sets the texture of the beam
 //
 //=============================================
-inline bool CBeam::SetBeamTexture( Int32 spriteindex )
+DO_INLINE bool CBeam::SetBeamTexture( Int32 spriteindex )
 {
 	const cache_model_t* pModel = gd_engfuncs.pfnGetModel(spriteindex);
 	if(!pModel)
@@ -194,7 +194,7 @@ inline bool CBeam::SetBeamTexture( Int32 spriteindex )
 // @brief Sets the texture of the beam
 //
 //=============================================
-inline bool CBeam::SetBeamTexture( const Char* pstrSpriteName )
+DO_INLINE bool CBeam::SetBeamTexture( const char* pstrSpriteName )
 {
 	return gd_engfuncs.pfnSetModel(m_pEdict, pstrSpriteName, false);
 }
@@ -203,7 +203,7 @@ inline bool CBeam::SetBeamTexture( const Char* pstrSpriteName )
 // @brief Returns the sprite index
 //
 //=============================================
-inline Int32 CBeam::GetBeamTexture( void ) const
+DO_INLINE Int32 CBeam::GetBeamTexture( void ) const
 {
 	return m_pState->modelindex;
 }
@@ -212,7 +212,7 @@ inline Int32 CBeam::GetBeamTexture( void ) const
 // @brief Sets the width of the beam
 //
 //=============================================
-inline void CBeam::SetBeamWidth( Float width )
+DO_INLINE void CBeam::SetBeamWidth( float width )
 {
 	m_pState->scale = width * 0.1;
 }
@@ -221,7 +221,7 @@ inline void CBeam::SetBeamWidth( Float width )
 // @brief Returns the beam width
 //
 //=============================================
-inline Float CBeam::GetBeamWidth( void ) const
+DO_INLINE float CBeam::GetBeamWidth( void ) const
 {
 	return m_pState->scale;
 }
@@ -230,7 +230,7 @@ inline Float CBeam::GetBeamWidth( void ) const
 // @brief Sets the amplitude of the beam
 //
 //=============================================
-inline void CBeam::SetBeamAmplitude( Float amplitude )
+DO_INLINE void CBeam::SetBeamAmplitude( float amplitude )
 {
 	m_pState->fuser2 = amplitude;
 }
@@ -239,7 +239,7 @@ inline void CBeam::SetBeamAmplitude( Float amplitude )
 // @brief Returns the beam amplitude
 //
 //=============================================
-inline Float CBeam::GetBeamAmplitude( void ) const
+DO_INLINE float CBeam::GetBeamAmplitude( void ) const
 {
 	return m_pState->fuser2;
 }
@@ -248,18 +248,18 @@ inline Float CBeam::GetBeamAmplitude( void ) const
 // @brief Sets the color of the beam
 //
 //=============================================
-inline void CBeam::SetBeamColor( Int32 r, Int32 g, Int32 b )
+DO_INLINE void CBeam::SetBeamColor( Int32 r, Int32 g, Int32 b )
 {
-	m_pState->rendercolor.x = clamp(r, 0, 255);
-	m_pState->rendercolor.y = clamp(g, 0, 255);
-	m_pState->rendercolor.z = clamp(b, 0, 255);
+	m_pState->rendercolor.x = Clamp(r, 0, 255);
+	m_pState->rendercolor.y = Clamp(g, 0, 255);
+	m_pState->rendercolor.z = Clamp(b, 0, 255);
 }
 
 //=============================================
 // @brief Returns the beam color
 //
 //=============================================
-inline const Vector& CBeam::GetBeamColor( void ) const
+DO_INLINE const Vector& CBeam::GetBeamColor( void ) const
 {
 	return m_pState->rendercolor;
 }
@@ -268,16 +268,16 @@ inline const Vector& CBeam::GetBeamColor( void ) const
 // @brief Sets the brightness of the beam
 //
 //=============================================
-inline void CBeam::SetBeamBrightness( Float brightness )
+DO_INLINE void CBeam::SetBeamBrightness( float brightness )
 {
-	m_pState->renderamt = clamp(brightness, 0, 255);
+	m_pState->renderamt = Clamp(brightness, 0, 255);
 }
 
 //=============================================
 // @brief Returns the beam brightness
 //
 //=============================================
-inline Float CBeam::GetBeamBrightness( void ) const
+DO_INLINE float CBeam::GetBeamBrightness( void ) const
 {
 	return m_pState->renderamt;
 }
@@ -286,7 +286,7 @@ inline Float CBeam::GetBeamBrightness( void ) const
 // @brief Sets the current frame
 //
 //=============================================
-inline void CBeam::SetBeamFrame( Float frame )
+DO_INLINE void CBeam::SetBeamFrame( float frame )
 {
 	m_pState->frame = frame;
 }
@@ -295,7 +295,7 @@ inline void CBeam::SetBeamFrame( Float frame )
 // @brief Returns the beam frame
 //
 //=============================================
-inline Float CBeam::GetBeamFrame( void ) const
+DO_INLINE float CBeam::GetBeamFrame( void ) const
 {
 	return m_pState->frame;
 }
@@ -304,7 +304,7 @@ inline Float CBeam::GetBeamFrame( void ) const
 // @brief Sets the scroll rate
 //
 //=============================================
-inline void CBeam::SetBeamScrollRate( Float speed )
+DO_INLINE void CBeam::SetBeamScrollRate( float speed )
 {
 	m_pState->fuser1 = speed;
 }
@@ -313,7 +313,7 @@ inline void CBeam::SetBeamScrollRate( Float speed )
 // @brief Returns the scroll rate
 //
 //=============================================
-inline Float CBeam::GetBeamScrollRate( void ) const
+DO_INLINE float CBeam::GetBeamScrollRate( void ) const
 {
 	return m_pState->fuser1;
 }
@@ -322,7 +322,7 @@ inline Float CBeam::GetBeamScrollRate( void ) const
 // @brief Sets the noise speed
 //
 //=============================================
-inline void CBeam::SetBeamNoiseSpeed( Float speed )
+DO_INLINE void CBeam::SetBeamNoiseSpeed( float speed )
 {
 	m_pState->fuser3 = speed;
 }
@@ -331,7 +331,7 @@ inline void CBeam::SetBeamNoiseSpeed( Float speed )
 // @brief Returns the noise speed
 //
 //=============================================
-inline Float CBeam::GetBeamNoiseSpeed( void ) const
+DO_INLINE float CBeam::GetBeamNoiseSpeed( void ) const
 {
 	return m_pState->fuser3;
 }
@@ -340,7 +340,7 @@ inline Float CBeam::GetBeamNoiseSpeed( void ) const
 // @brief Sets the beam to die after the given amount of time
 //
 //=============================================
-inline void CBeam::LiveForTime( Float time )
+DO_INLINE void CBeam::LiveForTime( float time )
 {
 	SetThink(&CBaseEntity::RemoveThink);
 	m_pState->nextthink = g_pGameVars->time + time;
@@ -350,7 +350,7 @@ inline void CBeam::LiveForTime( Float time )
 // @brief Deal instant damage
 //
 //=============================================
-inline void CBeam::BeamDamageInstant( trace_t& tr, Float damage )
+DO_INLINE void CBeam::BeamDamageInstant( trace_t& tr, float damage )
 {
 	m_beamDamage = damage;
 	m_dmgTime = g_pGameVars->time - 1;

@@ -67,7 +67,7 @@ void CGameRadio::Precache( void )
 	if(m_pFields->message == NO_STRING_VALUE)
 		return;
 
-	const Char* pstrsoundfile = gd_engfuncs.pfnGetString(m_pFields->message);
+	const char* pstrsoundfile = gd_engfuncs.pfnGetString(m_pFields->message);
 	gd_engfuncs.pfnPrecacheSound(pstrsoundfile);
 }
 
@@ -86,8 +86,8 @@ bool CGameRadio::Restore( void )
 	if(m_pFields->message == NO_STRING_VALUE || !m_beginTime)
 		return true;
 
-	const Char* pstrsoundfile = gd_engfuncs.pfnGetString(m_pFields->message);
-	Float duration = gd_engfuncs.pfnGetSoundDuration(pstrsoundfile, PITCH_NORM);
+	const char* pstrsoundfile = gd_engfuncs.pfnGetString(m_pFields->message);
+	float duration = gd_engfuncs.pfnGetSoundDuration(pstrsoundfile, PITCH_NORM);
 
 	if(m_beginTime + duration <= g_pGameVars->time)
 	{
@@ -96,7 +96,7 @@ bool CGameRadio::Restore( void )
 		return true;
 	}
 	
-	Float soundremainder = g_pGameVars->time - m_beginTime;
+	float soundremainder = g_pGameVars->time - m_beginTime;
 	gd_engfuncs.pfnPlayEntitySound(m_pPlayer->GetEntityIndex(), pstrsoundfile, HasSpawnFlag(FL_NO_MUTE) ? SND_FL_NONE : SND_FL_RADIO, SND_CHAN_STATIC, VOL_NORM, ATTN_NORM, PITCH_NORM, soundremainder, m_pPlayer->GetEntityIndex()-1);
 	return true;
 }
@@ -105,7 +105,7 @@ bool CGameRadio::Restore( void )
 // @brief
 //
 //=============================================
-void CGameRadio::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CGameRadio::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_pFields->message == NO_STRING_VALUE)
 		return;
@@ -118,13 +118,13 @@ void CGameRadio::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode
 		pEntity = Util::GetHostPlayer();
 
 	// Get sound file path
-	const Char* pstrsoundfile = gd_engfuncs.pfnGetString(m_pFields->message);
+	const char* pstrsoundfile = gd_engfuncs.pfnGetString(m_pFields->message);
 	gd_engfuncs.pfnPlayEntitySound(pEntity->GetEntityIndex(), pstrsoundfile, HasSpawnFlag(FL_NO_MUTE) ? SND_FL_NONE : SND_FL_RADIO, SND_CHAN_STATIC, VOL_NORM, ATTN_NORM, PITCH_NORM, 0, pEntity->GetClientIndex());
 
 	// Set radio icon
 	if(m_pFields->message != NO_STRING_VALUE)
 	{
-		const Char* pstrcallername = gd_engfuncs.pfnGetString(m_pFields->netname);
+		const char* pstrcallername = gd_engfuncs.pfnGetString(m_pFields->netname);
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.radiomessage, nullptr, pEntity->GetEdict());
 			gd_engfuncs.pfnMsgWriteInt16(m_pEdict->entindex);

@@ -38,15 +38,15 @@ public:
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	virtual togglestate_t GetToggleState( void ) override;
 	virtual bool IsLockedByMaster( void ) override;
-	virtual Float GetWaitTime( void ) override { return m_waitTime; }
+	virtual float GetWaitTime( void ) override { return m_waitTime; }
 
 public:
-	virtual Float GetDelay( void ) override;
+	virtual float GetDelay( void ) override;
 
-	void PlayLockSounds( bool locked, bool button, Float waittime, Double& nextSoundTime );
+	void PlayLockSounds( bool locked, bool button, float waittime, double& nextSoundTime );
 
-	void LinearMove( const Vector& destPosition, Float speed );
-	void AngularMove( const Vector& destAngle, Float speed );
+	void LinearMove( const Vector& destPosition, float speed );
+	void AngularMove( const Vector& destAngle, float speed );
 
 	void EXPORTFN LinearMoveDone( void );
 	void EXPORTFN AngularMoveDone( void );
@@ -58,7 +58,7 @@ public:
 #ifdef _DEBUG
 public:
 	// Sets the move done function in Debug mode
-	MOVEDONEPTR _SetMoveDone( MOVEDONEPTR pfnptr, const Char* pstrFunctionName );
+	MOVEDONEPTR _SetMoveDone( MOVEDONEPTR pfnptr, const char* pstrFunctionName );
 #endif
 
 private:
@@ -66,13 +66,13 @@ private:
 
 protected:
 	Int32 m_toggleState;
-	Double m_activateFinished;
+	double m_activateFinished;
 
-	Float m_moveDistance;
-	Float m_waitTime;
-	Float m_lip;
-	Float m_tWidth;
-	Float m_tLength;
+	float m_moveDistance;
+	float m_waitTime;
+	float m_lip;
+	float m_tWidth;
+	float m_tLength;
 
 	Vector m_position1;
 	Vector m_position2;
@@ -83,11 +83,11 @@ protected:
 	Vector m_finalDest;
 	Vector m_finalAngle;
 
-	Float m_height;
+	float m_height;
 
 	CEntityHandle m_activator;
 
-	Float m_damageDealt;
+	float m_damageDealt;
 	Int32 m_damageBits;
 
 	string_t m_masterEntityName;

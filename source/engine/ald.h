@@ -9,13 +9,17 @@ All Rights Reserved.
 
 #ifndef ALD_H
 #define ALD_H
+
+#include "constants.h"
+#include "aldformat.h"
+
 enum daystage_t;
 enum aldcompression_t;
 struct cache_model_t;
 
-extern bool ALD_Load( daystage_t stage, byte** pdestlmaparrays, byte** pdestvertexlightarrays );
+extern bool ALD_Load( daystage_t stage, Byte** pdestlmaparrays, Byte** pdestvertexlightarrays );
 extern bool ALD_ExportLightmaps( aldcompression_t compressionType, daystage_t daystage, CString* pstrFilenameOut = nullptr );
-extern void ALD_CopyAndExportLightmaps( const Char* psrcaldfilename, daystage_t srcstage, daystage_t dststage );
+extern void ALD_CopyAndExportLightmaps( const char* psrcaldfilename, daystage_t srcstage, daystage_t dststage );
 extern bool ALD_HasStageData( daystage_t stage );
 extern void ALD_ClearGame( void );
 extern void ALD_DeleteRestoreFile( void );

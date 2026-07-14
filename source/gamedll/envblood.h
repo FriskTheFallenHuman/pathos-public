@@ -37,21 +37,21 @@ public:
 public:
 	virtual bool Spawn( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bloodcolor_t GetBloodColor( void ) override;
 
 public:
-	Float GetBloodAmount( void ) const;
+	float GetBloodAmount( void ) const;
 
 	void SetBloodColor( bloodcolor_t color );
-	void SetBloodAmount( Float amount );
+	void SetBloodAmount( float amount );
 
 	Vector GetBloodDirection( void ) const;
 	Vector GetBloodPosition( CBaseEntity* pActivator ) const;
 
 private:
 	Int32 m_bloodColor;
-	Float m_bloodAmount;
+	float m_bloodAmount;
 };
 #endif //ENVBLOOD_H

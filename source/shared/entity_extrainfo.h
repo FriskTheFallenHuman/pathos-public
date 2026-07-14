@@ -36,7 +36,7 @@ struct entity_lightinfo_t
 		numsavedmlights(0),
 		reset(false)
 	{
-		for(Uint32 i = 0; i < (MAX_SURFACE_STYLES-1); i++)
+		for(UInt32 i = 0; i < (MAX_SURFACE_STYLES-1); i++)
 		{
 			prev_lightstyles[i] = 0;
 			target_lightstyles[i] = 0;
@@ -56,7 +56,7 @@ struct entity_lightinfo_t
 	// Current lightstyle diffuse colors
 	Vector lightstylecolors_diffuse[MAX_SURFACE_STYLES-1];
 	// Styles of the surface we're on
-	byte lightstyles[MAX_SURFACE_STYLES-1];
+	Byte lightstyles[MAX_SURFACE_STYLES-1];
 
 	// for lerping values
 	Vector prev_ambient;
@@ -73,15 +73,15 @@ struct entity_lightinfo_t
 	Vector prev_stylecolors_diffuse[MAX_SURFACE_STYLES-1];
 	Vector target_stylecolors_diffuse[MAX_SURFACE_STYLES-1];
 
-	byte prev_lightstyles[MAX_SURFACE_STYLES-1];
-	byte target_lightstyles[MAX_SURFACE_STYLES-1];
+	Byte prev_lightstyles[MAX_SURFACE_STYLES-1];
+	Byte target_lightstyles[MAX_SURFACE_STYLES-1];
 
 	// time we changed values
-	Double lighttime;
+	double lighttime;
 
 	// array of latest model light infos
 	mlightinfo_t savedmlights[MAX_ENT_MLIGHTS];
-	Uint32 numsavedmlights;
+	UInt32 numsavedmlights;
 
 	Vector lastlightorigin;
 
@@ -150,12 +150,12 @@ struct entity_extrainfo_t
 	struct cl_portal_t* pportaldata;
 
 	// PVS data for cameras
-	byte* ppvsdata;
+	Byte* ppvsdata;
 
 	// Leafnums for entity
-	CArray<Uint32> leafnums;
+	CArray<UInt32> leafnums;
 	// Number of leaves
-	Uint32 numleaves;
+	UInt32 numleaves;
 	
 	// cl_entity_t we're tied to
 	struct cl_entity_t* pentity;

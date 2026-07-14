@@ -23,9 +23,9 @@ All Rights Reserved.
 #include "cvar.h"
 
 // Client to server message buffer allocation size
-const Uint32 CNetworking::MSG_BUFFER_ALLOC_SIZE = 256;
+const UInt32 CNetworking::MSG_BUFFER_ALLOC_SIZE = 256;
 // Message data buffer allocation size
-const Uint32 CNetworking::MSG_DATA_BUFFER_ALLOC_SIZE = 2048;
+const UInt32 CNetworking::MSG_DATA_BUFFER_ALLOC_SIZE = 2048;
 
 // Pointer to networking class
 CNetworking* CNetworking::g_pNetworking = nullptr;
@@ -95,7 +95,7 @@ CNetworking::~CNetworking( void )
 	if(m_clientsArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_clientsArray.size(); i++)
+	for(UInt32 i = 0; i < m_clientsArray.size(); i++)
 	{
 		if(m_clientsArray[i].pcls_cache)
 			delete m_clientsArray[i].pcls_cache;
@@ -115,7 +115,7 @@ CNetworking::~CNetworking( void )
 // @brief
 //
 //=============================================
-bool CNetworking::Init( const Char* pstrhost )
+bool CNetworking::Init( const char* pstrhost )
 {
 	// Check if we're initializing the localhost
 	if(qstrcmp(pstrhost, "localhost"))
@@ -128,7 +128,7 @@ bool CNetworking::Init( const Char* pstrhost )
 	{
 		// Allocate all clients for server
 		m_clientsArray.resize(svs.maxclients);
-		for(Uint32 i = 0; i < svs.maxclients; i++)
+		for(UInt32 i = 0; i < svs.maxclients; i++)
 			InitClient(i, m_clientsArray[i], (i == 0) ? true : false);
 	}
 
@@ -155,9 +155,9 @@ net_msg_t* CNetworking::AllocMsg( net_msgcache_t* pcache )
 // @brief
 //
 //=============================================
-void CNetworking::SVC_MessageBegin( msgdest_t dest, Uint32 type, const edict_t* pedict, Int32 flags )
+void CNetworking::SVC_MessageBegin( msgdest_t dest, UInt32 type, const edict_t* pedict, Int32 flags )
 {
-	Uint32 cl_index = 0;
+	UInt32 cl_index = 0;
 
 	// Only seek cl index if it's not MSG_ALL
 	if(dest != MSG_ALL)
@@ -184,8 +184,8 @@ void CNetworking::SVC_MessageBegin( msgdest_t dest, Uint32 type, const edict_t* 
 		Con_EPrintf("%s called with an unfinished message.\n", __FUNCTION__);
 
 		// Reset the pointer and the data
-		byte *pdata = (*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset;
-		memset(pdata, 0, sizeof(byte)*m_pCurrentMessage->msg_size);
+		Byte *pdata = (*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset;
+		memset(pdata, 0, sizeof(Byte)*m_pCurrentMessage->msg_size);
 		m_pCurrentMessage = nullptr;
 	}
 
@@ -252,7 +252,7 @@ bool CNetworking::SVC_MessageEnd_Local( void )
 // @brief
 //
 //=============================================
-net_msgcache_t* CNetworking::SVC_GetWriteCache_Local( Uint32 clientidx )
+net_msgcache_t* CNetworking::SVC_GetWriteCache_Local( UInt32 clientidx )
 {
 	const net_client_t& cl = m_clientsArray[clientidx];
 	net_msgcache_t* pcache = cl.psvc_cache;
@@ -264,7 +264,7 @@ net_msgcache_t* CNetworking::SVC_GetWriteCache_Local( Uint32 clientidx )
 // @brief
 //
 //=============================================
-bool CNetworking::SVC_GetMessage( byte*& pmsgdata, Uint32& msgsize )
+bool CNetworking::SVC_GetMessage( Byte*& pmsgdata, UInt32& msgsize )
 {
 	// SVC will always arrive on client 0 as local client is on index 0
 	assert(m_pLocalClient != nullptr);
@@ -307,15 +307,15 @@ void CNetworking::SVC_ClearMessages( void )
 // @brief
 //
 //=============================================
-void CNetworking::CLS_MessageBegin( Uint32 type, Int32 flags )
+void CNetworking::CLS_MessageBegin( UInt32 type, Int32 flags )
 {
 	if(m_pCurrentMessage != nullptr)
 	{
 		Con_EPrintf("%s called with an unfinished message.\n", __FUNCTION__);
 
 		// Reset the pointer and the data
-		byte *pdata = (*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset;
-		memset(pdata, 0, sizeof(byte)*m_pCurrentMessage->msg_size);
+		Byte *pdata = (*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset;
+		memset(pdata, 0, sizeof(Byte)*m_pCurrentMessage->msg_size);
 		m_pCurrentMessage = nullptr;
 	}
 
@@ -387,7 +387,7 @@ bool CNetworking::CLS_MessageEnd_Local( void )
 // @brief
 //
 //=============================================
-bool CNetworking::CLS_GetMessage( Uint32 cl_index, byte*& pmsgdata, Uint32& msgsize )
+bool CNetworking::CLS_GetMessage( UInt32 cl_index, Byte*& pmsgdata, UInt32& msgsize )
 {
 	assert(cl_index < m_clientsArray.size());
 	net_client_t& cl = m_clientsArray[cl_index];
@@ -407,7 +407,7 @@ bool CNetworking::CLS_GetMessage( Uint32 cl_index, byte*& pmsgdata, Uint32& msgs
 // @brief
 //
 //=============================================
-void CNetworking::CLS_ClearMessages( Uint32 cl_index )
+void CNetworking::CLS_ClearMessages( UInt32 cl_index )
 {
 	assert(cl_index < m_clientsArray.size());
 	net_client_t& cl = m_clientsArray[cl_index];
@@ -462,38 +462,38 @@ void CNetworking::ResetClient( net_client_t& cl )
 // @brief
 //
 //=============================================
-void CNetworking::WriteByte( byte value )
+void CNetworking::WriteByte( Byte value )
 {
 	if(!m_pCurrentMessage)
 		return;
 
-	CheckBuffer((*m_pCurrentMessage), sizeof(byte));
+	CheckBuffer((*m_pCurrentMessage), sizeof(Byte));
 
-	byte* pdata = (*m_pCurrentMessage->pmsg_base) 
+	Byte* pdata = (*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
 	*pdata = value;
-	m_pCurrentMessage->msg_size += sizeof(byte);
+	m_pCurrentMessage->msg_size += sizeof(Byte);
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-void CNetworking::WriteChar( Char value )
+void CNetworking::WriteChar( char value )
 {
 	if(!m_pCurrentMessage)
 		return;
 
 	CheckBuffer((*m_pCurrentMessage), sizeof(value));
 
-	Char* pdata = reinterpret_cast<Char*>(*m_pCurrentMessage->pmsg_base) 
+	char* pdata = reinterpret_cast<char*>(*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
 	*pdata = value;
-	m_pCurrentMessage->msg_size += sizeof(Char);
+	m_pCurrentMessage->msg_size += sizeof(char);
 }
 
 //=============================================
@@ -507,7 +507,7 @@ void CNetworking::WriteInt16( Int16 value )
 
 	CheckBuffer((*m_pCurrentMessage), sizeof(Int16));
 
-	byte* pdata = (*m_pCurrentMessage->pmsg_base) 
+	Byte* pdata = (*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
@@ -519,19 +519,19 @@ void CNetworking::WriteInt16( Int16 value )
 // @brief
 //
 //=============================================
-void CNetworking::WriteUint16( Uint16 value )
+void CNetworking::WriteUint16( UInt16 value )
 {
 	if(!m_pCurrentMessage)
 		return;
 
-	CheckBuffer((*m_pCurrentMessage), sizeof(Uint16));
+	CheckBuffer((*m_pCurrentMessage), sizeof(UInt16));
 
-	byte* pdata = (*m_pCurrentMessage->pmsg_base) 
+	Byte* pdata = (*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
-	memcpy(pdata, &value, sizeof(Uint16));
-	m_pCurrentMessage->msg_size += sizeof(Uint16);
+	memcpy(pdata, &value, sizeof(UInt16));
+	m_pCurrentMessage->msg_size += sizeof(UInt16);
 }
 
 //=============================================
@@ -545,7 +545,7 @@ void CNetworking::WriteInt32( Int32 value )
 
 	CheckBuffer((*m_pCurrentMessage), sizeof(Int32));
 
-	byte* pdata = (*m_pCurrentMessage->pmsg_base) 
+	Byte* pdata = (*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
@@ -557,19 +557,19 @@ void CNetworking::WriteInt32( Int32 value )
 // @brief
 //
 //=============================================
-void CNetworking::WriteUint32( Uint32 value )
+void CNetworking::WriteUint32( UInt32 value )
 {
 	if(!m_pCurrentMessage)
 		return;
 
-	CheckBuffer((*m_pCurrentMessage), sizeof(Uint32));
+	CheckBuffer((*m_pCurrentMessage), sizeof(UInt32));
 
-	byte* pdata = (*m_pCurrentMessage->pmsg_base) 
+	Byte* pdata = (*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
-	memcpy(pdata, &value, sizeof(Uint32));
-	m_pCurrentMessage->msg_size += sizeof(Uint32);
+	memcpy(pdata, &value, sizeof(UInt32));
+	m_pCurrentMessage->msg_size += sizeof(UInt32);
 }
 
 //=============================================
@@ -583,7 +583,7 @@ void CNetworking::WriteInt64( Int64 value )
 
 	CheckBuffer((*m_pCurrentMessage), sizeof(Int64));
 
-	byte* pdata = (*m_pCurrentMessage->pmsg_base) 
+	Byte* pdata = (*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
@@ -595,26 +595,26 @@ void CNetworking::WriteInt64( Int64 value )
 // @brief
 //
 //=============================================
-void CNetworking::WriteUint64( Uint64 value )
+void CNetworking::WriteUint64( UInt64 value )
 {
 	if(!m_pCurrentMessage)
 		return;
 	
-	CheckBuffer((*m_pCurrentMessage), sizeof(Uint64));
+	CheckBuffer((*m_pCurrentMessage), sizeof(UInt64));
 
-	byte* pdata = (*m_pCurrentMessage->pmsg_base) 
+	Byte* pdata = (*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
-	memcpy(pdata, &value, sizeof(Uint64));
-	m_pCurrentMessage->msg_size += sizeof(Uint64);
+	memcpy(pdata, &value, sizeof(UInt64));
+	m_pCurrentMessage->msg_size += sizeof(UInt64);
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-void CNetworking::WriteSmallFloat( Float value )
+void CNetworking::WriteSmallFloat( float value )
 {
 	if(!m_pCurrentMessage)
 		return;
@@ -627,58 +627,58 @@ void CNetworking::WriteSmallFloat( Float value )
 // @brief
 //
 //=============================================
-void CNetworking::WriteFloat( Float value )
+void CNetworking::WriteFloat( float value )
 {
 	if(!m_pCurrentMessage)
 		return;
 
-	CheckBuffer((*m_pCurrentMessage), sizeof(Float));
+	CheckBuffer((*m_pCurrentMessage), sizeof(float));
 
-	byte* pdata = (*m_pCurrentMessage->pmsg_base) 
+	Byte* pdata = (*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
-	memcpy(pdata, &value, sizeof(Float));
+	memcpy(pdata, &value, sizeof(float));
 
-	m_pCurrentMessage->msg_size += sizeof(Float);
+	m_pCurrentMessage->msg_size += sizeof(float);
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-void CNetworking::WriteDouble( Float value )
+void CNetworking::WriteDouble( double value )
 {
 	if(!m_pCurrentMessage)
 		return;
 
-	CheckBuffer((*m_pCurrentMessage), sizeof(Double));
+	CheckBuffer((*m_pCurrentMessage), sizeof(double));
 
-	byte* pdata = (*m_pCurrentMessage->pmsg_base) 
+	Byte* pdata = (*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
-	memcpy(pdata, &value, sizeof(Double));
+	memcpy(pdata, &value, sizeof(double));
 
-	m_pCurrentMessage->msg_size += sizeof(Double);
+	m_pCurrentMessage->msg_size += sizeof(double);
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-void CNetworking::WriteBuffer( const byte* pdata, Uint32 size )
+void CNetworking::WriteBuffer( const Byte* pdata, UInt32 size )
 {
 	if(!m_pCurrentMessage)
 		return;
 
 	CheckBuffer((*m_pCurrentMessage), size);
 
-	byte* pdest = (*m_pCurrentMessage->pmsg_base) 
+	Byte* pdest = (*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
-	for(Uint32 i = 0; i < size; i++)
+	for(UInt32 i = 0; i < size; i++)
 		pdest[i] = pdata[i];
 		
 	m_pCurrentMessage->msg_size += size;
@@ -688,7 +688,7 @@ void CNetworking::WriteBuffer( const byte* pdata, Uint32 size )
 // @brief
 //
 //=============================================
-void CNetworking::WriteString( const Char* pstring )
+void CNetworking::WriteString( const char* pstring )
 {
 	if(!m_pCurrentMessage)
 		return;
@@ -696,7 +696,7 @@ void CNetworking::WriteString( const Char* pstring )
 	if(!pstring)
 	{
 		CheckBuffer((*m_pCurrentMessage), 1);
-		byte* pdest = (*m_pCurrentMessage->pmsg_base) 
+		Byte* pdest = (*m_pCurrentMessage->pmsg_base) 
 			+ m_pCurrentMessage->msg_offset
 			+ m_pCurrentMessage->msg_size;
 
@@ -706,17 +706,17 @@ void CNetworking::WriteString( const Char* pstring )
 	}
 
 	CString str(pstring);
-	Uint32 stringlength = qstrlen(pstring)+1;
+	UInt32 stringlength = qstrlen(pstring)+1;
 	WriteUint16(stringlength);
 
 	CheckBuffer((*m_pCurrentMessage), stringlength);
 
-	byte* pdest = (*m_pCurrentMessage->pmsg_base) 
+	Byte* pdest = (*m_pCurrentMessage->pmsg_base) 
 		+ m_pCurrentMessage->msg_offset
 		+ m_pCurrentMessage->msg_size;
 
-	for(Uint32 i = 0; i < stringlength; i++)
-		pdest[i] = static_cast<byte>(pstring[i]);
+	for(UInt32 i = 0; i < stringlength; i++)
+		pdest[i] = static_cast<Byte>(pstring[i]);
 		
 	m_pCurrentMessage->msg_size += stringlength;
 }
@@ -725,7 +725,7 @@ void CNetworking::WriteString( const Char* pstring )
 // @brief
 //
 //=============================================
-void CNetworking::WriteBitSet( const byte* pdataarray, Uint32 numbits, Uint32 numbytes )
+void CNetworking::WriteBitSet( const Byte* pdataarray, UInt32 numbits, UInt32 numbytes )
 {
 	if(!m_pCurrentMessage)
 		return;
@@ -742,23 +742,23 @@ void CNetworking::WriteBitSet( const byte* pdataarray, Uint32 numbits, Uint32 nu
 // @brief
 //
 //=============================================
-void CNetworking::CheckBuffer( net_msg_t& msg, Uint32 size )
+void CNetworking::CheckBuffer( net_msg_t& msg, UInt32 size )
 {
-	Uint32 finalSize = msg.msg_offset + msg.msg_size + size;
+	UInt32 finalSize = msg.msg_offset + msg.msg_size + size;
 	if(finalSize < (*msg.pmsg_bufsize))
 		return;
 
 	Int32 multiplier = 1;
-	Uint32 memNeeded = finalSize - ((*msg.pmsg_bufsize) - msg.msg_size);
+	UInt32 memNeeded = finalSize - ((*msg.pmsg_bufsize) - msg.msg_size);
 	if(memNeeded > MSG_DATA_BUFFER_ALLOC_SIZE)
 	{
-		Float nbTimes = static_cast<Float>(static_cast<Float>(memNeeded)/ static_cast<Float>(MSG_DATA_BUFFER_ALLOC_SIZE));
+		float nbTimes = static_cast<float>(static_cast<float>(memNeeded)/ static_cast<float>(MSG_DATA_BUFFER_ALLOC_SIZE));
 		multiplier = static_cast<Int32>(SDL_ceil(nbTimes));
 	}
 
 	// Resize the message data buffer
-	void* pmsgbuffer = Common::ResizeArray((*msg.pmsg_base), sizeof(byte), (*msg.pmsg_bufsize), MSG_DATA_BUFFER_ALLOC_SIZE*multiplier);
-	(*msg.pmsg_base) = static_cast<byte*>(pmsgbuffer);
+	void* pmsgbuffer = Common::ResizeArray((*msg.pmsg_base), sizeof(Byte), (*msg.pmsg_bufsize), MSG_DATA_BUFFER_ALLOC_SIZE*multiplier);
+	(*msg.pmsg_base) = static_cast<Byte*>(pmsgbuffer);
 	(*msg.pmsg_bufsize) = (*msg.pmsg_bufsize) + MSG_DATA_BUFFER_ALLOC_SIZE*multiplier;
 }
 
@@ -766,7 +766,7 @@ void CNetworking::CheckBuffer( net_msg_t& msg, Uint32 size )
 // @brief
 //
 //=============================================
-void CNetworking::InitClient( Uint32 index, net_client_t& cl, bool allocsvc )
+void CNetworking::InitClient( UInt32 index, net_client_t& cl, bool allocsvc )
 {
 	if(allocsvc)
 		cl.psvc_cache = new net_msgcache_t(MSG_BUFFER_ALLOC_SIZE, MSG_DATA_BUFFER_ALLOC_SIZE);
@@ -783,7 +783,7 @@ void CNetworking::InitClient( Uint32 index, net_client_t& cl, bool allocsvc )
 // @brief
 //
 //=============================================
-CString CNetworking::GetIPAddress( Uint32 cl_index )
+CString CNetworking::GetIPAddress( UInt32 cl_index )
 {
 	assert(cl_index < m_clientsArray.size());
 	const net_client_t& cl = m_clientsArray[cl_index];
@@ -800,7 +800,7 @@ CString CNetworking::GetIPAddress( Uint32 cl_index )
 // @brief
 //
 //=============================================
-const Char* CNetworking::GetInfoString( Uint32 cl_index )
+const char* CNetworking::GetInfoString( UInt32 cl_index )
 {
 	assert(cl_index < m_clientsArray.size());
 	net_client_t& cl = m_clientsArray[cl_index];
@@ -812,7 +812,7 @@ const Char* CNetworking::GetInfoString( Uint32 cl_index )
 // @brief
 //
 //=============================================
-netcl_state_t CNetworking::GetClientState( Uint32 cl_index )
+netcl_state_t CNetworking::GetClientState( UInt32 cl_index )
 {
 	assert(cl_index < m_clientsArray.size());
 	const net_client_t& cl = m_clientsArray[cl_index];
@@ -843,7 +843,7 @@ void CNetworking::Poll( void )
 // @brief
 //
 //=============================================
-Double CNetworking::GetLastMessageTime( Uint32 cl_index )
+double CNetworking::GetLastMessageTime( UInt32 cl_index )
 {
 	assert(cl_index < m_clientsArray.size());
 	const net_client_t& cl = m_clientsArray[cl_index];

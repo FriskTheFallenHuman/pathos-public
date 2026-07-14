@@ -25,17 +25,17 @@ public:
 
 public:
 	// Subway destination id for Bergen st.
-	static const Char BERGEN_ST_DEST_ID[];
+	static const char BERGEN_ST_DEST_ID[];
 	// Subway destination id for I B Mann st.
-	static const Char IBMANN_ST_DEST_ID[];
+	static const char IBMANN_ST_DEST_ID[];
 	// Subway destination id for Marshall
-	static const Char MARSHALL_ST_DEST_ID[];
+	static const char MARSHALL_ST_DEST_ID[];
 	// Subway destination id for Eckhart st.
-	static const Char ECKHART_ST_DEST_ID[];
+	static const char ECKHART_ST_DEST_ID[];
 	// Subway destination id for Kassarr st
-	static const Char KASSAR_ST_DEST_ID[];
+	static const char KASSAR_ST_DEST_ID[];
 	// Subway destination id for Aiello
-	static const Char AIELLO_ST_DEST_ID[];
+	static const char AIELLO_ST_DEST_ID[];
 
 public:
 	explicit CTriggerSubwayController( edict_t* pedict );
@@ -44,11 +44,11 @@ public:
 public:
 	virtual bool Spawn( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void DeclareSaveFields( void ) override;
 
 public:
-	void FireTarget( CBaseEntity* pPlayer, const Char* pstrdestinationid );
+	void FireTarget( CBaseEntity* pPlayer, const char* pstrdestinationid );
 
 public:
 	string_t m_destination1Target;

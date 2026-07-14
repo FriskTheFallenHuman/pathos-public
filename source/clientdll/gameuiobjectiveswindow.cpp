@@ -20,42 +20,42 @@ All Rights Reserved.
 #include "gameui_shared.h"
 
 // Object x inset for objectives window
-const Uint32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TAB_X_INSET = 30;
+const UInt32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TAB_X_INSET = 30;
 // Object y inset for objectives window
-const Uint32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TAB_Y_INSET = 60;
+const UInt32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TAB_Y_INSET = 60;
 // Object y spacing for objectives window
-const Uint32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TAB_Y_SPACING = 20;
+const UInt32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TAB_Y_SPACING = 20;
 // Object x spacing for objectives window
-const Uint32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TAB_X_SPACING = 80;
+const UInt32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TAB_X_SPACING = 80;
 // Text inset for objectives window
-const Uint32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TAB_TEXT_INSET = 10;
+const UInt32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TAB_TEXT_INSET = 10;
 // Default text color
 const color32_t CGameUIObjectivesWindow::OBJECTIVESWINDOW_TEXT_COLOR = color32_t(255, 255, 255, 255);
 // Height of the title surface
-const Uint32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TITLE_SURFACE_HEIGHT = 50;
+const UInt32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_TITLE_SURFACE_HEIGHT = 50;
 // Height of the button surface
-const Uint32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_BUTTON_SURFACE_HEIGHT = 350;
+const UInt32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_BUTTON_SURFACE_HEIGHT = 350;
 // Height of the info surface
-const Uint32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_INFO_SURFACE_HEIGHT = 200;
+const UInt32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_INFO_SURFACE_HEIGHT = 200;
 // Height of the exit button surface
-const Uint32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_EXIT_BUTTON_SURFACE_HEIGHT = 100;
+const UInt32 CGameUIObjectivesWindow::OBJECTIVESWINDOW_EXIT_BUTTON_SURFACE_HEIGHT = 100;
 // Number of objective buttons
-const Uint32 CGameUIObjectivesWindow::MAX_NB_OBJECTIVE_BUTTONS = 32;
+const UInt32 CGameUIObjectivesWindow::MAX_NB_OBJECTIVE_BUTTONS = 32;
 // Script subfolder name
-const Char CGameUIObjectivesWindow::OBJECTIVESWINDOW_SCRIPT_SUBFOLDER_NAME[] = "objectives";
+const char CGameUIObjectivesWindow::OBJECTIVESWINDOW_SCRIPT_SUBFOLDER_NAME[] = "objectives";
 // Base script name
-const Char CGameUIObjectivesWindow::OBJECTIVESWINDOW_SCRIPT_NAME[] = "defaults.txt";
+const char CGameUIObjectivesWindow::OBJECTIVESWINDOW_SCRIPT_NAME[] = "defaults.txt";
 // Color of highlighted buttons for this window
 const color32_t CGameUIObjectivesWindow::OBJECTIVESWINDOW_BUTTON_NEW_COLOR = color32_t(0, 255, 0, 100);
 // Title text default schema set name
-const Char CGameUIObjectivesWindow::OBJECTIVESWINDOW_TITLE_TEXTSCHEMA_NAME[] = "objectivestitle";
+const char CGameUIObjectivesWindow::OBJECTIVESWINDOW_TITLE_TEXTSCHEMA_NAME[] = "objectivestitle";
 // Text default font schema name
-const Char CGameUIObjectivesWindow::OBJECTIVESWINDOW_TEXTSCHEMA_NAME[] = "objectivestext";
+const char CGameUIObjectivesWindow::OBJECTIVESWINDOW_TEXTSCHEMA_NAME[] = "objectivestext";
 
 //====================================
 //
 //====================================
-CGameUIObjectivesWindow::CGameUIObjectivesWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUIObjectivesWindow::CGameUIObjectivesWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIWindow(flags, originX, originY, width, height),
 	m_pWindowTitleText(nullptr),
 	m_pDefaultDescription(nullptr),
@@ -90,17 +90,17 @@ CGameUIObjectivesWindow::~CGameUIObjectivesWindow( void )
 void CGameUIObjectivesWindow::init( void )
 {
 	// Init basic window elements
-	Uint32 verticalbarheight, middlebarwidth, barThickness;
+	UInt32 verticalbarheight, middlebarwidth, barThickness;
 	CGameUIWindow::initBackground(verticalbarheight, middlebarwidth, barThickness);
 
-	Uint32 tabTopInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_TOP_INSET);
-	Uint32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
-	Uint32 tabSideInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_SIDE_INSET);
-	Uint32 mainTabMaxWidth = gHUDDraw.ScaleX(GAMEUIWINDOW_MAIN_TAB_MAX_WIDTH);
-	Uint32 titleSurfaceHeight = gHUDDraw.ScaleY(OBJECTIVESWINDOW_TITLE_SURFACE_HEIGHT);
-	Uint32 buttonSurfaceHeight = gHUDDraw.ScaleY(OBJECTIVESWINDOW_BUTTON_SURFACE_HEIGHT);
-	Uint32 exitButtonSurfaceHeight = gHUDDraw.ScaleY(OBJECTIVESWINDOW_EXIT_BUTTON_SURFACE_HEIGHT);
-	Uint32 tabXSpacing = gHUDDraw.ScaleX(OBJECTIVESWINDOW_TAB_X_SPACING);
+	UInt32 tabTopInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_TOP_INSET);
+	UInt32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
+	UInt32 tabSideInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_SIDE_INSET);
+	UInt32 mainTabMaxWidth = gHUDDraw.ScaleX(GAMEUIWINDOW_MAIN_TAB_MAX_WIDTH);
+	UInt32 titleSurfaceHeight = gHUDDraw.ScaleY(OBJECTIVESWINDOW_TITLE_SURFACE_HEIGHT);
+	UInt32 buttonSurfaceHeight = gHUDDraw.ScaleY(OBJECTIVESWINDOW_BUTTON_SURFACE_HEIGHT);
+	UInt32 exitButtonSurfaceHeight = gHUDDraw.ScaleY(OBJECTIVESWINDOW_EXIT_BUTTON_SURFACE_HEIGHT);
+	UInt32 tabXSpacing = gHUDDraw.ScaleX(OBJECTIVESWINDOW_TAB_X_SPACING);
 
 	m_usedEdgeThickness = gHUDDraw.ScaleX(GAMEUIWINDOW_EDGE_THICKNESS);
 	m_infoSurfaceHeight = gHUDDraw.ScaleY(OBJECTIVESWINDOW_INFO_SURFACE_HEIGHT);
@@ -110,7 +110,7 @@ void CGameUIObjectivesWindow::init( void )
 	//
 	// Create the title text object
 	//
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	const font_set_t* pTitleFont = cl_engfuncs.pfnGetResolutionSchemaFontSet(OBJECTIVESWINDOW_TITLE_TEXTSCHEMA_NAME, screenHeight);
@@ -190,8 +190,8 @@ void CGameUIObjectivesWindow::init( void )
 	m_pWindowTitleText->setParent(pTitleTab);
 
 	// Create the buttons
-	Uint32 buttonWidth = m_buttonWidth = m_tabWidth - 2*tabXSpacing;
-	Uint32 buttonHeight = m_buttonHeight = (buttonSurfaceHeight - m_tabYSpacing * 7)/6;
+	UInt32 buttonWidth = m_buttonWidth = m_tabWidth - 2*tabXSpacing;
+	UInt32 buttonHeight = m_buttonHeight = (buttonSurfaceHeight - m_tabYSpacing * 7)/6;
 
 	Int32 buttonXPos = m_buttonXPos = tabXSpacing;
 	Int32 buttonYPos = m_buttonYPos = m_tabYSpacing;
@@ -238,7 +238,7 @@ void CGameUIObjectivesWindow::think( void )
 	{
 		bool hasVisible = false;
 
-		for (Uint32 i = 0; i < m_buttonsArray.size(); i++)
+		for (UInt32 i = 0; i < m_buttonsArray.size(); i++)
 		{
 			if (!m_buttonsArray[i].pButton->isVisible())
 				continue;
@@ -271,13 +271,13 @@ void CGameUIObjectivesWindow::think( void )
 //====================================
 //
 //====================================
-bool CGameUIObjectivesWindow::initData( const CArray<CString>& objectivesArray, const Char* pstrActiveObjectiveName, Int32& newObjectivesBitflags )
+bool CGameUIObjectivesWindow::initData( const CArray<CString>& objectivesArray, const char* pstrActiveObjectiveName, Int32& newObjectivesBitflags )
 {
 	// Load the base script
 	CString scriptFilePath;
 	scriptFilePath << GAMEUI_SCRIPT_BASE_PATH << PATH_SLASH_CHAR << OBJECTIVESWINDOW_SCRIPT_SUBFOLDER_NAME << PATH_SLASH_CHAR << OBJECTIVESWINDOW_SCRIPT_NAME;
 
-	const byte* pfile = cl_filefuncs.pfnLoadFile(scriptFilePath.c_str(), nullptr);
+	const Byte* pfile = cl_filefuncs.pfnLoadFile(scriptFilePath.c_str(), nullptr);
 	if(!pfile)
 	{
 		cl_engfuncs.pfnCon_EPrintf("%s - Failed to load '%s'.\n", __FUNCTION__, scriptFilePath.c_str());
@@ -288,7 +288,7 @@ bool CGameUIObjectivesWindow::initData( const CArray<CString>& objectivesArray, 
 	CString defaultDescription;
 
 	CString token;
-	const Char* pstr = reinterpret_cast<const Char*>(pfile);
+	const char* pstr = reinterpret_cast<const char*>(pfile);
 	while(pstr)
 	{
 		// Read the token in
@@ -326,7 +326,7 @@ bool CGameUIObjectivesWindow::initData( const CArray<CString>& objectivesArray, 
 				pstr++;
 					
 			// Find the ending bracket
-			const Char* pstrend = qstrstr(pstr, "}");
+			const char* pstrend = qstrstr(pstr, "}");
 			if(!pstrend)
 			{
 				cl_engfuncs.pfnCon_EPrintf("%s - Unexpected EOF while reading $button definition in '%s'.\n", __FUNCTION__, scriptFilePath.c_str());
@@ -335,13 +335,13 @@ bool CGameUIObjectivesWindow::initData( const CArray<CString>& objectivesArray, 
 			}
 
 			// Assign contents
-			Uint32 length = pstrend - pstr;
+			UInt32 length = pstrend - pstr;
 			defaultDescription.assign(pstr, length);
 
 			// Erase any tabulations
 			while(true)
 			{
-				Uint32 tabpos = defaultDescription.find(0, "\t");
+				UInt32 tabpos = defaultDescription.find(0, "\t");
 				if(tabpos == CString::CSTRING_NO_POSITION)
 					break;
 
@@ -382,20 +382,20 @@ bool CGameUIObjectivesWindow::initData( const CArray<CString>& objectivesArray, 
 	Int32 buttonYPos = m_buttonYPos;
 
 	// Track separately to avoid issues if a file is missing/bad
-	Uint32 nbAdded = 0;
-	for(Uint32 i = 0; i < objectivesArray.size(); i++)
+	UInt32 nbAdded = 0;
+	for(UInt32 i = 0; i < objectivesArray.size(); i++)
 	{
 		scriptFilePath.clear();;
 		scriptFilePath << GAMEUI_SCRIPT_BASE_PATH << PATH_SLASH_CHAR << "objectives" << PATH_SLASH_CHAR << objectivesArray[i] << ".txt";
 
-		const byte* pobjfile = cl_filefuncs.pfnLoadFile(scriptFilePath.c_str(), nullptr);
+		const Byte* pobjfile = cl_filefuncs.pfnLoadFile(scriptFilePath.c_str(), nullptr);
 		if(!pobjfile)
 		{
 			cl_engfuncs.pfnCon_EPrintf("%s - Failed to load '%s'.\n", __FUNCTION__, scriptFilePath.c_str());
 			continue;
 		}
 
-		pstr = reinterpret_cast<const Char*>(pobjfile);
+		pstr = reinterpret_cast<const char*>(pobjfile);
 
 		// Read the token in
 		pstr = Common::Parse(pstr, token);
@@ -441,7 +441,7 @@ bool CGameUIObjectivesWindow::initData( const CArray<CString>& objectivesArray, 
 			pstr++;
 					
 		// Find the ending bracket
-		const Char* pstrend = qstrstr(pstr, "}");
+		const char* pstrend = qstrstr(pstr, "}");
 		if(!pstrend)
 		{
 			cl_engfuncs.pfnCon_EPrintf("%s - Unexpected EOF while reading $button definition in '%s'.\n", __FUNCTION__, scriptFilePath.c_str());
@@ -451,13 +451,13 @@ bool CGameUIObjectivesWindow::initData( const CArray<CString>& objectivesArray, 
 
 		// Assign contents
 		CString objectiveDescription;
-		Uint32 length = pstrend - pstr;
+		UInt32 length = pstrend - pstr;
 		objectiveDescription.assign(pstr, length);
 
 		// Erase any tabulations
 		while(true)
 		{
-			Uint32 tabpos = objectiveDescription.find(0, "\t");
+			UInt32 tabpos = objectiveDescription.find(0, "\t");
 			if(tabpos == CString::CSTRING_NO_POSITION)
 				break;
 
@@ -465,7 +465,7 @@ bool CGameUIObjectivesWindow::initData( const CArray<CString>& objectivesArray, 
 		}
 
 		// Assign button contents and such
-		Uint32 addIndex = nbAdded;
+		UInt32 addIndex = nbAdded;
 		m_buttonsArray.resize(nbAdded + 1);
 		nbAdded++;
 
@@ -506,7 +506,7 @@ bool CGameUIObjectivesWindow::initData( const CArray<CString>& objectivesArray, 
 
 		newButton.objectiveName = objectivesArray[i];
 		newButton.pButton->setText(objectiveTitle.c_str());
-		newButton.pDescription->initData((const byte*)objectiveDescription.c_str(), objectiveDescription.length());
+		newButton.pDescription->initData((const Byte*)objectiveDescription.c_str(), objectiveDescription.length());
 		newButton.pButton->setVisible(true);
 
 		// Restore currently selected objective
@@ -544,7 +544,7 @@ void CGameUIObjectivesWindow::getInformation( CArray<CString>& objectivesArray, 
 	if(m_pCurrentObjective)
 		activeObjectiveName = m_pCurrentObjective->objectiveName;
 
-	for(Uint32 i = 0; i < m_buttonsArray.size(); i++)
+	for(UInt32 i = 0; i < m_buttonsArray.size(); i++)
 		objectivesArray.push_back(m_buttonsArray[i].objectiveName);
 
 	newObjectivesBitflags = m_newObjectivesBitflags;
@@ -584,7 +584,7 @@ void CGameUIObjectivesWindow::ManageEvent( objectivesbuttonevent_t event )
 				m_pCurrentObjective->pButton->setBgColor(GAMEUIWINDOW_MAIN_TAB_BG_COLOR);
 				m_newObjectivesBitflags &= ~(1 << buttonIndex);
 
-				Uint32 msgid = g_pGUIManager->GetServerUIMessageId();
+				UInt32 msgid = g_pGUIManager->GetServerUIMessageId();
 				if (!msgid)
 				{
 					cl_engfuncs.pfnCon_Printf("%s - Message 'GameUIMessage' not registered on client.\n", __FUNCTION__);
@@ -611,7 +611,7 @@ void CGameUIObjectivesWindow::ManageEvent( objectivesbuttonevent_t event )
 //====================================
 //
 //====================================
-void CGameUIObjectivesWindowCallbackEvent::PerformAction( Float param )
+void CGameUIObjectivesWindowCallbackEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;

@@ -63,31 +63,31 @@ struct ui_objectinfo_t
 		dragger(false)
 		{}
 
-	const Char* getName( void ) const { return objectName.c_str(); }
+	const char* getName( void ) const { return objectName.c_str(); }
 	ui_object_type_t getType( void ) const { return type; }
 
-	Uint32 getXOrigin( void ) const { return originx; }
-	Uint32 getYOrigin( void ) const { return originy; }
+	UInt32 getXOrigin( void ) const { return originx; }
+	UInt32 getYOrigin( void ) const { return originy; }
 
-	Uint32 getWidth( void ) const { return width; }
-	Uint32 getHeight( void ) const { return height; }
+	UInt32 getWidth( void ) const { return width; }
+	UInt32 getHeight( void ) const { return height; }
 
-	Uint32 getXInset( void ) const { return insetx; }
-	Uint32 getYInset( void ) const { return insety; }
+	UInt32 getXInset( void ) const { return insetx; }
+	UInt32 getYInset( void ) const { return insety; }
 
-	Uint32 getTitleXInset( void ) const { return title_insetx; }
-	Uint32 getTitleYInset( void ) const { return title_insety; }
+	UInt32 getTitleXInset( void ) const { return title_insetx; }
+	UInt32 getTitleYInset( void ) const { return title_insety; }
 
-	Uint32 getTextInset( void ) const { return text_inset; }
+	UInt32 getTextInset( void ) const { return text_inset; }
 
-	Uint32 getListRowHeight( void ) const { return listrowheight; }
+	UInt32 getListRowHeight( void ) const { return listrowheight; }
 
-	Float getAlpha( void ) const { return alpha; }
+	float getAlpha( void ) const { return alpha; }
 	Int32 getFlags( void ) const { return flags; }
 
-	Float getMinValue( void ) const { return minvalue; }
-	Float getMaxValue( void ) const { return maxvalue; }
-	Float getMarkerDistance( void ) const { return markerdistance; }
+	float getMinValue( void ) const { return minvalue; }
+	float getMaxValue( void ) const { return maxvalue; }
+	float getMarkerDistance( void ) const { return markerdistance; }
 
 	const CString& getText( void ) const { return text; }
 	const CString& getTitle( void ) const { return title; }
@@ -103,20 +103,20 @@ struct ui_objectinfo_t
 	Int32 originx;
 	Int32 originy;
 
-	Uint32 width;
-	Uint32 height;
+	UInt32 width;
+	UInt32 height;
 
-	Uint32 insetx;
-	Uint32 insety;
+	UInt32 insetx;
+	UInt32 insety;
 
-	Uint32 title_insetx;
-	Uint32 title_insety;
+	UInt32 title_insetx;
+	UInt32 title_insety;
 
-	Uint32 text_inset;
+	UInt32 text_inset;
 
-	Uint32 listrowheight;
+	UInt32 listrowheight;
 
-	Float alpha;
+	float alpha;
 
 	Int32 flags;
 
@@ -126,9 +126,9 @@ struct ui_objectinfo_t
 
 	const font_set_t* pfont;
 
-	Float minvalue;
-	Float maxvalue;
-	Float markerdistance;
+	float minvalue;
+	float maxvalue;
+	float markerdistance;
 
 	bool resizable;
 	bool dragger;
@@ -139,9 +139,9 @@ struct ui_windowdescription_t
 	ui_windowdescription_t()
 		{}
 
-	inline const ui_objectinfo_t* getObject( ui_object_type_t type, const Char* pstrName ) const
+	DO_INLINE const ui_objectinfo_t* getObject( ui_object_type_t type, const char* pstrName ) const
 	{
-		for(Uint32 i = 0; i < objectsArray.size(); i++)
+		for(UInt32 i = 0; i < objectsArray.size(); i++)
 		{
 			if(objectsArray[i].type != type)
 				continue;
@@ -202,19 +202,19 @@ struct ui_engine_interface_t
 		}
 
 	// Returns the engine time
-	Double				(*pfnGetEngineTime)( void );
+	double				(*pfnGetEngineTime)( void );
 
-	void				(*pfnCon_Printf)( const Char *fmt, ... );
-	void				(*pfnCon_DPrintf)( const Char *fmt, ... );
-	void				(*pfnCon_VPrintf)( const Char *fmt, ... );
-	void				(*pfnCon_WPrintf)( const Char *fmt, ... );
-	void				(*pfnCon_EPrintf)( const Char *fmt, ... );
+	void				(*pfnCon_Printf)( const char *fmt, ... );
+	void				(*pfnCon_DPrintf)( const char *fmt, ... );
+	void				(*pfnCon_VPrintf)( const char *fmt, ... );
+	void				(*pfnCon_WPrintf)( const char *fmt, ... );
+	void				(*pfnCon_EPrintf)( const char *fmt, ... );
 
 	// Returns the mouse position
 	void				(*pfnGetMousePosition)( Int32& x, Int32& y );
 
 	// Loads a window schema file
-	ui_schemeinfo_t*	(*pfnUILoadSchemaFile)( const Char* pstrFilename );
+	ui_schemeinfo_t*	(*pfnUILoadSchemaFile)( const char* pstrFilename );
 
 	// Tells if basic draw is active
 	bool				(*pfnBasicDrawIsActive)( void );
@@ -231,40 +231,40 @@ struct ui_engine_interface_t
 	// Renders the primitives
 	void				(*pfnBasicDrawEnd)( void );
 	// Sets a vertex's color
-	void				(*pfnBasicDrawColor4f)( Float r, Float g, Float b, Float a );
-	void				(*pfnBasicDrawColor4fv)( const Float* pfc );
+	void				(*pfnBasicDrawColor4f)( float r, float g, float b, float a );
+	void				(*pfnBasicDrawColor4fv)( const float* pfc );
 	// Sets a vertex's texcoords
-	void				(*pfnBasicDrawTexCoord2f)( Float u, Float v );
-	void				(*pfnBasicDrawTexCoord2fv)( const Float* ptc );
+	void				(*pfnBasicDrawTexCoord2f)( float u, float v );
+	void				(*pfnBasicDrawTexCoord2fv)( const float* ptc );
 	// Sets a vertex's origin
-	void				(*pfnBasicDrawVertex3f)( Float x, Float y, Float z );
-	void				(*pfnBasicDrawVertex3fv)( const Float* pfv );
+	void				(*pfnBasicDrawVertex3f)( float x, float y, float z );
+	void				(*pfnBasicDrawVertex3fv)( const float* pfv );
 	// Sets the projection matrix
-	void				(*pfnBasicDrawSetProjection)( const Float* pMatrix );
+	void				(*pfnBasicDrawSetProjection)( const float* pMatrix );
 	// Sets the modelview matrix
-	void				(*pfnBasicDrawSetModelView)( const Float* pMatrix );
+	void				(*pfnBasicDrawSetModelView)( const float* pMatrix );
 
 	// Binds a texture to a texture unit
-	void				(*pfnBind2DTexture)( Int32 texture, Uint32 id, bool force );
+	void				(*pfnBind2DTexture)( Int32 texture, UInt32 id, bool force );
 
 	// Gets the default font set
 	const font_set_t*	(*pfnGetDefaultFontSet)( void );
 	// Loads a font set
-	const font_set_t*	(*pfnLoadFontSet)( const Char *pstrFilename, Int32 fontSize );
+	const font_set_t*	(*pfnLoadFontSet)( const char *pstrFilename, Int32 fontSize );
 	// Draws a simple string on the screen
-	bool				(*pfnDrawSimpleString)( color32_t color, Int32 x, Int32 y, const Char* pstrString, const font_set_t* pfont );
+	bool				(*pfnDrawSimpleString)( color32_t color, Int32 x, Int32 y, const char* pstrString, const font_set_t* pfont );
 	// Draws a string box on the screen
-	bool				(*pfnDrawStringBox)( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int16 insetx, Int16 insety, bool reverse, color32_t color, Int32 x, Int32 y, const Char* pstrString, const font_set_t* pfont, Uint32 offset, Uint32 minlineheight, Uint32 xoffset );
+	bool				(*pfnDrawStringBox)( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int16 insetx, Int16 insety, bool reverse, color32_t color, Int32 x, Int32 y, const char* pstrString, const font_set_t* pfont, UInt32 offset, UInt32 minlineheight, UInt32 xoffset );
 	// Sets up for text rendering
 	bool				(*pfnBeginTextRendering)( const font_set_t* pfontset );
 	// Ends text rendering
 	void				(*pfnFinishTextRendering)( void );
 	// Draws a single character
-	bool				(*pfnDrawCharacter)( Int32 x, Int32 y, Char character, Uint32 r, Uint32 g, Uint32 b, Uint32 a );
+	bool				(*pfnDrawCharacter)( Int32 x, Int32 y, char character, UInt32 r, UInt32 g, UInt32 b, UInt32 a );
 	// Returns the size of a string in pixels
-	void				(*pfnGetStringSize)( const font_set_t *pset, const Char *pstring, Uint32 *width, Uint32 *height, Int32 *ymin );
+	void				(*pfnGetStringSize)( const font_set_t *pset, const char *pstring, UInt32 *width, UInt32 *height, Int32 *ymin );
 	// Estimates height of a string
-	Int32				(*pfnEstimateStringHeight)( const font_set_t *pset, const Char *pstrString, Uint32 minlineheight );
+	Int32				(*pfnEstimateStringHeight)( const font_set_t *pset, const char *pstrString, UInt32 minlineheight );
 	// Sets the string drawing rectangle
 	void				(*pfnSetStringRectangle)( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int32 insetx, Int32 insety );
 
@@ -274,7 +274,7 @@ struct ui_engine_interface_t
 	CMatrix&			(*pfnGetModelViewMatrix)( void );
 
 	// Gets the window sizes
-	void				(*pfnGetWindowSize)( Uint32& width, Uint32& height );
+	void				(*pfnGetWindowSize)( UInt32& width, UInt32& height );
 	// Validates basic draw
 	void				(*pfnValidateBasicDraw)( void );
 };

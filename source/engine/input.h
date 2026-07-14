@@ -22,7 +22,7 @@ class CInput
 {
 private:
 	// Inputs file path
-	static const Char KEYNAMES_FILE_PATH[];
+	static const char KEYNAMES_FILE_PATH[];
 	// Mouse wheel names
 	static const CString MOUSE_WHEEL_NAMES[];
 
@@ -43,7 +43,7 @@ private:
 			color(255, 255, 255, 255)
 		{}
 
-		Uint32 nbRepeats;
+		UInt32 nbRepeats;
 		bool isDown;
 
 		CString binding;
@@ -109,19 +109,19 @@ public:
 	void UpdateMousePositions( bool clearReset = true );
 
 	// Returns the key name for a bind
-	const Char* GetKeynameForBind( const Char* pstrBind );
+	const char* GetKeynameForBind( const char* pstrBind );
 	// Returns the key name for a bind
-	const Char* GetKeynameForScancode( Int32 scancodeIdx );
+	const char* GetKeynameForScancode( Int32 scancodeIdx );
 	// Returns the mouse button name for a bind
-	const Char* GetMouseButtonName( Int32 button );
+	const char* GetMouseButtonName( Int32 button );
 	// Returns the mouse wheel event name for a bind
-	const Char* GetMouseWheelEventName( Int32 button );
+	const char* GetMouseWheelEventName( Int32 button );
 
 	// Tells if the cursor is visible
-	inline bool IsMouseVisible( void ) const { return m_isCursorVisible; }
+	DO_INLINE bool IsMouseVisible( void ) const { return m_isCursorVisible; }
 
 	// Resets keys tied to a command
-	void ResetInputCommand( const Char* name );
+	void ResetInputCommand( const char* name );
 
 public:
 	// Command functions
@@ -135,15 +135,15 @@ private:
 	// Key input buffer array
 	CArray<keyevent_t> m_keyInputBuffer;
 	// Number of cached key inputs
-	Uint32 m_numKeyInputs;
+	UInt32 m_numKeyInputs;
 
-	// TRUE if the system mouse is visible
+	// true if the system mouse is visible
 	bool m_isCursorVisible;
-	// TRUE if shift is being pressed
+	// true if shift is being pressed
 	bool m_isShiftDown;
-	// TRUE if we should ignore delta on the next frame
+	// true if we should ignore delta on the next frame
 	bool m_resetMouse;
-	// TRUE if relative mouse mode was set
+	// true if relative mouse mode was set
 	bool m_relativeMouseModeSet;
 
 	// Mouse positions on previous frame

@@ -18,7 +18,7 @@ static constexpr Uint32 DEFAULT_FONT_SIZE = 20;
 // Default font size
 static constexpr Uint32 MAX_FONT_SIZE = 72;
 // Default font set name
-static const Char DEFAULT_FONTSET_NAME[] = "calibri.ttf";
+static const char DEFAULT_FONTSET_NAME[] = "FantasqueSansMono-Regular.ttf";
 
 // No GL info index
 static constexpr Int32 NO_GL_INFO_INDEX = -1;
@@ -54,7 +54,7 @@ struct font_glyph_t
 	Uint32 start_vertex;
 
 	// s and t offsets
-	Float texcoords[4][2];
+	float texcoords[4][2];
 };
 
 struct font_set_t

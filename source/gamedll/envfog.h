@@ -33,22 +33,22 @@ public:
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	virtual void DeclareSaveFields( void ) override;
 
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void SendInitMessage( const CBaseEntity* pPlayer ) override;
 
 public:
 	static void ClearFogGlobals( void );
 	static void UpdateFogGlobals( void );
 	static bool FogCull( const edict_t& client, const edict_t& entity );
-	static const Float GetFogEndDistance( void ) { return g_fogEndDist; }
+	static const float GetFogEndDistance( void ) { return g_fogEndDist; }
 	static color24_t& GetFogColor( void ) { return g_fogColor; }
-	static void SetFogCullParams( Float endDistance, Float blendTime, bool affectSky, const color24_t& color );
-	static void SetFogCullParams( Float endDistance, Float blendTime, bool affectSky, const Vector& color );
+	static void SetFogCullParams( float endDistance, float blendTime, bool affectSky, const color24_t& color );
+	static void SetFogCullParams( float endDistance, float blendTime, bool affectSky, const Vector& color );
 
 protected:
-	Float m_startDistance;
-	Float m_endDistance;
-	Float m_blendTime;
+	float m_startDistance;
+	float m_endDistance;
+	float m_blendTime;
 	
 	bool m_isActive;
 	bool m_dontAffectSky;
@@ -57,12 +57,12 @@ protected:
 	// Current fog color
 	static color24_t g_fogColor;
 	// Current fog end distance
-	static Uint32 g_fogEndDist;
+	static UInt32 g_fogEndDist;
 	// Fog ideal distance to set
-	static Uint32 g_fogIdealEndDist;
+	static UInt32 g_fogIdealEndDist;
 	// Time until fog blending is done
-	static Double g_fogBlendTime;
-	// TRUE if fog should affect skybox
+	static double g_fogBlendTime;
+	// true if fog should affect skybox
 	static bool g_fogAffectSky;
 };
 

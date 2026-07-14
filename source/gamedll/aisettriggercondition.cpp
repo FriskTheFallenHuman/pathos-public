@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "aisettriggercondition.h"
 
 // Number of AI condition triggers
-const Uint32 CAISetTriggerCondition::NUM_CONDITION_TRIGGERS = 2;
+const UInt32 CAISetTriggerCondition::NUM_CONDITION_TRIGGERS = 2;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(ai_settriggercondition, CAISetTriggerCondition);
@@ -106,9 +106,9 @@ bool CAISetTriggerCondition::Spawn( void )
 // @brief
 //
 //=============================================
-void CAISetTriggerCondition::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CAISetTriggerCondition::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
-	const Char* pstrTargetEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTargetEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
 
 	edict_t* pTargetEdict = Util::FindEntityByTargetName(nullptr, pstrTargetEntityName);
 	if(Util::IsNullEntity(pTargetEdict))

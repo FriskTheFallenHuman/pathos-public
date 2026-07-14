@@ -19,7 +19,7 @@ class CEnvBeverage : public CPointEntity
 {
 public:
 	// Default number of cans in an env_beverage
-	static const Uint32 DEFAULT_NB_BEVERAGES;
+	static const UInt32 DEFAULT_NB_BEVERAGES;
 	
 public:
 	enum
@@ -40,7 +40,7 @@ public:
 public:
 	virtual bool Spawn( void ) override;
 	virtual void Precache( void ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void ChildEntityRemoved( CBaseEntity* pEntity ) override;
 };
 #endif //ENVBEVERAGE_H

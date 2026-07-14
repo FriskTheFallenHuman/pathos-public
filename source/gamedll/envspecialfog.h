@@ -31,7 +31,7 @@ public:
 public:
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	virtual void DeclareSaveFields( void ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 private:
 	Int32 m_triggerMode;

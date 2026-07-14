@@ -31,10 +31,10 @@ struct subtitle_t
 	CString szname;
 	CString subtitle;
 
-	Float delay;
-	Float r;
-	Float g;
-	Float b;
+	float delay;
+	float r;
+	float g;
+	float b;
 };
 
 struct active_subtitle_t
@@ -47,9 +47,9 @@ struct active_subtitle_t
 		{}
 
 	subtitle_t* psubtitle;
-	Double holdtime;
-	Double timeout;
-	Double spawntime;
+	double holdtime;
+	double timeout;
+	double spawntime;
 };
 
 struct weapon_t
@@ -74,7 +74,7 @@ struct weapon_t
 	Int32		ammotype;
 	Int32		maxammo;
 	Int32		maxclip;
-	Uint32		slot;
+	UInt32		slot;
 	Int32		slotposition;
 	Int32		flags;
 	Int32		weaponid;
@@ -97,8 +97,8 @@ struct radiomessage_t
 
 	CString callername;
 	color32_t color;
-	Float life;
-	Double spawntime;
+	float life;
+	double spawntime;
 	entindex_t entindex;
 };
 
@@ -123,25 +123,25 @@ public:
 	// Assigns a weapon to a slot
 	void AssignWeapon( weapon_t* pweapon );
 	// Returns a weapon for an ID
-	weapon_t* GetWeapon( Uint32 id );
+	weapon_t* GetWeapon( UInt32 id );
 	// Removes a weapon from it's slot
 	void RemoveWeapon( weapon_t* pweapon );
 	// Removes all weapons from their slots
 	void RemoveAllWeapons( void );
 
 	// Returns a weapon at a specific slot and slot position
-	weapon_t* GetWeaponFromSlot( Uint32 slot, Uint32 position );
+	weapon_t* GetWeaponFromSlot( UInt32 slot, UInt32 position );
 	// Returns the first weapon in a slot
-	weapon_t* GetSlotFirstWeapon( Uint32 slot );
+	weapon_t* GetSlotFirstWeapon( UInt32 slot );
 	// Returns the next available weapon in the slot
-	weapon_t* GetNextSlotWeapon( Uint32 slot, Uint32 position );
+	weapon_t* GetNextSlotWeapon( UInt32 slot, UInt32 position );
 
 	// Tells if a weapon has any ammy
 	bool WeaponHasAmmo( weapon_t* pweapon ) const;
 	// Returns the ammo count for an ammo type
-	Uint32 GetAmmoCount( Int32 ammoId ) const;
+	UInt32 GetAmmoCount( Int32 ammoId ) const;
 	// Sets ammo count for an ammo type
-	void SetAmmoCount( Int32 ammoId, Uint32 count );
+	void SetAmmoCount( Int32 ammoId, UInt32 count );
 
 private:
 	// Array of weapons
@@ -150,7 +150,7 @@ private:
 	// Slot assignments
 	weapon_t*	m_pSlotsArray[MAX_WEAPON_SLOTS][MAX_SLOT_POSITIONS];
 	// Ammo counts
-	Uint32		m_ammoCounts[MAX_AMMO_TYPES];
+	UInt32		m_ammoCounts[MAX_AMMO_TYPES];
 };
 
 /*
@@ -172,15 +172,15 @@ public:
 
 public:
 	// Time an item spends active
-	static const Float HUD_HISTORY_DRAW_TIME;
+	static const float HUD_HISTORY_DRAW_TIME;
 	// History spacing
-	static const Uint32 HISTORY_SPACING;
+	static const UInt32 HISTORY_SPACING;
 	// Max history height
-	static const Float MAX_HISTORY_HEIGHT;
+	static const float MAX_HISTORY_HEIGHT;
 	// Text color
 	static color32_t HISTORY_TEXT_COLOR;
 	// Fade time for history texts
-	static const Float HISTORY_FADE_TIME;
+	static const float HISTORY_FADE_TIME;
 
 private:
 	struct hudhistory_t
@@ -189,7 +189,7 @@ private:
 			die(0)
 			{}
 
-		Float die;
+		float die;
 		CString description;
 	};
 
@@ -202,11 +202,11 @@ public:
 	void Reset( void );
 
 	// Adds a history element
-	void AddElement( Uint32 type, Uint32 id, Uint32 count = 0 );
+	void AddElement( UInt32 type, UInt32 id, UInt32 count = 0 );
 	// Adds a history element
-	void AddElement( Uint32 type, const Char* pstrname, Uint32 count );
+	void AddElement( UInt32 type, const char* pstrname, UInt32 count );
 	// Adds a history element
-	void AddElement( Uint32 type, const Char* pstrmsg );
+	void AddElement( UInt32 type, const char* pstrmsg );
 
 	// Tells if we have any elements to draw
 	bool HasActiveElements( void );
@@ -234,7 +234,7 @@ public:
 
 public:
 	// Default HUD alpha value
-	static const Float HUD_DEFAULT_ALPHA;
+	static const float HUD_DEFAULT_ALPHA;
 	// HUD white color
 	static const Vector HUD_COLOR_WHITE;
 	// HUD gray color
@@ -249,86 +249,86 @@ public:
 	static const Vector HUD_COLOR_ORANGE;
 
 	// Tilt amount
-	static const Uint32 TILT_AMOUNT;
+	static const UInt32 TILT_AMOUNT;
 	// Generic tab size
-	static const Uint32 TAB_GENERIC_SIZE_X;
-	static const Uint32 TAB_GENERIC_SIZE_Y;
-	static const Uint32 TAB_MOVENOISE_SIZE_X;
+	static const UInt32 TAB_GENERIC_SIZE_X;
+	static const UInt32 TAB_GENERIC_SIZE_Y;
+	static const UInt32 TAB_MOVENOISE_SIZE_X;
 	// Radio message tab width
-	static const Uint32 RADIO_MSGTAB_SIZE_X;
-	static const Uint32 RADIO_MSGTAB_SIZE_Y;
-	static const Uint32 RADIO_MSGTAB_SPACING;
-	static const Float RADIO_MSG_FADETIME;
+	static const UInt32 RADIO_MSGTAB_SIZE_X;
+	static const UInt32 RADIO_MSGTAB_SIZE_Y;
+	static const UInt32 RADIO_MSGTAB_SPACING;
+	static const float RADIO_MSG_FADETIME;
 	// Tab label size
-	static const Uint32 TAB_LABEL_SIZE_X;
+	static const UInt32 TAB_LABEL_SIZE_X;
 	// Heal tab width
-	static const Uint32 TAB_HEAL_SIZE_X;
+	static const UInt32 TAB_HEAL_SIZE_X;
 	// Healthkit tab width
-	static const Uint32 TAB_HEALTHKIT_SIZE_X;
+	static const UInt32 TAB_HEALTHKIT_SIZE_X;
 	// Tactical icon width
-	static const Uint32 TACTICAL_ICON_X;
+	static const UInt32 TACTICAL_ICON_X;
 	// Tactical icon height
-	static const Uint32 TACTICAL_ICON_Y;
+	static const UInt32 TACTICAL_ICON_Y;
 	// Tactical tab width
-	static const Uint32 TAB_TACTICAL_SIZE_X;
+	static const UInt32 TAB_TACTICAL_SIZE_X;
 	// Weapon tab width
-	static const Uint32 TAB_WEAPON_SIZE_X;
+	static const UInt32 TAB_WEAPON_SIZE_X;
 	// Clip label width
-	static const Uint32 LABEL_CLIP_SIZE_X;
+	static const UInt32 LABEL_CLIP_SIZE_X;
 	// Percentage bar height
-	static const Uint32 PERCENTAGE_BAR_HEIGHT;
+	static const UInt32 PERCENTAGE_BAR_HEIGHT;
 	// Icon size
-	static const Uint32 ICON_SIZE;
+	static const UInt32 ICON_SIZE;
 	// Ammo icon width
-	static const Float AMMOICON_SIZE_X;
+	static const float AMMOICON_SIZE_X;
 	// Ammo icon height
-	static const Float AMMOICON_SIZE_Y;
+	static const float AMMOICON_SIZE_Y;
 	// Weapon rubicle width
-	static const Uint32 RUBICLE_WEAPONINFO_SIZE_X;
+	static const UInt32 RUBICLE_WEAPONINFO_SIZE_X;
 	// List label T width
-	static const Uint32 LIST_LABEL_T_X;
+	static const UInt32 LIST_LABEL_T_X;
 	// List label T height
-	static const Uint32 LIST_LABEL_T_Y;
+	static const UInt32 LIST_LABEL_T_Y;
 	// List label S width
-	static const Uint32 LIST_LABEL_S_X;
+	static const UInt32 LIST_LABEL_S_X;
 	// List label S height
-	static const Uint32 LIST_LABEL_S_Y;
+	static const UInt32 LIST_LABEL_S_Y;
 	// Weapon tab X
-	static const Uint32 LIST_WEAPONTAB_X;
+	static const UInt32 LIST_WEAPONTAB_X;
 	// Weapon tab Y
-	static const Uint32 LIST_WEAPONTAB_Y;
+	static const UInt32 LIST_WEAPONTAB_Y;
 	// List edge size
-	static const Uint32 LIST_EDGE_SIZE;
+	static const UInt32 LIST_EDGE_SIZE;
 	// Subtitle tab width
-	static const Uint32 SUBTITLE_TAB_SIZE_X;
+	static const UInt32 SUBTITLE_TAB_SIZE_X;
 	// Subtitle tab height
-	static const Uint32 SUBTITLE_TAB_SIZE_Y;
+	static const UInt32 SUBTITLE_TAB_SIZE_Y;
 	// Subtitle timeout duration
-	static const Float SUBTITLE_TAB_TIMEOUT;
+	static const float SUBTITLE_TAB_TIMEOUT;
 	// Subtitle tab fade out time
-	static const Float	SUBTITLE_TAB_FADETIME;
+	static const float	SUBTITLE_TAB_FADETIME;
 	// Subtitle tab fade in time
-	static const Float	SUBTITLE_TAB_FADEINTIME;
+	static const float	SUBTITLE_TAB_FADEINTIME;
 	// Ammo bar height
-	static const Uint32 AMMOBAR_SIZE_Y;
+	static const UInt32 AMMOBAR_SIZE_Y;
 	// Ammo bar width
-	static const Uint32 AMMOBAR_SIZE_X;
+	static const UInt32 AMMOBAR_SIZE_X;
 	// Stamina fade time
-	static const Uint32 STAMINA_FADE_TIME;
+	static const UInt32 STAMINA_FADE_TIME;
 	// Subtitle spacing
-	static const Float SUBTITLE_GAP;
+	static const float SUBTITLE_GAP;
 	// Subtitle inset
-	static const Float SUBTITLE_INSET;
+	static const float SUBTITLE_INSET;
 
 	// HUD description script path
-	static const Char HUD_DESCRIPTION_SCRIPT_PATH[];
+	static const char HUD_DESCRIPTION_SCRIPT_PATH[];
 	
 	// Font set for HUD
-	static const Char HUD_FONT_SCHEMA_FILENAME[];
+	static const char HUD_FONT_SCHEMA_FILENAME[];
 	// Font set for counters
-	static const Char HUD_COUNTER_FONT_SCHEMA_FILENAME[];
+	static const char HUD_COUNTER_FONT_SCHEMA_FILENAME[];
 	// Font set for subtitles
-	static const Char HUD_SUBTITLE_FONT_SCHEMA_FILENAME[];
+	static const char HUD_SUBTITLE_FONT_SCHEMA_FILENAME[];
 
 public:
 	struct hud_iconinfo_t
@@ -410,75 +410,75 @@ public:
 
 public:
 	// Returns the stamina amount
-	Float GetStamina( void ) const { return m_stamina/100.0f; }
+	float GetStamina( void ) const { return m_stamina/100.0f; }
 	// Returns the health amount
-	Float GetHealth( void ) const { return m_health; }
+	float GetHealth( void ) const { return m_health; }
 	// Returns the flashlight battery charge
-	Float GetFlashlightBattery( void ) const { return m_tacticalAmount; }
+	float GetFlashlightBattery( void ) const { return m_tacticalAmount; }
 	// Returns the weapon selection
 	Int32 GetWeaponSelect( void ) const { return m_weaponSelection; }
 	// Sets the weapon selection
 	void SetWeaponSelect( Int32 select ) { m_weaponSelection = select; }
 	// Selects a weapon slot
-	void SelectWeaponSlot( Uint32 slot, bool advance, Int32 direction );
+	void SelectWeaponSlot( UInt32 slot, bool advance, Int32 direction );
 
 	// Adds a subtitle
-	bool AddSubtitle( const Char *szname, Float holdtime );
+	bool AddSubtitle( const char *szname, float holdtime );
 	// Removes a playing subtitle
-	void RemoveSubtitle( const Char *szname );
+	void RemoveSubtitle( const char *szname );
 	// Adds a radio message
-	void AddRadioMessage( const Char* pstrcallername, const color32_t& color, Float lifetime, entindex_t entindex );
+	void AddRadioMessage( const char* pstrcallername, const color32_t& color, float lifetime, entindex_t entindex );
 
 	// Sets the stamina amount
-	void SetStamina( Float stamina );
+	void SetStamina( float stamina );
 	// Sets the health amount
-	void SetHealth( Float health );
+	void SetHealth( float health );
 	// Sets the kevlar amount
-	void SetKevlar( Float kevlar );
+	void SetKevlar( float kevlar );
 	// Sets the number of healthkits
-	void SetHealthkitNumber( Uint32 numhealthkits );
+	void SetHealthkitNumber( UInt32 numhealthkits );
 	// Sets the healing progress amount
-	void SetHealProgress( Float progress );
+	void SetHealProgress( float progress );
 	// Sets current weapon information
-	void SetCurrentWeapon( Int32 state, Int32 id, Uint32 clip, Uint32 clipright, Uint32 clipleft, Uint32 cone );
+	void SetCurrentWeapon( Int32 state, Int32 id, UInt32 clip, UInt32 clipright, UInt32 clipleft, UInt32 cone );
 	// Sets data for a weapon
-	void AddWeaponList( const Char* pstrname, Int32 ammotype, Int32 maxammo, Int32 maxclip, Uint32 slot, Uint32 slotposition, Uint32 weaponid, Int32 flags );
+	void AddWeaponList( const char* pstrname, Int32 ammotype, Int32 maxammo, Int32 maxclip, UInt32 slot, UInt32 slotposition, UInt32 weaponid, Int32 flags );
 	// Sets ammo count
-	void SetAmmoCount( Uint32 ammoIndex, Uint32 ammoCount );
+	void SetAmmoCount( UInt32 ammoIndex, UInt32 ammoCount );
 	// Manages an ammo pickup event
-	void AmmoPickup( const Char* pstrentityname, Uint32 count );
+	void AmmoPickup( const char* pstrentityname, UInt32 count );
 	// Manages a weapon pickup event
-	void WeaponPickup( Int32 id, Uint32 ammoCount );
+	void WeaponPickup( Int32 id, UInt32 ammoCount );
 	// Manages an item pickup event
-	void ItemPickup( const Char* pstrentityname );
+	void ItemPickup( const char* pstrentityname );
 	// Custom pickup message
-	void CustomPickupMessage( const Char* pstrpickuptext );
+	void CustomPickupMessage( const char* pstrpickuptext );
 	// Sets active state for HUD
 	void SetActive( bool active );
 	// Sets tactical battery value and state
-	void SetTacticalBattery( bool ison, Float amount );
+	void SetTacticalBattery( bool ison, float amount );
 	// Sets the movement noise
-	void SetMovementNoise( Float noise );
+	void SetMovementNoise( float noise );
 	// Sets the movement noise
-	void SetNPCAwareness( Float awareness, color24_t& color );
+	void SetNPCAwareness( float awareness, color24_t& color );
 	// Sets new objective flag
 	void SetNewObjective( bool newObjective );
 	// Sets usable object mins/maxs
 	void SetUsableObjectMinsMaxs( const Vector& mins, const Vector& maxs, usableobject_type_t type );
 	// Sets countdown timer
-	void SetCountdownTime( Double endTime, const Char* pstrTitle );
+	void SetCountdownTime( double endTime, const char* pstrTitle );
 	// Set autoaim vector
-	void SetAutoaimVector( Float autoAimX, Float autoAimY, bool isOnTarget );
+	void SetAutoaimVector( float autoAimX, float autoAimY, bool isOnTarget );
 
 private:
 	// Draws a bar tab
-	bool DrawTab_Bar( Float x, Float y, Char *sztext, en_texture_t *picon, Float bar, Int32 width, Float alpha, Float *ox = nullptr, Float *oy = nullptr, bool reverseColor = false, color24_t* pcolor = nullptr );
+	bool DrawTab_Bar( float x, float y, char *sztext, en_texture_t *picon, float bar, Int32 width, float alpha, float *ox = nullptr, float *oy = nullptr, bool reverseColor = false, color24_t* pcolor = nullptr );
 	// Draws the weapon tab
 	bool DrawWeaponTab( void );
 	// Draws the healthkit tab
-	bool DrawHealthkitTab( Float x, Float y );
+	bool DrawHealthkitTab( float x, float y );
 	// Draws the tactical tab
-	bool DrawTacticalTab( Float x, Float y );
+	bool DrawTacticalTab( float x, float y );
 	// Draws the weapons list
 	bool DrawWeaponList( void );
 	// Draws the crosshair
@@ -502,12 +502,12 @@ private:
 	// Loads the HUD script
 	bool LoadHUDScript( void );
 	// Returns value for a key
-	const Char* GetValueForKey( const CArray<hud_infopair_t>& srcArray, const Char* pstrKey );
+	const char* GetValueForKey( const CArray<hud_infopair_t>& srcArray, const char* pstrKey );
 
 	// Returns an icon texture by name 
-	en_texture_t* GetIconTextureByName( const Char* pstrName );
+	en_texture_t* GetIconTextureByName( const char* pstrName );
 	// Returns an item description by name
-	bool GetItemDescriptionByName( const Char* pstrName, CString& outDescription, CString& outUnitName, bool singular );
+	bool GetItemDescriptionByName( const char* pstrName, CString& outDescription, CString& outUnitName, bool singular );
 	// Returns an item description by weapon id
 	bool GetItemDescriptionByWeaponId( weaponid_t weaponid, CString& outDescription, CString& outUnitName, bool singular );
 	// Returns a weapon info structure based on id
@@ -521,10 +521,10 @@ private:
 	Vector GetConeSize( Int32 coneindex ) const;
 
 	// Adds an active subtitle
-	void AddActiveSubtitle( subtitle_t* psubtitle, Float holdtime, Float timeout );
+	void AddActiveSubtitle( subtitle_t* psubtitle, float holdtime, float timeout );
 
 	// Plays a sound
-	static void PlaySound( const Char* pstrfilepath );
+	static void PlaySound( const char* pstrfilepath );
 
 	// Tells if we have any weapons
 	bool HasAnyWeapons( void ) const;
@@ -583,31 +583,31 @@ public:
 	const font_set_t *m_pCounterFont;
 
 private:
-	Float	m_stamina;
-	Float	m_health;
-	Float	m_kevlar;
-	Double	m_staminaFadeTime;
+	float	m_stamina;
+	float	m_health;
+	float	m_kevlar;
+	double	m_staminaFadeTime;
 
 	bool	m_isTacticalOn;
-	Float	m_tacticalAmount;
+	float	m_tacticalAmount;
 
-	Float	m_healProgress;
+	float	m_healProgress;
 	Int32	m_numMedkits;
 
-	Float	m_movementNoise;
-	Float	m_npcAwareness;
+	float	m_movementNoise;
+	float	m_npcAwareness;
 	color24_t m_npcAwarenessColor;
 
 	bool	m_newObjective;
 
 	CString	m_countdownTimerTitle;
-	Double	m_countdownTimerTime;
+	double	m_countdownTimerTime;
 
 	// Ideal autoaim vector
 	Vector m_idealAutoAimVector;
 	// Previous autoaim vector
 	Vector m_currentAutoAimVector;
-	// TRUE if locked onto a target
+	// true if locked onto a target
 	bool m_isOnTarget;
 
 private:
@@ -632,15 +632,15 @@ private:
 	Int32 m_weaponBits;
 	// Last key bits
 	Int32 m_keyBits;
-	// TRUE if HUD is active
+	// true if HUD is active
 	bool m_isActive;
 	// Weapon select usermsg id
-	Uint32 m_weaponSelectUserMSGId;
+	UInt32 m_weaponSelectUserMSGId;
 
 	// Screen width
-	Uint32 m_screenWidth;
+	UInt32 m_screenWidth;
 	// Screen Height
-	Uint32 m_screenHeight;
+	UInt32 m_screenHeight;
 
 	// Array of icons
 	CArray<hud_iconinfo_t> m_iconInfoArray;
@@ -650,7 +650,7 @@ private:
 	CArray<hud_iteminfo_t> m_itemInfoArray;
 
 	// Last time think was called
-	Double m_lastThinkTime;
+	double m_lastThinkTime;
 };
 extern CGameHUD gHUD;
 #endif //HUD_H

@@ -23,9 +23,9 @@ class CWinding
 {
 public:
 	CWinding( void );
-	CWinding( Uint32 nbpoints );
-	CWinding( const Vector* ppoints, Uint32 nbpoints );
-	CWinding( const Vector& normal, Float distance, Float planesize );
+	CWinding( UInt32 nbpoints );
+	CWinding( const Vector* ppoints, UInt32 nbpoints );
+	CWinding( const Vector& normal, float distance, float planesize );
 	CWinding( const CWinding& src );
 	~CWinding( void );
 
@@ -41,7 +41,7 @@ public:
 	// Removes colinear points from winding
 	void RemoveColinearPoints( void );
 	// Returns the area of the winding
-	Float GetArea( void );
+	float GetArea( void );
 	// Returns the bounding box of the winding
 	void GetBounds( Vector& mins, Vector& maxs );
 	// Get winding center
@@ -49,12 +49,12 @@ public:
 	// Check if winding is valid
 	bool IsValid( void );
 	// Tell what side of the plane the winding is on
-	planeside_t OnPlaneSide( const Vector& normal, Float distance );
+	planeside_t OnPlaneSide( const Vector& normal, float distance );
 
 	// Clips winding
-	void Clip( const Vector& normal, const Float& distance, CWinding*& ptrfront, CWinding*& ptrback );
+	void Clip( const Vector& normal, const float& distance, CWinding*& ptrfront, CWinding*& ptrback );
 	// Chop winding by plane, and return the front part
-	CWinding* Chop( const Vector& normal, Float distance );
+	CWinding* Chop( const Vector& normal, float distance );
 
 private:
 	// Calculates plane of the winding
@@ -70,7 +70,7 @@ private:
 	// Normal of the plane
 	Vector m_planeNormal;
 	// Plane distance value
-	Float m_planeDistance;
+	float m_planeDistance;
 	// Array of vertices
 	CArray<Vector> m_vertexArray;
 };

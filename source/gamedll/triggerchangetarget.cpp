@@ -81,12 +81,12 @@ bool CTriggerChangeTarget::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerChangeTarget::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerChangeTarget::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_pFields->target == NO_STRING_VALUE)
 		return;
 
-	const Char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
 
 	edict_t* pEdict = nullptr;
 	while(true)

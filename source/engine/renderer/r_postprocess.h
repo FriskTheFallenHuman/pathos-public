@@ -111,7 +111,7 @@ class CPostProcess
 {
 public:
 	// Overlay folder name
-	static const Char OVERLAY_FOLDER_PATH[];
+	static const char OVERLAY_FOLDER_PATH[];
 
 public:
 	struct overlay_t
@@ -134,14 +134,14 @@ public:
 		en_texture_t* ptexture;
 		overlay_rendermode_t rendermode;
 		Vector rendercolor;
-		Float renderamt;
+		float renderamt;
 		overlay_effect_t effect;
-		Float effectspeed;
-		Float effectminalpha;
-		Double effectbegintime;
+		float effectspeed;
+		float effectminalpha;
+		double effectbegintime;
 
-		Double fadebegintime;
-		Float fadetime;
+		double fadebegintime;
+		float fadetime;
 		bool fadeout;
 	};
 
@@ -202,23 +202,23 @@ private:
 
 public:
 	// Toggle motion blur effect message
-	void SetMotionBlur( bool active, Float blurfade, bool override );
+	void SetMotionBlur( bool active, float blurfade, bool override );
 	// Toggle vignette effect message
-	void SetVignette(bool active, Float strength, Float radius);
+	void SetVignette(bool active, float strength, float radius);
 	// Toggle filmgrain effect message
-	void SetFilmGrain(bool active, Float strength);
+	void SetFilmGrain(bool active, float strength);
 	// Toggle bw effect message
-	void SetBlackAndWhite( bool active, Float strength );
+	void SetBlackAndWhite( bool active, float strength );
 	// Toggle chromatic effect message
-	void SetChromatic(bool active, Float strength);
+	void SetChromatic(bool active, float strength);
 	// Reads fade message
-	void SetFade( Uint32 layerindex, Float duration, Float holdtime, Int32 flags, const color24_t& color, byte alpha, Float timeoffset );
+	void SetFade( UInt32 layerindex, float duration, float holdtime, Int32 flags, const color24_t& color, Byte alpha, float timeoffset );
 	// Sets gaussian blur
-	void SetGaussianBlur( bool active, Float alpha );
+	void SetGaussianBlur( bool active, float alpha );
 	// Set overlay
-	void SetOverlay( Int32 layerindex, const Char* pstrtexturename, overlay_rendermode_t rendermode, const Vector& rendercolor, Float renderamt, overlay_effect_t effect, Float effectspeed, Float effectminalpha, Float fadetime );
+	void SetOverlay( Int32 layerindex, const char* pstrtexturename, overlay_rendermode_t rendermode, const Vector& rendercolor, float renderamt, overlay_effect_t effect, float effectspeed, float effectminalpha, float fadetime );
 	// Clear an overlay slot
-	void ClearOverlay( Int32 layerindex, Float fadetime );
+	void ClearOverlay( Int32 layerindex, float fadetime );
 
 private:
 	// Gamma cvar
@@ -226,17 +226,17 @@ private:
 	// Blur FBO binding
 	fbobind_t		m_blurFBO;
 
-	// TRUE if gaussian blur is active
+	// true if gaussian blur is active
 	bool			m_gaussianBlurActive;
-	// TRUE if motion blur is active
+	// true if motion blur is active
 	bool			m_motionBlurActive;
-	// TRUE if vignette is active
+	// true if vignette is active
 	bool			m_vignetteActive;
-	// TRUE if bw is active
+	// true if bw is active
 	bool			m_blackAndWhiteActive;
-	// TRUE if filmgrain is active
+	// true if filmgrain is active
 	bool			m_filmGrainActive;
-	// TRUE if chromatic is active
+	// true if chromatic is active
 	bool			m_chromaticActive;
 	// TRUe if need to override motion blur
 	bool			m_blurOverride;
@@ -244,12 +244,12 @@ private:
 	// True if first game of motion blur
 	bool			m_isFirstFrame;
 	// Motion blur fade amount
-	Float			m_blurFade;
+	float			m_blurFade;
 
 	// Last time we were in water
-	Float			m_lastWaterTime;
+	float			m_lastWaterTime;
 	// Gaussian blur alpha
-	Float			m_gaussianBlurAlpha;
+	float			m_gaussianBlurAlpha;
 
 private:
 	// Screenfade information
@@ -269,15 +269,15 @@ private:
 	// Postporcess cvar
 	CCVar*			m_pCvarPostProcess;
 	// Vignette strength
-	Float           m_vignetteStrength;
+	float           m_vignetteStrength;
 	// Filmgrain strength
-	Float           m_filmGrainStrength;
+	float           m_filmGrainStrength;
 	// bw strength
-	Float           m_blackAndWhiteStrength;
+	float           m_blackAndWhiteStrength;
 	// Vignette radius
-	Float           m_vignetteRadius;
+	float           m_vignetteRadius;
 	// Chromatic strength
-	Float  m_chromaticStrength;
+	float  m_chromaticStrength;
 	// Bloom cvar
 	CCVar*			m_pCvarBloom;
 	// Bloom darken steps cvar

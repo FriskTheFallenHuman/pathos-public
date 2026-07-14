@@ -18,16 +18,16 @@ All Rights Reserved.
 #include "gameuimanager.h"
 
 // Text inset for the text tab
-const Uint32 CGameUITextWindow::TEXTWINDOW_TEXT_TAB_TEXT_INSET = 15;
+const UInt32 CGameUITextWindow::TEXTWINDOW_TEXT_TAB_TEXT_INSET = 15;
 // Title text default schema set name
-const Char CGameUITextWindow::TEXTWINDOW_TITLE_TEXTSCHEMA_NAME[] = "textwindowtitle";
+const char CGameUITextWindow::TEXTWINDOW_TITLE_TEXTSCHEMA_NAME[] = "textwindowtitle";
 // Text default font schema name
-const Char CGameUITextWindow::TEXTWINDOW_TEXTSCHEMA_NAME[] = "textwindowtext";
+const char CGameUITextWindow::TEXTWINDOW_TEXTSCHEMA_NAME[] = "textwindowtext";
 
 //====================================
 //
 //====================================
-CGameUITextWindow::CGameUITextWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUITextWindow::CGameUITextWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIWindow(flags, originX, originY, width, height),
 	m_pTitleText(nullptr),
 	m_pTextTab(nullptr)
@@ -47,37 +47,37 @@ CGameUITextWindow::~CGameUITextWindow( void )
 void CGameUITextWindow::initWindow( const font_set_t* pTitleFont, const font_set_t* pFontSet )
 {
 	// Init basic window elements
-	Uint32 verticalbarheight, middlebarwidth, barThickness;
+	UInt32 verticalbarheight, middlebarwidth, barThickness;
 	CGameUIWindow::initBackground(verticalbarheight, middlebarwidth, barThickness);
 
-	Uint32 tabTopInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_TOP_INSET);
-	Uint32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
-	Uint32 tabSideInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_SIDE_INSET);
-	Uint32 mainTabMaxWidth = gHUDDraw.ScaleX(GAMEUIWINDOW_MAIN_TAB_MAX_WIDTH);
-	Uint32 mainTabMaxHeight = gHUDDraw.ScaleY(GAMEUIWINDOW_MAIN_TAB_MAX_HEIGHT);
-	Uint32 bottomInset = gHUDDraw.ScaleY(GAMEUIWINDOW_TAB_BOTTOM_INSET);
-	Uint32 textInset = gHUDDraw.ScaleY(TEXTWINDOW_TEXT_TAB_TEXT_INSET);
-	Uint32 edgeThickness = gHUDDraw.ScaleX(GAMEUIWINDOW_EDGE_THICKNESS);
-	Uint32 defaultButtonWidth = gHUDDraw.ScaleX(DEFAULT_BUTTON_WIDTH);
-	Uint32 defaultButtonHeight = gHUDDraw.ScaleY(DEFAULT_BUTTON_HEIGHT);
+	UInt32 tabTopInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_TOP_INSET);
+	UInt32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
+	UInt32 tabSideInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_SIDE_INSET);
+	UInt32 mainTabMaxWidth = gHUDDraw.ScaleX(GAMEUIWINDOW_MAIN_TAB_MAX_WIDTH);
+	UInt32 mainTabMaxHeight = gHUDDraw.ScaleY(GAMEUIWINDOW_MAIN_TAB_MAX_HEIGHT);
+	UInt32 bottomInset = gHUDDraw.ScaleY(GAMEUIWINDOW_TAB_BOTTOM_INSET);
+	UInt32 textInset = gHUDDraw.ScaleY(TEXTWINDOW_TEXT_TAB_TEXT_INSET);
+	UInt32 edgeThickness = gHUDDraw.ScaleX(GAMEUIWINDOW_EDGE_THICKNESS);
+	UInt32 defaultButtonWidth = gHUDDraw.ScaleX(DEFAULT_BUTTON_WIDTH);
+	UInt32 defaultButtonHeight = gHUDDraw.ScaleY(DEFAULT_BUTTON_HEIGHT);
 
 	//
 	// Create the title text object
 	//
-	Uint32 textYOrigin = hBarYOrigin + tabTopInset/2.0f;
+	UInt32 textYOrigin = hBarYOrigin + tabTopInset/2.0f;
 	m_pTitleText = new CGameUIText(CGameUIObject::FL_ALIGN_CH, GAMEUIWINDOW_DEFAULT_TEXT_COLOR, pTitleFont, 0, textYOrigin);
 	m_pTitleText->setParent(this);
 
 	//
 	// Create the text tab
 	//
-	Uint32 tabWidth = middlebarwidth - barThickness*2 - tabSideInset*2;
+	UInt32 tabWidth = middlebarwidth - barThickness*2 - tabSideInset*2;
 	if(tabWidth > mainTabMaxWidth)
 		tabWidth = mainTabMaxWidth;
 
-	Uint32 tabOriginX = m_width / 2.0 - tabWidth / 2.0;
+	UInt32 tabOriginX = m_width / 2.0 - tabWidth / 2.0;
 
-	Uint32 tabHeight = verticalbarheight - tabTopInset - bottomInset;
+	UInt32 tabHeight = verticalbarheight - tabTopInset - bottomInset;
 	if(tabHeight > mainTabMaxHeight)
 		tabHeight = mainTabMaxHeight;
 
@@ -135,7 +135,7 @@ void CGameUITextWindow::onRemove( void )
 //====================================
 //
 //====================================
-bool CGameUITextWindow::initData( const Char* pstrtextfilepath, const Char* pstrPassCode )
+bool CGameUITextWindow::initData( const char* pstrtextfilepath, const char* pstrPassCode )
 {
 	// Title text
 	CString titletext;
@@ -153,7 +153,7 @@ bool CGameUITextWindow::initData( const Char* pstrtextfilepath, const Char* pstr
 	if(!ProcessTextFile(pstrtextfilepath, pstrPassCode, titletext, titletextschema, titletextcolor, textschema, textcolor, textcontents))
 		return false;
 
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	// Load font if not default
@@ -175,7 +175,7 @@ bool CGameUITextWindow::initData( const Char* pstrtextfilepath, const Char* pstr
 	initWindow(ptitlefontset, pfontset);
 
 	// Assign the contents
-	m_pTextTab->initData(reinterpret_cast<const byte*>(textcontents.c_str()), textcontents.length());
+	m_pTextTab->initData(reinterpret_cast<const Byte*>(textcontents.c_str()), textcontents.length());
 
 	// Set color
 	m_pTextTab->setTextColor(textcolor);
@@ -221,9 +221,9 @@ void CGameUITextWindow::CloseWindow( void )
 //====================================
 //
 //====================================
-bool CGameUITextWindow::ProcessTextFile( const Char* pstrFilePath, const CString passCode, CString& titleText, CString& titleTextSchema, color32_t& titleTextColor, CString& textSchema, color32_t& textColor, CString& documentText )
+bool CGameUITextWindow::ProcessTextFile( const char* pstrFilePath, const CString passCode, CString& titleText, CString& titleTextSchema, color32_t& titleTextColor, CString& textSchema, color32_t& textColor, CString& documentText )
 {
-	const byte* pfile = cl_filefuncs.pfnLoadFile(pstrFilePath, nullptr);
+	const Byte* pfile = cl_filefuncs.pfnLoadFile(pstrFilePath, nullptr);
 	if(!pfile)
 	{
 		cl_engfuncs.pfnCon_Printf("%s - Could not load file '%s'.\n", __FUNCTION__, pstrFilePath);
@@ -232,7 +232,7 @@ bool CGameUITextWindow::ProcessTextFile( const Char* pstrFilePath, const CString
 
 	// First get all options
 	CString token;
-	const Char* pstr = reinterpret_cast<const Char*>(pfile);
+	const char* pstr = reinterpret_cast<const char*>(pfile);
 	while(pstr)
 	{
 		// Parse the token
@@ -367,7 +367,7 @@ bool CGameUITextWindow::ProcessTextFile( const Char* pstrFilePath, const CString
 	}
 
 	// Find the ending bracket
-	const Char* pstrend = qstrstr(pstr, "}");
+	const char* pstrend = qstrstr(pstr, "}");
 	if(!pstrend)
 	{
 		cl_engfuncs.pfnCon_Printf("%s - Text file '%s' is missing ending bracket '}'.\n", __FUNCTION__, pstrFilePath);
@@ -375,7 +375,7 @@ bool CGameUITextWindow::ProcessTextFile( const Char* pstrFilePath, const CString
 		return false;
 	}
 
-	Uint32 datasize = (pstrend - pstr);
+	UInt32 datasize = (pstrend - pstr);
 	documentText.assign(pstr, datasize);
 
 	// Release the file
@@ -398,7 +398,7 @@ bool CGameUITextWindow::ProcessTextFile( const Char* pstrFilePath, const CString
 //====================================
 //
 //====================================
-void CGameUITextWindowExitCallbackEvent::PerformAction( Float param )
+void CGameUITextWindowExitCallbackEvent::PerformAction( float param )
 {
 	if(!m_pTextWindow)
 		return;

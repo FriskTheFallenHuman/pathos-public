@@ -37,7 +37,7 @@ public:
 
 public:
 	// Weapon view model
-	static const Char WEAPON_VIEWMODEL[];
+	static const char WEAPON_VIEWMODEL[];
 	// Weapon weight
 	static const Int32 WEAPON_WEIGHT;
 	// Weapon slot
@@ -45,11 +45,11 @@ public:
 	// Weapon slot position
 	static const Int32 WEAPON_SLOT_POSITION;
 	// Default ammo for weapon
-	static const Uint32 WEAPON_DEFAULT_GIVE;
+	static const UInt32 WEAPON_DEFAULT_GIVE;
 	// Grenade explosion delay
-	static const Float GRENADE_EXPLODE_DELAY;
+	static const float GRENADE_EXPLODE_DELAY;
 	// Grenade cooking cut-off time
-	static const Float GRENADE_CUTOFF_TIME;
+	static const float GRENADE_CUTOFF_TIME;
 
 public:
 	explicit CWeaponHandGrenade( edict_t* pedict );
@@ -76,14 +76,14 @@ public:
 
 private:
 	// Throw start time
-	Double m_throwStartTime;
+	double m_throwStartTime;
 	// Throw release time
-	Double m_throwReleaseTime;
-	// TRUE if we're tossing the grenade
+	double m_throwReleaseTime;
+	// true if we're tossing the grenade
 	bool m_isTossing;
 
 private:
 	// Sequence names for weapon
-	static const Char* m_sequenceNames[NUM_WEAPON_ANIMATIONS];
+	static const char* m_sequenceNames[NUM_WEAPON_ANIMATIONS];
 };
 #endif //WEAPONDEAGLE_H

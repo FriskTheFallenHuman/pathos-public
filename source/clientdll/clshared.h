@@ -9,5 +9,5 @@ All Rights Reserved.
 
 #ifndef CLSHARED_H
 #define CLSHARED_H
-extern void CL_UpdateAutoAim( Double frametime, const Vector& idealAutoAim, Vector& currentAutoAim );
+extern void CL_UpdateAutoAim( double frametime, const Vector& idealAutoAim, Vector& currentAutoAim );
 #endif //CLSHARED_H

@@ -56,8 +56,8 @@ struct flexbind_t
 		strength(0)
 	{}
 
-	Float time;
-	Float strength;
+	float time;
+	float strength;
 };
 
 struct flexcontroller_t
@@ -82,7 +82,7 @@ struct flexscript_t
 	CString filename;
 
 	CArray<flexcontroller_t> controllers;
-	Float duration;
+	float duration;
 	Int32 flags;
 };
 
@@ -96,18 +96,18 @@ struct flexstate_t
 		memset(prev_values, 0, sizeof(prev_values));
 		memset(values, 0, sizeof(values));
 
-		for(Uint32 i = 0; i < MAX_VBM_FLEXES; i++)
+		for(UInt32 i = 0; i < MAX_VBM_FLEXES; i++)
 		{
 			indexmap[i] = -1;
 			r_indexmap[i] = -1;
 		}
 	}
 
-	Float time;
-	Float nextblink;
+	float time;
+	float nextblink;
 
-	Float prev_values[MAX_VBM_FLEXES];
-	Float values[MAX_VBM_FLEXES];
+	float prev_values[MAX_VBM_FLEXES];
+	float values[MAX_VBM_FLEXES];
 
 	Int32 indexmap[MAX_VBM_FLEXES];
 	Int32 r_indexmap[MAX_VBM_FLEXES];

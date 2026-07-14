@@ -124,7 +124,7 @@ bool CGameText::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CGameText::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CGameText::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	CBaseEntity* pPlayer = nullptr;
 	if(!HasSpawnFlag(FL_ALL_PLAYERS))

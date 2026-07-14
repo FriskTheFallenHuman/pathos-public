@@ -26,15 +26,15 @@ public:
 	// Train starting pitch
 	static const Int32 TRAIN_MAX_SPEED;
 	// Default speed
-	static const Float DEFAULT_SPEED;
+	static const float DEFAULT_SPEED;
 	// Number of train default move sounds
-	static const Uint32 NB_DEFAULT_MOVE_SOUNDS;
+	static const UInt32 NB_DEFAULT_MOVE_SOUNDS;
 	// Default train move sounds
-	static const Char* DEFAULT_MOVE_SOUNDS[];
+	static const char* DEFAULT_MOVE_SOUNDS[];
 	// Default train stop sound
-	static const Char DEFAULT_STOP_SOUND[];
+	static const char DEFAULT_STOP_SOUND[];
 	// Start train stop sound
-	static const Char DEFAULT_START_SOUND[];
+	static const char DEFAULT_START_SOUND[];
 
 public:
 	enum
@@ -54,12 +54,12 @@ public:
 	virtual void Precache( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void CallBlocked( CBaseEntity* pBlocker ) override;
 	virtual Int32 GetEntityFlags( void ) override { return (CBaseEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION) | FL_ENTITY_DIRECTIONAL_USE; }
 	virtual void OnOverrideEntity( void ) override;
 	virtual bool IsFuncTrackTrainEntity( void ) const override { return true; }
-	virtual void SetNextThink( Double thinkTime, bool alwaysThink ) override;
+	virtual void SetNextThink( double thinkTime, bool alwaysThink ) override;
 
 public:
 	void EXPORTFN Next( void );
@@ -75,22 +75,22 @@ public:
 	void StopSound( void );
 	void UpdateSound( void );
 
-	CPathTrack* FindPathTrack( const Char* pstrPathTrackName );
+	CPathTrack* FindPathTrack( const char* pstrPathTrackName );
 	void SetPathTrack( CPathTrack* pPathTrack );
 
 public:
 	CPathTrack* GetPath( void );
-	Float GetLength( void ) const;
+	float GetLength( void ) const;
 
 private:
 	CPathTrack* m_pPath;
 
-	Float m_length;
-	Float m_height;
-	Float m_speed;
-	Float m_direction;
-	Float m_startSpeed;
-	Float m_blockDamage;
+	float m_length;
+	float m_height;
+	float m_speed;
+	float m_direction;
+	float m_startSpeed;
+	float m_blockDamage;
 
 	Vector m_controlMins;
 	Vector m_controlMaxs;
@@ -99,9 +99,9 @@ private:
 	bool m_soundPlaying;
 	Int32 m_sounds;
 
-	Float m_volume;
-	Float m_bank;
-	Float m_oldSpeed;
+	float m_volume;
+	float m_bank;
+	float m_oldSpeed;
 	Int32 m_lastPitch;
 
 	string_t m_moveSound;

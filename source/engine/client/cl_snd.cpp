@@ -43,27 +43,27 @@ All Rights Reserved.
 #include "stb_vorbis.h"
 
 // OpenAL library path
-static const Char OPENAL_LIBRARY_PATH[] = "OpenAL32.dll";
+static const char OPENAL_LIBRARY_PATH[] = "OpenAL32.dll";
 
 // Max active tempent sounds
 const Uint32 CSoundEngine::MAX_ACTIVE_TEMP_SOUNDS = 4;
 
 // Minimum sound distance
-const Float CSoundEngine::MIN_DISTANCE = 32;
+const float CSoundEngine::MIN_DISTANCE = 32;
 // Maximum sound distance
-const Float CSoundEngine::MAX_DISTANCE = 1024;
+const float CSoundEngine::MAX_DISTANCE = 1024;
 
 // Rever blend time
-const Float CSoundEngine::REVERB_BLEND_TIME = 2;
+const float CSoundEngine::REVERB_BLEND_TIME = 2;
 // Sound rolloff factor
-const Float CSoundEngine::SE_ROLLOFF_FACTOR = 1;
+const float CSoundEngine::SE_ROLLOFF_FACTOR = 1;
 // Buffer size
 const Uint32 CSoundEngine::BUFFER_SIZE = 4096*32;
 // Speed of sound ingame
-const Float CSoundEngine::SPEED_OF_SOUND = 17847.76902887139;
+const float CSoundEngine::SPEED_OF_SOUND = 17847.76902887139;
 
 // Cached message max lifetime
-const Float CSoundEngine::CACHED_MSG_DELETE_TIME = 60;
+const float CSoundEngine::CACHED_MSG_DELETE_TIME = 60;
 
 // Average nb of samples for 8-bit sounds
 const Uint32 CSoundEngine::AVERAGE_SAMPLES_8BIT = 768;
@@ -71,15 +71,15 @@ const Uint32 CSoundEngine::AVERAGE_SAMPLES_8BIT = 768;
 const Uint32 CSoundEngine::AVERAGE_SAMPLES_16BIT = 2048;
 
 // Default change time for SND_CHANGE_PITCH/SND_CHANGE_VOL flags
-const Float CSoundEngine::DEFAULT_SND_CHANGE_TIME = 0.2;
+const float CSoundEngine::DEFAULT_SND_CHANGE_TIME = 0.2;
 
 // On-demand sound file size limit
 const Uint32 CSoundEngine::ONDEMAND_SOUND_SIZE_LIMIT = 262144;
 
 // Config group for sound engine
-const Char CSoundEngine::SOUNDENGINE_CONFIG_GRP_NAME[] = "SoundSystem";
+const char CSoundEngine::SOUNDENGINE_CONFIG_GRP_NAME[] = "SoundSystem";
 // Config group for sound engine
-const Char CSoundEngine::SOUNDENGINE_HRTF_SETTING_NAME[] = "HRTF";
+const char CSoundEngine::SOUNDENGINE_HRTF_SETTING_NAME[] = "HRTF";
 
 //
 // EAX effects used by the engine
@@ -101,7 +101,7 @@ const EFXEAXREVERBPROPERTIES CSoundEngine::g_pEAXEffects[CSoundEngine::NUM_REVER
 //
 // Multipliers for EAX effects
 //
-const Float CSoundEngine::g_pEAXMultipliers[CSoundEngine::NUM_REVERBS] =
+const float CSoundEngine::g_pEAXMultipliers[CSoundEngine::NUM_REVERBS] =
 {
 	1.0, /* Normal */
 	1.0, /* Generic */
@@ -123,7 +123,7 @@ CSoundEngine gSoundEngine;
 // @brief
 //
 //=============================================
-inline byte Make8bit( Int16 sample )
+DO_INLINE Byte Make8bit( Int16 sample )
 {
 	sample >>= 8;  // drop the low 8 bits
 	sample ^= 0x80;  // toggle the sign bit
@@ -143,8 +143,8 @@ void Cmd_PlayMusic( void )
 	}
 
 	Int16 flags = 0;
-	Float timeOffset = 0;
-	const Char* pstrFilename = gCommands.Cmd_Argv(1);
+	float timeOffset = 0;
+	const char* pstrFilename = gCommands.Cmd_Argv(1);
 
 	if(gCommands.Cmd_Argc() > 2)
 	{
@@ -152,7 +152,7 @@ void Cmd_PlayMusic( void )
 		timeOffset = SDL_atof(gCommands.Cmd_Argv(2));
 	}
 
-	Float fadeintime = 0;
+	float fadeintime = 0;
 	if(gCommands.Cmd_Argc() > 3)
 		fadeintime = SDL_atof(gCommands.Cmd_Argv(3));
 
@@ -164,7 +164,7 @@ void Cmd_PlayMusic( void )
 	{
 		for(Uint32 i = 5; i < gCommands.Cmd_Argc(); i++)
 		{
-			const Char* pstrArg = gCommands.Cmd_Argv(i);
+			const char* pstrArg = gCommands.Cmd_Argv(i);
 			if(!qstrcmp(pstrArg, "loop"))
 				flags |= OGG_FL_LOOP;
 			else if(!qstrcmp(pstrArg, "stop"))
@@ -304,16 +304,16 @@ bool CSoundEngine::Init( void )
 	// Load extended functions
 	//
 
-	alGenEffects					= static_cast<LPALGENEFFECTS>(alGetProcAddress("alGenEffects"));
-	alDeleteEffects					= static_cast<LPALDELETEEFFECTS>(alGetProcAddress("alDeleteEffects"));
-	alEffecti						= static_cast<LPALEFFECTI>(alGetProcAddress("alEffecti"));
-	alEffectf						= static_cast<LPALEFFECTF>(alGetProcAddress("alEffectf"));
-	alEffectfv						= static_cast<LPALEFFECTFV>(alGetProcAddress("alEffectfv"));
+	alGenEffects					= reinterpret_cast<LPALGENEFFECTS>(alGetProcAddress("alGenEffects"));
+	alDeleteEffects					= reinterpret_cast<LPALDELETEEFFECTS>(alGetProcAddress("alDeleteEffects"));
+	alEffecti						= reinterpret_cast<LPALEFFECTI>(alGetProcAddress("alEffecti"));
+	alEffectf						= reinterpret_cast<LPALEFFECTF>(alGetProcAddress("alEffectf"));
+	alEffectfv						= reinterpret_cast<LPALEFFECTFV>(alGetProcAddress("alEffectfv"));
 
-	alGenAuxiliaryEffectSlots		= static_cast<LPALGENAUXILIARYEFFECTSLOTS>(alGetProcAddress("alGenAuxiliaryEffectSlots"));
-	alDeleteAuxiliaryEffectSlots	= static_cast<LPALDELETEAUXILIARYEFFECTSLOTS>(alGetProcAddress("alDeleteAuxiliaryEffectSlots"));
-	alAuxiliaryEffectSloti			= static_cast<LPALAUXILIARYEFFECTSLOTI>(alGetProcAddress("alAuxiliaryEffectSloti"));
-	alAuxiliaryEffectSlotf			= static_cast<LPALAUXILIARYEFFECTSLOTF>(alGetProcAddress("alAuxiliaryEffectSlotf"));
+	alGenAuxiliaryEffectSlots		= reinterpret_cast<LPALGENAUXILIARYEFFECTSLOTS>(alGetProcAddress("alGenAuxiliaryEffectSlots"));
+	alDeleteAuxiliaryEffectSlots	= reinterpret_cast<LPALDELETEAUXILIARYEFFECTSLOTS>(alGetProcAddress("alDeleteAuxiliaryEffectSlots"));
+	alAuxiliaryEffectSloti			= reinterpret_cast<LPALAUXILIARYEFFECTSLOTI>(alGetProcAddress("alAuxiliaryEffectSloti"));
+	alAuxiliaryEffectSlotf			= reinterpret_cast<LPALAUXILIARYEFFECTSLOTF>(alGetProcAddress("alAuxiliaryEffectSlotf"));
 
 	if(!alGenEffects || !alDeleteEffects || !alEffecti || !alEffectf 
 		|| !alEffectfv || !alGenAuxiliaryEffectSlots || !alDeleteAuxiliaryEffectSlots
@@ -349,8 +349,8 @@ bool CSoundEngine::Init( void )
 
 	// Allocate PAS buffer
 	Uint32 pasBufferSize = ens.visbuffersize;
-	m_pPASBuffer = new byte[pasBufferSize];
-	memset(m_pPASBuffer, 0, sizeof(byte)*pasBufferSize);
+	m_pPASBuffer = new Byte[pasBufferSize];
+	memset(m_pPASBuffer, 0, sizeof(Byte)*pasBufferSize);
 
 	// Load sentences
 	if(!LoadSentences())
@@ -626,7 +626,7 @@ void CSoundEngine::RemovePlaying( CSoundEngine::snd_active_t& sound )
 // @brief
 //
 //=============================================
-CSoundEngine::snd_active_t* CSoundEngine::AllocSound( const Char *sample, entindex_t entindex, Int32 flags, Int32 channel )
+CSoundEngine::snd_active_t* CSoundEngine::AllocSound( const char *sample, entindex_t entindex, Int32 flags, Int32 channel )
 {
 	// Don't let tempents clutter up or more than one hud sound play
 	if((flags & SND_FL_TEMPENT) || (flags & SND_FL_RADIO))
@@ -786,11 +786,11 @@ void CSoundEngine::CalcMouth8( snd_active_t& sound )
 		if(sndPos > pcache->length)
 			break;
 
-		byte *pdata = pcache->pdata+sndPos;
+		Byte *pdata = pcache->pdata+sndPos;
 		mouthavg += abs((*pdata)-127);
 	}
 
-	mouthavg = (mouthavg-10)/static_cast<Float>(i);
+	mouthavg = (mouthavg-10)/static_cast<float>(i);
 	if(mouthavg < 0) mouthavg = 0;
 	if(mouthavg > 255) mouthavg = 255;
 
@@ -823,12 +823,12 @@ void CSoundEngine::CalcMouth16( snd_active_t& sound )
 
 		// Convert it to 8-bit
 		Int16 sample = Common::ByteToUint16(pcache->pdata+sndPos);
-		byte _8bitdata = Make8bit(sample);
+		Byte _8bitdata = Make8bit(sample);
 
 		mouthavg += abs((_8bitdata & 0xFF)-127);
 	}
 
-	mouthavg = (mouthavg-10)/ static_cast<Float>(i);
+	mouthavg = (mouthavg-10)/ static_cast<float>(i);
 	if(mouthavg < 0) mouthavg = 0;
 	if(mouthavg > 255) mouthavg = 255;
 
@@ -840,7 +840,7 @@ void CSoundEngine::CalcMouth16( snd_active_t& sound )
 // @brief
 //
 //=============================================
-bool CSoundEngine::ShouldPlay( snd_active_t *psound, const Vector& vieworg, Double frametime, Int32 imsgnum, Float gameVolume ) const
+bool CSoundEngine::ShouldPlay( snd_active_t *psound, const Vector& vieworg, double frametime, Int32 imsgnum, float gameVolume ) const
 {
 	if(!frametime)
 		return false;
@@ -856,7 +856,7 @@ bool CSoundEngine::ShouldPlay( snd_active_t *psound, const Vector& vieworg, Doub
 
 	if(!(psound->flags & SND_FL_2D))
 	{
-		Float dist = (vieworg-psound->origin).Length2D();
+		float dist = (vieworg-psound->origin).Length2D();
 		if(dist > psound->radius)
 			return false;
 
@@ -950,7 +950,7 @@ void CSoundEngine::UpdateReverb( ref_params_t *pparams )
 	if(m_idealReverb < 0 || m_idealReverb > NUM_REVERBS)
 		m_idealReverb = 0;
 
-	Float fxMultiplier = g_pEAXMultipliers[m_idealReverb];
+	float fxMultiplier = g_pEAXMultipliers[m_idealReverb];
 
 	alAuxiliaryEffectSloti(m_effectSlot, AL_EFFECTSLOT_EFFECT, AL_EFFECT_NULL);
 	alEffectf(m_reverbEffect, AL_EAXREVERB_DENSITY, g_pEAXEffects[m_idealReverb].flDensity * fxMultiplier);
@@ -1009,7 +1009,7 @@ void CSoundEngine::ClearCache( void )
 		}
 
 		// Calculate offset since start
-		Double timeoffset = (cls.cl_time - pmsg->cachetime + pmsg->timeoffs);
+		double timeoffset = (cls.cl_time - pmsg->cachetime + pmsg->timeoffs);
 		if(pmsg->looping || timeoffset < pmsg->duration)
 		{
 			// Play the sound
@@ -1078,7 +1078,7 @@ void CSoundEngine::ClearCache( void )
 		else
 		{
 			// Calculate offset since start
-			Double timeoffset = (cls.cl_time - pmsg->cachetime + pmsg->timeoffs);
+			double timeoffset = (cls.cl_time - pmsg->cachetime + pmsg->timeoffs);
 			if(pmsg->looping || timeoffset < pmsg->duration)
 			{
 				// Play the sound
@@ -1097,7 +1097,7 @@ void CSoundEngine::ClearCache( void )
 // @brief
 //
 //=============================================
-CSoundEngine::snd_cache_t* CSoundEngine::PrecacheSound( const Char *sample, Int32 serverindex, rs_level_t level, bool isforplayback )
+CSoundEngine::snd_cache_t* CSoundEngine::PrecacheSound( const char *sample, Int32 serverindex, rs_level_t level, bool isforplayback )
 {
 	CString filepath;
 
@@ -1189,17 +1189,17 @@ CSoundEngine::snd_cache_t* CSoundEngine::PrecacheSound( const Char *sample, Int3
 // @brief
 //
 //=============================================
-bool CSoundEngine::LoadSoundData( const Char *sample, snd_cache_t* pcache, Int32 serverindex, bool keepdata )
+bool CSoundEngine::LoadSoundData( const char *sample, snd_cache_t* pcache, Int32 serverindex, bool keepdata )
 {
 	// See if it exists
 	Uint32 isize = 0;
-	const byte *pfile = FL_LoadFile(sample, &isize);
+	const Byte *pfile = FL_LoadFile(sample, &isize);
 	if(!pfile)
 	{
 		for(Uint32 i = 0; i < m_missingArray.size(); i++)
 		{
 			if(!qstrcmp(sample, m_missingArray[i].filename.c_str()))
-				return nullptr;
+				return false;
 		}
 
 		snd_missing_t newMissing;
@@ -1208,26 +1208,26 @@ bool CSoundEngine::LoadSoundData( const Char *sample, snd_cache_t* pcache, Int32
 		m_missingArray.push_back(newMissing);
 
 		Con_WPrintf("Failed to precache: %s.\n", sample);
-		return nullptr;
+		return false;
 	}
 
-	if(strncmp(reinterpret_cast<const Char *>(pfile), "RIFF", 4))
+	if(strncmp(reinterpret_cast<const char *>(pfile), "RIFF", 4))
 	{
 		Con_WPrintf("%s is not a valid .WAV file!\n", sample);
 		FL_FreeFile(pfile);
-		return nullptr;
+		return false;
 	}
 
 	// Allocate new data
-	const byte *pbegin = pfile + 12;
-	const byte *pend = pfile + isize;
+	const Byte *pbegin = pfile + 12;
+	const Byte *pend = pfile + isize;
 
 	while(1)
 	{
 		if(pbegin >= pend)
 			break;
 
-		DWORD ilength = Common::ByteToInt32(pbegin+4);
+		Dword ilength = Common::ByteToInt32(pbegin+4);
 		Common::ScaleByte(&ilength);
 
 		if(!strncmp(reinterpret_cast<const char*>(pbegin), "fmt ", 4))
@@ -1296,8 +1296,8 @@ bool CSoundEngine::LoadSoundData( const Char *sample, snd_cache_t* pcache, Int32
 			alBufferData(pcache->pbuffers[0], format, pfile+pcache->dataoffset, pcache->length, pcache->samplerate);
 		}
 
-		pcache->pdata = new byte[isize];
-		memcpy(pcache->pdata, pfile, sizeof(byte)*isize);
+		pcache->pdata = new Byte[isize];
+		memcpy(pcache->pdata, pfile, sizeof(Byte)*isize);
 	}
 
 	FL_FreeFile(pfile);
@@ -1309,7 +1309,7 @@ bool CSoundEngine::LoadSoundData( const Char *sample, snd_cache_t* pcache, Int32
 // @brief
 //
 //=============================================
-bool CSoundEngine::PrecacheServerSound( const Char *sample, Int32 serverindex )
+bool CSoundEngine::PrecacheServerSound( const char *sample, Int32 serverindex )
 {
 	if(sample[0] == '!')
 	{
@@ -1363,7 +1363,7 @@ bool CSoundEngine::PrecacheServerSound( const Char *sample, Int32 serverindex )
 // @brief
 //
 //=============================================
-bool CSoundEngine::GetSoundCache( const Char *sample, Int32 svindex, snd_cache_t*& psample, const CSentencesFile::sentence_t *& psentence, CString& filepath )
+bool CSoundEngine::GetSoundCache( const char *sample, Int32 svindex, snd_cache_t*& psample, const CSentencesFile::sentence_t *& psentence, CString& filepath )
 {
 	if(!sample)
 	{
@@ -1422,7 +1422,7 @@ bool CSoundEngine::GetSoundCache( const Char *sample, Int32 svindex, snd_cache_t
 // @brief
 //
 //=============================================
-void CSoundEngine::UpdateSound( const Char *sample, const Vector* pOrigin, Int32 flags, Int32 channel, Float volume, Int32 pitch, Float attenuation, cl_entity_t *entity, entindex_t entindex, Int32 svindex, Float timeoffs )
+void CSoundEngine::UpdateSound( const char *sample, const Vector* pOrigin, Int32 flags, Int32 channel, float volume, Int32 pitch, float attenuation, cl_entity_t *entity, entindex_t entindex, Int32 svindex, float timeoffs )
 {
 	CString filepath;
 	snd_cache_t* psample;
@@ -1439,7 +1439,7 @@ void CSoundEngine::UpdateSound( const Char *sample, const Vector* pOrigin, Int32
 		return;
 	}
 
-	// TRUE if a sound was updated
+	// true if a sound was updated
 	bool wasUpdated = false;
 
 	// Only change the sound if needed
@@ -1552,7 +1552,7 @@ void CSoundEngine::UpdateSound( const Char *sample, const Vector* pOrigin, Int32
 // @brief
 //
 //=============================================
-void CSoundEngine::PlaySound( const Char *sample, const Vector* pOrigin, Int32 flags, Int32 channel, Float volume, Int32 pitch, Float attenuation, cl_entity_t *entity, entindex_t entindex, Int32 svindex, Float timeoffs )
+void CSoundEngine::PlaySound( const char *sample, const Vector* pOrigin, Int32 flags, Int32 channel, float volume, Int32 pitch, float attenuation, cl_entity_t *entity, entindex_t entindex, Int32 svindex, float timeoffs )
 {
 	if(!CL_CanPlayGameSounds() && !(flags & SND_FL_MENU))
 	{
@@ -1623,7 +1623,7 @@ void CSoundEngine::PlaySound( const Char *sample, const Vector* pOrigin, Int32 f
 	psound->entindex = entindex;
 	psound->pentity = entity;
 	psound->flags = flags;
-	psound->pitch = clamp(pitch, MIN_PITCH, MAX_PITCH);
+	psound->pitch = Clamp(pitch, MIN_PITCH, MAX_PITCH);
 	psound->mainpitch = pitch;
 	psound->active = true;
 	psound->psentence = psentence;
@@ -1641,11 +1641,11 @@ void CSoundEngine::PlaySound( const Char *sample, const Vector* pOrigin, Int32 f
 	if(psound->psentence)
 	{
 		psound->pchunk = psentence->chunks[0];
-		psound->volume = (static_cast<Float>(psound->pchunk->volume)/100.0f)*psound->volume;
-		psound->pitch = (static_cast<Float>(psound->pchunk->pitch)/100.0f)*psound->mainpitch;
+		psound->volume = (static_cast<float>(psound->pchunk->volume)/100.0f)*psound->volume;
+		psound->pitch = (static_cast<float>(psound->pchunk->pitch)/100.0f)*psound->mainpitch;
 
 		if(psound->pchunk->start)
-			psound->datapos = psample->length*(static_cast<Float>(psound->pchunk->start)/100.0f);
+			psound->datapos = psample->length*(static_cast<float>(psound->pchunk->start)/100.0f);
 	}
 
 	if(psound->flags & SND_FL_RADIUS)
@@ -1725,7 +1725,7 @@ void CSoundEngine::PlaySound( const Char *sample, const Vector* pOrigin, Int32 f
 	if(psentence)
 	{
 		Int32 bytepersec = psample->channels * (psample->samplerate) * (psample->bitspersample>>3);
-		Float length = (static_cast<Float>(psample->length)/static_cast<Float>(bytepersec)) - timeoffs;
+		float length = (static_cast<float>(psample->length)/static_cast<float>(bytepersec)) - timeoffs;
 
 		if(cls.dllfuncs.pfnAddSubtitle(psentence->name.c_str(), length))
 			psound->flags |= SND_FL_HAS_SUBTITLES;
@@ -1733,7 +1733,7 @@ void CSoundEngine::PlaySound( const Char *sample, const Vector* pOrigin, Int32 f
 	else
 	{
 		Int32 bytepersec = psample->channels * (psample->samplerate) * (psample->bitspersample>>3);
-		Float length = (static_cast<Float>(psample->length)/ static_cast<Float>(bytepersec)) - timeoffs;
+		float length = (static_cast<float>(psample->length)/ static_cast<float>(bytepersec)) - timeoffs;
 
 		CString filename;
 		Common::Basename(psample->name.c_str(), filename);
@@ -1746,9 +1746,9 @@ void CSoundEngine::PlaySound( const Char *sample, const Vector* pOrigin, Int32 f
 // @brief
 //
 //=============================================
-Float CSoundEngine::CalcGain( const Vector& vieworg, snd_active_t *psound, Float multval, Float gameVolume ) const
+float CSoundEngine::CalcGain( const Vector& vieworg, snd_active_t *psound, float multval, float gameVolume ) const
 {
-	Float volume = psound->volume;
+	float volume = psound->volume;
 	if(!(psound->flags & SND_FL_MENU))
 		volume *= gameVolume;
 
@@ -1757,12 +1757,12 @@ Float CSoundEngine::CalcGain( const Vector& vieworg, snd_active_t *psound, Float
 
 	if(!(psound->flags & SND_FL_2D))
 	{ 
-		Float flrefdist = psound->radius*0.1;
-		Float fldistance = (vieworg-psound->origin).Length();
+		float flrefdist = psound->radius*0.1;
+		float fldistance = (vieworg-psound->origin).Length();
 		if(fldistance > psound->radius)
 			fldistance = psound->radius;
 
-		Float flgain = (1-SE_ROLLOFF_FACTOR*(fldistance-flrefdist)/(psound->radius-flrefdist));
+		float flgain = (1-SE_ROLLOFF_FACTOR*(fldistance-flrefdist)/(psound->radius-flrefdist));
 
 		if(m_pCVarOcclusion->GetValue() >= 1 && !(psound->flags & (SND_FL_OCCLUSIONLESS|SND_FL_2D)))
 		{
@@ -1874,7 +1874,7 @@ void CSoundEngine::Update( ref_params_t *pparams )
 		//
 		// Set listener properties
 		//
-		Float flOrientation[6];
+		float flOrientation[6];
 		Vector vForward, vUp;
 		Math::AngleVectors(pparams->v_angles, &vForward, nullptr, &vUp);
 
@@ -1901,7 +1901,7 @@ void CSoundEngine::Update( ref_params_t *pparams )
 	alListenerf(AL_GAIN, m_pCVarVolume->GetValue());
 
 	// Get game volume cvar
-	Float gameVolume = m_pCVarGameVolume->GetValue();
+	float gameVolume = m_pCVarGameVolume->GetValue();
 
 	//
 	// Set PHS/PAS
@@ -1918,7 +1918,7 @@ void CSoundEngine::Update( ref_params_t *pparams )
 
 	// Get local player and his messagenum
 	Int32 imsgnum = 0;
-	Float flmultval = 1.0;
+	float flmultval = 1.0;
 	cl_entity_t *pplayer = nullptr;
 
 	// Only run these if the game is active
@@ -2007,7 +2007,7 @@ void CSoundEngine::Update( ref_params_t *pparams )
 					else
 					{
 						// Calculate blended volume
-						Double frac = (pparams->time - psound->volchangetime)/psound->volchangeduration;
+						double frac = (pparams->time - psound->volchangetime)/psound->volchangeduration;
 						psound->volume = psound->prevvolume*(1.0-frac) + psound->targetvolume*frac;
 					}
 				}
@@ -2043,7 +2043,7 @@ void CSoundEngine::Update( ref_params_t *pparams )
 					else
 					{
 						// Calculate blended volume
-						Double frac = (pparams->time - psound->pitchchangetime)/psound->pitchchangeduration;
+						double frac = (pparams->time - psound->pitchchangetime)/psound->pitchchangeduration;
 						psound->pitch = psound->prevpitch*(1.0-frac) + psound->targetpitch*frac;
 					}
 				}
@@ -2068,10 +2068,10 @@ void CSoundEngine::Update( ref_params_t *pparams )
 
 		// This will be used later on
 		snd_cache_t *pcache = psound->pcache;
-		Float pitch = clamp((psound->pitch/(Float)PITCH_NORM) * g_pCvarTimeScale->GetValue(), 0.5, 5.0);
+		float pitch = Clamp((psound->pitch/(float)PITCH_NORM) * g_pCvarTimeScale->GetValue(), 0.5, 5.0);
 		Int32 bytepersec = pcache->channels * (pcache->samplerate*pitch) * (pcache->bitspersample>>3);
 
-		Double frametime;
+		double frametime;
 		if(psound->flags & SND_FL_MENU)
 			frametime = ens.frametime;
 		else
@@ -2087,7 +2087,7 @@ void CSoundEngine::Update( ref_params_t *pparams )
 			// Take length cutoff into consideration
 			Int32 endpos = pcache->length;
 			if(psound->psentence && psound->pchunk->end)
-				endpos = endpos*(static_cast<Float>(psound->pchunk->end)/100.0f);
+				endpos = endpos*(static_cast<float>(psound->pchunk->end)/100.0f);
 
 			ALenum state;
 			alGetSourcei(psound->pplaying->sourceindex, AL_SOURCE_STATE, &state);
@@ -2108,9 +2108,9 @@ void CSoundEngine::Update( ref_params_t *pparams )
 						RemovePlaying(*psound);
 
 					psound->pchunk = psound->pchunk->pnext;
-					psound->pitch = psound->mainpitch*(static_cast<Float>(psound->pchunk->pitch)/100.0f);
-					psound->volume = psound->volume*(static_cast<Float>(psound->pchunk->volume)/100.0f);
-					psound->datapos = pcache->length*(static_cast<Float>(psound->pchunk->start)/100.0f);
+					psound->pitch = psound->mainpitch*(static_cast<float>(psound->pchunk->pitch)/100.0f);
+					psound->volume = psound->volume*(static_cast<float>(psound->pchunk->volume)/100.0f);
+					psound->datapos = pcache->length*(static_cast<float>(psound->pchunk->start)/100.0f);
 
 					CString strSound;
 					strSound << SOUND_FOLDER_BASE_PATH << psound->psentence->folder << PATH_SLASH_CHAR << psound->pchunk->soundname << ".WAV";
@@ -2138,7 +2138,7 @@ void CSoundEngine::Update( ref_params_t *pparams )
 		}
 		else if(frametime)
 		{
-			Double playingTime; 
+			double playingTime; 
 			if(psound->flags & SND_FL_MENU)
 				playingTime = ens.time - psound->time;
 			else
@@ -2246,7 +2246,7 @@ void CSoundEngine::Update( ref_params_t *pparams )
 						alSource3i(psound->pplaying->sourceindex, AL_AUXILIARY_SEND_FILTER, AL_EFFECT_NULL, 0, 0);
 				}
 
-				Float flgain = CalcGain(pparams->v_origin, psound, flmultval, gameVolume);
+				float flgain = CalcGain(pparams->v_origin, psound, flmultval, gameVolume);
 
 				alSourcef(psound->pplaying->sourceindex, AL_GAIN, flgain);
 				alSourcef(psound->pplaying->sourceindex, AL_PITCH, pitch);
@@ -2327,7 +2327,7 @@ void CSoundEngine::Update( ref_params_t *pparams )
 			// If it wasn't set, recalculate the sound position
 			if(psound->datapos == -1)
 			{
-				Double playingTime;
+				double playingTime;
 				if(!(psound->flags & SND_FL_MENU))
 					playingTime = (pparams->time - psound->time) + psound->timeoffs;
 				else
@@ -2401,8 +2401,8 @@ void CSoundEngine::Update( ref_params_t *pparams )
 				alSourcei(pplaying->sourceindex, AL_SOURCE_RELATIVE, AL_FALSE);
 			}
 
-			Float flgain = CalcGain(pparams->v_origin, psound, flmultval, gameVolume);
-			Float setpitch = clamp((psound->pitch/(Float)PITCH_NORM), 0.01, 5.0);
+			float flgain = CalcGain(pparams->v_origin, psound, flmultval, gameVolume);
+			float setpitch = Clamp((psound->pitch/(float)PITCH_NORM), 0.01, 5.0);
 
 			alSourcef(pplaying->sourceindex, AL_GAIN, flgain);
 			alSourcef(pplaying->sourceindex, AL_PITCH, setpitch);
@@ -2428,7 +2428,7 @@ void CSoundEngine::Update( ref_params_t *pparams )
 // @brief
 //
 //=============================================
-void CSoundEngine::UpdateMusicPlayback( const ref_params_t* pparams, Float flmultval )
+void CSoundEngine::UpdateMusicPlayback( const ref_params_t* pparams, float flmultval )
 {
 	if(m_musicTracksList.empty())
 		return;
@@ -2458,7 +2458,7 @@ void CSoundEngine::UpdateMusicPlayback( const ref_params_t* pparams, Float flmul
 // @brief
 //
 //=============================================
-bool CSoundEngine::UpdateMusicTrackPlayback ( snd_music_t& track, const ref_params_t* pparams, Float flmultval )
+bool CSoundEngine::UpdateMusicTrackPlayback ( snd_music_t& track, const ref_params_t* pparams, float flmultval )
 {
 	// Prevent music playback while loading
 	if(ens.isloading || !gWindow.IsActive())
@@ -2510,9 +2510,9 @@ bool CSoundEngine::UpdateMusicTrackPlayback ( snd_music_t& track, const ref_para
 		alSourcePlay(track.source);
 	}
 
-	Double time = (track.flags & OGG_FL_MENU) ? ens.time : cls.cl_time;
+	double time = (track.flags & OGG_FL_MENU) ? ens.time : cls.cl_time;
 
-	Float musicVolume = 1.0;
+	float musicVolume = 1.0;
 	if(track.fadeouttime != 0 && track.fadeoutduration > 0)
 	{
 		if(track.fadeouttime == -1)
@@ -2520,19 +2520,19 @@ bool CSoundEngine::UpdateMusicTrackPlayback ( snd_music_t& track, const ref_para
 		else if((track.fadeouttime + track.fadeoutduration) <= time)
 			return false;
 
-		Float frac = (time - track.fadeouttime)/track.fadeoutduration;
+		float frac = (time - track.fadeouttime)/track.fadeoutduration;
 		musicVolume *= (1.0 - frac);
 	}
 	else if(track.fadeinduration > 0 && (track.starttime + track.fadeinduration) > time)
 	{
-		Float frac = (time - track.starttime)/track.fadeinduration;
+		float frac = (time - track.starttime)/track.fadeinduration;
 		musicVolume *= frac;
 	}
 
-	Float volume = 1.0;
+	float volume = 1.0;
 	if(track.unpausefadebegin && track.unpausefadetime > 0)
 	{
-		Double reftime = (track.flags & OGG_FL_MENU) ? ens.time : cls.cl_time;
+		double reftime = (track.flags & OGG_FL_MENU) ? ens.time : cls.cl_time;
 
 		if(track.unpausefadebegin == -1)
 		{
@@ -2551,7 +2551,7 @@ bool CSoundEngine::UpdateMusicTrackPlayback ( snd_music_t& track, const ref_para
 		}
 	}
 	
-	Float multiplier = (track.flags & OGG_FL_MENU) ? 1.0 : flmultval;
+	float multiplier = (track.flags & OGG_FL_MENU) ? 1.0 : flmultval;
 	alSourcef(track.source, AL_GAIN, m_pCVarMusicVolume->GetValue()*multiplier*musicVolume*volume);
 
 	ALenum state;
@@ -2568,7 +2568,7 @@ bool CSoundEngine::UpdateMusicTrackPlayback ( snd_music_t& track, const ref_para
 	{
 		if(track.unpausefadebegin)
 		{
-			Double reftime = (track.flags & OGG_FL_MENU) ? ens.time : cls.cl_time;
+			double reftime = (track.flags & OGG_FL_MENU) ? ens.time : cls.cl_time;
 			if((track.unpausefadebegin + track.unpausefadetime) < reftime)
 			{
 				alSourcePause(track.source);
@@ -2691,7 +2691,7 @@ void CSoundEngine::StopAllPlaying( void )
 // @brief
 //
 //=============================================
-void CSoundEngine::CacheMessage( const Vector* pOrigin, Int32 svindex, Int32 channel, Int32 flags, entindex_t entindex, Int32 pitch, Float vol, Float attn, bool isambient, Float timeoffs )
+void CSoundEngine::CacheMessage( const Vector* pOrigin, Int32 svindex, Int32 channel, Int32 flags, entindex_t entindex, Int32 pitch, float vol, float attn, bool isambient, float timeoffs )
 {
 	snd_cache_t *pcache = nullptr;
 	if(svindex >= 0)
@@ -2746,12 +2746,12 @@ void CSoundEngine::CacheMessage( const Vector* pOrigin, Int32 svindex, Int32 cha
 	snd_cachetype_t type = isambient ? SND_CT_PLAYAMBIENTSOUND : SND_CT_PLAYENTITYSOUND;
 
 	// Determine sound duration
-	Float soundduration = -1;
+	float soundduration = -1;
 	if(pcache && pcache->loopbegin == -1)
 	{
-		Float soundpitch = clamp((pitch/(Float)PITCH_NORM), 0.5, 5.0);
+		float soundpitch = Clamp((pitch/(float)PITCH_NORM), 0.5, 5.0);
 		Int32 bytepersec = pcache->channels * (pcache->samplerate*soundpitch) * (pcache->bitspersample>>3);
-		soundduration = static_cast<Float>(pcache->length)/ static_cast<Float>(bytepersec);
+		soundduration = static_cast<float>(pcache->length)/ static_cast<float>(bytepersec);
 	}
 	else if(svindex < 0)
 	{
@@ -2829,7 +2829,7 @@ void CSoundEngine::CacheMessage( const Vector* pOrigin, Int32 svindex, Int32 cha
 // @brief
 //
 //=============================================
-void CSoundEngine::CacheEffect( entindex_t entindex, Int32 svindex, Int32 channel, snd_effects_t effect, Float duration, Float targetvalue )
+void CSoundEngine::CacheEffect( entindex_t entindex, Int32 svindex, Int32 channel, snd_effects_t effect, float duration, float targetvalue )
 {
 	snd_cache_t *pcache = PrecacheSound(nullptr, svindex, RS_GAME_LEVEL, false);
 	if(pcache)
@@ -2874,7 +2874,7 @@ void CSoundEngine::CacheEffect( entindex_t entindex, Int32 svindex, Int32 channe
 // @brief
 //
 //=============================================
-void CSoundEngine::PlayOgg( const Char *sample, Int32 channel, Float timeOffset, Int32 flags, Float fadeInTime )
+void CSoundEngine::PlayOgg( const char *sample, Int32 channel, float timeOffset, Int32 flags, float fadeInTime )
 {
 	if(channel != MUSIC_CHANNEL_ALL && channel < 0
 		|| channel >= NB_MUSIC_CHANNELS && channel != MUSIC_CHANNEL_MENU)
@@ -2941,7 +2941,7 @@ void CSoundEngine::PlayOgg( const Char *sample, Int32 channel, Float timeOffset,
 	if(timeOffset > 0)
 	{
 		Uint32 totalsamples = stb_vorbis_stream_length_in_samples(ptrack->stream);
-		Double duration = (vorbisinfo.sample_rate > 0) ? (Double)totalsamples / (Double)vorbisinfo.sample_rate : 0;
+		double duration = (vorbisinfo.sample_rate > 0) ? (double)totalsamples / (double)vorbisinfo.sample_rate : 0;
 
 		// Make sure seek works
 		if(duration <= 0)
@@ -2953,7 +2953,7 @@ void CSoundEngine::PlayOgg( const Char *sample, Int32 channel, Float timeOffset,
 		}
 	
 		// Account for looping
-		Float _timeOffset = timeOffset;
+		float _timeOffset = timeOffset;
 		if((ptrack->flags & OGG_FL_LOOP) && _timeOffset > duration)
 			_timeOffset -= SDL_floor(_timeOffset/duration) * duration;
 
@@ -2985,7 +2985,7 @@ void CSoundEngine::PlayOgg( const Char *sample, Int32 channel, Float timeOffset,
 // @brief
 //
 //=============================================
-void CSoundEngine::StopOggFade( const Char *sample, Int32 channel, Float fadeTime )
+void CSoundEngine::StopOggFade( const char *sample, Int32 channel, float fadeTime )
 {
 	if(channel != MUSIC_CHANNEL_ALL && channel < 0
 		|| channel >= NB_MUSIC_CHANNELS && channel != MUSIC_CHANNEL_MENU)
@@ -3114,7 +3114,7 @@ void CSoundEngine::PauseOggChannel( Int32 channel )
 // @brief
 //
 //=============================================
-void CSoundEngine::UnPauseOggChannel( Int32 channel, Float fadetime )
+void CSoundEngine::UnPauseOggChannel( Int32 channel, float fadetime )
 {
 	if(channel != MUSIC_CHANNEL_ALL && channel < 0
 		|| channel >= NB_MUSIC_CHANNELS && channel != MUSIC_CHANNEL_MENU)
@@ -3148,7 +3148,7 @@ void CSoundEngine::UnPauseOggChannel( Int32 channel, Float fadetime )
 // @brief
 //
 //=============================================
-snd_oggcache_t* CSoundEngine::PrecacheOgg( const Char *sample, rs_level_t level )
+snd_oggcache_t* CSoundEngine::PrecacheOgg( const char *sample, rs_level_t level )
 {
 	m_cachedOggFilesList.begin();
 	while(!m_cachedOggFilesList.end())
@@ -3161,7 +3161,7 @@ snd_oggcache_t* CSoundEngine::PrecacheOgg( const Char *sample, rs_level_t level 
 	}
 
 	Uint32 fileSize = 0;
-	const byte *pFile = FL_LoadFile(sample, &fileSize);
+	const Byte *pFile = FL_LoadFile(sample, &fileSize);
 	if(!pFile)
 	{
 		Con_EPrintf("Failed to load %s\n", sample);
@@ -3172,8 +3172,8 @@ snd_oggcache_t* CSoundEngine::PrecacheOgg( const Char *sample, rs_level_t level 
 	m_cachedOggFilesList.add(pNew);
 
 	// Copy data
-	pNew->pfileptr = new byte[fileSize];
-	memcpy(pNew->pfileptr, pFile, sizeof(byte)*fileSize);
+	pNew->pfileptr = new Byte[fileSize];
+	memcpy(pNew->pfileptr, pFile, sizeof(Byte)*fileSize);
 	FL_FreeFile(pFile);
 
 	pNew->level = level;
@@ -3206,9 +3206,9 @@ void CSoundEngine::StopSound( entindex_t entindex, Int32 channel )
 // @brief
 //
 //=============================================
-void CSoundEngine::ApplySoundEffect( entindex_t entindex, Int32 svindex, Int32 channel, snd_effects_t effect, Float duration, Float targetvalue )
+void CSoundEngine::ApplySoundEffect( entindex_t entindex, Int32 svindex, Int32 channel, snd_effects_t effect, float duration, float targetvalue )
 {
-	const Char* pstrSoundFile = GetSoundFileForServerIndex(svindex);
+	const char* pstrSoundFile = GetSoundFileForServerIndex(svindex);
 	if(!pstrSoundFile)
 	{
 		Con_Printf("%s - Couldn't find sound file with server index '%d'.\n", __FUNCTION__, svindex);
@@ -3222,7 +3222,7 @@ void CSoundEngine::ApplySoundEffect( entindex_t entindex, Int32 svindex, Int32 c
 // @brief
 //
 //=============================================
-const Char* CSoundEngine::GetSoundFileForServerIndex( Int32 serverindex )
+const char* CSoundEngine::GetSoundFileForServerIndex( Int32 serverindex )
 {
 	m_cachedSoundsList.begin();
 	while(!m_cachedSoundsList.end())
@@ -3260,7 +3260,7 @@ bool CSoundEngine::IsSoundPlaying( entindex_t entindex, Int32 svindex, Int32 cha
 // @brief
 //
 //=============================================
-bool CSoundEngine::IsSoundPlaying( entindex_t entindex, const Char *sample, Int32 channel )
+bool CSoundEngine::IsSoundPlaying( entindex_t entindex, const char *sample, Int32 channel )
 {
 	// Build filepath
 	CString filepath;
@@ -3286,7 +3286,7 @@ bool CSoundEngine::IsSoundPlaying( entindex_t entindex, const Char *sample, Int3
 // @brief
 //
 //=============================================
-void CSoundEngine::ApplySoundEffect( entindex_t entindex, const Char *sample, Int32 channel, snd_effects_t effect, Float duration, Float targetvalue )
+void CSoundEngine::ApplySoundEffect( entindex_t entindex, const char *sample, Int32 channel, snd_effects_t effect, float duration, float targetvalue )
 {
 	if(!entindex || entindex == NO_ENTITY_INDEX)
 	{
@@ -3329,7 +3329,7 @@ void CSoundEngine::ApplySoundEffect( entindex_t entindex, const Char *sample, In
 				{
 					snd.pitchchangetime = -1;
 					snd.pitchchangeduration = duration;
-					snd.targetpitch = clamp(targetvalue, MIN_PITCH, MAX_PITCH);
+					snd.targetpitch = Clamp(targetvalue, MIN_PITCH, MAX_PITCH);
 				}
 				break;
 			default:
@@ -3373,7 +3373,7 @@ void CSoundEngine::FreeEntity( entindex_t entindex )
 //=============================================
 bool CSoundEngine::LoadSentences( void )
 {
-	const byte* pfile = FL_LoadFile(SENTENCES_FILE_PATH);
+	const Byte* pfile = FL_LoadFile(SENTENCES_FILE_PATH);
 	if(!pfile)
 	{
 		Con_EPrintf("%s - Could not load '%s'.\n", __FUNCTION__, SENTENCES_FILE_PATH);
@@ -3485,7 +3485,7 @@ void CSoundEngine::SetHRTFCommand( void )
 // @brief Precache function for sentences file
 //
 //=============================================
-Int32 Sentences_PrecacheSound( const Char* pstrFilename )
+Int32 Sentences_PrecacheSound( const char* pstrFilename )
 {
 	if(pstrFilename[0] == '!')
 	{
@@ -3507,14 +3507,14 @@ Int32 Sentences_PrecacheSound( const Char* pstrFilename )
 // @brief GetDuration function for sentences file
 //
 //=============================================
-Float Sentences_GetSoundDuration( const Char* pstrFilename, Uint32 pitch )
+float Sentences_GetSoundDuration( const char* pstrFilename, Uint32 pitch )
 {
 	if(pstrFilename[0] == '!')
 	{
 		Int32 index = SDL_atoi(pstrFilename + 1);
 		const CSentencesFile::sentence_t* psentence = gSoundEngine.GetSentence(index);
 
-		Float duration = 0;
+		float duration = 0;
 		for(Uint32 i = 0; i < psentence->chunks.size(); i++)
 		{
 			const CSentencesFile::sent_chunk_t* pchunk = psentence->chunks[i];
@@ -3524,9 +3524,9 @@ Float Sentences_GetSoundDuration( const Char* pstrFilename, Uint32 pitch )
 			CSoundEngine::snd_cache_t* pcache = gSoundEngine.PrecacheSound(pchunk->soundname.c_str(), NO_POSITION, RS_GAME_LEVEL, false);
 			if(pcache)
 			{
-				Float soundpitch = clamp((pitch/(Float)PITCH_NORM), 0.5, 5.0);
+				float soundpitch = Clamp((pitch/(float)PITCH_NORM), 0.5, 5.0);
 				Int32 bytepersec = pcache->channels * (pcache->samplerate*soundpitch) * (pcache->bitspersample>>3);
-				duration += static_cast<Float>(pcache->length)/static_cast<Float>(bytepersec);
+				duration += static_cast<float>(pcache->length)/static_cast<float>(bytepersec);
 			}
 		}
 
@@ -3538,8 +3538,8 @@ Float Sentences_GetSoundDuration( const Char* pstrFilename, Uint32 pitch )
 		if(!pcache)
 			return 0;
 
-		Float soundpitch = clamp((pitch/(Float)PITCH_NORM), 0.5, 5.0);
+		float soundpitch = Clamp((pitch/(float)PITCH_NORM), 0.5, 5.0);
 		Int32 bytepersec = pcache->channels * (pcache->samplerate*soundpitch) * (pcache->bitspersample>>3);
-		return static_cast<Float>(pcache->length)/ static_cast<Float>(bytepersec);
+		return static_cast<float>(pcache->length)/ static_cast<float>(bytepersec);
 	}
 }

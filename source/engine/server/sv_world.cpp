@@ -321,7 +321,7 @@ Int32 SV_LinkContents( areanode_t& node, const Vector& position )
 {
 	areanode_t* pnode = &node;
 
-	while(TRUE)
+	while(true)
 	{
 		pnode->solid_edicts.begin();
 		while(!pnode->solid_edicts.end())
@@ -974,7 +974,7 @@ void SV_Move( trace_t& trace, const Vector& start, const Vector& mins, const Vec
 		&& !clip.trace.startSolid())
 	{
 		Vector traceEndpos = clip.trace.endpos;
-		Double traceFraction = clip.trace.fraction;
+		double traceFraction = clip.trace.fraction;
 
 		clip.trace.fraction = 1.0f;
 		clip.pstart = &start;
@@ -1026,7 +1026,7 @@ void SV_MoveNoEntities( trace_t& trace, const Vector& start, const Vector& mins,
 		&& !clip.trace.startSolid())
 	{
 		Math::VectorCopy(clip.trace.endpos, traceEndpos);
-		Float traceFraction = clip.trace.fraction;
+		float traceFraction = clip.trace.fraction;
 
 		clip.trace.fraction = 1.0f;
 		clip.pstart = &start;
@@ -1073,7 +1073,7 @@ void SV_Move_Point( trace_t& trace, const Vector& start, const Vector& end, Int3
 		&& !clip.trace.startSolid())
 	{
 		Vector traceEndpos = clip.trace.endpos;
-		Float traceFraction = clip.trace.fraction;
+		float traceFraction = clip.trace.fraction;
 
 		clip.trace.fraction = 1.0f;
 		clip.pstart = &start;
@@ -1257,7 +1257,7 @@ void SV_TraceLine( const Vector& start, const Vector& end, Int32 traceflags, hul
 //=============================================
 //
 //=============================================
-Float SV_TraceModel( entindex_t entindex, const Vector& start, const Vector& end, hull_types_t hulltype, Int32 flags, trace_t& trace )
+float SV_TraceModel( entindex_t entindex, const Vector& start, const Vector& end, hull_types_t hulltype, Int32 flags, trace_t& trace )
 {
 	if(hulltype >= MAX_MAP_HULLS || hulltype < 0 && hulltype != HULL_AUTO)
 	{

@@ -42,38 +42,38 @@ class CConsole
 {
 public:
 	// How much to increase the console's buffer by each time
-	static const Uint32 CONSOLE_BUFFER_CHUNKSIZE;
+	static const UInt32 CONSOLE_BUFFER_CHUNKSIZE;
 	// Command name for the toggleconsole command
-	static const Char TOGGLECONSOLE_CMD_NAME[];
+	static const char TOGGLECONSOLE_CMD_NAME[];
 	// Max remembered last prints
-	static const Uint32 MAX_DEBUG_PRINTS;
+	static const UInt32 MAX_DEBUG_PRINTS;
 	// Print lifetime
-	static const Float DEBUG_PRINT_LIFETIME;
+	static const float DEBUG_PRINT_LIFETIME;
 
 	// Print box reference offset for x axis
-	static const Uint32 PRINT_BOX_REF_X_OFFSET;
+	static const UInt32 PRINT_BOX_REF_X_OFFSET;
 	// Print box reference offset for y axis
-	static const Uint32 PRINT_BOX_REF_Y_OFFSET;
+	static const UInt32 PRINT_BOX_REF_Y_OFFSET;
 	// Print box text inset
-	static const Uint32 PRINT_BOX_INSET;
+	static const UInt32 PRINT_BOX_INSET;
 
 	// Console reference width
-	static const Uint32 CONSOLE_REF_RESOLUTION_WIDTH;
+	static const UInt32 CONSOLE_REF_RESOLUTION_WIDTH;
 	// Print box reference height
-	static const Uint32 CONSOLE_REF_RESOLUTION_HEIGHT;
+	static const UInt32 CONSOLE_REF_RESOLUTION_HEIGHT;
 
 	// Print box reference width
-	static const Uint32 PRINT_BOX_REF_WIDTH;
+	static const UInt32 PRINT_BOX_REF_WIDTH;
 	// Print box reference height
-	static const Uint32 PRINT_BOX_REF_HEIGHT;
+	static const UInt32 PRINT_BOX_REF_HEIGHT;
 	// Print box reference bar thickness
-	static const Uint32 PRINT_BOX_REF_BAR_THICKNESS;
+	static const UInt32 PRINT_BOX_REF_BAR_THICKNESS;
 
 	// Print box color
 	static const color32_t PRINT_BOX_BAR_COLOR;
 
 	// Text schema name for console text box
-	static const Char TEXTBOX_TEXTSCHEMA_NAME[];
+	static const char TEXTBOX_TEXTSCHEMA_NAME[];
 
 public:
 	// Debug display prints
@@ -84,7 +84,7 @@ public:
 			{}
 
 		CString text;
-		Double time;
+		double time;
 	};
 
 public:
@@ -103,22 +103,22 @@ public:
 	bool InitGL( void );
 
 	// Adds text to the history
-	void AddTextHistory( const Char* pstrText );
+	void AddTextHistory( const char* pstrText );
 	// Returns a pointer to the console buffer
-	const Char* GetConsoleHistory( void ) const { return m_pConsoleBuffer; }
+	const char* GetConsoleHistory( void ) const { return m_pConsoleBuffer; }
 
 	// Processes a command input
-	void ProcessInput( const Char* pstrText );
+	void ProcessInput( const char* pstrText );
 	// Gets the current input from the history
-	const Char* GetCurrentInputHistory( void );
+	const char* GetCurrentInputHistory( void );
 	// Advances along the text history
 	void HistoryStepForward( void );
 	// Backtraces along the text history
 	void HistoryStepBack( void );
 	// Tells if we've reached the end of the history
-	inline bool IsAtHistoryEnd( void ) const { return m_inputHistoryList.end(); }
+	DO_INLINE bool IsAtHistoryEnd( void ) const { return m_inputHistoryList.end(); }
 	// Resets the history iterator
-	inline void ResetHistoryIterator( void ) { m_inputHistoryList.begin(); }
+	DO_INLINE void ResetHistoryIterator( void ) { m_inputHistoryList.begin(); }
 
 	// Spawns the console
 	static void ShowConsole( void );
@@ -130,22 +130,22 @@ public:
 	static void ToggleConsole( void );
 
 	// Retrieves a cvar by name
-	CCVar* GetCVar( const Char* pstrName );
+	CCVar* GetCVar( const char* pstrName );
 	// Creates a console variable
-	CCVar* CreateCVar( cvar_type_t type, Int32 flags, const Char* pstrName, const Char* pstrValue, const Char* pstrDescription = nullptr, pfnCVarCallback_t pfnCallback = nullptr );
+	CCVar* CreateCVar( cvar_type_t type, Int32 flags, const char* pstrName, const char* pstrValue, const char* pstrDescription = nullptr, pfnCVarCallback_t pfnCallback = nullptr );
 
 	// Adds an input to the inputs list
-	void AddInput( input_type_t type, const Char* name, const Char* description );
+	void AddInput( input_type_t type, const char* name, const char* description );
 	// Attemps to process a command from the cmd buffer
 	bool ProcessCommand( void );
 
 	// Sets a float value on a cvar
-	bool CVarSetFloatValue( const Char* pstrName, Float value );
+	bool CVarSetFloatValue( const char* pstrName, float value );
 	// Sets a string value on a cvar
-	bool CVarSetStringValue( const Char* pstrName, const Char* pstrValue );
+	bool CVarSetStringValue( const char* pstrName, const char* pstrValue );
 
 	// Sets the input list tabbing filter
-	const Char* GetBestInputChoice( const Char* pstrFilterString, bool retry = true );
+	const char* GetBestInputChoice( const char* pstrFilterString, bool retry = true );
 	// Resets the tabbing function
 	void ResetTabbing( void );
 
@@ -167,18 +167,18 @@ public:
 
 public:
 	// Buffer for all console text
-	Char* m_pConsoleBuffer;
+	char* m_pConsoleBuffer;
 	// Current buffer size
-	Uint32 m_bufferSize;
+	UInt32 m_bufferSize;
 	// Current buffer position
-	Uint32 m_bufferPosition;
+	UInt32 m_bufferPosition;
 
 	// Linked list of input commands
 	CLinkedList<CString> m_inputHistoryList;
-	// TRUE if we reached the end
+	// true if we reached the end
 	bool m_reachedHistoryEnd;
 
-	// TRUE if history text is up to date
+	// true if history text is up to date
 	bool m_isHistoryUpdated;
 
 private:

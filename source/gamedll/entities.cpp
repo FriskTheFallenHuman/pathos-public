@@ -28,7 +28,7 @@ All Rights Reserved.
 #include "player.h"
 #include "envpossky.h"
 
-// TRUE if we're in InitializeEntities
+// true if we're in InitializeEntities
 bool g_bInInitializeEntities = false;
 
 //
@@ -196,7 +196,7 @@ bool DispatchSpawn( edict_t* pedict )
 //=============================================
 bool UpdateTransitionedGlobalEntity( edict_t* pedict )
 {
-	const Char* pstrGlobalName = gd_engfuncs.pfnGetString(pedict->fields.globalname);
+	const char* pstrGlobalName = gd_engfuncs.pfnGetString(pedict->fields.globalname);
 	if(!pstrGlobalName || !qstrlen(pstrGlobalName))
 	{
 		Util::EntityConPrintf(pedict, "Transitioning global entity with no globalname!\n");
@@ -228,7 +228,7 @@ bool UpdateTransitionedGlobalEntity( edict_t* pedict )
 void ManageEntityGlobalState( edict_t* pedict, CBaseEntity* pEntity )
 {
 	// Manage global states
-	const Char* pstrGlobalName = pEntity->GetGlobalName();
+	const char* pstrGlobalName = pEntity->GetGlobalName();
 	if(pEntity->HasGlobalName())
 	{
 		const globalstate_t* pglobalstate = gGlobalStates.GetGlobalState(pstrGlobalName);
@@ -445,16 +445,16 @@ void SetAbsBox( edict_t* pedict )
 // @brief
 //
 //=============================================
-entity_data_desc_t CheckSaveField( entity_data_desc_t desc, Uint64 typesize, Int32 count, const Char* pstrObjectName, const Char* pstrVariableName )
+entity_data_desc_t CheckSaveField( entity_data_desc_t desc, UInt64 typesize, Int32 count, const char* pstrObjectName, const char* pstrVariableName )
 {
-	Uint64 expectedsize;
+	UInt64 expectedsize;
 	switch(desc.type)
 	{
 	case EFIELD_CARRAY_FLOAT:
-		expectedsize = sizeof(CArray<Float>);
+		expectedsize = sizeof(CArray<float>);
 		break;
 	case EFIELD_CARRAY_DOUBLE:
-		expectedsize = sizeof(CArray<Double>);
+		expectedsize = sizeof(CArray<double>);
 		break;
 	case EFIELD_CARRAY_STRING:
 		expectedsize = sizeof(CArray<string_t>);
@@ -482,50 +482,50 @@ entity_data_desc_t CheckSaveField( entity_data_desc_t desc, Uint64 typesize, Int
 		expectedsize = sizeof(CArray<Int16>);
 		break;
 	case EFIELD_CARRAY_UINT16:
-		expectedsize = sizeof(CArray<Uint16>);
+		expectedsize = sizeof(CArray<UInt16>);
 		break;
 	case EFIELD_CARRAY_INT32:
 		expectedsize = sizeof(CArray<Int32>);
 		break;
 	case EFIELD_CARRAY_UINT32:
-		expectedsize = sizeof(CArray<Uint32>);
+		expectedsize = sizeof(CArray<UInt32>);
 		break;
 	case EFIELD_CARRAY_INT64:
 		expectedsize = sizeof(CArray<Int64>);
 		break;
 	case EFIELD_CARRAY_UINT64:
-		expectedsize = sizeof(CArray<Uint64>);
+		expectedsize = sizeof(CArray<UInt64>);
 		break;
 	case EFIELD_CARRAY_BOOLEAN:
 		expectedsize = sizeof(CArray<bool>);
 		break;
 	case EFIELD_CARRAY_TIME:
-		expectedsize = sizeof(CArray<Double>);
+		expectedsize = sizeof(CArray<double>);
 		break;
 	case EFIELD_CBITSET:
 		expectedsize = sizeof(CBitSet);
 		break;
 	case EFIELD_FLOAT:
-		expectedsize = sizeof(Float);
+		expectedsize = sizeof(float);
 		break;
 	case EFIELD_TIME:
 	case EFIELD_DOUBLE:
-		expectedsize = sizeof(Double);
+		expectedsize = sizeof(double);
 		break;
 	case EFIELD_UINT16:
-		expectedsize = sizeof(Uint16);
+		expectedsize = sizeof(UInt16);
 		break;
 	case EFIELD_INT16:
 		expectedsize = sizeof(Int16);
 		break;
 	case EFIELD_UINT32:
-		expectedsize = sizeof(Uint32);
+		expectedsize = sizeof(UInt32);
 		break;
 	case EFIELD_INT32:
 		expectedsize = sizeof(Int32);
 		break;
 	case EFIELD_UINT64:
-		expectedsize = sizeof(Uint64);
+		expectedsize = sizeof(UInt64);
 		break;
 	case EFIELD_INT64:
 		expectedsize = sizeof(Int64);
@@ -538,10 +538,10 @@ entity_data_desc_t CheckSaveField( entity_data_desc_t desc, Uint64 typesize, Int
 		expectedsize = sizeof(bool);
 		break;
 	case EFIELD_BYTE:
-		expectedsize = sizeof(byte);
+		expectedsize = sizeof(Byte);
 		break;
 	case EFIELD_CHAR:
-		expectedsize = sizeof(Char);
+		expectedsize = sizeof(char);
 		break;
 	case EFIELD_FUNCPTR:
 		expectedsize = sizeof(void*);
@@ -595,8 +595,8 @@ bool ManageKeyvalue( entity_state_t& es, edict_fields_t& ef, const keyvalue_t& k
 		return true;
 	}
 
-	Uint32 nbFields = sizeof(g_edictStateFields)/sizeof(entity_data_desc_t);
-	for(Uint32 i = 0; i < nbFields; i++)
+	UInt32 nbFields = sizeof(g_edictStateFields)/sizeof(entity_data_desc_t);
+	for(UInt32 i = 0; i < nbFields; i++)
 	{
 		entity_data_desc_t& field = g_edictStateFields[i];
 		if(!qstrcmp(kv.keyname, field.fieldname))
@@ -605,49 +605,49 @@ bool ManageKeyvalue( entity_state_t& es, edict_fields_t& ef, const keyvalue_t& k
 			{
 			case EFIELD_FLOAT:
 				{
-					Float value = (Float)SDL_atof(kv.value);
-					byte* pdest = ((byte *)&es + field.offset);
-					memcpy(pdest, &value, sizeof(Float));
+					float value = (float)SDL_atof(kv.value);
+					Byte* pdest = ((Byte *)&es + field.offset);
+					memcpy(pdest, &value, sizeof(float));
 				}
 				break;
 
 			case EFIELD_TIME:
 			case EFIELD_DOUBLE:
 				{
-					Double value = SDL_atof(kv.value);
-					byte* pdest = ((byte *)&es + field.offset);
-					memcpy(pdest, &value, sizeof(Double));
+					double value = SDL_atof(kv.value);
+					Byte* pdest = ((Byte *)&es + field.offset);
+					memcpy(pdest, &value, sizeof(double));
 				}
 				break;
 
 			case EFIELD_UINT16:
-				(*(Uint16*)((byte *)&es + field.offset)) = SDL_atoi(kv.value);
+				(*(UInt16*)((Byte *)&es + field.offset)) = SDL_atoi(kv.value);
 				break;
 			case EFIELD_INT16:
-				(*(Int16*)((byte *)&es + field.offset)) = SDL_atoi(kv.value);
+				(*(Int16*)((Byte *)&es + field.offset)) = SDL_atoi(kv.value);
 				break;
 
 			case EFIELD_UINT32:
-				(*(Uint32*)((byte *)&es + field.offset)) = SDL_atoi(kv.value);
+				(*(UInt32*)((Byte *)&es + field.offset)) = SDL_atoi(kv.value);
 				break;
 			case EFIELD_INT32:
-				(*(Int32*)((byte *)&es + field.offset)) = SDL_atoi(kv.value);
+				(*(Int32*)((Byte *)&es + field.offset)) = SDL_atoi(kv.value);
 				break;
 
 			case EFIELD_UINT64:
-				(*(Uint64*)((byte *)&es + field.offset)) = SDL_atoi(kv.value);
+				(*(UInt64*)((Byte *)&es + field.offset)) = SDL_atoi(kv.value);
 				break;
 			case EFIELD_INT64:
-				(*(Int64*)((byte *)&es + field.offset)) = SDL_atoi(kv.value);
+				(*(Int64*)((Byte *)&es + field.offset)) = SDL_atoi(kv.value);
 				break;
 
 			case EFIELD_VECTOR:
 			case EFIELD_COORD:
-				Common::StringToVector(kv.value, (*(Vector*)((byte *)&es + field.offset)));
+				Common::StringToVector(kv.value, (*(Vector*)((Byte *)&es + field.offset)));
 				break;
 				
 			case EFIELD_BOOLEAN:
-				(*(bool*)((byte *)&es + field.offset)) = (SDL_atoi(kv.value) == 1) ? true : false;
+				(*(bool*)((Byte *)&es + field.offset)) = (SDL_atoi(kv.value) == 1) ? true : false;
 				break;
 
 			case EFIELD_BYTE:
@@ -671,7 +671,7 @@ bool ManageKeyvalue( entity_state_t& es, edict_fields_t& ef, const keyvalue_t& k
 	}
 
 	nbFields = sizeof(g_edictStringFields)/sizeof(entity_data_desc_t);
-	for(Uint32 i = 0; i < nbFields; i++)
+	for(UInt32 i = 0; i < nbFields; i++)
 	{
 		entity_data_desc_t& field = g_edictStringFields[i];
 		if(!qstrcmp(kv.keyname, field.fieldname))
@@ -682,7 +682,7 @@ bool ManageKeyvalue( entity_state_t& es, edict_fields_t& ef, const keyvalue_t& k
 			case EFIELD_SOUNDNAME:
 			case EFIELD_STRING:
 				{
-					(*(string_t*)((byte *)&ef + field.offset)) = gd_engfuncs.pfnAllocString(kv.value);
+					(*(string_t*)((Byte *)&ef + field.offset)) = gd_engfuncs.pfnAllocString(kv.value);
 				}
 				break;
 
@@ -724,17 +724,17 @@ bool ManageKeyvalue( entity_state_t& es, edict_fields_t& ef, const keyvalue_t& k
 //=============================================
 void SaveEntityState( entity_state_t& es, bool istransitionsave )
 {
-	Uint32 nbFields = sizeof(g_edictStateFields)/sizeof(entity_data_desc_t);
-	for(Uint32 i = 0; i < nbFields; i++)
+	UInt32 nbFields = sizeof(g_edictStateFields)/sizeof(entity_data_desc_t);
+	for(UInt32 i = 0; i < nbFields; i++)
 	{
 		entity_data_desc_t& field = g_edictStateFields[i];
-		byte* pdata = ((byte *)&es + field.offset);
+		Byte* pdata = ((Byte *)&es + field.offset);
 
 		switch(field.type)
 		{
 		case EFIELD_FLOAT:
 			{
-				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(Float)*field.size))
+				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(float)*field.size))
 					continue;
 
 				gd_engfuncs.pfnSaveWriteFloat(field.fieldname.c_str(), pdata, field.size, field.type); 
@@ -742,7 +742,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			break;
 		case EFIELD_DOUBLE:
 			{
-				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(Double)*field.size))
+				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(double)*field.size))
 					continue;
 
 				gd_engfuncs.pfnSaveWriteDouble(field.fieldname.c_str(), pdata, field.size, field.type); 
@@ -752,7 +752,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			{
 				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS))
 				{
-					Uint32 j = 0;
+					UInt32 j = 0;
 					for(; j < field.size; j++)
 					{
 						const entindex_t* pvalue = reinterpret_cast<entindex_t*>(pdata)+j;
@@ -771,7 +771,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			{
 				bool hasData = false;
 				entindex_t *ptempbuffer = new entindex_t[field.size];
-				for(Uint32 j = 0; j < field.size; j++)
+				for(UInt32 j = 0; j < field.size; j++)
 				{
 					CBaseEntity* pEntity = (reinterpret_cast<CBaseEntity**>(pdata))[j];
 					if(pEntity)
@@ -786,7 +786,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && !hasData)
 					continue;
 
-				gd_engfuncs.pfnSaveWriteEntindex(field.fieldname.c_str(), reinterpret_cast<byte*>(ptempbuffer), field.size, field.type);
+				gd_engfuncs.pfnSaveWriteEntindex(field.fieldname.c_str(), reinterpret_cast<Byte*>(ptempbuffer), field.size, field.type);
 				delete[] ptempbuffer;
 			}
 			break;
@@ -794,7 +794,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			{
 				bool hasData = false;
 				entindex_t *ptempbuffer = new entindex_t[field.size];
-				for(Uint32 j = 0; j < field.size; j++)
+				for(UInt32 j = 0; j < field.size; j++)
 				{
 					edict_t* pEntity = (reinterpret_cast<edict_t**>(pdata))[j];
 					if(pEntity)
@@ -809,7 +809,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && !hasData)
 					continue;
 
-				gd_engfuncs.pfnSaveWriteEntindex(field.fieldname.c_str(), reinterpret_cast<byte*>(ptempbuffer), field.size, field.type);
+				gd_engfuncs.pfnSaveWriteEntindex(field.fieldname.c_str(), reinterpret_cast<Byte*>(ptempbuffer), field.size, field.type);
 				delete[] ptempbuffer;
 			}
 			break;
@@ -817,7 +817,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			{
 				bool hasData = false;
 				entindex_t *ptempbuffer = new entindex_t[field.size];
-				for(Uint32 j = 0; j < field.size; j++)
+				for(UInt32 j = 0; j < field.size; j++)
 				{
 					entity_state_t* pEntity = (reinterpret_cast<entity_state_t**>(pdata))[j];
 					if(pEntity)
@@ -832,7 +832,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && !hasData)
 					continue;
 
-				gd_engfuncs.pfnSaveWriteEntindex(field.fieldname.c_str(), reinterpret_cast<byte*>(ptempbuffer), field.size, field.type);
+				gd_engfuncs.pfnSaveWriteEntindex(field.fieldname.c_str(), reinterpret_cast<Byte*>(ptempbuffer), field.size, field.type);
 				delete[] ptempbuffer;
 			}
 			break;
@@ -840,7 +840,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			{
 				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS))
 				{
-					Uint32 j = 0;
+					UInt32 j = 0;
 					for(; j < field.size; j++)
 					{
 						const Vector* pvalue = reinterpret_cast<Vector*>(pdata)+j;
@@ -872,7 +872,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			break;
 		case EFIELD_UINT16:
 			{
-				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(Uint16)*field.size))
+				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(UInt16)*field.size))
 					continue;
 
 				gd_engfuncs.pfnSaveWriteUint16(field.fieldname.c_str(), pdata, field.size, field.type);
@@ -888,7 +888,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			break;
 		case EFIELD_UINT32:
 			{
-				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(Uint32)*field.size))
+				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(UInt32)*field.size))
 					continue;
 
 				gd_engfuncs.pfnSaveWriteUint32(field.fieldname.c_str(), pdata, field.size, field.type);
@@ -904,7 +904,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			break;
 		case EFIELD_UINT64:
 			{
-				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(Uint64)*field.size))
+				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(UInt64)*field.size))
 					continue;
 
 				gd_engfuncs.pfnSaveWriteUint64(field.fieldname.c_str(), pdata, field.size, field.type);
@@ -927,7 +927,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 				if(!istransitionsave && functionName.empty())
 					continue;
 					
-				gd_engfuncs.pfnSaveWriteRawString(field.fieldname.c_str(), reinterpret_cast<const byte*>(functionName.c_str()), field.type);
+				gd_engfuncs.pfnSaveWriteRawString(field.fieldname.c_str(), reinterpret_cast<const Byte*>(functionName.c_str()), field.type);
 			}
 			break;
 		case EFIELD_BOOLEAN:
@@ -940,7 +940,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			break;
 		case EFIELD_BYTE:
 			{
-				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(byte)*field.size))
+				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(Byte)*field.size))
 					continue;
 
 				gd_engfuncs.pfnSaveWriteByte(field.fieldname.c_str(), pdata, field.size, field.type);
@@ -948,7 +948,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			break;
 		case EFIELD_CHAR:
 			{
-				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(Char)*field.size))
+				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(char)*field.size))
 					continue;
 
 				gd_engfuncs.pfnSaveWriteChar(field.fieldname.c_str(), pdata, field.size, field.type);
@@ -956,7 +956,7 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 			break;
 		case EFIELD_TIME:
 			{
-				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(Double)*field.size))
+				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS) && Util::IsDataEmpty(pdata, sizeof(double)*field.size))
 					continue;
 
 				gd_engfuncs.pfnSaveWriteTime(field.fieldname.c_str(), pdata, field.size, field.type); 
@@ -997,11 +997,11 @@ void SaveEntityState( entity_state_t& es, bool istransitionsave )
 //=============================================
 void SaveEntityFields( edict_fields_t& ef, bool istransitionsave )
 {
-	Uint32 nbFields = sizeof(g_edictStringFields)/sizeof(entity_data_desc_t);
-	for(Uint32 i = 0; i < nbFields; i++)
+	UInt32 nbFields = sizeof(g_edictStringFields)/sizeof(entity_data_desc_t);
+	for(UInt32 i = 0; i < nbFields; i++)
 	{
 		entity_data_desc_t& field = g_edictStringFields[i];
-		byte* pdata = ((byte *)&ef + field.offset);
+		Byte* pdata = ((Byte *)&ef + field.offset);
 
 		switch(field.type)
 		{
@@ -1011,10 +1011,10 @@ void SaveEntityFields( edict_fields_t& ef, bool istransitionsave )
 			{
 				if(!istransitionsave && !(field.flags & EFIELD_SAVE_ALWAYS))
 				{
-					Uint32 j = 0;
+					UInt32 j = 0;
 					for(; j < field.size; j++)
 					{
-						string_t stringIndex = Common::ByteToUint32(reinterpret_cast<byte *>(pdata) + sizeof(string_t)*j);
+						string_t stringIndex = Common::ByteToUint32(reinterpret_cast<Byte *>(pdata) + sizeof(string_t)*j);
 						if(stringIndex != NO_STRING_VALUE)
 							break;
 					}
@@ -1105,7 +1105,7 @@ bool KeyValue( edict_t* pedict, const keyvalue_t& keyvalue )
 // @brief
 //
 //=============================================
-void SetupVisiblity( edict_t* pclient, byte*& ppvs, byte*& ppas )
+void SetupVisiblity( edict_t* pclient, Byte*& ppvs, Byte*& ppas )
 {
 	if(Util::IsNullEntity(pclient))
 	{
@@ -1143,8 +1143,8 @@ void SetupVisiblity( edict_t* pclient, byte*& ppvs, byte*& ppas )
 				gd_engfuncs.pfnLeafPVS(g_pVISBuffer, g_visBufferSize, (*pleaf), (*pbrushmodel));
 
 				// Add the contents to the serve PVS
-				Uint32 bytecount = (pbrushmodel->numleafs + 7) >> 3;
-				for(Uint32 i = 0; i < bytecount; i++)
+				UInt32 bytecount = (pbrushmodel->numleafs + 7) >> 3;
+				for(UInt32 i = 0; i < bytecount; i++)
 					ppvs[i] |= g_pVISBuffer[i];
 			}
 		}
@@ -1155,7 +1155,7 @@ void SetupVisiblity( edict_t* pclient, byte*& ppvs, byte*& ppas )
 // @brief
 //
 //=============================================
-bool CheckVisibility( const edict_t& client, const edict_t& entity, const byte* pset )
+bool CheckVisibility( const edict_t& client, const edict_t& entity, const Byte* pset )
 {
 	// If set is null, just send everything
 	if(!pset)
@@ -1212,7 +1212,7 @@ bool CheckVisibility( const edict_t& client, const edict_t& entity, const byte* 
 // @brief
 //
 //=============================================
-bool AddPacketEntity( entity_state_t& state, entindex_t entindex, edict_t& entity, const edict_t& client, const byte* pset )
+bool AddPacketEntity( entity_state_t& state, entindex_t entindex, edict_t& entity, const edict_t& client, const Byte* pset )
 {
 	// Only with a valid model
 	if(entity.state.modelindex == 0 && !(entity.state.flags & FL_CLIENT))
@@ -1306,11 +1306,11 @@ bool AddPacketEntity( entity_state_t& state, entindex_t entindex, edict_t& entit
 	}
 
 	// Handle controllers
-	for(Uint32 i = 0; i < MAX_CONTROLLERS; i++)
+	for(UInt32 i = 0; i < MAX_CONTROLLERS; i++)
 		state.controllers[i] = entity.state.controllers[i];
 
 	// Handle blending controllers
-	for(Uint32 i = 0; i < MAX_BLENDING; i++)
+	for(UInt32 i = 0; i < MAX_BLENDING; i++)
 		state.blending[i] = entity.state.blending[i];
 
 	// Groundent
@@ -1386,11 +1386,11 @@ void BeginLoadSave( bool isLoadSave, bool isTransitionSave, bool isTransitionLoa
 // @brief
 //
 //=============================================
-bool ReadEntityStateData( edict_t* pedict, const Char* fieldname, const byte* pdata, Uint32 datasize, Uint32 blockindex, bool istransferglobalentity )
+bool ReadEntityStateData( edict_t* pedict, const char* fieldname, const Byte* pdata, UInt32 datasize, UInt32 blockindex, bool istransferglobalentity )
 {
-	Uint32 nbFields = sizeof(g_edictStateFields)/sizeof(entity_data_desc_t);
+	UInt32 nbFields = sizeof(g_edictStateFields)/sizeof(entity_data_desc_t);
 
-	for(Uint32 i = 0; i < nbFields; i++)
+	for(UInt32 i = 0; i < nbFields; i++)
 	{
 		entity_data_desc_t& field = g_edictStateFields[i];
 		if(!qstrcmp(fieldname, field.fieldname))
@@ -1405,14 +1405,14 @@ bool ReadEntityStateData( edict_t* pedict, const Char* fieldname, const byte* pd
 			{
 			case EFIELD_CHAR:
 				{
-					Char *pDestPtr = (Char*)((byte*)&pedict->state + field.offset);
-					memcpy(pDestPtr, pdata, sizeof(byte)*field.size);
+					char *pDestPtr = (char*)((Byte*)&pedict->state + field.offset);
+					memcpy(pDestPtr, pdata, sizeof(Byte)*field.size);
 				}
 				break;
 			case EFIELD_BYTE:
 				{
-					byte *pDestPtr = ((byte*)&pedict->state + field.offset);
-					memcpy(pDestPtr, pdata, sizeof(byte)*field.size);
+					Byte *pDestPtr = ((Byte*)&pedict->state + field.offset);
+					memcpy(pDestPtr, pdata, sizeof(Byte)*field.size);
 				}
 				break;
 			case EFIELD_ENTINDEX:
@@ -1421,7 +1421,7 @@ bool ReadEntityStateData( edict_t* pedict, const Char* fieldname, const byte* pd
 					if(entindex != NO_ENTITY_INDEX)
 						entindex = (*g_saveRestoreData.pentityindexarray)[entindex];
 
-					entindex_t *pDestPtr = (entindex_t *)((byte*)&pedict->state + field.offset);
+					entindex_t *pDestPtr = (entindex_t *)((Byte*)&pedict->state + field.offset);
 					(*pDestPtr) = entindex;
 				}
 				break;
@@ -1435,7 +1435,7 @@ bool ReadEntityStateData( edict_t* pedict, const Char* fieldname, const byte* pd
 					edict_t* pEdict = gd_engfuncs.pfnGetEdictByIndex(realindex);
 					CBaseEntity* pEntity = CBaseEntity::GetClass(pEdict);
 
-					CBaseEntity **pDestPtr = (CBaseEntity **)((byte*)&pedict->state + field.offset);
+					CBaseEntity **pDestPtr = (CBaseEntity **)((Byte*)&pedict->state + field.offset);
 					(*pDestPtr) = pEntity;
 				}
 				break;
@@ -1448,7 +1448,7 @@ bool ReadEntityStateData( edict_t* pedict, const Char* fieldname, const byte* pd
 					entindex_t realindex = (*g_saveRestoreData.pentityindexarray)[entindex];
 					edict_t* pEdict = gd_engfuncs.pfnGetEdictByIndex(realindex);
 
-					edict_t** pDestPtr = (edict_t**)((byte *)&pedict->state + field.offset);
+					edict_t** pDestPtr = (edict_t**)((Byte *)&pedict->state + field.offset);
 					(*pDestPtr) = pEdict;
 				}
 				break;
@@ -1458,79 +1458,79 @@ bool ReadEntityStateData( edict_t* pedict, const Char* fieldname, const byte* pd
 					if(entindex == NO_ENTITY_INDEX)
 						return true;
 
-					Uint32 realindex = (*g_saveRestoreData.pentityindexarray)[entindex];
+					UInt32 realindex = (*g_saveRestoreData.pentityindexarray)[entindex];
 					edict_t* pEdict = gd_engfuncs.pfnGetEdictByIndex(realindex);
 
-					entity_state_t** pEntStatePtr = (entity_state_t**)((byte *)&pedict->state + field.offset);
+					entity_state_t** pEntStatePtr = (entity_state_t**)((Byte *)&pedict->state + field.offset);
 					(*pEntStatePtr) = &pEdict->state;
 				}
 				break;
 			case EFIELD_TIME:
 				{
-					Double timeValue = Common::ByteToDouble(pdata);
+					double timeValue = Common::ByteToDouble(pdata);
 					if(g_saveRestoreData.transitionsave && timeValue != 0)
 						timeValue += g_pGameVars->time;
 
-					byte* pdest = ((byte *)&pedict->state + field.offset) + blockindex * sizeof(Double);
-					memcpy(pdest, &timeValue, sizeof(Double));
+					Byte* pdest = ((Byte *)&pedict->state + field.offset) + blockindex * sizeof(double);
+					memcpy(pdest, &timeValue, sizeof(double));
 				}
 				break;
 			case EFIELD_FLOAT:
 				{
-					Float floatValue = Common::ByteToFloat(pdata);
+					float floatValue = Common::ByteToFloat(pdata);
 
-					byte* pdest = ((byte *)&pedict->state + field.offset) + blockindex * sizeof(Float);
-					memcpy(pdest, &floatValue, sizeof(Float));
+					Byte* pdest = ((Byte *)&pedict->state + field.offset) + blockindex * sizeof(float);
+					memcpy(pdest, &floatValue, sizeof(float));
 				}
 				break;
 			case EFIELD_DOUBLE:
 				{
-					Double doubleValue = Common::ByteToDouble(pdata);
+					double doubleValue = Common::ByteToDouble(pdata);
 
-					byte* pdest = ((byte *)&pedict->state + field.offset) + blockindex * sizeof(Double);
-					memcpy(pdest, &doubleValue, sizeof(Double));
+					Byte* pdest = ((Byte *)&pedict->state + field.offset) + blockindex * sizeof(double);
+					memcpy(pdest, &doubleValue, sizeof(double));
 				}
 				break;
 			case EFIELD_INT16:
 				{
 					Int16 intValue = Common::ByteToInt16(pdata);
-					(*((Int16*)((byte *)&pedict->state + field.offset) + blockindex)) = intValue;
+					(*((Int16*)((Byte *)&pedict->state + field.offset) + blockindex)) = intValue;
 				}
 				break;
 			case EFIELD_UINT16:
 				{
-					Uint32 intValue = Common::ByteToUint16(pdata);
-					(*((Uint32*)((byte *)&pedict->state + field.offset) + blockindex)) = intValue;
+					UInt32 intValue = Common::ByteToUint16(pdata);
+					(*((UInt32*)((Byte *)&pedict->state + field.offset) + blockindex)) = intValue;
 				}
 				break;
 			case EFIELD_INT32:
 				{
 					Int32 intValue = Common::ByteToInt32(pdata);
-					(*((Int32*)((byte *)&pedict->state + field.offset) + blockindex)) = intValue;
+					(*((Int32*)((Byte *)&pedict->state + field.offset) + blockindex)) = intValue;
 				}
 				break;
 			case EFIELD_UINT32:
 				{
-					Uint32 intValue = Common::ByteToUint32(pdata);
-					(*((Uint32*)((byte *)&pedict->state + field.offset) + blockindex)) = intValue;
+					UInt32 intValue = Common::ByteToUint32(pdata);
+					(*((UInt32*)((Byte *)&pedict->state + field.offset) + blockindex)) = intValue;
 				}
 				break;
 			case EFIELD_INT64:
 				{
 					Int64 intValue = Common::ByteToInt64(pdata);
-					(*((Int64*)((byte *)&pedict->state + field.offset) + blockindex)) = intValue;
+					(*((Int64*)((Byte *)&pedict->state + field.offset) + blockindex)) = intValue;
 				}
 				break;
 			case EFIELD_UINT64:
 				{
-					Uint64 intValue = Common::ByteToUint64(pdata);
-					(*((Uint64*)((byte *)&pedict->state + field.offset) + blockindex)) = intValue;
+					UInt64 intValue = Common::ByteToUint64(pdata);
+					(*((UInt64*)((Byte *)&pedict->state + field.offset) + blockindex)) = intValue;
 				}
 				break;
 			case EFIELD_VECTOR:
 				{
 					Vector vecValue = *(reinterpret_cast<const Vector*>(pdata));
-					(*((Vector*)((byte *)&pedict->state + field.offset) + blockindex)) = vecValue;
+					(*((Vector*)((Byte *)&pedict->state + field.offset) + blockindex)) = vecValue;
 				}
 				break;
 			case EFIELD_COORD:
@@ -1539,13 +1539,13 @@ bool ReadEntityStateData( edict_t* pedict, const Char* fieldname, const byte* pd
 					if(g_saveRestoreData.transitionsave)
 						Math::VectorAdd(vecValue, g_saveRestoreData.landmarkOffset, vecValue);
 
-					(*((Vector*)((byte *)&pedict->state + field.offset) + blockindex)) = vecValue;
+					(*((Vector*)((Byte *)&pedict->state + field.offset) + blockindex)) = vecValue;
 				}
 				break;
 			case EFIELD_BOOLEAN:
 				{
 					bool boolValue = ((*pdata) == 0) ? false : true;
-					(*((bool*)((byte *)&pedict->state + field.offset) + blockindex)) = boolValue;
+					(*((bool*)((Byte *)&pedict->state + field.offset) + blockindex)) = boolValue;
 				}
 				break;
 			case EFIELD_MODELNAME:
@@ -1569,10 +1569,10 @@ bool ReadEntityStateData( edict_t* pedict, const Char* fieldname, const byte* pd
 // @brief
 //
 //=============================================
-bool ReadEntityFieldData( edict_t* pedict, const Char* fieldname, const byte* pdata, Uint32 datasize, Uint32 blockindex, bool istransferglobalentity )
+bool ReadEntityFieldData( edict_t* pedict, const char* fieldname, const Byte* pdata, UInt32 datasize, UInt32 blockindex, bool istransferglobalentity )
 {
-	Uint32 nbFields = sizeof(g_edictStringFields)/sizeof(entity_data_desc_t);
-	for(Uint32 i = 0; i < nbFields; i++)
+	UInt32 nbFields = sizeof(g_edictStringFields)/sizeof(entity_data_desc_t);
+	for(UInt32 i = 0; i < nbFields; i++)
 	{
 		entity_data_desc_t& field = g_edictStringFields[i];
 		if(!qstrcmp(fieldname, field.fieldname))
@@ -1589,8 +1589,8 @@ bool ReadEntityFieldData( edict_t* pedict, const Char* fieldname, const byte* pd
 			case EFIELD_SOUNDNAME:
 			case EFIELD_STRING:
 				{
-					CString value(reinterpret_cast<const Char*>(pdata), datasize);
-					string_t& str = (*((string_t*)((byte *)&pedict->fields + field.offset) + blockindex));
+					CString value(reinterpret_cast<const char*>(pdata), datasize);
+					string_t& str = (*((string_t*)((Byte *)&pedict->fields + field.offset) + blockindex));
 					str = gd_engfuncs.pfnAllocString(value.c_str());
 				}
 				break;
@@ -1623,7 +1623,7 @@ bool ReadEntityFieldData( edict_t* pedict, const Char* fieldname, const byte* pd
 // @brief
 //
 //=============================================
-bool PrepareEntityClassData( edict_t* pedict, const Char* fieldname, Uint32 numblocks, bool istransferglobalentity )
+bool PrepareEntityClassData( edict_t* pedict, const char* fieldname, UInt32 numblocks, bool istransferglobalentity )
 {
 	CBaseEntity* pEntity = CBaseEntity::GetClass(pedict);
 	if(!pEntity)
@@ -1636,7 +1636,7 @@ bool PrepareEntityClassData( edict_t* pedict, const Char* fieldname, Uint32 numb
 // @brief
 //
 //=============================================
-bool ReadEntityClassData( edict_t* pedict, const Char* fieldname, const byte* pdata, Uint32 datasize, Uint32 blockindex, bool istransferglobalentity )
+bool ReadEntityClassData( edict_t* pedict, const char* fieldname, const Byte* pdata, UInt32 datasize, UInt32 blockindex, bool istransferglobalentity )
 {
 	CBaseEntity* pEntity = CBaseEntity::GetClass(pedict);
 	if(!pEntity)
@@ -1652,8 +1652,8 @@ bool ReadEntityClassData( edict_t* pedict, const Char* fieldname, const byte* pd
 void RunEntityInitFunctions( bool triggerautos )
 {
 	// Initialize all but trigger_auto entities first
-	Uint32 numEntities = gd_engfuncs.pfnGetNbEdicts();
-	for(Uint32 i = 0; i < numEntities; i++)
+	UInt32 numEntities = gd_engfuncs.pfnGetNbEdicts();
+	for(UInt32 i = 0; i < numEntities; i++)
 	{
 		edict_t* pedict = gd_engfuncs.pfnGetEdictByIndex(i);
 		if(pedict->free || !pedict->pprivatedata)
@@ -1717,8 +1717,8 @@ void SendEntityInitMessages( edict_t* pPlayer )
 	if(!pPlayerEntity)
 		return;
 
-	Uint32 numEntities = gd_engfuncs.pfnGetNbEdicts();
-	for(Uint32 i = 1; i < numEntities; i++)
+	UInt32 numEntities = gd_engfuncs.pfnGetNbEdicts();
+	for(UInt32 i = 1; i < numEntities; i++)
 	{
 		edict_t* pedict = gd_engfuncs.pfnGetEdictByIndex(i);
 		if(pedict->free || !pedict->pprivatedata)
@@ -1732,7 +1732,7 @@ void SendEntityInitMessages( edict_t* pPlayer )
 //=============================================
 //
 //=============================================
-edict_t* FindEntityByString( edict_t* pStartEntity, const Char* pstrFieldName, const Char* pstrValue )
+edict_t* FindEntityByString( edict_t* pStartEntity, const char* pstrFieldName, const char* pstrValue )
 {
 	if(!pstrFieldName || !qstrlen(pstrFieldName))
 		return nullptr;
@@ -1741,7 +1741,7 @@ edict_t* FindEntityByString( edict_t* pStartEntity, const Char* pstrFieldName, c
 		return nullptr;
 
 	Int32 fieldoffset = -1;
-	for(Uint32 i = 0; i < sizeof(g_edictStringFields)/sizeof(entity_data_desc_t); i++)
+	for(UInt32 i = 0; i < sizeof(g_edictStringFields)/sizeof(entity_data_desc_t); i++)
 	{
 		if(!qstrcmp(g_edictStringFields[i].fieldname, pstrFieldName))
 		{
@@ -1764,7 +1764,7 @@ edict_t* FindEntityByString( edict_t* pStartEntity, const Char* pstrFieldName, c
 			continue;
 
 		// Retrieve the field value
-		string_t& str = (*(string_t*)((byte *)&pedict->fields + fieldoffset));
+		string_t& str = (*(string_t*)((Byte *)&pedict->fields + fieldoffset));
 		if(str == NO_STRING_VALUE)
 			continue;
 
@@ -1778,7 +1778,7 @@ edict_t* FindEntityByString( edict_t* pStartEntity, const Char* pstrFieldName, c
 //=============================================
 //
 //=============================================
-edict_t* FindGlobalEntity( const Char* pstrClassname, const Char* pstrGlobalName )
+edict_t* FindGlobalEntity( const char* pstrClassname, const char* pstrGlobalName )
 {
 	for(Int32 i = 0; i < gd_engfuncs.pfnGetNbEdicts(); i++)
 	{
@@ -1798,7 +1798,7 @@ edict_t* FindGlobalEntity( const Char* pstrClassname, const Char* pstrGlobalName
 // @brief
 //
 //=============================================
-bool GetTransitioningEntities( const byte* pPVS, const Vector* pTransitionMins, const Vector* pTransitionMaxs, const Char* pstrLandmarkName, const Vector& landmarkPosition, Int32 *pTransitionList, Uint32& numEntities, Uint32 maxEntities )
+bool GetTransitioningEntities( const Byte* pPVS, const Vector* pTransitionMins, const Vector* pTransitionMaxs, const char* pstrLandmarkName, const Vector& landmarkPosition, Int32 *pTransitionList, UInt32& numEntities, UInt32 maxEntities )
 {
 	// Make sure the local host is inside the PVS of this landmark
 	CBaseEntity* pPlayer = Util::GetHostPlayer();
@@ -1823,8 +1823,8 @@ bool GetTransitioningEntities( const byte* pPVS, const Vector* pTransitionMins, 
 	}
 
 	// Now go through all edicts and find which ones intersect
-	Uint32 numentities = gd_engfuncs.pfnGetNbEdicts();
-	for(Uint32 i = 1; i < numentities; i++)
+	UInt32 numentities = gd_engfuncs.pfnGetNbEdicts();
+	for(UInt32 i = 1; i < numentities; i++)
 	{
 		edict_t* pedict = gd_engfuncs.pfnGetEdictByIndex(i);
 
@@ -1878,7 +1878,7 @@ bool GetTransitioningEntities( const byte* pPVS, const Vector* pTransitionMins, 
 	}
 
 	// Make sure player made it onto the list
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for(; i < numEntities; i++)
 	{
 		if(pTransitionList[i] == playeredict->entindex)
@@ -1910,9 +1910,9 @@ void AdjustEntityPositions( edict_t* pedict, Vector prevmins )
 	Vector posAdj = pedict->state.mins - prevmins;
 
 	// Get nb of fields
-	Uint32 nbFields = sizeof(g_edictStateFields)/sizeof(entity_data_desc_t);
+	UInt32 nbFields = sizeof(g_edictStateFields)/sizeof(entity_data_desc_t);
 
-	for(Uint32 i = 0; i < nbFields; i++)
+	for(UInt32 i = 0; i < nbFields; i++)
 	{
 		entity_data_desc_t& field = g_edictStateFields[i];
 
@@ -1920,9 +1920,9 @@ void AdjustEntityPositions( edict_t* pedict, Vector prevmins )
 		if(field.flags & EFIELD_GLOBAL)
 			continue;
 
-		for(Uint32 j = 0; j < field.size; j++)
+		for(UInt32 j = 0; j < field.size; j++)
 		{
-			byte* pdata = ((byte*)&pedict->state) + field.offset;
+			Byte* pdata = ((Byte*)&pedict->state) + field.offset;
 
 			switch(field.type)
 			{

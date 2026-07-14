@@ -15,6 +15,7 @@ All Rights Reserved.
 #include "weapons_shared.h"
 #include "ehandle.h"
 #include "gameui_shared.h"
+#include "ladder_shared.h"
 
 class CTriggerSubwayController;
 class CTriggerKeypad;
@@ -30,14 +31,14 @@ extern void ClientPreThink( edict_t* pclient );
 extern void ClientPostThink( edict_t* pclient );
 
 extern bool ClientCommand( edict_t* pclient );
-extern bool ClientConnect( edict_t* pclient, const Char* pname, const Char* paddress, CString& rejectReason );
+extern bool ClientConnect( edict_t* pclient, const char* pname, const char* paddress, CString& rejectReason );
 extern void ClientDisconnected( edict_t* pclient );
 
 extern void CmdStart( const usercmd_t& cmd, edict_t* pclient );
 extern void CmdEnd( edict_t* pclient );
 
-extern void PM_PlayStepSound( entindex_t entindex, const Char* pstrMaterialName, bool stepleft, Float volume, const Vector& origin );
-extern void PM_PlaySound( entindex_t entindex, Int32 channel, const Char* psample, Float volume, Float attenuation, Int32 pitch, Int32 flags );
+extern void PM_PlayStepSound( entindex_t entindex, const char* pstrMaterialName, bool stepleft, float volume, const Vector& origin );
+extern void PM_PlaySound( entindex_t entindex, Int32 channel, const char* psample, float volume, float attenuation, Int32 pitch, Int32 flags );
 
 /*
 =======================
@@ -68,12 +69,12 @@ public:
 	};
 	struct cheatinfo_t
 	{
-		cheatinfo_t(const Char* pstrCheatCode, const Char* pstrDescription):
+		cheatinfo_t(const char* pstrCheatCode, const char* pstrDescription):
 			cheatcode(pstrCheatCode),
 			description(pstrDescription)
 			{
 			}
-		cheatinfo_t(Int32 impulsecode, const Char* pstrDescription):
+		cheatinfo_t(Int32 impulsecode, const char* pstrDescription):
 			description(pstrDescription)
 			{
 				cheatcode << "impulse " << impulsecode;
@@ -92,9 +93,9 @@ public:
 			{}
 
 		CEntityHandle pnpc;
-		Float awareness;
-		Double lasttime;
-		Float timeoutdelay;
+		float awareness;
+		double lasttime;
+		float timeoutdelay;
 		bool leanawareness;
 	};
 
@@ -111,9 +112,9 @@ public:
 		// Current OGG file being played
 		string_t filename;
 		// Duration of OGG file
-		Float duration;
+		float duration;
 		// Time when we began playing music
-		Double begintime;
+		double begintime;
 		// Music playback flags
 		Int32 flags;
 		// Music channel
@@ -122,43 +123,43 @@ public:
 
 public:
 	// Player punch treshold for falling
-	static const Float PLAYER_FALL_VELOCITY_PUNCH_MIN;
+	static const float PLAYER_FALL_VELOCITY_PUNCH_MIN;
 	// Player punch treshold for falling
-	static const Float PLAYER_FALL_VELOCITY_SAFE_LIMIT;
+	static const float PLAYER_FALL_VELOCITY_SAFE_LIMIT;
 	// Player punch treshold for falling
-	static const Float PLAYER_FALL_VELOCITY_FATAL;
+	static const float PLAYER_FALL_VELOCITY_FATAL;
 	// Player punch treshold for falling
-	static const Float DAMAGE_FALL_FOR_VELOCITY;
+	static const float DAMAGE_FALL_FOR_VELOCITY;
 	// Player falling velocity limit for producing audible sounds to NPCs
-	static const Float PLAYER_FALL_SOUND_LIMIT;
+	static const float PLAYER_FALL_SOUND_LIMIT;
 	// Player heal time
-	static const Double PLAYER_HEAL_TIME;
+	static const double PLAYER_HEAL_TIME;
 	// Player armor damage absorption
-	static const Float PLAYER_ARMOR_DMG_ABSORB;
+	static const float PLAYER_ARMOR_DMG_ABSORB;
 	// Player armor damage drain
-	static const Float PLAYER_ARMOR_DMG_DRAIN;
+	static const float PLAYER_ARMOR_DMG_DRAIN;
 	// Time based damage delay
-	static const Float DROWNRECOVER_HEAL_DELAY;
+	static const float DROWNRECOVER_HEAL_DELAY;
 	// Time based damage delay
-	static const Float DROWNRECOVER_MAX_HEAL;
+	static const float DROWNRECOVER_MAX_HEAL;
 	// Time based damage delay
-	static const Float TIMEBASED_DMG_DELAY;
+	static const float TIMEBASED_DMG_DELAY;
 	// Time based dmg type-dmg bit associations
 	static const Int32 TIMEBASED_DMG_BITS[NUM_TIMEBASED_DMG];
 	// Time based dmg type-dmg durations
-	static const Float TIMEBASED_DMG_DURATIONS[NUM_TIMEBASED_DMG];
+	static const float TIMEBASED_DMG_DURATIONS[NUM_TIMEBASED_DMG];
 	// Time based dmg type-damage values
-	static const Float TIMEBASED_DMG_AMOUNTS[NUM_TIMEBASED_DMG];
+	static const float TIMEBASED_DMG_AMOUNTS[NUM_TIMEBASED_DMG];
 	// Color of screen fade when hurt
 	static const color24_t PAIN_SCREENFADE_COLOR;
 	// Player use radius
-	static const Float PLAYER_USE_RADIUS;
+	static const float PLAYER_USE_RADIUS;
 	// Flashlight toggle sound
-	static const Char FLASHLIGHT_TOGGLE_SOUND[];
+	static const char FLASHLIGHT_TOGGLE_SOUND[];
 	// Flashlight drain time
-	static const Float FLASHLIGHT_DRAIN_TIME;
+	static const float FLASHLIGHT_DRAIN_TIME;
 	// Flashlight drain time
-	static const Float FLASHLIGHT_CHARGE_TIME;
+	static const float FLASHLIGHT_CHARGE_TIME;
 	// Flashlight impulse value
 	static const Int32 FLASHLIGHT_IMPULSE_VALUE;
 	// Player give weapons cheat code
@@ -210,29 +211,29 @@ public:
 	// Cheat codes and their descriptions
 	static const cheatinfo_t PLAYER_CHEAT_DESCRIPTIONS[];
 	// Player drown delay
-	static const Float PLAYER_DROWN_DELAY_TIME;
+	static const float PLAYER_DROWN_DELAY_TIME;
 	// Player drown damage ramp-up
-	static const Float PLAYER_DROWN_RAMP_AMOUNT;
+	static const float PLAYER_DROWN_RAMP_AMOUNT;
 	// Player drown damage ramp-up limit
-	static const Float PLAYER_DROWN_RAMP_LIMIT;
+	static const float PLAYER_DROWN_RAMP_LIMIT;
 	// Player flashlight drain speed
-	static const Float PLAYER_FLASHLIGHT_DRAIN_TIME;
+	static const float PLAYER_FLASHLIGHT_DRAIN_TIME;
 	// Player shoulder flashlight drain speed
-	static const Float PLAYER_FLASHLIGHT_DRAIN_TIME_SHOULDERLIGHT;
+	static const float PLAYER_FLASHLIGHT_DRAIN_TIME_SHOULDERLIGHT;
 	// Player flashlight drain speed
-	static const Float PLAYER_FLASHLIGHT_CHARGE_TIME;
+	static const float PLAYER_FLASHLIGHT_CHARGE_TIME;
 	// Max kevlar a player can carry
-	static const Float MAX_PLAYER_KEVLAR;
+	static const float MAX_PLAYER_KEVLAR;
 	// Player awareness field of view
-	static const Float PLAYER_NPC_AWARENESS_FIELD_OF_VIEW;
+	static const float PLAYER_NPC_AWARENESS_FIELD_OF_VIEW;
 	// Max player sound radius
-	static const Float PLAYER_SOUND_MAX_RADIUS;
+	static const float PLAYER_SOUND_MAX_RADIUS;
 	// Sound radius decay speed
-	static const Float PLAYER_SND_RADIUS_DECAY_SPEED;
+	static const float PLAYER_SND_RADIUS_DECAY_SPEED;
 	// Weapon sound radius decay speed
-	static const Float PLAYER_WEAPON_SND_RADIUS_DECAY_SPEED;
+	static const float PLAYER_WEAPON_SND_RADIUS_DECAY_SPEED;
 	// Weapon flash decay speed
-	static const Float PLAYER_WEAPON_FLASH_DECAY_SPEED;
+	static const float PLAYER_WEAPON_FLASH_DECAY_SPEED;
 
 public:
 	explicit CPlayerEntity( edict_t* pedict );
@@ -252,11 +253,11 @@ public:
 	virtual bool IsPlayer( void ) const override { return true; }
 
 	// Adds to the player's health
-	virtual bool TakeHealth( Float amount, Int32 damageFlags ) override;
+	virtual bool TakeHealth( float amount, Int32 damageFlags ) override;
 	// Makes the entity take on damage
-	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags ) override;
+	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags ) override;
 	// Handles damage calculation for a hitscan
-	virtual void TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
+	virtual void TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
 	// Manages dying
 	virtual void Killed( CBaseEntity* pAttacker, gibbing_t gibbing, deathmode_t deathMode = DEATH_NORMAL ) override;
 	// Returns blood color setting
@@ -291,16 +292,16 @@ public:
 	virtual bool IsInView( const Vector& position ) const override;
 
 	// Sets the falling velocity
-	virtual void SetFallingVelocity( Float velocity ) override;
+	virtual void SetFallingVelocity( float velocity ) override;
 
 	// Gives ammo to the player
-	virtual Int32 GiveAmmo( Int32 amount, const Char* pstrammoname, Int32 max, bool display, CBaseEntity* pentity ) override;
+	virtual Int32 GiveAmmo( Int32 amount, const char* pstrammoname, Int32 max, bool display, CBaseEntity* pentity ) override;
 	// Manages textmessage and textmessage_team functions
-	virtual void HostSay( const Char* pstrText, bool teamonly ) override;
+	virtual void HostSay( const char* pstrText, bool teamonly ) override;
 	// Drops active weapon
 	virtual void DropCurrentWeapon( void ) override;
 	// Gives an item by clasname
-	virtual void GiveItemByName( const Char* pstrClassname, const Char* pstrTargetName, Uint32 amount, bool removeunneeded ) override;
+	virtual void GiveItemByName( const char* pstrClassname, const char* pstrTargetName, UInt32 amount, bool removeunneeded ) override;
 	// Selects the last weapon used
 	virtual void SelectPreviousWeapon( void ) override;
 
@@ -317,20 +318,20 @@ public:
 	virtual void SetDayStage( daystage_t daystage ) override;
 
 	// Sets dialogue duration for player
-	virtual void SetDialogueDuration( Float duration ) override;
+	virtual void SetDialogueDuration( float duration ) override;
 
 	// Adds a medkit to the player
-	virtual bool AddMedkit( const Char* pstrClassname, bool noNotice ) override;
+	virtual bool AddMedkit( const char* pstrClassname, bool noNotice ) override;
 	// Adds a medkit to the player
-	virtual bool AddKevlar( const Char* pstrClassname, bool noNotice ) override;
+	virtual bool AddKevlar( const char* pstrClassname, bool noNotice ) override;
 	// Adds a shoulder light to the player
-	virtual bool AddShoulderLight( const Char* pstrClassname, bool noNotice ) override;
+	virtual bool AddShoulderLight( const char* pstrClassname, bool noNotice ) override;
 
 	// When player gets on the bike
 	virtual void EnterBike( CItemMotorBike *pEntity ) override;
 
 	// Adds a new passcode
-	virtual void AddPasscode( const Char* pstrid, const Char* pstrpasscode ) override;
+	virtual void AddPasscode( const char* pstrid, const char* pstrpasscode ) override;
 
 	// Tells if forced holstering is set
 	virtual bool IsForceHolsterSet( void ) const override { return m_forceHolster; }
@@ -342,18 +343,18 @@ public:
 	virtual void SetIsInDream( bool isindream ) override;
 
 	// Spawns a text window
-	virtual void SpawnTextWindow( const Char* pstrfilepath, const Char* pstrpasscode, const Char* pstrid ) override;
+	virtual void SpawnTextWindow( const char* pstrfilepath, const char* pstrpasscode, const char* pstrid ) override;
 	// Spawns a keypad window
-	virtual void SpawnKeypadWindow( const Char* pstrid, const Char* pstrkeypadcode, CTriggerKeypad* pkeypad, bool staytillnext ) override;
+	virtual void SpawnKeypadWindow( const char* pstrid, const char* pstrkeypadcode, CTriggerKeypad* pkeypad, bool staytillnext ) override;
 	// Spawns a subway window
 	virtual void SpawnSubwayWindow( subwayline_t type, CTriggerSubwayController* pcontroller, bool isdummy ) override;
 	// Spawns a login window
-	virtual void SpawnLoginWindow( const Char* pstruser, const Char* pstrpasscode, const Char* pstrid, CTriggerLogin* plogin, bool staytillnext ) override;
+	virtual void SpawnLoginWindow( const char* pstruser, const char* pstrpasscode, const char* pstrid, CTriggerLogin* plogin, bool staytillnext ) override;
 	// Sets subway flag
 	virtual void SetSubwayFlag( Int32 flag ) override;
 
 	// Selects a named weapon
-	virtual void SelectWeapon( const Char* pstrWeaponName ) override;
+	virtual void SelectWeapon( const char* pstrWeaponName ) override;
 	// Selects a weapon by weapon Id
 	virtual void SelectWeapon( weaponid_t weaponId ) override;
 	// Returns the active weapon
@@ -368,9 +369,9 @@ public:
 	virtual bool AddPlayerWeapon( CPlayerWeapon* pWeapon, bool& triggerTarget ) override;
 
 	// Sets the save-game title
-	virtual void SetSaveGameTitle( const Char* pstrtitle ) override;
+	virtual void SetSaveGameTitle( const char* pstrtitle ) override;
 	// Returns the save-game title
-	virtual const Char* GetSaveGameTitle( void ) override;
+	virtual const char* GetSaveGameTitle( void ) override;
 
 	// Sets the view entity
 	virtual void SetViewEntity( CBaseEntity* pEntity ) override;
@@ -386,22 +387,22 @@ public:
 	// Adds full ammo for dual-wielded weapons
 	virtual bool AddFullAmmoDual( CPlayerWeapon* pWeapon ) const override;
 	// Tells if the player can have an ammo type
-	virtual bool CanHaveAmmo( const Char* pstrammotype, Int32 maxammo ) const override;
+	virtual bool CanHaveAmmo( const char* pstrammotype, Int32 maxammo ) const override;
 	// Tells if the player can have a weapon
 	virtual bool CanHaveWeapon( CPlayerWeapon* pWeapon ) const override;
 
 	// Set stamina modifiers
-	virtual void SetStaminaModifiers( Float sprintStaminaDrainMultiplier, Float normalMovementStaminaDrainFactor ) override;
-	// TRUE if a black hole can pull this entity
+	virtual void SetStaminaModifiers( float sprintStaminaDrainMultiplier, float normalMovementStaminaDrainFactor ) override;
+	// true if a black hole can pull this entity
 	virtual bool CanBlackHolePull( void ) const override;
 
 public:
 	// Gets the entity's illumination
 	virtual Int32 GetIllumination( void ) override;
 	// Plays a music track for a player
-	virtual void PlayMusic( const Char* pstrFilename, Int32 channel, Float fadeInTime, Int32 flags ) override;
+	virtual void PlayMusic( const char* pstrFilename, Int32 channel, float fadeInTime, Int32 flags ) override;
 	// Stops any playing music tracks
-	virtual void StopMusic( const Char* pstrFilename, Int32 channel, Float fadeTime ) override;
+	virtual void StopMusic( const char* pstrFilename, Int32 channel, float fadeTime ) override;
 	// Tells if talking npc can answer
 	virtual bool CanAnswer( void ) override { return true; };
 	// Tells if entity should set bounds on restore
@@ -442,9 +443,9 @@ public:
 	void PostCmdThink( void );
 
 	// Plays a footstep sound
-	void PlayStepSound( const Char* pstrMaterialName, bool stepleft, Float volume, const Vector& origin );
+	void PlayStepSound( const char* pstrMaterialName, bool stepleft, float volume, const Vector& origin );
 	// Plays a player sound
-	void PlaySound( Int32 channel, const Char* psample, Float volume, Float attenuation, Int32 pitch, Int32 flags );
+	void PlaySound( Int32 channel, const char* psample, float volume, float attenuation, Int32 pitch, Int32 flags );
 
 	// Manages a game UI event
 	void ManageGameUIEvent( class CMSGReader& reader );
@@ -460,7 +461,7 @@ public:
 
 public:
 	// Returns the passcode for an id
-	const Char* GetPasscodeForId( const Char* pstrid );
+	const char* GetPasscodeForId( const char* pstrid );
 	// Dumps all codes saved by player
 	void DumpAllCodes( void );
 
@@ -469,7 +470,7 @@ public:
 
 public:
 	// Removes ammo for a given ammo type
-	void RemoveAmmo( Int32 ammotype, Uint32 numremove );
+	void RemoveAmmo( Int32 ammotype, UInt32 numremove );
 	// Updates ammo counts on client
 	void UpdateClientAmmoCounts( void );
 
@@ -505,16 +506,16 @@ public:
 	// Removes a weapon bit
 	void RemoveWeaponBit( Int64 weaponid );
 	// Checks if the player has the named weapon
-	bool HasPlayerWeapon( const Char* pstrWeaponClassName ) const;
+	bool HasPlayerWeapon( const char* pstrWeaponClassName ) const;
 	// Returns a weapon by classname
-	const CPlayerWeapon* GetPlayerWeaponByClassName( const Char* pstrWeaponClassName ) const;
+	const CPlayerWeapon* GetPlayerWeaponByClassName( const char* pstrWeaponClassName ) const;
 	// Returns the drop position for weapons
 	Vector GetWeaponDropPosition( void );
 
 	// Sets weapon volume
-	void SetWeaponVolume( Uint32 volume );
+	void SetWeaponVolume( UInt32 volume );
 	// Sets weapon flash brightness
-	void SetWeaponFlashBrightness( Uint32 brightness );
+	void SetWeaponFlashBrightness( UInt32 brightness );
 
 	// Tells if the a weapon update needs to be forced
 	bool ForceWeaponUpdate( void ) const;
@@ -522,22 +523,22 @@ public:
 	void SetForceWeaponUpdate( bool update );
 
 	// Returns cone index on client
-	Uint32 GetClientConeIndex( void ) const;
+	UInt32 GetClientConeIndex( void ) const;
 	// Sets cone index on client
-	void SetClientConeIndex( Uint32 coneIndex );
+	void SetClientConeIndex( UInt32 coneIndex );
 
 	// Updates player sounds
 	void UpdatePlayerSound( void );
 
 public:
 	// Applies view punch force on axis
-	void ApplyAxisPunch( Int32 axis, Float value );
+	void ApplyAxisPunch( Int32 axis, float value );
 	// Sets direct view punch on axis
-	void ApplyDirectAxisPunch( Int32 axis, Float value );
+	void ApplyDirectAxisPunch( Int32 axis, float value );
 	// Sets view model
-	void SetViewModel( const Char* pstrviewmodel );
+	void SetViewModel( const char* pstrviewmodel );
 	// Sets the client view model
-	void SetClientViewModel( const Char* pstrviewmodel );
+	void SetClientViewModel( const char* pstrviewmodel );
 
 public:
 	// Sets field of view
@@ -579,7 +580,7 @@ public:
 
 public:
 	// Set NPC awareness
-	virtual void SetNPCAwareness( Float awareness, CBaseEntity* pNPC, Float timeoutDelay, bool isLeanAwareness ) override;
+	virtual void SetNPCAwareness( float awareness, CBaseEntity* pNPC, float timeoutDelay, bool isLeanAwareness ) override;
 	// Think function for NPC awareness
 	void NPCAwarenessThink( void );
 
@@ -630,23 +631,23 @@ private:
 
 public:
 	// Begins playback of a tape track
-	virtual void PlaybackTapeTrack( const Char* pstrTrackFilename, Float duration, const Char* pstrPlaybackTitle, const Vector& titleColor, Float titleAlpha ) override;
+	virtual void PlaybackTapeTrack( const char* pstrTrackFilename, float duration, const char* pstrPlaybackTitle, const Vector& titleColor, float titleAlpha ) override;
 	// Stops playback of a tape track
-	virtual void StopTapeTrack( const Char* pstrTrackFilename ) override;
+	virtual void StopTapeTrack( const char* pstrTrackFilename ) override;
 	// Performs think functions for tape track playback
 	void TapePlaybackThink( void );
 
 public:
 	// Begins playback of a diary
-	virtual void BeginDiaryPlayback( const Char* pstrFilename, Float duration, CBaseEntity* pDiaryEntity ) override;
+	virtual void BeginDiaryPlayback( const char* pstrFilename, float duration, CBaseEntity* pDiaryEntity ) override;
 	// Performs think functions while playing diary track
 	void DiaryPlaybackThink( void );
 
 public:
 	// Adds a new mission objective
-	virtual void AddMissionObjective( const Char* pstrObjectiveIdentifier, bool notify ) override;
+	virtual void AddMissionObjective( const char* pstrObjectiveIdentifier, bool notify ) override;
 	// Removes a new mission objective
-	virtual void RemoveMissionObjective( const Char* pstrObjectiveIdentifier, bool notify ) override;
+	virtual void RemoveMissionObjective( const char* pstrObjectiveIdentifier, bool notify ) override;
 
 	// Spawns an objectives window
 	virtual void SpawnObjectivesWindow( void ) override;
@@ -655,13 +656,13 @@ public:
 
 public:
 	// Sets countdown timer
-	virtual void SetCountdownTimer( Float duration, const Char* pstrTitle ) override;
+	virtual void SetCountdownTimer( float duration, const char* pstrTitle ) override;
 	// Clears countdown timer
 	virtual void ClearCountdownTimer( void ) override;
 
 public:
 	// Sets a global delayed trigger
-	virtual void SetGlobalDelayedTrigger( Float delay, const Char* pstrTargetName ) override;
+	virtual void SetGlobalDelayedTrigger( float delay, const char* pstrTargetName ) override;
 	// Clears a global delayed trigger
 	virtual void ClearGlobalDelayedTrigger( void ) override;
 	// Think function for the global trigger
@@ -669,35 +670,35 @@ public:
 
 public:
 	// Set motion blur values
-	virtual void SetMotionBlur( bool isActive, Float blurFade ) override;
+	virtual void SetMotionBlur( bool isActive, float blurFade ) override;
 	// Tells if motion blur is active
 	virtual bool IsMotionBlurActive( void ) const override { return m_isMotionBlurActive; }
 
 	// Set chromatic aberration values
-	virtual void SetChromaticAberration( bool isActive, Float strength ) override;
+	virtual void SetChromaticAberration( bool isActive, float strength ) override;
 	// Tells if chromatic aberration is active
 	virtual bool IsChromaticAberrationActive( void ) const override { return m_isChromaticAberrationActive; }
 
 	// Set chromatic aberration values
-	virtual void SetBlackAndWhite( bool isActive, Float strength ) override;
+	virtual void SetBlackAndWhite( bool isActive, float strength ) override;
 	// Tells if chromatic aberration is active
 	virtual bool IsBlackAndwhiteActive( void ) const override { return m_isBlackAndWhiteActive; }
 
 	// Set vignette effect values
-	virtual void SetVignetteEffect( bool isActive, Float radius, Float strength ) override;
+	virtual void SetVignetteEffect( bool isActive, float radius, float strength ) override;
 	// Tells if vignette is active
 	virtual bool IsVignetteEffectActive( void ) const override { return m_isVignetteActive; }
 
 	// Set chromatic aberration values
-	virtual void SetFilmGrain( bool isActive, Float strength ) override;
+	virtual void SetFilmGrain( bool isActive, float strength ) override;
 	// Tells if chromatic aberration is active
 	virtual bool IsFilmGrainActive( void ) const override { return m_isFilmGrainActive; }
 
 public:
 	// Set overlay effect
-	virtual void SetScreenOverlay( Int32 layerindex, const Char* pstrTextureName, overlay_rendermode_t rendermode, const Vector& rendercolor, Float renderamt, overlay_effect_t effect, Float effectspeed, Float effectminalpha, Float fadetime ) override;
+	virtual void SetScreenOverlay( Int32 layerindex, const char* pstrTextureName, overlay_rendermode_t rendermode, const Vector& rendercolor, float renderamt, overlay_effect_t effect, float effectspeed, float effectminalpha, float fadetime ) override;
 	// Clears an overlay
-	virtual void ClearOverlay( Int32 layerindex, Float fadetime ) override;
+	virtual void ClearOverlay( Int32 layerindex, float fadetime ) override;
 
 public:
 	// Tells if a cheat command is active
@@ -715,7 +716,7 @@ private:
 	Int32						m_dayStage;
 	// Nightstage state on client
 	Int32						m_clientDayStageState;
-	// TRUE if specialfog is set
+	// true if specialfog is set
 	bool						m_specialFogEnabled;
 	// Specialfog state on client
 	bool						m_clientSpecialFogEnabled;
@@ -777,7 +778,7 @@ private:
 	Int32						m_clientConeIndex;
 
 	// Next time until we can perform actions
-	Double						m_nextActionTime;
+	double						m_nextActionTime;
 
 	// Buttons pressed last frame
 	Int32						m_prevFrameButtons;
@@ -789,30 +790,30 @@ private:
 	// Health value on client
 	Int32						m_clientHealth;
 	// Time at which to reload
-	Double						m_reloadTime;
+	double						m_reloadTime;
 	// Time at which we died
-	Double						m_deathTime;
+	double						m_deathTime;
 	// Stamina on client
-	Float						m_clientStamina;
+	float						m_clientStamina;
 	// Kevlar on client
-	Float						m_clientKevlar;
+	float						m_clientKevlar;
 
 	// Sprint stamina drain multiplier
-	Float						m_sprintStaminaDrainMultiplier;
+	float						m_sprintStaminaDrainMultiplier;
 	// Normal walking movement stamina drain factor
-	Float						m_normalMovementStaminaDrainFactor;
+	float						m_normalMovementStaminaDrainFactor;
 
 	// Current falling velocity
-	Float						m_fallingVelocity;
-	// TRUE if hud should be visible
+	float						m_fallingVelocity;
+	// true if hud should be visible
 	bool						m_isHUDVisible;
-	// TRUE if hud is visible on client
+	// true if hud is visible on client
 	bool						m_clientHUDVisible;
 
 	// Movement noise
-	Float						m_movementNoise;
+	float						m_movementNoise;
 	// Client movement noise
-	Float						m_clientMovementNoise;
+	float						m_clientMovementNoise;
 
 private:
 	// Used by ladder code
@@ -820,7 +821,7 @@ private:
 	// Ladder state
 	Int32						m_ladderState;
 	// Ladder update time
-	Double						m_ladderUpdateTime;
+	double						m_ladderUpdateTime;
 
 	// Ladder destination origin
 	Vector						m_ladderDestOrigin;
@@ -828,7 +829,7 @@ private:
 	Vector						m_ladderDestAngles;
 
 	// Ladder move time
-	Double						m_nextLadderMoveTime;
+	double						m_nextLadderMoveTime;
 	// Ladder move direction
 	Int32						m_ladderMoveDirection;
 	// Client move direction
@@ -836,13 +837,13 @@ private:
 
 public:
 	// Next time when bike states update
-	Double						m_bikeUpdateTime;
+	double						m_bikeUpdateTime;
 	// Current bike state
 	Int32						m_bikeState;
 	Int32						m_clientBikeState;
 
 	// Bike acceleration
-	Float						m_bikeAcceleration;
+	float						m_bikeAcceleration;
 	// Bike velocity
 	Vector						m_bikeVelocity;
 
@@ -878,7 +879,7 @@ private:
 	Vector						m_curLeanAngles;
 
 	// Leaning time
-	Double						m_leanTime;
+	double						m_leanTime;
 	// Leaning state
 	Int32						m_leanState;
 
@@ -899,9 +900,9 @@ private:
 	// Weapon flash value
 	Int32						m_weaponFlashBrightness;
 	// Weapon sound radius
-	Float						m_weaponSoundRadius;
+	float						m_weaponSoundRadius;
 	// Step sound radius
-	Float						m_stepSoundRadius;
+	float						m_stepSoundRadius;
 
 	// Viewmodel on client
 	string_t					m_clientViewModel;
@@ -910,20 +911,20 @@ private:
 	CPlayerWeapon*				m_pWeaponsList;
 
 	// Next weapon prompt time
-	Double						m_weaponFullPromptTime;
+	double						m_weaponFullPromptTime;
 
 	// Number of medkits we have
 	Int32						m_numMedkits;
 	// Number of medkits on client
 	Int32						m_numClientMedkits;
 	// Heal progress
-	Float						m_healProgress;
+	float						m_healProgress;
 	// Client heal progress
-	Float						m_clientHealProgress;
+	float						m_clientHealProgress;
 
 	// Force weapon update flag
 	bool						m_forceWeaponUpdate;
-	// TRUE if weapon is holstered
+	// true if weapon is holstered
 	bool						m_isWeaponHolstered;
 
 	// Ammo counts for ammo types
@@ -932,11 +933,11 @@ private:
 	Int32						m_clientAmmoCounts[MAX_AMMO_TYPES];
 
 	// Flashlight battery
-	Float						m_flashlightBattery;
+	float						m_flashlightBattery;
 	// Flashlight battery on client
-	Float						m_clientFlashlightBattery;
+	float						m_clientFlashlightBattery;
 
-	// TRUE if we have the shoulder light
+	// true if we have the shoulder light
 	bool						m_hasShoulderLight;
 
 private:					
@@ -947,29 +948,29 @@ private:
 	// Last damage amount
 	Int32						m_lastDmgAmount;
 	// Last damage time
-	Double						m_lastDamageTime;
+	double						m_lastDamageTime;
 	// Next pain sound time
-	Double						m_nextPainSoundTime;
+	double						m_nextPainSoundTime;
 	// Drown damage amount
-	Float						m_drownDamageAmount;
+	float						m_drownDamageAmount;
 	// Drown damage healed
-	Float						m_drownDamageHealed;
+	float						m_drownDamageHealed;
 	// Next damage view punch time
-	Double						m_lastDmgViewPunchTime;
-	// TRUE if underwater sound is playing
+	double						m_lastDmgViewPunchTime;
+	// true if underwater sound is playing
 	bool						m_isUnderwaterSoundPlaying;
 	// Time we went underwater
-	Double						m_underwaterTime;
+	double						m_underwaterTime;
 	// Last underwater dmg time
-	Double						m_lastWaterDamageTime;
+	double						m_lastWaterDamageTime;
 	// Last water damage dealt
-	Float						m_lastWaterDamage;
+	float						m_lastWaterDamage;
 	// Next swim sound time
-	Double						m_nextSwimSoundTime;
+	double						m_nextSwimSoundTime;
 	// Last water level
 	Int32						m_prevWaterLevel;
 	// Death motion blur delay
-	Double						m_deathMotionBlurTime;
+	double						m_deathMotionBlurTime;
 
 	// Ideal activity to set
 	Int32						m_idealActivity;
@@ -979,12 +980,12 @@ private:
 	CString						m_animExtension;
 
 	// Damage values for time based damages
-	Double						m_timeBasedDmgTime[NUM_TIMEBASED_DMG];
+	double						m_timeBasedDmgTime[NUM_TIMEBASED_DMG];
 	// Last time we were hurt by time based dmg
-	Double						m_lastTimeBasedDmgTime[NUM_TIMEBASED_DMG];
+	double						m_lastTimeBasedDmgTime[NUM_TIMEBASED_DMG];
 
 	// Dialogue playback timer
-	Double						m_dialoguePlaybackTime;
+	double						m_dialoguePlaybackTime;
 
 private:
 	// Music playback info
@@ -994,23 +995,23 @@ private:
 	// Current tape track's name
 	string_t					m_tapeTrackFile;
 	// Tape track playback begin time
-	Double						m_tapeTrackPlayBeginTime;
+	double						m_tapeTrackPlayBeginTime;
 	// Tape track duration in seconds
-	Float						m_tapeTrackDuration;
+	float						m_tapeTrackDuration;
 	// Playback title
 	string_t					m_tapePlaybackTitle;
 	// Tape playback title color
 	Vector						m_tapeTitleColor;
 	// Tape playback alpha
-	Float						m_tapePlaybackAlpha;
+	float						m_tapePlaybackAlpha;
 
 private:
 	// Current diary track's name
 	string_t					m_currentDiaryTrackName;
 	// Diary track playback begin time
-	Double						m_diaryTrackPlayBeginTime;
+	double						m_diaryTrackPlayBeginTime;
 	// Diary track duration in seconds
-	Float						m_diaryTrackDuration;
+	float						m_diaryTrackDuration;
 	// Diary entity pointer
 	CEntityHandle				m_diaryEntity;
 
@@ -1019,9 +1020,9 @@ private:
 	CLinkedList<npc_awarenessinfo_t> m_npcAwarenessList;
 
 	// Current highest awareness level
-	Float						m_highestAwarenessLevel;
+	float						m_highestAwarenessLevel;
 	// Current highest awareness level on client
-	Float						m_clientHighestAwarenessLevel;
+	float						m_clientHighestAwarenessLevel;
 	// Current highest awareness color
 	color24_t					m_highestAwarenessColor;
 	// Current highest awareness color on client
@@ -1033,7 +1034,7 @@ private:
 	// Flags indicating which objective is new/changed
 	Int32						m_objectivesNewFlags;
 	// Last time an objective was added
-	Double						m_lastObjectiveAddTime;
+	double						m_lastObjectiveAddTime;
 
 private:
 	// Current player usable object selected
@@ -1047,13 +1048,13 @@ private:
 
 private:
 	// Countdown timer ending time
-	Double						m_countdownTimerEndTime;
+	double						m_countdownTimerEndTime;
 	// Countdown timer title
 	string_t					m_countdownTimerTitle;
 
 private:
 	// Delayed global trigger time
-	Double						m_delayedGlobalTriggerTime;
+	double						m_delayedGlobalTriggerTime;
 	// Delayed global trigger target entity
 	string_t					m_delayedGlobalTriggerTarget;
 
@@ -1066,32 +1067,32 @@ private:
 	bool						m_isOnTarget;
 
 private:
-	// TRUE if chromatic aberration is active
+	// true if chromatic aberration is active
 	bool						m_isChromaticAberrationActive;
 	// Chromatic aberration strength
-	Float						m_chromaticAberrationStrength;
+	float						m_chromaticAberrationStrength;
 
-	// TRUE if b&w effect is active
+	// true if b&w effect is active
 	bool						m_isBlackAndWhiteActive;
 	// B&W strength
-	Float						m_blackAndWhiteStrength;
+	float						m_blackAndWhiteStrength;
 
-	// TRUE if motion blur is active
+	// true if motion blur is active
 	bool						m_isMotionBlurActive;
 	// Motion blur fade value
-	Float						m_motionBlurFade;
+	float						m_motionBlurFade;
 
-	// TRUE if vignette effect is active
+	// true if vignette effect is active
 	bool						m_isVignetteActive;
 	// Vignette strength
-	Float						m_vignetteStrength;
+	float						m_vignetteStrength;
 	// Vignette radius
-	Float						m_vignetteRadius;
+	float						m_vignetteRadius;
 
-	// TRUE if film grain is active
+	// true if film grain is active
 	bool						m_isFilmGrainActive;
 	// Film grain strength
-	Float						m_filmGrainStrength;
+	float						m_filmGrainStrength;
 
 private:
 	// Overlay effect arrays
@@ -1101,13 +1102,13 @@ private:
 	CArray<Vector>				m_overlayRenderColorArray;
 	CArray<Int32>				m_overlayRenderAmountArray;
 	CArray<Int32>				m_overlayEffectArray;
-	CArray<Float>				m_overlayEffectSpeedArray;
-	CArray<Float>				m_overlayEffectMinAlphaArray;
+	CArray<float>				m_overlayEffectSpeedArray;
+	CArray<float>				m_overlayEffectMinAlphaArray;
 	// Number of overlay effects
-	Uint32						m_numOverlays;
+	UInt32						m_numOverlays;
 
 private:
-	// TRUE if using cheat commands
+	// true if using cheat commands
 	static bool					m_cheatCommandUsed;
 };
 #endif //PLAYER_H

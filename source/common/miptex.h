@@ -36,10 +36,10 @@ struct dmiptex_t
 		memset(offsets, 0, sizeof(offsets));
 	}
 
-	Char name[MAX_TEXNAME_LENGTH];
-	Uint32 width;
-	Uint32 height;
+	char name[MAX_TEXNAME_LENGTH];
+	UInt32 width;
+	UInt32 height;
 
-	Uint32 offsets[MAX_MIPTEX];
+	UInt32 offsets[MAX_MIPTEX];
 };
 #endif //MIPTEX_H

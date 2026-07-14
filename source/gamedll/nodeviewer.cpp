@@ -161,7 +161,7 @@ void CNodeViewer::AddNode( Int32 fromNode, Int32 toNode )
 	if(fromNode == toNode)
 		return;
 
-	for(Uint32 i = 0; i < m_numVisited; i++)
+	for(UInt32 i = 0; i < m_numVisited; i++)
 	{
 		if(m_fromNodes[i] == fromNode && m_toNodes[i] == toNode)
 			return;
@@ -181,7 +181,7 @@ void CNodeViewer::AddNode( Int32 fromNode, Int32 toNode )
 //=============================================
 void CNodeViewer::DrawThink( void )
 {
-	for(Uint32 i = 0; i < m_numVisited; i++)
+	for(UInt32 i = 0; i < m_numVisited; i++)
 	{
 		const CAINodeGraph::node_t* pfromnode = gNodeGraph.GetNode(m_fromNodes[i]);
 		if(!pfromnode)
@@ -201,11 +201,11 @@ void CNodeViewer::DrawThink( void )
 			gd_engfuncs.pfnMsgWriteByte(NODE_DEBUG_PATHS);
 			
 			Vector pathStart = pfromnode->origin + CAINodeGraph::NODE_PEEK_OFFSET;
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				gd_engfuncs.pfnMsgWriteFloat(pathStart[j]);
 
 			Vector pathEnd = ptonode->origin + CAINodeGraph::NODE_PEEK_OFFSET;
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				gd_engfuncs.pfnMsgWriteFloat(pathEnd[j]);
 
 			gd_engfuncs.pfnMsgWriteByte(m_color.x);

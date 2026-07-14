@@ -27,7 +27,7 @@ public:
 	// Manages keyvalues
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	// Triggers targets
-	virtual void UseTargets( CBaseEntity* pActivator, usemode_t useMode, Float value, string_t target = NO_STRING_VALUE ) override;
+	virtual void UseTargets( CBaseEntity* pActivator, usemode_t useMode, float value, string_t target = NO_STRING_VALUE ) override;
 
 public:
 	// Performs delayed triggering
@@ -35,7 +35,7 @@ public:
 
 protected:
 	// Delay before trigger
-	Float m_delay;
+	float m_delay;
 	// Entities to kill on trigger
 	string_t m_killTarget;
 	// Use mode to trigger with

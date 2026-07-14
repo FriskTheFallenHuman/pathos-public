@@ -69,7 +69,7 @@ void CFuncFade::DeclareSaveFields( void )
 // @brief
 //
 //=============================================
-void CFuncFade::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncFade::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Set to always think
 	m_pState->flags |= FL_ALWAYSTHINK;
@@ -85,7 +85,7 @@ void CFuncFade::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_
 //=============================================
 void CFuncFade::Think( void )
 {
-	Double delta = (g_pGameVars->time - m_fadeBeginTime)/m_fadeDuration;
+	double delta = (g_pGameVars->time - m_fadeBeginTime)/m_fadeDuration;
 	if(delta >= 1.0)
 	{
 		m_pState->renderamt = m_targetAlpha;

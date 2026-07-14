@@ -18,7 +18,7 @@ All Rights Reserved.
 #include "window.h"
 
 // Path to the folder containing the schemas
-const Char CTextSchemas::SCHEMA_FOLDER_PATH[] = "/resources/textschemas/";
+const char CTextSchemas::SCHEMA_FOLDER_PATH[] = "/resources/textschemas/";
 
 CTextSchemas gTextSchemas;
 
@@ -57,7 +57,7 @@ void CTextSchemas::Clear( void )
 //====================================
 //
 //====================================
-const font_set_t* CTextSchemas::GetSchemaFontSet( const Char* schemaFileName )
+const font_set_t* CTextSchemas::GetSchemaFontSet( const char* schemaFileName )
 {
 	const textschema_t* pschema = nullptr;
 
@@ -97,7 +97,7 @@ const font_set_t* CTextSchemas::GetSchemaFontSet( const Char* schemaFileName )
 //====================================
 //
 //====================================
-const font_set_t* CTextSchemas::GetResolutionSchemaFontSet( const Char* schemaFileName, Uint32 resolution )
+const font_set_t* CTextSchemas::GetResolutionSchemaFontSet( const char* schemaFileName, UInt32 resolution )
 {
 	const textschema_t* pschema = nullptr;
 
@@ -125,7 +125,7 @@ const font_set_t* CTextSchemas::GetResolutionSchemaFontSet( const Char* schemaFi
 	}
 
 	text_reschema_t* pbestschema = nullptr;
-	for(Uint32 i = 0; i < pschema->resolutions.size(); i++)
+	for(UInt32 i = 0; i < pschema->resolutions.size(); i++)
 	{
 		text_reschema_t* preschema = &pschema->resolutions[i];
 		if(!pbestschema)
@@ -166,13 +166,13 @@ const font_set_t* CTextSchemas::GetResolutionSchemaFontSet( const Char* schemaFi
 //====================================
 //
 //====================================
-const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFileName )
+const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const char* schemaFileName )
 {
 	// Build the path and load the file
 	CString path;
 	path << SCHEMA_FOLDER_PATH << schemaFileName << ".json";
 
-	const byte* pfile = FL_LoadFile(path.c_str(), nullptr);
+	const Byte* pfile = FL_LoadFile(path.c_str(), nullptr);
 	if(!pfile)
 	{
 		Con_EPrintf("%s - Could not load schema definition file '%s'.\n", __FUNCTION__, schemaFileName);
@@ -180,7 +180,7 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 	}
 
 	// Convert file content to string
-	CString jsonStr(reinterpret_cast<const Char*>(pfile));
+	CString jsonStr(reinterpret_cast<const char*>(pfile));
 	FL_FreeFile(pfile);
 
 	// Parse JSON
@@ -272,10 +272,10 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 
 			switch (i)
 			{
-				case 0: outColor.r = static_cast<byte>(valNum); break;
-				case 1: outColor.g = static_cast<byte>(valNum); break;
-				case 2: outColor.b = static_cast<byte>(valNum); break;
-				case 3: outColor.a = static_cast<byte>(valNum); break;
+				case 0: outColor.r = static_cast<Byte>(valNum); break;
+				case 1: outColor.g = static_cast<Byte>(valNum); break;
+				case 2: outColor.b = static_cast<Byte>(valNum); break;
+				case 3: outColor.a = static_cast<Byte>(valNum); break;
 			}
 		}
 		return true;
@@ -322,7 +322,7 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 			Con_EPrintf("%s - 'fontsize' out of range (4‑256) in '%s'.\n", __FUNCTION__, path.c_str());
 			delete root; return nullptr;
 		}
-		schema.fontsize = static_cast<Uint32>(fontSize);
+		schema.fontsize = static_cast<UInt32>(fontSize);
 	}
 
 	// outlineradius (optional)
@@ -341,7 +341,7 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 			Con_EPrintf("%s - 'outlineradius' out of range (0‑4) in '%s'.\n", __FUNCTION__, path.c_str());
 			delete root; return nullptr;
 		}
-		schema.outlineradius = static_cast<Uint32>(radius);
+		schema.outlineradius = static_cast<UInt32>(radius);
 	}
 
 	// resolutions
@@ -380,7 +380,7 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 				Con_EPrintf("%s - 'screenheight' too low in resolution %u in '%s'.\n", __FUNCTION__, i, path.c_str());
 				delete root; return nullptr;
 			}
-			resInfo.screenheight = static_cast<Uint32>(screenH);
+			resInfo.screenheight = static_cast<UInt32>(screenH);
 
 			// fontsize
 			if(resObj->has_key("fontsize"))
@@ -398,7 +398,7 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 					Con_EPrintf("%s - 'fontsize' out of range in resolution %u in '%s'.\n", __FUNCTION__, i, path.c_str());
 					delete root; return nullptr;
 				}
-				resInfo.fontsize = static_cast<Uint32>(val);
+				resInfo.fontsize = static_cast<UInt32>(val);
 			}
 			else
 			{
@@ -421,7 +421,7 @@ const CTextSchemas::textschema_t* CTextSchemas::LoadSchema( const Char* schemaFi
 					Con_EPrintf("%s - 'outlineradius' out of range in resolution %u in '%s'.\n", __FUNCTION__, i, path.c_str());
 					delete root; return nullptr;
 				}
-				resInfo.outlineradius = static_cast<Uint32>(val);
+				resInfo.outlineradius = static_cast<UInt32>(val);
 			}
 			else
 			{

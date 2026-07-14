@@ -169,7 +169,7 @@ void CTimeDamage::DamageThink( void )
 
 	if(m_dmgType == TD_FOLLOW_ENTITY)
 	{
-		Float dmg = m_dmgAmount * m_hurtTarget->GetHitgroupDmgMultiplier(m_hitgroup);
+		float dmg = m_dmgAmount * m_hurtTarget->GetHitgroupDmgMultiplier(m_hitgroup);
 		m_hurtTarget->TakeDamage(this, m_attacker, dmg, m_dmgTypeFlags);
 	}
 	else
@@ -211,7 +211,7 @@ void CTimeDamage::SetType( damage_type_t type )
 // @brief
 //
 //=============================================
-void CTimeDamage::SetDamageDelay( Float delay )
+void CTimeDamage::SetDamageDelay( float delay )
 {
 	m_dmgDelay = delay;
 }
@@ -229,7 +229,7 @@ void CTimeDamage::SetDamageTypeFlags( Int32 dmgFlags )
 // @brief
 //
 //=============================================
-void CTimeDamage::SetLifetime( Float life )
+void CTimeDamage::SetLifetime( float life )
 {
 	m_lifetime = life;
 }
@@ -238,7 +238,7 @@ void CTimeDamage::SetLifetime( Float life )
 // @brief
 //
 //=============================================
-void CTimeDamage::SetDamageAmount( Float dmg )
+void CTimeDamage::SetDamageAmount( float dmg )
 {
 	m_dmgAmount = dmg;
 }
@@ -302,7 +302,7 @@ void CTimeDamage::OnAimentFreed( void )
 // @brief
 //
 //=============================================
-CTimeDamage* CTimeDamage::CreateTimeDamageBox( CBaseEntity* pInflictor, const Vector& origin, const Vector& mins, const Vector& maxs, Int32 dmgTypeFlags, Float dmgDelay, Float dmgAmount, Float life, CBaseEntity* pFollow )
+CTimeDamage* CTimeDamage::CreateTimeDamageBox( CBaseEntity* pInflictor, const Vector& origin, const Vector& mins, const Vector& maxs, Int32 dmgTypeFlags, float dmgDelay, float dmgAmount, float life, CBaseEntity* pFollow )
 {
 	CTimeDamage* pEntity = reinterpret_cast<CTimeDamage*>(CBaseEntity::CreateEntity("timedamage", pInflictor));
 
@@ -423,7 +423,7 @@ bool CTimeDamage::HasTimeDamageInBBox( const Vector& mins, const Vector& maxs, d
 // @brief
 //
 //=============================================
-CTimeDamage* CTimeDamage::CreateTimeDamageFollowEntity( CBaseEntity* pInflictor, CBaseEntity* pTarget, Int32 dmgTypeFlags, Int32 hitgroup, Float dmgDelay, Float dmgAmount, Float life )
+CTimeDamage* CTimeDamage::CreateTimeDamageFollowEntity( CBaseEntity* pInflictor, CBaseEntity* pTarget, Int32 dmgTypeFlags, Int32 hitgroup, float dmgDelay, float dmgAmount, float life )
 {
 	CTimeDamage* pEntity = reinterpret_cast<CTimeDamage*>(CBaseEntity::CreateEntity("timedamage", pInflictor));
 

@@ -20,7 +20,7 @@ CGameUIManager* CGameUIObject::g_pGUIManager = nullptr;
 //====================================
 //
 //====================================
-CGameUIObject::CGameUIObject( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUIObject::CGameUIObject( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	m_flags(flags),
 	m_originX(0),
 	m_originY(0),
@@ -47,7 +47,7 @@ CGameUIObject::~CGameUIObject( void )
 {
 	if(!m_pChildrenArray.empty())
 	{
-		for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+		for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 			delete m_pChildrenArray[i];
 
 		m_pChildrenArray.clear();
@@ -82,7 +82,7 @@ CGameUIObject* CGameUIObject::getParent( void )
 //====================================
 void CGameUIObject::addChild( CGameUIObject* pchild )
 {
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		if(m_pChildrenArray[i] == pchild)
 		{
@@ -132,7 +132,7 @@ void CGameUIObject::getAbsolutePosition( Int32& xcoord, Int32& ycoord )
 //====================================
 //
 //====================================
-void CGameUIObject::setSize( Uint32 width, Uint32 height )
+void CGameUIObject::setSize( UInt32 width, UInt32 height )
 {
 	m_width = width;
 	m_height = height;
@@ -141,7 +141,7 @@ void CGameUIObject::setSize( Uint32 width, Uint32 height )
 //====================================
 //
 //====================================
-void CGameUIObject::getSize( Uint32& width, Uint32& height ) const
+void CGameUIObject::getSize( UInt32& width, UInt32& height ) const
 {
 	width = m_width;
 	height = m_height;
@@ -150,7 +150,7 @@ void CGameUIObject::getSize( Uint32& width, Uint32& height ) const
 //====================================
 //
 //====================================
-Uint32 CGameUIObject::getWidth( void ) const
+UInt32 CGameUIObject::getWidth( void ) const
 {
 	return m_width;
 }
@@ -158,7 +158,7 @@ Uint32 CGameUIObject::getWidth( void ) const
 //====================================
 //
 //====================================
-Uint32 CGameUIObject::getHeight( void ) const
+UInt32 CGameUIObject::getHeight( void ) const
 {
 	return m_height;
 }
@@ -265,7 +265,7 @@ void CGameUIObject::think( void )
 	if(m_pChildrenArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 		m_pChildrenArray[i]->think();
 }
 
@@ -280,7 +280,7 @@ bool CGameUIObject::draw( void )
 	if(m_pChildrenArray.empty())
 		return true;
 
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		CGameUIObject* pObject = m_pChildrenArray[i];
 		if(pObject->getFlags() & FL_DRAW_LINKED_HIGHLIGHT_ONLY)
@@ -307,14 +307,14 @@ void CGameUIObject::adjustPosition( void )
 {
 	if(!m_pChildrenArray.empty())
 	{
-		for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+		for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 			m_pChildrenArray[i]->adjustPosition();
 	}
 	
 	if(!m_pParent)
 		return;
 
-	Uint32 parentwidth, parentheight;
+	UInt32 parentwidth, parentheight;
 	m_pParent->getSize(parentwidth, parentheight);
 
 	if(m_flags & FL_ALIGN_RIGHT)
@@ -346,7 +346,7 @@ bool CGameUIObject::mouseWheelEvent( Int32 mouseX, Int32 mouseY, Int32 button, b
 	if(m_pChildrenArray.empty())
 		return false;
 
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		CGameUIObject* pObject = m_pChildrenArray[i];
 		if(pObject->getFlags() & FL_DRAW_LINKED_HIGHLIGHT_ONLY)
@@ -377,7 +377,7 @@ bool CGameUIObject::mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 button, 
 	if(m_pChildrenArray.empty())
 		return false;
 
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		CGameUIObject* pObject = m_pChildrenArray[i];
 		if(pObject->getFlags() & FL_DRAW_LINKED_HIGHLIGHT_ONLY)
@@ -408,7 +408,7 @@ bool CGameUIObject::keyEvent( Int32 button, Int16 mod, bool keyDown )
 	if(m_pChildrenArray.empty())
 		return false;
 
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		CGameUIObject* pObject = m_pChildrenArray[i];
 		if(pObject->getFlags() & FL_DRAW_LINKED_HIGHLIGHT_ONLY)
@@ -449,7 +449,7 @@ void CGameUIObject::setButtonsDisabled( bool isDisabled )
 	if(m_pChildrenArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		CGameUIObject* pObject = m_pChildrenArray[i];
 		
@@ -472,7 +472,7 @@ void CGameUIObject::SetGameUIManager( CGameUIManager* pGUIManager )
 //====================================
 //
 //====================================
-CGameUIBar::CGameUIBar( Int32 flags, const color32_t& color, byte minalpha, Int32 fadeflags, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUIBar::CGameUIBar( Int32 flags, const color32_t& color, Byte minalpha, Int32 fadeflags, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIObject(flags, originX, originY, width, height),
 	m_fadeFlags(fadeflags),
 	m_color(color),
@@ -497,8 +497,8 @@ bool CGameUIBar::draw( void )
 	getAbsolutePosition(xposition, yposition);
 
 	// Set fade
-	byte fademod[4];
-	for(Uint32 i = 0; i < 4; i++)
+	Byte fademod[4];
+	for(UInt32 i = 0; i < 4; i++)
 		fademod[i] = 255;
 
 	if(m_fadeFlags & FL_BAR_FADE_LEFT)
@@ -542,7 +542,7 @@ bool CGameUIBar::draw( void )
 //====================================
 //
 //====================================
-CGameUISurface::CGameUISurface( Int32 flags, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUISurface::CGameUISurface( Int32 flags, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIObject(flags, originX, originY, width, height),
 	m_color(color),
 	m_backgroundColor(bgcolor),
@@ -597,7 +597,7 @@ bool CGameUISurface::draw( void )
 
 		// Draw left edge
 		originy = baseOriginY + m_edgeThickness;
-		Uint32 verticalBarHeight = m_height - m_edgeThickness;
+		UInt32 verticalBarHeight = m_height - m_edgeThickness;
 		if(!(m_flags & FL_NO_BOTTOM_BORDER))
 			verticalBarHeight -= m_edgeThickness;
 
@@ -641,7 +641,7 @@ bool CGameUISurface::draw( void )
 //====================================
 //
 //====================================
-CGameUIButton::CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUIButton::CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIObject(flags, originX, originY, width, height),
 	m_isClickedOn(false),
 	m_isDisabled(false),
@@ -658,7 +658,7 @@ CGameUIButton::CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, Uint32 
 //====================================
 //
 //====================================
-CGameUIButton::CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, SDL_Keycode keycode, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUIButton::CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, SDL_Keycode keycode, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIObject(flags, originX, originY, width, height),
 	m_isClickedOn(false),
 	m_isDisabled(false),
@@ -676,7 +676,7 @@ CGameUIButton::CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, SDL_Key
 //====================================
 //
 //====================================
-CGameUIButton::CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, const CArray<SDL_Keycode>& keycodesArray, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUIButton::CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, const CArray<SDL_Keycode>& keycodesArray, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIObject(flags, originX, originY, width, height),
 	m_isClickedOn(false),
 	m_isDisabled(false),
@@ -757,7 +757,7 @@ bool CGameUIButton::draw( void )
 
 		// Draw left edge
 		originy = baseOriginY + m_edgeThickness;
-		Uint32 verticalBarHeight = m_height - m_edgeThickness*2;
+		UInt32 verticalBarHeight = m_height - m_edgeThickness*2;
 		gHUDDraw.SetOrigin(originx, originy);
 		gHUDDraw.SetSize(m_edgeThickness, verticalBarHeight);
 		if(!gHUDDraw.DrawQuad(nullptr))
@@ -827,7 +827,7 @@ bool CGameUIButton::keyEvent( Int32 button, Int16 mod, bool keyDown )
 	if(m_buttonKeysArray.empty())
 		return false;
 
-	for(Uint32 i = 0; i < m_buttonKeysArray.size(); i++)
+	for(UInt32 i = 0; i < m_buttonKeysArray.size(); i++)
 	{
 		SDL_Keycode buttonKey = m_buttonKeysArray[i];
 		if(buttonKey == SDLK_UNKNOWN)
@@ -869,7 +869,7 @@ void CGameUIButton::think( void )
 //====================================
 //
 //====================================
-void CGameUIButton::setText( const Char* pstrText )
+void CGameUIButton::setText( const char* pstrText )
 {
 	if(!m_pButtonText)
 	{
@@ -915,7 +915,7 @@ void CGameUIButton::setBgColor( const color32_t& color )
 //====================================
 //
 //====================================
-CGameUIText::CGameUIText( Int32 flags, const color32_t& color, const font_set_t* pfontset, const Char* pstrText, Int32 originX, Int32 originY ):
+CGameUIText::CGameUIText( Int32 flags, const color32_t& color, const font_set_t* pfontset, const char* pstrText, Int32 originX, Int32 originY ):
 	CGameUIObject(flags, originX, originY, 0, 0),
 	m_color(color),
 	m_text(pstrText),
@@ -949,7 +949,7 @@ CGameUIText::CGameUIText( Int32 flags, const color32_t& color, const font_set_t*
 //====================================
 //
 //====================================
-CGameUIText::CGameUIText( Int32 flags, const color32_t& color, const font_set_t* pfontset, const Char* pstrText, Int32 originX, Int32 originY, Uint32 maxwidth, Uint32 maxheight, Uint32 textInset ):
+CGameUIText::CGameUIText( Int32 flags, const color32_t& color, const font_set_t* pfontset, const char* pstrText, Int32 originX, Int32 originY, UInt32 maxwidth, UInt32 maxheight, UInt32 textInset ):
 	CGameUIObject(flags, originX, originY, 0, 0),
 	m_color(color),
 	m_text(pstrText),
@@ -984,7 +984,7 @@ bool CGameUIText::draw( void )
 
 	if(!m_maxWidth || !m_maxHeight)
 	{
-		Uint32 height = cl_renderfuncs.pfnEstimateStringHeight(m_pFontSet, m_text.c_str(), 0);
+		UInt32 height = cl_renderfuncs.pfnEstimateStringHeight(m_pFontSet, m_text.c_str(), 0);
 		if(!cl_renderfuncs.pfnDrawSimpleString(m_color, xpos, ypos+height, m_text.c_str(), m_pFontSet))
 			return false;
 	}
@@ -1014,7 +1014,7 @@ bool CGameUIText::draw( void )
 //====================================
 //
 //====================================
-void CGameUIText::setText( const Char* pstrText )
+void CGameUIText::setText( const char* pstrText )
 {
 	m_text = pstrText;
 	adjustSize();
@@ -1043,10 +1043,10 @@ void CGameUIText::setColor( const color32_t& fontcolor )
 void CGameUIText::adjustSize( void )
 {
 	// Calculate string size
-	Uint32 stringwidth = 0;
-	Uint32 stringheight = 0;
+	UInt32 stringwidth = 0;
+	UInt32 stringheight = 0;
 	
-	const Char* pstr = m_text.c_str();
+	const char* pstr = m_text.c_str();
 	while(*pstr != '\0')
 	{
 		stringwidth += m_pFontSet->glyphs[*pstr].advancex;
@@ -1067,7 +1067,7 @@ void CGameUIText::adjustSize( void )
 //====================================
 //
 //====================================
-CGameUITextTab::CGameUITextTab( Int32 flags, const font_set_t* pfontset, Uint32 textinset, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const color32_t& textcolor, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUITextTab::CGameUITextTab( Int32 flags, const font_set_t* pfontset, UInt32 textinset, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const color32_t& textcolor, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUISurface(flags, edgethickness, color, bgcolor, originX, originY, width, height),
 	m_textInset(textinset),
 	m_pFontSet(pfontset),
@@ -1078,7 +1078,7 @@ CGameUITextTab::CGameUITextTab( Int32 flags, const font_set_t* pfontset, Uint32 
 	if(!m_pFontSet)
 		m_pFontSet = gGameUIManager.GetDefaultFontSet();
 
-	Uint32 edgeThicknessCount = (m_flags & CGameUIObject::FL_NO_BOTTOM_BORDER) ? 1 : 2;
+	UInt32 edgeThicknessCount = (m_flags & CGameUIObject::FL_NO_BOTTOM_BORDER) ? 1 : 2;
 	m_pScroller = new CGameUIScroller(CGameUIObject::FL_NONE, CGameUIObject::FL_SCROLL_V, edgethickness, color, highlightcolor, highlightcolor, m_pFontSet->fontsize, 16, m_height - edgeThicknessCount, 0, m_edgeThickness);
 	m_pScroller->setParent(this);
 }
@@ -1132,10 +1132,10 @@ bool CGameUITextTab::draw( void )
 //====================================
 //
 //====================================
-void CGameUITextTab::initData( const byte* pdata, Uint32 datasize )
+void CGameUITextTab::initData( const Byte* pdata, UInt32 datasize )
 {
 	// Set the text to display
-	m_displayText.assign(reinterpret_cast<const Char*>(pdata), datasize);
+	m_displayText.assign(reinterpret_cast<const char*>(pdata), datasize);
 	updateRangeSize();
 	
 	// Reset to beginning
@@ -1163,13 +1163,13 @@ void CGameUITextTab::setTextColor( const color32_t& textcolor )
 // @brief Sets the offset value for the element
 //
 //=============================================
-void CGameUITextTab::setOffsetValue( Float offset )
+void CGameUITextTab::setOffsetValue( float offset )
 {
 	if(m_displayText.empty())
 		return;
 
 	cl_renderfuncs.pfnSetStringRectangle(0, 0, m_width - m_pScroller->getWidth(), m_height, m_textInset, m_textInset);
-	Float textHeight = cl_renderfuncs.pfnEstimateStringHeight(m_pFontSet, m_displayText.c_str(), m_pFontSet->fontsize);
+	float textHeight = cl_renderfuncs.pfnEstimateStringHeight(m_pFontSet, m_displayText.c_str(), m_pFontSet->fontsize);
 	cl_renderfuncs.pfnSetStringRectangle(0, 0, 0, 0, 0, 0);
 
 	if(textHeight < m_height)
@@ -1178,8 +1178,8 @@ void CGameUITextTab::setOffsetValue( Float offset )
 		return;
 	}
 
-	Uint32 totalHeight = textHeight-(m_height-m_pFontSet->fontsize-m_textInset*2);
-	Uint32 nbElements = totalHeight/m_pFontSet->fontsize;
+	UInt32 totalHeight = textHeight-(m_height-m_pFontSet->fontsize-m_textInset*2);
+	UInt32 nbElements = totalHeight/m_pFontSet->fontsize;
 	m_textOffset = nbElements*offset;
 }
 
@@ -1257,7 +1257,7 @@ void CGameUITextTab::think( void )
 //====================================
 //
 //====================================
-CGameUIWindow::CGameUIWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUIWindow::CGameUIWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIObject(FL_NONE, originX, originY, width, height),
 	m_windowFlags(flags),
 	m_pInputFocusObject(nullptr),
@@ -1275,7 +1275,7 @@ CGameUIWindow::~CGameUIWindow( void )
 //====================================
 //
 //====================================
-void CGameUIWindow::initBackground( Uint32& verticalbarheight, Uint32& middlebarwidth, Uint32& barThickness )
+void CGameUIWindow::initBackground( UInt32& verticalbarheight, UInt32& middlebarwidth, UInt32& barThickness )
 {
 	// Create black background
 	CGameUISurface* pBackground = new CGameUISurface(CGameUIObject::FL_NONE, 
@@ -1326,7 +1326,7 @@ void CGameUIWindow::initBackground( Uint32& verticalbarheight, Uint32& middlebar
 	}
 
 	// Create horizontal upper right bar
-	Uint32 upperrightbarorigin = vBarXOrigin + middlebarwidth;
+	UInt32 upperrightbarorigin = vBarXOrigin + middlebarwidth;
 	if(!(m_windowFlags & FL_WINDOW_NO_BGBORDERS))
 	{
 		CGameUIBar* pUpperHorizontalRightBar = new CGameUIBar((FL_ALIGN_LEFT|FL_ALIGN_TOP), 
@@ -1443,7 +1443,7 @@ bool CGameUIWindow::mouseWheelEvent( Int32 mouseX, Int32 mouseY, Int32 button, b
 		return true;
 
 	// If not, allow others to take the input
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		if(m_pChildrenArray[i]->mouseWheelEvent(mouseX, mouseY, button, keyDown, scroll))
 			return true;
@@ -1471,7 +1471,7 @@ bool CGameUIWindow::mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 button, 
 		return true;
 
 	// If not, allow others to take the input
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		if(m_pChildrenArray[i]->mouseButtonEvent(mouseX, mouseY, button, keyDown))
 			return true;
@@ -1499,7 +1499,7 @@ bool CGameUIWindow::keyEvent( Int32 button, Int16 mod, bool keyDown )
 		return true;
 
 	// If not, allow others to take the input
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		if(m_pChildrenArray[i]->keyEvent(button, mod, keyDown))
 			return true;
@@ -1511,7 +1511,7 @@ bool CGameUIWindow::keyEvent( Int32 button, Int16 mod, bool keyDown )
 //====================================
 //
 //====================================
-void CGameUIWindow::setDelayedRemoval( Double delay )
+void CGameUIWindow::setDelayedRemoval( double delay )
 {
 	if(!(m_windowFlags & FL_WINDOW_WAIT_TILL_NEXT))
 	{
@@ -1526,7 +1526,7 @@ void CGameUIWindow::setDelayedRemoval( Double delay )
 // @brief Constructor
 //
 //=============================================
-CGameUIDragButton::CGameUIDragButton( Int32 flags, gui_scroller_align_t alignment, CGameUICallbackEvent* pEvent, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CGameUIDragButton::CGameUIDragButton( Int32 flags, gui_scroller_align_t alignment, CGameUICallbackEvent* pEvent, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CGameUIButton( flags, pEvent, edgethickness, color, bgcolor, highlightcolor, originx, originy, width, height ),
 	m_alignment(alignment),
 	m_lastMouseX(0),
@@ -1656,7 +1656,7 @@ void CGameUIDragButton::think( void )
 // @brief Sets the length of the drag button
 //
 //=============================================
-void CGameUIDragButton::setLength( Uint32 length )
+void CGameUIDragButton::setLength( UInt32 length )
 {
 	if(m_alignment == CGameUIObject::FL_SCROLL_V)
 	{
@@ -1674,16 +1674,16 @@ void CGameUIDragButton::setLength( Uint32 length )
 // @brief Sets the position of the drag button
 //
 //=============================================
-void CGameUIDragButton::setPosition( Float position )
+void CGameUIDragButton::setPosition( float position )
 {
-	m_position = clamp(position, 0.0, 1.0);
+	m_position = Clamp(position, 0.0, 1.0);
 }
 
 //=============================================
 // @brief Gets the position of the drag button
 //
 //=============================================
-Float CGameUIDragButton::getPosition( void )
+float CGameUIDragButton::getPosition( void )
 {
 	return m_position;
 }
@@ -1700,7 +1700,7 @@ bool CGameUIDragButton::adjPosition( Int32 adjAmt, bool isMouseDrag, bool callEv
 		return false;
 
 	// Get parent length
-	Uint32 parentLength;
+	UInt32 parentLength;
 	if(m_alignment == CGameUIObject::FL_SCROLL_V)
 		parentLength = m_pParent->getHeight();
 	else
@@ -1721,17 +1721,17 @@ bool CGameUIDragButton::adjPosition( Int32 adjAmt, bool isMouseDrag, bool callEv
 		return true;
 	}
 
-	Uint32 referenceRange;
+	UInt32 referenceRange;
 	if(isMouseDrag)
 		referenceRange = myRange;
 	else
 		referenceRange = m_pParent->getFullRange();
 
 	// Make adjustments
-	Float adjFrac = (Float)adjAmt/(Float)(referenceRange);
+	float adjFrac = (float)adjAmt/(float)(referenceRange);
 
 	m_position += adjFrac;
-	m_position = clamp(m_position, 0.0, 1.0);
+	m_position = Clamp(m_position, 0.0, 1.0);
 
 	// Set appropriate position
 	if(m_alignment == CGameUIObject::FL_SCROLL_V)
@@ -1752,7 +1752,7 @@ bool CGameUIDragButton::adjPosition( Int32 adjAmt, bool isMouseDrag, bool callEv
 // @brief Gets the length of the drag button
 //
 //=============================================
-Uint32 CGameUIDragButton::getLength( void )
+UInt32 CGameUIDragButton::getLength( void )
 {
 	if(m_alignment == CGameUIObject::FL_SCROLL_V)
 		return m_height;
@@ -1772,19 +1772,19 @@ void CGameUIDragButton::adjustPosition( void )
 	if(m_lastParentLength)
 	{
 		// Reset the position
-		Uint32 parentLength;
+		UInt32 parentLength;
 		if(m_alignment == CGameUIObject::FL_SCROLL_V)
 			parentLength = m_pParent->getHeight();
 		else
 			parentLength = m_pParent->getWidth();
 
 		// Determine previous full position
-		Uint32 prevRelativePosition = m_position*m_lastParentLength;
+		UInt32 prevRelativePosition = m_position*m_lastParentLength;
 		m_lastParentLength = parentLength;
 
 		// Determine current position based on this
-		Float currentPosition = (Float)prevRelativePosition/(Float)parentLength;
-		m_position = clamp(currentPosition, 0.0, 1.0);
+		float currentPosition = (float)prevRelativePosition/(float)parentLength;
+		m_position = Clamp(currentPosition, 0.0, 1.0);
 
 		// Determine my own range
 		Int32 myRange = parentLength-getLength()-m_startInset-m_endInset;
@@ -1809,13 +1809,13 @@ void CGameUIDragButton::adjustPosition( void )
 // @brief Performs the close action for the window
 //
 //=============================================
-void CGameUIScroller::CGameUIScrollerDragBtnAction::PerformAction( Float param )
+void CGameUIScroller::CGameUIScrollerDragBtnAction::PerformAction( float param )
 {
 	assert(m_pScroller != nullptr);
 
 	// Get the dragger button
 	CGameUIDragButton* pButton = m_pScroller->getDragButton();
-	Float position = pButton->getPosition();
+	float position = pButton->getPosition();
 
 	// Get parent of the scroller button
 	CGameUIObject* pParent = m_pScroller->getParent();
@@ -1827,7 +1827,7 @@ void CGameUIScroller::CGameUIScrollerDragBtnAction::PerformAction( Float param )
 // @brief Constructor
 //
 //=============================================
-CGameUIScroller::CGameUIScroller( Int32 flags, gui_scroller_align_t alignment, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Uint32 unitSize, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CGameUIScroller::CGameUIScroller( Int32 flags, gui_scroller_align_t alignment, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, UInt32 unitSize, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CGameUISurface( flags, edgethickness, color, bgcolor, originx, originy, width, height ),
 	m_pDragButton(nullptr),
 	m_alignment(alignment),
@@ -1845,8 +1845,8 @@ CGameUIScroller::CGameUIScroller( Int32 flags, gui_scroller_align_t alignment, U
 	Int32 dragBtnOriginX = m_edgeThickness;
 	Int32 dragBtnOriginY = m_edgeThickness;
 
-	Uint32 dragBtnWidth = 0;
-	Uint32 dragBtnHeight = 0;
+	UInt32 dragBtnWidth = 0;
+	UInt32 dragBtnHeight = 0;
 	if(m_alignment == CGameUIObject::FL_SCROLL_V)
 	{
 		dragBtnWidth = m_width - m_edgeThickness*2;
@@ -1897,7 +1897,7 @@ void CGameUIScroller::readjustDragButton( void )
 	m_pDragButton->getBounds(insetStart, insetEnd);
 
 	// Determine coverage
-	Uint32 viewSize = 0;
+	UInt32 viewSize = 0;
 	if(m_alignment == CGameUIObject::FL_SCROLL_V)
 		viewSize = m_height;
 	else
@@ -1911,8 +1911,8 @@ void CGameUIScroller::readjustDragButton( void )
 	}
 
 	// Determine coverage
-	Float coverage = viewSize/(Float)m_fullRangeSize;
-	Uint32 draggerLength = coverage*viewSize;
+	float coverage = viewSize/(float)m_fullRangeSize;
+	UInt32 draggerLength = coverage*viewSize;
 	if(draggerLength > viewSize)
 		draggerLength = viewSize;
 
@@ -1925,11 +1925,11 @@ void CGameUIScroller::readjustDragButton( void )
 	}
 	else
 	{
-		Double prevPos = m_pDragButton->getPosition();
-		Uint32 prevRealPos = m_prevFullRangeSize*prevPos;
+		double prevPos = m_pDragButton->getPosition();
+		UInt32 prevRealPos = m_prevFullRangeSize*prevPos;
 
-		Double newPos = (Double)prevRealPos/(Double)m_fullRangeSize;
-		m_pDragButton->setPosition((Float)newPos);
+		double newPos = (double)prevRealPos/(double)m_fullRangeSize;
+		m_pDragButton->setPosition((float)newPos);
 	}
 
 	// Force a reset
@@ -1974,7 +1974,7 @@ void CGameUIScroller::resetScrollerPosition( void )
 // @brief Sets the source text array to render text from
 //
 //=============================================
-void CGameUIScroller::setUnitSize( Uint32 unitsize )
+void CGameUIScroller::setUnitSize( UInt32 unitsize )
 {
 	m_unitSize = unitsize;
 }
@@ -1983,7 +1983,7 @@ void CGameUIScroller::setUnitSize( Uint32 unitsize )
 // @brief Constructor
 //
 //=============================================
-CGameUITextInputTab::CGameUITextInputTab( Int32 flags, CGameUICallbackEvent* pAction, Uint32 textinset, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const font_set_t* pFont, Int32 originx, Int32 originy, Uint32 width, Uint32 height ):
+CGameUITextInputTab::CGameUITextInputTab( Int32 flags, CGameUICallbackEvent* pAction, UInt32 textinset, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const font_set_t* pFont, Int32 originx, Int32 originy, UInt32 width, UInt32 height ):
 	CGameUIObject( flags, originx, originy, width, height ),
 	m_pFont(pFont),
 	m_nextBlinkTime(0),
@@ -2099,7 +2099,7 @@ bool CGameUITextInputTab::keyEvent( Int32 button, Int16 mod, bool keyDown )
 			return true;
 
 		// Shift if needed
-		Char inputChar = (Char)sdlKeycode;
+		char inputChar = (char)sdlKeycode;
 		if(mod & (KMOD_SHIFT|KMOD_CAPS))
 			inputChar = Common::GetShiftedChar(inputChar);
 
@@ -2107,13 +2107,13 @@ bool CGameUITextInputTab::keyEvent( Int32 button, Int16 mod, bool keyDown )
 		if(m_szBuffer[m_inputPosition] != '\0')
 		{
 			// Insert it inbetween
-			Uint32 bufLength = qstrlen(m_szBuffer);
-			Char *psrc = m_szBuffer + bufLength;
-			Char *pdst = m_szBuffer + m_inputPosition - 1;
+			UInt32 bufLength = qstrlen(m_szBuffer);
+			char *psrc = m_szBuffer + bufLength;
+			char *pdst = m_szBuffer + m_inputPosition - 1;
 
 			while(psrc != pdst)
 			{
-				Char *pcdst = psrc+1;
+				char *pcdst = psrc+1;
 				*pcdst = *psrc;
 
 				psrc--;
@@ -2163,13 +2163,13 @@ bool CGameUITextInputTab::keyEvent( Int32 button, Int16 mod, bool keyDown )
 			if(m_szBuffer[m_inputPosition] != '\0')
 			{
 				// Remove inbetween
-				Uint32 bufLength = qstrlen(m_szBuffer);
-				Char *psrc = m_szBuffer + m_inputPosition - 1;
-				Char *pdst = m_szBuffer + bufLength;
+				UInt32 bufLength = qstrlen(m_szBuffer);
+				char *psrc = m_szBuffer + m_inputPosition - 1;
+				char *pdst = m_szBuffer + bufLength;
 
 				while(psrc != pdst)
 				{
-					Char *pcsrc = psrc+1;
+					char *pcsrc = psrc+1;
 					*psrc = *pcsrc;
 
 					psrc++;
@@ -2177,7 +2177,7 @@ bool CGameUITextInputTab::keyEvent( Int32 button, Int16 mod, bool keyDown )
 			}
 			else
 			{
-				Char* pstr = m_szBuffer+m_inputPosition;
+				char* pstr = m_szBuffer+m_inputPosition;
 				*(pstr-1) = *pstr;
 			}
 
@@ -2206,7 +2206,7 @@ void CGameUITextInputTab::clearText( void )
 // @brief Sets the contents of the text buffer
 //
 //=============================================
-void CGameUITextInputTab::setText( const Char* pstrText )
+void CGameUITextInputTab::setText( const char* pstrText )
 {
 	if(!pstrText)
 	{
@@ -2290,7 +2290,7 @@ bool CGameUITextInputTab::draw( void )
 
 		// Draw left edge
 		originy = baseOriginY + m_edgeThickness;
-		Uint32 verticalBarHeight = m_height - m_edgeThickness*2;
+		UInt32 verticalBarHeight = m_height - m_edgeThickness*2;
 		gHUDDraw.SetOrigin(originx, originy);
 		gHUDDraw.SetSize(m_edgeThickness, verticalBarHeight);
 		if(!gHUDDraw.DrawQuad(nullptr))
@@ -2316,9 +2316,9 @@ bool CGameUITextInputTab::draw( void )
 	Int32 markerWidth = 2;
 
 	// For the marker
-	Char* pstr = nullptr;
-	Uint32 numChars = 0;
-	Uint32 stringWidth = 0;
+	char* pstr = nullptr;
+	UInt32 numChars = 0;
+	UInt32 stringWidth = 0;
 
 	if(m_szBuffer[0] != '\0')
 	{
@@ -2326,17 +2326,17 @@ bool CGameUITextInputTab::draw( void )
 		gHUDDraw.FinishDraw();
 
 		// Determine position to draw in
-		Uint32 textHeight = cl_renderfuncs.pfnEstimateStringHeight(m_pFont, m_szBuffer, 0);
+		UInt32 textHeight = cl_renderfuncs.pfnEstimateStringHeight(m_pFont, m_szBuffer, 0);
 
 		// Draw in the vertical center
-		Uint32 yOrg = baseOriginY + m_height/2 + textHeight/2;
+		UInt32 yOrg = baseOriginY + m_height/2 + textHeight/2;
 
 		// Draw only the parts that fit in
 		numChars = qstrlen(m_szBuffer)-1;
 		pstr = m_szBuffer+numChars;
 		while(numChars > 0)
 		{
-			Uint32 charWidth = m_pFont->glyphs[*pstr].advancex;
+			UInt32 charWidth = m_pFont->glyphs[*pstr].advancex;
 			if(m_inset+charWidth+stringWidth+markerWidth >= (m_width-m_inset))
 			{
 				pstr++;
@@ -2376,8 +2376,8 @@ bool CGameUITextInputTab::draw( void )
 			if(m_inputPosition < numChars)
 				return CGameUIObject::draw();
 
-			Uint32 nbChars = m_inputPosition - numChars;
-			for(Uint32 i = 0; i < nbChars; i++)
+			UInt32 nbChars = m_inputPosition - numChars;
+			for(UInt32 i = 0; i < nbChars; i++)
 				xOrg += m_pFont->glyphs[pstr[i]].advancex;
 		}
 
@@ -2397,7 +2397,7 @@ bool CGameUITextInputTab::draw( void )
 // @brief Constructor
 //
 //=============================================
-CGameUIScrollableSurface::CGameUIScrollableSurface( Int32 flags, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const font_set_t* pFont, Int32 originx, Int32 originy, Uint32 width, Uint32 height, Uint32 postspacing ) :
+CGameUIScrollableSurface::CGameUIScrollableSurface( Int32 flags, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const font_set_t* pFont, Int32 originx, Int32 originy, UInt32 width, UInt32 height, UInt32 postspacing ) :
 	CGameUIObject(flags, originx, originy, width, height),
 	m_pSurface(nullptr),
 	m_pScroller(nullptr),
@@ -2415,7 +2415,7 @@ CGameUIScrollableSurface::CGameUIScrollableSurface( Int32 flags, Uint32 edgethic
 	if (m_flags & CGameUIObject::FL_SCROLL_REVERSE)
 		scrollerFlags |= CGameUIObject::FL_SCROLL_REVERSE;
 
-	Uint32 edgeThicknessCount = (m_flags & CGameUIObject::FL_NO_BOTTOM_BORDER) ? 1 : 2;
+	UInt32 edgeThicknessCount = (m_flags & CGameUIObject::FL_NO_BOTTOM_BORDER) ? 1 : 2;
 	m_pScroller = new CGameUIScroller(scrollerFlags, CGameUIObject::FL_SCROLL_V, edgethickness, color, highlightcolor, highlightcolor, m_pFont->fontsize, 16, m_height - edgethickness * edgeThicknessCount, 0, edgethickness);
 	m_pScroller->setParent(this);
 }
@@ -2432,7 +2432,7 @@ CGameUIScrollableSurface::~CGameUIScrollableSurface(void)
 // @brief Sets the offset value for the element
 //
 //=============================================
-void CGameUIScrollableSurface::setOffsetValue( Float offset )
+void CGameUIScrollableSurface::setOffsetValue( float offset )
 {
 	m_scrollOffset = offset;
 }
@@ -2473,7 +2473,7 @@ bool CGameUIScrollableSurface::mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int
 	Int32 offsetAmount = minusCoverage * m_scrollOffset;
 
 	// Prioritize interactives first
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		CGameUIObject* pObject = m_pChildrenArray[i];
 		if (!pObject->isInteractive())
@@ -2510,7 +2510,7 @@ bool CGameUIScrollableSurface::mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int
 	}
 
 	// Now handle non-interactives
-	for (Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for (UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		CGameUIObject* pObject = m_pChildrenArray[i];
 		if (pObject->isInteractive())
@@ -2568,7 +2568,7 @@ void CGameUIScrollableSurface::think( void )
 
 	Int32 offsetAmount = minusCoverage * m_scrollOffset;
 
-	for (Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for (UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		CGameUIObject* pObject = m_pChildrenArray[i];
 
@@ -2603,7 +2603,7 @@ bool CGameUIScrollableSurface::draw( void )
 		return true;
 
 	// Draw non-scrolling elements first
-	for(Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		CGameUIObject* pObject = m_pChildrenArray[i];
 		if (shouldShiftChild(pObject))
@@ -2627,10 +2627,10 @@ bool CGameUIScrollableSurface::draw( void )
 	Int32 absX, absY;
 	m_pSurface->getAbsolutePosition(absX, absY);
 
-	Uint32 width, height;
+	UInt32 width, height;
 	m_pSurface->getSize(width, height);
 
-	Uint32 scrwidth, scrheight;
+	UInt32 scrwidth, scrheight;
 	cl_renderfuncs.pfnGetScreenSize(scrwidth, scrheight);
 
 	Int32 originY = static_cast<Int32>(scrheight) - absY - height;
@@ -2646,7 +2646,7 @@ bool CGameUIScrollableSurface::draw( void )
 	Int32 offsetAmount = minusCoverage * m_scrollOffset;
 
 	// Draw scrolling elements now
-	for (Uint32 i = 0; i < m_pChildrenArray.size(); i++)
+	for (UInt32 i = 0; i < m_pChildrenArray.size(); i++)
 	{
 		CGameUIObject* pObject = m_pChildrenArray[i];
 		if (!shouldShiftChild(pObject))
@@ -2699,14 +2699,14 @@ bool CGameUIScrollableSurface::isChildVisible( CGameUIObject* pChild, Int32 offs
 	yPos -= offsetAmount;
 	yPos += m_baseYOffset;
 
-	Uint32 width, height;
+	UInt32 width, height;
 	pChild->getSize(width, height);
 
 	// Get the size and location of the background
 	Int32 surfX, surfY;
 	m_pSurface->getPosition(surfX, surfY);
 
-	Uint32 surfWidth, surfHeight;
+	UInt32 surfWidth, surfHeight;
 	m_pSurface->getSize(surfWidth, surfHeight);
 
 	if (xPos >= surfX + static_cast<Int32>(surfWidth))
@@ -2726,7 +2726,7 @@ bool CGameUIScrollableSurface::isChildVisible( CGameUIObject* pChild, Int32 offs
 //====================================
 bool CGameUIScrollableSurface::isMouseOver( Int32 mousex, Int32 mousey )
 {
-	Uint32 surfWidth, surfHeight;
+	UInt32 surfWidth, surfHeight;
 	m_pSurface->getSize(surfWidth, surfHeight);
 
 	Int32 absX, absY;
@@ -2749,7 +2749,7 @@ bool CGameUIScrollableSurface::isMouseOver( Int32 mousex, Int32 mousey )
 //====================================
 bool CGameUIScrollableSurface::isMouseOver( void )
 {
-	Uint32 surfWidth, surfHeight;
+	UInt32 surfWidth, surfHeight;
 	m_pSurface->getSize(surfWidth, surfHeight);
 
 	Int32 absX, absY;
@@ -2778,7 +2778,7 @@ bool CGameUIScrollableSurface::isMouseOverChild( CGameUIObject* pChild )
 	if (!isMouseOver())
 		return false;
 
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for (; m_pChildrenArray.size(); i++)
 	{
 		if (m_pChildrenArray[i] == pChild)

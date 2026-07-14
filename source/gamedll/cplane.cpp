@@ -36,6 +36,6 @@ CPlane::~CPlane( void )
 //=============================================
 bool CPlane::IsPointInFront( const Vector& point )
 {
-	Float dp = Math::DotProduct(m_planeNormal, point) - m_planeDistance;
+	float dp = Math::DotProduct(m_planeNormal, point) - m_planeDistance;
 	return (dp >= 0) ? true : false;
 }

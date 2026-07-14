@@ -99,7 +99,7 @@ bool CEnvShake::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvShake::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvShake::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	Util::ScreenShake(m_pState->origin,
 		m_amplitude,

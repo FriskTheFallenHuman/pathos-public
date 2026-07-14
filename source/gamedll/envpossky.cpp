@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "envpossky.h"
 
 // Distance between PVS updates
-const Float CEnvPosSky::PVS_UPDATE_DIST = 4.0f;
+const float CEnvPosSky::PVS_UPDATE_DIST = 4.0f;
 
 // Skybox entity used for VIS tests
 CEnvPosSky* CEnvPosSky::g_pSkyEntity = nullptr;
@@ -113,7 +113,7 @@ bool CEnvPosSky::TrainSetModel( void )
 // @brief
 //
 //=============================================
-const byte* CEnvPosSky::GetPVSData( void )
+const Byte* CEnvPosSky::GetPVSData( void )
 {
 	if(!m_pPVSData || (m_lastPVSOrigin-m_pState->origin).Length() > PVS_UPDATE_DIST)
 		SetPVSData();
@@ -127,11 +127,11 @@ const byte* CEnvPosSky::GetPVSData( void )
 //=============================================
 void CEnvPosSky::SetPVSData( void )
 {
-	Uint32 visBufferSize = gd_engfuncs.pfnGetVISBufferSize();
+	UInt32 visBufferSize = gd_engfuncs.pfnGetVISBufferSize();
 	if(!m_pPVSData)
 	{
 		// Allocate buffer
-		m_pPVSData = new byte[visBufferSize];
+		m_pPVSData = new Byte[visBufferSize];
 	}
 
 	const cache_model_t* pcache = gd_engfuncs.pfnGetModel(WORLD_MODEL_INDEX);
@@ -161,7 +161,7 @@ bool CEnvPosSky::CheckSkyboxVisibility( const edict_t* pedict )
 	if(!g_pSkyEntity)
 		return true;
 
-	const byte* pPVS = g_pSkyEntity->GetPVSData();
+	const Byte* pPVS = g_pSkyEntity->GetPVSData();
 	if(!pPVS)
 		return false;
 

@@ -50,7 +50,7 @@ public:
 
 public:
 	// Weapon view model
-	static const Char WEAPON_VIEWMODEL[];
+	static const char WEAPON_VIEWMODEL[];
 	// Weapon weight
 	static const Int32 WEAPON_WEIGHT;
 	// Weapon slot
@@ -58,36 +58,36 @@ public:
 	// Weapon slot position
 	static const Int32 WEAPON_SLOT_POSITION;
 	// Default ammo for weapon
-	static const Uint32 WEAPON_DEFAULT_GIVE;
+	static const UInt32 WEAPON_DEFAULT_GIVE;
 	// Max clip capacity for weapon
-	static const Uint32 WEAPON_MAX_CLIP;
+	static const UInt32 WEAPON_MAX_CLIP;
 	// Weapon cone id
-	static const Uint32 WEAPON_CONE_ID;
+	static const UInt32 WEAPON_CONE_ID;
 	// Silencer item name
-	static const Char SILENCER_ENTITY_NAME[];
+	static const char SILENCER_ENTITY_NAME[];
 	// Flashlight item name
-	static const Char FLASHLIGHT_ENTITY_NAME[];
+	static const char FLASHLIGHT_ENTITY_NAME[];
 
 	// w_ model groups
-	static const Uint32 WGLOCK_SL_GROUP_INDEX;
-	static const Uint32 WGLOCK_SL_OFF;
-	static const Uint32 WGLOCK_SL_ON;
+	static const UInt32 WGLOCK_SL_GROUP_INDEX;
+	static const UInt32 WGLOCK_SL_OFF;
+	static const UInt32 WGLOCK_SL_ON;
 		
-	static const Uint32 WGLOCK_FL_GROUP_INDEX;
-	static const Uint32 WGLOCK_FL_OFF;
-	static const Uint32 WGLOCK_FL_ON;
+	static const UInt32 WGLOCK_FL_GROUP_INDEX;
+	static const UInt32 WGLOCK_FL_OFF;
+	static const UInt32 WGLOCK_FL_ON;
 
 	// v_ model groups
-	static const Uint32 VGLOCK_SL_GROUP_INDEX;
-	static const Uint32 VGLOCK_SL_OFF;
-	static const Uint32 VGLOCK_SL_ON;
+	static const UInt32 VGLOCK_SL_GROUP_INDEX;
+	static const UInt32 VGLOCK_SL_OFF;
+	static const UInt32 VGLOCK_SL_ON;
 
-	static const Uint32 VGLOCK_FL_GROUP_INDEX;
-	static const Uint32 VGLOCK_FL_OFF;
-	static const Uint32 VGLOCK_FL_ON;
+	static const UInt32 VGLOCK_FL_GROUP_INDEX;
+	static const UInt32 VGLOCK_FL_OFF;
+	static const UInt32 VGLOCK_FL_ON;
 
 	// Recoil degrade speed
-	static const Float WEAPON_RECOIL_DEGRADE;
+	static const float WEAPON_RECOIL_DEGRADE;
 
 public:
 	explicit CWeaponGlock( edict_t* pedict );
@@ -115,7 +115,7 @@ public:
 	virtual void FlashlightToggle( bool drain = false ) override;
 	virtual void SetFlashlightRequest( bool requested ) override;
 
-	virtual Float GetRecoilDegradeFactor( void ) override;
+	virtual float GetRecoilDegradeFactor( void ) override;
 
 	virtual bool HasSilencer( void ) override;
 	virtual void SetHasSilencer( bool hasSilencer ) override;
@@ -133,12 +133,12 @@ private:
 	bool m_isFlashlightActive;
 	bool m_isFlashlightRequested;
 
-	Double m_toggleTime;
-	Double m_silencerTime;
-	Double m_fireRateDelayTime;
+	double m_toggleTime;
+	double m_silencerTime;
+	double m_fireRateDelayTime;
 
 private:
 	// Sequence names for weapon
-	static const Char* m_sequenceNames[NUM_WEAPON_ANIMATIONS];
+	static const char* m_sequenceNames[NUM_WEAPON_ANIMATIONS];
 };
 #endif //WEAPONGLOCK_H

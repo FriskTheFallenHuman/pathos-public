@@ -150,7 +150,7 @@ bool CCableRenderer::InitGame( void )
 		m_pShader->SetVBO(m_pVBO);
 	}
 
-	for(Uint32 i = 0; i < m_cablesArray.size(); i++)
+	for(UInt32 i = 0; i < m_cablesArray.size(); i++)
 		InitCableVBOData(m_cablesArray[i]);
 
 	return true;
@@ -201,7 +201,7 @@ bool CCableRenderer::DrawCables( void )
 	{
 		m_pShader->SetDeterminator(m_attribs.d_fog, 1);
 		m_pShader->SetUniform3f(m_attribs.u_fogcolor, rns.fog.settings.color[0], rns.fog.settings.color[1], rns.fog.settings.color[2]);
-		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<Float>(rns.fog.settings.end)- static_cast<Float>(rns.fog.settings.start)));
+		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<float>(rns.fog.settings.end)- static_cast<float>(rns.fog.settings.start)));
 	}
 	else
 	{
@@ -215,7 +215,7 @@ bool CCableRenderer::DrawCables( void )
 
 	glDisable(GL_CULL_FACE);
 
-	for(Uint32 i = 0; i < m_cablesArray.size(); i++)
+	for(UInt32 i = 0; i < m_cablesArray.size(); i++)
 	{
 		cable_object_t *pcable = &m_cablesArray[i];
 
@@ -254,40 +254,40 @@ void CCableRenderer::InitCableVBOData( cable_object_t& cable )
 	cable_vertex_t pvertexes[4];
 	
 	// set first segment
-	Float f = 1.0f/ static_cast<Float>(cable.numsegments);
+	float f = 1.0f/ static_cast<float>(cable.numsegments);
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		vpoint[i] = cable.start[i]*((1-f)*(1-f))+vbottom[i]*((1-f)*f*2)+cable.end[i]*(f*f);
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		pvertexes[0].origin[i] = cable.start[i];
 
 	Math::VectorCopy(cable.start, pvertexes[0].origin);
 	Math::VectorCopy(vpoint, pvertexes[0].vpoint);
-	pvertexes[0].width = -static_cast<Float>(cable.width);
+	pvertexes[0].width = -static_cast<float>(cable.width);
 
 	Math::VectorCopy(cable.start, pvertexes[1].origin);
 	Math::VectorCopy(vpoint, pvertexes[1].vpoint);
-	pvertexes[1].width = static_cast<Float>(cable.width);
+	pvertexes[1].width = static_cast<float>(cable.width);
 	
-	Uint32 numverts = cable.numsegments*6;
+	UInt32 numverts = cable.numsegments*6;
 	cable_vertex_t *pverts = new cable_vertex_t[numverts];
-	Uint32 curvert = 0;
+	UInt32 curvert = 0;
 
 	for(Int32 i = 1; i < (cable.numsegments+1); i++)
 	{
-		f = static_cast<Float>(i)/static_cast<Float>(cable.numsegments);
-		for(Uint32 j = 0; j < 3; j++)
+		f = static_cast<float>(i)/static_cast<float>(cable.numsegments);
+		for(UInt32 j = 0; j < 3; j++)
 			vpoint[j] = cable.start[j]*((1-f)*(1-f))+vbottom[j]*((1-f)*f*2)+cable.end[j]*(f*f);
 
 		// Set reference array
 		Math::VectorCopy(vpoint, pvertexes[2].origin);
 		Math::VectorCopy(vpoint, pvertexes[2].vpoint);
-		pvertexes[2].width = static_cast<Float>(cable.width);
+		pvertexes[2].width = static_cast<float>(cable.width);
 
 		Math::VectorCopy(vpoint, pvertexes[3].origin);
 		Math::VectorCopy(vpoint, pvertexes[3].vpoint);
-		pvertexes[3].width = -static_cast<Float>(cable.width);
+		pvertexes[3].width = -static_cast<float>(cable.width);
 
 		memcpy(&pverts[curvert], &pvertexes[0], sizeof(cable_vertex_t)); curvert++;
 		memcpy(&pverts[curvert], &pvertexes[1], sizeof(cable_vertex_t)); curvert++;
@@ -311,7 +311,7 @@ void CCableRenderer::InitCableVBOData( cable_object_t& cable )
 //====================================
 //
 //====================================
-void CCableRenderer::AddCable( const Vector& start, const Vector& end, Uint32 depth, Uint32 width, Uint32 numsegments )
+void CCableRenderer::AddCable( const Vector& start, const Vector& end, UInt32 depth, UInt32 width, UInt32 numsegments )
 {
 	cable_object_t newcable;
 	newcable.start = start;
@@ -326,15 +326,15 @@ void CCableRenderer::AddCable( const Vector& start, const Vector& end, Uint32 de
 
 	Vector vmins = NULL_MINS;
 	Vector vmaxs = NULL_MAXS;
-	for(Uint32 i = 0; i < (numsegments+1); i++)
+	for(UInt32 i = 0; i < (numsegments+1); i++)
 	{
-		Float f = static_cast<Float>(i)/static_cast<Float>(numsegments);
+		float f = static_cast<float>(i)/static_cast<float>(numsegments);
 
 		Vector vpoint;
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			vpoint[j] = start[j]*((1-f)*(1-f))+vbottom[j]*((1-f)*f*2)+end[j]*(f*f);
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			if(vpoint[j] > vmaxs[j])
 				vmaxs[j] = vpoint[j];

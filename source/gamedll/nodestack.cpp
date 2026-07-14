@@ -83,7 +83,7 @@ bool CNodeStack::IsEmpty( void ) const
 // @brief
 //
 //=============================================
-Uint32 CNodeStack::GetSize( void ) const
+UInt32 CNodeStack::GetSize( void ) const
 {
 	return m_level;
 }
@@ -92,7 +92,7 @@ Uint32 CNodeStack::GetSize( void ) const
 // @brief
 //
 //=============================================
-void CNodeStack::CopyToArray( Int32* pArray, Uint32 maxElements )
+void CNodeStack::CopyToArray( Int32* pArray, UInt32 maxElements )
 {
 	Int32 numCopy = _max((Int32)maxElements, m_level);
 	for(Int32 i = 0; i < numCopy; i++)

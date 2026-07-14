@@ -25,7 +25,7 @@ class CBasicDraw
 {
 public:
 	// Increment by 1024 vertexes
-	static const Uint32 BASICDRAW_VERTEX_CACHE_SIZE;
+	static const UInt32 BASICDRAW_VERTEX_CACHE_SIZE;
 
 private:
 	struct shader_attribs_t
@@ -103,7 +103,7 @@ public:
 	// Enables fogging
 	bool EnableFog( void );
 	// Sets fog parameters
-	void SetFogParams( const Vector& fogcolor, Float startdist, Float enddist );
+	void SetFogParams( const Vector& fogcolor, float startdist, float enddist );
 	// Disables fogging
 	bool DisableFog( void );
 
@@ -111,31 +111,31 @@ public:
 	bool IsActive( void ) const { return m_isActive; }
 	
 	// Sets the projection matrix
-	void SetProjection( const Float* pMatrix );
+	void SetProjection( const float* pMatrix );
 	// Sets the modelview matrix
-	void SetModelview( const Float* pMatrix );
+	void SetModelview( const float* pMatrix );
 
 	// Sets a vertex's color
-	void Color4f( Float r, Float g, Float b, Float a );
-	void Color4fv( const Float* pfc );
+	void Color4f( float r, float g, float b, float a );
+	void Color4fv( const float* pfc );
 	// Sets a vertex's texcoords
-	void TexCoord2f( Float u, Float v );
-	void TexCoord2fv( const Float* ptc );
+	void TexCoord2f( float u, float v );
+	void TexCoord2fv( const float* ptc );
 	// Sets a vertex's origin
-	void Vertex3f( Float x, Float y, Float z );
-	void Vertex3fv( const Float* pfv );
+	void Vertex3f( float x, float y, float z );
+	void Vertex3fv( const float* pfv );
 	// Sets the brightness value
-	void Brightness1f( Float brightness );
+	void Brightness1f( float brightness );
 	// Sets the color multiplier value
-	void SetColorMultiplier( Float multiplier );
+	void SetColorMultiplier( float multiplier );
 
 	// Returns the shader's error message
-	const Char* GetShaderError( void ) const;
+	const char* GetShaderError( void ) const;
 	// Tells if the shader has an error
 	bool HasError( void ) const;
 
 	// Validates current shader setup
-	void ValidateShaderSetup( void (*pfnConPrintfFnPtr)( const Char *fmt, ... ) );
+	void ValidateShaderSetup( void (*pfnConPrintfFnPtr)( const char *fmt, ... ) );
 
 public:
 	// Creates an instance of this class
@@ -146,20 +146,20 @@ public:
 	static void DeleteInstance( void );
 
 public:
-	// TRUE if we're bound right now
+	// true if we're bound right now
 	bool m_isActive;
 	// Array of vertexes
 	CArray<basic_vertex_t> m_vertexesArray;
 	// Quad triangle indexes array
-	CArray<Uint32> m_quadIndexesArray;
+	CArray<UInt32> m_quadIndexesArray;
 	// Number of currently cached vertexes
-	Uint32 m_numVertexes;
+	UInt32 m_numVertexes;
 	// Primitive type
 	primitivetype_t m_primitiveType;
 	// Last color specified
 	vec4_t m_vertexColor;
 	// Brightness
-	Float m_brightness;
+	float m_brightness;
 
 	// Pointer to VBO object
 	class CVBO* m_pVBO;

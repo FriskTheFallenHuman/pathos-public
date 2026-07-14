@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "funcrotating.h"
 
 // Array of fan sounds
-const Char* CFuncRotating::g_pFanSounds[NUM_FAN_SOUND_OPTIONS] = 
+const char* CFuncRotating::g_pFanSounds[NUM_FAN_SOUND_OPTIONS] = 
 {
 	"",
 	"fans/fan1.wav",
@@ -23,9 +23,9 @@ const Char* CFuncRotating::g_pFanSounds[NUM_FAN_SOUND_OPTIONS] =
 };
 
 // Fan minimum pitch
-const Float CFuncRotating::FAN_MIN_PITCH = 30;
+const float CFuncRotating::FAN_MIN_PITCH = 30;
 // Fan maximum pitch
-const Float CFuncRotating::FAN_MAX_PITCH = 100;
+const float CFuncRotating::FAN_MAX_PITCH = 100;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(func_rotating, CFuncRotating);
@@ -125,7 +125,7 @@ bool CFuncRotating::Spawn( void )
 //=============================================
 void CFuncRotating::Precache( void )
 {
-	const Char* pstrSoundFile = nullptr;
+	const char* pstrSoundFile = nullptr;
 	if(m_pFields->message != NO_STRING_VALUE)
 	{
 		pstrSoundFile = gd_engfuncs.pfnGetString(m_pFields->message);
@@ -174,7 +174,7 @@ bool CFuncRotating::KeyValue( const keyvalue_t& kv )
 	else if(!qstrcmp(kv.keyname, "volume"))
 	{
 		m_volume = SDL_atof(kv.value)/10.0f;
-		m_volume = clamp(m_volume, 0.0, 1.0);
+		m_volume = Clamp(m_volume, 0.0, 1.0);
 		return true;
 	}
 	else if(!qstrcmp(kv.keyname, "spawnorigin"))
@@ -222,7 +222,7 @@ void CFuncRotating::HurtTouch( CBaseEntity* pOther )
 	if(pOther->GetTakeDamage() == TAKEDAMAGE_NO)
 		return;
 
-	Float dmgamount = m_pState->avelocity.Length() / 10.0f;
+	float dmgamount = m_pState->avelocity.Length() / 10.0f;
 	pOther->TakeDamage(this, this, dmgamount, DMG_CRUSH);
 
 	Vector velocity = (pOther->GetOrigin() - GetBrushModelCenter()).Normalize() * dmgamount;
@@ -243,7 +243,7 @@ void CFuncRotating::SpinUpThink( void )
 		return;
 	}
 
-	Double thinkTime = g_pGameVars->time - m_lastThinkTime;
+	double thinkTime = g_pGameVars->time - m_lastThinkTime;
 	m_lastThinkTime = g_pGameVars->time;
 
 	Math::VectorMA(m_pState->avelocity, (m_pState->speed*m_fanFriction*thinkTime), m_pState->movedir, m_pState->avelocity);
@@ -297,12 +297,12 @@ void CFuncRotating::SpinDownThink( void )
 		return;
 	}
 
-	Double thinkTime = g_pGameVars->time - m_lastThinkTime;
+	double thinkTime = g_pGameVars->time - m_lastThinkTime;
 	m_lastThinkTime = g_pGameVars->time;
 
 	Math::VectorMA(m_pState->avelocity, (m_pState->speed*m_fanFriction*thinkTime) * -1, m_pState->movedir, m_pState->avelocity);
 
-	Float movedir;
+	float movedir;
 	if(m_pState->movedir.x != 0)
 		movedir = m_pState->movedir.x;
 	else if(m_pState->movedir.y != 0)
@@ -372,11 +372,11 @@ void CFuncRotating::RampPitchAndVolume( void )
 {
 	// Get angular velocity
 	Vector vecvel = m_pState->avelocity;
-	Float anglevelocity = abs(vecvel.x != 0 ? vecvel.x : (vecvel.y != 0 ? vecvel.y : vecvel.z));
+	float anglevelocity = abs(vecvel.x != 0 ? vecvel.x : (vecvel.y != 0 ? vecvel.y : vecvel.z));
 
 	// Determine target
 	Vector vecdir = m_pState->movedir;
-	Float targetvelocity = abs(abs(vecdir.x != 0 ? vecdir.x : (vecdir.y != 0 ? vecdir.y : vecdir.z)) * m_pState->speed);
+	float targetvelocity = abs(abs(vecdir.x != 0 ? vecdir.x : (vecdir.y != 0 ? vecdir.y : vecdir.z)) * m_pState->speed);
 
 	// Calculate pitch
 	Int32 pitch = (Int32(FAN_MIN_PITCH + (FAN_MAX_PITCH-FAN_MIN_PITCH)*(anglevelocity/targetvelocity)));
@@ -384,7 +384,7 @@ void CFuncRotating::RampPitchAndVolume( void )
 		pitch = PITCH_NORM-1;
 
 	// Calculate volume
-	Float volume = m_volume * (anglevelocity/targetvelocity);
+	float volume = m_volume * (anglevelocity/targetvelocity);
 
 	// Update on client
 	if(m_fanSound != NO_STRING_VALUE)
@@ -405,7 +405,7 @@ void CFuncRotating::RampPitchAndVolume( void )
 // @brief
 //
 //=============================================
-void CFuncRotating::CallUse( CBaseEntity* pacticator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncRotating::CallUse( CBaseEntity* pacticator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_fanState == FAN_STATE_ON 
 		|| m_fanState == FAN_STATE_SPINUP)

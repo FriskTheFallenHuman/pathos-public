@@ -37,7 +37,7 @@ CFuncTrackAutoChange::~CFuncTrackAutoChange( void )
 // @brief
 //
 //=============================================
-void CFuncTrackAutoChange::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncTrackAutoChange::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!IsUseEnabled())
 		return;

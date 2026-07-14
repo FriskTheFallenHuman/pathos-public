@@ -27,18 +27,18 @@ struct usercmd_t
 	{
 	}
 
-	Uint64 cmdidx;		// Index of usercmd
+	UInt64 cmdidx;		// Index of usercmd
 
-	Uint32 lerp_msec;	// interpolation time on client
-	byte msec;			// duration in ms of command
+	UInt32 lerp_msec;	// interpolation time on client
+	Byte msec;			// duration in ms of command
 	Vector viewangles;	// view angles at time of cmd send
 
-	Float forwardmove;	// forward movement velocity
-	Float sidemove;		// side movement velocity
-	Float upmove;		// upwards movement velocity
-	byte weaponselect;	// weapon selection
-	byte impulse;		// impulse command value
-	Uint32 buttons;		// buttons pressed
+	float forwardmove;	// forward movement velocity
+	float sidemove;		// side movement velocity
+	float upmove;		// upwards movement velocity
+	Byte weaponselect;	// weapon selection
+	Byte impulse;		// impulse command value
+	UInt32 buttons;		// buttons pressed
 };
 
 #endif //USERCMD_H

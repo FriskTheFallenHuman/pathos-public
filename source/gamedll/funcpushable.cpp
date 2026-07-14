@@ -13,11 +13,11 @@ All Rights Reserved.
 #include "buttonbits.h"
 
 // Default push sound pattern
-const Char CFuncPushable::PUSHABLE_DEFAULT_PUSH_SOUND[] = "debris/wood_push%d.wav";
+const char CFuncPushable::PUSHABLE_DEFAULT_PUSH_SOUND[] = "debris/wood_push%d.wav";
 // Maximum friction
-const Float CFuncPushable::MAX_FRICTION = 399;
+const float CFuncPushable::MAX_FRICTION = 399;
 // Minimum sound delay time
-const Float CFuncPushable::MIN_SOUND_DELAY = 0.7;
+const float CFuncPushable::MIN_SOUND_DELAY = 0.7;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(func_pushable, CFuncPushable);
@@ -141,7 +141,7 @@ void CFuncPushable::Precache( void )
 {
 	if(m_pushSoundsPattern != NO_STRING_VALUE)
 	{
-		const Char* pstrSoundPattern = gd_engfuncs.pfnGetString(m_pushSoundsPattern);
+		const char* pstrSoundPattern = gd_engfuncs.pfnGetString(m_pushSoundsPattern);
 		Util::PrecacheVariableNbSounds(pstrSoundPattern, m_nbPushSounds);
 	}
 
@@ -153,7 +153,7 @@ void CFuncPushable::Precache( void )
 // @brief
 //
 //=============================================
-void CFuncPushable::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncPushable::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!pActivator || !pActivator->IsPlayer())
 	{
@@ -186,7 +186,7 @@ void CFuncPushable::CallTouch( CBaseEntity* pOther )
 // @brief
 //
 //=============================================
-bool CFuncPushable::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags )
+bool CFuncPushable::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags )
 {
 	if(HasSpawnFlag(FL_BREAKABLE))
 		return CFuncBreakable::TakeDamage(pInflictor, pAttacker, amount, damageFlags);
@@ -198,7 +198,7 @@ bool CFuncPushable::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker,
 // @brief
 //
 //=============================================
-Float CFuncPushable::GetMaxSpeed( void ) const
+float CFuncPushable::GetMaxSpeed( void ) const
 {
 	return m_maxSpeed;
 }
@@ -227,7 +227,7 @@ void CFuncPushable::Move( CBaseEntity* pEntity, bool push )
 		isPlayerTouch = true;
 	}
 
-	Float factor = 0;
+	float factor = 0;
 	if(isPlayerTouch)
 	{
 		if(!(pEntity->GetFlags() & FL_ONGROUND))
@@ -257,7 +257,7 @@ void CFuncPushable::Move( CBaseEntity* pEntity, bool push )
 	if(SDL_fabs(m_pState->velocity.y) > SDL_fabs(otherVelocity.y))
 		m_pState->velocity.y = otherVelocity.y;
 
-	Float length = SDL_sqrt(velocity.x*velocity.x+velocity.y*velocity.y);
+	float length = SDL_sqrt(velocity.x*velocity.x+velocity.y*velocity.y);
 	if(push && length > m_maxSpeed)
 	{
 		m_pState->velocity.x = ((velocity.x*m_maxSpeed)/length);
@@ -275,7 +275,7 @@ void CFuncPushable::Move( CBaseEntity* pEntity, bool push )
 		{
 			if(m_nextSoundTime < g_pGameVars->time)
 			{
-				const Char* pstrSoundPattern = gd_engfuncs.pfnGetString(m_pushSoundsPattern);
+				const char* pstrSoundPattern = gd_engfuncs.pfnGetString(m_pushSoundsPattern);
 				Util::PlayRandomEntitySound(this, pstrSoundPattern, m_nbPushSounds, SND_CHAN_WEAPON);
 
 				m_nextSoundTime = g_pGameVars->time + MIN_SOUND_DELAY;

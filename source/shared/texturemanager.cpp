@@ -27,17 +27,17 @@ All Rights Reserved.
 #endif //GL_TEXTURE_MAX_ANISOTROPY
 
 // Default value for specular scale
-const Float CTextureManager::DEFAULT_SPECFACTOR = 2.0f;
+const float CTextureManager::DEFAULT_SPECFACTOR = 2.0f;
 // Default phong exponent value
-const Float CTextureManager::DEFAULT_PHONG_EXP = 16.0f;
+const float CTextureManager::DEFAULT_PHONG_EXP = 16.0f;
 // Anisotropy off value
-const Uint32 CTextureManager::ANISOTROPY_OFF_VALUE = 1;
+const UInt32 CTextureManager::ANISOTROPY_OFF_VALUE = 1;
 
 // Texture manager instance
 CTextureManager* CTextureManager::g_pInstance = nullptr;
 
 // Extensions of the texture formats used
-const Char* CTextureManager::TEXTURE_FORMAT_EXTENSIONS[] = 
+const char* CTextureManager::TEXTURE_FORMAT_EXTENSIONS[] = 
 {
 	"",
 	"tga",
@@ -112,7 +112,7 @@ void CTextureManager::ReloadResources( void )
 				while(itMaterial != m_materialsMap.end())
 				{
 					en_material_t* pmaterial = itMaterial->second;
-					for(Uint32 i = 0; i < NB_MT_TX; i++)
+					for(UInt32 i = 0; i < NB_MT_TX; i++)
 					{
 						if(pmaterial->ptextures[i] == ptexture)
 							pmaterial->ptextures[i] = nullptr;
@@ -190,7 +190,7 @@ void CTextureManager::Shutdown( void )
 // @brief Checks anisotropy cvar setting
 //
 //=============================================
-void CTextureManager::UpdateAnisotropySettings( Float cvarValue )
+void CTextureManager::UpdateAnisotropySettings( float cvarValue )
 {
 	// Update anisotropy if needed
 	Int32 anisotropySetting = cvarValue;
@@ -400,7 +400,7 @@ void CTextureManager::DeleteTextures( rs_level_t level, bool keepentry )
 //
 // @param pstrFilename Filename of the texture to delete
 //=============================================
-void CTextureManager::DeleteTexture( const Char *pstrFilename )
+void CTextureManager::DeleteTexture( const char *pstrFilename )
 {
 	CString filename(pstrFilename);
 	filename.tolower();
@@ -492,19 +492,19 @@ void CTextureManager::DeleteAllocation( en_texalloc_t* palloc )
 //=============================================
 void CTextureManager::CreateDummyTexture( void )
 {
-	constexpr Uint32 dummyTextureSize = 16;
-	Uint32 dataSize = dummyTextureSize*dummyTextureSize*4;
+	constexpr UInt32 dummyTextureSize = 16;
+	UInt32 dataSize = dummyTextureSize*dummyTextureSize*4;
 
-	byte *pdata = new byte[dataSize];
-	memset(pdata, 0, sizeof(byte)*dataSize);
+	Byte *pdata = new Byte[dataSize];
+	memset(pdata, 0, sizeof(Byte)*dataSize);
 
 	HashResourceTypeKey_t key("dummy", RS_WINDOW_LEVEL);
 
 	// This is based after the Quake code
-	byte* pdest = pdata;
-	for (Uint32 y = 0; y < dummyTextureSize; y++)
+	Byte* pdest = pdata;
+	for (UInt32 y = 0; y < dummyTextureSize; y++)
 	{
-		for (Uint32 x = 0; x < dummyTextureSize; x++)
+		for (UInt32 x = 0; x < dummyTextureSize; x++)
 		{
 			if ((y < 8) ^ (x < 8))
 			{
@@ -539,7 +539,7 @@ void CTextureManager::CreateDummyTexture( void )
 
 	// Bind it in OpenGL
 	glBindTexture(GL_TEXTURE_2D, m_pDummyTexture->palloc->gl_index);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_pDummyTexture->width, m_pDummyTexture->height, FALSE, GL_RGBA, GL_UNSIGNED_BYTE, pdata);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_pDummyTexture->width, m_pDummyTexture->height, false, GL_RGBA, GL_UNSIGNED_BYTE, pdata);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -578,14 +578,14 @@ void CTextureManager::CreateDummyTexture( void )
 //
 // @return Format identifier
 //=============================================
-texture_format_t CTextureManager::GetFormat( const Char* pstrFilename )
+texture_format_t CTextureManager::GetFormat( const char* pstrFilename )
 {
 	CString filename(pstrFilename);
 	Int32 dotpos = filename.find(0, ".");
 	if(dotpos == CString::CSTRING_NO_POSITION)
 		return TX_FORMAT_UNDEFINED;
 
-	Uint32 extensionlength = filename.length() - (dotpos + 1);
+	UInt32 extensionlength = filename.length() - (dotpos + 1);
 	CString extension(filename.c_str() + (dotpos+1), extensionlength);
 
 	if(!qstrcicmp(extension, "tga"))
@@ -603,7 +603,7 @@ texture_format_t CTextureManager::GetFormat( const Char* pstrFilename )
 //
 // @return Texture type identifier
 //=============================================
-mt_texture_t CTextureManager::GetTextureType( const Char* pstrTypename )
+mt_texture_t CTextureManager::GetTextureType( const char* pstrTypename )
 {
 	if(!qstrcmp(pstrTypename, "diffuse"))
 		return MT_TX_DIFFUSE;
@@ -628,7 +628,7 @@ mt_texture_t CTextureManager::GetTextureType( const Char* pstrTypename )
 // @param level Resource level to load onto
 // @return Pointer to material object
 //=============================================
-en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs_level_t level, bool prompt, bool isloadingfromalias )
+en_material_t* CTextureManager::LoadMaterialScript( const char* pstrFilename, rs_level_t level, bool prompt, bool isloadingfromalias )
 {
 	CString filename(pstrFilename);
 	filename.tolower();
@@ -639,7 +639,7 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 		return pmaterial;
 
 	// True if this is an alias script
-	static Char aliasscriptpath[MAX_PARSE_LENGTH];
+	static char aliasscriptpath[MAX_PARSE_LENGTH];
 	bool isaliasscript = false;
 
 	// Base directory is fixed
@@ -650,7 +650,7 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 		filePath = filename;
 
 	// Load the file in
-	const Char* pfile = reinterpret_cast<const Char*>(m_fileFuncs.pfnLoadFile(filePath.c_str(), nullptr));
+	const char* pfile = reinterpret_cast<const char*>(m_fileFuncs.pfnLoadFile(filePath.c_str(), nullptr));
 	if(!pfile)
 	{
 		if(prompt)
@@ -660,10 +660,10 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 	}
 
 	// Make sure the syntax is valid
-	static Char token[MAX_PARSE_LENGTH];
-	static Char value[MAX_PARSE_LENGTH];
+	static char token[MAX_PARSE_LENGTH];
+	static char value[MAX_PARSE_LENGTH];
 
-	const Char* pchar = Common::Parse(pfile, token);
+	const char* pchar = Common::Parse(pfile, token);
 	if(!pchar)
 	{
 		m_printErrorFunction("Unexpected EOF in '%s'.\n", filePath.c_str());
@@ -726,15 +726,15 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 		pmaterial->phong_exp = DEFAULT_PHONG_EXP;
 	}
 
-	static Char line[MAX_LINE_LENGTH];
+	static char line[MAX_LINE_LENGTH];
 
 	// Because we load textures after reading the script in
-	Char texturePaths[NB_MT_TX][MAX_PARSE_LENGTH] = { 0 };
-	for(Uint32 i = 0; i < NB_MT_TX; i++)
+	char texturePaths[NB_MT_TX][MAX_PARSE_LENGTH] = { 0 };
+	for(UInt32 i = 0; i < NB_MT_TX; i++)
 		texturePaths[i][0] = '\0';
 
 	// Parse the file line by line
-	const Char* pstr = pchar;
+	const char* pstr = pchar;
 	while(true)
 	{
 		if(!pstr)
@@ -846,21 +846,21 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 				else if(!qstrcmp(token, "$int_height"))
 					pmaterial->int_height = SDL_atoi(value);
 				else if(!qstrcmp(token, "$alpha"))
-					pmaterial->alpha = static_cast<Float>(SDL_atof(value));
+					pmaterial->alpha = static_cast<float>(SDL_atof(value));
 				else if(!qstrcmp(token, "$phong_exp"))
-					pmaterial->phong_exp = static_cast<Float>(SDL_atof(value));
+					pmaterial->phong_exp = static_cast<float>(SDL_atof(value));
 				else if(!qstrcmp(token, "$spec"))
-					pmaterial->spec_factor = static_cast<Float>(SDL_atof(value));
+					pmaterial->spec_factor = static_cast<float>(SDL_atof(value));
 				else if(!qstrcmp(token, "$scopescale"))
-					pmaterial->scale = static_cast<Float>(SDL_atof(value));
+					pmaterial->scale = static_cast<float>(SDL_atof(value));
 				else if(!qstrcmp(token, "$cubemapstrength"))
-					pmaterial->cubemapstrength = static_cast<Float>(SDL_atof(value));
+					pmaterial->cubemapstrength = static_cast<float>(SDL_atof(value));
 				else if(!qstrcmp(token, "$container"))
 					pmaterial->containername = value;
 				else if(!qstrcmp(token, "$scrollu"))
-					pmaterial->scrollu = static_cast<Float>(SDL_atof(value));
+					pmaterial->scrollu = static_cast<float>(SDL_atof(value));
 				else if(!qstrcmp(token, "$scrollv"))
-					pmaterial->scrollv = static_cast<Float>(SDL_atof(value));
+					pmaterial->scrollv = static_cast<float>(SDL_atof(value));
 			}
 			else if(!qstrcmp(token, "$texture"))
 			{
@@ -903,7 +903,7 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 			}
 			else if(!qstrcmp(token, "$fullbrightcolor"))
 			{
-				Uint32 i = 0;
+				UInt32 i = 0;
 				for(; i < 3; i++)
 				{
 					if(!pchar)
@@ -963,7 +963,7 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 		m_printFunction("%s - Invalid x detail texture scale for material script file '%s'.\n", __FUNCTION__, filePath.c_str());
 
 	// Load in the individual textures
-	for(Uint32 i = 0; i < NB_MT_TX; i++)
+	for(UInt32 i = 0; i < NB_MT_TX; i++)
 	{
 		if(!qstrlen(texturePaths[i]))
 			continue;
@@ -1004,9 +1004,9 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 // @param outFormat Output variable for the texture format
 // @return Pointer to file data
 //=============================================
-const byte* CTextureManager::LoadFile( const Char* pstrFileName, texture_format_t& outFormat )
+const Byte* CTextureManager::LoadFile( const char* pstrFileName, texture_format_t& outFormat )
 {
-	const byte* pfile = m_fileFuncs.pfnLoadFile(pstrFileName, nullptr);
+	const Byte* pfile = m_fileFuncs.pfnLoadFile(pstrFileName, nullptr);
 	outFormat = GetFormat(pstrFileName);
 
 	if(pfile)
@@ -1016,12 +1016,12 @@ const byte* CTextureManager::LoadFile( const Char* pstrFileName, texture_format_
 	Int32 dotpos = basefilename.find(0, ".");
 	if(dotpos != CString::CSTRING_NO_POSITION)
 	{
-		Uint32 nberase = basefilename.length() - dotpos;
+		UInt32 nberase = basefilename.length() - dotpos;
 		basefilename.erase(dotpos, nberase);
 	}
 
 	Int32 triedFormats = (1<<(Int32)outFormat);
-	for(Uint32 i = 0; i < NB_TEXTURE_FORMATS; i++)
+	for(UInt32 i = 0; i < NB_TEXTURE_FORMATS; i++)
 	{
 		// Don't bother with non-file based formats
 		if(!qstrlen(TEXTURE_FORMAT_EXTENSIONS[i]))
@@ -1058,7 +1058,7 @@ const byte* CTextureManager::LoadFile( const Char* pstrFileName, texture_format_
 // @param pborder Border to set
 // @return Pointer to texture object
 //=============================================
-en_texture_t* CTextureManager::LoadTexture( const Char* pstrFilename, rs_level_t level, Int32 flags, const GLint* pborder )
+en_texture_t* CTextureManager::LoadTexture( const char* pstrFilename, rs_level_t level, Int32 flags, const GLint* pborder )
 {
 	CString filename(pstrFilename);
 	filename.tolower();
@@ -1083,11 +1083,11 @@ en_texture_t* CTextureManager::LoadTexture( const Char* pstrFilename, rs_level_t
 		return ptexture;
 
 	// To hold the values
-	byte *pdata = nullptr;
-	Uint32 width = 0;
-	Uint32 height = 0;
-	Uint32 bpp = 0;
-	Uint32 datasize = 0;
+	Byte *pdata = nullptr;
+	UInt32 width = 0;
+	UInt32 height = 0;
+	UInt32 bpp = 0;
+	UInt32 datasize = 0;
 	texture_compression_t compression = TX_COMPRESSION_NONE;
 
 	// Base directory is fixed
@@ -1099,7 +1099,7 @@ en_texture_t* CTextureManager::LoadTexture( const Char* pstrFilename, rs_level_t
 
 	// Load the file
 	texture_format_t format = TX_FORMAT_UNDEFINED;
-	const byte* pfile = LoadFile(filePath.c_str(), format);
+	const Byte* pfile = LoadFile(filePath.c_str(), format);
 	if(!pfile)
 	{
 		m_printErrorFunction("Failed to load texture '%s'.\n", filePath.c_str());
@@ -1155,7 +1155,7 @@ en_texture_t* CTextureManager::LoadTexture( const Char* pstrFilename, rs_level_t
 	if(!Common::IsPowerOfTwo(width) || !Common::IsPowerOfTwo(height))
 	{
 		m_printErrorFunction("%s is not a power of two texture.\n", filename.c_str());
-		return false;
+		return nullptr;
 	}
 
 	// Allocate a new texture if it's not already present
@@ -1175,7 +1175,7 @@ en_texture_t* CTextureManager::LoadTexture( const Char* pstrFilename, rs_level_t
 	// Set border if any
 	if(pborder)
 	{
-		for(Uint32 i = 0; i < 4; i++)
+		for(UInt32 i = 0; i < 4; i++)
 			ptexture->bordercolor[i] = pborder[i];
 
 		ptexture->flags |= TX_FL_BORDER;
@@ -1192,7 +1192,7 @@ en_texture_t* CTextureManager::LoadTexture( const Char* pstrFilename, rs_level_t
 		(compression == TX_COMPRESSION_DXT1) ? GL_COMPRESSED_RGBA_S3TC_DXT1_EXT : GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 
 		ptexture->width, ptexture->height, 0, datasize, pdata);
 	else
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ptexture->width, ptexture->height, FALSE, GL_RGBA, GL_UNSIGNED_BYTE, pdata);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ptexture->width, ptexture->height, false, GL_RGBA, GL_UNSIGNED_BYTE, pdata);
 	
 	if(ptexture->flags & TX_FL_BORDER)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
@@ -1252,7 +1252,7 @@ en_texture_t* CTextureManager::LoadTexture( const Char* pstrFilename, rs_level_t
 // @param pborder Border to set(only for TGA)
 // @return Pointer to texture object
 //=============================================
-en_texture_t* CTextureManager::LoadFromMemory( const Char* pstrTextureName, rs_level_t level, Int32 flags, const byte* pdata, Uint32 width, Uint32 height, Uint32 bpp, Uint32 datasize )
+en_texture_t* CTextureManager::LoadFromMemory( const char* pstrTextureName, rs_level_t level, Int32 flags, const Byte* pdata, UInt32 width, UInt32 height, UInt32 bpp, UInt32 datasize )
 {
 	if(bpp != 4 && bpp != 3 || !width || !height || !pdata)
 	{
@@ -1306,7 +1306,7 @@ en_texture_t* CTextureManager::LoadFromMemory( const Char* pstrTextureName, rs_l
 		(ptexture->compression == TX_COMPRESSION_DXT1) ? GL_COMPRESSED_RGBA_S3TC_DXT1_EXT : GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 
 		ptexture->width, ptexture->height, 0, datasize, pdata);
 	else
-		glTexImage2D(target, 0, (bpp == 4) ? GL_RGBA : GL_RGB, ptexture->width, ptexture->height, FALSE, (bpp == 4) ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, pdata);
+		glTexImage2D(target, 0, (bpp == 4) ? GL_RGBA : GL_RGB, ptexture->width, ptexture->height, false, (bpp == 4) ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, pdata);
 
 	glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -1352,7 +1352,7 @@ en_texture_t* CTextureManager::LoadFromMemory( const Char* pstrTextureName, rs_l
 // @param level Resource level to load onto
 // @return Pointer to texture object if found
 //=============================================
-en_texture_t* CTextureManager::FindTexture( const Char* pstrFilename, rs_level_t level )
+en_texture_t* CTextureManager::FindTexture( const char* pstrFilename, rs_level_t level )
 {
 	CString filename(pstrFilename);
 	filename.tolower();
@@ -1373,7 +1373,7 @@ en_texture_t* CTextureManager::FindTexture( const Char* pstrFilename, rs_level_t
 // @param level Resource level to load onto
 // @return Pointer to material object if found
 //=============================================
-en_material_t* CTextureManager::FindMaterialScript( const Char* pstrFilename, rs_level_t level )
+en_material_t* CTextureManager::FindMaterialScript( const char* pstrFilename, rs_level_t level )
 {
 	CString filename(pstrFilename);
 	filename.tolower();
@@ -1401,7 +1401,7 @@ en_material_t* CTextureManager::FindMaterialScript( const Char* pstrFilename, rs
 // @param flags Texture flags
 // @return Pointer to texture object
 //=============================================
-en_texture_t* CTextureManager::LoadPallettedTexture( const Char* pstrFilename, rs_level_t level, const byte *pdata, const color24_t *ppal, Uint32 width, Uint32 height, Int32 flags )
+en_texture_t* CTextureManager::LoadPallettedTexture( const char* pstrFilename, rs_level_t level, const Byte *pdata, const color24_t *ppal, UInt32 width, UInt32 height, Int32 flags )
 {
 	CString filename(pstrFilename);
 	filename.tolower();
@@ -1414,10 +1414,10 @@ en_texture_t* CTextureManager::LoadPallettedTexture( const Char* pstrFilename, r
 	}
 
 	color24_t pix1, pix2, pix3, pix4;
-	byte alpha1, alpha2, alpha3, alpha4;
+	Byte alpha1, alpha2, alpha3, alpha4;
 
 	// convert texture to power of 2
-	Uint32 outwidth, outheight;
+	UInt32 outwidth, outheight;
 	for (outwidth = 1; outwidth < width; outwidth <<= 1);
 	for (outheight = 1; outheight < height; outheight <<= 1);
 
@@ -1427,24 +1427,24 @@ en_texture_t* CTextureManager::LoadPallettedTexture( const Char* pstrFilename, r
 	Int32* pcol1 = new Int32[outwidth];
 	Int32* pcol2 = new Int32[outwidth];
 
-	byte* ptex = new byte[(outwidth*outheight*4*sizeof(byte))];
-	byte* pout = ptex;
+	Byte* ptex = new Byte[(outwidth*outheight*4*sizeof(Byte))];
+	Byte* pout = ptex;
 
-	for (Uint32 i = 0; i < outwidth; i++)
+	for (UInt32 i = 0; i < outwidth; i++)
 	{
-		pcol1[i] = static_cast<Int32>((i + 0.25) * (width / static_cast<Float>(outwidth)));
-		pcol2[i] = static_cast<Int32>((i + 0.75) * (width / static_cast<Float>(outwidth)));
+		pcol1[i] = static_cast<Int32>((i + 0.25) * (width / static_cast<float>(outwidth)));
+		pcol2[i] = static_cast<Int32>((i + 0.75) * (width / static_cast<float>(outwidth)));
 	}
 
-	for (Uint32 i = 0; i < outheight; i++)
+	for (UInt32 i = 0; i < outheight; i++)
 	{
-		prow1[i] = static_cast<Int32>((i + 0.25) * (height / static_cast<Float>(outheight))) * width;
-		prow2[i] = static_cast<Int32>((i + 0.75) * (height / static_cast<Float>(outheight))) * width;
+		prow1[i] = static_cast<Int32>((i + 0.25) * (height / static_cast<float>(outheight))) * width;
+		prow2[i] = static_cast<Int32>((i + 0.75) * (height / static_cast<float>(outheight))) * width;
 	}
 
-	for (Uint32 i = 0; i < outheight; i++)
+	for (UInt32 i = 0; i < outheight; i++)
 	{
-		for (Uint32 j = 0; j < outwidth; j++, pout += 4)
+		for (UInt32 j = 0; j < outwidth; j++, pout += 4)
 		{
 			pix1 = ppal[pdata[prow1[i] + pcol1[j]]];
 			pix2 = ppal[pdata[prow1[i] + pcol2[j]]];
@@ -1597,7 +1597,7 @@ en_material_t* CTextureManager::FindMaterialScriptByIndex( Int32 index )
 // @brief Returns the anisotropy value at a setting index
 //
 //=============================================
-Int32 CTextureManager::GetAnisotropySettingValue( Uint32 settingIndex )
+Int32 CTextureManager::GetAnisotropySettingValue( UInt32 settingIndex )
 {
 	assert(settingIndex < m_anisotropySettingsArray.size());
 	return m_anisotropySettingsArray[settingIndex];
@@ -1607,7 +1607,7 @@ Int32 CTextureManager::GetAnisotropySettingValue( Uint32 settingIndex )
 // @brief Returns the number of anisotropy setting
 //
 //=============================================
-Uint32 CTextureManager::GetNbAnisotropySettings( void ) const
+UInt32 CTextureManager::GetNbAnisotropySettings( void ) const
 {
 	return m_anisotropySettingsArray.size();
 }
@@ -1734,7 +1734,7 @@ void CTextureManager::WritePMFFile( en_material_t* pmaterial )
 	CString fullpath;
 	fullpath << "textures/" << pmaterial->filepath;
 
-	const byte* pwritedata = reinterpret_cast<const byte*>(data.c_str());
+	const Byte* pwritedata = reinterpret_cast<const Byte*>(data.c_str());
 	m_fileFuncs.pfnWriteFile(pwritedata, data.length(), fullpath.c_str(), false);
 }
 

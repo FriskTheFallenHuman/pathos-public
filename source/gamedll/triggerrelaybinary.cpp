@@ -129,7 +129,7 @@ bool CTriggerRelayBinary::Spawn(void)
 // @brief
 //
 //=============================================
-void CTriggerRelayBinary::CallUse(CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value)
+void CTriggerRelayBinary::CallUse(CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value)
 {
 	switch (useMode)
 	{

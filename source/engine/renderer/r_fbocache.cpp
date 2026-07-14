@@ -132,7 +132,7 @@ void CFBOCache::Think(void)
 //====================================
 //
 //====================================
-CFBOCache::cache_fbo_t* CFBOCache::Alloc(Uint32 width, Uint32 height, bool depthbuffer)
+CFBOCache::cache_fbo_t* CFBOCache::Alloc(UInt32 width, UInt32 height, bool depthbuffer)
 {
 	// Seek an available FBO
 	m_cacheList.begin();

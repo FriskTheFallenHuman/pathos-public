@@ -39,12 +39,12 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 public:
 	void SetMagnitude( Int32 magnitude );
-	void SetDamageAmount( Float dmgamount );
-	void SetDamageRadius( Float radius );
+	void SetDamageAmount( float dmgamount );
+	void SetDamageRadius( float radius );
 	void SetAttacker( CBaseEntity* pAttacker );
 	void SetInflictor( CBaseEntity* pInflictor );
 	void SetGibEntity( CBaseEntity* pEntity );
@@ -55,12 +55,12 @@ public:
 
 public:
 	static void CreateEnvExplosion( const Vector& origin, const Vector& angles, Int32 magnitude, bool dodamage, CBaseEntity* pAttacker = nullptr, CBaseEntity* pInflictor = nullptr, CBaseEntity* pHitEntity = nullptr, CPlayerWeapon* pWeapon = nullptr );
-	static void CreateEnvExplosion( const Vector& origin, const Vector& angles, Float radius, Float dmgamount, bool dodamage, CBaseEntity* pAttacker = nullptr, CBaseEntity* pInflictor = nullptr, CBaseEntity* pHitEntity = nullptr, CPlayerWeapon* pWeapon = nullptr );
+	static void CreateEnvExplosion( const Vector& origin, const Vector& angles, float radius, float dmgamount, bool dodamage, CBaseEntity* pAttacker = nullptr, CBaseEntity* pInflictor = nullptr, CBaseEntity* pHitEntity = nullptr, CPlayerWeapon* pWeapon = nullptr );
 
 private:
 	Int32 m_magnitude;
-	Float m_dmgRadius;
-	Float m_dmgAmount;
+	float m_dmgRadius;
+	float m_dmgAmount;
 
 	CEntityHandle m_attacker;
 	CEntityHandle m_inflictor;

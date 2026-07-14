@@ -16,14 +16,14 @@ All Rights Reserved.
 class CSentencesFile
 {
 public:
-	typedef Int32 (*pfnPrecacheSoundFunctionPtr_t)( const Char* pstrFilepath );
-	typedef Float (*pfnGetSoundDurationFunctionPtr_t)( const Char* pstrfilename, Uint32 pitch );
+	typedef Int32 (*pfnPrecacheSoundFunctionPtr_t)( const char* pstrFilepath );
+	typedef float (*pfnGetSoundDurationFunctionPtr_t)( const char* pstrfilename, UInt32 pitch );
 
 public:
 	// Comma delay amount
-	static const Float COMMA_DELAY;
+	static const float COMMA_DELAY;
 	// Default folder for sentences
-	static const Char DEFAULT_FOLDER[];
+	static const char DEFAULT_FOLDER[];
 
 public:
 	struct sentencegroup_t
@@ -36,9 +36,9 @@ public:
 			}
 
 		CString groupname;
-		Uint32 numsentences;
-		Uint32 startindex;
-		Float duration;
+		UInt32 numsentences;
+		UInt32 startindex;
+		float duration;
 	};
 
 	struct sent_chunk_t
@@ -55,12 +55,12 @@ public:
 			}
 
 		CString soundname;
-		Uint32 pitch;
-		Uint32 time;
-		Uint32 start;
-		Uint32 end;
-		Uint32 volume;
-		Float delay;
+		UInt32 pitch;
+		UInt32 time;
+		UInt32 start;
+		UInt32 end;
+		UInt32 volume;
+		float delay;
 
 		sent_chunk_t* pnext;
 	};
@@ -74,14 +74,14 @@ public:
 		}
 		~sentence_t()
 		{
-			for(Uint32 i = 0; i < chunks.size(); i++)
+			for(UInt32 i = 0; i < chunks.size(); i++)
 				delete chunks[i];
 		}
 
 		CString name;
 		CString entryname;
-		Uint32 index;
-		Float duration;
+		UInt32 index;
+		float duration;
 
 		CString folder;
 		CArray<sent_chunk_t*> chunks;
@@ -93,33 +93,33 @@ public:
 	~CSentencesFile( void );
 
 public:
-	bool Init( const byte* pfile );
+	bool Init( const Byte* pfile );
 	void Clear( void );
 
-	const Char* GetRandomSentence( const Char* pstrGroupName, Float* pDuration );
-	const Char* GetSentence( const Char* pstrSentenceName, Float* pDuration );
+	const char* GetRandomSentence( const char* pstrGroupName, float* pDuration );
+	const char* GetSentence( const char* pstrSentenceName, float* pDuration );
 
-	const sentence_t* GetSentenceDefinition( const Char* pstrSentenceName ) const;
+	const sentence_t* GetSentenceDefinition( const char* pstrSentenceName ) const;
 	const sentence_t* GetSentenceDefinition( Int32 index ) const;
-	Float GetSentenceDuration( const Char* pstrSentenceName );
-	Float GetSentenceDuration( Int32 index );
+	float GetSentenceDuration( const char* pstrSentenceName );
+	float GetSentenceDuration( Int32 index );
 
-	void PrecacheGroup( const Char* pstrGroupName );
-	void PrecacheSentence( const Char* pstrSentenceName );
+	void PrecacheGroup( const char* pstrGroupName );
+	void PrecacheSentence( const char* pstrSentenceName );
 	void PrecacheSentence( sentence_t* psentence );
 
 public:
 	bool HasWarnings( void ) const;
-	const Char* GetWarning( Uint32 index );
-	Uint32 GetNbWarnings( void ) const;
+	const char* GetWarning( UInt32 index );
+	UInt32 GetNbWarnings( void ) const;
 
 	bool HasError( void ) const;
-	const Char* GetError( void ) const;
+	const char* GetError( void ) const;
 
-	sentence_t* GetSentenceDefinition(const Char* pstrSentenceName);
+	sentence_t* GetSentenceDefinition(const char* pstrSentenceName);
 
 private:
-	bool ParseOptionToken( const Char** ppoutstr, const Char* pstroption, Uint32& pitch, Uint32& time, Uint32& start, Uint32& end, Uint32& volume );
+	bool ParseOptionToken( const char** ppoutstr, const char* pstroption, UInt32& pitch, UInt32& time, UInt32& start, UInt32& end, UInt32& volume );
 
 private:
 	// Array of sentence groups

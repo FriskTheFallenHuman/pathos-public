@@ -132,7 +132,7 @@ void CTriggerVacuum::InitEntity( void )
 // @brief
 //
 //=============================================
-void CTriggerVacuum::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerVacuum::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool desiredStatus = false;
 	switch(useMode)
@@ -194,7 +194,7 @@ void CTriggerVacuum::PullThink( void )
 	if(!pPlayer)
 		return;
 
-	Float pullForce = 1.0;
+	float pullForce = 1.0;
 	if(m_beginTime && m_fullForceTime > 0)
 	{
 		if(m_beginTime + m_fullForceTime > g_pGameVars->time)
@@ -264,7 +264,7 @@ Vector CTriggerVacuum::GetPullPosition( CBaseEntity* pPlayer, const Vector& play
 		return m_pState->origin;
 	}
 
-	Uint64 nodeTypeBits = Util::GetNodeTypeForNPC(m_pTestHullNPC);
+	UInt64 nodeTypeBits = Util::GetNodeTypeForNPC(m_pTestHullNPC);
 	node_hull_types_t hullType = Util::GetNodeHullForNPC(m_pTestHullNPC);
 
 	// Try to find the air nodes that can navigate to the player
@@ -280,7 +280,7 @@ Vector CTriggerVacuum::GetPullPosition( CBaseEntity* pPlayer, const Vector& play
 	}
 
 	static Int32 nodeIndexes[MAX_ROUTE_POINTS];
-	Uint32 numNodes = gNodeGraph.GetShortestPath(myNodeIndex, playerNodeIndex, hullType, CBitSet(CBaseNPC::AI_CAP_BITS_COUNT), nodeIndexes);
+	UInt32 numNodes = gNodeGraph.GetShortestPath(myNodeIndex, playerNodeIndex, hullType, CBitSet(CBaseNPC::AI_CAP_BITS_COUNT), nodeIndexes);
 	if(!numNodes)
 	{
 		m_pTestHullNPC->MakeInert();

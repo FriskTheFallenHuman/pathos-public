@@ -13,13 +13,13 @@ All Rights Reserved.
 #include "constants.h"
 
 #ifndef pfnCon_Printf_t
-typedef void (*pfnCon_Printf_t)( const Char* fmt, ... );
-#endif pfnCon_Printf_t
+typedef void (*pfnCon_Printf_t)( const char* fmt, ... );
+#endif // pfnCon_Printf_t
 
 // Default recoil degradation
-static const Float DEFAULT_RECOIL_DEGRADE	= 0.5f;
+static const float DEFAULT_RECOIL_DEGRADE	= 0.5f;
 // Default recoil limit
-static const Float DEFAULT_RECOIL_LIMIT		= 10.5f;
+static const float DEFAULT_RECOIL_LIMIT		= 10.5f;
 // Value marking the weapon having no clip
 static const Int32 WEAPON_NO_CLIP = -1;
 
@@ -40,84 +40,84 @@ static const Vector VECTOR_CONE_20DEGREES	= Vector( 0.17365, 0.17365, 0.17365 );
 #define DEFINE_BULLET_TYPE( bullet_type ) { bullet_type, #bullet_type }
 
 // Ammo pickup sound file
-static const Char AMMO_PICKUP_SOUND[] = "items/pickup_ammo.wav";
+static const char AMMO_PICKUP_SOUND[] = "items/pickup_ammo.wav";
 // Weapon pickup sound file
-static const Char WEAPON_PICKUP_SOUND[] = "items/pickup_weapon.wav";
+static const char WEAPON_PICKUP_SOUND[] = "items/pickup_weapon.wav";
 // Model file for bullet casings
-static const Char BULLET_CASINGS_MODEL[] = "models/shellcasings.mdl";
+static const char BULLET_CASINGS_MODEL[] = "models/shellcasings.mdl";
 
 // 9mm ammotype name
-static const Char AMMOTYPE_9MM_NAME[] = "9mm";
+static const char AMMOTYPE_9MM_NAME[] = "9mm";
 // .45 S&W ammotype name
-static const Char AMMOTYPE_45SW_NAME[] = ".45SW";
+static const char AMMOTYPE_45SW_NAME[] = ".45SW";
 // .22 LR ammotype name
-static const Char AMMOTYPE_22LR_NAME[] = ".22LR";
+static const char AMMOTYPE_22LR_NAME[] = ".22LR";
 // .50 AE ammotype name
-static const Char AMMOTYPE_50AE_NAME[] = ".50AE";
+static const char AMMOTYPE_50AE_NAME[] = ".50AE";
 // NATO 5.56 ammotype name for Sig552
-static const Char AMMOTYPE_556_NAME[] = "5.56";
+static const char AMMOTYPE_556_NAME[] = "5.56";
 // Buckshot ammotype name for M249
-static const Char AMMOTYPE_BUCKSHOT_NAME[] = "Buckshot";
+static const char AMMOTYPE_BUCKSHOT_NAME[] = "Buckshot";
 // NATO 5.56 ammotype name for M249
-static const Char AMMOTYPE_556_M249_NAME[] = "5.56_M249";
+static const char AMMOTYPE_556_M249_NAME[] = "5.56_M249";
 // 7.62 ammotype name
-static const Char AMMOTYPE_762_NAME[] = "7.62";
+static const char AMMOTYPE_762_NAME[] = "7.62";
 // 40x46mm Grenade ammotype name
-static const Char AMMOTYPE_40X46MM_NAME[] = "40x46mm";
+static const char AMMOTYPE_40X46MM_NAME[] = "40x46mm";
 // Grenade ammotype name
-static const Char AMMOTYPE_MK2GRENADE_NAME[] = "Mk2Grenade";
+static const char AMMOTYPE_MK2GRENADE_NAME[] = "Mk2Grenade";
 // Grenade ammotype name
-static const Char AMMOTYPE_URANIUM_NAME[] = "U238 AP";
+static const char AMMOTYPE_URANIUM_NAME[] = "U238 AP";
 
 // Maximum 9mm ammo
-static const Uint32 MAX_9MM_AMMO = 150;
+static const UInt32 MAX_9MM_AMMO = 150;
 // Maximum .45 SW ammo
-static const Uint32 MAX_45SW_AMMO = 96;
+static const UInt32 MAX_45SW_AMMO = 96;
 // Maximum .22 LR ammo
-static const Uint32 MAX_22LR_AMMO = 128;
+static const UInt32 MAX_22LR_AMMO = 128;
 // Maximum .50 AE ammo
-static const Uint32 MAX_50AE_AMMO = 21;
+static const UInt32 MAX_50AE_AMMO = 21;
 // Maximum Sig552 5.56 ammo
-static const Uint32 MAX_556_AMMO = 200;
+static const UInt32 MAX_556_AMMO = 200;
 // Maximum buckshot ammo
-static const Uint32 MAX_BUCKSHOT_AMMO = 54;
+static const UInt32 MAX_BUCKSHOT_AMMO = 54;
 // Maximum M249 5.56 ammo
-static const Uint32 MAX_556_M249_AMMO = 200;
+static const UInt32 MAX_556_M249_AMMO = 200;
 // Maximum 7.62 ammo
-static const Uint32 MAX_762_AMMO = 15;
+static const UInt32 MAX_762_AMMO = 15;
 // Maximum 40x46 mm grenade ammo
-static const Uint32 MAX_40X46_AMMO = 6;
+static const UInt32 MAX_40X46_AMMO = 6;
 // Maximum Mk2 Grenades
-static const Uint32 MAX_MK2_GRENADES = 5;
+static const UInt32 MAX_MK2_GRENADES = 5;
 // Maximum Uranium ammo
-static const Uint32 MAX_URANIUM_AMMO = 126;
+static const UInt32 MAX_URANIUM_AMMO = 126;
 
 // Maximum amount of weapons
-static const Uint32 MAX_WEAPONS = 32;
+static const UInt32 MAX_WEAPONS = 32;
 // Maximum amount of weapons
-static const Uint32 MAX_AMMO_TYPES = 32;
+static const UInt32 MAX_AMMO_TYPES = 32;
 
 // Max slot positions
-static const Uint32 MAX_SLOT_POSITIONS		= 6;
+static const UInt32 MAX_SLOT_POSITIONS		= 6;
 // Max weapon slots
-static const Uint32 MAX_WEAPON_SLOTS		= 6;
+static const UInt32 MAX_WEAPON_SLOTS		= 6;
 
 // Gun loud volume
-static const Uint32 GUN_VOLUME_LOUD = 4096;
+static const UInt32 GUN_VOLUME_LOUD = 4096;
 // Gun normal volume
-static const Uint32 GUN_VOLUME_NORMAL = 2048;
+static const UInt32 GUN_VOLUME_NORMAL = 2048;
 // Gun low volume
-static const Uint32 GUN_VOLUME_LOW = 1024;
+static const UInt32 GUN_VOLUME_LOW = 1024;
 
 // Gun bright flash
-static const Uint32 GUN_FLASH_BRIGHT = 512;
+static const UInt32 GUN_FLASH_BRIGHT = 512;
 // Gun normal flash
-static const Uint32 GUN_FLASH_NORMAL = 256;
+static const UInt32 GUN_FLASH_NORMAL = 256;
 // Gun dim flash
-static const Uint32 GUN_FLASH_LOW = 128;
+static const UInt32 GUN_FLASH_LOW = 128;
 
 // Maximum distance traveled by bullet
-static const Float BULLET_MAX_DISTANCE = 8192;
+static const float BULLET_MAX_DISTANCE = 8192;
 
 // No ammo add result
 static const Int32 NO_AMMO_INDEX = -1;
@@ -125,7 +125,7 @@ static const Int32 NO_AMMO_INDEX = -1;
 #define DEFINE_WEAPON_MAPPING( weapon ) { weapon, #weapon }
 
 // Max weapons in a given slot
-static const Uint32 WEAPON_SLOT_LIMITS[MAX_SLOT_POSITIONS] =
+static const UInt32 WEAPON_SLOT_LIMITS[MAX_SLOT_POSITIONS] =
 {
 	1, // Melee slot
 	3, // Pistol slot
@@ -163,11 +163,11 @@ enum weaponid_t
 struct weapon_mapping_t
 {
 	Int32 id;
-	Char* name;
+	const char* name;
 };
 
 // Names of weapon entities
-static const Char* WEAPON_ENTITY_NAMES[NUM_WEAPONS] = 
+static const char* WEAPON_ENTITY_NAMES[NUM_WEAPONS] = 
 {
 	"",
 	"weapon_glock",
@@ -176,7 +176,7 @@ static const Char* WEAPON_ENTITY_NAMES[NUM_WEAPONS] =
 };
 
 // Max ammo counts for weapons
-static const Uint32 MAX_AMMO_COUNTS[NUM_WEAPONS] = 
+static const UInt32 MAX_AMMO_COUNTS[NUM_WEAPONS] = 
 {
 	0,
 	MAX_9MM_AMMO,
@@ -202,7 +202,7 @@ enum bullet_types_t
 struct bullet_typemapping_t
 {
 	Int32 type;
-	Char* name;
+	const char* name;
 };
 
 extern bullet_typemapping_t BULLET_TYPE_MAP[];
@@ -238,7 +238,7 @@ enum autoaimdegrees_t
 };
 
 // Autoaim degree values
-static const Float AUTOAIM_DEGREES_VALUES [] =
+static const float AUTOAIM_DEGREES_VALUES [] =
 {
 	0.03489,
 	0.08715,

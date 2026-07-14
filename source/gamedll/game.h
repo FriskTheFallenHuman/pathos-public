@@ -10,6 +10,8 @@ All Rights Reserved.
 #ifndef GAME_H
 #define GAME_H
 
+#include "weapons_shared.h"
+
 extern CCVar* g_pCvarCheats;
 extern CCVar* g_pCvarTriggerDebug;
 extern CCVar* g_pCvarWeaponHolster;
@@ -31,7 +33,7 @@ extern CFlexManager* g_pFlexManager;
 // Sentences file object
 extern CSentencesFile* g_pSentencesFile;
 
-extern Uint32 g_nbNPCPenetrations;
+extern UInt32 g_nbNPCPenetrations;
 
 // Smoke sprite precache index
 extern Int32 g_smokeSpriteIndex;
@@ -48,6 +50,6 @@ extern void ToggleBikeBlockers( bool enable );
 extern void PrecacheGenericResources( void );
 extern bool InitSentences( void );
 
-extern void FireBullets( Uint32 nbshots, const Vector& gunPosition, const Vector& aimForward, const Vector& aimRight, const Vector& aimUp, const Vector& spread, Float distance, bullet_types_t bulletType, Int32 tracerFrequency, Float damage, CBaseEntity* pAttacker, CBaseEntity* pWeapon = nullptr, bool mirrorTracer = false );
-extern void RadiusDamage( const Vector& vecPosition, CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float damageDealt, Float damageRadius, Int32 classToIgnore, Int32 damageFlags, CBaseEntity* pGibEntity = nullptr, CPlayerWeapon* pWeapon = nullptr );
+extern void FireBullets( UInt32 nbshots, const Vector& gunPosition, const Vector& aimForward, const Vector& aimRight, const Vector& aimUp, const Vector& spread, float distance, bullet_types_t bulletType, Int32 tracerFrequency, float damage, CBaseEntity* pAttacker, CBaseEntity* pWeapon = nullptr, bool mirrorTracer = false );
+extern void RadiusDamage( const Vector& vecPosition, CBaseEntity* pInflictor, CBaseEntity* pAttacker, float damageDealt, float damageRadius, Int32 classToIgnore, Int32 damageFlags, CBaseEntity* pGibEntity = nullptr, CPlayerWeapon* pWeapon = nullptr );
 #endif //GAME_H

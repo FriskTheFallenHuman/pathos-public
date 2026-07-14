@@ -93,7 +93,7 @@ void InitClientUserMessages( void )
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_GameUIMessage( edict_t* pclient, const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_GameUIMessage( edict_t* pclient, const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	if(Util::IsNullEntity(pclient))
 	{
@@ -126,7 +126,7 @@ MSGFN MsgFunc_GameUIMessage( edict_t* pclient, const Char* pstrName, const byte*
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SelectWeapon( edict_t* pclient, const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SelectWeapon( edict_t* pclient, const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	if(Util::IsNullEntity(pclient))
 	{
@@ -146,7 +146,7 @@ MSGFN MsgFunc_SelectWeapon( edict_t* pclient, const Char* pstrName, const byte* 
 	CMSGReader reader(pdata, msgsize);
 
 	// Get weapon name and select
-	const Char* pstrWeapon = reader.ReadString();
+	const char* pstrWeapon = reader.ReadString();
 	pPlayer->SelectWeapon(pstrWeapon);
 
 	if(reader.HasError())
@@ -162,14 +162,14 @@ MSGFN MsgFunc_SelectWeapon( edict_t* pclient, const Char* pstrName, const byte* 
 // @brief
 //
 //=============================================
-MSGFN MsgFunc_SpawnClientDecal( edict_t* pclient, const Char* pstrName, const byte* pdata, Uint32 msgsize )
+MSGFN MsgFunc_SpawnClientDecal( edict_t* pclient, const char* pstrName, const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 	Int32 flags = reader.ReadUint16();
 	flags |= FL_DECAL_SERVER;
 
 	Vector origin;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		origin[i] = reader.ReadFloat();
 
 	CString name = reader.ReadString();
@@ -181,9 +181,9 @@ MSGFN MsgFunc_SpawnClientDecal( edict_t* pclient, const Char* pstrName, const by
 	}
 
 	trace_t tr;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
-		Uint32 j = 0;
+		UInt32 j = 0;
 		for(; j < 2; j++)
 		{
 			Vector traceStartOffset;

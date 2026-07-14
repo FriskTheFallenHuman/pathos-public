@@ -23,60 +23,11 @@ All Rights Reserved.
 #include "scriptedsequence.h"
 #include "ai_common.h"
 #include "weapons_shared.h"
+#include "entity_enums.h"
 
 // AI Conditions can't be enums, because they go over 32 bits
-enum ai_condition_bits_t
-{
-	AI_COND_NO_AMMO_LOADED = 0,
-	AI_COND_SEE_HATE,
-	AI_COND_SEE_FEAR,
-	AI_COND_SEE_DISLIKE,
-	AI_COND_SEE_ENEMY,
-	AI_COND_ENEMY_OCCLUDED,
-	AI_COND_SMELL_FOOD,
-	AI_COND_ENEMY_TOO_FAR,
-	AI_COND_LIGHT_DAMAGE,
-	AI_COND_HEAVY_DAMAGE,
-	AI_COND_CAN_RANGE_ATTACK1,
-	AI_COND_CAN_RANGE_ATTACK2,
-	AI_COND_CAN_MELEE_ATTACK1,
-	AI_COND_CAN_MELEE_ATTACK2,
-	AI_COND_FOLLOW_TARGET_TOO_FAR,
-	AI_COND_PROVOKED,
-	AI_COND_NEW_ENEMY,
-	AI_COND_HEAR_SOUND,
-	AI_COND_SMELL,
-	AI_COND_ENEMY_FACING_ME,
-	AI_COND_ENEMY_DEAD,
-	AI_COND_SEE_CLIENT,
-	AI_COND_SEE_NEMESIS,
-	AI_COND_ENEMY_NOT_FOUND,
-	AI_COND_ENEMY_UNREACHABLE,
-	AI_COND_IN_DANGER,
-	AI_COND_DANGEROUS_ENEMY_CLOSE,
-	AI_COND_BLOCKING_PATH,
-	AI_COND_TASK_FAILED,
-	AI_COND_SCHEDULE_DONE,
-	AI_COND_CLIENT_UNSEEN,
-	AI_COND_PLAYER_CLOSE,
-	AI_COND_FRIENDLY_FIRE,
-	AI_COND_ENEMY_NAVIGABLE,
-	AI_COND_ELOF_FAILED,
-	AI_COND_HEARD_ENEMY_NEW_POSITION,
-	AI_COND_RESERVED1,
-	AI_COND_RESERVED2,
-	AI_COND_RESERVED3,
-	AI_COND_RESERVED4,
-	AI_COND_NOT_ONGROUND,
-	AI_COND_SHOOT_VECTOR_VALID,
-	AI_COND_CAN_SPECIAL_ATTACK1,
-	AI_COND_CAN_SPECIAL_ATTACK2,
-	AI_COND_SEE_HOSTILE_NPC,
 
-	AI_COND_BITSET_SIZE = 64
-};
-
-static const Uint32 AI_COND_CAN_ATTACK_BITS[] = 
+static const UInt32 AI_COND_CAN_ATTACK_BITS[] = 
 {
 	AI_COND_CAN_RANGE_ATTACK1,
 	AI_COND_CAN_RANGE_ATTACK2,
@@ -87,7 +38,7 @@ static const Uint32 AI_COND_CAN_ATTACK_BITS[] =
 };
 static const CBitSet AI_COND_CAN_ATTACK(AI_COND_BITSET_SIZE, AI_COND_CAN_ATTACK_BITS, PT_ARRAYSIZE(AI_COND_CAN_ATTACK_BITS));
 
-static const Uint32 AI_SCRIPT_BREAK_CONDITIONS_BITS[] = 
+static const UInt32 AI_SCRIPT_BREAK_CONDITIONS_BITS[] = 
 {
 	AI_COND_LIGHT_DAMAGE,
 	AI_COND_HEAVY_DAMAGE,
@@ -147,125 +98,125 @@ class CBaseNPC : public CAnimatingEntity
 {
 public:
 	// Delay between npc thinking
-	static const Float NPC_THINK_TIME;
+	static const float NPC_THINK_TIME;
 	// Head turn speed on yaw
-	static const Float NPC_HEAD_TURN_YAW_SPEED;
+	static const float NPC_HEAD_TURN_YAW_SPEED;
 	// Head turn speed on pitch
-	static const Float NPC_HEAD_TURN_PITCH_SPEED;
+	static const float NPC_HEAD_TURN_PITCH_SPEED;
 	// Maximum looking distance
-	static const Float NPC_DEFAULT_MAX_LOOK_DISTANCE;
+	static const float NPC_DEFAULT_MAX_LOOK_DISTANCE;
 	// Maximum firing distance
-	static const Float NPC_DEFAULT_MAX_FIRING_DISTANCE;
+	static const float NPC_DEFAULT_MAX_FIRING_DISTANCE;
 	// Default hearing sensitivity
-	static const Float NPC_DEFAULT_HEARING_SENSITIVITY;
+	static const float NPC_DEFAULT_HEARING_SENSITIVITY;
 	// Hearing lean awareness gain
-	static const Float NPC_HEAR_LEAN_AWARENESS_GAIN;
+	static const float NPC_HEAR_LEAN_AWARENESS_GAIN;
 	// Lean awareness timeout
-	static const Float NPC_LEANAWARENESS_TIMEOUT;
+	static const float NPC_LEANAWARENESS_TIMEOUT;
 	// NPC step size
-	static const Float NPC_STEP_SIZE;
+	static const float NPC_STEP_SIZE;
 	// Maximum danger exposure time
-	static const Float NPC_MAX_DANGER_TIME;
+	static const float NPC_MAX_DANGER_TIME;
 	// Minimum enemy distance
-	static const Float NPC_MINIMUM_ENEMY_DISTANCE;
+	static const float NPC_MINIMUM_ENEMY_DISTANCE;
 	// Enemy intercept distance
-	static const Float NPC_ENEMY_INTERCEPT_DISTANCE;
+	static const float NPC_ENEMY_INTERCEPT_DISTANCE;
 	// Enemy combat state timeout
-	static const Float NPC_COMBATSTATE_TIMEOUT;
+	static const float NPC_COMBATSTATE_TIMEOUT;
 	// Distance beyond which we'll try to cut corners
-	static const Float NPC_CORNER_CUT_MIN_DIST;
+	static const float NPC_CORNER_CUT_MIN_DIST;
 	// Enemy update distance
-	static const Float NPC_ENEMY_UPDATE_DISTANCE;
+	static const float NPC_ENEMY_UPDATE_DISTANCE;
 	// Triangulation maximum height
-	static const Float NPC_TRIANGULATION_MAX_HEIGHT;
+	static const float NPC_TRIANGULATION_MAX_HEIGHT;
 	// Triangulation minimum x size
-	static const Float NPC_TRIANGULATION_MIN_SIZE_X;
+	static const float NPC_TRIANGULATION_MIN_SIZE_X;
 	// Triangulation maximum x size
-	static const Float NPC_TRIANGULATION_MAX_SIZE_X;
+	static const float NPC_TRIANGULATION_MAX_SIZE_X;
 	// Door search radius when looking for double doors
-	static const Float NPC_DOOR_SEARCH_RADIUS;
+	static const float NPC_DOOR_SEARCH_RADIUS;
 	// Minimum localmove check distance
-	static const Float MIN_LOCALMOVE_CHECK_DIST;
+	static const float MIN_LOCALMOVE_CHECK_DIST;
 	// Maximum distance the NPC can simplify paths in
-	static const Float NPC_MAX_SIMPLIFY_DISTANCE;
+	static const float NPC_MAX_SIMPLIFY_DISTANCE;
 	// Maximum traces an NPC can do while simplifying routes
-	static const Uint32 NPC_MAX_SIMPLIFY_TRACES;
+	static const UInt32 NPC_MAX_SIMPLIFY_TRACES;
 	// Distance between corner cut checks
-	static const Float NPC_SIMPLIFICATION_FIX_DISTANCE;
+	static const float NPC_SIMPLIFICATION_FIX_DISTANCE;
 	// NPC error glow aura color
 	static const Vector NPC_ERROR_GLOW_AURA_COLOR;
 	// Default max distance for navigation
-	static const Float NPC_MAX_NAVIGATION_DISTANCE;
+	static const float NPC_MAX_NAVIGATION_DISTANCE;
 	// Dangerous enemy minimum distance
-	static const Float NPC_DANGEROUS_ENEMY_MIN_DISTANCE;
+	static const float NPC_DANGEROUS_ENEMY_MIN_DISTANCE;
 	// Dangerous enemy minimum cover distance
-	static const Float NPC_DANGEROUS_ENEMY_MIN_COVER_DISTANCE;
+	static const float NPC_DANGEROUS_ENEMY_MIN_COVER_DISTANCE;
 	// Enemy search distance
-	static const Float NPC_MAX_ENEMY_SEARCH_DISTANCE;
+	static const float NPC_MAX_ENEMY_SEARCH_DISTANCE;
 	// Number of lateral cover checks
-	static const Float NPC_LATERAL_COVER_CHECK_NUM;
+	static const float NPC_LATERAL_COVER_CHECK_NUM;
 	// Lateral cover check distance
-	static const Float NPC_LATERAL_COVER_CHECK_DISTANCE;
+	static const float NPC_LATERAL_COVER_CHECK_DISTANCE;
 	// NPC follow walk distance
-	static const Float NPC_FOLLOW_WALK_DISTANCE;
+	static const float NPC_FOLLOW_WALK_DISTANCE;
 	// NPC follow run distance
-	static const Float NPC_FOLLOW_RUN_DISTANCE;
+	static const float NPC_FOLLOW_RUN_DISTANCE;
 	// NPC default cover distance
-	static const Float NPC_DEFAULT_COVER_DISTANCE;
+	static const float NPC_DEFAULT_COVER_DISTANCE;
 	// NPC reload cover distance
-	static const Float NPC_RELOAD_COVER_DISTANCE;
+	static const float NPC_RELOAD_COVER_DISTANCE;
 	// Best sound cover minimum distance
-	static const Float NPC_COVER_BESTSOUND_MIN_DISTANCE;
+	static const float NPC_COVER_BESTSOUND_MIN_DISTANCE;
 	// Best sound cover maximum distance
-	static const Float NPC_COVER_BESTSOUND_MAX_DISTANCE;
+	static const float NPC_COVER_BESTSOUND_MAX_DISTANCE;
 	// Best sound cover optimal distance
-	static const Float NPC_COVER_BESTSOUND_OPTIMAL_DISTANCE;
+	static const float NPC_COVER_BESTSOUND_OPTIMAL_DISTANCE;
 	// NPC move wait time
-	static const Float NPC_DEFAULT_MOVE_WAIT_TIME;
+	static const float NPC_DEFAULT_MOVE_WAIT_TIME;
 	// Dodge min distance
-	static const Float NPC_DODGE_MIN_DISTANCE;
+	static const float NPC_DODGE_MIN_DISTANCE;
 	// Dodge max distance
-	static const Float NPC_DODGE_MAX_DISTANCE;
+	static const float NPC_DODGE_MAX_DISTANCE;
 	// Minimum health value for gibbing
-	static const Float NPC_GIB_HEALTH_VALUE;
+	static const float NPC_GIB_HEALTH_VALUE;
 	// Bullet gibbing damage treshold
-	static const Float NPC_BULLETGIB_DMG_TRESHOLD;
+	static const float NPC_BULLETGIB_DMG_TRESHOLD;
 	// Bullet gibbing minimum health treshold
-	static const Float NPC_BULLETGIB_MIN_HEALTH;
+	static const float NPC_BULLETGIB_MIN_HEALTH;
 	// Light damage treshold
-	static const Float NPC_LIGHT_DAMAGE_TRESHOLD;
+	static const float NPC_LIGHT_DAMAGE_TRESHOLD;
 	// Heavy damage treshold
-	static const Float NPC_HEAVY_DAMAGE_TRESHOLD;
+	static const float NPC_HEAVY_DAMAGE_TRESHOLD;
 	// Default lean awareness time
-	static const Float NPC_DEFAULT_LEAN_AWARE_TIME;
+	static const float NPC_DEFAULT_LEAN_AWARE_TIME;
 	// Script move minimum distance
-	static const Float NPC_SCRIPT_MOVE_MIN_DIST;
+	static const float NPC_SCRIPT_MOVE_MIN_DIST;
 	// NPC gun sound radius
-	static const Float NPC_GUN_SOUND_RADIUS;
+	static const float NPC_GUN_SOUND_RADIUS;
 	// Minimum size of an enemy the NPC will kick
-	static const Float NPC_ENEMY_MIN_KICK_SIZE;
+	static const float NPC_ENEMY_MIN_KICK_SIZE;
 	// NPC firing angle treshold
-	static const Float NPC_FIRING_ANGLE_TRESHOLD;
+	static const float NPC_FIRING_ANGLE_TRESHOLD;
 	// Max localmove height diff in start and end
-	static const Float NPC_MAX_LOCALMOVE_HEIGHT_DIFF;
+	static const float NPC_MAX_LOCALMOVE_HEIGHT_DIFF;
 	// Distance at which we can be decapitated
-	static const Float NPC_DECAP_MAX_DISTANCE;
+	static const float NPC_DECAP_MAX_DISTANCE;
 	// Distance at which we can be gibbed by a bullet
-	static const Float NPC_BULLETGIB_MAX_DISTANCE;
+	static const float NPC_BULLETGIB_MAX_DISTANCE;
 	// Number of coverage checks
-	static const Uint32 NPC_NUM_COVERAGE_CHECKS;
+	static const UInt32 NPC_NUM_COVERAGE_CHECKS;
 	// Max number of schedule changes per think
-	static const Uint32 NPC_MAX_SCHEDULE_CHANGES;
+	static const UInt32 NPC_MAX_SCHEDULE_CHANGES;
 	// Max number of tasks executed
-	static const Uint32 NPC_MAX_TASK_EXECUTIONS;
+	static const UInt32 NPC_MAX_TASK_EXECUTIONS;
 	// Navigability minimum distance change
-	static const Float NAVIGABILITY_CHECK_MIN_DISTANCE_CHANGE;
+	static const float NAVIGABILITY_CHECK_MIN_DISTANCE_CHANGE;
 	// Max walk-move traces per frame
-	static const Uint32 MAX_FRAME_WALKMOVE_TRACES;
+	static const UInt32 MAX_FRAME_WALKMOVE_TRACES;
 
 public:
 	// Max backed up enemies
-	static const Uint32 MAX_BACKED_UP_ENEMIES = 4;
+	static const UInt32 MAX_BACKED_UP_ENEMIES = 4;
 
 public:
 	enum
@@ -334,9 +285,9 @@ public:
 	};
 
 	// Door group bits
-	static const Uint32 CBaseNPC::AI_CAP_DOORS_GROUP_BITS[];
+	static const UInt32 AI_CAP_DOORS_GROUP_BITS[];
 	// Door group bitset
-	static const CBitSet CBaseNPC::AI_CAP_GROUP_DOORS;
+	static const CBitSet AI_CAP_GROUP_DOORS;
 
 	enum movementflag_t
 	{
@@ -426,7 +377,7 @@ protected:
 		CEntityHandle enemy;
 		Vector lastknownorigin;
 		Vector lastknownangles;
-		Double lastsighttime;
+		double lastsighttime;
 	};
 
 	struct route_point_t
@@ -449,7 +400,7 @@ protected:
 			{}
 
 		Int32 dmgbit;
-		Double time;
+		double time;
 	};
 
 	struct enemyawareness_t
@@ -460,8 +411,8 @@ protected:
 		{}
 
 		CEntityHandle entity;
-		Double lastsighttime;
-		Float awareness;
+		double lastsighttime;
+		float awareness;
 	};
 
 public:
@@ -506,7 +457,7 @@ public:
 	// Handles an animation event
 	virtual void HandleAnimationEvent( const mstudioevent_t* pevent ) override;
 
-	// TRUE if a black hole can pull this entity
+	// true if a black hole can pull this entity
 	virtual bool CanBlackHolePull( void ) const override;
 
 	// Set by an NPC if this NPC is blocking them
@@ -521,12 +472,12 @@ public:
 	// Manages getting killed
 	virtual void Killed( CBaseEntity* pAttacker, gibbing_t gibbing, deathmode_t deathMode ) override;
 	// Takes some amount of health
-	virtual bool TakeHealth( Float amount, Int32 damageFlags ) override;
+	virtual bool TakeHealth( float amount, Int32 damageFlags ) override;
 
 	// Manages taking damage
-	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags ) override;
+	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags ) override;
 	// Manages a traceline from an attack
-	virtual void TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
+	virtual void TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
 	// Returns blood color setting
 	virtual bloodcolor_t GetBloodColor( void ) override;
 
@@ -539,7 +490,7 @@ public:
 
 	// Performs a localmove check
 	// Note: Keep startPosition as not a reference, because CheckLocalMove modifies m_pState->origin, which is used sometimes as a parameter
-	virtual localmove_t CheckLocalMove( const Vector startPosition, const Vector& endPosition, const CBaseEntity* pTargetEntity, Float* pDistance = nullptr, bool isInitial = false, bool isPerformingMovement = false ) override;
+	virtual localmove_t CheckLocalMove( const Vector startPosition, const Vector& endPosition, const CBaseEntity* pTargetEntity, float* pDistance = nullptr, bool isInitial = false, bool isPerformingMovement = false ) override;
 
 	// Sets the current script state
 	virtual void SetScriptState( scriptstate_t state ) override;
@@ -563,7 +514,7 @@ public:
 	virtual void SetTargetEntity( CBaseEntity* pEntity ) override;
 
 	// Sets the activity time
-	virtual void SetLastActivityTime( Double time ) override;
+	virtual void SetLastActivityTime( double time ) override;
 	// Sets the current activity
 	virtual void SetCurrentActivity( activity_t activity ) override;
 	// Returns the ideal activity
@@ -578,40 +529,40 @@ public:
 	virtual void ClearSchedule( void ) override;
 
 	// Plays a sentence
-	virtual void PlaySentence( const Char* pstrSentenceName, Float duration, Float volume, Float attenuation, Float timeOffset, bool subtitleOnlyInRadius, CBaseEntity* pPlayer = nullptr );
+	virtual void PlaySentence( const char* pstrSentenceName, float duration, float volume, float attenuation, float timeOffset, bool subtitleOnlyInRadius, CBaseEntity* pPlayer = nullptr );
 	// Plays a scripted_sentence
-	virtual void PlayScriptedSentence( const Char* pstrSentenceName, Float duration, Float volume, Float attenuation, Float timeOffset, bool subtitleOnlyInRadius, bool isConcurrent, CBaseEntity* pListener, CBaseEntity* pPlayer = nullptr ) override;
+	virtual void PlayScriptedSentence( const char* pstrSentenceName, float duration, float volume, float attenuation, float timeOffset, bool subtitleOnlyInRadius, bool isConcurrent, CBaseEntity* pListener, CBaseEntity* pPlayer = nullptr ) override;
 
 	// Sets the enemy's last known position and angles
 	virtual void SetEnemyInfo( const Vector& enemyLKP, const Vector& enemyLKA ) override;
 	// Gets the enemy information
-	virtual void GetEnemyInfo( Vector& enemyLKP, Vector& enemyLKA, Double& enemyLST ) override;
+	virtual void GetEnemyInfo( Vector& enemyLKP, Vector& enemyLKA, double& enemyLST ) override;
 	// Sets the last time the enemy was sighted
-	virtual void SetLastEnemySightTime( Double time ) override;
+	virtual void SetLastEnemySightTime( double time ) override;
 	// Sets the last enemy sight time
-	virtual Double GetLastEnemySightTime( void ) override;
+	virtual double GetLastEnemySightTime( void ) override;
 
 	// Clears an AI condition
-	virtual void ClearCondition( Uint32 conditionBit ) override;
+	virtual void ClearCondition( UInt32 conditionBit ) override;
 	// Clears AI conditions specified in a bitset
 	virtual void ClearConditions( const CBitSet& conditionBitSet ) override;
 	// Sets an AI condition
-	virtual void SetCondition( Uint32 conditionBit ) override;
+	virtual void SetCondition( UInt32 conditionBit ) override;
 	// Sets AI conditions specified in a bitset
 	virtual void SetConditions( const CBitSet& conditionBitSet ) override;
 	// Checks conditions
-	virtual bool CheckCondition( Uint32 conditionBit ) const override;
+	virtual bool CheckCondition( UInt32 conditionBit ) const override;
 	// Checks conditions specified in a bitset
 	virtual bool CheckConditions( const CBitSet& conditionBitSet ) const override;
 
 	// Set memory bits
-	virtual void SetMemory( Uint32 memoryBit ) override;
+	virtual void SetMemory( UInt32 memoryBit ) override;
 
 	// Tells if the NPC has the specified capabilities
-	virtual bool HasCapability( Uint32 capabilityBit ) const override;
+	virtual bool HasCapability( UInt32 capabilityBit ) const override;
 
 	// Adds a new enemy
-	virtual void PushEnemy( CBaseEntity* pEnemy, const Vector& lastPosition, const Vector& lastAngles, Double lastSightTime ) override;
+	virtual void PushEnemy( CBaseEntity* pEnemy, const Vector& lastPosition, const Vector& lastAngles, double lastSightTime ) override;
 	// Sets the current enemy
 	virtual void SetEnemy( CBaseEntity* pEnemy ) override;
 
@@ -625,7 +576,7 @@ public:
 	virtual void ReportAIState( void ) override;
 
 	// Sets a trigger condition
-	virtual void SetAITriggerCondition( Int32 conditionIndex, Int32 condition, const Char* pstrTarget ) override;
+	virtual void SetAITriggerCondition( Int32 conditionIndex, Int32 condition, const char* pstrTarget ) override;
 
 	// Tells if weapons can be dropped
 	virtual bool CanDropWeapons( void ) const override;
@@ -641,20 +592,20 @@ public:
 	virtual void OnGibSpawnCallback( CBaseEntity* pGib ) override;
 
 	// Return damage multiplier for hitgroup
-	virtual Float GetHitgroupDmgMultiplier( Int32 hitgroup ) override;
+	virtual float GetHitgroupDmgMultiplier( Int32 hitgroup ) override;
 
 	// Sets the NPC to be pulled by a trigger_pullnpc
 	virtual void SetNPCPuller( CBaseEntity* pPuller, const Vector& pullPosition ) override;
 	
 public:
 	// Plays a flex script
-	void PlayFlexScript( const Char* pstrSentenceName );
+	void PlayFlexScript( const char* pstrSentenceName );
 
 	// Stops a sentence playback
 	void StopSentence( void );
 
 	// Takes damage when dead
-	bool TakeDamageDead( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags );
+	bool TakeDamageDead( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags );
 	// Decapitates the NPC
 	void DecapitateNPC( bool spawnGib, Int32 bodyGroup, Int32 bodyNumber );
 	// Tells if the NPC should be gibbed
@@ -694,7 +645,7 @@ protected:
 	// Calls for the NPC initialization code
 	void EXPORTFN NPCInitThink( void );
 	// EXPORT function for NPC use call
-	void EXPORTFN NPCUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	void EXPORTFN NPCUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 
 	// Tells if a task is running
 	bool IsTaskRunning( void ) const;
@@ -708,28 +659,28 @@ protected:
 	// Tells if movement is completed
 	bool IsMovementComplete( void ) const;
 	// Performs movement
-	void PerformMovement( Double animInterval );
+	void PerformMovement( double animInterval );
 	// Stops the movement
 	void StopMovement( void );
 	
 	// Get an ideal weapon drop position
-	bool GetWeaponDropPosition( Uint32 attachmentIndex, Vector& outPosition );
+	bool GetWeaponDropPosition( UInt32 attachmentIndex, Vector& outPosition );
 	// Drops an item/weapon
-	CBaseEntity* DropItem( weaponid_t weaponId, Uint32 attachmentIndex, bool wasGibbed, Int32 clipAmmoCount = -1 );
+	CBaseEntity* DropItem( weaponid_t weaponId, UInt32 attachmentIndex, bool wasGibbed, Int32 clipAmmoCount = -1 );
 
 	// Checks clear damage list for any dmg bit that needs to be cleared
 	void ProcessClearDamageList( void );
 	// Adds a new damage bit that needs delayed clearing
-	void AddClearDamage( Int32 dmgbit, Float delay );
+	void AddClearDamage( Int32 dmgbit, float delay );
 
 protected:
 	// Updates expressions
 	void UpdateExpressions( void );
 
 	// Returns the current flex AI state
-	enum flexaistates_t GetFlexAIState( void );
+	flexaistates_t GetFlexAIState( void );
 	// Returns the NPC's flex type
-	static enum flextypes_t GetFlexNPCType( void );
+	static flextypes_t GetFlexNPCType( void );
 
 protected:
 	// Hears any sounds
@@ -756,7 +707,7 @@ protected:
 	bool CheckMaterialPenetration( CBaseEntity* pHitEntity, const Vector& gunPosition, const Vector& hitPosition, const Vector& hitNormal, Vector& outPosition );
 
 	// Fires a weapon
-	void FireWeapon( Uint32 numShots, const Char* soundPattern, Uint32 numSounds, Uint32* ptrAmmoLoaded );
+	void FireWeapon( UInt32 numShots, const char* soundPattern, UInt32 numSounds, UInt32* ptrAmmoLoaded );
 
 	// Pops an enemy from the stack
 	bool PopEnemy( void );
@@ -764,7 +715,7 @@ protected:
 	CBaseEntity* GetBestVisibleEnemy( void );
 
 	// Sets a sequence by name
-	void SetSequenceByName( const Char* pstrName );
+	void SetSequenceByName( const char* pstrName );
 	// Manages a footstep event
 	void FootStep( void );
 
@@ -773,13 +724,13 @@ protected:
 	// Sets the ideal yaw from a vector
 	void SetIdealYaw( const Vector& targetVector, bool isPositionVector = true );
 	// Returns the difference between current and ideal yaw
-	Float GetYawDifference( void );
+	float GetYawDifference( void );
 	// Changes the yaw to the ideal yaw based on time
-	void ChangeYaw( Double timeInterval );
+	void ChangeYaw( double timeInterval );
 	// Turns a position vector to a yaw
-	Float VectorToYaw( const Vector& direction ) const;
+	float VectorToYaw( const Vector& direction ) const;
 	// Turns a position vector to a pitch
-	Float VectorToPitch( const Vector& direction ) const;
+	float VectorToPitch( const Vector& direction ) const;
 	// Sets the turning activity
 	void SetTurnActivity( void );
 
@@ -798,13 +749,13 @@ protected:
 	// Updates the route
 	bool UpdateRoute( CBaseEntity* pTargetEntity, const Vector& destination );
 	// Shows the current route
-	void ShowRoute( bool isDetour, Uint32 maxPath, const Vector& destination );
+	void ShowRoute( bool isDetour, UInt32 maxPath, const Vector& destination );
 	// Shows the current route
-	void ShowRoute( const Vector* pPoints, Uint32 numPoints );
+	void ShowRoute( const Vector* pPoints, UInt32 numPoints );
 	// Shows an error path
 	void ShowErrorPath( const Vector& startPosition, const Vector& endPosition );
 	// Builds a route fto a destination
-	bool BuildRoute( const Vector& destination, Uint64 moveFlags, CBaseEntity* pTargetEntity );
+	bool BuildRoute( const Vector& destination, UInt64 moveFlags, CBaseEntity* pTargetEntity );
 	// Checks if a route is traversable to the destination from the start
 	bool CheckRoute( const Vector& startPosition, const Vector& endPosition, CBaseEntity* pTargetEntity = nullptr );
 	// Builds a node route to a destination vector and target entity
@@ -816,24 +767,24 @@ protected:
 	// Builds a node detour route around an obstable marked by some nodes
 	bool BuildNodeDetourRoute( const Vector& destination, CBaseEntity* pBlocker, CBaseEntity* pTargetEntity = nullptr );
 	// Builds a route where a position vector is visible
-	bool BuildNearestVisibleRoute( const Vector& destination, const Vector& viewOffset, Float minDistance, Float maxDistance );
+	bool BuildNearestVisibleRoute( const Vector& destination, const Vector& viewOffset, float minDistance, float maxDistance );
 	// Builds a nearest route to a position vector
-	bool BuildNearestRoute( const Vector& destination, Float minDistance, Float maxDistance );
+	bool BuildNearestRoute( const Vector& destination, float minDistance, float maxDistance );
 	// Finds a node that's not visible from our current position
 	bool FindUnseenNode( void );
 	// Finds a random search spot
 	bool FindRandomSearchSpot( void );
 	// Advances the index in the route array
-	advance_result_t AdvanceRoute( Float distance );
+	advance_result_t AdvanceRoute( float distance );
 	// Marks movement as completed
 	void MovementComplete( void );
 	// Tells the route's type
-	static movegoal_t ClassifyRoute( Uint64 moveFlags );
+	static movegoal_t ClassifyRoute( UInt64 moveFlags );
 	// Tells if a position is navigable
 	bool IsPositionNavigable( const Vector& position );
 
 	// Attempts to triangulate to a destination position
-	bool AttemptTriangulation( const Vector& startPosition, const Vector& endPosition, Float distance, CBaseEntity* pTargetEntity, Vector* pApexPosition, bool isTest = false );
+	bool AttemptTriangulation( const Vector& startPosition, const Vector& endPosition, float distance, CBaseEntity* pTargetEntity, Vector* pApexPosition, bool isTest = false );
 	// Attemps to circle around an obstacle
 	bool AttemptCircleAround( bool isRetry, const Vector& destination, CBaseEntity* pBlocker, CBaseEntity* pTargetEntity );
 	// Attempts to shift the route point destination to make it traversable
@@ -843,23 +794,23 @@ protected:
 	// Simplifies the current route
 	void SimplifyRoute( CBaseEntity* pTargetEntity );
 	// Inserts a point into the route at a given position
-	void InsertRoutePoint( const Vector& position, Int32 nodeIndex, Uint64 moveFlags );
+	void InsertRoutePoint( const Vector& position, Int32 nodeIndex, UInt64 moveFlags );
 	// Inserts a point at the end of the route
-	void InsertRoutePoint( Int32 insertIndex, const Vector& position, Int32 nodeIndex, Uint64 moveFlags );
+	void InsertRoutePoint( Int32 insertIndex, const Vector& position, Int32 nodeIndex, UInt64 moveFlags );
 
 	// Does a trace to see how far an NPC can go in a given direction
-	bool WalkMoveTrace( const Vector& origin, const Vector& moveDirection, Vector& outPosition, Float moveDistance, Float& distanceMoved, bool noNPCs = false );
+	bool WalkMoveTrace( const Vector& origin, const Vector& moveDirection, Vector& outPosition, float moveDistance, float& distanceMoved, bool noNPCs = false );
 
 	// Nudges the player if he's in the way during scripted_sequences
 	void NudgePlayer( CBaseEntity* pPlayer ) const;
 	// Handles a blockage when performing movement
-	bool HandleBlockage( CBaseEntity* pBlocker, CBaseEntity* pTargetEntity, Float moveDistance );
+	bool HandleBlockage( CBaseEntity* pBlocker, CBaseEntity* pTargetEntity, float moveDistance );
 	// Checks the result of a move to a given direction and distance
-	bool CheckMoveResult( localmove_t moveResult, Float moveDistance, const Vector& vectorToTarget );
+	bool CheckMoveResult( localmove_t moveResult, float moveDistance, const Vector& vectorToTarget );
 	// Check if you can advance the route index
-	bool CheckAdvanceRoute( Float distanceToPoint, CBaseEntity* pTargetEntity );
+	bool CheckAdvanceRoute( float distanceToPoint, CBaseEntity* pTargetEntity );
 	// Executes movement for thE NPC
-	void ExecuteMovement( CBaseEntity* pTargetEntity, const Vector& direction, Double animInterval, Float checkDistance );
+	void ExecuteMovement( CBaseEntity* pTargetEntity, const Vector& direction, double animInterval, float checkDistance );
 
 	// Tries to find a lateral shooting position
 	bool GetLateralShootingPosition( const Vector& enemyPosition );
@@ -891,39 +842,39 @@ protected:
 	void MaintainSchedule( void );
 
 	// Checks which attacks are possible
-	void CheckAttacks( CBaseEntity* pTargetEntity, Float distance );
+	void CheckAttacks( CBaseEntity* pTargetEntity, float distance );
 	// Tells if we can do ranged attacks
 	bool CanRangeAttack( void ) const;
 
 	// Return skill cvar value
-	Float GetSkillCVarValue( Int32 skillcvar ) const;
+	float GetSkillCVarValue( Int32 skillcvar ) const;
 
 protected:
 	// Returns the firing coverage for a targer position
-	Float GetFiringCoverage( const Vector& shootOrigin, const Vector& targetPosition, const Vector& firingCone );
+	float GetFiringCoverage( const Vector& shootOrigin, const Vector& targetPosition, const Vector& firingCone );
 	// Returns visibility bits for an NPC/player
-	Uint64 GetNPCVisibilityBits( CBaseEntity* pEntity, bool checkGlass = false, enemyawareness_t** pAwarenessPtr = nullptr );
+	UInt64 GetNPCVisibilityBits( CBaseEntity* pEntity, bool checkGlass = false, enemyawareness_t** pAwarenessPtr = nullptr );
 	// Returns an entity we can kick
-	CBaseEntity* GetKickEntity( Float checkDistance );
+	CBaseEntity* GetKickEntity( float checkDistance );
 	// Calculates coverage for a position
-	Float CalculateCoverage( const Vector& lookOrigin, const Vector& lookOffset, const Vector& enemyEyePosition );
+	float CalculateCoverage( const Vector& lookOrigin, const Vector& lookOffset, const Vector& enemyEyePosition );
 
 	// Return the most ideal firing cone
-	virtual Uint32 GetFogAttenuatedFiringCone( Uint32 coneIndex );
+	virtual UInt32 GetFogAttenuatedFiringCone( UInt32 coneIndex );
 
 protected:
 	// Moves to a given location and tells if it's possible
-	bool MoveToLocation( activity_t moveActivity, Float waitTime, const Vector& goalPosition );
+	bool MoveToLocation( activity_t moveActivity, float waitTime, const Vector& goalPosition );
 	// Moves to a given node's position
-	bool MoveToNode( activity_t moveActivity, Float waitTime, const Vector& goalPosition );
+	bool MoveToNode( activity_t moveActivity, float waitTime, const Vector& goalPosition );
 	// Moves to the current target
-	bool MoveToTarget( activity_t moveActivity, Float waitTime );
+	bool MoveToTarget( activity_t moveActivity, float waitTime );
 
 	// Returns the length of the route we are taking
-	Float GetRouteLength( void );
+	float GetRouteLength( void );
 
 	// Opens a door
-	Double OpenDoor( CBaseEntity* pDoorEntity );
+	double OpenDoor( CBaseEntity* pDoorEntity );
 
 	// Tells if we're in danger
 	bool IsInDanger( void );
@@ -932,37 +883,37 @@ protected:
 	// Examines current dangers
 	void ExamineDangers( void );
 	// Finds cover with the best distance
-	bool FindCoverWithBestDistance( const Vector& threatPosition, Float minDistance, float maxDistance, Float optimalDistance, Vector& outPosition );
+	bool FindCoverWithBestDistance( const Vector& threatPosition, float minDistance, float maxDistance, float optimalDistance, Vector& outPosition );
 	// Finds a dodge cover from a threat
-	bool FindDodgeCover( const Vector& threatPosition, Float minDistance, float maxDistance, Vector& outPosition );
+	bool FindDodgeCover( const Vector& threatPosition, float minDistance, float maxDistance, Vector& outPosition );
 	// Finds a cover position from a threat
-	bool FindCover( const Vector& threatPosition, const Vector& viewOffset, Float minDistance, Float maxDistance, CBaseEntity* pThreatEntity );
+	bool FindCover( const Vector& threatPosition, const Vector& viewOffset, float minDistance, float maxDistance, CBaseEntity* pThreatEntity );
 	// Finds a lateral cover position
 	bool FindLateralCover( const Vector& threatPosition, const Vector& viewOffset );
 
 protected:
 	// Sets ideal head angles
-	void SetIdealHeadAngles( Float pitch, Float yaw );
+	void SetIdealHeadAngles( float pitch, float yaw );
 	// Sets the ideal yaw
-	bool SetIdealHeadYaw( Float yaw );
+	bool SetIdealHeadYaw( float yaw );
 
 	// Sets the ideal expression based on AI state
 	void SetIdealExpression( void );
 
 protected:
 	// Clears the memory of specified bits
-	void ClearMemory( Uint32 memoryBit );
+	void ClearMemory( UInt32 memoryBit );
 	// Tells if we have the specified memory bits
-	bool HasMemory( Uint32 memoryBit ) const;
+	bool HasMemory( UInt32 memoryBit ) const;
 
 	// Sets capability bits
-	void SetCapability( Uint32 capabilityBit );
+	void SetCapability( UInt32 capabilityBit );
 	// Sets capability bits
 	void SetCapabilities( const CBitSet& capabilityBitSet );
 	// Disables a capability bit
-	void DisableCapability( Uint32 capabilityBit );
+	void DisableCapability( UInt32 capabilityBit );
 	// Removes a capability
-	void RemoveCapability( Uint32 capabilityBit );
+	void RemoveCapability( UInt32 capabilityBit );
 
 	// For blowback death
 	void EXPORTFN CorpseTouch( CBaseEntity* pOther );
@@ -996,11 +947,11 @@ protected:
 	// Sets the ideal yaw speed
 	virtual void SetYawSpeed( void ) = 0;
 	// Returns the sound mask for the NPC
-	virtual Uint64 GetSoundMask( void ) = 0;
+	virtual UInt64 GetSoundMask( void ) = 0;
 	// Returns the hearing sensitivity for this npc
-	virtual Float GetHearingSensitivity( void );
+	virtual float GetHearingSensitivity( void );
 	// Returns the firing cone
-	virtual const Uint32 GetFiringCone( bool attenuateByFog ) { return 0; }
+	virtual const UInt32 GetFiringCone( bool attenuateByFog ) { return 0; }
 	// Used to override NPC AI behavior
 	const CAISchedule* GetScheduleMain( void );
 	// Returns the ideal schedule
@@ -1014,11 +965,11 @@ protected:
 	virtual void RunSenses( void );
 
 	// Updates the awareness factor
-	virtual void UpdatePartialAwareness( enemyawareness_t* pAwarenessinfo, Uint64 sightBits );
+	virtual void UpdatePartialAwareness( enemyawareness_t* pAwarenessinfo, UInt64 sightBits );
 	// Updates the awareness factor
-	virtual void UpdateAwareness( CBaseEntity* pEntity, enemyawareness_t* pPartialAwareness, enemyawareness_t** pEnemyAwarenessPtr, Uint64 sightBits ) { };
+	virtual void UpdateAwareness( CBaseEntity* pEntity, enemyawareness_t* pPartialAwareness, enemyawareness_t** pEnemyAwarenessPtr, UInt64 sightBits ) { };
 	// Returns the time time to be aware of a player who's leaning
-	virtual Float GetLeanAwarenessTime( void );
+	virtual float GetLeanAwarenessTime( void );
 
 	// Gibs the NPC
 	virtual void GibNPC( void );
@@ -1035,23 +986,23 @@ protected:
 	// Plays alert sounds
 	virtual void EmitAlertSound( void ) { };
 	// Returns the voice pitch
-	virtual Uint32 GetVoicePitch( void );
+	virtual UInt32 GetVoicePitch( void );
 
 	// Sets the ideal activity
 	virtual void SetIdealActivity( Int32 activity );
 
 	// Checks if we can do range attack 1
-	virtual bool CheckRangeAttack1( Float dp, Float distance ) { return false; }
+	virtual bool CheckRangeAttack1( float dp, float distance ) { return false; }
 	// Checks if we can do range attack 2
-	virtual bool CheckRangeAttack2( Float dp, Float distance ) { return false; }
+	virtual bool CheckRangeAttack2( float dp, float distance ) { return false; }
 	// Checks if we can do melee attack 1
-	virtual bool CheckMeleeAttack1( Float dp, Float distance ) { return false; }
+	virtual bool CheckMeleeAttack1( float dp, float distance ) { return false; }
 	// Checks if we can do melee attack 2
-	virtual bool CheckMeleeAttack2( Float dp, Float distance ) { return false; }
+	virtual bool CheckMeleeAttack2( float dp, float distance ) { return false; }
 	// Checks if we can do special attack 1
-	virtual bool CheckSpecialAttack1( Float dp, Float distance ) { return false; }
+	virtual bool CheckSpecialAttack1( float dp, float distance ) { return false; }
 	// Checks if we can do melee attack 2
-	virtual bool CheckSpecialAttack2( Float dp, Float distance ) { return false; }
+	virtual bool CheckSpecialAttack2( float dp, float distance ) { return false; }
 	// Tells if we can check the attacks
 	virtual bool CanCheckAttacks( void ) const;
 	// Checks if we are likely to shoot a friendly NPC
@@ -1063,7 +1014,7 @@ protected:
 	virtual void OnScheduleChange( void );
 
 	// Returns the ideal cover distance
-	virtual Float GetCoverDistance( void );
+	virtual float GetCoverDistance( void );
 	// Returns the gun position
 	virtual Vector GetGunPosition( stance_t stance = STANCE_ACTUAL ) = 0;
 	// Allows squad members to validate a cover position
@@ -1098,9 +1049,9 @@ protected:
 	virtual void SetTaskCompleted( void );
 
 	// Processes a sound heard
-	virtual bool ProcessHeardSound( ai_sound_t& sound, Uint64 soundMask );
+	virtual bool ProcessHeardSound( ai_sound_t& sound, UInt64 soundMask );
 	// Tells if we should see an NPC
-	virtual bool ShouldSeeNPC( Uint64 sightBits, CBaseEntity* pEntity, enemyawareness_t* pPartialAwareness, enemyawareness_t* pEnemyAwareness );
+	virtual bool ShouldSeeNPC( UInt64 sightBits, CBaseEntity* pEntity, enemyawareness_t* pPartialAwareness, enemyawareness_t* pEnemyAwareness );
 	// Tells if NPC should check navigability
 	virtual bool ShouldCheckEnemyNavigability( void ) { return false; }
 
@@ -1113,28 +1064,28 @@ protected:
 	virtual void UpdateDistances( void );
 
 	// Plays a footstep sound
-	virtual void PlayFootStepSound( const Char* pstrMaterialName, Float volume ) { };
+	virtual void PlayFootStepSound( const char* pstrMaterialName, float volume ) { };
 
 	// Tells if the NPC should be gibbed
-	virtual bool ShouldDamageGibNPC( Float damageAmount, Float prevHealth, Int32 dmgFlags, bool wasDecapitated );
+	virtual bool ShouldDamageGibNPC( float damageAmount, float prevHealth, Int32 dmgFlags, bool wasDecapitated );
 	// Spawns particles when NPC is gibbed
 	virtual void SpawnGibbedParticles( void );
 	// Tells if NPC should be blown back by death inducing damage
 	virtual bool ShouldApplyDeathBlowback( bool shouldGib, Int32 damageFlags, Int32 hitgroup );
 	// Gets the blowback damage acceleration multiplier
-	virtual Float GetBlowbackDmgAccelerationMultiplier ( void ) { return 1.0; };
+	virtual float GetBlowbackDmgAccelerationMultiplier ( void ) { return 1.0; };
 
 	// Picks a proper reload schedule
 	virtual const CAISchedule* GetReloadSchedule( void );
 
 	// Returns the reaction time
-	virtual Float GetReactionTime( void );
+	virtual float GetReactionTime( void );
 
 	// Return bullet type used by NPC
 	virtual bullet_types_t GetBulletType( void ) { return BULLET_NONE; }
 
 	// Return the NPC's minimum firing distance
-	virtual Float GetMinimumRangeAttackDistance( void ) { return 0; }
+	virtual float GetMinimumRangeAttackDistance( void ) { return 0; }
 	// Checks if an enemy's body target is shootable
 	virtual bool IsEnemyBodyTargetShootable( CBaseEntity& enemy, bool ignoreGlass, bool ignoreBreakables, const Vector& gunPosition, const Vector& enemyBodyTarget );
 
@@ -1147,19 +1098,19 @@ public:
 
 protected:
 	// Last time the NPC thought
-	Double						m_npcLastThinkTime;
+	double						m_npcLastThinkTime;
 	// Think interval time
-	Double						m_thinkIntervalTime;
+	double						m_thinkIntervalTime;
 
 	// Head controller related for yaw
-	Float						m_idealHeadYaw;
-	Float						m_headYaw;
+	float						m_idealHeadYaw;
+	float						m_headYaw;
 
 	// Head controller related for pitch
-	Float						m_idealHeadPitch;
-	Float						m_headPitch;
+	float						m_idealHeadPitch;
+	float						m_headPitch;
 
-	// TRUE if we shouldn't drop any weapons
+	// true if we shouldn't drop any weapons
 	bool						m_dontDropWeapons;
 
 	// Current activity
@@ -1167,7 +1118,7 @@ protected:
 	// Ideal activity
 	Int32						m_idealActivity;
 	// Last time we changed the activity
-	Double						m_lastActivityTime;
+	double						m_lastActivityTime;
 
 	// Current task status
 	Int32						m_taskStatus;
@@ -1193,9 +1144,9 @@ protected:
 	Int32						m_currentScheduleIndex;
 
 	// Maximum looking distance
-	Float						m_lookDistance;
+	float						m_lookDistance;
 	// Distance for shooting
-	Float						m_firingDistance;
+	float						m_firingDistance;
 
 protected:
 	// Array of AI condition flags
@@ -1207,19 +1158,19 @@ protected:
 	// Capability bits
 	CBitSet						m_disabledCapabilityBits;
 	// Damage bits taken
-	Uint64						m_damageBits;
+	UInt64						m_damageBits;
 	// Damage direction
 	Vector						m_damageDirection;
 	// Last damage amount we took
-	Float						m_lastDamageAmount;
+	float						m_lastDamageAmount;
 	// Last attack vector
 	Vector						m_lastAttackVector;
 	// For damage types that need to be cleared after a while
 	CLinkedList<cleardamage_t>	m_damageClearList;
 	// Last heavy flinch time
-	Double						m_lastHeavyFlinchTime;
+	double						m_lastHeavyFlinchTime;
 	// Next flinch time(non-heavy only)
-	Double						m_nextFlinchTime;
+	double						m_nextFlinchTime;
 
 	// Current enemy
 	CEntityHandle				m_enemy;
@@ -1240,12 +1191,12 @@ protected:
 	enemy_info_t				m_backedUpEnemies[MAX_BACKED_UP_ENEMIES];
 
 	// Field of view of the npc
-	Float						m_fieldOfView;
+	float						m_fieldOfView;
 
 	// Wait finish time
-	Double						m_waitFinishedTime;
+	double						m_waitFinishedTime;
 	// Move wait finish time
-	Double						m_moveWaitFinishTime;
+	double						m_moveWaitFinishTime;
 
 	// Last hitgroup that took damage
 	Int32						m_lastHitGroup;
@@ -1257,13 +1208,13 @@ protected:
 	// Current index into the route array
 	Int32						m_routePointIndex;
 	// Wait time until we begin moving again
-	Double						m_moveWaitTime;
+	double						m_moveWaitTime;
 	// First node index
 	Int32						m_firstNodeIndex;
 
 	// Last origin we cut corners at
 	Vector						m_lastCornerCutOrigin;
-	// TRUE if we can cut corners
+	// true if we can cut corners
 	bool						m_canCutCorners;
 	// Shortcut path index
 	Int32						m_shortcutPathIndex;
@@ -1277,7 +1228,7 @@ protected:
 	// Blocker entity
 	CEntityHandle				m_blockerEntity;
 	// Distance travelled
-	Float						m_distanceTravelled;
+	float						m_distanceTravelled;
 	// Path corner destination entity
 	CEntityHandle				m_goalEntity;
 
@@ -1292,22 +1243,22 @@ protected:
 	Int32						m_hintNodeIndex;
 
 	// NPC's maximum health
-	Float						m_maximumHealth;
+	float						m_maximumHealth;
 	// Amount of ammy loaded
-	Uint32						m_ammoLoaded;
+	UInt32						m_ammoLoaded;
 	// Clip size
-	Uint32						m_clipSize;
+	UInt32						m_clipSize;
 
 	// Blood color type
 	Int32						m_bloodColor;
 
 	// Talk time
-	Double						m_talkTime;
+	double						m_talkTime;
 
 	// Current best sound
 	ai_sound_t*					m_pBestSound;
 
-	// TRUE if values were parsed
+	// true if values were parsed
 	bool						m_valuesParsed;
 
 	// Force skill cvar setting
@@ -1321,24 +1272,24 @@ protected:
 	Vector						m_blockedNPCDestination;
 
 	// Last enemy sight time, only used if enemy is a player
-	Double						m_lastEnemySightTime;
+	double						m_lastEnemySightTime;
 
 	// Death mode
 	Int32						m_deathMode;
 	// Damage bits at death
 	Int32						m_deathDamageBits;
 	// Damage dealt at death
-	Float						m_deathDamageAmount;
+	float						m_deathDamageAmount;
 	// Delay before NPC explodes
-	Double						m_deathExplodeTime;
+	double						m_deathExplodeTime;
 	// Flags for dying/death
 	Int32						m_deathFlags;
 
 	// Last distance from danger source
-	Float						m_lastDangerDistance;
+	float						m_lastDangerDistance;
 	// Current danger exposure
-	Float						m_dangerExposure;
-	// TRUE if we're seeking cover
+	float						m_dangerExposure;
+	// true if we're seeking cover
 	bool						m_isSeekingCover;
 	// Danger source origin
 	Vector						m_dangerOrigin;
@@ -1348,7 +1299,7 @@ protected:
 	// Active flex state
 	Int32						m_activeFlexState;
 	// Flex script duration
-	Double						m_flexScriptDuration;
+	double						m_flexScriptDuration;
 	// Script flags
 	Int32						m_flexScriptFlags;
 
@@ -1394,7 +1345,7 @@ protected:
 	// sound can change, but we need this
 	// to remain the same as we're checking it out
 	ai_sound_t					m_currentCheckSound;
-	// TRUE if best sound was set
+	// true if best sound was set
 	bool						m_checkSoundWasSet;
 
 	// Last place we visited while looking for enemies
@@ -1416,6 +1367,6 @@ protected:
 	// Last active idle search node
 	static Int32 g_lastActiveIdleSearchNodeIndex;
 	// Number of walk move traces this frame
-	static Uint32 g_numFrameWalkMoveTraces;
+	static UInt32 g_numFrameWalkMoveTraces;
 };
 #endif //AI_BASENPC_H

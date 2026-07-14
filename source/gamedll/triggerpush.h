@@ -19,7 +19,7 @@ class CTriggerPush : public CTriggerEntity
 {
 public:
 	// Default speed
-	static const Float DEFAULT_SPEED;
+	static const float DEFAULT_SPEED;
 
 public:
 	enum
@@ -36,7 +36,7 @@ public:
 public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void CallTouch( CBaseEntity* pOther ) override;
 
 private:

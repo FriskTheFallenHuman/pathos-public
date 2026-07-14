@@ -14,7 +14,7 @@ All Rights Reserved.
 #include "playerweapon.h"
 
 // Object types spawned by breakable
-const Char* CFuncBreakable::SPAWN_OBJECT_TYPES[SPAWN_OBJECT_TYPES_COUNT] = 
+const char* CFuncBreakable::SPAWN_OBJECT_TYPES[SPAWN_OBJECT_TYPES_COUNT] = 
 {
 	nullptr,				// 0
 	"item_kevlar",			// 1
@@ -25,45 +25,45 @@ const Char* CFuncBreakable::SPAWN_OBJECT_TYPES[SPAWN_OBJECT_TYPES_COUNT] =
 };
 
 // Wood gibs model file
-const Char CFuncBreakable::GIB_MODEL_WOOD_FILENAME[] = "models/woodgibs.mdl";
+const char CFuncBreakable::GIB_MODEL_WOOD_FILENAME[] = "models/woodgibs.mdl";
 // Flesh gibs model file
-const Char CFuncBreakable::GIB_MODEL_FLESH_FILENAME[] = "models/fleshgibs.mdl";
+const char CFuncBreakable::GIB_MODEL_FLESH_FILENAME[] = "models/fleshgibs.mdl";
 // Computer gibs model file
-const Char CFuncBreakable::GIB_MODEL_COMPUTER_FILENAME[] = "models/computergibs.mdl";
+const char CFuncBreakable::GIB_MODEL_COMPUTER_FILENAME[] = "models/computergibs.mdl";
 // Glass gibs model file
-const Char CFuncBreakable::GIB_MODEL_GLASS_FILENAME[] = "models/glassgibs.mdl";
+const char CFuncBreakable::GIB_MODEL_GLASS_FILENAME[] = "models/glassgibs.mdl";
 // Metal gibs model file
-const Char CFuncBreakable::GIB_MODEL_METAL_FILENAME[] = "models/metalplategibs.mdl";
+const char CFuncBreakable::GIB_MODEL_METAL_FILENAME[] = "models/metalplategibs.mdl";
 // Cinder block gibs model file
-const Char CFuncBreakable::GIB_MODEL_CINDERBLOCKS_FILENAME[] = "models/cindergibs.mdl";
+const char CFuncBreakable::GIB_MODEL_CINDERBLOCKS_FILENAME[] = "models/cindergibs.mdl";
 // Rock gibs model file
-const Char CFuncBreakable::GIB_MODEL_ROCK_FILENAME[] = "models/rockgibs.mdl";
+const char CFuncBreakable::GIB_MODEL_ROCK_FILENAME[] = "models/rockgibs.mdl";
 // Ceiling gibs model file
-const Char CFuncBreakable::GIB_MODEL_CEILING_FILENAME[] = "models/ceilinggibs.mdl";
+const char CFuncBreakable::GIB_MODEL_CEILING_FILENAME[] = "models/ceilinggibs.mdl";
 
 // Wood damage sounds pattern
-const Char CFuncBreakable::WOOD_DMG_SOUNDS_PATTERN[] = "debris/wood_dmg%d.wav";
+const char CFuncBreakable::WOOD_DMG_SOUNDS_PATTERN[] = "debris/wood_dmg%d.wav";
 // Wood break sounds pattern
-const Char CFuncBreakable::WOOD_BREAK_SOUNDS_PATTERN[] = "debris/wood_break%d.wav";
+const char CFuncBreakable::WOOD_BREAK_SOUNDS_PATTERN[] = "debris/wood_break%d.wav";
 // Flesh sounds pattern
-const Char CFuncBreakable::FLESH_DMG_SOUNDS_PATTERN[] = "debris/flesh_splatter%d.wav";
+const char CFuncBreakable::FLESH_DMG_SOUNDS_PATTERN[] = "debris/flesh_splatter%d.wav";
 // Glass damage sounds pattern
-const Char CFuncBreakable::GLASS_DMG_SOUNDS_PATTERN[] = "debris/glass_dmg%d.wav";
+const char CFuncBreakable::GLASS_DMG_SOUNDS_PATTERN[] = "debris/glass_dmg%d.wav";
 // Glass break sounds pattern
-const Char CFuncBreakable::GLASS_BREAK_SOUNDS_PATTERN[] = "debris/glass_break%d.wav";;
+const char CFuncBreakable::GLASS_BREAK_SOUNDS_PATTERN[] = "debris/glass_break%d.wav";;
 // Metal damage sounds pattern
-const Char CFuncBreakable::METAL_DMG_SOUNDS_PATTERN[] = "debris/metal_dmg%d.wav";
+const char CFuncBreakable::METAL_DMG_SOUNDS_PATTERN[] = "debris/metal_dmg%d.wav";
 // Metal break sounds pattern
-const Char CFuncBreakable::METAL_BREAK_SOUNDS_PATTERN[] = "debris/metal_break%d.wav";
+const char CFuncBreakable::METAL_BREAK_SOUNDS_PATTERN[] = "debris/metal_break%d.wav";
 // Concrete damage sounds pattern
-const Char CFuncBreakable::CONCRETE_DMG_SOUNDS_PATTERN[] = "debris/concrete_dmg%d.wav";
+const char CFuncBreakable::CONCRETE_DMG_SOUNDS_PATTERN[] = "debris/concrete_dmg%d.wav";
 // Concrete break sounds pattern
-const Char CFuncBreakable::CONCRETE_BREAK_SOUNDS_PATTERN[] = "debris/concrete_break%d.wav";
+const char CFuncBreakable::CONCRETE_BREAK_SOUNDS_PATTERN[] = "debris/concrete_break%d.wav";
 // Computer break sounds pattern
-const Char CFuncBreakable::COMPUTER_DMG_SOUNDS_PATTERN[] = "misc/spark%d.wav";
+const char CFuncBreakable::COMPUTER_DMG_SOUNDS_PATTERN[] = "misc/spark%d.wav";
 
 // Gib model lifetime
-const Float CFuncBreakable::GIB_MODEL_LIFETIME = 30;
+const float CFuncBreakable::GIB_MODEL_LIFETIME = 30;
 
 // Weapon->ammo associations
 const CFuncBreakable::ammo_assocation_t CFuncBreakable::WPN_AMMO_ASSOCIATIONS[NUM_WEAPONS] = {
@@ -279,7 +279,7 @@ void CFuncBreakable::SetPrecacheObjects( void )
 //=============================================
 void CFuncBreakable::Precache( void )
 {
-	const Char* pstrDmgSound = gd_engfuncs.pfnGetString(m_dmgSoundsPattern);
+	const char* pstrDmgSound = gd_engfuncs.pfnGetString(m_dmgSoundsPattern);
 	if(pstrDmgSound && qstrlen(pstrDmgSound))
 	{
 		Util::PrecacheVariableNbSounds(pstrDmgSound, m_nbDmgSounds);
@@ -287,7 +287,7 @@ void CFuncBreakable::Precache( void )
 			Util::EntityConPrintf(m_pEdict, "Couldn't precache damage sounds.\n");
 	}
 
-	const Char* pstrBreakSound = gd_engfuncs.pfnGetString(m_breakSoundsPattern);
+	const char* pstrBreakSound = gd_engfuncs.pfnGetString(m_breakSoundsPattern);
 	if(pstrBreakSound && qstrlen(pstrBreakSound))
 	{
 		Util::PrecacheVariableNbSounds(pstrBreakSound, m_nbBreakSounds);
@@ -297,13 +297,13 @@ void CFuncBreakable::Precache( void )
 
 	if(m_gibModelName != NO_STRING_VALUE)
 	{
-		const Char* pstrGibFilePath = gd_engfuncs.pfnGetString(m_gibModelName);
+		const char* pstrGibFilePath = gd_engfuncs.pfnGetString(m_gibModelName);
 		m_breakModelIndex = gd_engfuncs.pfnPrecacheModel(pstrGibFilePath);
 	}
 
 	if(m_spawnEntityName != NO_STRING_VALUE)
 	{
-		const Char* pstrSpawnObject = gd_engfuncs.pfnGetString(m_spawnEntityName);
+		const char* pstrSpawnObject = gd_engfuncs.pfnGetString(m_spawnEntityName);
 		Util::PrecacheEntity(pstrSpawnObject);
 	}
 }
@@ -371,7 +371,7 @@ void CFuncBreakable::SetSpawnProperties( void )
 // @brief
 //
 //=============================================
-void CFuncBreakable::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncBreakable::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Don't break if not breakable
 	if(!IsFuncBreakableEntity())
@@ -385,7 +385,7 @@ void CFuncBreakable::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, use
 		// Exploding objects are handled specially
 		m_breakVector = GetCenter();
 
-		Float refdmg = m_pState->health;
+		float refdmg = m_pState->health;
 		if(refdmg < 100)
 			refdmg = 100;
 		m_breakDamage = refdmg * Common::RandomFloat(3, 5);
@@ -417,14 +417,14 @@ bool CFuncBreakable::IsFuncBreakableEntity( void ) const
 // @brief
 //
 //=============================================
-bool CFuncBreakable::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags )
+bool CFuncBreakable::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags )
 {
 	// Don't take damage if not breakable
 	if(!IsFuncBreakableEntity())
 		return false;
 
 	// Club weapons do twice the damage
-	Float damagedealt;
+	float damagedealt;
 	if(damageFlags & (DMG_MELEE|DMG_AXE))
 		damagedealt = amount *= 2;
 	else 
@@ -441,7 +441,7 @@ bool CFuncBreakable::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker
 		{
 			// Exploding objects are handled specially
 			m_breakVector = GetCenter();
-			Float refdmg = damagedealt;
+			float refdmg = damagedealt;
 			if(refdmg < 100)
 				refdmg = 100;
 			m_breakDamage = refdmg * Common::RandomFloat(3, 5);
@@ -479,7 +479,7 @@ bool CFuncBreakable::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker
 // @brief
 //
 //=============================================
-void CFuncBreakable::TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
+void CFuncBreakable::TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
 {
 	// Add special effects
 	switch(m_material)
@@ -521,7 +521,7 @@ void CFuncBreakable::BreakTouch( CBaseEntity* pOther )
 	if(HasSpawnFlag(FL_BREAK_ON_TOUCH))
 	{
 		// Calculate damage dealt
-		Float damage = pOther->GetVelocity().Length() * 0.01;
+		float damage = pOther->GetVelocity().Length() * 0.01;
 		if(damage >= m_pState->health)
 		{
 			SetTouch(nullptr);
@@ -544,7 +544,7 @@ void CFuncBreakable::BreakTouch( CBaseEntity* pOther )
 
 		// Set to break with delay
 		SetThink(&CFuncBreakable::DieThink);
-		Float delay = m_delay;
+		float delay = m_delay;
 		if(!delay)
 			delay = 0.1;
 
@@ -562,9 +562,9 @@ void CFuncBreakable::DieThink( void )
 	Int32 pitch = PITCH_NORM + Common::RandomLong(-5, 25);
 
 	// Calculate volume
-	Float volume = Common::RandomFloat(0.85, VOL_NORM);
+	float volume = Common::RandomFloat(0.85, VOL_NORM);
 	volume += SDL_fabs(m_pState->health)/100.0f;
-	volume = clamp(volume, 0.0, VOL_NORM);
+	volume = Clamp(volume, 0.0, VOL_NORM);
 
 	// Get center of bmodel
 	Vector center = GetCenter();
@@ -572,13 +572,13 @@ void CFuncBreakable::DieThink( void )
 	// Play material breaking sound
 	if(m_nbBreakSounds > 0)
 	{
-		const Char* pstrBreakSound = gd_engfuncs.pfnGetString(m_breakSoundsPattern);
+		const char* pstrBreakSound = gd_engfuncs.pfnGetString(m_breakSoundsPattern);
 		if(pstrBreakSound && qstrlen(pstrBreakSound))
 			Util::PlayRandomAmbientSound(center, pstrBreakSound, m_nbBreakSounds, volume, ATTN_NORM, pitch);
 	}
 
-	Float bouyancy = 0;
-	Float waterfriction = 0;
+	float bouyancy = 0;
+	float waterfriction = 0;
 	switch(m_material)
 	{
 	case MAT_FLESH: 
@@ -618,8 +618,8 @@ void CFuncBreakable::DieThink( void )
 	if(!HasSpawnFlag(FL_NO_GIBS))
 	{
 		// Determine min/max values for velocity
-		Float velocitymin;
-		Float velocitymax;
+		float velocitymin;
+		float velocitymax;
 
 		bm_velocity_t bmvelmode;
 		switch(m_breakDirection)
@@ -694,7 +694,7 @@ void CFuncBreakable::DieThink( void )
 		{
 			if(m_spawnEntityName != NO_STRING_VALUE)
 			{
-				const Char* pstrSpawnObject = gd_engfuncs.pfnGetString(m_spawnEntityName);
+				const char* pstrSpawnObject = gd_engfuncs.pfnGetString(m_spawnEntityName);
 				CBaseEntity* pEntity = CBaseEntity::CreateEntity(pstrSpawnObject, center, spawnAngle, this);
 				if(pEntity)
 				{
@@ -710,7 +710,7 @@ void CFuncBreakable::DieThink( void )
 			
 			// Weapon with lowest ammo
 			CPlayerWeapon* pLowestAmmoWeapon = nullptr;
-			Uint32 lowestAmmoPercentage = 0;
+			UInt32 lowestAmmoPercentage = 0;
 
 			CPlayerWeapon* pWeapon = pAttacker->GetWeaponList();
 			while(pWeapon)
@@ -718,14 +718,14 @@ void CFuncBreakable::DieThink( void )
 				if(pWeapon->GetMaxAmmo() != -1)
 				{
 					Int32 ammoType = pWeapon->GetAmmoIndex();
-					Uint32 ammoCount = m_attacker->GetAmmoCount(ammoType);
+					UInt32 ammoCount = m_attacker->GetAmmoCount(ammoType);
 
 					Int32 weaponId = pWeapon->GetId();
 					assert(weaponId >= 0 && weaponId < NUM_WEAPONS);
-					Uint32 maxAmmo = MAX_AMMO_COUNTS[weaponId];
+					UInt32 maxAmmo = MAX_AMMO_COUNTS[weaponId];
 					assert(maxAmmo > 0);
 
-					Uint32 ammoPercentage = ((Float)ammoCount/(Float)maxAmmo) * 100;
+					UInt32 ammoPercentage = ((float)ammoCount/(float)maxAmmo) * 100;
 					if(!pLowestAmmoWeapon || ammoPercentage < lowestAmmoPercentage)
 					{
 						pLowestAmmoWeapon = pWeapon;
@@ -783,7 +783,7 @@ void CFuncBreakable::PlayDamageSound( void )
 		pitch = PITCH_NORM + Common::RandomLong(-5, 30);
 
 	// Set volume
-	Float volume = Common::RandomFloat(0.75, VOL_NORM);
+	float volume = Common::RandomFloat(0.75, VOL_NORM);
 
 	Util::PlayRandomEntitySound(this, gd_engfuncs.pfnGetString(m_dmgSoundsPattern), m_nbDmgSounds, SND_CHAN_VOICE, volume, ATTN_NORM, pitch);
 }

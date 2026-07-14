@@ -11,7 +11,7 @@ All Rights Reserved.
 #define SCREENFADE_H
 
 // Max env_fade layers
-static constexpr Uint32 MAX_FADE_LAYERS = 8;
+static constexpr UInt32 MAX_FADE_LAYERS = 8;
 
 enum fadeflags_t
 {
@@ -36,14 +36,14 @@ struct screenfade_t
 		curfade(0)
 		{}
 
-	Float speed;
-	Double end;
-	Float totalend;
-	Float reset;
+	float speed;
+	double end;
+	float totalend;
+	float reset;
 	color24_t color;
-	byte alpha;
+	Byte alpha;
 	Int32 flags;
-	Float curfade;
+	float curfade;
 };
 
 #endif // SCREENFADE_H

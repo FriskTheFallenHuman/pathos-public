@@ -89,13 +89,13 @@ bool CEnvSetBodyGroup::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvSetBodyGroup::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSetBodyGroup::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool isFirst = false;
 	edict_t* pedict = nullptr;
-	const Char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
-	const Char* pstrGroupName = gd_engfuncs.pfnGetString(m_bodyGroupName);
-	const Char* pstrSubmodelName = gd_engfuncs.pfnGetString(m_submodelName);
+	const char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrGroupName = gd_engfuncs.pfnGetString(m_bodyGroupName);
+	const char* pstrSubmodelName = gd_engfuncs.pfnGetString(m_submodelName);
 
 	while(true)
 	{

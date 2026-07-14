@@ -32,13 +32,13 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void SendInitMessage( const CBaseEntity* pPlayer ) override;
 	virtual bool Restore( void ) override;
 
 private:
-	Float m_fogStartDist;
-	Float m_fogEndDist;
+	float m_fogStartDist;
+	float m_fogEndDist;
 	bool m_dontAffectSky;
 	bool m_isActive;
 	string_t m_skyTextureName;

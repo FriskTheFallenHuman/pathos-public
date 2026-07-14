@@ -24,9 +24,9 @@ void Cmd_ScreenChake( void )
 		return;
 	}
 
-	Float amplitude = SDL_atof(cl_engfuncs.pfnCmd_Argv(1));
-	Float frequency = SDL_atof(cl_engfuncs.pfnCmd_Argv(2));
-	Float duration = SDL_atof(cl_engfuncs.pfnCmd_Argv(3));
+	float amplitude = SDL_atof(cl_engfuncs.pfnCmd_Argv(1));
+	float frequency = SDL_atof(cl_engfuncs.pfnCmd_Argv(2));
+	float duration = SDL_atof(cl_engfuncs.pfnCmd_Argv(3));
 
 	gShake.AddScreenShake(amplitude, duration, frequency);
 }
@@ -73,8 +73,8 @@ void CScreenShake::CalcShake ( void )
 	// Clear angle
 	m_shakeAngle = 0;
 
-	Double time = cl_engfuncs.pfnGetClientTime();
-	Double frametime = cl_engfuncs.pfnGetFrameTime();
+	double time = cl_engfuncs.pfnGetClientTime();
+	double frametime = cl_engfuncs.pfnGetFrameTime();
 
 	m_shakesList.begin();
 	while(!m_shakesList.end())
@@ -99,35 +99,35 @@ void CScreenShake::CalcShake ( void )
 		{
 			shake.shakebegin = time;
 			shake.nextshake = time + (1.0f / shake.frequency);
-			for (Uint32 i = 0; i < 3; i++)
+			for (UInt32 i = 0; i < 3; i++)
 				shake.offset[i] = Common::RandomFloat( -shake.amplitude, shake.amplitude );
 
 			shake.angle = Common::RandomFloat( -shake.amplitude, shake.amplitude );
 		}
 
-		Double fraction = (shake.endtime - time) / shake.duration;
-		Double freq = fraction ? (shake.frequency / fraction) : 0;
+		double fraction = (shake.endtime - time) / shake.duration;
+		double freq = fraction ? (shake.frequency / fraction) : 0;
 		fraction = (fraction * fraction) * SDL_sin(time * freq);
 
 		// Reduce fade time by closeness to default refresh rate
-		Float fadeModulator = (60 - _max(60, shake.frequency)) / 60;
+		float fadeModulator = (60 - _max(60, shake.frequency)) / 60;
 		
-		Double fadetime = 0;
+		double fadetime = 0;
 		if(fadeModulator > 0)
 		{
-			Double shaketime = shake.nextshake - shake.shakebegin;
+			double shaketime = shake.nextshake - shake.shakebegin;
 			fadetime = shaketime * (0.25 * fadeModulator);
 			if(fadetime > 0)
 			{
-				Float startfade = clamp((time - shake.shakebegin)/fadetime, 0.0, 1.0);
+				float startfade = Clamp((time - shake.shakebegin)/fadetime, 0.0, 1.0);
 				fraction *= startfade;
 			}
 		}
 
 		if(fadeModulator > 0 && fadetime > 0)
 		{
-			Double fadebegintime = shake.nextshake-fadetime;
-			Float endfade = (1.0 - clamp((time-fadebegintime)/fadetime, 0.0, 1.0));
+			double fadebegintime = shake.nextshake-fadetime;
+			float endfade = (1.0 - Clamp((time-fadebegintime)/fadetime, 0.0, 1.0));
 			fraction *= endfade;
 		}
 
@@ -146,7 +146,7 @@ void CScreenShake::CalcShake ( void )
 //====================================
 //
 //====================================
-void CScreenShake::ApplyShake( Vector& origin, Vector& angles, Float factor )
+void CScreenShake::ApplyShake( Vector& origin, Vector& angles, float factor )
 {
 	// Apply the offset
 	Math::VectorMA( origin, factor * 0.5, m_shakeOffset, origin );
@@ -169,7 +169,7 @@ screenshake_t* CScreenShake::AllocShake ( void )
 //====================================
 //
 //====================================
-void CScreenShake::AddScreenShake( Float amplitude, Float duration, Float frequency )
+void CScreenShake::AddScreenShake( float amplitude, float duration, float frequency )
 {
 	screenshake_t* pshake = AllocShake();
 	if(!pshake)

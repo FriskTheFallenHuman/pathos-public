@@ -99,27 +99,27 @@ public:
 
 public:
 	// Ideal yaw task yaw speed
-	static const Float IDEALYAW_TASK_YAWSPEED;
+	static const float IDEALYAW_TASK_YAWSPEED;
 	// Maximum distance for staring
-	static const Float STARE_MAX_DIST;
+	static const float STARE_MAX_DIST;
 	// Minimum treshold for idealyaw difference
-	static const Float IDEALYAW_DIFF_TRESHOLD;
+	static const float IDEALYAW_DIFF_TRESHOLD;
 	// Minimum talk range
-	static const Float MAXIMUM_TALK_RANGE;
+	static const float MAXIMUM_TALK_RANGE;
 	// Minimum push speed
-	static const Float MINIMUM_PUSH_SPEED;
+	static const float MINIMUM_PUSH_SPEED;
 	// Mortal health treshold on player
-	static const Float PLAYER_MORTAL_HEALTH_TRESHOLD;
+	static const float PLAYER_MORTAL_HEALTH_TRESHOLD;
 	// Medium health treshold on player
-	static const Float PLAYER_MEDIUM_HEALTH_TRESHOLD;
+	static const float PLAYER_MEDIUM_HEALTH_TRESHOLD;
 	// Light health treshold on player
-	static const Float PLAYER_LIGHT_HEALTH_TRESHOLD;
+	static const float PLAYER_LIGHT_HEALTH_TRESHOLD;
 	// Maximum follower distance before FOLLO_TARGET_TOOFAR is set
-	static const Float MAX_FOLLOW_DISTANCE;
+	static const float MAX_FOLLOW_DISTANCE;
 	// Default follow range
-	static const Float DEFAULT_FOLLOW_RANGE;
+	static const float DEFAULT_FOLLOW_RANGE;
 	// Sentence group name postifxes
-	static const Char* SENTENCE_GROUP_POSTFIXES[NB_TALKNPC_GROUPS];
+	static const char* SENTENCE_GROUP_POSTFIXES[NB_TALKNPC_GROUPS];
 
 public:
 	explicit CTalkNPC( edict_t* pedict );
@@ -135,9 +135,9 @@ public:
 	// Manages keyvalues
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	// Manages taking damage
-	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags ) override;
+	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags ) override;
 	// Handles damage calculation for a hitscan
-	virtual void TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
+	virtual void TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
 	// Calls touch function
 	virtual void CallTouch( CBaseEntity* pOther ) override;
 	// Manages getting killed
@@ -147,9 +147,9 @@ public:
 	// Tells if the NPC can play a scripted_sentence
 	virtual bool CanPlaySentence( bool disregardState ) override;
 	// Plays a sentence
-	virtual void PlaySentence( const Char* pstrSentenceName, Float duration, Float volume, Float attenuation, Float timeOffset, bool subtitleOnlyInRadius, CBaseEntity* pPlayer = nullptr ) override;
+	virtual void PlaySentence( const char* pstrSentenceName, float duration, float volume, float attenuation, float timeOffset, bool subtitleOnlyInRadius, CBaseEntity* pPlayer = nullptr ) override;
 	// Plays a scripted_sentence
-	virtual void PlayScriptedSentence( const Char* pstrSentenceName, Float duration, Float volume, Float attenuation, Float timeOffset, bool subtitleOnlyInRadius, bool isConcurrent, CBaseEntity* pListener, CBaseEntity* pPlayer = nullptr ) override;
+	virtual void PlayScriptedSentence( const char* pstrSentenceName, float duration, float volume, float attenuation, float timeOffset, bool subtitleOnlyInRadius, bool isConcurrent, CBaseEntity* pListener, CBaseEntity* pPlayer = nullptr ) override;
 	// Returns the conditions to ignore
 	virtual CBitSet GetIgnoreConditions( void ) override;
 	// Returns a schedule by it's index
@@ -171,11 +171,11 @@ public:
 	// Stops following the target
 	virtual void StopFollowing( bool clearSchedule ) override;
 	// Returns the voice pitch
-	virtual Uint32 GetVoicePitch( void ) override;
+	virtual UInt32 GetVoicePitch( void ) override;
 	// Tells if talking npc can answer
 	virtual bool CanAnswer( void ) override;
 	// Sets to answer a question
-	virtual void SetAnswerQuestion( CBaseEntity* pSpeaker, Double talkTime ) override;
+	virtual void SetAnswerQuestion( CBaseEntity* pSpeaker, double talkTime ) override;
 	// Performs pre-schedule think functions
 	virtual void PreScheduleThink( void ) override;
 	// Sets the follow target for this NPC
@@ -193,7 +193,7 @@ public:
 	// Finds the player
 	CBaseEntity* FindPlayer( void );
 	// Returns distance to target
-	Float GetTargetDistance( void );
+	float GetTargetDistance( void );
 	// Stops the NPC from talking
 	void StopTalking( void );
 
@@ -217,20 +217,20 @@ public:
 	// Tells if the NPC is talking
 	bool IsTalking( void ) const;
 	// Sets talking duration
-	void SetTalkTime( Float duration );
+	void SetTalkTime( float duration );
 
 	// Tells if NPC can follow the player
 	bool CanFollow( void ) const;
 	// Starts following a target
 	void StartFollowing( CBaseEntity* pTarget );
 	// Limits followers to a number
-	void LimitFollowers( const CBaseEntity* pPlayer, Uint32 maxFollowers );
+	void LimitFollowers( const CBaseEntity* pPlayer, UInt32 maxFollowers );
 
 	// Use function for following
-	void EXPORTFN FollowerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	void EXPORTFN FollowerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 
 	// Sets sentence group names
-	void SetSentenceGroups( const Char* pstrPrefix );
+	void SetSentenceGroups( const char* pstrPrefix );
 
 public:
 	// Initializes talknpc data
@@ -240,21 +240,21 @@ public:
 
 public:
 	// Sets the time until someone else can talk
-	static void SetTalkWaitTime( Double talkWaitTime );
+	static void SetTalkWaitTime( double talkWaitTime );
 	// Resets talk time
 	static void ResetTalkTime( void );
 
 public:
 	// Bits storing what one-time sentences we've said
-	Uint64			m_saidSentencesBits;
+	UInt64			m_saidSentencesBits;
 	// Number of times we've initiated talks
-	Uint32			m_nbTalksInitiated;
+	UInt32			m_nbTalksInitiated;
 	// Voice pitch value
-	Uint32			m_voicePitch;
+	UInt32			m_voicePitch;
 	// Sentence group names specific to this NPC
 	CString			m_sentenceGroupNames[NB_TALKNPC_GROUPS];
 	// Next time we can be used
-	Double			m_nextUseTime;
+	double			m_nextUseTime;
 	// Follow sentence group
 	string_t		m_useSentenceGroup;
 	// Un-follow sentence group
@@ -270,6 +270,6 @@ public:
 
 protected:
 	// Wait time until we can talk again
-	static Double g_talkWaitTime;
+	static double g_talkWaitTime;
 };
 #endif //AI_TALKNPC_H

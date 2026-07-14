@@ -14,7 +14,7 @@ All Rights Reserved.
 #include "buttonbits.h"
 
 // Sequence names for weapon
-const Char* CWeaponKnife::m_sequenceNames[CWeaponKnife::NUM_WEAPON_ANIMATIONS] = 
+const char* CWeaponKnife::m_sequenceNames[CWeaponKnife::NUM_WEAPON_ANIMATIONS] = 
 {
 	"idle1",
 	"idle2",
@@ -32,7 +32,7 @@ const Char* CWeaponKnife::m_sequenceNames[CWeaponKnife::NUM_WEAPON_ANIMATIONS] =
 };
 
 // Weapon view model
-const Char CWeaponKnife::WEAPON_VIEWMODEL[] = "models/v_knife.mdl";
+const char CWeaponKnife::WEAPON_VIEWMODEL[] = "models/v_knife.mdl";
 // Weapon weight
 const Int32 CWeaponKnife::WEAPON_WEIGHT = 5;
 // Weapon slot
@@ -132,7 +132,7 @@ bool CWeaponKnife::Deploy( void )
 //=============================================
 void CWeaponKnife::Holster( void )
 {
-	const Char* pstrSequenceName = m_sequenceNames[KNIFE_HOLSTER];
+	const char* pstrSequenceName = m_sequenceNames[KNIFE_HOLSTER];
 	m_nextThinkTime = g_pGameVars->time + GetSequenceTime(pstrSequenceName);
 	SetWeaponAnimation(pstrSequenceName);
 
@@ -164,7 +164,7 @@ void CWeaponKnife::PrimaryAttack( void )
 	if(!CheckFriendlyFire(gunPosition, forward))
 		return;
 
-	const Char* pstrSequenceName = m_sequenceNames[KNIFE_SWING_START];
+	const char* pstrSequenceName = m_sequenceNames[KNIFE_SWING_START];
 	m_timeNext = g_pGameVars->time + GetSequenceTime(pstrSequenceName);
 	m_nextAttackTime = m_timeNext;
 	m_attackState = STATE_FIRST_SWING;
@@ -181,8 +181,8 @@ void CWeaponKnife::Idle( void )
 	if (m_nextIdleTime > g_pGameVars->time)
 		return;
 
-	Float timeMultiplier;
-	Uint32 sequenceIndex;
+	float timeMultiplier;
+	UInt32 sequenceIndex;
 
 	if(!m_playedFidgetAnimation && Common::RandomFloat(0.0, 1.0) >= 0.8)
 	{
@@ -197,7 +197,7 @@ void CWeaponKnife::Idle( void )
 		m_playedFidgetAnimation = false;
 	}
 
-	Float sequenceTime = GetSequenceTime(m_sequenceNames[sequenceIndex]);
+	float sequenceTime = GetSequenceTime(m_sequenceNames[sequenceIndex]);
 	m_nextIdleTime = g_pGameVars->time + sequenceTime;
 
 	SetWeaponAnimation( m_sequenceNames[sequenceIndex] );
@@ -249,7 +249,7 @@ void CWeaponKnife::PostThink( void )
 					CBaseEntity *pEntity = Util::GetEntityFromTrace(tr);
 					if(pEntity && pEntity->GetClassification() != CLASS_HUMAN_FRIENDLY)
 					{
-						Float knifeDamage = gSkillData.GetSkillCVarSetting(g_skillcvars.skillPlayerDmgKnife);
+						float knifeDamage = gSkillData.GetSkillCVarSetting(g_skillcvars.skillPlayerDmgKnife);
 						pEntity->TraceAttack(m_pPlayer, knifeDamage, forward, tr, DMG_MELEE);
 
 						CString soundfile;
@@ -309,7 +309,7 @@ void CWeaponKnife::PostThink( void )
 				if(m_attackState == STATE_SWING_LEFT)
 				{
 					// Get the sequence time
-					Double sequenceTime = GetSequenceTime(m_sequenceNames[KNIFE_RETURN_RIGHT]);
+					double sequenceTime = GetSequenceTime(m_sequenceNames[KNIFE_RETURN_RIGHT]);
 
 					// We were just about to swing to the left
 					m_nextAttackTime = m_nextThinkTime = m_timeNext = g_pGameVars->time + sequenceTime;
@@ -319,7 +319,7 @@ void CWeaponKnife::PostThink( void )
 				else if(m_attackState == STATE_SWING_RIGHT)
 				{
 					// Get the sequence time
-					Double sequenceTime = GetSequenceTime(m_sequenceNames[KNIFE_RETURN_LEFT]);
+					double sequenceTime = GetSequenceTime(m_sequenceNames[KNIFE_RETURN_LEFT]);
 
 					// We were just about to swing to the right
 					m_nextAttackTime = m_nextThinkTime = m_timeNext = g_pGameVars->time + sequenceTime;

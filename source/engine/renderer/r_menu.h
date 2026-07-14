@@ -39,16 +39,16 @@ public:
 	static const Int32 MENU_BASE_WIDTH;
 	static const Int32 MENU_BASE_HEIGHT;
 
-	static const Float MENU_BLEND_TIME;
-	static const Float MENU_POST_INIT_BLEND_TIME;
+	static const float MENU_BLEND_TIME;
+	static const float MENU_POST_INIT_BLEND_TIME;
 
-	static const Char MENU_HOVER_SOUND[];
-	static const Char MENU_CLICK_SOUND[];
-	static const Char MENU_MUSIC_FILE_STARTUP[];
-	static const Char MENU_MUSIC_FILE_INGAME[];
+	static const char MENU_HOVER_SOUND[];
+	static const char MENU_CLICK_SOUND[];
+	static const char MENU_MUSIC_FILE_STARTUP[];
+	static const char MENU_MUSIC_FILE_INGAME[];
 
-	static const Char MENU_BUTTON_TEXT_SCHEMA[];
-	static const Char MENU_TITLE_TEXT_SCHEMA[];
+	static const char MENU_BUTTON_TEXT_SCHEMA[];
+	static const char MENU_TITLE_TEXT_SCHEMA[];
 
 public:
 	// Menu button actions
@@ -135,7 +135,7 @@ public:
 	void ResetMenuBackground( void );
 
 	// Plays a menu sound
-	static void PlayMenuSound( const Char* pstrSample );
+	static void PlayMenuSound( const char* pstrSample );
 
 	// Sets whether the mouse should be hidden on return to game
 	void SetShouldHideMouse( bool shouldHide ) { m_shouldHideMouse = shouldHide; }
@@ -169,7 +169,7 @@ private:
 	rendercode_t DrawMenuElements( class CBasicDraw* pDraw );
 
 private:
-	// TRUE if menu should be displayed
+	// true if menu should be displayed
 	bool m_isActive;
 	// Menu title logo texture
 	en_texture_t* m_pTitleLogoTexture;
@@ -193,17 +193,17 @@ private:
 	en_texture_t* m_pNextBlendTexture;
 
 	// Blend begin time
-	Double m_flBlendBeginTime;
+	double m_flBlendBeginTime;
 
-	// TRUE if we should hide them mouse on return to game
+	// true if we should hide them mouse on return to game
 	bool m_shouldHideMouse;
 
 	// List of save background textures
 	CLinkedList<en_texture_t*> m_saveBgTexturesList;
 
 	// Post-initialization blend time
-	Double m_postInitBlendBeginTime;
-	// TRUE if menu music is playing
+	double m_postInitBlendBeginTime;
+	// true if menu music is playing
 	bool m_isMenuMusicPlaying;
 
 private:
@@ -231,18 +231,18 @@ extern CMenu gMenu;
 class CMenuButton
 {
 private:
-	static const Float DEFAULT_BRIGHTNESS;
-	static const Float HOVER_BRIGHTNESS;
-	static const Float DISABLED_BRIGHTNESS;
+	static const float DEFAULT_BRIGHTNESS;
+	static const float HOVER_BRIGHTNESS;
+	static const float DISABLED_BRIGHTNESS;
 
-	static const Float DEFAULT_ALPHA;
-	static const Float HOVER_ALPHA;
+	static const float DEFAULT_ALPHA;
+	static const float HOVER_ALPHA;
 	
-	static const Float FADE_TIME;
-	static const Float CLICK_OFFSET;
+	static const float FADE_TIME;
+	static const float CLICK_OFFSET;
 
 public:
-	CMenuButton( CMenu *pMenu, CMenu::mbutton_t buttonId, const Char* pstrText, SDL_Scancode scancode );
+	CMenuButton( CMenu *pMenu, CMenu::mbutton_t buttonId, const char* pstrText, SDL_Scancode scancode );
 	~CMenuButton( void );
 
 public:
@@ -264,11 +264,11 @@ public:
 	bool KeyEvent( Int32 button, Int16 mod, bool keyDown );
 
 	// Sets the properties of the button
-	void SetProperties( Int32 xPos, Int32 yPos, Uint32 width, Uint32 height );
+	void SetProperties( Int32 xPos, Int32 yPos, UInt32 width, UInt32 height );
 	// Returns the text used
-	const Char* GetString( void ) const { return m_text.c_str(); }
+	const char* GetString( void ) const { return m_text.c_str(); }
 	// Returns the height of the button
-	Uint32 GetHeight( void ) const { return m_sizeY; }
+	UInt32 GetHeight( void ) const { return m_sizeY; }
 
 	// Sets enabled state
 	void SetEnabled( bool enabled ) { m_isEnabled = enabled; }
@@ -279,19 +279,19 @@ private:
 	// Text to display
 	CString m_text;
 	// Brightness value
-	Float m_brightness;
+	float m_brightness;
 	// Alpha value
-	Float m_alpha;
+	float m_alpha;
 
 	// Origin
 	Int32 m_originX;
 	Int32 m_originY;
 
 	// Size
-	Uint32 m_sizeX;
-	Uint32 m_sizeY;
+	UInt32 m_sizeX;
+	UInt32 m_sizeY;
 
-	// TRUE if the button was clicked on
+	// true if the button was clicked on
 	bool m_isClicked;
 	// Determines if the button is available
 	bool m_isEnabled;
@@ -299,7 +299,7 @@ private:
 	bool m_isHidden;
 	// Tells if the glow sound was played
 	bool m_glowSoundPlayed;
-	// TRUE if cursor is over us
+	// true if cursor is over us
 	bool m_isCursorOver;
 
 	// Scancode tied to this button

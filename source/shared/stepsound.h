@@ -47,11 +47,11 @@ private:
 
 public:
 	// Default footstep type name
-	static const Char DEFAULT_FOOTSTEP_TYPE[];
+	static const char DEFAULT_FOOTSTEP_TYPE[];
 	// Default material type name
-	static const Char DEFAULT_MATERIAL_TYPE[];
+	static const char DEFAULT_MATERIAL_TYPE[];
 	// Concrete material type name
-	static const Char CONCRETE_MATERIAL_TYPE[];
+	static const char CONCRETE_MATERIAL_TYPE[];
 
 public:
 	CStepSound( void );
@@ -59,13 +59,13 @@ public:
 
 public:
 	// Loads script for footsteps
-	bool Init( const Char* pstrFile, Uint32 filesize );
+	bool Init( const char* pstrFile, UInt32 filesize );
 	// Precaches the sounds used
 	void GetPrecacheList( CArray<CString>& outList );
 	// Retreives a footstep for a material type
-	const CArray<CString>* GetFootSoundList( foot_t foot, const Char* pmaterialname, const Char* psteptype = nullptr );
+	const CArray<CString>* GetFootSoundList( foot_t foot, const char* pmaterialname, const char* psteptype = nullptr );
 	// Tells if the specified material type exists
-	bool IsMaterialTypeValid( const Char* pmaterialname );
+	bool IsMaterialTypeValid( const char* pmaterialname );
 
 	// Returns the info string
 	const bool IsInfoStringEmpty( void ) const { return m_strInfoString.empty(); }
@@ -73,15 +73,15 @@ public:
 	const CString& GetInfoString( void ) const { return m_strInfoString; }
 
 	// Returns material by index
-	const footstepinfo_t* GetMaterialByIndex( Uint32 index );
+	const footstepinfo_t* GetMaterialByIndex( UInt32 index );
 	// Returns the number of materials
-	Uint32 GetNbMaterials( void );
+	UInt32 GetNbMaterials( void );
 
 private:
 	// Compares types
-	static bool CheckType( const Char* pstrType, const Char* pstrCheckType );
+	static bool CheckType( const char* pstrType, const char* pstrCheckType );
 	// Compares materials
-	static bool CheckMaterial( const Char* pstrMaterial, const Char* pstrCheckMaterial );
+	static bool CheckMaterial( const char* pstrMaterial, const char* pstrCheckMaterial );
 
 private:
 	// Array of footstep sounds

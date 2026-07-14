@@ -91,7 +91,7 @@ bool CEnvGobal::Spawn( void )
 
 	if(HasSpawnFlag(FL_SET_INITIAL_STATE))
 	{
-		const Char* pstrGlobalState = gd_engfuncs.pfnGetString(m_globalStateName);
+		const char* pstrGlobalState = gd_engfuncs.pfnGetString(m_globalStateName);
 		if(!gGlobalStates.IsGlobalStatePresent(pstrGlobalState))
 			SetState(m_initialState);
 	}
@@ -103,7 +103,7 @@ bool CEnvGobal::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvGobal::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvGobal::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	SetState(m_triggerMode);
 }
@@ -114,7 +114,7 @@ void CEnvGobal::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_
 //=============================================
 void CEnvGobal::SetState( Int32 newstate )
 {
-	const Char* pstrGlobalName = gd_engfuncs.pfnGetString(m_globalStateName);
+	const char* pstrGlobalName = gd_engfuncs.pfnGetString(m_globalStateName);
 	if(!pstrGlobalName || !qstrlen(pstrGlobalName))
 		return;
 

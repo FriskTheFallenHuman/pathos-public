@@ -63,7 +63,7 @@ public:
     virtual bool Spawn( void ) override;
     virtual void DeclareSaveFields( void ) override;
     virtual bool KeyValue( const keyvalue_t& kv ) override;
-    virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+    virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 public:
     void IncrementValue( operation_t operation, Int32 increment );
@@ -76,9 +76,9 @@ private:
     Int32 m_minValue;
     Int32 m_originalStartValue;
 
-    Uint32 m_operationToggleTrigger;
-    Uint32 m_operationOnTrigger;
-    Uint32 m_operationOffTrigger;
+    UInt32 m_operationToggleTrigger;
+    UInt32 m_operationOnTrigger;
+    UInt32 m_operationOffTrigger;
 
     CEntityHandle m_activator;
 };

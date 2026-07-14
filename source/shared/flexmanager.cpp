@@ -24,9 +24,9 @@ All Rights Reserved.
 #define INTERP_TIME		0.5
 
 // Script folder path for flexes
-static const Char FLEX_SCRIPT_FOLDER_PATH[] = "scripts/expressions";
+static const char FLEX_SCRIPT_FOLDER_PATH[] = "scripts/expressions";
 // Expression script format extension
-static const Char FLEX_SCRIPT_FORMAT_EXTENSION[] = ".ccs";
+static const char FLEX_SCRIPT_FORMAT_EXTENSION[] = ".ccs";
 
 //====================================
 //
@@ -51,7 +51,7 @@ void CFlexManager::Clear( void )
 {
 	if(!m_scriptCache.empty())
 	{
-		for(Uint32 i = 0; i < m_scriptCache.size(); i++)
+		for(UInt32 i = 0; i < m_scriptCache.size(); i++)
 			delete m_scriptCache[i];
 
 		m_scriptCache.clear();
@@ -60,9 +60,9 @@ void CFlexManager::Clear( void )
 	if(!m_sentenceScriptArray.empty())
 		m_sentenceScriptArray.clear();
 
-	for(Uint32 i = 0; i < NUM_FLEX_NPC_TYPES; i++)
+	for(UInt32 i = 0; i < NUM_FLEX_NPC_TYPES; i++)
 	{
-		for(Uint32 j = 0; j < NUM_FLEX_AISTATES; j++)
+		for(UInt32 j = 0; j < NUM_FLEX_AISTATES; j++)
 		{
 			if(!m_flexAIStateScripts[i][j].empty())
 				m_flexAIStateScripts[i][j].clear();
@@ -76,7 +76,7 @@ void CFlexManager::Clear( void )
 //====================================
 //
 //====================================
-Int32 CFlexManager::GetFixedFlexIndex( const Char *pstrname )
+Int32 CFlexManager::GetFixedFlexIndex( const char *pstrname )
 {
 	if(!qstrcmp(pstrname, "mouth_open"))
 		return FLEX_MOUTH_OPEN;
@@ -95,7 +95,7 @@ Int32 CFlexManager::GetFixedFlexIndex( const Char *pstrname )
 //====================================
 void CFlexManager::SetFlexMappings( const vbmheader_t* pvbm, flexstate_t* pstate )
 {
-	const vbmflexcontroller_t* pflexcontrollers = reinterpret_cast<const vbmflexcontroller_t*>(reinterpret_cast<const byte*>(pvbm) + pvbm->flexcontrolleroffset);
+	const vbmflexcontroller_t* pflexcontrollers = reinterpret_cast<const vbmflexcontroller_t*>(reinterpret_cast<const Byte*>(pvbm) + pvbm->flexcontrolleroffset);
 	for(Int32 i = 0; i < pvbm->numflexcontrollers; i++)
 	{
 		// Reset to default
@@ -109,7 +109,7 @@ void CFlexManager::SetFlexMappings( const vbmheader_t* pvbm, flexstate_t* pstate
 		if(!pstate->pscript)
 			continue;
 
-		for(Uint32 j = 0; j < pstate->pscript->controllers.size(); j++)
+		for(UInt32 j = 0; j < pstate->pscript->controllers.size(); j++)
 		{
 			if(!qstrcmp(pflexcontrollers[i].name, pstate->pscript->controllers[j].name))
 			{
@@ -124,7 +124,7 @@ void CFlexManager::SetFlexMappings( const vbmheader_t* pvbm, flexstate_t* pstate
 //====================================
 //
 //====================================
-void CFlexManager::SetScript( const vbmheader_t* pvbm, flexstate_t* pstate, Float time, const Char* pscriptname )
+void CFlexManager::SetScript( const vbmheader_t* pvbm, flexstate_t* pstate, float time, const char* pscriptname )
 {
 	const flexscript_t* pfile = LoadScript( pscriptname );
 	if( !pfile )
@@ -134,7 +134,7 @@ void CFlexManager::SetScript( const vbmheader_t* pvbm, flexstate_t* pstate, Floa
 	pstate->time = time;
 
 	// save previous values
-	Float saved_values[MAX_VBM_FLEXES];
+	float saved_values[MAX_VBM_FLEXES];
 	for(Int32 i = 0; i < MAX_VBM_FLEXES; i++)
 		saved_values[i] = 0;
 	
@@ -151,7 +151,7 @@ void CFlexManager::SetScript( const vbmheader_t* pvbm, flexstate_t* pstate, Floa
 
 	// count unique flexes
 	Int32 numuniqueflex = 0;
-	for(Uint32 i = 0; i < pfile->controllers.size(); i++)
+	for(UInt32 i = 0; i < pfile->controllers.size(); i++)
 	{
 		if(pfile->controllers[i].index >= NB_FIXED_FLEXES)
 			numuniqueflex++;
@@ -180,10 +180,10 @@ void CFlexManager::SetScript( const vbmheader_t* pvbm, flexstate_t* pstate, Floa
 //====================================
 //
 //====================================
-bool CFlexManager::SetControllerName( const flexscript_t* pscript, flexcontroller_t* pcontroller, const Char* pstrname )
+bool CFlexManager::SetControllerName( const flexscript_t* pscript, flexcontroller_t* pcontroller, const char* pstrname )
 {
 	// Check for duplicacy
-	for(Uint32 i = 0; i < pscript->controllers.size(); i++)
+	for(UInt32 i = 0; i < pscript->controllers.size(); i++)
 	{
 		if(!qstrcmp(pscript->controllers[i].name, pstrname))
 			return false;
@@ -194,8 +194,8 @@ bool CFlexManager::SetControllerName( const flexscript_t* pscript, flexcontrolle
 	pcontroller->index = GetFixedFlexIndex(pstrname);
 	if(pcontroller->index == -1)
 	{
-		Uint32 index = 0;
-		for(Uint32 i = 0; i < pscript->controllers.size(); i++)
+		UInt32 index = 0;
+		for(UInt32 i = 0; i < pscript->controllers.size(); i++)
 		{
 			if(&pscript->controllers[i] != pcontroller && pscript->controllers[i].index >= NB_FIXED_FLEXES)
 				index++;
@@ -210,9 +210,9 @@ bool CFlexManager::SetControllerName( const flexscript_t* pscript, flexcontrolle
 //====================================
 //
 //====================================
-Int32 CFlexManager::GetControllerIndex( const flexscript_t* pscript, const Char* name )
+Int32 CFlexManager::GetControllerIndex( const flexscript_t* pscript, const char* name )
 {
-	for(Uint32 i = 0; i < pscript->controllers.size(); i++)
+	for(UInt32 i = 0; i < pscript->controllers.size(); i++)
 	{
 		if(!qstrcmp(pscript->controllers[i].name, name))
 			return pscript->controllers[i].index;
@@ -224,7 +224,7 @@ Int32 CFlexManager::GetControllerIndex( const flexscript_t* pscript, const Char*
 //====================================
 //
 //====================================
-bool CFlexManager::LoadAssociationScript( flextypes_t npcType, const Char* pscriptname )
+bool CFlexManager::LoadAssociationScript( flextypes_t npcType, const char* pscriptname )
 {
 	// Make sure the type is valid
 	if( npcType == FLEX_NPC_TYPE_NONE || npcType != FLEX_NPC_TYPE_HUMAN && npcType != FLEX_NPC_TYPE_UNUSED )
@@ -235,17 +235,17 @@ bool CFlexManager::LoadAssociationScript( flextypes_t npcType, const Char* pscri
 
 	CString filepath;
 	filepath << FLEX_SCRIPT_FOLDER_PATH << PATH_SLASH_CHAR << pscriptname;
-	const byte* pfile = m_fileInterface.pfnLoadFile(filepath.c_str(), nullptr);
+	const Byte* pfile = m_fileInterface.pfnLoadFile(filepath.c_str(), nullptr);
 	if(!pfile)
 	{
 		SetError("%s - Could not load script '%s'", __FUNCTION__, filepath.c_str());
 		return false;
 	}
 
-	static Char line[MAX_LINE_LENGTH];
-	static Char field[MAX_PARSE_LENGTH];
+	static char line[MAX_LINE_LENGTH];
+	static char field[MAX_PARSE_LENGTH];
 
-	const Char* pstr = reinterpret_cast<const Char*>(pfile);
+	const char* pstr = reinterpret_cast<const char*>(pfile);
 	while(true)
 	{
 		if(!pstr)
@@ -255,7 +255,7 @@ bool CFlexManager::LoadAssociationScript( flextypes_t npcType, const Char* pscri
 		if(!qstrlen(line))
 			continue;
 
-		const Char* pchar = Common::Parse(line, field);
+		const char* pchar = Common::Parse(line, field);
 		if(!pchar)
 		{
 			// Fail on missing definitions
@@ -332,7 +332,7 @@ bool CFlexManager::LoadAssociationScript( flextypes_t npcType, const Char* pscri
 	m_fileInterface.pfnFreeFile(pfile);
 
 	// Precache these scripts
-	for(Uint32 iNPC = FLEX_NPC_TYPE_NONE+1; iNPC < NUM_FLEX_NPC_TYPES; iNPC++)
+	for(UInt32 iNPC = FLEX_NPC_TYPE_NONE+1; iNPC < NUM_FLEX_NPC_TYPES; iNPC++)
 	{
 		for(Int32 iState = FLEX_AISTATE_NONE+1; iState < NUM_FLEX_AISTATES; iState++)
 		{
@@ -340,13 +340,13 @@ bool CFlexManager::LoadAssociationScript( flextypes_t npcType, const Char* pscri
 			if(scriptlist.empty())
 				continue;
 
-			for(Uint32 i = 0; i < scriptlist.size(); i++)
+			for(UInt32 i = 0; i < scriptlist.size(); i++)
 				LoadScript(scriptlist[i].c_str());
 		}
 	}
 
 	// Precache sentence scripts as well
-	for(Uint32 i = 0; i < m_sentenceScriptArray.size(); i++)
+	for(UInt32 i = 0; i < m_sentenceScriptArray.size(); i++)
 		LoadScript(m_sentenceScriptArray[i].flexfile.c_str());
 
 	return true;
@@ -355,7 +355,7 @@ bool CFlexManager::LoadAssociationScript( flextypes_t npcType, const Char* pscri
 //====================================
 //
 //====================================
-const Char* CFlexManager::GetAIScript( flextypes_t npcType, flexaistates_t aiState )
+const char* CFlexManager::GetAIScript( flextypes_t npcType, flexaistates_t aiState )
 {
 	if( npcType == FLEX_NPC_TYPE_NONE || npcType != FLEX_NPC_TYPE_HUMAN && npcType != FLEX_NPC_TYPE_UNUSED )
 	{
@@ -373,7 +373,7 @@ const Char* CFlexManager::GetAIScript( flextypes_t npcType, flexaistates_t aiSta
 		return nullptr;
 
 	CArray<CString>& scriptArray = m_flexAIStateScripts[npcType][aiState];
-	Uint32 scriptIndex = Common::RandomLong( 0, (static_cast<Int32>(scriptArray.size()))-1);
+	UInt32 scriptIndex = Common::RandomLong( 0, (static_cast<Int32>(scriptArray.size()))-1);
 
 	return scriptArray[scriptIndex].c_str();
 }
@@ -381,12 +381,12 @@ const Char* CFlexManager::GetAIScript( flextypes_t npcType, flexaistates_t aiSta
 //====================================
 //
 //====================================
-const Char* CFlexManager::GetSentenceScript( const Char* pstrSentence )
+const char* CFlexManager::GetSentenceScript( const char* pstrSentence )
 {
 	CString sentence = pstrSentence;
 	sentence.tolower();
 
-	for(Uint32 i = 0; i < m_sentenceScriptArray.size(); i++)
+	for(UInt32 i = 0; i < m_sentenceScriptArray.size(); i++)
 	{
 		if(!qstrcmp(m_sentenceScriptArray[i].sentence, sentence))
 			return m_sentenceScriptArray[i].flexfile.c_str();
@@ -398,7 +398,7 @@ const Char* CFlexManager::GetSentenceScript( const Char* pstrSentence )
 //====================================
 //
 //====================================
-const flexscript_t* CFlexManager::LoadScript( const Char* pscriptname )
+const flexscript_t* CFlexManager::LoadScript( const char* pscriptname )
 {
 	CString filepath;
 	if(qstrstr(pscriptname, ":") == nullptr)
@@ -406,13 +406,13 @@ const flexscript_t* CFlexManager::LoadScript( const Char* pscriptname )
 	else
 		filepath = pscriptname;
 
-	for(Uint32 i = 0; i < m_scriptCache.size(); i++)
+	for(UInt32 i = 0; i < m_scriptCache.size(); i++)
 	{
 		if(!qstrcmp(m_scriptCache[i]->filename, filepath))
 			return m_scriptCache[i];
 	}
 
-	const byte* pfile = m_fileInterface.pfnLoadFile(filepath.c_str(), nullptr);
+	const Byte* pfile = m_fileInterface.pfnLoadFile(filepath.c_str(), nullptr);
 	if(!pfile)
 	{
 		SetError("%s - Could not load file '%s'", __FUNCTION__, pscriptname);
@@ -426,7 +426,7 @@ const flexscript_t* CFlexManager::LoadScript( const Char* pscriptname )
 	CString field;
 
 	// Read in the file contents
-	const Char* pchar = reinterpret_cast<const Char*>(pfile);
+	const char* pchar = reinterpret_cast<const char*>(pfile);
 
 	if(*pchar != '{')
 	{
@@ -513,7 +513,7 @@ const flexscript_t* CFlexManager::LoadScript( const Char* pscriptname )
 								newbind.strength = SDL_atof(szvalue.c_str());
 							else
 							{
-								SetError(false, "Error reading %s: Unknown field: %s", pscriptname, szfield.c_str());
+								SetError("Error reading %s: Unknown field: %s", pscriptname, szfield.c_str());
 								bError = true;
 								break;
 							}
@@ -592,14 +592,14 @@ const flexscript_t* CFlexManager::LoadScript( const Char* pscriptname )
 						pscript->flags |= FLEX_FLAG_STAY;
 					else
 					{
-						SetError(false, "Error reading %s: Unknown flag: %s", pscriptname, szvalue.c_str());
+						SetError("Error reading %s: Unknown flag: %s", pscriptname, szvalue.c_str());
 						bError = true;
 					}
 				}
 			}
 			else
 			{
-				SetError(false, "Error reading %s: Unknown field: %s", pscriptname, szfield.c_str());
+				SetError("Error reading %s: Unknown field: %s", pscriptname, szfield.c_str());
 				bError = true;
 			}
 		}
@@ -614,9 +614,9 @@ const flexscript_t* CFlexManager::LoadScript( const Char* pscriptname )
 	}
 
 	// Determine length
-	for(Uint32 i = 0; i < pscript->controllers.size(); i++)
+	for(UInt32 i = 0; i < pscript->controllers.size(); i++)
 	{
-		for(Uint32 j = 0; j < pscript->controllers[i].binds.size(); j++)
+		for(UInt32 j = 0; j < pscript->controllers[i].binds.size(); j++)
 		{
 			if(pscript->controllers[i].binds[j].time > pscript->duration)
 				pscript->duration = pscript->controllers[i].binds[j].time;
@@ -634,17 +634,17 @@ const flexscript_t* CFlexManager::LoadScript( const Char* pscriptname )
 //====================================
 void CFlexManager::SetMouth( Int32 mouthopen, flexstate_t* pstate )
 {
-	Float value = static_cast<Float>(mouthopen) / 30.0f;
-	value = clamp(value, 0.0, 1.0);
+	float value = static_cast<float>(mouthopen) / 30.0f;
+	value = Clamp(value, 0.0, 1.0);
 
-	Float outValue = pstate->values[FLEX_MOUTH_OPEN] += value;
-	pstate->values[FLEX_MOUTH_OPEN] = clamp(outValue, 0.0, 1.0);
+	float outValue = pstate->values[FLEX_MOUTH_OPEN] += value;
+	pstate->values[FLEX_MOUTH_OPEN] = Clamp(outValue, 0.0, 1.0);
 }
 
 //====================================
 //
 //====================================
-void CFlexManager::Blink( Float cur_time, Float health, flexstate_t* pstate )
+void CFlexManager::Blink( float cur_time, float health, flexstate_t* pstate )
 {
 	if(!cur_time)
 		return;
@@ -658,14 +658,14 @@ void CFlexManager::Blink( Float cur_time, Float health, flexstate_t* pstate )
 	if(pstate->nextblink > cur_time)
 		return;
 
-	Float blinkfull = pstate->nextblink + BLINK_IN;
-	Float blinkout = blinkfull + BLINK_CLOSED;
-	Float blinkdone = blinkout + BLINK_OUT;
+	float blinkfull = pstate->nextblink + BLINK_IN;
+	float blinkout = blinkfull + BLINK_CLOSED;
+	float blinkdone = blinkout + BLINK_OUT;
 
-	Float value = 0.0;
+	float value = 0.0;
 	if( cur_time < blinkfull && cur_time < blinkout )
 	{
-		Float local_time = cur_time - pstate->nextblink;
+		float local_time = cur_time - pstate->nextblink;
 		value = Common::SplineFraction( local_time, 1/BLINK_IN );
 	}
 	else if( cur_time < blinkout && cur_time < blinkdone )
@@ -674,7 +674,7 @@ void CFlexManager::Blink( Float cur_time, Float health, flexstate_t* pstate )
 	}
 	else if( cur_time < blinkdone && cur_time > blinkout )
 	{
-		Float local_time = cur_time - blinkout;
+		float local_time = cur_time - blinkout;
 		value = 1.0 - Common::SplineFraction( local_time, 1/BLINK_OUT );
 	}
 	else if( cur_time > blinkdone )
@@ -683,11 +683,11 @@ void CFlexManager::Blink( Float cur_time, Float health, flexstate_t* pstate )
 		value = 0.0;
 	}
 
-	Float outValue = pstate->values[FLEX_BLINK] + value;
-	pstate->values[FLEX_BLINK] = clamp(outValue, 0.0, 1.0);
+	float outValue = pstate->values[FLEX_BLINK] + value;
+	pstate->values[FLEX_BLINK] = Clamp(outValue, 0.0, 1.0);
 
 	// Curb eyes wide and eyes squint by blink value
-	Float eyeFlexesValue = 1.0 - pstate->values[FLEX_BLINK];
+	float eyeFlexesValue = 1.0 - pstate->values[FLEX_BLINK];
 	pstate->values[FLEX_EYES_WIDE] *= eyeFlexesValue;
 	pstate->values[FLEX_EYES_SQUINT] *= eyeFlexesValue;
 }
@@ -695,14 +695,14 @@ void CFlexManager::Blink( Float cur_time, Float health, flexstate_t* pstate )
 //====================================
 //
 //====================================
-void CFlexManager::UpdateValues( Float cur_time, Float health, Int32 mouthopen, flexstate_t* pstate, bool scripting )
+void CFlexManager::UpdateValues( float cur_time, float health, Int32 mouthopen, flexstate_t* pstate, bool scripting )
 {
 	// Reset mouth and blink flexes
 	pstate->values[FLEX_BLINK] = 0;
 	pstate->values[FLEX_MOUTH_OPEN] = 0;
 
 	// Temporary array of values
-	Float flexValues[MAX_VBM_FLEXES];
+	float flexValues[MAX_VBM_FLEXES];
 	for(Int32 i = 0; i < MAX_VBM_FLEXES; i++)
 		flexValues[i] = 0;
 
@@ -711,13 +711,13 @@ void CFlexManager::UpdateValues( Float cur_time, Float health, Int32 mouthopen, 
 	{
 		const flexscript_t* pscript = pstate->pscript;
 
-		for(Uint32 i = 0; i < pscript->controllers.size(); i++)
+		for(UInt32 i = 0; i < pscript->controllers.size(); i++)
 		{
 			const flexcontroller_t* pcontroller = &pscript->controllers[i];
 			for(Int32 j = 0; j < (static_cast<Int32>(pcontroller->binds.size()))-1; j++)
 			{
-				Double bindtime = pstate->time + pcontroller->binds[j].time;
-				Double nextbindtime = pstate->time + pcontroller->binds[j+1].time;
+				double bindtime = pstate->time + pcontroller->binds[j].time;
+				double nextbindtime = pstate->time + pcontroller->binds[j+1].time;
 
 				// Not there yet
 				if(bindtime > cur_time)
@@ -741,15 +741,15 @@ void CFlexManager::UpdateValues( Float cur_time, Float health, Int32 mouthopen, 
 					continue;
 				}
 
-				Double interval = nextbindtime - bindtime;
-				Double cur_segment_time = cur_time - bindtime;
+				double interval = nextbindtime - bindtime;
+				double cur_segment_time = cur_time - bindtime;
 			
-				Double curbindfraction = Common::SplineFraction(cur_segment_time, 1.0/interval);
-				Double prevbindfraction = 1.0 - curbindfraction;
+				double curbindfraction = Common::SplineFraction(cur_segment_time, 1.0/interval);
+				double prevbindfraction = 1.0 - curbindfraction;
 
-				Double prev_add = pcontroller->binds[j].strength*prevbindfraction;
-				Double cur_add = pcontroller->binds[j+1].strength*curbindfraction;
-				Double finalValue = prev_add + cur_add;
+				double prev_add = pcontroller->binds[j].strength*prevbindfraction;
+				double cur_add = pcontroller->binds[j+1].strength*curbindfraction;
+				double finalValue = prev_add + cur_add;
 
 				flexValues[pcontroller->index] = finalValue;
 			}
@@ -759,13 +759,13 @@ void CFlexManager::UpdateValues( Float cur_time, Float health, Int32 mouthopen, 
 	// Interpolate if we're in time
 	if((cur_time - pstate->time) < INTERP_TIME)
 	{
-		Float fullTime = cur_time - pstate->time;
-		Float fullFrac = Common::SplineFraction(fullTime, 1.0/INTERP_TIME);
+		float fullTime = cur_time - pstate->time;
+		float fullFrac = Common::SplineFraction(fullTime, 1.0/INTERP_TIME);
 
 		for(Int32 i = 0; i < MAX_VBM_FLEXES; i++)
 		{
-			Float prevValue = pstate->prev_values[i]*(1.0-fullFrac);
-			Float curValue = flexValues[i]*fullFrac;
+			float prevValue = pstate->prev_values[i]*(1.0-fullFrac);
+			float curValue = flexValues[i]*fullFrac;
 
 			pstate->values[i] = prevValue + curValue;
 		}
@@ -788,10 +788,10 @@ void CFlexManager::UpdateValues( Float cur_time, Float health, Int32 mouthopen, 
 //====================================
 //
 //====================================
-void CFlexManager::SetError( const Char *fmt, ... )
+void CFlexManager::SetError( const char *fmt, ... )
 {
 	va_list	vArgPtr;
-	Char cMsg[MAX_PARSE_LENGTH];
+	char cMsg[MAX_PARSE_LENGTH];
 	
 	va_start(vArgPtr,fmt);
 	vsprintf(cMsg, fmt, vArgPtr);

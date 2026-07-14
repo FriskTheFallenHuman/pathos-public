@@ -11,7 +11,7 @@ All Rights Reserved.
 #include "gd_includes.h"
 #include "multimanager.h"
 
-// TRUE if we're in InitializeEntities
+// true if we're in InitializeEntities
 extern bool g_bInInitializeEntities;
 
 // Link the entity to it's class
@@ -30,7 +30,7 @@ CMultiManager::CMultiManager( edict_t* pedict ):
 	m_nbTargets(0),
 	m_currentIndex(0)
 {
-	for(Uint32 i = 0; i < MAX_MULTIMANAGER_TARGETS; i++)
+	for(UInt32 i = 0; i < MAX_MULTIMANAGER_TARGETS; i++)
 	{
 		m_targetNamesArray[i] = NO_STRING_VALUE;
 		m_targetDelaysArray[i] = 0;
@@ -87,7 +87,7 @@ bool CMultiManager::KeyValue( const keyvalue_t& kv )
 		}
 
 		CString targetname(kv.keyname);
-		Uint32 hashpos = targetname.find(0, "#");
+		UInt32 hashpos = targetname.find(0, "#");
 		if(hashpos != CString::CSTRING_NO_POSITION)
 			targetname.erase(hashpos, targetname.length()-hashpos);
 
@@ -124,12 +124,12 @@ void CMultiManager::SortTargets( void )
 	while(isSwapped)
 	{
 		isSwapped = false;
-		for(Uint32 i = 1; i < m_nbTargets; i++)
+		for(UInt32 i = 1; i < m_nbTargets; i++)
 		{
 			if(m_targetDelaysArray[i] < m_targetDelaysArray[i-1])
 			{
 				string_t moveName = m_targetNamesArray[i];
-				Float moveDelay = m_targetDelaysArray[i];
+				float moveDelay = m_targetDelaysArray[i];
 
 				// Move it up one position
 				m_targetNamesArray[i] = m_targetNamesArray[i-1];
@@ -148,7 +148,7 @@ void CMultiManager::SortTargets( void )
 // @brief
 //
 //=============================================
-Uint32 CMultiManager::GetNbTargets( void ) const
+UInt32 CMultiManager::GetNbTargets( void ) const
 {
 	return m_nbTargets;
 }
@@ -157,7 +157,7 @@ Uint32 CMultiManager::GetNbTargets( void ) const
 // @brief
 //
 //=============================================
-string_t CMultiManager::GetTargetNameByIndex( Uint32 index ) const
+string_t CMultiManager::GetTargetNameByIndex( UInt32 index ) const
 {
 	if(index >= m_nbTargets)
 		return NO_STRING_VALUE;
@@ -169,7 +169,7 @@ string_t CMultiManager::GetTargetNameByIndex( Uint32 index ) const
 // @brief
 //
 //=============================================
-Float CMultiManager::GetTargetDelayByIndex( Uint32 index ) const
+float CMultiManager::GetTargetDelayByIndex( UInt32 index ) const
 {
 	if(index >= m_nbTargets)
 		return 0;
@@ -181,7 +181,7 @@ Float CMultiManager::GetTargetDelayByIndex( Uint32 index ) const
 // @brief
 //
 //=============================================
-Float CMultiManager::GetDelay( void )
+float CMultiManager::GetDelay( void )
 {
 	return m_delay;
 }
@@ -190,7 +190,7 @@ Float CMultiManager::GetDelay( void )
 // @brief
 //
 //=============================================
-void CMultiManager::AddTarget( const Char* pstrTargetName, Float delay )
+void CMultiManager::AddTarget( const char* pstrTargetName, float delay )
 {
 	m_targetNamesArray[m_nbTargets] = gd_engfuncs.pfnAllocString(pstrTargetName);
 	m_targetDelaysArray[m_nbTargets] = delay;
@@ -246,7 +246,7 @@ CMultiManager* CMultiManager::CloneManager( void )
 		return nullptr;
 	}
 
-	for(Uint32 i = 0; i < m_nbTargets; i++)
+	for(UInt32 i = 0; i < m_nbTargets; i++)
 		pManager->AddTarget(gd_engfuncs.pfnGetString(m_targetNamesArray[i]), m_targetDelaysArray[i]);
 
 	return pManager;
@@ -258,7 +258,7 @@ CMultiManager* CMultiManager::CloneManager( void )
 //=============================================
 void CMultiManager::TriggerThink( void )
 {
-	Double time = g_pGameVars->time - m_startTime;
+	double time = g_pGameVars->time - m_startTime;
 	while(m_currentIndex < m_nbTargets && m_targetDelaysArray[m_currentIndex] <= time)
 	{
 		Util::FireTargets(gd_engfuncs.pfnGetString(m_targetNamesArray[m_currentIndex]), m_activator, this, USE_TOGGLE, 0);
@@ -290,7 +290,7 @@ void CMultiManager::TriggerThink( void )
 // @brief
 //
 //=============================================
-void CMultiManager::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CMultiManager::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Do not allow re-triggers while running
 	if(m_isRunning)

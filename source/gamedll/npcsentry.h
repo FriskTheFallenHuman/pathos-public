@@ -19,19 +19,19 @@ class CNPCSentry : public CTurretNPC
 {
 public:
 	// Model used by this NPC
-	static const Char NPC_MODEL_NAME[];
+	static const char NPC_MODEL_NAME[];
 	// Retracted height
-	static const Float NPC_RETRACTED_HEIGHT;
+	static const float NPC_RETRACTED_HEIGHT;
 	// Deployed height
-	static const Float NPC_DEPLOYED_HEIGHT;
+	static const float NPC_DEPLOYED_HEIGHT;
 	// Minimum pitch value
-	static const Float NPC_MIN_PITCH_VALUE;
+	static const float NPC_MIN_PITCH_VALUE;
 	// View offset for npc
 	static const Vector NPC_VIEW_OFFSET;
 	// X size of NPC
-	static const Float NPC_X_SIZE;
+	static const float NPC_X_SIZE;
 	// Y size of NPC
-	static const Float NPC_Y_SIZE;
+	static const float NPC_Y_SIZE;
 
 public:
 	explicit CNPCSentry( edict_t* pedict );
@@ -41,7 +41,7 @@ public:
 	// Spawns the entity
 	virtual bool Spawn( void ) override;
 	// Makes the entity take on damage
-	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags ) override;
+	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags ) override;
 	// Returns the classification
 	virtual Int32 GetClassification( void ) const override;
 

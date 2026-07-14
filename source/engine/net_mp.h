@@ -24,12 +24,12 @@ public:
 
 public:
 	// Initializes networking functions
-	virtual bool Init( const Char* pstrhost ) override;
+	virtual bool Init( const char* pstrhost ) override;
 
 	// Close off and cache a message
 	virtual void SVC_MessageEnd( void ) override;
 	// Retrieves a cache pointer
-	virtual net_msgcache_t* SVC_GetWriteCache( Uint32 clientidx ) override;
+	virtual net_msgcache_t* SVC_GetWriteCache( UInt32 clientidx ) override;
 
 	// Close off and cache a message
 	virtual void CLS_MessageEnd( void ) override;
@@ -39,7 +39,7 @@ public:
 	// Manages a connecting client
 	virtual void ClientConnect( ENetEvent* pevent );
 	// Disconnects from the host server
-	virtual void Disconnect( Uint32 clindex ) override;
+	virtual void Disconnect( UInt32 clindex ) override;
 
 	// Retrieve any packets
 	virtual void Poll( void ) override;
@@ -49,9 +49,9 @@ public:
 
 private:
 	// Initializes server networking
-	bool InitServerNetworking( Uint32 port );
+	bool InitServerNetworking( UInt32 port );
 	// Initializes client networking
-	bool InitClientNetworking( Uint32 port, const Char* pstrhost );
+	bool InitClientNetworking( UInt32 port, const char* pstrhost );
 
 	// Retrieve any packets
 	virtual void Poll_Host( void );
@@ -61,13 +61,13 @@ private:
 	// Reads an incoming message
 	void ReadUDPMessage( net_msgcache_t* pcache, ENetEvent* pevent );
 	// Sends a message to a peer
-	bool SendUDPMessage( msgdest_t dest, byte* pdata, Uint32 msgsize, ENetPeer* ptrpeer );
+	bool SendUDPMessage( msgdest_t dest, Byte* pdata, UInt32 msgsize, ENetPeer* ptrpeer );
 
 	// Rejects a client and tells them why
-	virtual void RejectClient( ENetPeer* ptrpeer, const Char* pstrreason );
+	virtual void RejectClient( ENetPeer* ptrpeer, const char* pstrreason );
 	
 	// Called when connection is lost with the remote
-	void ConnectionLost( Uint32 clindex );
+	void ConnectionLost( UInt32 clindex );
 
 private:
 	// Write cache used for remotes
@@ -78,11 +78,11 @@ private:
 	// Host address
 	CString m_hostAddress;
 	// Host port
-	Uint32 m_hostPort;
+	UInt32 m_hostPort;
 	// Last time we attempted to reconnect
-	Double m_lastReconnectAttemptTime;
+	double m_lastReconnectAttemptTime;
 
 	// Connect id->player index map
-	CArray<Uint32> m_connectIdPlayerIdxArray;
+	CArray<UInt32> m_connectIdPlayerIdxArray;
 };
 #endif //NET_MP_H

@@ -35,7 +35,7 @@ All Rights Reserved.
 CBlackHoleRenderer gBlackHoleRenderer;
 
 // Black hole reference size
-const Float CBlackHoleRenderer::BLACK_HOLE_REFERENCE_SIZE = 1024;
+const float CBlackHoleRenderer::BLACK_HOLE_REFERENCE_SIZE = 1024;
 
 //=============================================
 //
@@ -181,7 +181,7 @@ void CBlackHoleRenderer::Think( void )
 //=============================================
 //
 //=============================================
-bool CBlackHoleRenderer::AffectObject( const Vector& origin, Vector& velocity, Float gravity )
+bool CBlackHoleRenderer::AffectObject( const Vector& origin, Vector& velocity, float gravity )
 {
 	if(m_blackHolesList.empty())
 		return true;
@@ -203,22 +203,22 @@ bool CBlackHoleRenderer::AffectObject( const Vector& origin, Vector& velocity, F
 		}
 
 		// Use inverse square radius
-		Float scale = GetBlackHoleScale(blackhole);
-		Float radius = BLACK_HOLE_SIZE*scale;
-		Float radiusSquared = radius*radius;
+		float scale = GetBlackHoleScale(blackhole);
+		float radius = BLACK_HOLE_SIZE*scale;
+		float radiusSquared = radius*radius;
 		Vector direction = blackhole.origin - origin;
-		Float distance = Math::DotProduct(direction, direction);
+		float distance = Math::DotProduct(direction, direction);
 		if(distance > radiusSquared)
 		{
 			m_blackHolesList.next();
 			continue;
 		}
 
-		Float attenuation = ((distance/radiusSquared) - 1.0) * -1.0;
-		attenuation = clamp(attenuation, 0.0, 1.0);
+		float attenuation = ((distance/radiusSquared) - 1.0) * -1.0;
+		attenuation = Clamp(attenuation, 0.0, 1.0);
 
 		// Calculate strength of pull by black hole
-		Float pullStrength = attenuation*BLACK_HOLE_SUCK_SPEED*blackhole.strength*m_pStrengthDebugCvar->GetValue();
+		float pullStrength = attenuation*BLACK_HOLE_SUCK_SPEED*blackhole.strength*m_pStrengthDebugCvar->GetValue();
 		Math::VectorNormalize(direction);
 
 		Vector velocityDirection = velocity;
@@ -235,8 +235,8 @@ bool CBlackHoleRenderer::AffectObject( const Vector& origin, Vector& velocity, F
 			Vector right, up;
 			Math::GetUpRight(direction, up, right);
 
-			Float orbitAtten = radiusSquared/(distance*sqrt(distance));
-			orbitAtten = clamp(orbitAtten, 0.0, 1.0);
+			float orbitAtten = radiusSquared/(distance*sqrt(distance));
+			orbitAtten = Clamp(orbitAtten, 0.0, 1.0);
 
 			// Orbit direction should pull towards the black hole the closer we are
 			velocity = velocity + right * BLACK_HOLE_SUCK_SPEED * blackhole.rotation * (1.0 - orbitAtten) * cls.frametime;
@@ -258,7 +258,7 @@ bool CBlackHoleRenderer::AffectObject( const Vector& origin, Vector& velocity, F
 //=============================================
 //
 //=============================================
-void CBlackHoleRenderer::CreateBlackHole( Int32 key, const Vector& origin, Float life, Float scale, Float strength, Float rotation, Float growthtime, Float shrinktime )
+void CBlackHoleRenderer::CreateBlackHole( Int32 key, const Vector& origin, float life, float scale, float strength, float rotation, float growthtime, float shrinktime )
 {
 	// Try to find a black hole with the same key if key is a non-zero value
 	blackhole_t* pblackhole = nullptr;
@@ -329,14 +329,14 @@ void CBlackHoleRenderer::KillBlackHole( Int32 key )
 //=============================================
 //
 //=============================================
-Float CBlackHoleRenderer::GetBlackHoleScale( const blackhole_t& blackhole ) const
+float CBlackHoleRenderer::GetBlackHoleScale( const blackhole_t& blackhole ) const
 {
-	Float scale = blackhole.scale;
+	float scale = blackhole.scale;
 
 	// Calculate growth period
 	if(blackhole.growthtime && cls.cl_time < (blackhole.spawntime + blackhole.growthtime))
 	{
-		Float growthFactor = (cls.cl_time - blackhole.spawntime) / blackhole.growthtime;
+		float growthFactor = (cls.cl_time - blackhole.spawntime) / blackhole.growthtime;
 		if(growthFactor > 1.0)
 			growthFactor = 1.0;
 		else if(growthFactor > 1.0)
@@ -348,10 +348,10 @@ Float CBlackHoleRenderer::GetBlackHoleScale( const blackhole_t& blackhole ) cons
 	// Calculate shrinking
 	if(blackhole.life != -1 && blackhole.shrinktime)
 	{
-		Double shrinkBeginTime = (blackhole.spawntime + blackhole.life - blackhole.shrinktime);
+		double shrinkBeginTime = (blackhole.spawntime + blackhole.life - blackhole.shrinktime);
 		if(shrinkBeginTime < cls.cl_time)
 		{
-			Float shrinkFactor = (cls.cl_time - shrinkBeginTime) / blackhole.shrinktime;
+			float shrinkFactor = (cls.cl_time - shrinkBeginTime) / blackhole.shrinktime;
 			if(shrinkFactor < 0)
 				shrinkFactor = 0;
 			else if(shrinkFactor > 1.0)
@@ -402,7 +402,7 @@ bool CBlackHoleRenderer::DrawBlackHoles( void )
 		return false;
 	}
 
-	if (!m_pShader->SetDeterminator(m_attribs.d_rectangle, TRUE))
+	if (!m_pShader->SetDeterminator(m_attribs.d_rectangle, true))
 	{
 		Sys_ErrorPopup("Shader error: %s.", m_pShader->GetError());
 		return false;
@@ -415,14 +415,14 @@ bool CBlackHoleRenderer::DrawBlackHoles( void )
 		m_blackHolesList.next();
 
 		const Vector& origin = blackhole.origin;
-		Float vOrigin [] = { origin[0], origin[1], origin[2], 1.0 };
+		float vOrigin [] = { origin[0], origin[1], origin[2], 1.0 };
 
 		// Multiply with modelview
-		Float viewPos[4];
+		float viewPos[4];
 		Math::MatMult4(rns.view.modelview.Transpose(), vOrigin, viewPos);
 
 		// Multiply with projection
-		Float screenCoords[4];
+		float screenCoords[4];
 		Math::MatMult4(rns.view.projection.Transpose(), viewPos, screenCoords);
 
 		// See if it's z-clipped
@@ -434,12 +434,12 @@ bool CBlackHoleRenderer::DrawBlackHoles( void )
 		glCopyTexImage2D(GL_TEXTURE_RECTANGLE, 0, GL_RGBA, 0, 0, rns.view.viewsize_x, rns.view.viewsize_y, 0);
 
 		// Calculate uniform values
-		Float distance = (rns.view.v_origin-origin).Length();
-		Float coordX = (screenCoords[0]/screenCoords[3])*0.5 + 0.5;
-		Float coordY = (screenCoords[1]/screenCoords[3])*0.5 + 0.5;
+		float distance = (rns.view.v_origin-origin).Length();
+		float coordX = (screenCoords[0]/screenCoords[3])*0.5 + 0.5;
+		float coordY = (screenCoords[1]/screenCoords[3])*0.5 + 0.5;
 
 		// Calculate size based on time from spawn/time to death
-		Float scale = GetBlackHoleScale(blackhole);
+		float scale = GetBlackHoleScale(blackhole);
 
 		m_pShader->SetUniform2f(m_attribs.u_screenpos, coordX, coordY);
 		m_pShader->SetUniform1f(m_attribs.u_distance, distance);

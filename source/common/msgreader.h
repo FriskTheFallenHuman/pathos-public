@@ -25,7 +25,7 @@ public:
 		m_readOffset(0)
 	{
 	}
-	CMSGReader( const byte* pdata, Uint32 msgsize ):
+	CMSGReader( const Byte* pdata, Uint32 msgsize ):
 		m_pMessageData(nullptr),
 		m_messageSize(0),
 		m_readOffset(0)
@@ -38,45 +38,45 @@ public:
 
 public:
 	// Begins reading a message
-	inline void BeginRead( const byte* pdata, Uint32 msgsize );
+	DO_INLINE void BeginRead( const Byte* pdata, Uint32 msgsize );
 	// Returns the error code if any
-	inline const Char* GetError( void ) const;
+	DO_INLINE const char* GetError( void ) const;
 	// Returns if we have an error
-	inline bool HasError( void );
+	DO_INLINE bool HasError( void );
 
 public:
 	// Reads a single byte
-	inline byte ReadByte( void );
+	DO_INLINE Byte ReadByte( void );
 	// Reads a single char
-	inline Char ReadChar( void );
+	DO_INLINE char ReadChar( void );
 	// Reats an short
-	inline Int16 ReadInt16( void );
+	DO_INLINE Int16 ReadInt16( void );
 	// Reads a unsigned short
-	inline Uint16 ReadUint16( void );
+	DO_INLINE Uint16 ReadUint16( void );
 	// Reads a 32-bit integer
-	inline Int32 ReadInt32( void );
+	DO_INLINE Int32 ReadInt32( void );
 	// Reads a 32-bit unsigned integer
-	inline Uint32 ReadUint32( void );
+	DO_INLINE Uint32 ReadUint32( void );
 	// Reads a 64-bit integer
-	inline Int64 ReadInt64( void );
+	DO_INLINE Int64 ReadInt64( void );
 	// Reads a 64-bit unsigned integer
-	inline Uint64 ReadUint64( void );
+	DO_INLINE Uint64 ReadUint64( void );
 	// Reads a 2-byte small float
-	inline Float ReadSmallFloat( void );
+	DO_INLINE float ReadSmallFloat( void );
 	// Reads a float
-	inline Float ReadFloat( void );
-	// Reads a Double
-	inline Double ReadDouble( void );
+	DO_INLINE float ReadFloat( void );
+	// Reads a double
+	DO_INLINE double ReadDouble( void );
 	// Reads a string
-	inline const Char* ReadString( void );
+	DO_INLINE const char* ReadString( void );
 	// Reads a buffer
-	inline const byte* ReadBuffer( Uint32 size );
+	DO_INLINE const Byte* ReadBuffer( Uint32 size );
 	// Reads a bitset
-	inline CBitSet ReadBitSet( void );
+	DO_INLINE CBitSet ReadBitSet( void );
 
 private:
 	// Message data pointer
-	const byte* m_pMessageData;
+	const Byte* m_pMessageData;
 	// Message size
 	Uint32 m_messageSize;
 	// Message read offset

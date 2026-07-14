@@ -13,7 +13,7 @@ All Rights Reserved.
 #include "snd_shared.h"
 #include "sentencesfile.h"
 
-// TRUE if we're in InitializeEntities
+// true if we're in InitializeEntities
 extern bool g_bInInitializeEntities;
 
 // Link the entity to it's class
@@ -93,13 +93,13 @@ bool CAmbientGeneric::KeyValue( const keyvalue_t& kv )
 	if(!qstrcmp(kv.keyname, "pitch"))
 	{
 		m_pitch = SDL_atoi(kv.value);
-		m_pitch = clamp(m_pitch, MIN_PITCH, MAX_PITCH);
+		m_pitch = Clamp(m_pitch, MIN_PITCH, MAX_PITCH);
 		return true;
 	}
 	else if(!qstrcmp(kv.keyname, "pitchstart"))
 	{
 		m_startPitch = SDL_atoi(kv.value);
-		m_startPitch = clamp(m_startPitch, MIN_PITCH, MAX_PITCH);
+		m_startPitch = Clamp(m_startPitch, MIN_PITCH, MAX_PITCH);
 		return true;
 	}
 	else if(!qstrcmp(kv.keyname, "spinup"))
@@ -164,7 +164,7 @@ bool CAmbientGeneric::Spawn( void )
 
 	// Set volume
 	m_volume = m_pState->health * 10;
-	m_volume = clamp(m_volume, 0, 100);
+	m_volume = Clamp(m_volume, 0, 100);
 
 	// Check for errors
 	if(!m_volume)
@@ -273,10 +273,10 @@ void CAmbientGeneric::Precache( void )
 {
 	if(m_pFields->message != NO_STRING_VALUE)
 	{
-		const Char* pstrSound = gd_engfuncs.pfnGetString(m_pFields->message);
+		const char* pstrSound = gd_engfuncs.pfnGetString(m_pFields->message);
 		if(pstrSound[0] == '!')
 		{
-			const Char* pstrName = g_pSentencesFile->GetSentence(pstrSound, &m_soundDuration);
+			const char* pstrName = g_pSentencesFile->GetSentence(pstrSound, &m_soundDuration);
 			if(pstrName)
 			{
 				m_emitSoundName = gd_engfuncs.pfnAllocString(pstrName);
@@ -310,7 +310,7 @@ void CAmbientGeneric::Precache( void )
 //=============================================
 void CAmbientGeneric::InitEntity( void )
 {
-	const Char* pstrEmitterName = gd_engfuncs.pfnGetString(m_emitterEntityName);
+	const char* pstrEmitterName = gd_engfuncs.pfnGetString(m_emitterEntityName);
 	if(!pstrEmitterName || !qstrlen(pstrEmitterName))
 		return;
 
@@ -360,11 +360,11 @@ void CAmbientGeneric::SendInitMessage( const CBaseEntity* pPlayer )
 		}
 
 		// Calculate the volume
-		Float volume = 0;
+		float volume = 0;
 		if(m_volumeFadeInTime && m_beginTime + m_volumeFadeInTime > g_pGameVars->time)
 		{
-			Float frac = (g_pGameVars->time - m_beginTime)/m_volumeFadeInTime;
-			frac = clamp(frac, 0.0, 1.0);
+			float frac = (g_pGameVars->time - m_beginTime)/m_volumeFadeInTime;
+			frac = Clamp(frac, 0.0, 1.0);
 
 			volume = m_startVolume * (1.0 - frac) + m_volume * frac;
 		}
@@ -376,8 +376,8 @@ void CAmbientGeneric::SendInitMessage( const CBaseEntity* pPlayer )
 				return;
 			}
 
-			Float frac = (g_pGameVars->time - m_turnoffBeginTime)/m_volumeFadeOutTime;
-			frac = clamp(frac, 0.0, 1.0);
+			float frac = (g_pGameVars->time - m_turnoffBeginTime)/m_volumeFadeOutTime;
+			frac = Clamp(frac, 0.0, 1.0);
 
 			volume = m_volume * (1.0 - frac);
 		}
@@ -388,8 +388,8 @@ void CAmbientGeneric::SendInitMessage( const CBaseEntity* pPlayer )
 		Int32 pitch = 0;
 		if(m_pitchFadeInTime && m_beginTime + m_pitchFadeInTime > g_pGameVars->time)
 		{
-			Float frac = (g_pGameVars->time - m_beginTime)/m_pitchFadeInTime;
-			frac = clamp(frac, 0.0, 1.0);
+			float frac = (g_pGameVars->time - m_beginTime)/m_pitchFadeInTime;
+			frac = Clamp(frac, 0.0, 1.0);
 
 			pitch = m_startPitch * (1.0 - frac) + m_pitch * frac;
 		}
@@ -401,8 +401,8 @@ void CAmbientGeneric::SendInitMessage( const CBaseEntity* pPlayer )
 				return;
 			}
 
-			Float frac = (g_pGameVars->time - m_turnoffBeginTime)/m_pitchFadeOutTime;
-			frac = clamp(frac, 0.0, 1.0);
+			float frac = (g_pGameVars->time - m_turnoffBeginTime)/m_pitchFadeOutTime;
+			frac = Clamp(frac, 0.0, 1.0);
 
 			pitch = m_pitch * (1.0 - frac);
 		}
@@ -412,7 +412,7 @@ void CAmbientGeneric::SendInitMessage( const CBaseEntity* pPlayer )
 		// Check if we should bother at all
 		if(!m_isLooping && m_beginTime)
 		{
-			Float duration = m_soundDuration * (static_cast<Float>(pitch) / static_cast<Float>(PITCH_NORM));
+			float duration = m_soundDuration * (static_cast<float>(pitch) / static_cast<float>(PITCH_NORM));
 			if((g_pGameVars->time-m_beginTime) > duration)
 			{
 				// Reset this
@@ -427,7 +427,7 @@ void CAmbientGeneric::SendInitMessage( const CBaseEntity* pPlayer )
 		}
 
 		// Calculate offset in time
-		Float timeoffset = g_pGameVars->time - m_beginTime;
+		float timeoffset = g_pGameVars->time - m_beginTime;
 
 		// Play the sound from the last time position
 		if(m_emitterEntity != reinterpret_cast<const CBaseEntity*>(this) && m_emitterEntity->IsVisible())
@@ -438,19 +438,19 @@ void CAmbientGeneric::SendInitMessage( const CBaseEntity* pPlayer )
 		// Add effects for pitch changes
 		if(pitch != m_pitch)
 		{
-			Float time = 0;
+			float time = 0;
 			Int32 target = 0;
 			if(m_pitchFadeInTime && m_beginTime + m_pitchFadeInTime > g_pGameVars->time)
 			{
-				Float frac = (g_pGameVars->time - m_beginTime)/m_pitchFadeInTime;
-				frac = clamp(frac, 0.0, 1.0);
+				float frac = (g_pGameVars->time - m_beginTime)/m_pitchFadeInTime;
+				frac = Clamp(frac, 0.0, 1.0);
 				time = m_pitchFadeInTime * (1.0 - frac);
 				target = m_pitch;
 			}
 			else if(m_pitchFadeOutTime && m_turnoffEndTime)
 			{
-				Float frac = (g_pGameVars->time - m_turnoffBeginTime)/m_pitchFadeOutTime;
-				frac = clamp(frac, 0.0, 1.0);
+				float frac = (g_pGameVars->time - m_turnoffBeginTime)/m_pitchFadeOutTime;
+				frac = Clamp(frac, 0.0, 1.0);
 				time = m_pitchFadeOutTime * (1.0 - frac);
 				target = 0;
 			}
@@ -462,19 +462,19 @@ void CAmbientGeneric::SendInitMessage( const CBaseEntity* pPlayer )
 		// Add effects for volume changes
 		if(volume != m_volume)
 		{
-			Float time = 0;
-			Float target = 0;
+			float time = 0;
+			float target = 0;
 			if(m_volumeFadeInTime && m_beginTime + m_volumeFadeInTime > g_pGameVars->time)
 			{
-				Float frac = (g_pGameVars->time - m_beginTime)/m_volumeFadeInTime;
-				frac = clamp(frac, 0.0, 1.0);
+				float frac = (g_pGameVars->time - m_beginTime)/m_volumeFadeInTime;
+				frac = Clamp(frac, 0.0, 1.0);
 				time = m_volumeFadeInTime * (1.0 - frac);
 				target = m_volume;
 			}
 			else if(m_volumeFadeOutTime && m_turnoffEndTime)
 			{
-				Float frac = (g_pGameVars->time - m_turnoffBeginTime)/m_volumeFadeOutTime;
-				frac = clamp(frac, 0.0, 1.0);
+				float frac = (g_pGameVars->time - m_turnoffBeginTime)/m_volumeFadeOutTime;
+				frac = Clamp(frac, 0.0, 1.0);
 				time = m_volumeFadeOutTime * (1.0 - frac);
 				target = 0;
 			}
@@ -489,7 +489,7 @@ void CAmbientGeneric::SendInitMessage( const CBaseEntity* pPlayer )
 // @brief
 //
 //=============================================
-void CAmbientGeneric::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CAmbientGeneric::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!m_isLooping)
 	{
@@ -534,7 +534,7 @@ void CAmbientGeneric::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, us
 void CAmbientGeneric::PlaySound( void )
 {
 	// Determine starting pitch/volume
-	Float volume = (m_volumeFadeInTime > 0) ? m_startVolume : m_volume;
+	float volume = (m_volumeFadeInTime > 0) ? m_startVolume : m_volume;
 	Int32 pitch = (m_pitchFadeInTime > 0) ? m_startPitch : m_pitch;
 
 	// Set play begin time
@@ -560,7 +560,7 @@ void CAmbientGeneric::PlaySound( void )
 void CAmbientGeneric::StopSound( void )
 {
 	// Get turn off time
-	Float turnofftime;
+	float turnofftime;
 	if(g_bInInitializeEntities)
 	{
 		// Do not set turnoff time if called from InitializeEntities

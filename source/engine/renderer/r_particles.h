@@ -200,64 +200,64 @@ struct script_definition_t
 	Int16 globsize;
 	Int16 numglobparticles;
 
-	Float minvel;
-	Float maxvel;
-	Float maxofs;
+	float minvel;
+	float maxvel;
+	float maxofs;
 
-	Float fadeintime;
-	Float fadeoutdelay;
-	Float velocitydamp;
-	Float stuckdie;
-	Float tracerdist;
+	float fadeintime;
+	float fadeoutdelay;
+	float velocitydamp;
+	float stuckdie;
+	float tracerdist;
 
-	Float maxheight;
+	float maxheight;
 
-	Float windx;
-	Float windy;
-	Float windvar;
-	Float windmult;
-	Float minwindmult;
-	Float windmultvar;
+	float windx;
+	float windy;
+	float windvar;
+	float windmult;
+	float minwindmult;
+	float windmultvar;
 	Int16 windtype;
 
 	Int16 attachflags;
 
-	Float maxlife;
-	Float maxlifevar;
-	Float systemsize;
+	float maxlife;
+	float maxlifevar;
+	float systemsize;
 
 	Vector primarycolor;
 	Vector secondarycolor;
-	Float transitiondelay;
-	Float transitiontime;
-	Float transitionvar;
+	float transitiondelay;
+	float transitiontime;
+	float transitionvar;
 	
-	Float rotationvar;
-	Float rotationvel;
-	Float rotationdamp;
-	Float rotationdampdelay;
+	float rotationvar;
+	float rotationvel;
+	float rotationdamp;
+	float rotationdampdelay;
 
-	Float rotxvar;
-	Float rotxvel;
-	Float rotxdamp;
-	Float rotxdampdelay;
+	float rotxvar;
+	float rotxvel;
+	float rotxdamp;
+	float rotxdampdelay;
 
-	Float rotyvar;
-	Float rotyvel;
-	Float rotydamp;
-	Float rotydampdelay;
+	float rotyvar;
+	float rotyvel;
+	float rotydamp;
+	float rotydampdelay;
 
-	Float scale;
-	Float scalevar;
-	Float scaledampdelay;
-	Float scaledampfactor;
-	Float veldampdelay;
-	Float gravity;
-	Float particlefreq;
-	Float impactdamp;
-	Float mainalpha;
-	Float minlight;
-	Float maxlight;
+	float scale;
+	float scalevar;
+	float scaledampdelay;
+	float scaledampfactor;
+	float veldampdelay;
+	float gravity;
+	float particlefreq;
+	float impactdamp;
+	float mainalpha;
+	float minlight;
+	float maxlight;
 
 	Uint16 startparticles;
 	Int16 maxparticles;
@@ -270,7 +270,7 @@ struct script_definition_t
 	Int16 rendermode;
 	Int16 render_flags;
 	Int16 spawnchance;
-	Float softofftime;
+	float softofftime;
 
 	Int16 fadedistfar;
 	Int16 fadedistnear;
@@ -284,9 +284,9 @@ struct script_definition_t
 	CString deathcreate;
 	CString watercreate;
 
-	Float decallife;
-	Float decalfade;
-	Float decalgrowthtime;
+	float decallife;
+	float decalfade;
+	float decalgrowthtime;
 
 	en_texture_t *ptexture;
 };
@@ -324,13 +324,13 @@ struct part_msg_cache_t
 	Int32 id;
 	entindex_t entindex;
 	CString file;
-	byte attachment;
+	Byte attachment;
 
 	Vector origin;
 	Vector direction;
 
-	byte msgtype;
-	byte scripttype;
+	Byte msgtype;
+	Byte scripttype;
 
 	Int32 boneindex;
 	Int32 attachflags;
@@ -380,15 +380,15 @@ struct particle_system_t
 	Vector dir;
 
 	cl_entity_t *parententity;
-	byte attachment;
+	Byte attachment;
 
-	Float skyheight;
+	float skyheight;
 
-	Double spawntime;
-	Double softoffbegintime;
+	double spawntime;
+	double softoffbegintime;
 
 	Int16 maxparticles;
-	Float particlefreq;
+	float particlefreq;
 
 	Int16 attachflags;
 
@@ -467,32 +467,32 @@ struct cl_particle_t
 	Vector last_light;
 	Vector lightmap;
 
-	Double spawntime;
-	Float life;
-	Float scale;
-	Float alpha;
+	double spawntime;
+	float life;
+	float scale;
+	float alpha;
 
-	Float fadeoutdelay;
+	float fadeoutdelay;
 
-	Float scaledampdelay;
-	Float secondarydelay;
-	Float secondarytime;
+	float scaledampdelay;
+	float secondarydelay;
+	float secondarytime;
 
-	Float rotationvel;
-	Float rotation;
+	float rotationvel;
+	float rotation;
 
-	Float rotx;
-	Float rotxvel;
+	float rotx;
+	float rotxvel;
 
-	Float roty;
-	Float rotyvel;
+	float roty;
+	float rotyvel;
 
-	Float windxvel;
-	Float windyvel;
-	Float windmult;
-	Float fadein;
+	float windxvel;
+	float windyvel;
+	float windmult;
+	float fadein;
 
-	Float texcoords[4][2];
+	float texcoords[4][2];
 
 	Int32 frame;
 
@@ -501,7 +501,7 @@ struct cl_particle_t
 	cl_particle_t	*next;
 	cl_particle_t	*prev;
 
-	byte pad[27];
+	Byte pad[27];
 };
 
 struct particle_vertex_t
@@ -517,8 +517,8 @@ struct particle_vertex_t
 	vec4_t origin;
 	vec4_t color;
 
-	Float texcoord[2];
-	byte padding[24];
+	float texcoord[2];
+	Byte padding[24];
 };
 
 struct p_proj_light
@@ -649,17 +649,17 @@ public:
 	
 public:
 	// Caches a particle engine system creation event
-	void CacheCreateSystem( const Vector& origin, const Vector& direction, part_script_type_t scripttype, const Char* pstrFilepath, Uint32 id, entindex_t entindex, Int32 attachment, Int32 boneindex = NO_POSITION, Int32 attachflags = PARTICLE_ATTACH_NONE );
+	void CacheCreateSystem( const Vector& origin, const Vector& direction, part_script_type_t scripttype, const char* pstrFilepath, Uint32 id, entindex_t entindex, Int32 attachment, Int32 boneindex = NO_POSITION, Int32 attachflags = PARTICLE_ATTACH_NONE );
 	// Caches a particle removal event
 	void CacheRemoveSystem( Int32 id, entindex_t entindex, bool keepcached );
 	// Parses a particle script
-	const script_cache_t* PrecacheScript( Int32 type, const Char *name, CArray<CString>* pLoadList );
+	const script_cache_t* PrecacheScript( Int32 type, const char *name, CArray<CString>* pLoadList );
 	// Loads a system script
-	bool LoadSystemScript( script_cache_t* pCache, const Char* pstrData );
+	bool LoadSystemScript( script_cache_t* pCache, const char* pstrData );
 	// Loads a cluster script
-	bool LoadClusterScript( script_cache_t* pCache, const Char* pstrData );
+	bool LoadClusterScript( script_cache_t* pCache, const char* pstrData );
 	// Reads a field in from a particle script
-	bool ReadField( script_definition_t* pdefinition, const Char* pstrField, const Char* pstrNextRead );
+	bool ReadField( script_definition_t* pdefinition, const char* pstrField, const char* pstrNextRead );
 
 	// Removes particle systems tied to an entity
 	void KillEntityParticleSystems( Int32 entindex );
@@ -668,15 +668,15 @@ private:
 	// Allocates a particle system object
 	particle_system_t *AllocSystem( void );
 	// Allocates a particle
-	__forceinline cl_particle_t *AllocParticle( particle_system_t *psystem );
+	FORCE_INLINE cl_particle_t *AllocParticle( particle_system_t *psystem );
 	// Releases a particle system
 	void ReleaseSystem( particle_system_t* psystem );
 
 private:
 	// Creates partile systems from a cluster script
-	void CreateCluster( const Char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, cl_entity_t *pentity = 0, entindex_t entindex = 0, Uint32 attachment = 0, Int32 boneindex = NO_POSITION, Int32 attachflags = PARTICLE_ATTACH_NONE );
+	void CreateCluster( const char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, cl_entity_t *pentity = 0, entindex_t entindex = 0, Uint32 attachment = 0, Int32 boneindex = NO_POSITION, Int32 attachflags = PARTICLE_ATTACH_NONE );
 	// Creates a particle system object
-	particle_system_t *CreateSystem( const Char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, particle_system_t *parent = nullptr, cl_entity_t *entity = 0, entindex_t entindex = 0, Uint32 attachment = 0, Int32 boneindex = NO_POSITION, Int32 attachflags = PARTICLE_ATTACH_NONE );
+	particle_system_t *CreateSystem( const char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, particle_system_t *parent = nullptr, cl_entity_t *entity = 0, entindex_t entindex = 0, Uint32 attachment = 0, Int32 boneindex = NO_POSITION, Int32 attachflags = PARTICLE_ATTACH_NONE );
 	// Removes a particle system
 	void RemoveSystem( entindex_t entindex, Int32 iId, bool keepcached );
 
@@ -685,31 +685,31 @@ private:
 	void UpdateSystems( void );
 	
 	// Creates a particle
-	cl_particle_t *CreateParticle( particle_system_t *psystem, Float *pflorigin = nullptr, Float *pflnormal = nullptr );
+	cl_particle_t *CreateParticle( particle_system_t *psystem, float *pflorigin = nullptr, float *pflnormal = nullptr );
 	// Creates environment particle first-time objects
 	void EnvironmentCreateFirst( particle_system_t *psystem );
 
 	// Removes a particle
-	__forceinline void RemoveParticle( cl_particle_t *particle );
+	FORCE_INLINE void RemoveParticle( cl_particle_t *particle );
 	// Updates a particle
 	bool UpdateParticle( cl_particle_t *pparticle );
 	// Checks collisions for a particle
 	bool CheckCollision( Vector& vecOrigin, Vector& vecVelocity, particle_system_t* psystem, cl_particle_t *pparticle ) ;
 	// Retreives lighting info for a particle
-	__forceinline Vector LightForParticle( cl_particle_t *pparticle );
+	FORCE_INLINE Vector LightForParticle( cl_particle_t *pparticle );
 
 	// Retreives dynamic lights for a particle
 	static void GetLights( particle_system_t *psystem, cl_dlight_t **plights, Uint32 *numlights, bool spotlight, Uint32 max );
 
 private:
 	// Checks water state for a particle
-	__forceinline static Int32 CheckWater( const Vector& origin );
+	FORCE_INLINE static Int32 CheckWater( const Vector& origin );
 	// Clips a tracer particle
-	__forceinline static bool ClipTracer( const Vector &start, const Vector &delta, Vector &clippedStart, Vector &clippedDelta );
+	FORCE_INLINE static bool ClipTracer( const Vector &start, const Vector &delta, Vector &clippedStart, Vector &clippedDelta );
 	// Batches vertexes for a particle
-	__forceinline void BatchVertex( cl_particle_t *pparticle, const Vector& vertex, Float alpha,  Int32 tc );
+	FORCE_INLINE void BatchVertex( cl_particle_t *pparticle, const Vector& vertex, float alpha,  Int32 tc );
 	// Batches a particle
-	void BatchParticle( cl_particle_t *pparticle, Float flup, Float flright, const Float *pfltranspose );
+	void BatchParticle( cl_particle_t *pparticle, float flup, float flright, const float *pfltranspose );
 	
 	// Returns a position transformed by an entity's bone
 	void GetBoneTransformedPosition( const Vector& baseposition, cl_entity_t* pentity, Int32 boneindex, Vector& outposition, bool reverse );

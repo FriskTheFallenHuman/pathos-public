@@ -154,7 +154,7 @@ bool CEnvEarthQuake::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CEnvEarthQuake::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvEarthQuake::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool currentstate = false;
 	switch(useMode)
@@ -190,7 +190,7 @@ void CEnvEarthQuake::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, use
 //=============================================
 void CEnvEarthQuake::QuakeThink( void )
 {
-	Float nextdelay = Common::RandomFloat(m_minDelay, m_maxDelay);
+	float nextdelay = Common::RandomFloat(m_minDelay, m_maxDelay);
 	if((g_pGameVars->time + nextdelay) > (m_shakeBeginTime + m_duration))
 	{
 		SetThink(nullptr);
@@ -205,15 +205,15 @@ void CEnvEarthQuake::QuakeThink( void )
 		0);
 	shakeDirection.Normalize();
 
-	Float shakeForce = Common::RandomFloat(m_minForce, m_maxForce);
+	float shakeForce = Common::RandomFloat(m_minForce, m_maxForce);
 	if(m_fadeTime)
 	{
 		// Calculate fade factor
-		Double fadeBeginTime = m_shakeBeginTime + m_duration - m_fadeTime;
+		double fadeBeginTime = m_shakeBeginTime + m_duration - m_fadeTime;
 		if(fadeBeginTime <= g_pGameVars->time)
 		{
-			Float factor = (g_pGameVars->time - fadeBeginTime) / m_duration;
-			factor = 1.0 - clamp(factor, 0.0, 1.0);
+			float factor = (g_pGameVars->time - fadeBeginTime) / m_duration;
+			factor = 1.0 - Clamp(factor, 0.0, 1.0);
 			shakeForce *= factor;
 		}
 	}
@@ -233,7 +233,7 @@ void CEnvEarthQuake::QuakeThink( void )
 
 		if(Common::RandomLong(0, 1) == 0)
 		{
-			Float angleForce = Common::RandomFloat(0.5, 0.8);
+			float angleForce = Common::RandomFloat(0.5, 0.8);
 			pPlayer->SetPunchAmount(vecPush * angleForce);
 		}
 	}

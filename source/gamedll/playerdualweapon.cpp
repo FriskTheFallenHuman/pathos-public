@@ -77,7 +77,7 @@ bool CPlayerDualWeapon::AddFullAmmoDual( CPlayerWeapon* pcheckweapon )
 // @brief
 //
 //=============================================
-bool CPlayerDualWeapon::AddAmmo( Int32 count, const Char* pstrname, Int32 maxclip, Int32 maxcarry, CBaseEntity* pWeapon )
+bool CPlayerDualWeapon::AddAmmo( Int32 count, const char* pstrname, Int32 maxclip, Int32 maxcarry, CBaseEntity* pWeapon )
 {
 	Int32 ammoid;
 	if(maxclip < 1)
@@ -87,7 +87,7 @@ bool CPlayerDualWeapon::AddAmmo( Int32 count, const Char* pstrname, Int32 maxcli
 	}
 	else if(!m_clip && !qstrcmp(pWeapon->GetClassName(), GetClassName()))
 	{
-		Uint32 prevClip = m_clip;
+		UInt32 prevClip = m_clip;
 		Int32 clipgive = m_clip+count;
 		if(clipgive > maxclip)
 			clipgive = maxclip;
@@ -127,7 +127,7 @@ bool CPlayerDualWeapon::AddAmmo( Int32 count, const Char* pstrname, Int32 maxcli
 		}
 
 		// We need ammoid regardless
-		Uint32 numgive = count - clipgive;
+		UInt32 numgive = count - clipgive;
 		if (numgive)
 			ammoid = m_pPlayer->GiveAmmo(count - clipgive, pstrname, maxcarry, true, pWeapon);
 		else

@@ -16,7 +16,7 @@ All Rights Reserved.
 #include "grenade.h"
 
 // Sequence names for weapon
-const Char* CWeaponHandGrenade::m_sequenceNames[CWeaponHandGrenade::NUM_WEAPON_ANIMATIONS] = 
+const char* CWeaponHandGrenade::m_sequenceNames[CWeaponHandGrenade::NUM_WEAPON_ANIMATIONS] = 
 {
 	"idle1",
 	"idle2",
@@ -31,7 +31,7 @@ const Char* CWeaponHandGrenade::m_sequenceNames[CWeaponHandGrenade::NUM_WEAPON_A
 };
 
 // Weapon view model
-const Char CWeaponHandGrenade::WEAPON_VIEWMODEL[] = "models/v_grenade.mdl";
+const char CWeaponHandGrenade::WEAPON_VIEWMODEL[] = "models/v_grenade.mdl";
 // Weapon weight
 const Int32 CWeaponHandGrenade::WEAPON_WEIGHT = 80;
 // Weapon slot
@@ -39,11 +39,11 @@ const Int32 CWeaponHandGrenade::WEAPON_SLOT = 5;
 // Weapon slot position
 const Int32 CWeaponHandGrenade::WEAPON_SLOT_POSITION = 0;
 // Default ammo for weapon
-const Uint32 CWeaponHandGrenade::WEAPON_DEFAULT_GIVE = 1;
+const UInt32 CWeaponHandGrenade::WEAPON_DEFAULT_GIVE = 1;
 // Grenade explosion delay
-const Float CWeaponHandGrenade::GRENADE_EXPLODE_DELAY = 3.0;
+const float CWeaponHandGrenade::GRENADE_EXPLODE_DELAY = 3.0;
 // Grenade cooking cut-off time
-const Float CWeaponHandGrenade::GRENADE_CUTOFF_TIME = 2.5;
+const float CWeaponHandGrenade::GRENADE_CUTOFF_TIME = 2.5;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(weapon_handgrenade, CWeaponHandGrenade);
@@ -145,7 +145,7 @@ void CWeaponHandGrenade::Holster( void )
 	Int32 ammocount = m_pPlayer->GetAmmoCount(m_ammoType);
 	if(ammocount > 0)
 	{
-		const Char* pstrSequenceName = m_sequenceNames[HANDGRENADE_HOLSTER];
+		const char* pstrSequenceName = m_sequenceNames[HANDGRENADE_HOLSTER];
 		SetWeaponAnimation(pstrSequenceName);
 		m_nextThinkTime = g_pGameVars->time + GetSequenceTime(pstrSequenceName);
 		m_nextAttackTime = m_nextThinkTime;
@@ -196,7 +196,7 @@ void CWeaponHandGrenade::SecondaryAttack( void )
 void CWeaponHandGrenade::Begin( bool istossing )
 {
 	Int32 animationIndex = istossing ? HANDGRENADE_PINPULL_TOSS : HANDGRENADE_PINPULL;
-	const Char* pstrSequenceName = m_sequenceNames[animationIndex];
+	const char* pstrSequenceName = m_sequenceNames[animationIndex];
 
 	m_throwStartTime = g_pGameVars->time + GetSequenceTime(pstrSequenceName);
 	m_nextThinkTime = m_nextAttackTime = m_nextIdleTime = m_throwStartTime;
@@ -220,7 +220,7 @@ void CWeaponHandGrenade::PostThink( void )
 		if(m_throwStartTime <= g_pGameVars->time)
 		{
 			// Get time spent cooking the grenade
-			Float timeafter = m_throwStartTime - g_pGameVars->time + GRENADE_EXPLODE_DELAY;
+			float timeafter = m_throwStartTime - g_pGameVars->time + GRENADE_EXPLODE_DELAY;
 			if(timeafter < 0)
 				timeafter = 0;
 			
@@ -246,8 +246,8 @@ void CWeaponHandGrenade::PostThink( void )
 				endpos = tr.endpos;
 
 			// Calculate speed and strength
-			Float throwstrength = 4 + (g_pGameVars->time - m_throwStartTime)/GRENADE_EXPLODE_DELAY * 3;
-			Float throwspeed = (90 - throwangles.x)*throwstrength;
+			float throwstrength = 4 + (g_pGameVars->time - m_throwStartTime)/GRENADE_EXPLODE_DELAY * 3;
+			float throwspeed = (90 - throwangles.x)*throwstrength;
 			if(throwspeed > 1200)
 				throwspeed = 1200;
 
@@ -309,7 +309,7 @@ void CWeaponHandGrenade::PostThink( void )
 			SpawnPin(origin, m_pPlayer->GetViewAngles(), velocity);
 
 			// If we have more, set the recovery time
-			Double nextTime = g_pGameVars->time + GetSequenceTime(m_sequenceNames[animationIndex]);
+			double nextTime = g_pGameVars->time + GetSequenceTime(m_sequenceNames[animationIndex]);
 			// IMPORTANT - Set next think time
 			m_nextIdleTime = m_nextThinkTime = nextTime;
 			m_playedFidgetAnimation = true;
@@ -351,9 +351,9 @@ void CWeaponHandGrenade::Idle( void )
 	if(!m_pPlayer->GetAmmoCount(m_ammoType))
 		return;
 
-	Uint32 sequenceIndex;
-	Float timeMultiplier;
-	Float flRand = Common::RandomFloat(0.0, 1.0);
+	UInt32 sequenceIndex;
+	float timeMultiplier;
+	float flRand = Common::RandomFloat(0.0, 1.0);
 
 	if(!m_playedFidgetAnimation && flRand >= 0.75)
 	{
@@ -368,7 +368,7 @@ void CWeaponHandGrenade::Idle( void )
 		m_playedFidgetAnimation = false;
 	}
 
-	Float sequenceTime = GetSequenceTime(m_sequenceNames[sequenceIndex]);
+	float sequenceTime = GetSequenceTime(m_sequenceNames[sequenceIndex]);
 	m_nextIdleTime = g_pGameVars->time + sequenceTime * timeMultiplier;
 
 	SetWeaponAnimation( m_sequenceNames[sequenceIndex] );

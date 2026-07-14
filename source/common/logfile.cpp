@@ -14,16 +14,16 @@ All Rights Reserved.
 #include "constants.h"
 
 // Buffer size
-const Uint32 CLogFile::LOG_BUFFER_SIZE = 4096;
+const UInt32 CLogFile::LOG_BUFFER_SIZE = 4096;
 // Size of buffer for message prints
-const Uint32 CLogFile::PRINT_MSG_BUFFER_SIZE = 16384;
+const UInt32 CLogFile::PRINT_MSG_BUFFER_SIZE = 16384;
 
 //=============================================
 // @brief Constructor
 //
 // @param pstrPath Log file path
 //=============================================
-CLogFile::CLogFile(const Char* pstrPath, pfnConPrintf_t pfnConPrintf, file_interface_t& fileInterface, bool deletePrevious, bool timeStamps) :
+CLogFile::CLogFile(const char* pstrPath, pfnConPrintf_t pfnConPrintf, file_interface_t& fileInterface, bool deletePrevious, bool timeStamps) :
 	m_sLogPath(pstrPath),
 	m_nbLinesWritten(0),
 	m_useTimeStamps(timeStamps),
@@ -35,8 +35,8 @@ CLogFile::CLogFile(const Char* pstrPath, pfnConPrintf_t pfnConPrintf, file_inter
 	m_fileInterface(fileInterface),
 	m_pTempWriteBuffer(nullptr)
 {
-	m_pBuffer = new Char[LOG_BUFFER_SIZE];
-	m_pTempWriteBuffer = new Char[PRINT_MSG_BUFFER_SIZE];
+	m_pBuffer = new char[LOG_BUFFER_SIZE];
+	m_pTempWriteBuffer = new char[PRINT_MSG_BUFFER_SIZE];
 }
 
 //=============================================
@@ -100,7 +100,7 @@ bool CLogFile::Close()
 	if(m_logBufferLoad > 0)
 	{
 		// Write to file
-		const byte* pdata = reinterpret_cast<const byte*>(m_pBuffer);
+		const Byte* pdata = reinterpret_cast<const Byte*>(m_pBuffer);
 		result = m_fileInterface.pfnWriteLogFile(pdata, m_logBufferLoad, m_sLogPath.c_str(), true);
 		if(!result)
 		{
@@ -119,7 +119,7 @@ bool CLogFile::Close()
 //
 // @param pstrString String to write
 //=============================================
-bool CLogFile::Write( const Char* pstrString )
+bool CLogFile::Write( const char* pstrString )
 {
 	if(m_writeSemaphore)
 		return false;
@@ -133,10 +133,10 @@ bool CLogFile::Write( const Char* pstrString )
 		CString strOut;
 		CString dateStr = Common::GetDate();
 
-		Uint32 newlineCount = 0;
+		UInt32 newlineCount = 0;
 		bool isMultiLine = false;
 
-		const Char* pstr = pstrString;
+		const char* pstr = pstrString;
 		while(*pstr)
 		{
 			if(*pstr == '\n' || *pstr == '\r')
@@ -178,8 +178,8 @@ bool CLogFile::Write( const Char* pstrString )
 			{
 				if(*pstr == '\n' || *pstr == '\r')
 				{
-					const Char* pstrbegin = pstrString+begin;
-					const Uint32 count = (pstr - pstrbegin);
+					const char* pstrbegin = pstrString+begin;
+					const UInt32 count = (pstr - pstrbegin);
 					if(count)
 					{
 						strOut.assign(pstrbegin, count);
@@ -214,8 +214,8 @@ bool CLogFile::Write( const Char* pstrString )
 
 			if(pstr - (pstrString+begin) > 0)
 			{
-				const Char* pstrbegin = pstrString+begin;
-				const Uint32 count = (pstr - pstrbegin) - 1;
+				const char* pstrbegin = pstrString+begin;
+				const UInt32 count = (pstr - pstrbegin) - 1;
 
 				strOut.assign(pstrbegin, count);
 				strOut.insert(0, dateStr.c_str());
@@ -241,24 +241,24 @@ bool CLogFile::Write( const Char* pstrString )
 //
 // @param pstrString String to write
 //=============================================
-bool CLogFile::WriteInternal( const Char* pstrString )
+bool CLogFile::WriteInternal( const char* pstrString )
 {
 	// Start from beginning
-	Uint32 remainsize = qstrlen(pstrString);
-	const Char* psrc = pstrString;
+	UInt32 remainsize = qstrlen(pstrString);
+	const char* psrc = pstrString;
 
 	bool result = true;
 	while(remainsize > 0 && result)
 	{
-		Char* pdest = m_pBuffer + m_logBufferLoad;
+		char* pdest = m_pBuffer + m_logBufferLoad;
 
-		Uint32 sizetowrite;
+		UInt32 sizetowrite;
 		if(m_logBufferLoad + remainsize >= LOG_BUFFER_SIZE)
 			sizetowrite = LOG_BUFFER_SIZE - m_logBufferLoad;
 		else
 			sizetowrite = remainsize;
 
-		memcpy(pdest, psrc, sizeof(Char)*sizetowrite);
+		memcpy(pdest, psrc, sizeof(char)*sizetowrite);
 		remainsize -= sizetowrite;
 		m_logBufferLoad += sizetowrite;
 		psrc += sizetowrite;
@@ -266,7 +266,7 @@ bool CLogFile::WriteInternal( const Char* pstrString )
 		if(m_logBufferLoad == LOG_BUFFER_SIZE)
 		{
 			// Write to file
-			const byte* pdata = reinterpret_cast<const byte*>(m_pBuffer);
+			const Byte* pdata = reinterpret_cast<const Byte*>(m_pBuffer);
 			result = m_fileInterface.pfnWriteLogFile(pdata, m_logBufferLoad, m_sLogPath.c_str(), true);
 			if(!result)
 			{
@@ -288,12 +288,12 @@ bool CLogFile::WriteInternal( const Char* pstrString )
 //
 // @param pstrString String to write
 //=============================================
-bool CLogFile::Printf( const Char *fmt, ... )
+bool CLogFile::Printf( const char *fmt, ... )
 {
 	va_list	vArgPtr;
 	
 	va_start(vArgPtr,fmt);
-	vsprintf_s(m_pTempWriteBuffer, PRINT_MSG_BUFFER_SIZE, fmt, vArgPtr);
+	ENGINE_VSPRINTF_S(m_pTempWriteBuffer, PRINT_MSG_BUFFER_SIZE, fmt, vArgPtr);
 	va_end(vArgPtr);
 
 	return Write(m_pTempWriteBuffer);

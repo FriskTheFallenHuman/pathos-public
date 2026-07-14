@@ -14,7 +14,7 @@ All Rights Reserved.
 #include "r_fbocache.h"
 
 // Maximum entities rendered for glow
-static constexpr Uint32 MAX_AURA_ENTITIES	= 32;
+static constexpr UInt32 MAX_AURA_ENTITIES	= 32;
 
 enum glow_shaders_t
 {
@@ -34,8 +34,8 @@ struct aura_vertex_t
 	}
 
 	vec4_t origin;
-	Float texcoord[2];
-	byte padding[8];
+	float texcoord[2];
+	Byte padding[8];
 };
 
 struct aura_attribs
@@ -81,9 +81,9 @@ class CGlowAura
 {
 public:
 	// Radius of aura effect
-	static const Float AURA_RADIUS;
+	static const float AURA_RADIUS;
 	// Maximum aura resolution
-	static const Uint32 AURA_RESOLUTION;
+	static const UInt32 AURA_RESOLUTION;
 public:
 	CGlowAura( void );
 	~CGlowAura( void );
@@ -107,7 +107,7 @@ private:
 	// Entities to render for glow aura
 	cl_entity_t	*m_pEntities[MAX_AURA_ENTITIES];
 	// Number of entities to render
-	Uint32	m_iNumEntities;
+	UInt32	m_iNumEntities;
 
 private:
 	// Shader object

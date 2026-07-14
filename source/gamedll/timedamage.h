@@ -47,21 +47,21 @@ public:
 
 public:
 	// Creates bbox-based timedamage entity
-	static CTimeDamage* CreateTimeDamageBox( CBaseEntity* pInflictor, const Vector& origin, const Vector& mins, const Vector& maxs, Int32 dmgTypeFlags, Float dmgDelay, Float dmgAmount, Float life, CBaseEntity* pFollow = nullptr );
+	static CTimeDamage* CreateTimeDamageBox( CBaseEntity* pInflictor, const Vector& origin, const Vector& mins, const Vector& maxs, Int32 dmgTypeFlags, float dmgDelay, float dmgAmount, float life, CBaseEntity* pFollow = nullptr );
 	// Creates timedamage entity that follows another entity
-	static CTimeDamage* CreateTimeDamageFollowEntity( CBaseEntity* pInflictor, CBaseEntity* pTarget, Int32 dmgTypeFlags, Int32 hitgroup, Float dmgDelay, Float dmgAmount, Float life );
+	static CTimeDamage* CreateTimeDamageFollowEntity( CBaseEntity* pInflictor, CBaseEntity* pTarget, Int32 dmgTypeFlags, Int32 hitgroup, float dmgDelay, float dmgAmount, float life );
 
 public:
 	// Set the type
 	void SetType( damage_type_t type );
 	// Set the damage delay
-	void SetDamageDelay( Float delay );
+	void SetDamageDelay( float delay );
 	// Set damage type flags
 	void SetDamageTypeFlags( Int32 dmgFlags );
 	// Set lifetime of entity
-	void SetLifetime( Float life );
+	void SetLifetime( float life );
 	// Set damage amount
-	void SetDamageAmount( Float dmg );
+	void SetDamageAmount( float dmg );
 	// Set attacker entity
 	void SetAttacker( CBaseEntity* pAttacker );
 	// Set hurt target entity
@@ -89,20 +89,20 @@ private:
 	// Damage type
 	Int32 m_dmgType;
 	// Damage delay
-	Float m_dmgDelay;
+	float m_dmgDelay;
 	// Damage type flags
 	Int32 m_dmgTypeFlags;
 	// Lifetime of entity
-	Float m_lifetime;
+	float m_lifetime;
 	// Damage amount
-	Float m_dmgAmount;
+	float m_dmgAmount;
 	// Hitgroup
 	Int32 m_hitgroup;
 
 	// Next damage time
-	Double m_nextDmgTime;
+	double m_nextDmgTime;
 	// Death time
-	Double m_deathTime;
+	double m_deathTime;
 
 	// Attacker entity
 	CEntityHandle m_attacker;

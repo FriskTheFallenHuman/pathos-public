@@ -24,11 +24,11 @@ public:
 public:
 	virtual bool AddDuplicate( CPlayerWeapon* pOriginal ) override;
 	virtual bool AddFullAmmoDual( CPlayerWeapon* pcheckweapon ) override;
-	virtual bool AddAmmo( Int32 count, const Char* pstrname, Int32 maxclip, Int32 maxcarry, CBaseEntity* pWeapon ) override;
+	virtual bool AddAmmo( Int32 count, const char* pstrname, Int32 maxclip, Int32 maxcarry, CBaseEntity* pWeapon ) override;
 
 	virtual void FinishReload( void ) override;
 
 public:
-	virtual Uint32 GetMaxClipSingle( void ) = 0;
+	virtual UInt32 GetMaxClipSingle( void ) = 0;
 };
 #endif //PLAYERDUALWEAPON_H

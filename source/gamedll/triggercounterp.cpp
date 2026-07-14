@@ -56,7 +56,7 @@ bool CTriggerCounterP::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerCounterP::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerCounterP::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(useMode == USE_OFF)
 	{

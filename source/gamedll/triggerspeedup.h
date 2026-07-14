@@ -25,16 +25,16 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	
 public:
 	void EXPORTFN SpeedupThink( void );
 
 private:
-	Float m_targetSpeed;
-	Float m_startSpeed;
-	Float m_duration;
-	Double m_beginTime;
+	float m_targetSpeed;
+	float m_startSpeed;
+	float m_duration;
+	double m_beginTime;
 };
 
 #endif //TRIGGERSPEEDUP_H

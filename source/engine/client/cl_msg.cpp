@@ -45,8 +45,8 @@ bool CL_ReadMessages( void )
 	CNetworking* pnetworking = cls.netinfo.pnet;
 	assert(pnetworking != nullptr);
 
-	byte* pdata = nullptr;
-	Uint32 msgsize = 0;
+	Byte* pdata = nullptr;
+	UInt32 msgsize = 0;
 	while(pnetworking->SVC_GetMessage(pdata, msgsize))
 	{
 		// Begin reading the message
@@ -197,7 +197,7 @@ void CL_ParseHeartBeat( void )
 
 	if(prompt)
 	{
-		Double delta = cls.cl_time - cls.cl_pingtime;
+		double delta = cls.cl_time - cls.cl_pingtime;
 		Int32 responsemstime = SDL_ceil(delta*SECONDS_TO_MILLISECONDS);
 		Con_Printf("Sever response time: %d ms.\n", responsemstime);
 	}
@@ -211,7 +211,7 @@ void CL_ParseAddAVelocity( void )
 	CMSGReader& reader = cls.netinfo.reader;
 
 	Vector avelocity;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		avelocity[i] = reader.ReadFloat();
 
 	if(reader.HasError())
@@ -231,7 +231,7 @@ void CL_ParseViewSetAngles( void )
 	CMSGReader& reader = cls.netinfo.reader;
 
 	Vector vangles;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		vangles[i] = reader.ReadFloat();
 
 	if(reader.HasError())
@@ -273,12 +273,12 @@ bool CL_ParseServerInfo( void )
 	// Parse skybox name
 	cls.skyname = reader.ReadString();
 
-	for(Uint32 i = 0; i < MAX_MAP_HULLS; i++)
+	for(UInt32 i = 0; i < MAX_MAP_HULLS; i++)
 	{
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			cls.pminfo.player_mins[i][j] = reader.ReadFloat();
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			cls.pminfo.player_maxs[i][j] = reader.ReadFloat();
 	}
 
@@ -371,7 +371,7 @@ bool CL_ReadClientData( void )
 	cls.clinfo.entindex = reader.ReadInt16();
 	cls.clientindex = reader.ReadInt16();
 	cls.cl_clsvtime = reader.ReadDouble();
-	Uint32 lastsvusercmdidx = reader.ReadUint64();
+	UInt32 lastsvusercmdidx = reader.ReadUint64();
 	cls.parsecount++;
 
 	if(reader.HasError())
@@ -404,7 +404,7 @@ void CL_SendPlayerInfo( void )
 	if(pnetworking->GetClientState(0) != NETCL_CONNECTED)
 		return;
 
-	const Char* pstrPlayerName = g_pCvarName->GetStrValue();
+	const char* pstrPlayerName = g_pCvarName->GetStrValue();
 	pnetworking->CLS_MessageBegin(cls_clientinfo);
 		pnetworking->WriteString(pstrPlayerName);
 	pnetworking->CLS_MessageEnd();
@@ -424,7 +424,7 @@ void CL_DisconnectMsg( void )
 	bool rejected = reader.ReadByte() ? true : false;
 	if(rejected)
 	{
-		const Char* pstrReason = reader.ReadString();
+		const char* pstrReason = reader.ReadString();
 		Con_Printf("Rejected: %s.\n", pstrReason);
 	}
 	else
@@ -454,7 +454,7 @@ void CL_UpdateLatchedState( cl_entity_t* pentity )
 		pentity->latched.sequence = pentity->prevstate.sequence;
 		pentity->latched.sequencetime = pentity->curstate.animtime; // Otherwise take animtime
 
-		for(Uint32 i = 0; i < MAX_BLENDING; i++)
+		for(UInt32 i = 0; i < MAX_BLENDING; i++)
 			pentity->latched.prevseqblending[i] = pentity->prevstate.blending[i];
 	}
 
@@ -463,14 +463,14 @@ void CL_UpdateLatchedState( cl_entity_t* pentity )
 	pentity->latched.origin = pentity->prevstate.origin;
 	pentity->latched.animtime = pentity->prevstate.animtime;
 
-	for(Uint32 i = 0; i < MAX_CONTROLLERS; i++)
+	for(UInt32 i = 0; i < MAX_CONTROLLERS; i++)
 		pentity->latched.controllers[i] = pentity->prevstate.controllers[i];
 
-	for(Uint32 i = 0; i < MAX_BLENDING; i++)
+	for(UInt32 i = 0; i < MAX_BLENDING; i++)
 		pentity->latched.blending[i] = pentity->prevstate.blending[i];
 
 	// Set attachments to their base values
-	for(Uint32 i = 0; i < MAX_ATTACHMENTS; i++)
+	for(UInt32 i = 0; i < MAX_ATTACHMENTS; i++)
 		pentity->attachments[i] = pentity->prevstate.origin;
 }
 
@@ -485,7 +485,7 @@ void CL_ResetLatchedState( cl_entity_t* pentity )
 	pentity->latched.sequence = 0;
 	pentity->latched.sequencetime = 0;
 
-	for(Uint32 i = 0; i < MAX_BLENDING; i++)
+	for(UInt32 i = 0; i < MAX_BLENDING; i++)
 		pentity->latched.prevseqblending[i] = pentity->curstate.blending[i];
 
 	// Copy last predicted origin and angles
@@ -493,14 +493,14 @@ void CL_ResetLatchedState( cl_entity_t* pentity )
 	pentity->latched.origin = pentity->curstate.origin;
 	pentity->latched.animtime = pentity->curstate.animtime;
 
-	for(Uint32 i = 0; i < MAX_CONTROLLERS; i++)
+	for(UInt32 i = 0; i < MAX_CONTROLLERS; i++)
 		pentity->latched.controllers[i] = pentity->curstate.controllers[i];
 
-	for(Uint32 i = 0; i < MAX_BLENDING; i++)
+	for(UInt32 i = 0; i < MAX_BLENDING; i++)
 		pentity->latched.blending[i] = pentity->curstate.blending[i];
 
 	// Set attachments to their base values
-	for(Uint32 i = 0; i < MAX_ATTACHMENTS; i++)
+	for(UInt32 i = 0; i < MAX_ATTACHMENTS; i++)
 		pentity->attachments[i] = pentity->curstate.origin;
 }
 
@@ -613,15 +613,15 @@ bool CL_ReadPacketEntities( void )
 	cls.numparticleblockers = 0;
 
 	// Get the number of entities
-	Uint32 numentities = reader.ReadUint32();
+	UInt32 numentities = reader.ReadUint32();
 	
 	// Parse the entities
-	for(Uint32 i = 0; i < numentities; i++)
+	for(UInt32 i = 0; i < numentities; i++)
 	{
 		// Get the entity index
 		entindex_t entindex = reader.ReadInt16();
 		// Get the identifier
-		Uint32 identifier = reader.ReadUint32();
+		UInt32 identifier = reader.ReadUint32();
 
 		// Filter for bad messages
 		if(entindex >= static_cast<entindex_t>(cls.entities.size()))
@@ -657,25 +657,25 @@ bool CL_ReadPacketEntities( void )
 		state.msg_time = cls.cl_time;
 
 		// Read in the update mask
-		Uint32 updateMask = reader.ReadUint32();
+		UInt32 updateMask = reader.ReadUint32();
 
 		// Nothing fancy until we have actual networking
 		if(updateMask & U_ORIGIN)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.origin[j] = reader.ReadFloat();
 		}
 
 		if(updateMask & U_ANGLES)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.angles[j] = reader.ReadFloat();
 		}
 
 		// Read velocities
 		if(updateMask & U_VELOCITY)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.velocity[j] = reader.ReadFloat();
 
 			state.fallvelocity = reader.ReadFloat();
@@ -683,54 +683,54 @@ bool CL_ReadPacketEntities( void )
 
 		if(updateMask & U_AVELOCITY)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.avelocity[j] = reader.ReadFloat();
 		}
 
 		if(updateMask & U_BASEVELOCITY)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.basevelocity[j] = reader.ReadFloat();
 		}
 
 		// Read view related things
 		if(updateMask & U_PUNCHANGLES)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.punchangles[j] = reader.ReadFloat();
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.punchamount[j] = reader.ReadFloat();
 		}
 
 		if(updateMask & U_VIEWANGLES)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.viewangles[j] = reader.ReadFloat();
 		}
 
 		if(updateMask & U_VIEWOFFSET)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.view_offset[j] = reader.ReadFloat();
 		}
 
 		// Read endpos/startpos
 		if(updateMask & U_POSITIONS)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.endpos[j] = reader.ReadFloat();
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.startpos[j] = reader.ReadFloat();
 		}
 
 		// Read mins/maxs
 		if(updateMask & U_MINSMAXS)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.mins[j] = reader.ReadFloat();
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.maxs[j] = reader.ReadFloat();
 		}
 
@@ -768,13 +768,13 @@ bool CL_ReadPacketEntities( void )
 
 		if(updateMask & U_CONTROLLERS)
 		{
-			for(Uint32 j = 0; j < MAX_CONTROLLERS; j++)
+			for(UInt32 j = 0; j < MAX_CONTROLLERS; j++)
 				state.controllers[j] = reader.ReadFloat();
 		}
 
 		if(updateMask & U_BLENDING)
 		{
-			for(Uint32 j = 0; j < MAX_BLENDING; j++)
+			for(UInt32 j = 0; j < MAX_BLENDING; j++)
 				state.blending[j] = reader.ReadFloat();
 		}
 
@@ -787,10 +787,10 @@ bool CL_ReadPacketEntities( void )
 			state.renderfx = reader.ReadInt32();
 			state.numsegments = reader.ReadUint32();
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.rendercolor[j] = reader.ReadFloat();
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.lightorigin[j] = reader.ReadFloat();
 		}
 
@@ -849,25 +849,25 @@ bool CL_ReadPacketEntities( void )
 
 		if(updateMask & U_VUSER1)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.vuser1[j] = reader.ReadFloat();
 		}
 
 		if(updateMask & U_VUSER2)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.vuser2[j] = reader.ReadFloat();
 		}
 
 		if(updateMask & U_VUSER3)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.vuser3[j] = reader.ReadFloat();
 		}
 
 		if(updateMask & U_VUSER4)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.vuser4[j] = reader.ReadFloat();
 		}
 
@@ -875,7 +875,7 @@ bool CL_ReadPacketEntities( void )
 		{
 			state.parent = reader.ReadInt32();
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				state.parentoffset[j] = reader.ReadFloat();
 		}
 
@@ -974,7 +974,7 @@ void CL_FileConsistencyMsg( void )
 	CMSGReader& reader = cls.netinfo.reader;
 
 	// Retrieve the file path string
-	const Char* pstrFilename = reader.ReadString();
+	const char* pstrFilename = reader.ReadString();
 
 	if(reader.HasError())
 	{
@@ -983,8 +983,8 @@ void CL_FileConsistencyMsg( void )
 	}
 
 	// Load the file in
-	Uint32 filesize = 0;
-	const byte* pfile = FL_LoadFile(pstrFilename, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = FL_LoadFile(pstrFilename, &filesize);
 	if(!pfile)
 	{
 		Con_Printf("%s - Could not load '%s'.\n", __FUNCTION__, pstrFilename);
@@ -1027,8 +1027,8 @@ void CL_ReadUserMessage( void )
 		return;
 	}
 
-	Uint16 msgsize = reader.ReadUint16();
-	const byte* pdata = reader.ReadBuffer(msgsize);
+	UInt16 msgsize = reader.ReadUint16();
+	const Byte* pdata = reader.ReadBuffer(msgsize);
 
 	if(reader.HasError())
 	{
@@ -1048,7 +1048,7 @@ void CL_ReadParticlePrecacheMessage( void )
 {
 	CMSGReader& reader = cls.netinfo.reader;
 
-	const Char* pstrfilepath = reader.ReadString();
+	const char* pstrfilepath = reader.ReadString();
 	part_script_type_t type = static_cast<part_script_type_t>(reader.ReadByte());
 
 	if(reader.HasError())
@@ -1057,7 +1057,7 @@ void CL_ReadParticlePrecacheMessage( void )
 		return;
 	}
 
-	gParticleEngine.PrecacheScript(type, pstrfilepath, false);
+	gParticleEngine.PrecacheScript(type, pstrfilepath, nullptr);
 }
 
 //=============================================
@@ -1070,7 +1070,7 @@ void CL_ReadDecalPrecacheMessage( void )
 	CString name = reader.ReadString();
 	decalcache_type_t type = static_cast<decalcache_type_t>(reader.ReadByte());
 
-	for(Uint32 i = 0; i < cls.netinfo.decalcache.size(); i++)
+	for(UInt32 i = 0; i < cls.netinfo.decalcache.size(); i++)
 	{
 		const decalcache_t& cache = cls.netinfo.decalcache[i];
 		if(!qstrcmp(cache.name, name) && cache.type == type)
@@ -1098,8 +1098,8 @@ void CL_RegisterUserMessage( void )
 	CMSGReader& reader = cls.netinfo.reader;
 
 	// Read message info
-	Uint32 msgid = reader.ReadByte();
-	const Char* pstrMsgName = reader.ReadString();
+	UInt32 msgid = reader.ReadByte();
+	const char* pstrMsgName = reader.ReadString();
 
 	if(reader.HasError())
 	{
@@ -1108,7 +1108,7 @@ void CL_RegisterUserMessage( void )
 	}
 
 	// Make sure we don't add it twice, not like it's likely to happen on client
-	for(Uint32 i = 0; i < cls.netinfo.usermsgfunctions.size(); i++)
+	for(UInt32 i = 0; i < cls.netinfo.usermsgfunctions.size(); i++)
 	{
 		if(!qstrcmp(cls.netinfo.usermsgfunctions[i].name, pstrMsgName))
 			return;
@@ -1131,7 +1131,7 @@ void CL_RegisterUserMessage( void )
 	usermsgfuncname << "MsgFunc_" << pstrMsgName;
 
 	// Load function pointer
-	pfnCLUserMsg_t pFunction = static_cast<pfnCLUserMsg_t>(SDL_LoadFunction(cls.pdllhandle, usermsgfuncname.c_str()));
+	pfnCLUserMsg_t pFunction = reinterpret_cast<pfnCLUserMsg_t>(SDL_LoadFunction(cls.pdllhandle, usermsgfuncname.c_str()));
 	if(!pFunction)
 	{
 		// Add the entry anyway, but warn the client
@@ -1160,9 +1160,9 @@ void CL_ReadSoundEngineMessage( void )
 	{
 	case MSG_SNDENGINE_OGG:
 		{
-			Float fadetime = 0;
-			Float timeoffset = 0;
-			const Char* pstring = nullptr;
+			float fadetime = 0;
+			float timeoffset = 0;
+			const char* pstring = nullptr;
 
 			Int32 flags = reader.ReadByte();
 			Int32 channel = reader.ReadInt16();
@@ -1237,7 +1237,7 @@ void CL_ReadSoundEngineMessage( void )
 		break;
 	case MSG_SNDENGINE_PRECACHE:
 		{
-			const Char *sample = reader.ReadString();
+			const char *sample = reader.ReadString();
 			Int32 svindex = reader.ReadInt16();
 
 			if(reader.HasError())
@@ -1253,12 +1253,12 @@ void CL_ReadSoundEngineMessage( void )
 		{
 			Int32 svindex = reader.ReadInt16();
 			entindex_t entindex = reader.ReadInt16();
-			Float volume = reader.ReadFloat();
-			Float atten = reader.ReadFloat();
+			float volume = reader.ReadFloat();
+			float atten = reader.ReadFloat();
 			Int32 channel = reader.ReadByte();
 			Int32 flags = reader.ReadInt32();
 			Int32 pitch = reader.ReadInt16();
-			Float timeoffset = reader.ReadSmallFloat();
+			float timeoffset = reader.ReadSmallFloat();
 
 			if(reader.HasError())
 			{
@@ -1293,14 +1293,14 @@ void CL_ReadSoundEngineMessage( void )
 			Vector origin;
 			Int32 svindex = reader.ReadInt16();
 			entindex_t entindex = reader.ReadInt16();
-			Float volume = reader.ReadFloat();
-			Float atten = reader.ReadFloat();
+			float volume = reader.ReadFloat();
+			float atten = reader.ReadFloat();
 			Int32 flags = reader.ReadInt32();
 			Int32 pitch = reader.ReadInt16();
 			origin[0] = reader.ReadFloat();
 			origin[1] = reader.ReadFloat();
 			origin[2] = reader.ReadFloat();
-			Float timeoffs = reader.ReadSmallFloat();
+			float timeoffs = reader.ReadSmallFloat();
 
 			if(reader.HasError())
 			{
@@ -1333,10 +1333,10 @@ void CL_ReadSoundEngineMessage( void )
 		{
 			Int32 svindex = reader.ReadInt16();
 			entindex_t entindex = reader.ReadInt16();
-			byte channel = reader.ReadByte();
+			Byte channel = reader.ReadByte();
 			snd_effects_t effect = static_cast<snd_effects_t>(reader.ReadByte());
-			Float duration = reader.ReadSmallFloat();
-			Float targetvalue = reader.ReadFloat();
+			float duration = reader.ReadSmallFloat();
+			float targetvalue = reader.ReadFloat();
 
 			if(reader.HasError())
 			{
@@ -1359,7 +1359,7 @@ void CL_ReadSoundEngineMessage( void )
 	case MSG_SNDENGINE_KILL_ENTITY_SOUNDS:
 		{
 			entindex_t entindex = reader.ReadInt16();
-			byte channel = reader.ReadByte();
+			Byte channel = reader.ReadByte();
 
 			gSoundEngine.StopSound(entindex, channel);
 		}
@@ -1390,7 +1390,7 @@ void CL_ReadSoundEngineMessage( void )
 //=============================================
 //
 //=============================================
-Int32 CL_RegisterClientUserMessage( const Char* pstrMsgName, Int32 msgsize )
+Int32 CL_RegisterClientUserMessage( const char* pstrMsgName, Int32 msgsize )
 {
 	return UserMSG_RegisterUserMessage(cls.netinfo.usermsgs, pstrMsgName, msgsize);
 }
@@ -1457,7 +1457,7 @@ void CL_ClientRegisterUserMessages( void )
 		return;
 	}
 
-	for(Uint32 i = 0; i < cls.netinfo.usermsgs.size(); i++)
+	for(UInt32 i = 0; i < cls.netinfo.usermsgs.size(); i++)
 	{
 		usermsg_t& msg = cls.netinfo.usermsgs[i];
 
@@ -1472,7 +1472,7 @@ void CL_ClientRegisterUserMessages( void )
 //=============================================
 //
 //=============================================
-void CL_Msg_WriteByte( byte value )
+void CL_Msg_WriteByte( Byte value )
 {
 	UserMSG_Msg_WriteByte(cls.netinfo.msgdata, value);
 }
@@ -1480,7 +1480,7 @@ void CL_Msg_WriteByte( byte value )
 //=============================================
 //
 //=============================================
-void CL_Msg_WriteChar( Char value )
+void CL_Msg_WriteChar( char value )
 {
 	UserMSG_Msg_WriteChar(cls.netinfo.msgdata, value);
 }
@@ -1496,7 +1496,7 @@ void CL_Msg_WriteInt16( Int16 value )
 //=============================================
 //
 //=============================================
-void CL_Msg_WriteUint16( Uint16 value )
+void CL_Msg_WriteUint16( UInt16 value )
 {
 	UserMSG_Msg_WriteUint16(cls.netinfo.msgdata, value);
 }
@@ -1512,7 +1512,7 @@ void CL_Msg_WriteInt32( Int32 value )
 //=============================================
 //
 //=============================================
-void CL_Msg_WriteUint32( Uint32 value )
+void CL_Msg_WriteUint32( UInt32 value )
 {
 	UserMSG_Msg_WriteUint32(cls.netinfo.msgdata, value);
 }
@@ -1528,7 +1528,7 @@ void CL_Msg_WriteInt64( Int64 value )
 //=============================================
 //
 //=============================================
-void CL_Msg_WriteUint64( Uint64 value )
+void CL_Msg_WriteUint64( UInt64 value )
 {
 	UserMSG_Msg_WriteUint64(cls.netinfo.msgdata, value);
 }
@@ -1536,7 +1536,7 @@ void CL_Msg_WriteUint64( Uint64 value )
 //=============================================
 //
 //=============================================
-void CL_Msg_WriteSmallFloat( Float value )
+void CL_Msg_WriteSmallFloat( float value )
 {
 	UserMSG_Msg_WriteSmallFloat(cls.netinfo.msgdata, value);
 }
@@ -1544,7 +1544,7 @@ void CL_Msg_WriteSmallFloat( Float value )
 //=============================================
 //
 //=============================================
-void CL_Msg_WriteFloat( Float value )
+void CL_Msg_WriteFloat( float value )
 {
 	UserMSG_Msg_WriteFloat(cls.netinfo.msgdata, value);
 }
@@ -1552,7 +1552,7 @@ void CL_Msg_WriteFloat( Float value )
 //=============================================
 //
 //=============================================
-void CL_Msg_WriteDouble( Double value )
+void CL_Msg_WriteDouble( double value )
 {
 	UserMSG_Msg_WriteDouble(cls.netinfo.msgdata, value);
 }
@@ -1560,7 +1560,7 @@ void CL_Msg_WriteDouble( Double value )
 //=============================================
 //
 //=============================================
-void CL_Msg_WriteBuffer( const byte* pdata, Uint32 size )
+void CL_Msg_WriteBuffer( const Byte* pdata, UInt32 size )
 {
 	UserMSG_Msg_WriteBuffer(cls.netinfo.msgdata, pdata, size);
 }
@@ -1568,7 +1568,7 @@ void CL_Msg_WriteBuffer( const byte* pdata, Uint32 size )
 //=============================================
 //
 //=============================================
-void CL_Msg_WriteString( const Char* pstring )
+void CL_Msg_WriteString( const char* pstring )
 {
 	UserMSG_Msg_WriteString(cls.netinfo.msgdata, pstring);
 }
@@ -1585,7 +1585,7 @@ void CL_Msg_WriteEntindex( entindex_t entindex )
 //=============================================
 //
 //=============================================
-void CL_Msg_WriteBitSet( const byte* pdataarray, Uint32 numbits, Uint32 numbytes )
+void CL_Msg_WriteBitSet( const Byte* pdataarray, UInt32 numbits, UInt32 numbytes )
 {
 	// Is this function even neeeded?
 	UserMSG_Msg_WriteBitSet(cls.netinfo.msgdata, pdataarray, numbits, numbytes);

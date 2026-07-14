@@ -14,7 +14,7 @@ All Rights Reserved.
 // @brief Default constructor
 //
 //=============================================
-template <typename T> inline CArray<T>::CArray( void ):
+template <typename T> DO_INLINE CArray<T>::CArray( void ):
 	m_pArray(nullptr),
 	m_arraySize(0),
 	m_reservedSize(0)
@@ -26,7 +26,7 @@ template <typename T> inline CArray<T>::CArray( void ):
 //
 // @param size Size to allocate
 //=============================================
-template <typename T> inline CArray<T>::CArray( Uint32 size ):
+template <typename T> DO_INLINE CArray<T>::CArray( Uint32 size ):
 	m_pArray(nullptr),
 	m_arraySize(0),
 	m_reservedSize(0)
@@ -39,7 +39,7 @@ template <typename T> inline CArray<T>::CArray( Uint32 size ):
 //
 // @param src Source array
 //=============================================
-template <typename T> inline CArray<T>::CArray( const CArray& src ):
+template <typename T> DO_INLINE CArray<T>::CArray( const CArray& src ):
 	m_pArray(nullptr),
 	m_arraySize(0),
 	m_reservedSize(0)
@@ -53,7 +53,7 @@ template <typename T> inline CArray<T>::CArray( const CArray& src ):
 // @brief Destructor
 //
 //=============================================
-template <typename T> inline CArray<T>::~CArray( void )
+template <typename T> DO_INLINE CArray<T>::~CArray( void )
 {
 	if(m_pArray)
 		delete[] m_pArray;
@@ -64,7 +64,7 @@ template <typename T> inline CArray<T>::~CArray( void )
 //
 // @param src Source array to copy data from
 //=============================================
-template <typename T> inline void CArray<T>::operator=( const CArray& src )
+template <typename T> DO_INLINE void CArray<T>::operator=( const CArray& src )
 {
 	resize(src.size());
 	for(Uint32 i = 0; i < size(); i++)
@@ -76,7 +76,7 @@ template <typename T> inline void CArray<T>::operator=( const CArray& src )
 //
 // @param size New size to set
 //=============================================
-template <typename T> inline void CArray<T>::resize( Uint32 size )
+template <typename T> DO_INLINE void CArray<T>::resize( Uint32 size )
 {
 	if(!size)
 	{
@@ -122,7 +122,7 @@ template <typename T> inline void CArray<T>::resize( Uint32 size )
 //
 // @param size Size to be reserved
 //=============================================
-template <typename T> inline void CArray<T>::reserve( Uint32 size )
+template <typename T> DO_INLINE void CArray<T>::reserve( Uint32 size )
 {
 	assert(size > m_arraySize);
 
@@ -152,7 +152,7 @@ template <typename T> inline void CArray<T>::reserve( Uint32 size )
 // @brief Clears the array
 //
 //=============================================
-template <typename T> inline void CArray<T>::clear( void )
+template <typename T> DO_INLINE void CArray<T>::clear( void )
 {
 	if(m_pArray)
 	{
@@ -169,7 +169,7 @@ template <typename T> inline void CArray<T>::clear( void )
 //
 // @return The size of the array
 //=============================================
-template <typename T> inline Uint32 CArray<T>::size( void ) const
+template <typename T> DO_INLINE Uint32 CArray<T>::size( void ) const
 {
 	return m_arraySize;
 }
@@ -177,9 +177,9 @@ template <typename T> inline Uint32 CArray<T>::size( void ) const
 //=============================================
 // @brief Tells if the array is empty
 //
-// @return TRUE if array is empty, FALSE otherwise
+// @return true if array is empty, false otherwise
 //=============================================
-template <typename T> inline bool CArray<T>::empty( void ) const
+template <typename T> DO_INLINE bool CArray<T>::empty( void ) const
 {
 	if(!m_pArray || !m_arraySize)
 		return true;
@@ -192,7 +192,7 @@ template <typename T> inline bool CArray<T>::empty( void ) const
 //
 // @param element element to add to the array
 //=============================================
-template <typename T> inline void CArray<T>::push_back( const T& element )
+template <typename T> DO_INLINE void CArray<T>::push_back( const T& element )
 {
 	Uint32 addIndex = m_arraySize;
 	if(m_reservedSize <= m_arraySize)
@@ -209,7 +209,7 @@ template <typename T> inline void CArray<T>::push_back( const T& element )
 //
 // @param index Index of the element to remove
 //=============================================
-template <typename T> inline void CArray<T>::erase( Uint32 index )
+template <typename T> DO_INLINE void CArray<T>::erase( Uint32 index )
 {
 	T* newArray = new T[m_reservedSize-1]();
 	if(index > 0)
@@ -235,7 +235,7 @@ template <typename T> inline void CArray<T>::erase( Uint32 index )
 //
 // @param element Element to remove
 //=============================================
-template <typename T> inline void CArray<T>::erase_object( const T& element )
+template <typename T> DO_INLINE void CArray<T>::erase_object( const T& element )
 {
 	Uint32 i = 0;
 	for(; i < m_arraySize; i++)
@@ -253,7 +253,7 @@ template <typename T> inline void CArray<T>::erase_object( const T& element )
 //
 // @param n Index of element to return
 //=============================================
-template <typename T> inline T& CArray<T>::operator[] ( Uint32 n ) const
+template <typename T> DO_INLINE T& CArray<T>::operator[] ( Uint32 n ) const
 {
 	assert(n < m_arraySize);
 	return m_pArray[n];

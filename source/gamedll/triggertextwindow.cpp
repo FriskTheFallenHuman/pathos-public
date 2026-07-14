@@ -115,7 +115,7 @@ bool CTriggerTextWindow::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerTextWindow::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerTextWindow::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pEntity;
@@ -127,9 +127,9 @@ void CTriggerTextWindow::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller,
 	if(!pEntity || !pEntity->IsPlayer())
 		return;
 
-	const Char* pstrTextFile = gd_engfuncs.pfnGetString(m_textFilePath);
-	const Char* pstrCodeId = gd_engfuncs.pfnGetString(m_codeId);
-	const Char* pstrCode = gd_engfuncs.pfnGetString(m_code);
+	const char* pstrTextFile = gd_engfuncs.pfnGetString(m_textFilePath);
+	const char* pstrCodeId = gd_engfuncs.pfnGetString(m_codeId);
+	const char* pstrCode = gd_engfuncs.pfnGetString(m_code);
 
 	pEntity->SpawnTextWindow(pstrTextFile, pstrCode, pstrCodeId); 
 }

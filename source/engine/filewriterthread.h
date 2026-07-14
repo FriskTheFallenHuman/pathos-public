@@ -12,8 +12,8 @@ All Rights Reserved.
 
 extern void FWT_Init( void );
 extern void FWT_Shutdown( void );
-extern bool FWT_AddFile( const Char* pstrFilename, const byte* pData, Uint32 dataSize, bool incremental = false, bool prompt = false, bool append = false );
-extern void FWT_Con_Printf( struct writerthread_t* pThreadData, const Char *fmt, ... );
+extern bool FWT_AddFile( const char* pstrFilename, const Byte* pData, UInt32 dataSize, bool incremental = false, bool prompt = false, bool append = false );
+extern void FWT_Con_Printf( struct writerthread_t* pThreadData, const char *fmt, ... );
 extern void FWT_GetConsolePrints( CArray<CString>& destArray );
 
 struct threadfile_t
@@ -32,8 +32,8 @@ struct threadfile_t
 	}
 
 	CString filename;
-	byte* pdata;
-	Uint32 datasize;
+	Byte* pdata;
+	UInt32 datasize;
 	bool incremental;
 	bool prompt;
 	bool append;

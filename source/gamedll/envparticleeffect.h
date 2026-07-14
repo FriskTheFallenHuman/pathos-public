@@ -19,7 +19,7 @@ class CEnvParticleEffect : public CPointEntity
 {
 public:
 	// Max colors that can be addressed
-	static const Uint32 MAX_COLORS;
+	static const UInt32 MAX_COLORS;
 
 	// Spawnflags
 	enum
@@ -59,7 +59,7 @@ public:
 	// Manages keyvalues
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	// Calls use function
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 public:
 	// Repeat function
@@ -79,9 +79,9 @@ private:
 	// Rocket trail type
 	Int32 m_trailType;
 	// Min repeat delay
-	Float m_minRepeatDelay;
+	float m_minRepeatDelay;
 	// Max repeat delay
-	Float m_maxRepeatDelay;
+	float m_maxRepeatDelay;
 	// True if we're actively repeating
 	bool m_isActive;
 };

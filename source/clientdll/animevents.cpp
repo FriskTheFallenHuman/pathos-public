@@ -21,9 +21,9 @@ All Rights Reserved.
 #include "beam_shared.h"
 
 // Vapor trail smoke sprite
-static const Char VAPORTRAIL_SMOKE_SPRITE[] = "sprites/smoke.spr";
+static const char VAPORTRAIL_SMOKE_SPRITE[] = "sprites/smoke.spr";
 // Vapor trail glow sprite
-static const Char VAPORTRAIL_GLOW_SPRITE[] = "sprites/laserbeam.spr";
+static const char VAPORTRAIL_GLOW_SPRITE[] = "sprites/laserbeam.spr";
 
 //=============================================
 // @brief
@@ -31,7 +31,7 @@ static const Char VAPORTRAIL_GLOW_SPRITE[] = "sprites/laserbeam.spr";
 //=============================================
 void EV_MuzzleFlashLight( const Vector& position, Int32 key )
 {
-	Float radius = Common::RandomFloat( 110, 180 );
+	float radius = Common::RandomFloat( 110, 180 );
 
 	cl_dlight_t *pdl = cl_efxapi.pfnAllocDynamicPointLight( key, 0, false, true, nullptr );
 	pdl->die = cl_engfuncs.pfnGetClientTime() + 0.1;
@@ -63,7 +63,7 @@ void EV_SimpleMuzzleFlash( const Vector& position, const Vector& angles, entinde
 // @brief
 //
 //=============================================
-void EV_AttachmentDirectionMuzzleFlash( const cl_entity_t *pentity, const Char* pstroptions, Int32 attachment1, Int32 attachment2 )
+void EV_AttachmentDirectionMuzzleFlash( const cl_entity_t *pentity, const char* pstroptions, Int32 attachment1, Int32 attachment2 )
 {
 	Vector attach1 = pentity->getAttachment(attachment1);
 	Vector attach2 = pentity->getAttachment(attachment2);
@@ -159,15 +159,15 @@ void EV_EjectBullet( const Vector& attachment, const mstudioevent_t *pevent, con
 	CString submodelName;
 	CString soundtypestr;
 	bool bouyancyset = false;
-	Float bouyancy = 0;
+	float bouyancy = 0;
 	bool waterfrictionset = false;
-	Float waterfriction = 0;
+	float waterfriction = 0;
 	bool fadeout = false;
-	Float rightvel = 0;
+	float rightvel = 0;
 	bool rightvelset = false;
-	Float upvel = 0;
+	float upvel = 0;
 	bool upvelset = false;
-	Float rightvelsign = 1;
+	float rightvelsign = 1;
 
 	// Parse the option string
 	CString options = pevent->options;
@@ -176,18 +176,18 @@ void EV_EjectBullet( const Vector& attachment, const mstudioevent_t *pevent, con
 	{
 		Int32 nextpos = options.find(lastpos, ";");
 
-		Uint32 length;
+		UInt32 length;
 		if(nextpos == CString::CSTRING_NO_POSITION)
 			length = options.length() - lastpos;
 		else
 			length = nextpos - lastpos;
 
-		const Char* pstr = options.c_str() + lastpos;
+		const char* pstr = options.c_str() + lastpos;
 		CString option(pstr, length);
 
 		// Read parameter name
 		CString token;
-		const Char* pscanstr = Common::Parse(option.c_str(), token);
+		const char* pscanstr = Common::Parse(option.c_str(), token);
 
 		if(!qstrcmp(token, "reverse_dir") || !qstrcmp(token, "rdir"))
 		{
@@ -344,10 +344,10 @@ void EV_EjectBullet( const Vector& attachment, const mstudioevent_t *pevent, con
 
 	Int64 bodyvalue = -1;
 	const vbmheader_t* pvbmheader = pmodel->getVBMCache()->pvbmhdr;
-	for(Uint32 i = 0; i < pvbmheader->numbodyparts; i++)
+	for(UInt32 i = 0; i < pvbmheader->numbodyparts; i++)
 	{
 		const vbmbodypart_t* pbodypart = pvbmheader->getBodyPart(i);
-		Uint32 j = 0;
+		UInt32 j = 0;
 		for(; j < pbodypart->numsubmodels; j++)
 		{
 			const vbmsubmodel_t* psubmodel = pbodypart->getSubmodel(pvbmheader, j);
@@ -358,17 +358,17 @@ void EV_EjectBullet( const Vector& attachment, const mstudioevent_t *pevent, con
 			}
 		}
 
-		if(j != (Uint32)pbodypart->numsubmodels)
+		if(j != (UInt32)pbodypart->numsubmodels)
 			break;
 	}
 
 	if(bodyvalue == -1)
 	{
 		// Find partial match
-		for(Uint32 i = 0; i < pvbmheader->numbodyparts; i++)
+		for(UInt32 i = 0; i < pvbmheader->numbodyparts; i++)
 		{
 			const vbmbodypart_t* pbodypart = pvbmheader->getBodyPart(i);
-			Uint32 j = 0;
+			UInt32 j = 0;
 			for(; j < pbodypart->numsubmodels; j++)
 			{
 				const vbmsubmodel_t* psubmodel = pbodypart->getSubmodel(pvbmheader, j);
@@ -379,7 +379,7 @@ void EV_EjectBullet( const Vector& attachment, const mstudioevent_t *pevent, con
 				}
 			}
 
-			if(j != (Uint32)pbodypart->numsubmodels)
+			if(j != (UInt32)pbodypart->numsubmodels)
 				break;
 		}
 
@@ -396,7 +396,7 @@ void EV_EjectBullet( const Vector& attachment, const mstudioevent_t *pevent, con
 	if(!rightvelset)
 		rightvel = Common::RandomFloat(70, 90) * rightvelsign;
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		velocity[i] = velocity[i] + right[i] * rightvel + up[i] * upvel + forward[i] * 20;
 
 	// Offset a bit for NPCs
@@ -447,7 +447,7 @@ void EV_EjectBullet( const Vector& attachment, const mstudioevent_t *pevent, con
 // @brief
 //
 //=============================================
-void EV_NPC_StepSound( cl_entity_t *pentity, const Char* pstrsteptype )
+void EV_NPC_StepSound( cl_entity_t *pentity, const char* pstrsteptype )
 {
 	// Don't play for entities outside the PVS
 	cl_entity_t* pplayer = cl_engfuncs.pfnGetLocalPlayer();
@@ -462,7 +462,7 @@ void EV_NPC_StepSound( cl_entity_t *pentity, const Char* pstrsteptype )
 	if(tr.noHit() || tr.allSolid() || tr.startSolid())
 		return;
 
-	const Char* pstrTextureName = cl_tracefuncs.pfnTraceTexture(tr.hitentity, tr.endpos+tr.plane.normal, tr.endpos-tr.plane.normal);
+	const char* pstrTextureName = cl_tracefuncs.pfnTraceTexture(tr.hitentity, tr.endpos+tr.plane.normal, tr.endpos-tr.plane.normal);
 	if(!pstrTextureName)
 		return;
 
@@ -487,7 +487,7 @@ void EV_NPC_StepSound( cl_entity_t *pentity, const Char* pstrsteptype )
 	if(!pstepsounds || pstepsounds->empty())
 		return;
 
-	Uint32 soundindex = Common::RandomLong(0, pstepsounds->size()-1);
+	UInt32 soundindex = Common::RandomLong(0, pstepsounds->size()-1);
 	const CString& stepsnd = (*pstepsounds)[soundindex];
 
 	// Play the random sound
@@ -536,15 +536,15 @@ void EV_ViewModelMuzzleflash( cl_entity_t* pentity, const mstudioevent_t *pevent
 //=============================================
 void EV_ViewModelMuzzleflash_UserSpecifiedAttachment(cl_entity_t* pentity, const mstudioevent_t* pevent, const Vector& position)
 {
-	const Char* pstrString = pevent->options;
-	const Char* pstrSeparator = qstrstr(pstrString, ";");
+	const char* pstrString = pevent->options;
+	const char* pstrSeparator = qstrstr(pstrString, ";");
 	if (!pstrSeparator)
 	{
 		cl_engfuncs.pfnCon_Printf("%s - Event option string '%s' is missing ';' separator.\n", __FUNCTION__, pstrString);
 		return;
 	}
 
-	Uint32 length = pstrSeparator - pstrString;
+	UInt32 length = pstrSeparator - pstrString;
 	CString attachmentString(pstrString, length);
 	if (attachmentString.empty())
 	{

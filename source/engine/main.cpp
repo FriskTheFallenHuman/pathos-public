@@ -7,10 +7,6 @@ All Rights Reserved.
 ===============================================
 */
 
-#ifdef USE_VLD
-#include <vld.h>
-#endif
-
 #include "includes.h"
 #include "system.h"
 
@@ -26,7 +22,7 @@ extern "C"
 // main
 // SDL2's Windows FAQ says the standard "main" is prefered over any Windows version.
 //===============================================
-int main(Int32 argc, Char* argv[])
+int main(Int32 argc, char* argv[])
 {
 	// Store arguments in an array
 	CArray<CString>* argsArray;

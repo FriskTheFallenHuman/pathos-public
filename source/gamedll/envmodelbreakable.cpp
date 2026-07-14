@@ -14,7 +14,7 @@ All Rights Reserved.
 #include "materialdefs.h"
 
 // Material names for material types
-const Char* CEnvModelBreakable::MAT_TYPE_MAT_NAMES[NB_BREAK_MATERIALS] = 
+const char* CEnvModelBreakable::MAT_TYPE_MAT_NAMES[NB_BREAK_MATERIALS] = 
 {
 	"glass", //MAT_GLASS
 	"wood", //MAT_WOOD
@@ -84,7 +84,7 @@ void CEnvModelBreakable::SetBoundingBox( void )
 // @brief
 //
 //=============================================
-void CEnvModelBreakable::TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
+void CEnvModelBreakable::TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
 {
 	// Let base class handle it's own
 	CFuncBreakable::TraceAttack(pAttacker, damage, direction, tr, damageFlags);

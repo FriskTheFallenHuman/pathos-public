@@ -26,7 +26,7 @@ class CViewModel
 {
 public:
 	// View model default FOV value
-	static const Uint32 VIEWMODEL_DEFAULT_FOV_VALUE;
+	static const UInt32 VIEWMODEL_DEFAULT_FOV_VALUE;
 
 public:
 	CViewModel( void );
@@ -50,7 +50,7 @@ public:
 	// Sets the sequence to play
 	void SetSequence( Int32 sequence, Int64 body, Int32 skin, bool blendsequence = true );
 	// Reads viewmodel emssages
-	void ProcessMessage( const byte* pdata, Uint32 msgsize );
+	void ProcessMessage( const Byte* pdata, UInt32 msgsize );
 
 public:
 	// Tells if offsets can be applied
@@ -76,9 +76,9 @@ private:
 
 	// Ideal sequence to use
 	Int32					m_iIdealSequence;
-	// TRUE if we should blend sequences
+	// true if we should blend sequences
 	bool					m_bBlendSequence;
-	// TRUE if sequence needs to be updated
+	// true if sequence needs to be updated
 	bool					m_bUpdateSequence;
 
 	// Don't blend if vmodel got changed

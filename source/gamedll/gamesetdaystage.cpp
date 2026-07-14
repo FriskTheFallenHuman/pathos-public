@@ -77,7 +77,7 @@ void CGameSetDayStage::DeclareSaveFields( void )
 // @brief
 //
 //=============================================
-void CGameSetDayStage::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CGameSetDayStage::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pEntity;
@@ -98,8 +98,8 @@ void CGameSetDayStage::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, u
 	bool valuesset = false;
 
 	// Update all light_env entities
-	Uint32 numEntities = gd_engfuncs.pfnGetNbEdicts();
-	for (Uint32 i = 1; i < numEntities; i++)
+	UInt32 numEntities = gd_engfuncs.pfnGetNbEdicts();
+	for (UInt32 i = 1; i < numEntities; i++)
 	{
 		edict_t* pedict = gd_engfuncs.pfnGetEdictByIndex(i);
 		if (pedict->free || !pedict->pprivatedata)

@@ -55,7 +55,7 @@ void TR_InitBoxHull( void )
 	g_boxHull.firstclipnode = 0;
 	g_boxHull.lastclipnode = 5;
 
-	for(Uint32 i = 0; i < 6; i++)
+	for(UInt32 i = 0; i < 6; i++)
 	{
 		Int32 side = i & 1;
 		g_boxClipnodes[i].planenum = i;
@@ -87,7 +87,7 @@ const hull_t* TR_HullForBox( const Vector& mins, const Vector& maxs )
 //=============================================
 void TR_MoveBounds( const Vector& start, const Vector& mins, const Vector& maxs, const Vector&end, Vector& boxmins, Vector& boxmaxs )
 {
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(end[i] > start[i])
 		{
@@ -107,7 +107,7 @@ void TR_MoveBounds( const Vector& start, const Vector& mins, const Vector& maxs,
 //=============================================
 void TR_MoveBoundsPoint( const Vector& start, const Vector&end, Vector& boxmins, Vector& boxmaxs )
 {
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(end[i] > start[i])
 		{
@@ -152,7 +152,7 @@ const hull_t* TR_HullForBSP( const entity_state_t& entity, hull_types_t hulltype
 //=============================================
 //
 //=============================================
-const Char* TR_TraceTexture( const entity_state_t& entity, const Vector& start, const Vector& end )
+const char* TR_TraceTexture( const entity_state_t& entity, const Vector& start, const Vector& end )
 {
 	Vector offset;
 	Vector start_l;
@@ -238,7 +238,7 @@ Int32 TR_HullPointContents( const hull_t* phull, Int32 clipnodeidx, const Vector
 		const mclipnode_t* pclipnode = &phull->pclipnodes[index];
 		const plane_t* pplane = &phull->pplanes[pclipnode->planenum];
 
-		Float dp;
+		float dp;
 		if(pplane->type < 3)
 			dp = position[pplane->type] - pplane->dist;
 		else
@@ -256,7 +256,7 @@ Int32 TR_HullPointContents( const hull_t* phull, Int32 clipnodeidx, const Vector
 //=============================================
 //
 //=============================================
-bool TR_RecursiveHullCheck( const hull_t* phull, Int32 clipnodeidx, Double p1f, Double p2f, const Vector& p1, const Vector& p2, trace_t& trace )
+bool TR_RecursiveHullCheck( const hull_t* phull, Int32 clipnodeidx, double p1f, double p2f, const Vector& p1, const Vector& p2, trace_t& trace )
 {
 	if(clipnodeidx < 0)
 	{
@@ -290,7 +290,7 @@ bool TR_RecursiveHullCheck( const hull_t* phull, Int32 clipnodeidx, Double p1f, 
 	const mclipnode_t& node = phull->pclipnodes[clipnodeidx];
 	const plane_t& plane = phull->pplanes[node.planenum];
 
-	Double t1, t2;
+	double t1, t2;
 	if(plane.type < 3)
 	{
 		t1 = p1[plane.type] - plane.dist;
@@ -307,18 +307,18 @@ bool TR_RecursiveHullCheck( const hull_t* phull, Int32 clipnodeidx, Double p1f, 
 	if(t1 < 0 && t2 < 0)
 		return TR_RecursiveHullCheck(phull, node.children[1], p1f, p2f, p1, p2, trace);
 
-	Double frac;
+	double frac;
 	if(t1 < 0.0f)
 		frac = (t1 + DIST_EPSILON) / (t1 - t2);
 	else
 		frac = (t1 - DIST_EPSILON) / (t1 - t2);
 
-	frac = clamp(frac, 0, 1);
+	frac = Clamp(frac, 0, 1);
 	if(Common::IsNAN(frac))
 		return false;
 
-	Double pdiff = p2f - p1f;
-	Double midf = p1f + pdiff * frac;
+	double pdiff = p2f - p1f;
+	double midf = p1f + pdiff * frac;
 
 	Vector point, mid;
 	Math::VectorSubtract(p2, p1, point);
@@ -538,7 +538,7 @@ bool TR_TracelineBBoxCheck( const entity_state_t& entity, const cache_model_t* p
 	Vector hullmins, hullmaxs;
 	if(pcachemodel->type == MOD_BRUSH && !entity.angles.IsZero())
 	{
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			hullmins[i] = entity.origin[i] - pcachemodel->radius;
 			hullmaxs[i] = entity.origin[i] + pcachemodel->radius;
@@ -551,7 +551,7 @@ bool TR_TracelineBBoxCheck( const entity_state_t& entity, const cache_model_t* p
 	}
 
 	// Some very small mins/maxs need to be extended, otherwise the trace fails
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		hullmins[i] -= 1;
 		hullmaxs[i] += 1;

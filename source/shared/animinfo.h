@@ -36,24 +36,24 @@ struct entity_animinfo_t
 
 	Int32	numbones;
 
-	Float	lastframe;
+	float	lastframe;
 	Int32	lastsequence;
 
 	// Used for events
-	Float	prevframe_frame;
+	float	prevframe_frame;
 	Int32	prevframe_sequence;
 
-	Float	rotation[3][4];
+	float	rotation[3][4];
 	Vector	lastangles;
 	Vector	lastorigin;
 
-	byte	lastmouth;
-	byte	lastcontroller[MAX_CONTROLLERS];
-	byte	lastblending[MAX_BLENDING];
+	Byte	lastmouth;
+	Byte	lastcontroller[MAX_CONTROLLERS];
+	Byte	lastblending[MAX_BLENDING];
 
-	Float	scale;
+	float	scale;
 
 	// Used by interpolation
-	Double	lastsequencetime;
+	double	lastsequencetime;
 };
 #endif //ANIMINFO_H

@@ -32,7 +32,7 @@ public:
     virtual void DeclareSaveFields(void) override;
     virtual bool Spawn( void ) override;
     virtual bool KeyValue(const keyvalue_t& kv) override;
-    virtual void CallUse(CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value) override;
+    virtual void CallUse(CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value) override;
 
 private:
     Int32 m_setMode;
@@ -40,8 +40,8 @@ private:
     string_t m_textureName;
     Int32 m_renderMode;
     Int32 m_effect;
-    Float m_effectSpeed;
-    Float m_effectMinAlpha;
-    Float m_fadeTime;
+    float m_effectSpeed;
+    float m_effectMinAlpha;
+    float m_fadeTime;
 };
 #endif // ENVFILMGRAIN

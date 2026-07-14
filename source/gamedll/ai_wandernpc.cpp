@@ -13,25 +13,25 @@ All Rights Reserved.
 #include "ai_nodegraph.h"
 
 // Speed at which tiredness fades
-const Float CWanderNPC::WANDERNPC_REST_SPEED = 0.4;
+const float CWanderNPC::WANDERNPC_REST_SPEED = 0.4;
 // Time after which we'll try to find the player to talk to him
-const Float CWanderNPC::WANDERNPC_PLAYER_ABSENCE_TIME_TRESHOLD = 50.0f;
+const float CWanderNPC::WANDERNPC_PLAYER_ABSENCE_TIME_TRESHOLD = 50.0f;
 // Amount of tiredness after which we'll try to sit down to rest
-const Float CWanderNPC::WANDERNPC_TIREDNESS_TRESHOLD = 10.0f;
+const float CWanderNPC::WANDERNPC_TIREDNESS_TRESHOLD = 10.0f;
 // Maximum tiredness we're willing to take
-const Float CWanderNPC::WANDERNPC_TIREDNESS_LIMIT = 40.0f;
+const float CWanderNPC::WANDERNPC_TIREDNESS_LIMIT = 40.0f;
 // Speed at which the NPC tires
-const Float CWanderNPC::WANDERNPC_TIRE_SPEED = 1.0f/30.0f;
+const float CWanderNPC::WANDERNPC_TIRE_SPEED = 1.0f/30.0f;
 // Distance at which the player is considered to be "close"
-const Float CWanderNPC::WANDERNPC_PLAYER_CLOSE_DISTANCE = 128;
+const float CWanderNPC::WANDERNPC_PLAYER_CLOSE_DISTANCE = 128;
 // Minimum distance between node destinations for wander npcs
-const Float CWanderNPC::WANDERNPC_MIN_DESTINATION_DISTANCE = 256.0f;
+const float CWanderNPC::WANDERNPC_MIN_DESTINATION_DISTANCE = 256.0f;
 // Minimum distance to a wander spot
-const Float CWanderNPC::WANDERNPC_MIN_WANDER_DISTANCE = 256.0f;
+const float CWanderNPC::WANDERNPC_MIN_WANDER_DISTANCE = 256.0f;
 // Maximum distance to a wander spot
-const Float CWanderNPC::WANDERNPC_MAX_WANDER_DISTANCE = 4096.0f;
+const float CWanderNPC::WANDERNPC_MAX_WANDER_DISTANCE = 4096.0f;
 // Max retries for finding a destination
-const Uint32 CWanderNPC::WANDERNPC_MAX_RETRIES = 2;
+const UInt32 CWanderNPC::WANDERNPC_MAX_RETRIES = 2;
 
 //==========================================================================
 //
@@ -46,14 +46,14 @@ const Uint32 CWanderNPC::WANDERNPC_MAX_RETRIES = 2;
 ai_task_t taskListScheduleWanderNPCWander[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,							0),
-	AITASK(AI_WANDERNPC_TASK_FIND_DEST,					(Float)WANDER_NPC_DEST_WANDER),
+	AITASK(AI_WANDERNPC_TASK_FIND_DEST,					(float)WANDER_NPC_DEST_WANDER),
 	AITASK(AI_TASK_WALK_PATH,							0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,						(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,						(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT,								4)
 };
 
-Uint32 interruptBitsScheduleWanderNPCWander[] =
+UInt32 interruptBitsScheduleWanderNPCWander[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -85,14 +85,14 @@ const CAISchedule scheduleWanderNPCWander(
 ai_task_t taskListScheduleWanderNPCFindSittingSpot[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,							0),
-	AITASK(AI_WANDERNPC_TASK_FIND_DEST,					(Float)WANDER_NPC_DEST_SIT),
+	AITASK(AI_WANDERNPC_TASK_FIND_DEST,					(float)WANDER_NPC_DEST_SIT),
 	AITASK(AI_TASK_WALK_PATH,							0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,					0),
 	AITASK(AI_TASK_WAIT,								0.3),
-	AITASK(AI_TASK_SET_SCHEDULE,						(Float)AI_WANDERNPC_SCHED_SIT)
+	AITASK(AI_TASK_SET_SCHEDULE,						(float)AI_WANDERNPC_SCHED_SIT)
 };
 
-Uint32 interruptBitsScheduleWanderNPCFindSittingSpot[] =
+UInt32 interruptBitsScheduleWanderNPCFindSittingSpot[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -124,17 +124,17 @@ const CAISchedule scheduleWanderNPCFindSittingSpot(
 ai_task_t taskListScheduleWanderNPCWalkToWindow[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,							0),
-	AITASK(AI_WANDERNPC_TASK_FIND_DEST,					(Float)WANDER_NPC_DEST_WINDOW),
+	AITASK(AI_WANDERNPC_TASK_FIND_DEST,					(float)WANDER_NPC_DEST_WINDOW),
 	AITASK(AI_TASK_WALK_PATH,							0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,					0),
 	AITASK(AI_TASK_WAIT,								0.1),
 	AITASK(AI_WANDERNPC_TASK_GET_NODE_IDEAL_YAW,		0),
 	AITASK(AI_TASK_FACE_IDEAL,							0),
-	AITASK(AI_TASK_SET_ACTIVITY,						(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,						(float)ACT_IDLE),
 	AITASK(AI_WANDERNPC_TASK_RANDOM_WAIT,				0)
 };
 
-Uint32 interruptBitsScheduleWanderNPCWalkToWindow[] =
+UInt32 interruptBitsScheduleWanderNPCWalkToWindow[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -166,17 +166,17 @@ const CAISchedule scheduleWanderNPCWalkToWindow(
 ai_task_t taskListScheduleWanderNPCSit[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,							0),
-	AITASK(AI_WANDERNPC_TASK_GET_NODE_IDEAL_YAW,		(Float)AI_WANDERNPC_SCHED_SIT),
+	AITASK(AI_WANDERNPC_TASK_GET_NODE_IDEAL_YAW,		(float)AI_WANDERNPC_SCHED_SIT),
 	AITASK(AI_TASK_FACE_IDEAL,							0),
-	AITASK(AI_TASK_PLAY_SEQUENCE,						(Float)ACT_CROUCH),
+	AITASK(AI_TASK_PLAY_SEQUENCE,						(float)ACT_CROUCH),
 	AITASK(AI_WANDERNPC_TASK_BEGIN_REST,				0),
-	AITASK(AI_TASK_SET_ACTIVITY,						(Float)ACT_CROUCH_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,						(float)ACT_CROUCH_IDLE),
 	AITASK(AI_WANDERNPC_TASK_REST,						0),
 	AITASK(AI_WANDERNPC_TASK_DONE_RESTING,				0),
-	AITASK(AI_TASK_PLAY_SEQUENCE,						(Float)ACT_STAND)
+	AITASK(AI_TASK_PLAY_SEQUENCE,						(float)ACT_STAND)
 };
 
-Uint32 interruptBitsScheduleWanderNPCSit[] =
+UInt32 interruptBitsScheduleWanderNPCSit[] =
 {
 	AI_COND_SCHEDULE_DONE
 };
@@ -207,12 +207,12 @@ ai_task_t taskListScheduleWanderNPCFindPlayer[] =
 	AITASK(AI_TASK_WAIT,								0.5),
 	AITASK(AI_WANDERNPC_TASK_FACE_PLAYER,				0),
 	AITASK(AI_TASK_FACE_IDEAL,							0),
-	AITASK(AI_TASK_SET_ACTIVITY,						(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,						(float)ACT_IDLE),
 	AITASK(AI_WANDERNPC_TASK_CONVERSE_PLAYER,			0),
 	AITASK(AI_TASK_WAIT,								5)
 };
 
-Uint32 interruptBitsScheduleWanderNPCFindPlayer[] =
+UInt32 interruptBitsScheduleWanderNPCFindPlayer[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -340,7 +340,7 @@ const CAISchedule* CWanderNPC::GetSchedule( void )
 			{
 				if(!CheckCondition(AI_COND_SEE_CLIENT) && (g_pGameVars->time - m_wanderLastPlayerSightTime) > WANDERNPC_PLAYER_ABSENCE_TIME_TRESHOLD)
 				{
-					Float playerSeekChance = (g_pGameVars->time - m_wanderLastPlayerSightTime)/WANDERNPC_PLAYER_ABSENCE_TIME_TRESHOLD;
+					float playerSeekChance = (g_pGameVars->time - m_wanderLastPlayerSightTime)/WANDERNPC_PLAYER_ABSENCE_TIME_TRESHOLD;
 					if(Common::RandomFloat(0, 4) <= playerSeekChance)
 					{
 						m_nextWanderTime = g_pGameVars->time + Common::RandomLong(20, 40);
@@ -351,7 +351,7 @@ const CAISchedule* CWanderNPC::GetSchedule( void )
 				// Opportunistically rest a bit
 				if(m_tirednessFactor > WANDERNPC_TIREDNESS_TRESHOLD)
 				{
-					Float tirednessFactor = (m_tirednessFactor-WANDERNPC_TIREDNESS_TRESHOLD)/WANDERNPC_TIREDNESS_LIMIT;
+					float tirednessFactor = (m_tirednessFactor-WANDERNPC_TIREDNESS_TRESHOLD)/WANDERNPC_TIREDNESS_LIMIT;
 					if(Common::RandomFloat(0, 1) >= (1.0f - tirednessFactor))
 					{
 						m_nextWanderTime = g_pGameVars->time + Common::RandomLong(20, 40);
@@ -421,7 +421,7 @@ void CWanderNPC::RunAI( void )
 	{
 		m_tirednessFactor += WANDERNPC_TIRE_SPEED*m_thinkIntervalTime;
 
-		const Float maxTiredness = (WANDERNPC_TIREDNESS_TRESHOLD+WANDERNPC_TIREDNESS_LIMIT);
+		const float maxTiredness = (WANDERNPC_TIREDNESS_TRESHOLD+WANDERNPC_TIREDNESS_LIMIT);
 		if(m_tirednessFactor > maxTiredness)
 			m_tirednessFactor = maxTiredness;
 	}
@@ -441,7 +441,7 @@ void CWanderNPC::PreScheduleThink( void )
 	CBaseEntity* pPlayer = Util::GetHostPlayer();
 	if(pPlayer)
 	{
-		Float playerDistance = (pPlayer->GetOrigin()-m_pState->origin).Length2D();
+		float playerDistance = (pPlayer->GetOrigin()-m_pState->origin).Length2D();
 		if(playerDistance < WANDERNPC_PLAYER_CLOSE_DISTANCE)
 			SetCondition(AI_COND_PLAYER_CLOSE);
 		else
@@ -631,7 +631,7 @@ bool CWanderNPC::CanAnswer( void )
 // @brief Finds a wander destination
 //
 //=============================================
-bool CWanderNPC::FindWanderDestination( wandernpc_dest_type_t type, Uint32 numTries )
+bool CWanderNPC::FindWanderDestination( wandernpc_dest_type_t type, UInt32 numTries )
 {
 	if(!gNodeGraph.IsNodeGraphValid())
 	{
@@ -643,7 +643,7 @@ bool CWanderNPC::FindWanderDestination( wandernpc_dest_type_t type, Uint32 numTr
 		g_lastActiveIdleSearchNodeIndex = 0;
 
 	// Get node type
-	Uint64 nodeType = Util::GetNodeTypeForNPC(this);
+	UInt64 nodeType = Util::GetNodeTypeForNPC(this);
 	// Get node hull
 	node_hull_types_t hullType = Util::GetNodeHullForNPC(this);
 
@@ -704,7 +704,7 @@ bool CWanderNPC::FindWanderDestination( wandernpc_dest_type_t type, Uint32 numTr
 			continue;
 
 		// Check distance
-		Float distance = (m_pState->origin - pNode->origin).Length();
+		float distance = (m_pState->origin - pNode->origin).Length();
 		if(distance < WANDERNPC_MIN_WANDER_DISTANCE || distance > WANDERNPC_MAX_WANDER_DISTANCE)
 			continue;
 
@@ -780,7 +780,7 @@ bool CWanderNPC::IsWanderNodeAvailable( Int32 nodeIndex ) const
 		if(pEntity->GetWanderNode() == nodeIndex)
 			return false;
 
-		Float distance = (pNode->origin - pEntity->GetOrigin()).Length();
+		float distance = (pNode->origin - pEntity->GetOrigin()).Length();
 		if(distance < WANDERNPC_MIN_DESTINATION_DISTANCE)
 			return false;
 	}

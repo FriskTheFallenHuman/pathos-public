@@ -71,7 +71,7 @@ void CNPCTestHull::SetYawSpeed( void )
 // @brief
 //
 //=============================================
-Uint64 CNPCTestHull::GetSoundMask( void )
+UInt64 CNPCTestHull::GetSoundMask( void )
 {
 	return AI_SOUND_NONE;
 }

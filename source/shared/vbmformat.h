@@ -15,13 +15,13 @@ All Rights Reserved.
 
 ************************/
 // Max total number of flexes. Hard limit due to how data is organized.
-static const Uint32 MAX_VBM_FLEXES				= 64;
+static const UInt32 MAX_VBM_FLEXES				= 64;
 // Max bones per mesh. Abritrary, but was capped to ARB ASM max local parameters.
-static const Uint32 MAX_SHADER_BONES			= 32;
+static const UInt32 MAX_SHADER_BONES			= 32;
 // Max number of weights per vertex
-static const Uint32 MAX_VBM_BONEWEIGHTS			= 4;
+static const UInt32 MAX_VBM_BONEWEIGHTS			= 4;
 // Size in either dimension of the texture that holds flex vertex offset values
-static const Uint32  VBM_FLEXTEXTURE_SIZE		= 256;
+static const UInt32  VBM_FLEXTEXTURE_SIZE		= 256;
 // Header ID for VBM files
 static const Int32 VBM_HEADER					= (('1'<<24)+('M'<<16)+('B'<<8)+'V');
 
@@ -92,10 +92,10 @@ struct vbmvertex_t
 	Vector origin;
 	Vector normal;
 	vec4_t tangent;
-	Float texcoord[2];
+	float texcoord[2];
 	Int16 flexvertindex;
-	byte boneindexes[MAX_VBM_BONEWEIGHTS];
-	byte boneweights[MAX_VBM_BONEWEIGHTS];
+	Byte boneindexes[MAX_VBM_BONEWEIGHTS];
+	Byte boneweights[MAX_VBM_BONEWEIGHTS];
 };
 
 struct vbmmesh_t
@@ -108,10 +108,10 @@ struct vbmmesh_t
 		num_indexes(0)
 		{}
 
-	const byte* getBones( const vbmheader_t* phdr ) const
+	const Byte* getBones( const vbmheader_t* phdr ) const
 	{
 		assert(numbones > 0);
-		return reinterpret_cast<const byte*>(phdr) + boneoffset;
+		return reinterpret_cast<const Byte*>(phdr) + boneoffset;
 	}
 
 	Int32 boneoffset;
@@ -132,18 +132,18 @@ struct vbmlod_t
 
 	const vbmsubmodel_t* getSubmodel( const vbmheader_t* phdr ) const
 	{
-		return reinterpret_cast<const vbmsubmodel_t*>(reinterpret_cast<const byte*>(phdr) + submodeloffset);
+		return reinterpret_cast<const vbmsubmodel_t*>(reinterpret_cast<const Byte*>(phdr) + submodeloffset);
 	}
 
 	vbmsubmodel_t* getSubmodel( vbmheader_t* phdr )
 	{
-		return reinterpret_cast<vbmsubmodel_t*>(reinterpret_cast<byte*>(phdr) + submodeloffset);
+		return reinterpret_cast<vbmsubmodel_t*>(reinterpret_cast<Byte*>(phdr) + submodeloffset);
 	}
 
 	vbmlod_type_t type;
 	Int32 submodeloffset;
 	
-	Float distance;
+	float distance;
 };
 
 struct vbmsubmodel_t
@@ -161,28 +161,28 @@ struct vbmsubmodel_t
 	const vbmmesh_t* getMesh( const vbmheader_t* phdr, Int32 index ) const
 	{
 		assert(index >= 0 && index < nummeshes);
-		return reinterpret_cast<const vbmmesh_t*>(reinterpret_cast<const byte*>(phdr) + meshoffset) + index;
+		return reinterpret_cast<const vbmmesh_t*>(reinterpret_cast<const Byte*>(phdr) + meshoffset) + index;
 	}
 
 	vbmmesh_t* getMesh( vbmheader_t* phdr, Int32 index )
 	{
 		assert(index >= 0 && index < nummeshes);
-		return reinterpret_cast<vbmmesh_t*>(reinterpret_cast<byte*>(phdr) + meshoffset) + index;
+		return reinterpret_cast<vbmmesh_t*>(reinterpret_cast<Byte*>(phdr) + meshoffset) + index;
 	}
 
 	const vbmlod_t* getLOD( const vbmheader_t* phdr, Int32 index ) const
 	{
 		assert(index >= 0 && index < numlods);
-		return reinterpret_cast<const vbmlod_t*>(reinterpret_cast<const byte*>(phdr) + lodoffset) + index;
+		return reinterpret_cast<const vbmlod_t*>(reinterpret_cast<const Byte*>(phdr) + lodoffset) + index;
 	}
 
 	vbmlod_t* getLOD( vbmheader_t* phdr, Int32 index )
 	{
 		assert(index >= 0 && index < numlods);
-		return reinterpret_cast<vbmlod_t*>(reinterpret_cast<byte*>(phdr) + lodoffset) + index;
+		return reinterpret_cast<vbmlod_t*>(reinterpret_cast<Byte*>(phdr) + lodoffset) + index;
 	}
 
-	Char name[32];
+	char name[32];
 
 	Int32 meshoffset;
 	Int32 nummeshes;
@@ -206,16 +206,16 @@ struct vbmbodypart_t
 	const vbmsubmodel_t* getSubmodel( const vbmheader_t* phdr, Int32 index ) const
 	{
 		assert(index >= 0 && index < numsubmodels);
-		return reinterpret_cast<const vbmsubmodel_t*>(reinterpret_cast<const byte*>(phdr) + submodeloffset) + index;
+		return reinterpret_cast<const vbmsubmodel_t*>(reinterpret_cast<const Byte*>(phdr) + submodeloffset) + index;
 	}
 
 	vbmsubmodel_t* getSubmodel( vbmheader_t* phdr, Int32 index )
 	{
 		assert(index >= 0 && index < numsubmodels);
-		return reinterpret_cast<vbmsubmodel_t*>(reinterpret_cast<byte*>(phdr) + submodeloffset) + index;
+		return reinterpret_cast<vbmsubmodel_t*>(reinterpret_cast<Byte*>(phdr) + submodeloffset) + index;
 	}
 
-	Char name[32];
+	char name[32];
 	Int32 base;
 
 	Int32 numsubmodels;
@@ -232,12 +232,12 @@ struct vbmflexcontroller_t
 		memset(name, 0, sizeof(name));
 	}
 
-	Char name[32];
+	char name[32];
 
 	vbmflexinterp_t interpmode;
 
-	Float minvalue;
-	Float maxvalue;
+	float minvalue;
+	float maxvalue;
 };
 
 struct vbmboneinfo_t
@@ -252,7 +252,7 @@ struct vbmboneinfo_t
 		memset(bindtransform, 0, sizeof(bindtransform));
 	}
 
-	Char name[64];
+	char name[64];
 
 	Int32 flags;
 	Int32 index;
@@ -261,9 +261,9 @@ struct vbmboneinfo_t
 	Vector position;
 	Vector angles;
 
-	Float scale[6];
+	float scale[6];
 
-	Float bindtransform[3][4];
+	float bindtransform[3][4];
 };
 
 struct vbmflexinfo_t
@@ -282,17 +282,17 @@ struct vbmflexinfo_t
 
 	const vbmflexvertex_t* getFlexVertexes( const vbmheader_t* phdr ) const
 	{
-		return reinterpret_cast<const vbmflexvertex_t*>(reinterpret_cast<const byte*>(phdr) + flexvertoffset);
+		return reinterpret_cast<const vbmflexvertex_t*>(reinterpret_cast<const Byte*>(phdr) + flexvertoffset);
 	}
 
 	const vbmflexvertinfo_t* getFlexVertexInfos( const vbmheader_t* phdr ) const
 	{
-		return reinterpret_cast<const vbmflexvertinfo_t*>(reinterpret_cast<const byte*>(phdr) + flexvertinfooffset);
+		return reinterpret_cast<const vbmflexvertinfo_t*>(reinterpret_cast<const Byte*>(phdr) + flexvertinfooffset);
 	}
 
-	const byte* getFlexControllerIndexes( const vbmheader_t* phdr ) const
+	const Byte* getFlexControllerIndexes( const vbmheader_t* phdr ) const
 	{
-		return reinterpret_cast<const byte*>(phdr) + flexcontrolleridxoffset;
+		return reinterpret_cast<const Byte*>(phdr) + flexcontrolleridxoffset;
 	}
 
 	Int32 type;
@@ -327,11 +327,11 @@ struct vbmcontroller_t
 	Vector left;
 	Vector forward;
 
-	Float range_xmin;
-	Float range_xmax;
+	float range_xmin;
+	float range_xmax;
 
-	Float range_ymin;
-	Float range_ymax;
+	float range_ymin;
+	float range_ymax;
 };
 
 struct vbmtexture_t
@@ -346,7 +346,7 @@ struct vbmtexture_t
 		memset(name, 0, sizeof(name));
 	}
 
-	Char name[64];
+	char name[64];
 	Int32 flags;
 
 	Int32 width;
@@ -354,7 +354,7 @@ struct vbmtexture_t
 	
 	Int32 index;
 
-	Float value;
+	float value;
 };
 
 struct vbmflexvertinfo_t
@@ -412,83 +412,83 @@ struct vbmheader_t
 	const vbmvertex_t* getVertexes( void ) const
 	{
 		assert(vertexoffset > 0);
-		return reinterpret_cast<const vbmvertex_t*>(reinterpret_cast<const byte*>(this) + vertexoffset);
+		return reinterpret_cast<const vbmvertex_t*>(reinterpret_cast<const Byte*>(this) + vertexoffset);
 	}
 
-	const Uint32* getIndexes( void ) const
+	const UInt32* getIndexes( void ) const
 	{
 		assert(indexoffset > 0);
-		return reinterpret_cast<const Uint32*>(reinterpret_cast<const byte*>(this) + indexoffset);
+		return reinterpret_cast<const UInt32*>(reinterpret_cast<const Byte*>(this) + indexoffset);
 	}
 
 	const vbmbodypart_t* getBodyPart( Int32 index ) const
 	{
 		assert(index >= 0 && index < numbodyparts);
-		return reinterpret_cast<const vbmbodypart_t*>(reinterpret_cast<const byte*>(this) + bodypartoffset) + index;
+		return reinterpret_cast<const vbmbodypart_t*>(reinterpret_cast<const Byte*>(this) + bodypartoffset) + index;
 	}
 
 	vbmbodypart_t* getBodyPart( Int32 index )
 	{
 		assert(index >= 0 && index < numbodyparts);
-		return reinterpret_cast<vbmbodypart_t*>(reinterpret_cast<byte*>(this) + bodypartoffset) + index;
+		return reinterpret_cast<vbmbodypart_t*>(reinterpret_cast<Byte*>(this) + bodypartoffset) + index;
 	}
 
 	const vbmtexture_t* getTexture( Int32 index ) const
 	{
 		assert(index >= 0 && index < numtextures);
-		return reinterpret_cast<const vbmtexture_t*>(reinterpret_cast<const byte*>(this) + textureoffset) + index;
+		return reinterpret_cast<const vbmtexture_t*>(reinterpret_cast<const Byte*>(this) + textureoffset) + index;
 	}
 
 	vbmtexture_t* getTexture( Int32 index )
 	{
 		assert(index >= 0 && index < numtextures);
-		return reinterpret_cast<vbmtexture_t*>(reinterpret_cast<byte*>(this) + textureoffset) + index;
+		return reinterpret_cast<vbmtexture_t*>(reinterpret_cast<Byte*>(this) + textureoffset) + index;
 	}
 
 	const vbmflexinfo_t* getFlexInfo( Int32 index ) const
 	{
 		assert(index >= 0 && index < numflexinfo);
-		return reinterpret_cast<const vbmflexinfo_t*>(reinterpret_cast<const byte*>(this) + flexinfooffset) + index;
+		return reinterpret_cast<const vbmflexinfo_t*>(reinterpret_cast<const Byte*>(this) + flexinfooffset) + index;
 	}
 
 	const vbmflexcontroller_t* getFlexController( Int32 index ) const
 	{
 		assert(index >= 0 && index < numflexcontrollers);
-		return reinterpret_cast<const vbmflexcontroller_t*>(reinterpret_cast<const byte*>(this) + flexcontrolleroffset) + index;
+		return reinterpret_cast<const vbmflexcontroller_t*>(reinterpret_cast<const Byte*>(this) + flexcontrolleroffset) + index;
 	}
 
 	const vbmflexcontroller_t* getFlexControllers( void ) const
 	{
 		assert(flexcontrolleroffset > 0);
-		return reinterpret_cast<const vbmflexcontroller_t*>(reinterpret_cast<const byte*>(this) + flexcontrolleroffset);
+		return reinterpret_cast<const vbmflexcontroller_t*>(reinterpret_cast<const Byte*>(this) + flexcontrolleroffset);
 	}
 
 	const vbmcontroller_t* getController( Int32 index ) const
 	{
 		assert(index >= 0 && index < numcontrollers);
-		return reinterpret_cast<const vbmcontroller_t*>(reinterpret_cast<const byte*>(this) + controlleroffset) + index;
+		return reinterpret_cast<const vbmcontroller_t*>(reinterpret_cast<const Byte*>(this) + controlleroffset) + index;
 	}
 
 	const vbmboneinfo_t* getBoneInfo( Int32 index ) const
 	{
 		assert(index >= 0 && index < numboneinfo);
-		return reinterpret_cast<const vbmboneinfo_t*>(reinterpret_cast<const byte*>(this) + boneinfooffset) + index;
+		return reinterpret_cast<const vbmboneinfo_t*>(reinterpret_cast<const Byte*>(this) + boneinfooffset) + index;
 	}
 
 	const Int16* getSkinFamily( Int32 index ) const
 	{
 		assert(index >= 0 && index < numskinfamilies);
-		return reinterpret_cast<const Int16*>(reinterpret_cast<const byte*>(this) + skinoffset) + index*numskinref;
+		return reinterpret_cast<const Int16*>(reinterpret_cast<const Byte*>(this) + skinoffset) + index*numskinref;
 	}
 
 	const Int16* getSkinFamilies( void ) const
 	{
 		assert(skinoffset > 0);
-		return reinterpret_cast<const Int16*>(reinterpret_cast<const byte*>(this) + skinoffset);
+		return reinterpret_cast<const Int16*>(reinterpret_cast<const Byte*>(this) + skinoffset);
 	}
 
 	Int32 id;
-	Char name[128];
+	char name[128];
 
 	Int32 flags;
 

@@ -53,9 +53,9 @@ bool CAISetFollowTarget::Spawn( void )
 // @brief
 //
 //=============================================
-void CAISetFollowTarget::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CAISetFollowTarget::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
-	const Char* pstrTargetEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTargetEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
 
 	edict_t* pTargetEdict = Util::FindEntityByTargetName(nullptr, pstrTargetEntityName);
 	if(Util::IsNullEntity(pTargetEdict))
@@ -79,7 +79,7 @@ void CAISetFollowTarget::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller,
 	else
 	{
 		CBaseEntity* pFollowEntity = nullptr;
-		const Char* pstrFollowEntityName = gd_engfuncs.pfnGetString(m_pFields->netname);
+		const char* pstrFollowEntityName = gd_engfuncs.pfnGetString(m_pFields->netname);
 
 		if (!qstrcmp(pstrFollowEntityName, "player"))
 		{

@@ -103,7 +103,7 @@ bool CTriggerGlobalDelayed::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CTriggerGlobalDelayed::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerGlobalDelayed::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	CBaseEntity* pPlayer;
 	if(pActivator && pActivator->IsPlayer())

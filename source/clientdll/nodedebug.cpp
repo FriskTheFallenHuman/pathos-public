@@ -95,7 +95,7 @@ void CNodeDebug::ClearGame( void )
 {
 	if(!m_routesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_routesArray.size(); i++)
+		for(UInt32 i = 0; i < m_routesArray.size(); i++)
 			delete m_routesArray[i];
 
 		m_routesArray.clear();
@@ -138,7 +138,7 @@ bool CNodeDebug::Draw( void )
 	glPointSize(16);
 
 	// Draw links
-	for(Uint32 i = 0; i < m_linksArray.size(); i++)
+	for(UInt32 i = 0; i < m_linksArray.size(); i++)
 	{
 		node_debug_link_t& link = m_linksArray[i];
 
@@ -158,7 +158,7 @@ bool CNodeDebug::Draw( void )
 		if(m_pCvarDrawDebug->GetValue() == 3)
 			glDisable(GL_DEPTH_TEST);
 
-		for(Uint32 i = 0; i < m_routesArray.size(); i++)
+		for(UInt32 i = 0; i < m_routesArray.size(); i++)
 		{
 			node_debug_route_t* proute = m_routesArray[i];
 
@@ -191,7 +191,7 @@ bool CNodeDebug::Draw( void )
 			cl_renderfuncs.pfnValidateBasicDraw();
 
 			// Draw the waypoint
-			for(Uint32 j = 1; j < proute->points.size(); j++)
+			for(UInt32 j = 1; j < proute->points.size(); j++)
 			{
 				cl_renderfuncs.pfnBasicDrawBegin(CBasicDraw::DRAW_LINES);
 				cl_renderfuncs.pfnBasicDrawVertex3fv(proute->points[j-1] + raise);
@@ -200,7 +200,7 @@ bool CNodeDebug::Draw( void )
 			}
 
 			// Draw the points themselves
-			for(Uint32 j = 0; j < proute->points.size(); j++)
+			for(UInt32 j = 0; j < proute->points.size(); j++)
 			{
 				cl_renderfuncs.pfnBasicDrawBegin(CBasicDraw::DRAW_POINTS);
 				cl_renderfuncs.pfnBasicDrawVertex3fv(proute->points[j] + raise);
@@ -218,7 +218,7 @@ bool CNodeDebug::Draw( void )
 		glDisable( GL_CULL_FACE );
 		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
-		for(Uint32 i = 0; i < m_bboxesArray.size(); i++)
+		for(UInt32 i = 0; i < m_bboxesArray.size(); i++)
 		{
 			node_debug_bbox_t *pbbox = &m_bboxesArray[i];
 
@@ -282,7 +282,7 @@ bool CNodeDebug::Draw( void )
 void CNodeDebug::AddBBox( const Vector& origin, const Vector& mins, const Vector& maxs )
 {
 	// Make sure this doesn't already exist
-	for(Uint32 i = 0; i < m_bboxesArray.size(); i++)
+	for(UInt32 i = 0; i < m_bboxesArray.size(); i++)
 	{
 		if(m_bboxesArray[i].mins == mins && m_bboxesArray[i].maxs == maxs)
 			return;
@@ -293,7 +293,7 @@ void CNodeDebug::AddBBox( const Vector& origin, const Vector& mins, const Vector
 	newbbox.mins = mins;
 	newbbox.maxs = maxs;
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		newbbox.color[i] = Common::RandomFloat(0, 1);
 
 	m_bboxesArray.push_back(newbbox);
@@ -305,8 +305,8 @@ void CNodeDebug::AddBBox( const Vector& origin, const Vector& mins, const Vector
 //=============================================
 void CNodeDebug::AddPath( const Vector& node1, const Vector& node2, const Vector& color )
 {
-	Uint32 raiselevel = 0;
-	for(Uint32 i = 0; i < m_linksArray.size(); i++)
+	UInt32 raiselevel = 0;
+	for(UInt32 i = 0; i < m_linksArray.size(); i++)
 	{
 		if(m_linksArray[i].node1 == node1 && m_linksArray[i].node2 == node2
 			|| m_linksArray[i].node2 == node1 && m_linksArray[i].node1 == node2)
@@ -333,7 +333,7 @@ void CNodeDebug::AddPath( const Vector& node1, const Vector& node2, const Vector
 void CNodeDebug::AddWaypoint( const CArray<Vector>& pointsArray, entindex_t entindex, waypoint_type_t type )
 {
 	node_debug_route_t* proute = nullptr;
-	for(Uint32 i = 0; i < m_routesArray.size(); i++)
+	for(UInt32 i = 0; i < m_routesArray.size(); i++)
 	{
 		if(m_routesArray[i]->entindex == entindex && m_routesArray[i]->type == type)
 		{
@@ -358,7 +358,7 @@ void CNodeDebug::AddWaypoint( const CArray<Vector>& pointsArray, entindex_t enti
 	
 	// Fill in the points
 	proute->points.resize(pointsArray.size());
-	for(Uint32 i = 0; i < pointsArray.size(); i++)
+	for(UInt32 i = 0; i < pointsArray.size(); i++)
 		proute->points[i] = pointsArray[i];
 }
 
@@ -372,7 +372,7 @@ void CNodeDebug::DrawBBox( node_debug_bbox_t& bbox, Vector* pbboxpoints )
 	cl_renderfuncs.pfnBasicDrawBegin(CBasicDraw::DRAW_TRIANGLES);
 
 	Vector triverts[3];
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		// Remember triverts
 		triverts[i] = pbboxpoints[i&7];
@@ -381,13 +381,13 @@ void CNodeDebug::DrawBBox( node_debug_bbox_t& bbox, Vector* pbboxpoints )
 		cl_renderfuncs.pfnBasicDrawVertex3fv(pbboxpoints[i]);
 	}
 
-	for(Uint32 i = 3; i < 10; i++)
+	for(UInt32 i = 3; i < 10; i++)
 	{
 		triverts[0] = triverts[1];
 		triverts[1] = triverts[2];
 		triverts[2] = pbboxpoints[i&7];
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			cl_renderfuncs.pfnBasicDrawVertex3fv(triverts[j]);
 	}
 

@@ -62,7 +62,7 @@ bool CFuncNPCClip::Spawn( void )
 // @brief
 //
 //=============================================
-void CFuncNPCClip::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncNPCClip::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(useMode == USE_OFF)
 	{

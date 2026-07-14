@@ -103,7 +103,7 @@ void CEntityManager::Setup ( void )
 //=============================================
 void CEntityManager::ParseEntities ( void )
 {
-	Char token[MAX_PATH];
+	char token[MAX_PATH];
 
 	// Retreive world model ptr
 	const cache_model_t *pmodel = cl_engfuncs.pfnGetModel(WORLD_MODEL_INDEX);
@@ -118,8 +118,8 @@ void CEntityManager::ParseEntities ( void )
 
 	// Count the number of entities
 	Int32 depth = 0;
-	Uint32 numentities = 0;
-	const Char *pscan = pbrushmodel->pentdata;
+	UInt32 numentities = 0;
+	const char *pscan = pbrushmodel->pentdata;
 	while(pscan && *pscan != '\0')
 	{
 		if(*pscan == '\"')
@@ -227,7 +227,7 @@ void CEntityManager::ParseEntities ( void )
 void CEntityManager::Entity_EnvCable( const entitydata_t& entity )
 {
 	// Get our origin
-	const Char *pValue = ValueForKey(entity, "origin");
+	const char *pValue = ValueForKey(entity, "origin");
 	if(!pValue)
 		return;
 
@@ -264,14 +264,14 @@ void CEntityManager::Entity_EnvCable( const entitydata_t& entity )
 	if(!pValue)
 		return;
 
-	Uint32 falldepth = atoi(pValue);
+	UInt32 falldepth = atoi(pValue);
 
 	// Get sprite width
 	pValue = ValueForKey(entity, "spritewidth");
 	if(!pValue)
 		return;
 
-	Float flwidth = atof(pValue);
+	float flwidth = atof(pValue);
 	if(flwidth < 1) flwidth = 1;
 
 	// Get segment count
@@ -279,7 +279,7 @@ void CEntityManager::Entity_EnvCable( const entitydata_t& entity )
 	if(!pValue)
 		return;
 
-	Uint32 numsegments = atoi(pValue);
+	UInt32 numsegments = atoi(pValue);
 	cl_efxapi.pfnCreateCableEntity(vorigin1, vorigin2, falldepth, flwidth, numsegments);
 }
 
@@ -289,7 +289,7 @@ void CEntityManager::Entity_EnvCable( const entitydata_t& entity )
 //=============================================
 void CEntityManager::Entity_EnvDecal( const entitydata_t& entity )
 {
-	const Char *pvalue = ValueForKey(entity, "targetname");
+	const char *pvalue = ValueForKey(entity, "targetname");
 	if(pvalue)
 		return;
 
@@ -331,7 +331,7 @@ void CEntityManager::Entity_EnvDecal( const entitydata_t& entity )
 //=============================================
 void CEntityManager::Entity_EnvSprite( const entitydata_t& entity, entindex_t& entindex )
 {
-	const Char *pvalue = ValueForKey(entity, "targetname");
+	const char *pvalue = ValueForKey(entity, "targetname");
 	if(pvalue)
 		return;
 
@@ -410,7 +410,7 @@ void CEntityManager::Entity_EnvSprite( const entitydata_t& entity, entindex_t& e
 //=============================================
 void CEntityManager::Entity_EnvELight( const entitydata_t& entity, entindex_t& entindex )
 {
-	const Char *pvalue = ValueForKey(entity, "targetname");
+	const char *pvalue = ValueForKey(entity, "targetname");
 	if(pvalue)
 	{
 		// Entities with targetname are handled by the engine
@@ -469,7 +469,7 @@ void CEntityManager::Entity_EnvELight( const entitydata_t& entity, entindex_t& e
 //=============================================
 void CEntityManager::Entity_EnvModel( const entitydata_t& entity, entindex_t& entindex )
 {
-	const Char *pvalue = ValueForKey(entity, "targetname");
+	const char *pvalue = ValueForKey(entity, "targetname");
 	if(pvalue)
 	{
 		// Entities with a targetname are handled by the engine
@@ -487,7 +487,7 @@ void CEntityManager::Entity_EnvModel( const entitydata_t& entity, entindex_t& en
 		return;
 	}
 
-	Uint32 spawnFlags = 0;
+	UInt32 spawnFlags = 0;
 	pvalue = ValueForKey(entity, "spawnflags");
 	if (pvalue)
 		spawnFlags = SDL_atoi(pvalue);
@@ -651,7 +651,7 @@ void CEntityManager::Entity_EnvModel( const entitydata_t& entity, entindex_t& en
 		Math::VectorCopy( vtemp, vbounds[i] );
 	}
 		
-	Float anglemarix[3][4];
+	float anglemarix[3][4];
 	Math::AngleMatrix(newEntity.curstate.angles, anglemarix);
 
 	for (int i = 0; i < 8; i++ )
@@ -663,7 +663,7 @@ void CEntityManager::Entity_EnvModel( const entitydata_t& entity, entindex_t& en
 	// Set the bounding box
 	Vector vmins = NULL_MINS;
 	Vector vmaxs = NULL_MAXS;
-	for(Uint32 i = 0; i < 8; i++)
+	for(UInt32 i = 0; i < 8; i++)
 	{
 		// Mins
 		if(vbounds[i][0] < vmins[0]) 
@@ -700,7 +700,7 @@ void CEntityManager::Entity_EnvModel( const entitydata_t& entity, entindex_t& en
 		newEntity.curstate.effects |= EF_STATICENTITY;
 
 	// Set the bone conteollers
-	for(Uint32 i = 0; i < pstudiohdr->numbonecontrollers; i++)
+	for(UInt32 i = 0; i < pstudiohdr->numbonecontrollers; i++)
 		VBM_SetController(pmodel, i, 0, newEntity.curstate.controllers, cl_engfuncs.pfnCon_Printf);
 }
 
@@ -708,14 +708,14 @@ void CEntityManager::Entity_EnvModel( const entitydata_t& entity, entindex_t& en
 // @brief
 //
 //=============================================
-const entitydata_t* CEntityManager::FindEntityByTargetName( const Char* pstrClassName, const Char* pstrTargetName )
+const entitydata_t* CEntityManager::FindEntityByTargetName( const char* pstrClassName, const char* pstrTargetName )
 {
 	if(!pstrClassName || !pstrTargetName)
 		return nullptr;
 
-	for(Uint32 i = 0; i < m_bspEntitiesArray.size(); i++)
+	for(UInt32 i = 0; i < m_bspEntitiesArray.size(); i++)
 	{
-		const Char* pvalue = ValueForKey(m_bspEntitiesArray[i], "classname");
+		const char* pvalue = ValueForKey(m_bspEntitiesArray[i], "classname");
 
 		if (strcmp(pvalue, pstrClassName))
 			continue;
@@ -748,7 +748,7 @@ const CArray<entitydata_t>& CEntityManager::GetEntityList( void ) const
 void CEntityManager::SetupModelVertexLighting( const entitydata_t& entity, cl_entity_t* pcliententity, const cache_model_t* pmodel )
 {
 	// Read the offset into data
-	const Char* pvalue = ValueForKey(entity, "vlight_offset");
+	const char* pvalue = ValueForKey(entity, "vlight_offset");
 	if(!pvalue)
 	{
 		cl_engfuncs.pfnCon_Printf("%s - Entity with model '%s' missing 'vlight_offset' field.\n", __FUNCTION__, pmodel->name.c_str());
@@ -782,9 +782,9 @@ void CEntityManager::SetupModelVertexLighting( const entitydata_t& entity, cl_en
 	if(pvalue)
 	{
 		CString token;
-		Uint32 index = 0;
+		UInt32 index = 0;
 
-		const Char* pstr = pvalue;
+		const char* pstr = pvalue;
 		while(pstr)
 		{
 			if(index >= MAX_ENTITY_STYLES)
@@ -833,9 +833,9 @@ void CEntityManager::LoadEntVars( void )
 	Int32 entityindex = CL_ENTITY_INDEX_BASE;
 
 	// Create the client-side entities
-	for(Uint32 i = 0; i < m_bspEntitiesArray.size(); i++)
+	for(UInt32 i = 0; i < m_bspEntitiesArray.size(); i++)
 	{
-		const Char *pValue = ValueForKey(m_bspEntitiesArray[i], "classname");
+		const char *pValue = ValueForKey(m_bspEntitiesArray[i], "classname");
 		if(!pValue)
 			continue;
 
@@ -892,12 +892,12 @@ void CEntityManager::Frame( void )
 
 	// Get pvs data for view origin
 	const mleaf_t* pleaf = cl_engfuncs.pfnPointInLeaf(vorigin);
-	const byte* ppvs = cl_engfuncs.pfnLeafPVS(*pleaf);
+	const Byte* ppvs = cl_engfuncs.pfnLeafPVS(*pleaf);
 
 	// Collect all camera entities
-	Uint32 numEntities = 0;
+	UInt32 numEntities = 0;
 	static CArray<cl_entity_t*> cameraEntitiesArray;
-	for(Uint32 i = 0; i < MAX_RENDER_ENTITIES; i++)
+	for(UInt32 i = 0; i < MAX_RENDER_ENTITIES; i++)
 	{
 		cl_entity_t* pentity = cl_engfuncs.pfnGetEntityByIndex(i);
 		if(pentity && pentity->curstate.rendertype == RT_MONITORENTITY)
@@ -917,7 +917,7 @@ void CEntityManager::Frame( void )
 		}
 	}
 
-	for(Uint32 i = 0; i < m_entitiesArray.size(); i++)
+	for(UInt32 i = 0; i < m_entitiesArray.size(); i++)
 	{
 		cl_entity_t *pentity = &m_entitiesArray[i];
 
@@ -951,7 +951,7 @@ void CEntityManager::Frame( void )
 		{
 			if(!Common::CheckVisibility(pInfo->leafnums, pInfo->numleaves, ppvs))
 			{
-				Uint32 j = 0;
+				UInt32 j = 0;
 				for(; j < numEntities; j++)
 				{
 					entity_extrainfo_t* pCameraInfo = cl_engfuncs.pfnGetEntityExtraData(cameraEntitiesArray[j]);
@@ -980,16 +980,16 @@ void CEntityManager::DecalExternalEntities( const Vector& vpos, const Vector& vn
 	if(!texptr)
 		return;
 
-	Float radius = (texptr->xsize > texptr->ysize) ? texptr->xsize : texptr->ysize;
+	float radius = (texptr->xsize > texptr->ysize) ? texptr->xsize : texptr->ysize;
 
 	Vector vdecalmins, vdecalmaxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		vdecalmins[i] = vpos[i] - radius;
 		vdecalmaxs[i] = vpos[i] + radius;
 	}
 
-	for(Uint32 i = 0; i < m_entitiesArray.size(); i++)
+	for(UInt32 i = 0; i < m_entitiesArray.size(); i++)
 	{
 		cl_entity_t *pentity = &m_entitiesArray[i];
 

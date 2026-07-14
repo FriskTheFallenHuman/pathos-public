@@ -7,8 +7,6 @@ All Rights Reserved.
 ===============================================
 */
 
-#include <math.h>
-
 #include "includes.h"
 #include "matrix.h"
 
@@ -23,19 +21,19 @@ CMatrix::CMatrix ( void ):
 	m_pMatrixHeader = new matrix_t;
 	m_pCurrentMatrix = m_pMatrixHeader->matrix;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_workingMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_outMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_multMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_rotationMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_matrixTranspose[i] = 0;
 }
 
@@ -58,7 +56,7 @@ CMatrix::CMatrix( const CMatrix& src ):
 		else
 			lastinsert->next = pnew;
 
-		for(Uint32 i = 0; i < 16; i++)
+		for(UInt32 i = 0; i < 16; i++)
 			pnew->matrix[i] = pnext->matrix[i];
 		
 		pnext = pnext->next;
@@ -67,19 +65,19 @@ CMatrix::CMatrix( const CMatrix& src ):
 
 	m_pCurrentMatrix = m_pMatrixHeader->matrix;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_workingMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_outMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_multMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_rotationMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_matrixTranspose[i] = 0;
 }
 
@@ -88,7 +86,7 @@ CMatrix::CMatrix( const CMatrix& src ):
 //
 // @param m Source matrix
 //=============================================
-CMatrix::CMatrix ( const Float *pMatrix ):
+CMatrix::CMatrix ( const float *pMatrix ):
 	m_pCurrentMatrix(nullptr),
 	m_pMatrixHeader(nullptr)
 {
@@ -100,19 +98,19 @@ CMatrix::CMatrix ( const Float *pMatrix ):
 	m_pCurrentMatrix[8] = pMatrix[2]; m_pCurrentMatrix[9] = pMatrix[6]; m_pCurrentMatrix[10] = pMatrix[10]; m_pCurrentMatrix[11] = pMatrix[14];
 	m_pCurrentMatrix[12] = pMatrix[3]; m_pCurrentMatrix[13] = pMatrix[7]; m_pCurrentMatrix[14] = pMatrix[11]; m_pCurrentMatrix[15] = pMatrix[15];
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_workingMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_outMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_multMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_rotationMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_matrixTranspose[i] = 0;
 }
 
@@ -163,7 +161,7 @@ void CMatrix::PopMatrix( void )
 //
 // @return Pointer to matrix output buffer
 //=============================================
-const Float *CMatrix::GetMatrix( void ) 
+const float *CMatrix::GetMatrix( void ) 
 {
 	m_outMatrix[0] = m_pCurrentMatrix[0]; m_outMatrix[1] = m_pCurrentMatrix[1]; m_outMatrix[2] = m_pCurrentMatrix[2]; m_outMatrix[3] = m_pCurrentMatrix[3];
 	m_outMatrix[4] = m_pCurrentMatrix[4]; m_outMatrix[5] = m_pCurrentMatrix[5]; m_outMatrix[6] = m_pCurrentMatrix[6]; m_outMatrix[7] = m_pCurrentMatrix[7];
@@ -177,7 +175,7 @@ const Float *CMatrix::GetMatrix( void )
 //
 // @return Inverse of the matrix
 //=============================================
-const Float *CMatrix::GetInverse( void ) 
+const float *CMatrix::GetInverse( void ) 
 {
 	m_workingMatrix[0] = m_pCurrentMatrix[5]  * m_pCurrentMatrix[10] * m_pCurrentMatrix[15] - m_pCurrentMatrix[5]  * m_pCurrentMatrix[11] * m_pCurrentMatrix[14] - m_pCurrentMatrix[9]  * m_pCurrentMatrix[6]  * m_pCurrentMatrix[15] + m_pCurrentMatrix[9]  * m_pCurrentMatrix[7]  * m_pCurrentMatrix[14] +m_pCurrentMatrix[13] * m_pCurrentMatrix[6]  * m_pCurrentMatrix[11] - m_pCurrentMatrix[13] * m_pCurrentMatrix[7]  * m_pCurrentMatrix[10];
 	m_workingMatrix[4] = -m_pCurrentMatrix[4]  * m_pCurrentMatrix[10] * m_pCurrentMatrix[15] + m_pCurrentMatrix[4]  * m_pCurrentMatrix[11] * m_pCurrentMatrix[14] + m_pCurrentMatrix[8]  * m_pCurrentMatrix[6]  * m_pCurrentMatrix[15] - m_pCurrentMatrix[8]  * m_pCurrentMatrix[7]  * m_pCurrentMatrix[14] - m_pCurrentMatrix[12] * m_pCurrentMatrix[6]  * m_pCurrentMatrix[11] + m_pCurrentMatrix[12] * m_pCurrentMatrix[7]  * m_pCurrentMatrix[10];
@@ -196,10 +194,10 @@ const Float *CMatrix::GetInverse( void )
 	m_workingMatrix[11] = -m_pCurrentMatrix[0] * m_pCurrentMatrix[5] * m_pCurrentMatrix[11] + m_pCurrentMatrix[0] * m_pCurrentMatrix[7] * m_pCurrentMatrix[9] + m_pCurrentMatrix[4] * m_pCurrentMatrix[1] * m_pCurrentMatrix[11] - m_pCurrentMatrix[4] * m_pCurrentMatrix[3] * m_pCurrentMatrix[9] - m_pCurrentMatrix[8] * m_pCurrentMatrix[1] * m_pCurrentMatrix[7] + m_pCurrentMatrix[8] * m_pCurrentMatrix[3] * m_pCurrentMatrix[5];
 	m_workingMatrix[15] = m_pCurrentMatrix[0] * m_pCurrentMatrix[5] * m_pCurrentMatrix[10] - m_pCurrentMatrix[0] * m_pCurrentMatrix[6] * m_pCurrentMatrix[9] - m_pCurrentMatrix[4] * m_pCurrentMatrix[1] * m_pCurrentMatrix[10] + m_pCurrentMatrix[4] * m_pCurrentMatrix[2] * m_pCurrentMatrix[9] + m_pCurrentMatrix[8] * m_pCurrentMatrix[1] * m_pCurrentMatrix[6] - m_pCurrentMatrix[8] * m_pCurrentMatrix[2] * m_pCurrentMatrix[5];
 	
-	Float det = m_pCurrentMatrix[0] * m_workingMatrix[0] + m_pCurrentMatrix[1] * m_workingMatrix[4] + m_pCurrentMatrix[2] * m_workingMatrix[8] + m_pCurrentMatrix[3] * m_workingMatrix[12];
-	det = static_cast<Float>(1.0 / det);
+	float det = m_pCurrentMatrix[0] * m_workingMatrix[0] + m_pCurrentMatrix[1] * m_workingMatrix[4] + m_pCurrentMatrix[2] * m_workingMatrix[8] + m_pCurrentMatrix[3] * m_workingMatrix[12];
+	det = static_cast<float>(1.0 / det);
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_matrixTranspose[i] = m_workingMatrix[i] * det;
 
 	return m_matrixTranspose;
@@ -210,7 +208,7 @@ const Float *CMatrix::GetInverse( void )
 //
 // @return Transpose of the matrix
 //=============================================
-const Float *CMatrix::Transpose( void )
+const float *CMatrix::Transpose( void )
 {
     m_outMatrix[0] = m_pCurrentMatrix[0];   m_outMatrix[1] = m_pCurrentMatrix[4];   m_outMatrix[2] = m_pCurrentMatrix[8];   m_outMatrix[3] = m_pCurrentMatrix[12];
     m_outMatrix[4] = m_pCurrentMatrix[1];   m_outMatrix[5] = m_pCurrentMatrix[5];   m_outMatrix[6] = m_pCurrentMatrix[9];   m_outMatrix[7] = m_pCurrentMatrix[13];
@@ -224,7 +222,7 @@ const Float *CMatrix::Transpose( void )
 //
 // @param m Source matrix to copy values from
 //=============================================
-void CMatrix::SetMatrix( const Float *pMatrix ) 
+void CMatrix::SetMatrix( const float *pMatrix ) 
 {
 	m_pCurrentMatrix[0] = pMatrix[0]; m_pCurrentMatrix[1] = pMatrix[4]; m_pCurrentMatrix[2] = pMatrix[8]; m_pCurrentMatrix[3] = pMatrix[12]; 
 	m_pCurrentMatrix[4] = pMatrix[1]; m_pCurrentMatrix[5] = pMatrix[5]; m_pCurrentMatrix[6] = pMatrix[9]; m_pCurrentMatrix[7] = pMatrix[13]; 
@@ -247,7 +245,7 @@ void CMatrix::LoadIdentity( void )
 //
 // @param Right hand matrix to multiply with
 //=============================================
-void CMatrix::MultMatrix ( const Float *pMatrix )
+void CMatrix::MultMatrix ( const float *pMatrix )
 {
 	m_multMatrix[0] = pMatrix[0] * m_pCurrentMatrix[0] + pMatrix[4] * m_pCurrentMatrix[1] + pMatrix[8] * m_pCurrentMatrix[2] + pMatrix[12] * m_pCurrentMatrix[3];
 	m_multMatrix[1] = pMatrix[1] * m_pCurrentMatrix[0] + pMatrix[5] * m_pCurrentMatrix[1] + pMatrix[9] * m_pCurrentMatrix[2] + pMatrix[13] * m_pCurrentMatrix[3];
@@ -270,7 +268,7 @@ void CMatrix::MultMatrix ( const Float *pMatrix )
 	m_multMatrix[15] = pMatrix[3] * m_pCurrentMatrix[12] + pMatrix[7] * m_pCurrentMatrix[13] + pMatrix[11] * m_pCurrentMatrix[14] + pMatrix[15] * m_pCurrentMatrix[15];
 
 	// copy it over
-	memcpy(m_pCurrentMatrix, m_multMatrix, sizeof(Float)*16);
+	memcpy(m_pCurrentMatrix, m_multMatrix, sizeof(float)*16);
 }
 
 //=============================================
@@ -280,7 +278,7 @@ void CMatrix::MultMatrix ( const Float *pMatrix )
 // @param y Value on y coordinate to translate by
 // @param z Value on z coordinate to translate by
 //=============================================
-void CMatrix::Translate ( Float x, Float y, Float z )
+void CMatrix::Translate ( float x, float y, float z )
 {
 	m_workingMatrix[0]  = 1;  m_workingMatrix[1]  = 0;  m_workingMatrix[2]  = 0;  m_workingMatrix[3]  = x;
 	m_workingMatrix[4]  = 0;  m_workingMatrix[5]  = 1;  m_workingMatrix[6]  = 0;  m_workingMatrix[7]  = y;
@@ -293,17 +291,17 @@ void CMatrix::Translate ( Float x, Float y, Float z )
 // @brief Rotates the matrix with a vector
 //
 //=============================================
-void CMatrix::Rotate ( Float angle, Float x, Float y, Float z )
+void CMatrix::Rotate ( float angle, float x, float y, float z )
 {
-	Float sinAngle, cosAngle;
-	const Float mag = sqrtf(x * x + y * y + z * z);
+	float sinAngle, cosAngle;
+	const float mag = sqrtf(x * x + y * y + z * z);
 
-	sinAngle = sinf ( static_cast<Float>(angle * M_PI / 180.0f) );
-	cosAngle = cosf ( static_cast<Float>(angle * M_PI / 180.0f) );
+	sinAngle = sinf ( static_cast<float>(angle * M_PI / 180.0f) );
+	cosAngle = cosf ( static_cast<float>(angle * M_PI / 180.0f) );
 	if ( mag > 0.0f )
 	{
-		Float xx, yy, zz, xy, yz, zx, xs, ys, zs;
-		Float oneMinusCos;
+		float xx, yy, zz, xy, yz, zx, xs, ys, zs;
+		float oneMinusCos;
 
 		x /= mag;
 		y /= mag;
@@ -351,7 +349,7 @@ void CMatrix::Rotate ( Float angle, Float x, Float y, Float z )
 // @param y Value on y coordinate to scale width
 // @param z Value on z coordinate to scale width
 //=============================================
-void CMatrix::Scale ( Float x, Float y, Float z )
+void CMatrix::Scale ( float x, float y, float z )
 {
 	m_workingMatrix[0] = x; m_workingMatrix[5] = y; m_workingMatrix[10] = z; m_workingMatrix[15] = 1;
 	m_workingMatrix[1] = m_workingMatrix[2] = m_workingMatrix[3] = m_workingMatrix[4] = m_workingMatrix[6] = m_workingMatrix[7] = m_workingMatrix[8] = m_workingMatrix[9] = m_workingMatrix[11] = m_workingMatrix[12] = m_workingMatrix[13] = m_workingMatrix[14] = 0;
@@ -362,7 +360,7 @@ void CMatrix::Scale ( Float x, Float y, Float z )
 // @brief Sets the matrix as a view frustum matrix
 //
 //=============================================
-void CMatrix::SetFrustum( Float l, Float r, Float b, Float t, Float n, Float f )
+void CMatrix::SetFrustum( float l, float r, float b, float t, float n, float f )
 {
 	memset(m_workingMatrix, 0, sizeof(m_workingMatrix));
 	m_workingMatrix[0]  = 2 * n / (r - l);
@@ -380,14 +378,14 @@ void CMatrix::SetFrustum( Float l, Float r, Float b, Float t, Float n, Float f )
 // @brief Sets up an orthogonical projection matrix
 //
 //=============================================
-void CMatrix::Ortho(Float l, Float r, Float b, Float t, Float n, Float f)
+void CMatrix::Ortho(float l, float r, float b, float t, float n, float f)
 {
-	const Float r_l = r - l;
-	const Float t_b = t - b;
-	const Float f_n = f - n;
-	const Float tx = - (r + l) / (r - l);
-	const Float ty = - (t + b) / (t - b);
-	const Float tz = - (f + n) / (f - n);
+	const float r_l = r - l;
+	const float t_b = t - b;
+	const float f_n = f - n;
+	const float tx = - (r + l) / (r - l);
+	const float ty = - (t + b) / (t - b);
+	const float tz = - (f + n) / (f - n);
 
 	m_workingMatrix[0] = 2.0f / r_l;
 	m_workingMatrix[1] = 0.0f;
@@ -415,10 +413,10 @@ void CMatrix::Ortho(Float l, Float r, Float b, Float t, Float n, Float f)
 // @brief Sets up a matrix that looks at a given coordinate
 //
 //=============================================
-void CMatrix::LookAt( Float eyex, Float eyey, Float eyez, Float centerx, Float centery, Float centerz, Float upx, Float upy, Float upz )
+void CMatrix::LookAt( float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz )
 {
-	Float x[3] = {0}, y[3] = {0}, z[3] = {0};
-	Float mag;
+	float x[3] = {0}, y[3] = {0}, z[3] = {0};
+	float mag;
 
 	/* Make rotation matrix */
 
@@ -512,25 +510,25 @@ void CMatrix::operator=( const CMatrix& src )
 		else
 			lastinsert->next = pnew;
 
-		for(Uint32 i = 0; i < 16; i++)
+		for(UInt32 i = 0; i < 16; i++)
 			pnew->matrix[i] = pnext->matrix[i];
 		
 		pnext = pnext->next;
 		lastinsert = pnew;
 	}
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_workingMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_outMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_multMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_rotationMatrix[i] = 0;
 
-	for(Uint32 i = 0; i < 16; i++)
+	for(UInt32 i = 0; i < 16; i++)
 		m_matrixTranspose[i] = 0;
 }

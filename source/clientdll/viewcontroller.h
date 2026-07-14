@@ -48,7 +48,7 @@ public:
 
 public:
 	// Processes a view controller message
-	void ProcessMessage( const byte* pdata, Uint32 msgsize );
+	void ProcessMessage( const Byte* pdata, UInt32 msgsize );
 	// Gets the view origin and angles
 	void GetViewInfo( Vector& origin, Vector& angles );
 
@@ -57,11 +57,11 @@ private:
 	void CalcView_CameraModel( ref_params_t& params );
 
 	// Gets duration of a sequence
-	Float GetSequenceTime( const cache_model_t *pmodel, Int32 sequence );
+	float GetSequenceTime( const cache_model_t *pmodel, Int32 sequence );
 	// Estimates current frame
-	Float EstimateFrame( cl_entity_t *pentity, Int32 sequence, Float flTime ) const;
+	float EstimateFrame( cl_entity_t *pentity, Int32 sequence, float flTime ) const;
 	// Looks up a sequence by name
-	static Int32 LookupSequence( const cache_model_t *pmodel, const Char *szname );
+	static Int32 LookupSequence( const cache_model_t *pmodel, const char *szname );
 
 	// Gets the entity angles and origin from attachments
 	static void GetViewInfoFromEntity( cl_entity_t* pentity, Vector& origin, Vector& angles );
@@ -82,10 +82,10 @@ private:
 	viewcontroller_blend_modes_t	m_blendMode;
 
 	bool							m_blend;
-	Double							m_blendTime;
-	Double							m_blendDelta;
+	double							m_blendTime;
+	double							m_blendDelta;
 	
-	Float							m_lerpDelay;
+	float							m_lerpDelay;
 
 	Vector							m_blendOrigin;
 	Vector							m_blendAngles;

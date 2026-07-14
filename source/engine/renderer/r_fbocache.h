@@ -23,7 +23,7 @@ class CFBOCache
 {
 public:
 	// Time until an FBO is freed
-	static const Float FBO_FREE_DELAY;
+	static const float FBO_FREE_DELAY;
 
 public:
 	struct cache_fbo_t
@@ -34,12 +34,12 @@ public:
 			freetime(0)
 		{}
 
-		Uint32 width;
-		Uint32 height;
+		UInt32 width;
+		UInt32 height;
 
 		fbobind_t fbo;
 
-		Double freetime;
+		double freetime;
 	};
 
 public:
@@ -59,7 +59,7 @@ public:
 	void Think(void);
 
 public:
-	cache_fbo_t* Alloc(Uint32 width, Uint32 height, bool depthbuffer);
+	cache_fbo_t* Alloc(UInt32 width, UInt32 height, bool depthbuffer);
 	void Free(cache_fbo_t* pfbo);
 
 private:

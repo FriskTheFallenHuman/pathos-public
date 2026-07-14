@@ -23,7 +23,7 @@ All Rights Reserved.
 // @brief
 //
 //=============================================
-brushmodel_t* BSPV30_Load( const byte* pfile, const dv30header_t* pheader, const Char* pstrFilename )
+brushmodel_t* BSPV30_Load( const Byte* pfile, const dv30header_t* pheader, const char* pstrFilename )
 {
 	// Create the brushmodel_t object
 	brushmodel_t* pmodel = new brushmodel_t();
@@ -61,7 +61,7 @@ brushmodel_t* BSPV30_Load( const byte* pfile, const dv30header_t* pheader, const
 // @brief
 //
 //=============================================
-bool BSPV30_LoadVertexes( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadVertexes( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -78,14 +78,14 @@ bool BSPV30_LoadVertexes( const byte* pfile, brushmodel_t& model, const dv30lump
 	}
 
 	// Load the data in
-	Uint32 count = lump.size/sizeof(dv30vertex_t);
+	UInt32 count = lump.size/sizeof(dv30vertex_t);
 	const dv30vertex_t* pinverts = reinterpret_cast<const dv30vertex_t*>(pfile + lump.offset);
 	mvertex_t* poutverts = new mvertex_t[count];
 
 	model.pvertexes = poutverts;
 	model.numvertexes = count;
 
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 		Math::VectorCopy(pinverts[i].origin, poutverts[i].origin);
 
 	return true;
@@ -95,7 +95,7 @@ bool BSPV30_LoadVertexes( const byte* pfile, brushmodel_t& model, const dv30lump
 // @brief
 //
 //=============================================
-bool BSPV30_LoadEdges( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadEdges( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -112,17 +112,17 @@ bool BSPV30_LoadEdges( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 	}
 
 	// Load the data in
-	Uint32 count = lump.size/sizeof(dv30edge_t);
+	UInt32 count = lump.size/sizeof(dv30edge_t);
 	const dv30edge_t* pinedges = reinterpret_cast<const dv30edge_t*>(pfile + lump.offset);
 	medge_t* poutedges = new medge_t[count];
 
 	model.pedges = poutedges;
 	model.numedges = count;
 
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
-		poutedges[i].vertexes[0] = Common::ByteToUint16(reinterpret_cast<const byte*>(&pinedges[i].vertexes[0]));
-		poutedges[i].vertexes[1] = Common::ByteToUint16(reinterpret_cast<const byte*>(&pinedges[i].vertexes[1]));
+		poutedges[i].vertexes[0] = Common::ByteToUint16(reinterpret_cast<const Byte*>(&pinedges[i].vertexes[0]));
+		poutedges[i].vertexes[1] = Common::ByteToUint16(reinterpret_cast<const Byte*>(&pinedges[i].vertexes[1]));
 	}
 
 	return true;
@@ -132,7 +132,7 @@ bool BSPV30_LoadEdges( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 // @brief
 //
 //=============================================
-bool BSPV30_LoadSurfedges( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadSurfedges( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -149,7 +149,7 @@ bool BSPV30_LoadSurfedges( const byte* pfile, brushmodel_t& model, const dv30lum
 	}
 
 	// Load the data in
-	Uint32 count = lump.size/sizeof(Int32);
+	UInt32 count = lump.size/sizeof(Int32);
 	const Int32* pinedges = reinterpret_cast<const Int32*>(pfile + lump.offset);
 	Int32* poutedges = new Int32[count];
 
@@ -164,7 +164,7 @@ bool BSPV30_LoadSurfedges( const byte* pfile, brushmodel_t& model, const dv30lum
 // @brief
 //
 //=============================================
-bool BSPV30_LoadTextures( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadTextures( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -179,10 +179,10 @@ bool BSPV30_LoadTextures( const byte* pfile, brushmodel_t& model, const dv30lump
 	model.numtextures = pmiptexlump->nummiptex;
 	model.ptextures = new mtexture_t[model.numtextures];
 
-	for(Uint32 i = 0; i < model.numtextures; i++)
+	for(UInt32 i = 0; i < model.numtextures; i++)
 	{
 		// Get pointer to miptex data
-		const dmiptex_t* pmiptex = reinterpret_cast<const dmiptex_t*>(reinterpret_cast<const byte*>(pmiptexlump) + pmiptexlump->dataoffsets[i]);
+		const dmiptex_t* pmiptex = reinterpret_cast<const dmiptex_t*>(reinterpret_cast<const Byte*>(pmiptexlump) + pmiptexlump->dataoffsets[i]);
 
 		// We only get the name and width/height here
 		mtexture_t* ptexture = &model.ptextures[i];
@@ -192,7 +192,7 @@ bool BSPV30_LoadTextures( const byte* pfile, brushmodel_t& model, const dv30lump
 	}
 
 	// Handle animated textures
-	for(Uint32 i = 0; i < model.numtextures; i++)
+	for(UInt32 i = 0; i < model.numtextures; i++)
 	{
 		mtexture_t* ptexture = &model.ptextures[i];
 		if(ptexture->name[0] != '+' && ptexture->name[0] != '-')
@@ -237,7 +237,7 @@ bool BSPV30_LoadTextures( const byte* pfile, brushmodel_t& model, const dv30lump
 		}
 
 		// Check ahead
-		for(Uint32 j = i+1; j < model.numtextures; j++)
+		for(UInt32 j = i+1; j < model.numtextures; j++)
 		{
 			mtexture_t* pnext = &model.ptextures[j];
 			if(!pnext)
@@ -322,7 +322,7 @@ bool BSPV30_LoadTextures( const byte* pfile, brushmodel_t& model, const dv30lump
 // @brief
 //
 //=============================================
-bool BSPV30_LoadLighting( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadLighting( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	if(!lump.size)
 		return true;
@@ -334,13 +334,13 @@ bool BSPV30_LoadLighting( const byte* pfile, brushmodel_t& model, const dv30lump
 		return false;
 	}
 
-	model.plightdata[SURF_LIGHTMAP_DEFAULT] = reinterpret_cast<color24_t*>(new byte[lump.size]);
+	model.plightdata[SURF_LIGHTMAP_DEFAULT] = reinterpret_cast<color24_t*>(new Byte[lump.size]);
 	model.lightdatasize = lump.size;
 
-	const byte* psrc = (pfile + lump.offset);
-	memcpy(model.plightdata[SURF_LIGHTMAP_DEFAULT], psrc, sizeof(byte) * lump.size);
+	const Byte* psrc = (pfile + lump.offset);
+	memcpy(model.plightdata[SURF_LIGHTMAP_DEFAULT], psrc, sizeof(Byte) * lump.size);
 
-	model.plightdata_original[SURF_LIGHTMAP_DEFAULT] = reinterpret_cast<byte*>(model.plightdata[SURF_LIGHTMAP_DEFAULT]);
+	model.plightdata_original[SURF_LIGHTMAP_DEFAULT] = reinterpret_cast<Byte*>(model.plightdata[SURF_LIGHTMAP_DEFAULT]);
 	model.original_lightdatasizes[SURF_LIGHTMAP_DEFAULT] = lump.size;
 	model.original_compressionlevel[SURF_LIGHTMAP_DEFAULT] = 0;
 	model.original_compressiontype[SURF_LIGHTMAP_DEFAULT] = BSP_LMAP_COMPRESSION_NONE;
@@ -352,7 +352,7 @@ bool BSPV30_LoadLighting( const byte* pfile, brushmodel_t& model, const dv30lump
 // @brief
 //
 //=============================================
-bool BSPV30_LoadPlanes( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadPlanes( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -369,17 +369,17 @@ bool BSPV30_LoadPlanes( const byte* pfile, brushmodel_t& model, const dv30lump_t
 	}
 
 	// Load the data in
-	Uint32 count = lump.size/sizeof(dv30plane_t);
+	UInt32 count = lump.size/sizeof(dv30plane_t);
 	const dv30plane_t* pinplanes = reinterpret_cast<const dv30plane_t*>(pfile + lump.offset);
 	plane_t* poutplanes = new plane_t[count];
 
 	model.pplanes = poutplanes;
 	model.numplanes = count;
 
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
-		Uint32 bits = 0;
-		for(Uint32 j = 0; j < 3; j++)
+		UInt32 bits = 0;
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			poutplanes[i].normal[j] = pinplanes[i].normal[j];
 			if(poutplanes[i].normal[j] < 0)
@@ -398,7 +398,7 @@ bool BSPV30_LoadPlanes( const byte* pfile, brushmodel_t& model, const dv30lump_t
 // @brief
 //
 //=============================================
-bool BSPV30_LoadTexinfo( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadTexinfo( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -415,17 +415,17 @@ bool BSPV30_LoadTexinfo( const byte* pfile, brushmodel_t& model, const dv30lump_
 	}
 
 	// Load the data in
-	Uint32 count = lump.size/sizeof(dv30texinfo_t);
+	UInt32 count = lump.size/sizeof(dv30texinfo_t);
 	const dv30texinfo_t* pintexinfos = reinterpret_cast<const dv30texinfo_t*>(pfile + lump.offset);
 	mtexinfo_t* pouttexinfos = new mtexinfo_t[count];
 	
 	model.ptexinfos = pouttexinfos;
 	model.numtexinfos = count;
 
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
 		// Copy the alignment info
-		memcpy(pouttexinfos[i].vecs, pintexinfos[i].vecs, sizeof(Float)*8);
+		memcpy(pouttexinfos[i].vecs, pintexinfos[i].vecs, sizeof(float)*8);
 
 		pouttexinfos[i].flags = pintexinfos[i].flags;
 		Int32 textureindex = pintexinfos[i].miptex;
@@ -446,7 +446,7 @@ bool BSPV30_LoadTexinfo( const byte* pfile, brushmodel_t& model, const dv30lump_
 // @brief
 //
 //=============================================
-bool BSPV30_LoadFaces( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadFaces( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -463,7 +463,7 @@ bool BSPV30_LoadFaces( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 	}
 
 	// Load the data in
-	Uint32 count = lump.size/sizeof(dv30face_t);
+	UInt32 count = lump.size/sizeof(dv30face_t);
 	const dv30face_t* pinfaces = reinterpret_cast<const dv30face_t*>(pfile + lump.offset);
 	msurface_t* poutsurfaces = new msurface_t[count];
 	
@@ -471,13 +471,13 @@ bool BSPV30_LoadFaces( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 	model.numsurfaces = count;
 
 	// If we need to re-organize lighting data
-	byte* plightdata[NB_SURF_LIGHTMAP_LAYERS] = { nullptr };
-	Uint32 lightdatasize = 0;
+	Byte* plightdata[NB_SURF_LIGHTMAP_LAYERS] = { nullptr };
+	UInt32 lightdatasize = 0;
 
 	bool hasBumpMapData = false;
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
-		Uint32 j = 0;
+		UInt32 j = 0;
 		for(; j < MAX_SURFACE_STYLES; j++)
 		{
 			if(pinfaces[i].lmstyles[j] == BSPV30_LM_AMBIENT_STYLE
@@ -498,38 +498,38 @@ bool BSPV30_LoadFaces( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 	// If we found bump data, allocate the lightmaps
 	if(hasBumpMapData)
 	{
-		for(Uint32 j = 0; j < NB_SURF_LIGHTMAP_LAYERS; j++)
+		for(UInt32 j = 0; j < NB_SURF_LIGHTMAP_LAYERS; j++)
 		{
-			plightdata[j] = new byte[model.lightdatasize];
+			plightdata[j] = new Byte[model.lightdatasize];
 			memset(plightdata[j], 0, sizeof(model.lightdatasize));
 		}
 	}
 
 	// Check if we have any bump map data
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
 		msurface_t* pout = &poutsurfaces[i];
 
 		pout->firstedge = pinfaces[i].firstedge;
-		pout->numedges = Common::ByteToInt16(reinterpret_cast<const byte *>(&pinfaces[i].numedges));
+		pout->numedges = Common::ByteToInt16(reinterpret_cast<const Byte *>(&pinfaces[i].numedges));
 		pout->flags = 0;
 		pout->base_samplesize = V30_LM_BASE_SAMPLE_SIZE;
 		pout->lightmapdivider = V30_LM_BASE_SAMPLE_SIZE;
 
-		Uint16 planeindex = Common::ByteToUint16(reinterpret_cast<const byte*>(&pinfaces[i].planenum));
-		Int16 side = Common::ByteToInt16(reinterpret_cast<const byte*>(&pinfaces[i].side));
+		UInt16 planeindex = Common::ByteToUint16(reinterpret_cast<const Byte*>(&pinfaces[i].planenum));
+		Int16 side = Common::ByteToInt16(reinterpret_cast<const Byte*>(&pinfaces[i].side));
 		if(side)
 			pout->flags |= SURF_PLANEBACK;
 
 		pout->pplane = &model.pplanes[planeindex];
 		
-		Int16 texinfoindex = Common::ByteToInt16(reinterpret_cast<const byte*>(&pinfaces[i].texinfo));
+		Int16 texinfoindex = Common::ByteToInt16(reinterpret_cast<const Byte*>(&pinfaces[i].texinfo));
 		pout->ptexinfo = &model.ptexinfos[texinfoindex];
 
 		if(!BSP_CalcSurfaceExtents(pout, model, V30_MAX_SURFACE_EXTENTS))
 			return false;
 
-		for(Uint32 j = 0; j < MAX_SURFACE_STYLES; j++)
+		for(UInt32 j = 0; j < MAX_SURFACE_STYLES; j++)
 			pout->styles[j] = pinfaces[i].lmstyles[j];
 		
 		if(pinfaces[i].lightoffset != -1)
@@ -542,9 +542,9 @@ bool BSPV30_LoadFaces( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 			if(hasBumpMapData && ambientIndex != NO_POSITION && diffuseIndex != NO_POSITION && vectorsIndex != NO_POSITION)
 			{
 				// Calculate extents
-				Uint32 xsize = (pout->extents[0] / pout->lightmapdivider)+1;
-				Uint32 ysize = (pout->extents[1] / pout->lightmapdivider)+1;
-				Uint32 size = xsize*ysize;
+				UInt32 xsize = (pout->extents[0] / pout->lightmapdivider)+1;
+				UInt32 ysize = (pout->extents[1] / pout->lightmapdivider)+1;
+				UInt32 size = xsize*ysize;
 
 				// Set up indexes
 				Int32 layerIndexes[NB_SURF_LIGHTMAP_LAYERS] = { 
@@ -554,11 +554,11 @@ bool BSPV30_LoadFaces( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 					diffuseIndex,	// SURF_LIGHTMAP_DIFFUSE
 				};
 
-				for(Uint32 j = 0; j < NB_SURF_LIGHTMAP_LAYERS; j++)
+				for(UInt32 j = 0; j < NB_SURF_LIGHTMAP_LAYERS; j++)
 				{
 					// Set final data offset and copy the data
-					byte* pdestination = plightdata[j] + lightdatasize;
-					color24_t* psrclightdata = reinterpret_cast<color24_t*>(reinterpret_cast<byte*>(model.plightdata[SURF_LIGHTMAP_DEFAULT]) + pinfaces[i].lightoffset);
+					Byte* pdestination = plightdata[j] + lightdatasize;
+					color24_t* psrclightdata = reinterpret_cast<color24_t*>(reinterpret_cast<Byte*>(model.plightdata[SURF_LIGHTMAP_DEFAULT]) + pinfaces[i].lightoffset);
 					
 					psrclightdata += size*layerIndexes[j];
 					memcpy(pdestination, psrclightdata, sizeof(color24_t)*size);
@@ -577,7 +577,7 @@ bool BSPV30_LoadFaces( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 			// If any of these were set, clear the styles entirely past position 0
 			if(ambientIndex != NO_POSITION || diffuseIndex != NO_POSITION || vectorsIndex != NO_POSITION)
 			{
-				for(Uint32 j = 1; j < MAX_SURFACE_STYLES; j++)
+				for(UInt32 j = 1; j < MAX_SURFACE_STYLES; j++)
 					pout->styles[j] = NULL_LIGHTSTYLE_INDEX;
 			}
 		}
@@ -602,14 +602,14 @@ bool BSPV30_LoadFaces( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 			delete[] model.plightdata[SURF_LIGHTMAP_DEFAULT];
 
 		// Resize the lighting data to it's final size
-		for(Uint32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
+		for(UInt32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
 		{
-			byte* pfinaldata = new byte[lightdatasize];
-			memcpy(pfinaldata, plightdata[i], sizeof(byte)*lightdatasize);
+			Byte* pfinaldata = new Byte[lightdatasize];
+			memcpy(pfinaldata, plightdata[i], sizeof(Byte)*lightdatasize);
 
 			// Set pointers and data sizes
 			model.plightdata[i] = reinterpret_cast<color24_t*>(pfinaldata);
-			model.plightdata_original[i] = reinterpret_cast<byte*>(model.plightdata[i]);
+			model.plightdata_original[i] = reinterpret_cast<Byte*>(model.plightdata[i]);
 			model.original_lightdatasizes[i] = lightdatasize;
 			model.original_compressiontype[i] = BSP_LMAP_COMPRESSION_NONE;
 			model.original_compressionlevel[i] = 0;
@@ -629,7 +629,7 @@ bool BSPV30_LoadFaces( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 // @brief
 //
 //=============================================
-bool BSPV30_LoadMarksurfaces( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadMarksurfaces( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -646,16 +646,16 @@ bool BSPV30_LoadMarksurfaces( const byte* pfile, brushmodel_t& model, const dv30
 	}
 
 	// Load the data in
-	Uint32 count = lump.size/sizeof(Int16);
-	const Uint16* pinmarksurfaces = reinterpret_cast<const Uint16*>(pfile + lump.offset);
+	UInt32 count = lump.size/sizeof(Int16);
+	const UInt16* pinmarksurfaces = reinterpret_cast<const UInt16*>(pfile + lump.offset);
 	msurface_t** poutmarksurfaces = new msurface_t*[count];
 
 	model.pmarksurfaces = poutmarksurfaces;
 	model.nummarksurfaces = count;
 
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
-		Uint16 surfindex = Common::ByteToUint16(reinterpret_cast<const byte*>(&pinmarksurfaces[i]));
+		UInt16 surfindex = Common::ByteToUint16(reinterpret_cast<const Byte*>(&pinmarksurfaces[i]));
 		if(surfindex >= count)
 		{
 			Con_EPrintf("BSPV30_LoadMarksurfaces - Bad surface index.\n");
@@ -672,12 +672,12 @@ bool BSPV30_LoadMarksurfaces( const byte* pfile, brushmodel_t& model, const dv30
 // @brief
 //
 //=============================================
-bool BSPV30_LoadVisibility( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadVisibility( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	if(!lump.size)
 		return true;
 
-	model.pvisdata = new byte[lump.size];
+	model.pvisdata = new Byte[lump.size];
 	memset(model.pvisdata, 0, lump.size);
 	model.visdatasize = lump.size;
 
@@ -690,7 +690,7 @@ bool BSPV30_LoadVisibility( const byte* pfile, brushmodel_t& model, const dv30lu
 // @brief
 //
 //=============================================
-bool BSPV30_LoadLeafs( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadLeafs( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -707,28 +707,28 @@ bool BSPV30_LoadLeafs( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 	}
 
 	// Load the data in
-	Uint32 count = lump.size/sizeof(dv30leaf_t);
+	UInt32 count = lump.size/sizeof(dv30leaf_t);
 	const dv30leaf_t* pinleafs = reinterpret_cast<const dv30leaf_t*>(pfile + lump.offset);
 	mleaf_t* poutleafs = new mleaf_t[count];
 
 	model.pleafs = poutleafs;
 	model.numleafs = count;
 
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
 		mleaf_t* pout = &poutleafs[i];
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
-			pout->mins[j] = Common::ByteToInt16(reinterpret_cast<const byte*>(&pinleafs[i].mins[j]));
-			pout->maxs[j] = Common::ByteToInt16(reinterpret_cast<const byte*>(&pinleafs[i].maxs[j]));
+			pout->mins[j] = Common::ByteToInt16(reinterpret_cast<const Byte*>(&pinleafs[i].mins[j]));
+			pout->maxs[j] = Common::ByteToInt16(reinterpret_cast<const Byte*>(&pinleafs[i].maxs[j]));
 		}
 
 		pout->contents = pinleafs[i].contents;
 
-		Uint16 marksurfindex = Common::ByteToUint16(reinterpret_cast<const byte*>(&pinleafs[i].firstmarksurface));
+		UInt16 marksurfindex = Common::ByteToUint16(reinterpret_cast<const Byte*>(&pinleafs[i].firstmarksurface));
 		pout->pfirstmarksurface = &model.pmarksurfaces[marksurfindex];
-		pout->nummarksurfaces = Common::ByteToUint16(reinterpret_cast<const byte*>(&pinleafs[i].nummarksurfaces));
+		pout->nummarksurfaces = Common::ByteToUint16(reinterpret_cast<const Byte*>(&pinleafs[i].nummarksurfaces));
 
 		if(pinleafs[i].visoffset != -1)
 			pout->pcompressedvis = model.pvisdata + pinleafs[i].visoffset;
@@ -741,7 +741,7 @@ bool BSPV30_LoadLeafs( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 // @brief
 //
 //=============================================
-bool BSPV30_LoadNodes( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadNodes( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -758,31 +758,31 @@ bool BSPV30_LoadNodes( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 	}
 
 	// Load the data in
-	Uint32 count = lump.size/sizeof(dv30node_t);
+	UInt32 count = lump.size/sizeof(dv30node_t);
 	const dv30node_t* pinnodes = reinterpret_cast<const dv30node_t*>(pfile + lump.offset);
 	mnode_t* poutnodes = new mnode_t[count];
 
 	model.pnodes = poutnodes;
 	model.numnodes = count;
 
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
 		mnode_t* pout = &poutnodes[i];
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
-			pout->mins[j] = Common::ByteToInt16(reinterpret_cast<const byte*>(&pinnodes[i].mins[j]));
-			pout->maxs[j] = Common::ByteToInt16(reinterpret_cast<const byte*>(&pinnodes[i].maxs[j]));
+			pout->mins[j] = Common::ByteToInt16(reinterpret_cast<const Byte*>(&pinnodes[i].mins[j]));
+			pout->maxs[j] = Common::ByteToInt16(reinterpret_cast<const Byte*>(&pinnodes[i].maxs[j]));
 		}
 
 		pout->pplane = &model.pplanes[pinnodes[i].planenum];
 
-		pout->firstsurface = Common::ByteToUint16(reinterpret_cast<const byte*>(&pinnodes[i].firstface));
-		pout->numsurfaces = Common::ByteToUint16(reinterpret_cast<const byte*>(&pinnodes[i].numfaces));
+		pout->firstsurface = Common::ByteToUint16(reinterpret_cast<const Byte*>(&pinnodes[i].firstface));
+		pout->numsurfaces = Common::ByteToUint16(reinterpret_cast<const Byte*>(&pinnodes[i].numfaces));
 
-		for(Uint32 j = 0; j < 2; j++)
+		for(UInt32 j = 0; j < 2; j++)
 		{
-			Int16 nodeidx = Common::ByteToInt16(reinterpret_cast<const byte*>(&pinnodes[i].children[j]));
+			Int16 nodeidx = Common::ByteToInt16(reinterpret_cast<const Byte*>(&pinnodes[i].children[j]));
 
 			if(nodeidx >= 0)
 				pout->pchildren[j] = &model.pnodes[nodeidx];
@@ -800,7 +800,7 @@ bool BSPV30_LoadNodes( const byte* pfile, brushmodel_t& model, const dv30lump_t&
 // @brief
 //
 //=============================================
-bool BSPV30_LoadClipnodes( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadClipnodes( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -817,7 +817,7 @@ bool BSPV30_LoadClipnodes( const byte* pfile, brushmodel_t& model, const dv30lum
 	}
 
 	// Load the data in
-	Uint32 count = lump.size/sizeof(dv30clipnode_t);
+	UInt32 count = lump.size/sizeof(dv30clipnode_t);
 	const dv30clipnode_t* pinnodes = reinterpret_cast<const dv30clipnode_t*>(pfile + lump.offset);
 	mclipnode_t* poutnodes = new mclipnode_t[count];
 
@@ -866,11 +866,11 @@ bool BSPV30_LoadClipnodes( const byte* pfile, brushmodel_t& model, const dv30lum
 	phull->clipmaxs[1] = 16;
 	phull->clipmaxs[2] = 18;
 
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
 		poutnodes[i].planenum = pinnodes[i].planenum;
-		poutnodes[i].children[0] = Common::ByteToInt16(reinterpret_cast<const byte*>(&pinnodes[i].children[0]));
-		poutnodes[i].children[1] = Common::ByteToInt16(reinterpret_cast<const byte*>(&pinnodes[i].children[1]));
+		poutnodes[i].children[0] = Common::ByteToInt16(reinterpret_cast<const Byte*>(&pinnodes[i].children[0]));
+		poutnodes[i].children[1] = Common::ByteToInt16(reinterpret_cast<const Byte*>(&pinnodes[i].children[1]));
 	}
 
 	return true;
@@ -880,7 +880,7 @@ bool BSPV30_LoadClipnodes( const byte* pfile, brushmodel_t& model, const dv30lum
 // @brief
 //
 //=============================================
-bool BSPV30_LoadEntities( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadEntities( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -889,10 +889,10 @@ bool BSPV30_LoadEntities( const byte* pfile, brushmodel_t& model, const dv30lump
 		return false;
 	}
 
-	model.pentdata = new Char[lump.size];
+	model.pentdata = new char[lump.size];
 
-	const byte* pdata = pfile + lump.offset;
-	memcpy(model.pentdata, pdata, sizeof(Char)*lump.size);
+	const Byte* pdata = pfile + lump.offset;
+	memcpy(model.pentdata, pdata, sizeof(char)*lump.size);
 	
 	return true;
 }
@@ -901,7 +901,7 @@ bool BSPV30_LoadEntities( const byte* pfile, brushmodel_t& model, const dv30lump
 // @brief
 //
 //=============================================
-bool BSPV30_LoadSubmodels( const byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
+bool BSPV30_LoadSubmodels( const Byte* pfile, brushmodel_t& model, const dv30lump_t& lump )
 {
 	// Safeguard against incorrectly compiled BSP
 	if(!lump.size)
@@ -918,25 +918,25 @@ bool BSPV30_LoadSubmodels( const byte* pfile, brushmodel_t& model, const dv30lum
 	}
 
 	// Load the data in
-	Uint32 count = lump.size/sizeof(dv30model_t);
+	UInt32 count = lump.size/sizeof(dv30model_t);
 	const dv30model_t* pinmodels = reinterpret_cast<const dv30model_t*>(pfile + lump.offset);
 	mmodel_t* poutmodels = new mmodel_t[count];
 
 	model.psubmodels = poutmodels;
 	model.numsubmodels = count;
 
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			poutmodels[i].mins[j] = pinmodels[i].mins[j] - 1;
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			poutmodels[i].maxs[j] = pinmodels[i].maxs[j] - 1;
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			poutmodels[i].origin[j] = pinmodels[i].origin[j];
 
-		for(Uint32 j = 0; j < V30_MAX_MAP_HULLS; j++)
+		for(UInt32 j = 0; j < V30_MAX_MAP_HULLS; j++)
 			poutmodels[i].headnode[j] = pinmodels[i].headnode[j];
 
 		poutmodels[i].visleafs = pinmodels[i].visleafs;

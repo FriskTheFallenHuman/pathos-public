@@ -64,7 +64,7 @@ ai_sound_t* CAISounds::GetSoundForEmitter( CBaseEntity* pEmitterEntity )
 // @brief
 //
 //=============================================
-ai_sound_t* CAISounds::AddSound( CBaseEntity* pEmitterEntity, Int32 typebits, Float radius, Float volume, Float duration )
+ai_sound_t* CAISounds::AddSound( CBaseEntity* pEmitterEntity, Int32 typebits, float radius, float volume, float duration )
 {
 	if(!pEmitterEntity)
 		return nullptr;
@@ -126,7 +126,7 @@ void CAISounds::ClearEmitterSounds( CBaseEntity* pEmitterEntity )
 // @brief
 //
 //=============================================
-ai_sound_t* CAISounds::AddSound( Int32 typebits, const Vector& origin, Float radius, Float volume, Float duration )
+ai_sound_t* CAISounds::AddSound( Int32 typebits, const Vector& origin, float radius, float volume, float duration )
 {
 	// Add the new entry
 	ai_sound_t* psound = &m_soundsList.add(ai_sound_t())->_val;
@@ -147,12 +147,12 @@ ai_sound_t* CAISounds::AddSound( Int32 typebits, const Vector& origin, Float rad
 // @brief
 //
 //=============================================
-void CAISounds::GetSoundList( const Vector& position, CLinkedList<ai_sound_t>& destList, Uint32 soundMask, Float sensitivity )
+void CAISounds::GetSoundList( const Vector& position, CLinkedList<ai_sound_t>& destList, UInt32 soundMask, float sensitivity )
 {
 	if(m_soundsList.empty())
 		return;
 
-	Float sndsensitivity = clamp(sensitivity, 0.0, 1.0);
+	float sndsensitivity = Clamp(sensitivity, 0.0, 1.0);
 
 	m_soundsList.begin();
 	while(!m_soundsList.end())
@@ -164,11 +164,11 @@ void CAISounds::GetSoundList( const Vector& position, CLinkedList<ai_sound_t>& d
 			continue;
 		}
 
-		Float distance = (position - sound.position).Length();
+		float distance = (position - sound.position).Length();
 		if(distance < sound.radius)
 		{
-			Float soundatten = 1.0f - (distance/sound.radius);
-			Float soundvolume = soundatten*sound.volume;
+			float soundatten = 1.0f - (distance/sound.radius);
+			float soundvolume = soundatten*sound.volume;
 			
 			if(soundvolume >= sndsensitivity)
 			{

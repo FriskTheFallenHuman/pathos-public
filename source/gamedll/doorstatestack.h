@@ -31,7 +31,7 @@ private:
 
 		CBaseEntity* pEntity;
 		solid_t solidity;
-		Uint64 flags;
+		UInt64 flags;
 
 		Vector origin;
 		Vector angles;

@@ -36,10 +36,10 @@ CArray<Vector>	g_bonePositions4;
 CArray<vec4_t>	g_boneQuaternions4;
 
 // Used for bone transform calculations
-Float	g_boneMatrix[3][4];
+float	g_boneMatrix[3][4];
 
 // Internal rotation matrix
-Float g_rotationMatrix[3][4];
+float g_rotationMatrix[3][4];
 
 //=============================================
 //
@@ -65,7 +65,7 @@ void TR_VBMInit( void )
 void TR_VBMInitHulls( const studiohdr_t* pstudiohdr, hull_types_t hulltype, entity_vbmhulldata_t& cache )
 {
 	// Initialize clipnodes
-	for(Uint32 i = 0; i < NUM_STUDIO_HULL_CLIPNODES; i++)
+	for(UInt32 i = 0; i < NUM_STUDIO_HULL_CLIPNODES; i++)
 	{
 		Int32 side = i&1;
 
@@ -112,7 +112,7 @@ void TR_VBMInitHulls( const studiohdr_t* pstudiohdr, hull_types_t hulltype, enti
 //=============================================
 //
 //=============================================
-bool TR_VBMCheckHullInfo( entity_vbmhulldata_t* pdata, const cache_model_t* pmodel, Float frame, const entity_state_t& state )
+bool TR_VBMCheckHullInfo( entity_vbmhulldata_t* pdata, const cache_model_t* pmodel, float frame, const entity_state_t& state )
 {
 	if(pmodel != pdata->pcachemodel)
 		return false;
@@ -123,13 +123,13 @@ bool TR_VBMCheckHullInfo( entity_vbmhulldata_t* pdata, const cache_model_t* pmod
 	if(state.sequence != pdata->sequence)
 		return false;
 
-	for(Uint32 i = 0; i < MAX_CONTROLLERS; i++)
+	for(UInt32 i = 0; i < MAX_CONTROLLERS; i++)
 	{
 		if(pdata->controller[i] != state.controllers[i])
 			return false;
 	}
 
-	for(Uint32 i = 0; i < MAX_BLENDING; i++)
+	for(UInt32 i = 0; i < MAX_BLENDING; i++)
 	{
 		if(pdata->blending[i] != state.blending[i])
 			return false;
@@ -145,7 +145,7 @@ bool TR_VBMCheckHullInfo( entity_vbmhulldata_t* pdata, const cache_model_t* pmod
 //=============================================
 //
 //=============================================
-void TR_VBMSetupBones( entity_vbmhulldata_t* phulldata, const studiohdr_t* pstudiohdr, Float time, Float frame, const mstudioseqdesc_t* pseqdesc, const cache_model_t* pmodel, const entity_state_t& state )
+void TR_VBMSetupBones( entity_vbmhulldata_t* phulldata, const studiohdr_t* pstudiohdr, float time, float frame, const mstudioseqdesc_t* pseqdesc, const cache_model_t* pmodel, const entity_state_t& state )
 {
 	// Ensure bone arrays are of proper sizes
 	if(g_bonePositions1.size() < pstudiohdr->numbones)
@@ -173,7 +173,7 @@ void TR_VBMSetupBones( entity_vbmhulldata_t* phulldata, const studiohdr_t* pstud
 		g_boneQuaternions4.resize(pstudiohdr->numbones);
 
 	// Also the bone transforms
-	if(phulldata->bonetransform.size() != static_cast<Uint32>(pstudiohdr->numbones))
+	if(phulldata->bonetransform.size() != static_cast<UInt32>(pstudiohdr->numbones))
 		phulldata->bonetransform.resize(pstudiohdr->numbones);
 
 	Vector angles = state.angles;
@@ -181,7 +181,7 @@ void TR_VBMSetupBones( entity_vbmhulldata_t* phulldata, const studiohdr_t* pstud
 
 	Math::AngleMatrix(angles, g_rotationMatrix);
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		g_rotationMatrix[i][3] = state.origin[i];
 
 	// Apply scale to models that require it
@@ -189,9 +189,9 @@ void TR_VBMSetupBones( entity_vbmhulldata_t* phulldata, const studiohdr_t* pstud
 		|| state.renderfx == RenderFx_InPortalScaledModel 
 		|| state.renderfx == RenderFx_SkyEntScaled) && state.scale != 0)
 	{
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				g_rotationMatrix[i][j] *= state.scale;
 		}
 	}
@@ -212,7 +212,7 @@ void TR_VBMSetupBones( entity_vbmhulldata_t* phulldata, const studiohdr_t* pstud
 	{
 		panim += pstudiohdr->numbones;
 		VBM_CalculateRotations(pstudiohdr, time, state.animtime, 0, g_bonePositions2, g_boneQuaternions2, pseqdesc, panim, frame, state.controllers, state.controllers, 0);
-		Float interp = state.blending[0]/255.0f;
+		float interp = state.blending[0]/255.0f;
 
 		VBM_InterpolateBones(pstudiohdr, g_boneQuaternions1, g_bonePositions1, g_boneQuaternions2, g_bonePositions2, interp, g_boneQuaternions1, g_bonePositions1);
 
@@ -238,7 +238,7 @@ void TR_VBMSetupBones( entity_vbmhulldata_t* phulldata, const studiohdr_t* pstud
 		const mstudiobone_t* pbone = pstudiohdr->getBone(i);
 		Math::QuaternionMatrix(g_boneQuaternions1[i], g_boneMatrix);
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			g_boneMatrix[j][3] = g_bonePositions1[i][j];
 
 		if(pbone->parent == -1)
@@ -251,7 +251,7 @@ void TR_VBMSetupBones( entity_vbmhulldata_t* phulldata, const studiohdr_t* pstud
 //=============================================
 //
 //=============================================
-void TR_VBMSetHullPlane( entity_vbmhulldata_t* phulldata, plane_t& plane, Int32 boneindex, Uint32 i, Float dist )
+void TR_VBMSetHullPlane( entity_vbmhulldata_t* phulldata, plane_t& plane, Int32 boneindex, UInt32 i, float dist )
 {
 	// Set type
 	plane.type = PLANE_AZ;
@@ -271,7 +271,7 @@ void TR_VBMSetHullPlane( entity_vbmhulldata_t* phulldata, plane_t& plane, Int32 
 //=============================================
 //
 //=============================================
-void TR_VBMSetStateInfo( entity_vbmhulldata_t* pvbmhulldata, const cache_model_t* pmodel, Float frame, const entity_state_t& state )
+void TR_VBMSetStateInfo( entity_vbmhulldata_t* pvbmhulldata, const cache_model_t* pmodel, float frame, const entity_state_t& state )
 {
 	pvbmhulldata->angles = state.angles;
 	pvbmhulldata->origin = state.origin;
@@ -279,17 +279,17 @@ void TR_VBMSetStateInfo( entity_vbmhulldata_t* pvbmhulldata, const cache_model_t
 	pvbmhulldata->frame = frame;
 	pvbmhulldata->pcachemodel = pmodel;
 
-	for(Uint32 i = 0; i < MAX_BLENDING; i++)
+	for(UInt32 i = 0; i < MAX_BLENDING; i++)
 		pvbmhulldata->blending[i] = state.blending[i];
 
-	for(Uint32 i = 0; i < MAX_CONTROLLERS; i++)
+	for(UInt32 i = 0; i < MAX_CONTROLLERS; i++)
 		pvbmhulldata->controller[i] = state.controllers[i];
 }
 
 //=============================================
 //
 //=============================================
-void TR_VBMSetHullInfo( entity_vbmhulldata_t*& pdataptr, const cache_model_t* pmodel, const Vector& hullmins, const Vector& hullmaxs, const entity_state_t& state, Float time, hull_types_t hulltype )
+void TR_VBMSetHullInfo( entity_vbmhulldata_t*& pdataptr, const cache_model_t* pmodel, const Vector& hullmins, const Vector& hullmaxs, const entity_state_t& state, float time, hull_types_t hulltype )
 {
 	// Get cache
 	const vbmcache_t* pcache = pmodel->getVBMCache();
@@ -301,7 +301,7 @@ void TR_VBMSetHullInfo( entity_vbmhulldata_t*& pdataptr, const cache_model_t* pm
 
 	// Get sequence data
 	const mstudioseqdesc_t* pseqdesc = pstudiohdr->getSequence(sequence);
-	Float frame = VBM_EstimateFrame(pseqdesc, time, state.frame, state.animtime, state.framerate, state.effects);
+	float frame = VBM_EstimateFrame(pseqdesc, time, state.frame, state.animtime, state.framerate, state.effects);
 
 	// Check if the last data matches our current state
 	bool statematches = false;
@@ -367,7 +367,7 @@ void TR_VBMSetHullInfo( entity_vbmhulldata_t*& pdataptr, const cache_model_t* pm
 		// Reset these if state doesn't match
 		if(!statematches)
 		{
-			for(Uint32 i = 0; i < MAX_MAP_HULLS; i++)
+			for(UInt32 i = 0; i < MAX_MAP_HULLS; i++)
 				pdataptr->hulls[i].hullset = false;
 		}
 
@@ -375,7 +375,7 @@ void TR_VBMSetHullInfo( entity_vbmhulldata_t*& pdataptr, const cache_model_t* pm
 		if(pmodel != pdataptr->pcachemodel)
 		{
 			// If model was changed, flush current hull setup
-			for(Uint32 i = 0; i < MAX_MAP_HULLS; i++)
+			for(UInt32 i = 0; i < MAX_MAP_HULLS; i++)
 			{
 				if(pdataptr->hulls[i].hullsarray.empty())
 					continue;
@@ -403,7 +403,7 @@ void TR_VBMSetHullInfo( entity_vbmhulldata_t*& pdataptr, const cache_model_t* pm
 		const mstudiobbox_t* pbbox = pstudiohdr->getHitBox(i);
 		vbmhitboxhull_t& hull = pdataptr->hulls[hullindex].hullsarray[i];
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			// Set the first hull
 			plane_t& plane1 = hull.planes[j*2];
@@ -476,7 +476,7 @@ const CArray<vbmhitboxhull_t>* TR_VBMGetHulls( entity_vbmhulldata_t* pvbmhulldat
 //=============================================
 void TR_VBMHullCheck( const CArray<vbmhitboxhull_t>* phulls, const Vector& start, const Vector& end, trace_t& tr )
 {
-	for(Uint32 i = 0; i < phulls->size(); i++)
+	for(UInt32 i = 0; i < phulls->size(); i++)
 	{
 		trace_t hbtr;
 		hbtr.endpos = end;

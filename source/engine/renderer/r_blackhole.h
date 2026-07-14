@@ -28,7 +28,7 @@ struct blackhole_vertex_t
 	}
 
 	vec4_t origin;
-	byte padding[16];
+	Byte padding[16];
 };
 
 struct blackhole_attribs
@@ -73,13 +73,13 @@ class CBlackHoleRenderer
 {
 public:
 	// Max black hole entities in the stack
-	static const Uint32 MAX_BLACKHOLE_ENTITIES = 16;
+	static const UInt32 MAX_BLACKHOLE_ENTITIES = 16;
 	// Max black hole entities in the stack
-	static const Uint32 NUM_BLACKHOLE_VERTEXES = 6;
+	static const UInt32 NUM_BLACKHOLE_VERTEXES = 6;
 
 public:
 	// Black hole reference size
-	static const Float BLACK_HOLE_REFERENCE_SIZE;
+	static const float BLACK_HOLE_REFERENCE_SIZE;
 
 public:
 	// Black hole object
@@ -97,13 +97,13 @@ public:
 			{}
 
 		Int32 key;
-		Double spawntime;
-		Float life;
-		Float scale;
-		Float strength;
-		Float growthtime;
-		Float shrinktime;
-		Float rotation;
+		double spawntime;
+		float life;
+		float scale;
+		float strength;
+		float growthtime;
+		float shrinktime;
+		float rotation;
 		Vector origin;
 	};
 
@@ -129,12 +129,12 @@ public:
 	bool DrawBlackHoles( void );
 
 	// Makes black holes affect a particle
-	bool AffectObject( const Vector& origin, Vector& velocity, Float gravity );
+	bool AffectObject( const Vector& origin, Vector& velocity, float gravity );
 	// Returns scale affected by growth/shrinking
-	Float GetBlackHoleScale( const blackhole_t& blackhole ) const;
+	float GetBlackHoleScale( const blackhole_t& blackhole ) const;
 
 	// Adds a black hole entity to be rendered
-	void CreateBlackHole( Int32 key, const Vector& origin, Float life, Float scale, Float strength, Float rotation, Float growthtime, Float shrinktime );
+	void CreateBlackHole( Int32 key, const Vector& origin, float life, float scale, float strength, float rotation, float growthtime, float shrinktime );
 	// Kills a black hole
 	void KillBlackHole( Int32 key );
 

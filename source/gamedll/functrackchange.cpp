@@ -14,7 +14,7 @@ All Rights Reserved.
 #include "pathtrack.h"
 
 // Blocked alarm sound
-const Char CFuncTrackChange::BLOCKED_ALARM_SND[] = "buttons/button11.wav";
+const char CFuncTrackChange::BLOCKED_ALARM_SND[] = "buttons/button11.wav";
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(func_trackchange, CFuncTrackChange);
@@ -163,7 +163,7 @@ bool CFuncTrackChange::Spawn( void )
 // @brief
 //
 //=============================================
-void CFuncTrackChange::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncTrackChange::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Do not allow use while moving
 	if(m_toggleState != TSTATE_AT_TOP && m_toggleState != TSTATE_AT_BOTTOM)
@@ -280,7 +280,7 @@ void CFuncTrackChange::GoDown( void )
 void CFuncTrackChange::InitEntity( void )
 {
 	// Get top track entity
-	const Char* pstrEntityName = gd_engfuncs.pfnGetString(m_topTrackName);
+	const char* pstrEntityName = gd_engfuncs.pfnGetString(m_topTrackName);
 	m_pTopTrack = FindPathTrack(pstrEntityName);
 	if(!m_pTopTrack)
 	{
@@ -368,8 +368,8 @@ CFuncTrackChange::traincode_t CFuncTrackChange::EvaluateTrain( CPathTrack* pCurr
 			return TRAIN_BLOCKING;
 
 		Vector distance = m_pState->origin - m_pTrain->GetOrigin();
-		Float length = distance.Length2D();
-		Float trainlength = m_pTrain->GetLength();
+		float length = distance.Length2D();
+		float trainlength = m_pTrain->GetLength();
 
 		if(length < m_pTrain->GetLength())
 			return TRAIN_FOLLOWING;
@@ -389,7 +389,7 @@ CFuncTrackChange::traincode_t CFuncTrackChange::EvaluateTrain( CPathTrack* pCurr
 void CFuncTrackChange::UpdateTrain( const Vector& destAngles )
 {
 	// Get delta
-	Double time = m_pState->nextthink-m_pState->ltime;
+	double time = m_pState->nextthink-m_pState->ltime;
 
 	m_pTrain->SetVelocity(m_pState->velocity);
 	m_pTrain->SetAngularVelocity(m_pState->avelocity);
@@ -516,7 +516,7 @@ bool CFuncTrackChange::IsUseEnabled( void ) const
 // @brief
 //
 //=============================================
-CPathTrack* CFuncTrackChange::FindPathTrack( const Char* pstrTargetname )
+CPathTrack* CFuncTrackChange::FindPathTrack( const char* pstrTargetname )
 {
 	edict_t* pedict = nullptr;
 	while(true)

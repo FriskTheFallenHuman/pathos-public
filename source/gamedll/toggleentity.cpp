@@ -157,7 +157,7 @@ togglestate_t CToggleEntity::GetToggleState( void )
 // @brief
 //
 //=============================================
-Float CToggleEntity::GetDelay( void )
+float CToggleEntity::GetDelay( void )
 {
 	return m_waitTime;
 }
@@ -166,12 +166,12 @@ Float CToggleEntity::GetDelay( void )
 // @brief
 //
 //=============================================
-void CToggleEntity::PlayLockSounds( bool locked, bool button, Float waittime, Double& nextSoundTime )
+void CToggleEntity::PlayLockSounds( bool locked, bool button, float waittime, double& nextSoundTime )
 {
 	if(nextSoundTime > g_pGameVars->time)
 		return;
 
-	const Char* pstrSound = nullptr;
+	const char* pstrSound = nullptr;
 	if(locked && m_lockedSoundFile != NO_STRING_VALUE)
 		pstrSound = gd_engfuncs.pfnGetString(m_lockedSoundFile);
 	else if(!locked && m_unlockedSoundFile  != NO_STRING_VALUE)
@@ -188,7 +188,7 @@ void CToggleEntity::PlayLockSounds( bool locked, bool button, Float waittime, Do
 // @brief
 //
 //=============================================
-void CToggleEntity::LinearMove( const Vector& destPosition, Float speed )
+void CToggleEntity::LinearMove( const Vector& destPosition, float speed )
 {
 	// Set destination position
 	m_finalDest = destPosition;
@@ -202,7 +202,7 @@ void CToggleEntity::LinearMove( const Vector& destPosition, Float speed )
 
 	// Calculate travel time
 	Vector destDelta = destPosition - m_pState->origin;
-	Double travelTime = destDelta.Length()/speed;
+	double travelTime = destDelta.Length()/speed;
 
 	// Set next think time
 	SetThink(&CToggleEntity::LinearMoveDone);
@@ -216,7 +216,7 @@ void CToggleEntity::LinearMove( const Vector& destPosition, Float speed )
 // @brief
 //
 //=============================================
-void CToggleEntity::AngularMove( const Vector& destAngle, Float speed )
+void CToggleEntity::AngularMove( const Vector& destAngle, float speed )
 {
 	// Set dest angle
 	m_finalAngle = destAngle;
@@ -230,7 +230,7 @@ void CToggleEntity::AngularMove( const Vector& destAngle, Float speed )
 
 	// Calculate duration and vector
 	Vector destDelta = destAngle - m_pState->angles;
-	Double travelTime = destDelta.Length()/speed;
+	double travelTime = destDelta.Length()/speed;
 
 	// Set next think time
 	SetThink(&CToggleEntity::AngularMoveDone);
@@ -248,7 +248,7 @@ bool CToggleEntity::IsLockedByMaster( void )
 {
 	if(m_masterEntityName != NO_STRING_VALUE)
 	{
-		const Char* pstrMasterName = gd_engfuncs.pfnGetString(m_masterEntityName);
+		const char* pstrMasterName = gd_engfuncs.pfnGetString(m_masterEntityName);
 		if(!Util::IsMasterTriggered(pstrMasterName, m_activator, this))
 			return true;
 	}
@@ -319,7 +319,7 @@ const Vector& CToggleEntity::GetPosition2( void ) const
 //=============================================
 void CToggleEntity::SyncGroundEntities( const Vector& adjustVec )
 {
-	for(Uint32 i = 1; i < g_pGameVars->numentities; i++)
+	for(UInt32 i = 1; i < g_pGameVars->numentities; i++)
 	{
 		edict_t* pedict = gd_engfuncs.pfnGetEdictByIndex(i);
 		if(!pedict || pedict->free)
@@ -340,10 +340,10 @@ void CToggleEntity::SyncGroundEntities( const Vector& adjustVec )
 // @brief
 //
 //=============================================
-MOVEDONEPTR CToggleEntity::_SetMoveDone( MOVEDONEPTR pfnptr, const Char* pstrFunctionName )
+MOVEDONEPTR CToggleEntity::_SetMoveDone( MOVEDONEPTR pfnptr, const char* pstrFunctionName )
 {
 	m_pfnMoveDoneFunction = pfnptr;
-	CheckFunction(reinterpret_cast<void*>(*(reinterpret_cast<Int64*>(reinterpret_cast<byte*>(this) + offsetof(CToggleEntity, m_pfnMoveDoneFunction)))), pstrFunctionName);
+	CheckFunction(reinterpret_cast<void*>(*(reinterpret_cast<Int64*>(reinterpret_cast<Byte*>(this) + offsetof(CToggleEntity, m_pfnMoveDoneFunction)))), pstrFunctionName);
 	return m_pfnMoveDoneFunction;
 }
 #endif //_DEBUG

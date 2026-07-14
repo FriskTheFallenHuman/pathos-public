@@ -33,15 +33,15 @@ public:
 	virtual void AddCameraMonitorEntity( const edict_t* pedict ) override;
 	virtual bool CheckCameraBBox( const edict_t* pedict ) const override;
 
-	virtual Uint32 GetNbCameraMonitors( void ) const override;
-	virtual const edict_t* GetMonitorByIndex( Uint32 index ) const override;
+	virtual UInt32 GetNbCameraMonitors( void ) const override;
+	virtual const edict_t* GetMonitorByIndex( UInt32 index ) const override;
 
 	virtual void SetPVSData( void ) override;
-	virtual const byte* GetPVSData( void ) const override;
+	virtual const Byte* GetPVSData( void ) const override;
 
 public:
 	// Do not save-restore this
-	byte* m_pPVSData;
+	Byte* m_pPVSData;
 
 	// Do not save-restore
 	const edict_t* m_pCameraMonitors[MAX_MONITOR_ENTITIES];

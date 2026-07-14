@@ -37,7 +37,7 @@ public:
 	virtual bool Restore( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual Int32 GetEntityFlags( void ) override;
 	virtual void PreAddPacket( void ) override;
 	virtual void InitEntity( void ) override;
@@ -47,10 +47,10 @@ public:
 	void EXPORTFN ExpandThink( void );
 	void EXPORTFN AnimateOnceThink( void );
 
-	void Animate( Float frameadd );
-	void AnimateAndDie( Float framerate );
-	void Expand( Float scalespeed, Float fadespeed );
-	void SpriteInit( const Char* pstrSpriteName, const Vector& origin );
+	void Animate( float frameadd );
+	void AnimateAndDie( float framerate );
+	void Expand( float scalespeed, float fadespeed );
+	void SpriteInit( const char* pstrSpriteName, const Vector& origin );
 	void SetAttachment( CBaseEntity* pEntity, Int32 attachment );
 	void SetTransparency( rendermode_t rendermode, Int32 r, Int32 g, Int32 b, Int32 alpha, Int32 renderfx );
 	void SetTexture( Int32 spritemodel );
@@ -58,17 +58,17 @@ public:
 	void TurnOff( void );
 	void TurnOn( void );
 
-	Float GetMaxFrame( void ) const;
+	float GetMaxFrame( void ) const;
 
 public:
-	static CEnvSprite* CreateSprite( const Char* pstrSpriteName, const Vector& origin, bool animate );
+	static CEnvSprite* CreateSprite( const char* pstrSpriteName, const Vector& origin, bool animate );
 
 private:
-	Double m_lastAnimTime;
-	Double m_dieTime;
-	Float m_maxFrame;
-	Uint32 m_angularFOV;
+	double m_lastAnimTime;
+	double m_dieTime;
+	float m_maxFrame;
+	UInt32 m_angularFOV;
 	string_t m_attachEntity;
-	Uint32 m_attachmentIndex;
+	UInt32 m_attachmentIndex;
 };
 #endif //ENVSPRITE_H

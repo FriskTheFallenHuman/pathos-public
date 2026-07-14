@@ -70,19 +70,19 @@ public:
 	Vector	color;
 	Vector	angles;
 
-	Float	radius;
-	Double	spawntime;
-	Double	die;
-	Float	decay;
-	Float	decay_delay;
-	Float	cone_size;
+	float	radius;
+	double	spawntime;
+	double	die;
+	float	decay;
+	float	decay_delay;
+	float	cone_size;
 
 	Int32		key;
 	Int32		subkey;
 	Int32		lastframe;
-	Uint32		lightstyle;
+	UInt32		lightstyle;
 
-	Uint32 textureindex;
+	UInt32 textureindex;
 
 	bool	followentity;
 	Int32	attachment;
@@ -103,8 +103,8 @@ private:
 
 	Vector prevorigin;
 	Vector prevangles;
-	Float prevradius;
-	Float prevconesize;
+	float prevradius;
+	float prevconesize;
 
 public:
 	class CFrustum* pfrustum;

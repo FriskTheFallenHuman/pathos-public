@@ -7,8 +7,6 @@ All Rights Reserved.
 ===============================================
 */
 
-#include <ctime>
-
 #include "includes.h"
 #include "r_vbo.h"
 #include "r_glsl.h"
@@ -21,17 +19,17 @@ All Rights Reserved.
 static const Uint32 BUFFER_ALLOC_SIZE = 65535;
 
 // Total duration of vertex shader compile calls
-Double CGLSLShader::g_vertexShaderCompileTotalDuration = 0;
+double CGLSLShader::g_vertexShaderCompileTotalDuration = 0;
 // Total duration of vertex shader verification calls
-Double CGLSLShader::g_vertexShaderGetStatusCallTotalDuration = 0;
+double CGLSLShader::g_vertexShaderGetStatusCallTotalDuration = 0;
 // Total duration of fragment shader compile calls
-Double CGLSLShader::g_fragmentShaderCompileTotalDuration = 0;
+double CGLSLShader::g_fragmentShaderCompileTotalDuration = 0;
 // Total duration of fragment shader compile calls
-Double CGLSLShader::g_fragmentShaderGetStatusCallTotalDuration = 0;
+double CGLSLShader::g_fragmentShaderGetStatusCallTotalDuration = 0;
 // Total duration of shader linking calls
-Double CGLSLShader::g_shaderLinkTotalDuration = 0;
+double CGLSLShader::g_shaderLinkTotalDuration = 0;
 // Total duration of shader linking calls
-Double CGLSLShader::g_shaderLinkGetStatusCallDuration = 0;
+double CGLSLShader::g_shaderLinkGetStatusCallDuration = 0;
 // Number of shader programs linked total
 Uint32 CGLSLShader::g_numShaderProgramsLinked = 0;
 
@@ -41,7 +39,7 @@ Uint32 CGLSLShader::g_numShaderProgramsLinked = 0;
 // @param szfile File path string
 // @param flags Shader compile flags
 //=============================================
-CGLSLShader::CGLSLShader ( const file_interface_t& fileFuncs, const CGLExtF& glExtF, const Char *szfile, Int32 flags, pfnProgressUpdateFunction_t pfnCallback ):
+CGLSLShader::CGLSLShader ( const file_interface_t& fileFuncs, const CGLExtF& glExtF, const char *szfile, Int32 flags, pfnProgressUpdateFunction_t pfnCallback ):
 	m_fileInterface(fileFuncs),
 	m_glExtF( glExtF ),
 	m_shaderIndex( 0 ),
@@ -277,7 +275,7 @@ void CGLSLShader::FreeData ( void )
 // @param index Index of the shader to compile
 // @param pshader Shader information object
 // @param pshaderdata Pointer to compiled shader data
-// @return TRUE if the compile was successful, FALSE otherwise
+// @return true if the compile was successful, false otherwise
 //=============================================
 bool CGLSLShader::CompileShader( Uint32 index, glsl_shader_t* pshader, csdshaderdata_t* pshaderdata )
 {
@@ -285,13 +283,13 @@ bool CGLSLShader::CompileShader( Uint32 index, glsl_shader_t* pshader, csdshader
 	clock_t beginTime = clock();
 
 	// Try to compile the vertex shader
-	const Char *vp = reinterpret_cast<Char*>(reinterpret_cast<byte*>(m_pCSDHeader) + pshaderdata->vertexdataoffs);
+	const char *vp = reinterpret_cast<char*>(reinterpret_cast<Byte*>(m_pCSDHeader) + pshaderdata->vertexdataoffs);
 	GLuint vertex_id = m_glExtF.glCreateShader(GL_VERTEX_SHADER);
 	m_glExtF.glShaderSource(vertex_id, 1, &vp, &pshaderdata->vertexdatasize);
 	m_glExtF.glCompileShader(vertex_id);
 
 	// Now get elapsed time
-	g_vertexShaderCompileTotalDuration += static_cast<Double>(clock() - beginTime) / CLOCKS_PER_SEC;
+	g_vertexShaderCompileTotalDuration += static_cast<double>(clock() - beginTime) / CLOCKS_PER_SEC;
 
 	CString basename;
 	Common::Basename(m_shaderFile.c_str(), basename);
@@ -302,13 +300,13 @@ bool CGLSLShader::CompileShader( Uint32 index, glsl_shader_t* pshader, csdshader
 	// Get start clock
 	beginTime = clock();
 
-	Int32 iStatus = FALSE;
+	GLint iStatus = GL_FALSE;
 	m_glExtF.glGetShaderiv(vertex_id, GL_COMPILE_STATUS, &iStatus);
-	g_vertexShaderGetStatusCallTotalDuration += static_cast<Double>(clock() - beginTime) / CLOCKS_PER_SEC;
-	if(!Shader_PrintLog(vertex_id, vp, pshaderdata->vertexdatasize, vsOut.c_str(), (iStatus != TRUE) ? true : false))
+	g_vertexShaderGetStatusCallTotalDuration += static_cast<double>(clock() - beginTime) / CLOCKS_PER_SEC;
+	if(!Shader_PrintLog(vertex_id, vp, pshaderdata->vertexdatasize, vsOut.c_str(), (iStatus != GL_TRUE) ? true : false))
 		return false;
 
-	if(iStatus != TRUE)
+	if(iStatus != GL_TRUE)
 	{
 		m_errorString = "Vertex shader " + m_shaderFile + " failed to compile. Log file was written.";
 		return false;
@@ -318,13 +316,13 @@ bool CGLSLShader::CompileShader( Uint32 index, glsl_shader_t* pshader, csdshader
 	beginTime = clock();
 
 	// Compile the fragment shader now
-	const Char *fp = reinterpret_cast<Char*>(reinterpret_cast<byte*>(m_pCSDHeader) + pshaderdata->fragmentdataoffs);
+	const char *fp = reinterpret_cast<char*>(reinterpret_cast<Byte*>(m_pCSDHeader) + pshaderdata->fragmentdataoffs);
 	GLuint fragment_id = m_glExtF.glCreateShader(GL_FRAGMENT_SHADER);
 	m_glExtF.glShaderSource(fragment_id, 1, &fp, &pshaderdata->fragmentdatasize);
 	m_glExtF.glCompileShader(fragment_id);
 		
 	// Now get elapsed time
-	g_fragmentShaderCompileTotalDuration += static_cast<Double>(clock() - beginTime) / CLOCKS_PER_SEC;
+	g_fragmentShaderCompileTotalDuration += static_cast<double>(clock() - beginTime) / CLOCKS_PER_SEC;
 
 	CString fsOut;
 	fsOut << "logs/" << basename << "_" << static_cast<Int32>(index) << "_fs";
@@ -333,11 +331,11 @@ bool CGLSLShader::CompileShader( Uint32 index, glsl_shader_t* pshader, csdshader
 	beginTime = clock();
 
 	m_glExtF.glGetShaderiv(fragment_id, GL_COMPILE_STATUS, &iStatus);
-	g_fragmentShaderGetStatusCallTotalDuration += static_cast<Double>(clock() - beginTime) / CLOCKS_PER_SEC;
-	if(!Shader_PrintLog(fragment_id, fp, pshaderdata->fragmentdatasize, fsOut.c_str(), (iStatus != TRUE) ? true : false))
+	g_fragmentShaderGetStatusCallTotalDuration += static_cast<double>(clock() - beginTime) / CLOCKS_PER_SEC;
+	if(!Shader_PrintLog(fragment_id, fp, pshaderdata->fragmentdatasize, fsOut.c_str(), (iStatus != GL_TRUE) ? true : false))
 		return false;
 
-	if(iStatus != TRUE)
+	if(iStatus != GL_TRUE)
 	{
 		m_errorString = "Fragment shader " + m_shaderFile + " failed to compile. Log file was written.";
 		return false;
@@ -353,7 +351,7 @@ bool CGLSLShader::CompileShader( Uint32 index, glsl_shader_t* pshader, csdshader
 	m_glExtF.glLinkProgram(pshader->program_id);
 
 	// Now get elapsed time
-	g_shaderLinkTotalDuration += static_cast<Double>(clock() - beginTime) / CLOCKS_PER_SEC;
+	g_shaderLinkTotalDuration += static_cast<double>(clock() - beginTime) / CLOCKS_PER_SEC;
 
 	CString progOut;
 	progOut << "logs/" << basename << "_" << static_cast<Int32>(index) << "_prog";
@@ -362,12 +360,12 @@ bool CGLSLShader::CompileShader( Uint32 index, glsl_shader_t* pshader, csdshader
 	beginTime = clock();
 
 	m_glExtF.glGetProgramiv(pshader->program_id, GL_LINK_STATUS, &iStatus);
-	g_shaderLinkGetStatusCallDuration += static_cast<Double>(clock() - beginTime) / CLOCKS_PER_SEC;
+	g_shaderLinkGetStatusCallDuration += static_cast<double>(clock() - beginTime) / CLOCKS_PER_SEC;
 	if(!Program_PrintLog(pshader->program_id, progOut.c_str()))
 		return false;
 
 	bool result = true;
-	if(iStatus != TRUE)
+	if(iStatus != GL_TRUE)
 	{
 		result = Shader_PrintLog(vertex_id, vp, pshaderdata->vertexdatasize, vsOut.c_str(), true);
 
@@ -386,23 +384,23 @@ bool CGLSLShader::CompileShader( Uint32 index, glsl_shader_t* pshader, csdshader
 	if(!result)
 		return false;
 
-	if(iStatus == TRUE)
+	if(iStatus == GL_TRUE)
 	{
 		// Flag it as compiled
 		pshader->compiled = true;
 		g_numShaderProgramsLinked++;
 	}
 
-	return (iStatus == TRUE) ? true : false;
+	return (iStatus == GL_TRUE) ? true : false;
 }
 
 //=============================================
 // @brief Validates a program, and if it's not ok, it'll write to the console
 //
 // @param msg CString to hold result
-// @param return TRUE if no error was returned, FALSE otherwise
+// @param return true if no error was returned, false otherwise
 //=============================================
-bool CGLSLShader::ValidateProgram( void (*pfnConPrintfFnPtr)( const Char *fmt, ... ) )
+bool CGLSLShader::ValidateProgram( void (*pfnConPrintfFnPtr)( const char *fmt, ... ) )
 {
 	if(!pfnConPrintfFnPtr)
 		return true;
@@ -420,7 +418,7 @@ bool CGLSLShader::ValidateProgram( void (*pfnConPrintfFnPtr)( const Char *fmt, .
 		return true;
 
 	GLsizei logSize2;
-	Char* pstrTmp = new Char[logSize1+1];
+	char* pstrTmp = new char[logSize1+1];
 	m_glExtF.glGetProgramInfoLog(m_shadersArray[m_shaderIndex].program_id, logSize1+1, &logSize2, pstrTmp);
 
 	(*pfnConPrintfFnPtr)("%s - Validation error: %s\n", m_shaderFile.c_str(), pstrTmp);
@@ -432,7 +430,7 @@ bool CGLSLShader::ValidateProgram( void (*pfnConPrintfFnPtr)( const Char *fmt, .
 //=============================================
 // @brief Compiles the shader from a CSD file
 //
-// @return TRUE if successful, FLASE otherwise
+// @return true if successful, FLASE otherwise
 //=============================================
 bool CGLSLShader::CompileFromCSD( void )
 {
@@ -441,7 +439,7 @@ bool CGLSLShader::CompileFromCSD( void )
 	scriptFilePath << "shaders/" << m_shaderFile;
 
 	Uint32 scriptFileSize = 0;
-	const byte* pScriptFile = m_fileInterface.pfnLoadFile(scriptFilePath.c_str(), &scriptFileSize);
+	const Byte* pScriptFile = m_fileInterface.pfnLoadFile(scriptFilePath.c_str(), &scriptFileSize);
 	if(!pScriptFile)
 	{
 		m_errorString << "Failed to open '" << m_shaderFile << "' for reading.";
@@ -465,7 +463,7 @@ bool CGLSLShader::CompileFromCSD( void )
 
 	// Open the file for reading
 	Uint32 csdFileSize = 0;
-	const byte *pFile = m_fileInterface.pfnLoadFile(csdFilePath.c_str(), &csdFileSize);
+	const Byte *pFile = m_fileInterface.pfnLoadFile(csdFilePath.c_str(), &csdFileSize);
 	if(!pFile)
 		return false;
 
@@ -504,14 +502,14 @@ bool CGLSLShader::CompileFromCSD( void )
 	}
 
 	// Check the hash
-	if(memcmp(pFileCSDHeader->hash, strHash.c_str(), sizeof(Char)*32))
+	if(memcmp(pFileCSDHeader->hash, strHash.c_str(), sizeof(char)*32))
 	{
 		m_fileInterface.pfnFreeFile(pFile);
 		return false;
 	}
 
 	// Set the basic data
-	m_pCSDHeader = reinterpret_cast<csdheader_t*>(new byte[csdFileSize]);
+	m_pCSDHeader = reinterpret_cast<csdheader_t*>(new Byte[csdFileSize]);
 	memcpy(m_pCSDHeader, pFile, csdFileSize);
 	m_fileInterface.pfnFreeFile(pFile);
 
@@ -526,7 +524,7 @@ bool CGLSLShader::CompileFromCSD( void )
 
 	// Set determinators
 	m_determinatorArray.resize(m_pCSDHeader->numdeterminators);
-	csddeterminator_t* pindeterminators = reinterpret_cast<csddeterminator_t*>(reinterpret_cast<byte*>(m_pCSDHeader) + m_pCSDHeader->determinatoroffset);
+	csddeterminator_t* pindeterminators = reinterpret_cast<csddeterminator_t*>(reinterpret_cast<Byte*>(m_pCSDHeader) + m_pCSDHeader->determinatoroffset);
 	for(Uint32 i = 0; i < m_pCSDHeader->numdeterminators; i++)
 	{
 		m_determinatorArray[i].name = pindeterminators[i].name;
@@ -535,7 +533,7 @@ bool CGLSLShader::CompileFromCSD( void )
 		m_determinatorArray[i].maxval = pindeterminators[i].maxval;
 
 		// Copy values
-		Int16* pinvalues = reinterpret_cast<Int16*>(reinterpret_cast<byte*>(m_pCSDHeader) + pindeterminators[i].valuesoffset);
+		Int16* pinvalues = reinterpret_cast<Int16*>(reinterpret_cast<Byte*>(m_pCSDHeader) + pindeterminators[i].valuesoffset);
 		m_determinatorArray[i].values.resize(m_pCSDHeader->numshaders);
 		memcpy(&m_determinatorArray[i].values[0], pinvalues, sizeof(Int16)*m_pCSDHeader->numshaders);
 
@@ -547,7 +545,7 @@ bool CGLSLShader::CompileFromCSD( void )
 	// Create map
 	for(Uint32 i = 0; i < m_pCSDHeader->numshaders; i++)
 	{
-		Char* pshadervaluesbytes = reinterpret_cast<Char*>(m_pShaderDeterminatorValues + m_pCSDHeader->numdeterminators * i);
+		char* pshadervaluesbytes = reinterpret_cast<char*>(m_pShaderDeterminatorValues + m_pCSDHeader->numdeterminators * i);
 		ShaderValuesStringType_t valuestr(pshadervaluesbytes, m_pCSDHeader->numdeterminators * sizeof(Int16));
 		std::pair<ShaderValuesIndexMapType_t::iterator, bool> insertResult = m_shaderValuesIndexMap.insert(ShaderValuesIndexMapPairType_t(valuestr, i));
 		assert(insertResult.second == true);
@@ -600,7 +598,7 @@ bool CGLSLShader::CompileFromCSD( void )
 //=============================================
 // @brief Loads shaders from the BSD file
 //
-// @return TRUE if no errors occurred, FLASE otherwise
+// @return true if no errors occurred, FLASE otherwise
 //=============================================
 bool CGLSLShader::LoadFromBSD( void )
 {
@@ -626,7 +624,7 @@ bool CGLSLShader::LoadFromBSD( void )
 
 	// Open the file for reading
 	Uint32 bsdFileSize = 0;
-	const byte *pFile = m_fileInterface.pfnLoadFile(bsdFilePath.c_str(), &bsdFileSize);
+	const Byte *pFile = m_fileInterface.pfnLoadFile(bsdFilePath.c_str(), &bsdFileSize);
 	if(!pFile)
 		return false;
 
@@ -663,7 +661,7 @@ bool CGLSLShader::LoadFromBSD( void )
 		return false;
 	}
 
-	if(memcmp(pBSDHeader->hash, m_pCSDHeader->hash, sizeof(Char)*32))
+	if(memcmp(pBSDHeader->hash, m_pCSDHeader->hash, sizeof(char)*32))
 	{
 		m_fileInterface.pfnFreeFile(pFile);
 		return false;
@@ -689,7 +687,7 @@ bool CGLSLShader::LoadFromBSD( void )
 	CArray<GLint> binaryFormats(nbBinaryFormats);
 	glGetIntegerv(GL_PROGRAM_BINARY_FORMATS, &binaryFormats[0]);
 
-	const shader_binary_t* pbinaryshaders = reinterpret_cast<const shader_binary_t*>(reinterpret_cast<const byte*>(pBSDHeader) + pBSDHeader->shaderoffset);
+	const shader_binary_t* pbinaryshaders = reinterpret_cast<const shader_binary_t*>(reinterpret_cast<const Byte*>(pBSDHeader) + pBSDHeader->shaderoffset);
 	for(Uint32 i = 0; i < pBSDHeader->numshaders; i++)
 	{
 		// Do not compile disabled states
@@ -752,7 +750,7 @@ bool CGLSLShader::LoadFromBSD( void )
 		}
 
 		const shader_binary_t* pshaderinfo = &pbinaryshaders[i];
-		const byte* pshaderdata = reinterpret_cast<const byte*>(pBSDHeader) + pshaderinfo->dataoffset;
+		const Byte* pshaderdata = reinterpret_cast<const Byte*>(pBSDHeader) + pshaderinfo->dataoffset;
 
 		m_shadersArray[i].program_id = m_glExtF.glCreateProgram();
 		m_glExtF.glProgramBinary(m_shadersArray[i].program_id, pshaderinfo->binaryformat, pshaderdata, pshaderinfo->datasize);
@@ -793,7 +791,7 @@ bool CGLSLShader::LoadFromBSD( void )
 //=============================================
 // @brief Compiles all CSD shaders
 //
-// @return TRUE if no errors occurred, FLASE otherwise
+// @return true if no errors occurred, FLASE otherwise
 //=============================================
 bool CGLSLShader::CompileCSDShaderData( void )
 {
@@ -804,7 +802,7 @@ bool CGLSLShader::CompileCSDShaderData( void )
 	if(m_useBinaryShaders)
 	{
 		// Create buffer object
-		pbuffer = new CBuffer(sizeof(byte)*TEMP_FILE_BUFFER_SIZE);
+		pbuffer = new CBuffer(sizeof(Byte)*TEMP_FILE_BUFFER_SIZE);
 		pbsdheader = reinterpret_cast<bsd_header_t*>(pbuffer->getbufferdata());
 		pbuffer->addpointer(reinterpret_cast<void**>(&pbsdheader));
 		pbuffer->append(nullptr, sizeof(bsd_header_t));
@@ -818,7 +816,7 @@ bool CGLSLShader::CompileCSDShaderData( void )
 		// Get ptr to binary shaders
 		Uint32 datasize = sizeof(shader_binary_t) * pbsdheader->numshaders;
 		pbuffer->append(nullptr, datasize);
-		pbinaryshaders = reinterpret_cast<shader_binary_t*>(reinterpret_cast<byte*>(pbsdheader) + pbsdheader->shaderoffset);
+		pbinaryshaders = reinterpret_cast<shader_binary_t*>(reinterpret_cast<Byte*>(pbsdheader) + pbsdheader->shaderoffset);
 		pbuffer->addpointer(reinterpret_cast<void**>(&pbinaryshaders));
 	}
 
@@ -833,7 +831,7 @@ bool CGLSLShader::CompileCSDShaderData( void )
 	Int32 lastPrompt = -1;
 
 	// Always compile all shaders if the CSD was changed, to find any possible errors
-	csdshaderdata_t* pinshaders = reinterpret_cast<csdshaderdata_t*>(reinterpret_cast<byte*>(m_pCSDHeader) + m_pCSDHeader->shaderdataoffset);
+	csdshaderdata_t* pinshaders = reinterpret_cast<csdshaderdata_t*>(reinterpret_cast<Byte*>(m_pCSDHeader) + m_pCSDHeader->shaderdataoffset);
 	for(Uint32 i = 0; i < m_shadersArray.size(); i++)
 	{
 		// Do not compile disabled states
@@ -869,7 +867,7 @@ bool CGLSLShader::CompileCSDShaderData( void )
 			pbinaryshader->datasize = programSize;
 
 			pbuffer->append(nullptr, pbinaryshader->datasize);
-			void *pbinarydest = reinterpret_cast<byte*>(pbsdheader) + pbinaryshader->dataoffset;
+			void *pbinarydest = reinterpret_cast<Byte*>(pbsdheader) + pbinaryshader->dataoffset;
 			m_glExtF.glGetProgramBinary(m_shadersArray[i].program_id, programSize, nullptr, &pbinaryshader->binaryformat, pbinarydest);
 
 			pbuffer->removepointer((const void**)&pbinaryshader);
@@ -912,7 +910,7 @@ bool CGLSLShader::CompileCSDShaderData( void )
 
 		CString filePath;
 		filePath << folderPath << basename << ".bsd";
-		if(!m_fileInterface.pfnWriteFile(reinterpret_cast<byte*>(pbsdheader), pbsdheader->size, filePath.c_str(), false))
+		if(!m_fileInterface.pfnWriteFile(reinterpret_cast<Byte*>(pbsdheader), pbsdheader->size, filePath.c_str(), false))
 		{
 			m_errorString << "Failed to open " << filePath << " for writing";
 			delete[] pbsdheader;
@@ -929,13 +927,13 @@ bool CGLSLShader::CompileCSDShaderData( void )
 // @brief Reads in the script entry for a determinator
 //
 // @param ppstr Pointer to the current character's pointer
-// @return TRUE if no errors occurred, FLASE otherwise
+// @return true if no errors occurred, FLASE otherwise
 //=============================================
-bool CGLSLShader::ReadDeterminator( const Char** ppstr )
+bool CGLSLShader::ReadDeterminator( const char** ppstr )
 {
 	// Extract the token name
 	CString szdttoken;
-	const Char* pscan = Common::Parse((*ppstr), szdttoken);
+	const char* pscan = Common::Parse((*ppstr), szdttoken);
 	if(szdttoken[0] == '$')
 	{
 		m_errorString << "Unexpected " << szdttoken << " in " << m_shaderFile;
@@ -977,15 +975,15 @@ bool CGLSLShader::ReadDeterminator( const Char** ppstr )
 // @brief Reads in the script entry for invalid states
 //
 // @param ppstr Pointer to the current character's pointer
-// @return TRUE if no errors occurred, FLASE otherwise
+// @return true if no errors occurred, FLASE otherwise
 //=============================================
-bool CGLSLShader :: ReadInvalidState( const Char** ppstr )
+bool CGLSLShader :: ReadInvalidState( const char** ppstr )
 {
 	CString sztoken;
 	invalid_state_t newState;
 	
 	// Scan the next token
-	const Char* pscan = Common::Parse((*ppstr), sztoken);
+	const char* pscan = Common::Parse((*ppstr), sztoken);
 	if(!Common::IsNumber(sztoken))
 	{
 		m_errorString << "Expected an integer number, got " << sztoken << " in " << m_shaderFile;
@@ -1042,7 +1040,7 @@ bool CGLSLShader :: ReadInvalidState( const Char** ppstr )
 //=============================================
 // @brief Compiles the shader from a script
 //
-// @return TRUE if successful, FLASE otherwise
+// @return true if successful, FLASE otherwise
 //=============================================
 bool CGLSLShader :: CompileFromScript( void )
 {
@@ -1053,7 +1051,7 @@ bool CGLSLShader :: CompileFromScript( void )
 	filePath << "shaders/" << m_shaderFile;
 
 	Uint32 isize = 0;
-	const Char *pfile = reinterpret_cast<const Char*>(m_fileInterface.pfnLoadFile(filePath.c_str(), &isize));
+	const char *pfile = reinterpret_cast<const char*>(m_fileInterface.pfnLoadFile(filePath.c_str(), &isize));
 	if(!pfile)
 	{
 		m_errorString << "Error: Failed to load shader script " << filePath << ".";
@@ -1070,7 +1068,7 @@ bool CGLSLShader :: CompileFromScript( void )
 
 	// Parse the script data
 	CString sztoken;
-	const Char *pscan = pfile;
+	const char *pscan = pfile;
 	while((pscan-pfile) < isize && pscan)
 	{
 		// Seek out global determinators
@@ -1187,9 +1185,9 @@ bool CGLSLShader :: CompileFromScript( void )
 // @brief Compiles the shader from a given script
 //
 // @param szfile File path string
-// @return TRUE if successful, FLASE otherwise
+// @return true if successful, FLASE otherwise
 //=============================================
-bool CGLSLShader :: Compile( const Char* szfile )
+bool CGLSLShader :: Compile( const char* szfile )
 {
 	m_shaderFile = szfile;
 
@@ -1228,9 +1226,9 @@ bool CGLSLShader :: Compile( const Char* szfile )
 //
 // @param ppscan Pointer to current character in the script
 // @param pchunkptr Pointer to chunk array
-// @return TRUE if successful, FLASE otherwise
+// @return true if successful, FLASE otherwise
 //=============================================
-bool CGLSLShader::ReadChunks( const Char **ppscan, shader_chunk_t** pchunkptr, Uint32* numchunkptr, glsl_branchcondition_t* pconditionals, Uint32 numconditionals )
+bool CGLSLShader::ReadChunks( const char **ppscan, shader_chunk_t** pchunkptr, Uint32* numchunkptr, glsl_branchcondition_t* pconditionals, Uint32 numconditionals )
 {
 	CString szToken1;
 	CString szToken2;
@@ -1252,7 +1250,7 @@ bool CGLSLShader::ReadChunks( const Char **ppscan, shader_chunk_t** pchunkptr, U
 	}
 
 	// Read the chunk in byte by byte
-	while(TRUE)
+	while(true)
 	{
 		if((**ppscan) == '$')
 		{
@@ -1269,7 +1267,7 @@ bool CGLSLShader::ReadChunks( const Char **ppscan, shader_chunk_t** pchunkptr, U
 				// determines how we relate to a previous conditional
 				operator_e lastoperator = OPERATOR_NONE;
 
-				while(TRUE)
+				while(true)
 				{
 					// Read the determinator name
 					(*ppscan) = Common::Parse((*ppscan), szToken1);
@@ -1388,7 +1386,7 @@ bool CGLSLShader::ReadChunks( const Char **ppscan, shader_chunk_t** pchunkptr, U
 				// Copy the data to the final buffer
 				Uint32 chunkSize = chunkBuffer.getdatasize();
 				pchunk->isize = chunkSize;
-				pchunk->pdata = new Char[chunkSize+1];
+				pchunk->pdata = new char[chunkSize+1];
 				memcpy(pchunk->pdata, chunkBuffer.getbufferdata(), chunkSize);
 
 				// Null terminate the string
@@ -1433,7 +1431,7 @@ bool CGLSLShader::ReadChunks( const Char **ppscan, shader_chunk_t** pchunkptr, U
 
 	// Copy the data to the final buffer
 	pchunk->isize = chunkBuffer.getdatasize();
-	pchunk->pdata = new Char[pchunk->isize+1];
+	pchunk->pdata = new char[pchunk->isize+1];
 	memcpy(pchunk->pdata, chunkBuffer.getbufferdata(), pchunk->isize);
 
 	// Null terminate the string
@@ -1505,7 +1503,7 @@ void CGLSLShader::RecursiveFillValues( Uint32 index, Uint32& numShaders )
 //
 // @param id Index of the shader to compile
 // @param pchunk Pointer to the chunk object
-// @return TRUE if the chuck should be added, FALSE otherwise
+// @return true if the chuck should be added, false otherwise
 //=============================================
 bool CGLSLShader::ShouldIncludeChunk( Uint32 id, shader_chunk_t *pchunk )
 {
@@ -1604,7 +1602,7 @@ bool CGLSLShader::RecursiveAddChunks( Uint32 id, shader_chunk_t* pchunk, CBuffer
 // @param vsptr Pointer to pointer to hold the vertex shader data
 // @param fsptr Pointer to pointer to hold the fragment shader data
 //=============================================
-bool CGLSLShader::SpliceScripts( Uint32 id, Char **vsptr, Char **fsptr )
+bool CGLSLShader::SpliceScripts( Uint32 id, char **vsptr, char **fsptr )
 {
 	// Buffer to write to
 	CBuffer tempBuffer(BUFFER_ALLOC_SIZE);
@@ -1621,8 +1619,8 @@ bool CGLSLShader::SpliceScripts( Uint32 id, Char **vsptr, Char **fsptr )
 
 	// Allocate the final buffer
 	Uint32 buffersize = tempBuffer.getdatasize();
-	(*vsptr) = new Char[buffersize+1];
-	memcpy((*vsptr), tempBuffer.getbufferdata(), sizeof(Char)*buffersize);
+	(*vsptr) = new char[buffersize+1];
+	memcpy((*vsptr), tempBuffer.getbufferdata(), sizeof(char)*buffersize);
 	(*vsptr)[buffersize] = '\0';
 
 	// Reset this
@@ -1640,8 +1638,8 @@ bool CGLSLShader::SpliceScripts( Uint32 id, Char **vsptr, Char **fsptr )
 
 	// Allocate the final buffer
 	buffersize = tempBuffer.getdatasize();
-	(*fsptr) = new Char[buffersize+1];
-	memcpy((*fsptr), tempBuffer.getbufferdata(), sizeof(Char)*buffersize);
+	(*fsptr) = new char[buffersize+1];
+	memcpy((*fsptr), tempBuffer.getbufferdata(), sizeof(char)*buffersize);
 	(*fsptr)[buffersize] = '\0';
 
 	return true;
@@ -1653,7 +1651,7 @@ bool CGLSLShader::SpliceScripts( Uint32 id, Char **vsptr, Char **fsptr )
 // @param pstrName Name of the determinator to disable a state for
 // @param state Value to be disabled on the determinator
 //=============================================
-void CGLSLShader::DisableDeterminatorState( const Char *pstrName, Int32 state )
+void CGLSLShader::DisableDeterminatorState( const char *pstrName, Int32 state )
 {
 	for(Uint32 i = 0; i < m_disabledStatesArray.size(); i++)
 	{
@@ -1703,7 +1701,7 @@ bool CGLSLShader::CompileShaderVariation( Uint32 index )
 		return false;
 
 	// Compile the shader
-	csdshaderdata_t* pshaderdata = reinterpret_cast<csdshaderdata_t*>(reinterpret_cast<byte *>(m_pCSDHeader) + m_pCSDHeader->shaderdataoffset) + index;
+	csdshaderdata_t* pshaderdata = reinterpret_cast<csdshaderdata_t*>(reinterpret_cast<Byte *>(m_pCSDHeader) + m_pCSDHeader->shaderdataoffset) + index;
 	if(!CompileShader(index, &m_shadersArray[index], pshaderdata))
 	{
 		m_bFailed = true;
@@ -1747,7 +1745,7 @@ bool CGLSLShader::CompileShaderVariation( Uint32 index )
 // @brief Constructs all possible shader setups
 //
 //=============================================
-bool CGLSLShader::ConstructBranches ( const Char* pSrc, Uint32 fileSize )
+bool CGLSLShader::ConstructBranches ( const char* pSrc, Uint32 fileSize )
 {
 	// Determine all possible values
 	Uint32 nbShaders = 1;
@@ -1772,7 +1770,7 @@ bool CGLSLShader::ConstructBranches ( const Char* pSrc, Uint32 fileSize )
 		// Create map
 		for(Uint32 i = 0; i < nbShaders; i++)
 		{
-			Char* pshadervaluesbytes = reinterpret_cast<Char*>(m_pShaderDeterminatorValues + nbDeterminators * i);
+			char* pshadervaluesbytes = reinterpret_cast<char*>(m_pShaderDeterminatorValues + nbDeterminators * i);
 			ShaderValuesStringType_t valuestr(pshadervaluesbytes, nbDeterminators * sizeof(Int16));
 			std::pair<ShaderValuesIndexMapType_t::iterator, bool> insertResult = m_shaderValuesIndexMap.insert(ShaderValuesIndexMapPairType_t(valuestr, i));
 			assert(insertResult.second == true);
@@ -1789,7 +1787,7 @@ bool CGLSLShader::ConstructBranches ( const Char* pSrc, Uint32 fileSize )
 	pheader->id = CSD_HEADER_ENCODED;
 	pheader->version = CSD_FILE_VERSION;
 
-	CMD5 hash(reinterpret_cast<const byte*>(pSrc), fileSize);
+	CMD5 hash(reinterpret_cast<const Byte*>(pSrc), fileSize);
 	CString hashStr = hash.HexDigest();
 
 	qstrcpy(pheader->hash, hashStr.c_str());
@@ -1802,13 +1800,13 @@ bool CGLSLShader::ConstructBranches ( const Char* pSrc, Uint32 fileSize )
 	pheader->numshaders = nbShaders;
 	csdBuffer.append(nullptr, sizeof(csdshaderdata_t)*nbShaders);
 
-	csdshaderdata_t* poutshaders = reinterpret_cast<csdshaderdata_t*>(reinterpret_cast<byte*>(pheader) + pheader->shaderdataoffset);
+	csdshaderdata_t* poutshaders = reinterpret_cast<csdshaderdata_t*>(reinterpret_cast<Byte*>(pheader) + pheader->shaderdataoffset);
 	csdBuffer.addpointer(reinterpret_cast<void**>(&poutshaders));
 
 	for(Uint32 i = 0; i < nbShaders; i++)
 	{
 		// Perform the script splices
-		Char *vsscript, *fsscript;
+		char *vsscript, *fsscript;
 		if(!SpliceScripts(i, &vsscript, &fsscript))
 			return false;
 
@@ -1818,7 +1816,7 @@ bool CGLSLShader::ConstructBranches ( const Char* pSrc, Uint32 fileSize )
 		poutshaders[i].vertexdatasize = vslength;
 
 		// Copy the vertex shader data
-		csdBuffer.append(vsscript, sizeof(Char)*vslength);
+		csdBuffer.append(vsscript, sizeof(char)*vslength);
 
 		// Allocate in the output
 		Uint32 fslength = qstrlen(fsscript);
@@ -1826,7 +1824,7 @@ bool CGLSLShader::ConstructBranches ( const Char* pSrc, Uint32 fileSize )
 		poutshaders[i].fragmentdatasize = fslength;
 
 		// Copy the vertex shader data
-		csdBuffer.append(fsscript, sizeof(Char)*fslength);
+		csdBuffer.append(fsscript, sizeof(char)*fslength);
 		
 		delete[] vsscript;
 		delete[] fsscript;
@@ -1839,7 +1837,7 @@ bool CGLSLShader::ConstructBranches ( const Char* pSrc, Uint32 fileSize )
 		pheader->numdeterminators = m_determinatorArray.size();
 		csdBuffer.append(nullptr, sizeof(csddeterminator_t)*pheader->numdeterminators);
 
-		csddeterminator_t* pdeterminators = reinterpret_cast<csddeterminator_t*>(reinterpret_cast<byte *>(pheader) + pheader->determinatoroffset);
+		csddeterminator_t* pdeterminators = reinterpret_cast<csddeterminator_t*>(reinterpret_cast<Byte *>(pheader) + pheader->determinatoroffset);
 		csdBuffer.addpointer(reinterpret_cast<void**>(&pdeterminators));
 
 		for(Uint32 i = 0; i < m_determinatorArray.size(); i++)
@@ -1865,14 +1863,14 @@ bool CGLSLShader::ConstructBranches ( const Char* pSrc, Uint32 fileSize )
 	CString filePath;
 	filePath << "shaders/" << basename << ".csd";
 
-	if(!m_fileInterface.pfnWriteFile(reinterpret_cast<byte*>(pheader), csdBuffer.getdatasize(), filePath.c_str(), false))
+	if(!m_fileInterface.pfnWriteFile(reinterpret_cast<Byte*>(pheader), csdBuffer.getdatasize(), filePath.c_str(), false))
 	{
 		m_errorString << "Failed to open " << filePath << " for writing";
 		return false;
 	}
 
 	// Create the final CSD buffer
-	m_pCSDHeader = reinterpret_cast<csdheader_t*>(new byte[pheader->size]);
+	m_pCSDHeader = reinterpret_cast<csdheader_t*>(new Byte[pheader->size]);
 	memcpy(m_pCSDHeader, pheader, pheader->size);
 
 	// Link up disabled states to determinators
@@ -1907,7 +1905,7 @@ bool CGLSLShader::ConstructBranches ( const Char* pSrc, Uint32 fileSize )
 // @param script Pointer to the GLSL script
 // @param szoutpath Log file base name
 //=============================================
-bool CGLSLShader::Shader_PrintLog ( GLuint shader_id, const Char *script, Uint32 length, const Char *szoutpath, bool dumpShaderCode )
+bool CGLSLShader::Shader_PrintLog ( GLuint shader_id, const char *script, Uint32 length, const char *szoutpath, bool dumpShaderCode )
 {
 	Int32 iLogSize = 0;
 	m_glExtF.glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &iLogSize);
@@ -1921,10 +1919,10 @@ bool CGLSLShader::Shader_PrintLog ( GLuint shader_id, const Char *script, Uint32
 		}
 
 		Int32 iNumWritten;
-		Char *pLog = new Char[iLogSize];
+		char *pLog = new char[iLogSize];
 		m_glExtF.glGetShaderInfoLog(shader_id, iLogSize, &iNumWritten, pLog);
 
-		Char *pScan = pLog;
+		char *pScan = pLog;
 		while(*pScan)
 		{
 			if(*pScan == '\n')
@@ -1933,8 +1931,8 @@ bool CGLSLShader::Shader_PrintLog ( GLuint shader_id, const Char *script, Uint32
 			pScan++;
 		}
 
-		Char *pOut = new Char[iLogSize];
-		Char *pDest = pOut;
+		char *pOut = new char[iLogSize];
+		char *pDest = pOut;
 		pScan = pLog;
 
 		while(*pScan)
@@ -1951,7 +1949,7 @@ bool CGLSLShader::Shader_PrintLog ( GLuint shader_id, const Char *script, Uint32
 
 		CString outputPath;
 		outputPath << szoutpath << "_debug.txt";
-		m_fileInterface.pfnWriteFile(reinterpret_cast<const byte *>(pOut), iLogSize-1, outputPath.c_str(), false);
+		m_fileInterface.pfnWriteFile(reinterpret_cast<const Byte *>(pOut), iLogSize-1, outputPath.c_str(), false);
 
 		delete[] pLog;
 		delete[] pOut;
@@ -1961,7 +1959,7 @@ bool CGLSLShader::Shader_PrintLog ( GLuint shader_id, const Char *script, Uint32
 	{
 		CString outputPath;
 		outputPath << szoutpath << "_source.txt";
-		m_fileInterface.pfnWriteFile(reinterpret_cast<const byte *>(script), length, outputPath.c_str(), false);
+		m_fileInterface.pfnWriteFile(reinterpret_cast<const Byte *>(script), length, outputPath.c_str(), false);
 	}
 
 	return true;
@@ -1973,7 +1971,7 @@ bool CGLSLShader::Shader_PrintLog ( GLuint shader_id, const Char *script, Uint32
 // @param program_id GLSL id for the program
 // @param szoutpath Log file base name
 //=============================================
-bool CGLSLShader :: Program_PrintLog ( GLuint program_id, const Char *szoutpath )
+bool CGLSLShader :: Program_PrintLog ( GLuint program_id, const char *szoutpath )
 {
 	Int32 iLogSize = 0;
 	m_glExtF.glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &iLogSize);
@@ -1987,10 +1985,10 @@ bool CGLSLShader :: Program_PrintLog ( GLuint program_id, const Char *szoutpath 
 	}
 
 	Int32 iNumWritten;
-	Char *pLog = new Char[iLogSize];
+	char *pLog = new char[iLogSize];
 	m_glExtF.glGetProgramInfoLog(program_id, iLogSize, &iNumWritten, pLog);
 
-	Char *pScan = pLog;
+	char *pScan = pLog;
 	while(*pScan)
 	{
 		if(*pScan == '\n')
@@ -1999,8 +1997,8 @@ bool CGLSLShader :: Program_PrintLog ( GLuint program_id, const Char *szoutpath 
 		pScan++;
 	}
 
-	Char *pOut = new Char[iLogSize];
-	Char *pDest = pOut;
+	char *pOut = new char[iLogSize];
+	char *pDest = pOut;
 	pScan = pLog;
 	while(*pScan)
 	{
@@ -2016,7 +2014,7 @@ bool CGLSLShader :: Program_PrintLog ( GLuint program_id, const Char *szoutpath 
 
 	CString outputPath;
 	outputPath << szoutpath << "_prog_debug.txt";
-	m_fileInterface.pfnWriteFile(reinterpret_cast<byte *>(pOut), iLogSize-1, outputPath.c_str(), false);
+	m_fileInterface.pfnWriteFile(reinterpret_cast<Byte *>(pOut), iLogSize-1, outputPath.c_str(), false);
 
 	delete[] pLog;
 	delete[] pOut;
@@ -2030,7 +2028,7 @@ bool CGLSLShader :: Program_PrintLog ( GLuint program_id, const Char *szoutpath 
 // @param szname The name of the determinator
 // @return Pointer to the new determinator
 //=============================================
-CGLSLShader::glsl_determinator_t *CGLSLShader::AddDeterminator ( const Char *szname )
+CGLSLShader::glsl_determinator_t *CGLSLShader::AddDeterminator ( const char *szname )
 {
 	for(Uint32 i = 0; i < m_determinatorArray.size(); i++)
 	{
@@ -2148,8 +2146,8 @@ bool CGLSLShader::EnableShader ( void )
 void CGLSLShader::SyncUniform( glsl_uniform_t& uniform )
 {
 	Uint32 offset = uniform.stride * uniform.elementcount * m_shaderIndex;
-	Float* pshadervalue = &uniform.shadervalues[offset];
-	Float* pcurrentvalue = &uniform.currentvalues[0];
+	float* pshadervalue = &uniform.shadervalues[offset];
+	float* pcurrentvalue = &uniform.currentvalues[0];
 
 	switch (uniform.type)
 	{
@@ -2158,55 +2156,55 @@ void CGLSLShader::SyncUniform( glsl_uniform_t& uniform )
 		case UNIFORM_SAMPLERCUBE:
 		case UNIFORM_SAMPLERRECT:
 		{
-			if (memcmp(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount) != 0)
+			if (memcmp(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount) != 0)
 			{
 				m_glExtF.glUniform1i(uniform.indexes[m_shaderIndex], (*pcurrentvalue));
-				memcpy(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount);
+				memcpy(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount);
 			}
 		}
 	break;
 		case UNIFORM_FLOAT1:
 		{
-			if (memcmp(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount) != 0)
+			if (memcmp(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount) != 0)
 			{
 				m_glExtF.glUniform1fv(uniform.indexes[m_shaderIndex], uniform.elementcount, pcurrentvalue);
-				memcpy(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount);
+				memcpy(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount);
 			}
 		}
 	break;
 		case UNIFORM_FLOAT2:
 		{
-			if (memcmp(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount) != 0)
+			if (memcmp(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount) != 0)
 			{
 				m_glExtF.glUniform2fv(uniform.indexes[m_shaderIndex], uniform.elementcount, pcurrentvalue);
-				memcpy(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount);
+				memcpy(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount);
 			}
 		}
 	break;
 		case UNIFORM_FLOAT3:
 		{
-			if (memcmp(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount) != 0)
+			if (memcmp(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount) != 0)
 			{
 				m_glExtF.glUniform3fv(uniform.indexes[m_shaderIndex], uniform.elementcount, pcurrentvalue);
-				memcpy(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount);
+				memcpy(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount);
 			}
 		}
 	break;
 		case UNIFORM_FLOAT4:
 		{
-			if (memcmp(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount) != 0)
+			if (memcmp(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount) != 0)
 			{
 				m_glExtF.glUniform4fv(uniform.indexes[m_shaderIndex], uniform.elementcount, pcurrentvalue);
-				memcpy(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount);
+				memcpy(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount);
 			}
 		}
 	break;
 		case UNIFORM_MATRIX4:
 		{
-			if (memcmp(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount) != 0)
+			if (memcmp(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount) != 0)
 			{
 				m_glExtF.glUniformMatrix4fv(uniform.indexes[m_shaderIndex], uniform.elementcount, GL_FALSE, pcurrentvalue);
-				memcpy(pshadervalue, pcurrentvalue, sizeof(Float) * uniform.stride * uniform.elementcount);
+				memcpy(pshadervalue, pcurrentvalue, sizeof(float) * uniform.stride * uniform.elementcount);
 			}
 		}
 	break;
@@ -2274,7 +2272,7 @@ void CGLSLShader::ResetShader ( void )
 // @param pointer Byte offset into the vertex datatype
 // @return Index of the attribute
 //=============================================
-Int32 CGLSLShader::InitAttribute( const Char *szname, Uint32 size, Int32 type, Uint32 stride, const void *pointer )
+Int32 CGLSLShader::InitAttribute( const char *szname, Uint32 size, Int32 type, Uint32 stride, const void *pointer )
 {
 	if(stride % 32 != 0)
 	{
@@ -2497,7 +2495,7 @@ void CGLSLShader::SetVBO( CVBO *pVBO, Int32 index )
 // @param type Type of the uniform to initialize
 // @return Index of the uniform in the array
 //=============================================
-Int32 CGLSLShader::InitUniform( const Char *szname, uniform_e type, Uint32 elementcount)
+Int32 CGLSLShader::InitUniform( const char *szname, uniform_e type, Uint32 elementcount)
 {
 	for(Uint32 i = 0; i < m_uniformsArray.size(); i++)
 	{
@@ -2597,7 +2595,7 @@ Int32 CGLSLShader::InitUniform( const Char *szname, uniform_e type, Uint32 eleme
 // @param bufferSize size of the UBO
 // @return The index of the UBO entry
 //=============================================
-Int32 CGLSLShader :: InitUniformBufferObject( const Char* pstrName, Uint32 bufferSize )
+Int32 CGLSLShader :: InitUniformBufferObject( const char* pstrName, Uint32 bufferSize )
 {
 	glsl_ubo_t newUBO;
 	newUBO.name = pstrName;
@@ -2736,7 +2734,7 @@ bool CGLSLShader :: VerifyDeterminators ( void )
 
 	// Shader to bind
 	Int32 shaderIndex = NO_POSITION;
-	Char* pvaluesbytes = reinterpret_cast<Char*>(m_pDeterminatorValues);
+	char* pvaluesbytes = reinterpret_cast<char*>(m_pDeterminatorValues);
 	ShaderValuesStringType_t valuestr(pvaluesbytes, m_determinatorArray.size() * sizeof(Int16));
 	if(m_lastIndex == NO_POSITION || valuestr != m_lastQueriedKey)
 	{
@@ -2785,7 +2783,7 @@ bool CGLSLShader :: VerifyDeterminators ( void )
 //=============================================
 // @brief Check sampler uniforms for any overlap
 //
-// @return TRUE if there's no overlap, FALSE otherwise
+// @return true if there's no overlap, false otherwise
 //=============================================
 bool CGLSLShader :: CheckSamplerUniforms( void )
 {
@@ -2832,8 +2830,8 @@ bool CGLSLShader :: CheckSamplerUniforms( void )
 
 			if(uniform1.currentvalues[0] == uniform2.currentvalues[0])
 			{
-				const Char* uniform1TypeName = UNIFORM_TYPENAMES[uniform1.type];
-				const Char* uniform2TypeName = UNIFORM_TYPENAMES[uniform2.type];
+				const char* uniform1TypeName = UNIFORM_TYPENAMES[uniform1.type];
+				const char* uniform2TypeName = UNIFORM_TYPENAMES[uniform2.type];
 
 				m_errorString.clear();
 				m_errorString << "Sampler uniform '" << uniform1.name << "' of type " << uniform1TypeName;
@@ -2935,7 +2933,7 @@ void CGLSLShader :: ShiftOverlappingSamplers( void )
 // @param szname Name of the determinator
 // @return Index of the determinator
 //=============================================
-Int32 CGLSLShader :: GetDeterminatorIndex( const Char *szname )
+Int32 CGLSLShader :: GetDeterminatorIndex( const char *szname )
 {
 	for(Uint32 i = 0; i < m_determinatorArray.size(); i++)
 	{
@@ -3056,7 +3054,7 @@ void CGLSLShader :: ClearTimeCounters( void )
 //
 // @return Cumulative compile time for vertex shaders
 //=============================================
-Double CGLSLShader :: GetTotalVertexShaderCompileTime( void )
+double CGLSLShader :: GetTotalVertexShaderCompileTime( void )
 {
 	return g_vertexShaderCompileTotalDuration;
 }
@@ -3066,7 +3064,7 @@ Double CGLSLShader :: GetTotalVertexShaderCompileTime( void )
 //
 // @return Cumulative status get call time for vertex shaders
 //=============================================
-Double CGLSLShader :: GetTotalVertexShaderGetStatusCallTime( void )
+double CGLSLShader :: GetTotalVertexShaderGetStatusCallTime( void )
 {
 	return g_vertexShaderGetStatusCallTotalDuration;
 }
@@ -3076,7 +3074,7 @@ Double CGLSLShader :: GetTotalVertexShaderGetStatusCallTime( void )
 //
 // @return Cumulative compile time for fragment shaders
 //=============================================
-Double CGLSLShader :: GetTotalFragmentShaderCompileTime( void )
+double CGLSLShader :: GetTotalFragmentShaderCompileTime( void )
 {
 	return g_fragmentShaderCompileTotalDuration;
 }
@@ -3086,7 +3084,7 @@ Double CGLSLShader :: GetTotalFragmentShaderCompileTime( void )
 //
 // @return Cumulative status get call time for fragment shaders
 //=============================================
-Double CGLSLShader :: GetTotalFragmentShaderGetStatusCallTime( void )
+double CGLSLShader :: GetTotalFragmentShaderGetStatusCallTime( void )
 {
 	return g_fragmentShaderGetStatusCallTotalDuration;
 }
@@ -3096,7 +3094,7 @@ Double CGLSLShader :: GetTotalFragmentShaderGetStatusCallTime( void )
 //
 // @return Cumulative link time for shaders
 //=============================================
-Double CGLSLShader :: GetTotalShaderLinkTime( void )
+double CGLSLShader :: GetTotalShaderLinkTime( void )
 {
 	return g_shaderLinkTotalDuration;
 }
@@ -3106,7 +3104,7 @@ Double CGLSLShader :: GetTotalShaderLinkTime( void )
 //
 // @return Cumulative get status call time of shader programs linked total
 //=============================================
-Double CGLSLShader :: GetTotalShaderLinkGetStatusCallTime( void )
+double CGLSLShader :: GetTotalShaderLinkGetStatusCallTime( void )
 {
 	return g_shaderLinkGetStatusCallDuration;
 }

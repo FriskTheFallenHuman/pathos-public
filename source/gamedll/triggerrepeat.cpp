@@ -53,7 +53,7 @@ bool CTriggerRepeat::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerRepeat::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerRepeat::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	SetThink(&CTriggerRepeat::RepeatThink);
 	m_pState->nextthink = g_pGameVars->time + 0.1;

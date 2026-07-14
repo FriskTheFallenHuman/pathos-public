@@ -88,7 +88,7 @@ void CTriggerAutoSave::SaveTouch( CBaseEntity* pOther )
 // @brief
 //
 //=============================================
-void CTriggerAutoSave::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerAutoSave::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// This only works if we are use only
 	if(!HasSpawnFlag(FL_USE_ONLY))

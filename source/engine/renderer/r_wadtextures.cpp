@@ -25,7 +25,7 @@ All Rights Reserved.
 #include "enginestate.h"
 
 // Path to legacy texture material type associations
-const Char CWADTextureResource::TEXTURE_MATERIAL_ASSOCIATION_FILE_PATH[] = "scripts/legacy/materials.txt";
+const char CWADTextureResource::TEXTURE_MATERIAL_ASSOCIATION_FILE_PATH[] = "scripts/legacy/materials.txt";
 
 //=============================================
 // @brief Constructor
@@ -44,7 +44,7 @@ CWADTextureResource::~CWADTextureResource( void )
 {
 	if(!m_detailTexturesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_detailTexturesArray.size(); i++)
+		for(UInt32 i = 0; i < m_detailTexturesArray.size(); i++)
 			delete m_detailTexturesArray[i];
 
 		m_detailTexturesArray.clear();
@@ -52,7 +52,7 @@ CWADTextureResource::~CWADTextureResource( void )
 
 	if(!m_detailTextureAssociationArray.empty())
 	{
-		for(Uint32 i = 0; i < m_detailTextureAssociationArray.size(); i++)
+		for(UInt32 i = 0; i < m_detailTextureAssociationArray.size(); i++)
 			delete m_detailTextureAssociationArray[i];
 
 		m_detailTextureAssociationArray.clear();
@@ -60,7 +60,7 @@ CWADTextureResource::~CWADTextureResource( void )
 
 	if(!m_materialAssociationArray.empty())
 	{
-		for(Uint32 i = 0; i < m_materialAssociationArray.size(); i++)
+		for(UInt32 i = 0; i < m_materialAssociationArray.size(); i++)
 			delete m_materialAssociationArray[i];
 
 		m_materialAssociationArray.clear();
@@ -68,7 +68,7 @@ CWADTextureResource::~CWADTextureResource( void )
 
 	if(!m_materialCodeTypesAssociations.empty())
 	{
-		for(Uint32 i = 0; i < m_materialCodeTypesAssociations.size(); i++)
+		for(UInt32 i = 0; i < m_materialCodeTypesAssociations.size(); i++)
 			delete m_materialCodeTypesAssociations[i];
 
 		m_materialCodeTypesAssociations.clear();
@@ -76,7 +76,7 @@ CWADTextureResource::~CWADTextureResource( void )
 
 	if(!m_pWADFilesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_pWADFilesArray.size(); i++)
+		for(UInt32 i = 0; i < m_pWADFilesArray.size(); i++)
 		{
 			FL_FreeFile(m_pWADFilesArray[i].pwadfile);
 		}
@@ -95,24 +95,24 @@ CWADTextureResource::~CWADTextureResource( void )
 // @brief Destructor
 //
 //=============================================
-bool CWADTextureResource::Init( const Char* pstrBSPName, const CArray<CString>& wadFilesList, bool generateMissingWAD, bool generateMissingBSP )
+bool CWADTextureResource::Init( const char* pstrBSPName, const CArray<CString>& wadFilesList, bool generateMissingWAD, bool generateMissingBSP )
 {
-	Uint32 filesize = 0;
-	const byte* pfile = FL_LoadFile(pstrBSPName, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = FL_LoadFile(pstrBSPName, &filesize);
 	if(!pfile)
 	{
 		Con_WPrintf("Failed to load '%s'.\n", pstrBSPName);
 		return false;
 	}
 
-	// TRUE if we need to load detail textures
+	// true if we need to load detail textures
 	// and material associations from legacy stuff
 	bool generateBSPPMFFiles = false;
 	bool generateWADPMFFiles = false;
 
 	// Create a copy of the BSP data
-	m_pBSPFile = new byte[filesize];
-	memcpy(m_pBSPFile, pfile, sizeof(byte)*filesize);
+	m_pBSPFile = new Byte[filesize];
+	memcpy(m_pBSPFile, pfile, sizeof(Byte)*filesize);
 	FL_FreeFile(pfile);
 
 	// Create map for BSP textures
@@ -125,7 +125,7 @@ bool CWADTextureResource::Init( const Char* pstrBSPName, const CArray<CString>& 
 		if (ptexturelump->dataoffsets[i] == -1)
 			continue;
 
-		const dmiptex_t* pmiptex = reinterpret_cast<const dmiptex_t*>(reinterpret_cast<const byte*>(ptexturelump) + ptexturelump->dataoffsets[i]);
+		const dmiptex_t* pmiptex = reinterpret_cast<const dmiptex_t*>(reinterpret_cast<const Byte*>(ptexturelump) + ptexturelump->dataoffsets[i]);
 		if (!pmiptex->offsets[0])
 			continue;
 
@@ -140,10 +140,10 @@ bool CWADTextureResource::Init( const Char* pstrBSPName, const CArray<CString>& 
 	m_BSPFileName << ".bsp";
 
 	// Now check WAD files if any
-	for(Uint32 i = 0; i < wadFilesList.size(); i++)
+	for(UInt32 i = 0; i < wadFilesList.size(); i++)
 	{
 		// Get basename
-		static Char basename[MAX_PARSE_LENGTH];
+		static char basename[MAX_PARSE_LENGTH];
 		Common::Basename(wadFilesList[i].c_str(), basename);
 
 		// Build wad path
@@ -173,7 +173,7 @@ bool CWADTextureResource::Init( const Char* pstrBSPName, const CArray<CString>& 
 		qstrcpy(wad.wadfilename, wadFilesList[i].c_str());
 		wad.pwadfile = pfile;
 
-		const wad3lumpinfo_t* plumps = reinterpret_cast<const wad3lumpinfo_t*>(reinterpret_cast<const byte*>(pwadinfo) + pwadinfo->infotableofs);
+		const wad3lumpinfo_t* plumps = reinterpret_cast<const wad3lumpinfo_t*>(reinterpret_cast<const Byte*>(pwadinfo) + pwadinfo->infotableofs);
 		for(Int32 j = 0; j < pwadinfo->numlumps; j++)
 		{
 			const wad3lumpinfo_t* plump = &plumps[j];
@@ -210,7 +210,7 @@ bool CWADTextureResource::Init( const Char* pstrBSPName, const CArray<CString>& 
 			if (ptexturelump->dataoffsets[i] == -1)
 				continue;
 
-			const dmiptex_t* pmiptex = reinterpret_cast<const dmiptex_t*>(reinterpret_cast<const byte*>(ptexturelump) + ptexturelump->dataoffsets[i]);
+			const dmiptex_t* pmiptex = reinterpret_cast<const dmiptex_t*>(reinterpret_cast<const Byte*>(ptexturelump) + ptexturelump->dataoffsets[i]);
 			if (!pmiptex->offsets[0])
 				continue;
 
@@ -225,10 +225,10 @@ bool CWADTextureResource::Init( const Char* pstrBSPName, const CArray<CString>& 
 	// Check WADs too
 	if (generateMissingWAD)
 	{
-		for (Uint32 i = 0; i < m_pWADFilesArray.size(); i++)
+		for (UInt32 i = 0; i < m_pWADFilesArray.size(); i++)
 		{
 			const wad3info_t* pwadinfo = reinterpret_cast<const wad3info_t*>(m_pWADFilesArray[i].pwadfile);
-			const wad3lumpinfo_t* plumps = reinterpret_cast<const wad3lumpinfo_t*>(reinterpret_cast<const byte*>(pwadinfo) + pwadinfo->infotableofs);
+			const wad3lumpinfo_t* plumps = reinterpret_cast<const wad3lumpinfo_t*>(reinterpret_cast<const Byte*>(pwadinfo) + pwadinfo->infotableofs);
 
 			for (Int32 j = 0; j < pwadinfo->numlumps; j++)
 			{
@@ -273,7 +273,7 @@ bool CWADTextureResource::Init( const Char* pstrBSPName, const CArray<CString>& 
 				if (ptexturelump->dataoffsets[i] == -1)
 					continue;
 
-				const dmiptex_t* pmiptex = reinterpret_cast<const dmiptex_t*>(reinterpret_cast<const byte*>(ptexturelump) + ptexturelump->dataoffsets[i]);
+				const dmiptex_t* pmiptex = reinterpret_cast<const dmiptex_t*>(reinterpret_cast<const Byte*>(ptexturelump) + ptexturelump->dataoffsets[i]);
 				if (!pmiptex->offsets[0])
 					continue;
 
@@ -286,13 +286,13 @@ bool CWADTextureResource::Init( const Char* pstrBSPName, const CArray<CString>& 
 		// Find also in the WAD files
 		if(generateWADPMFFiles && generateMissingWAD && !m_pWADFilesArray.empty())
 		{
-			for(Uint32 i = 0; i < m_pWADFilesArray.size(); i++)
+			for(UInt32 i = 0; i < m_pWADFilesArray.size(); i++)
 			{
 				if(!m_pWADFilesArray[i].hasmissing)
 					continue;
 
 				const wad3info_t* pwadinfo = reinterpret_cast<const wad3info_t*>(m_pWADFilesArray[i].pwadfile);
-				const wad3lumpinfo_t* plumps = reinterpret_cast<const wad3lumpinfo_t*>(reinterpret_cast<const byte*>(pwadinfo) + pwadinfo->infotableofs);
+				const wad3lumpinfo_t* plumps = reinterpret_cast<const wad3lumpinfo_t*>(reinterpret_cast<const Byte*>(pwadinfo) + pwadinfo->infotableofs);
 
 				for(Int32 j = 0; j < pwadinfo->numlumps; j++)
 				{
@@ -300,7 +300,7 @@ bool CWADTextureResource::Init( const Char* pstrBSPName, const CArray<CString>& 
 					if(plump->type != 0 && !(plump->type & 0x43))
 						continue;
 
-					static Char wadbasename[MAX_PARSE_LENGTH];
+					static char wadbasename[MAX_PARSE_LENGTH];
 					Common::Basename(m_pWADFilesArray[i].wadfilename, wadbasename);
 					strcat(wadbasename, WAD_FILE_EXTENSION);
 
@@ -377,8 +377,8 @@ const dmiptexlump_t* CWADTextureResource::GetBSPTextureData( void )
 bool CWADTextureResource::LoadMaterialTypeCodeAssociations( void )
 {
 	// Load texture material type associations
-	Uint32 filesize = 0;
-	const byte* pfile = FL_LoadFile(MATERIAL_TYPES_FILE_PATH, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = FL_LoadFile(MATERIAL_TYPES_FILE_PATH, &filesize);
 	if(!pfile)
 	{
 		Con_WPrintf("Failed to load '%s'.\n", MATERIAL_TYPES_FILE_PATH);
@@ -386,11 +386,11 @@ bool CWADTextureResource::LoadMaterialTypeCodeAssociations( void )
 	}
 
 	// Reset line count
-	Uint32 linecount = 0;
-	static Char line[MAX_LINE_LENGTH];
+	UInt32 linecount = 0;
+	static char line[MAX_LINE_LENGTH];
 
 	// Read the contents
-	const Char* pstr = reinterpret_cast<const Char*>(pfile);
+	const char* pstr = reinterpret_cast<const char*>(pfile);
 	while(pstr)
 	{
 		linecount++;
@@ -401,8 +401,8 @@ bool CWADTextureResource::LoadMaterialTypeCodeAssociations( void )
 			continue;
 
 		// Read in the map texture name token
-		static Char materialcode[MAX_PARSE_LENGTH];
-		const Char* plinestr = Common::Parse(line, materialcode);
+		static char materialcode[MAX_PARSE_LENGTH];
+		const char* plinestr = Common::Parse(line, materialcode);
 		if(!plinestr)
 		{
 			Con_Printf("%s - Unexpected end of line %d in '%s'.\n", __FUNCTION__, linecount, MATERIAL_TYPES_FILE_PATH);
@@ -410,7 +410,7 @@ bool CWADTextureResource::LoadMaterialTypeCodeAssociations( void )
 		}
 
 		// Read in the detail texture name token
-		static Char materialname[MAX_PARSE_LENGTH];
+		static char materialname[MAX_PARSE_LENGTH];
 		plinestr = Common::Parse(plinestr, materialname);
 		if(!qstrlen(materialname))
 		{
@@ -437,8 +437,8 @@ bool CWADTextureResource::LoadMaterialTypeCodeAssociations( void )
 bool CWADTextureResource::LoadMaterialTextureAssociations( void )
 {
 	// Load texture material type associations
-	Uint32 filesize = 0;
-	const byte* pfile = FL_LoadFile(TEXTURE_MATERIAL_ASSOCIATION_FILE_PATH, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = FL_LoadFile(TEXTURE_MATERIAL_ASSOCIATION_FILE_PATH, &filesize);
 	if(!pfile)
 	{
 		Con_WPrintf("Failed to load '%s'.\n", TEXTURE_MATERIAL_ASSOCIATION_FILE_PATH);
@@ -446,17 +446,17 @@ bool CWADTextureResource::LoadMaterialTextureAssociations( void )
 	}
 
 	// Reset line count
-	static Char line[MAX_LINE_LENGTH];
+	static char line[MAX_LINE_LENGTH];
 
 	// Count the number of lines
-	Uint32 linecount = Common::GetFileLineCount(reinterpret_cast<const Char*>(pfile));
+	UInt32 linecount = Common::GetFileLineCount(reinterpret_cast<const char*>(pfile));
 
 	// For faster load
 	m_materialAssociationArray.reserve(linecount);
 	linecount = 0;
 
 	// Read the contents
-	const Char* pstr = reinterpret_cast<const Char*>(pfile);
+	const char* pstr = reinterpret_cast<const char*>(pfile);
 	while(pstr)
 	{
 		linecount++;
@@ -467,8 +467,8 @@ bool CWADTextureResource::LoadMaterialTextureAssociations( void )
 			continue;
 
 		// Read in the map texture name token
-		static Char materialtype[MAX_PARSE_LENGTH];
-		const Char* plinestr = Common::Parse(line, materialtype);
+		static char materialtype[MAX_PARSE_LENGTH];
+		const char* plinestr = Common::Parse(line, materialtype);
 		if(!plinestr)
 		{
 			Con_Printf("%s - Unexpected end of line %d in '%s'.\n", __FUNCTION__, linecount, TEXTURE_MATERIAL_ASSOCIATION_FILE_PATH);
@@ -476,7 +476,7 @@ bool CWADTextureResource::LoadMaterialTextureAssociations( void )
 		}
 
 		// Read in the detail texture name token
-		static Char maptexturename[MAX_PARSE_LENGTH];
+		static char maptexturename[MAX_PARSE_LENGTH];
 		plinestr = Common::Parse(plinestr, maptexturename);
 		if(!qstrlen(maptexturename))
 		{
@@ -504,13 +504,13 @@ bool CWADTextureResource::LoadMaterialTextureAssociations( void )
 // @brief Destructor
 //
 //=============================================
-bool CWADTextureResource::IsMaterialScriptPresent( const Char* pstrTextureName, const Char* pstrContainerName )
+bool CWADTextureResource::IsMaterialScriptPresent( const char* pstrTextureName, const char* pstrContainerName )
 {
-	static Char basename[MAX_PARSE_LENGTH];
+	static char basename[MAX_PARSE_LENGTH];
 	Common::Basename(pstrContainerName, basename);
 
 	// Build file path
-	static Char filepath[MAX_PARSE_LENGTH];
+	static char filepath[MAX_PARSE_LENGTH];
 	sprintf(filepath, "%s%s/%s%s", WORLD_TEXTURES_BASE_PATH, basename, pstrTextureName, PMF_FORMAT_EXTENSION);
 
 	return FL_FileExists(filepath);
@@ -520,7 +520,7 @@ bool CWADTextureResource::IsMaterialScriptPresent( const Char* pstrTextureName, 
 // @brief Destructor
 //
 //=============================================
-void CWADTextureResource::CreateMaterialScript( const dmiptex_t* ptexture, const Char* pstrContainerName )
+void CWADTextureResource::CreateMaterialScript( const dmiptex_t* ptexture, const char* pstrContainerName )
 {
 	// Convert name to lowercase
 	CString texturename(ptexture->name);
@@ -532,7 +532,7 @@ void CWADTextureResource::CreateMaterialScript( const dmiptex_t* ptexture, const
 
 	// Check if we have detail textures for this
 	detail_association_t* pdetailassoc = nullptr;
-	for(Uint32 i = 0; i < m_detailTextureAssociationArray.size(); i++)
+	for(UInt32 i = 0; i < m_detailTextureAssociationArray.size(); i++)
 	{
 		if(!qstrcmp(m_detailTextureAssociationArray[i]->maptexturename, texturename))
 		{
@@ -548,8 +548,8 @@ void CWADTextureResource::CreateMaterialScript( const dmiptex_t* ptexture, const
 	if(pdetailassoc)
 	{
 		detailtexture_t* pdetail = m_detailTexturesArray[pdetailassoc->detailtextureidx];
-		Float detailxscale = (static_cast<Float>(ptexture->width)/256.0)*(128.0/(static_cast<float>(pdetail->width))*12.0);
-		Float detailyscale = (static_cast<Float>(ptexture->height)/256.0)*(128.0/(static_cast<float>(pdetail->height))*12.0);
+		float detailxscale = (static_cast<float>(ptexture->width)/256.0)*(128.0/(static_cast<float>(pdetail->width))*12.0);
+		float detailyscale = (static_cast<float>(ptexture->height)/256.0)*(128.0/(static_cast<float>(pdetail->height))*12.0);
 
 		data << "\t$dt_scalex " << detailxscale << NEWLINE;
 		data << "\t$dt_scaley " << detailyscale << NEWLINE;
@@ -570,14 +570,14 @@ void CWADTextureResource::CreateMaterialScript( const dmiptex_t* ptexture, const
 
 	// Find material type
 	CString materialtype = "concrete";
-	for(Uint32 i = 0; i < m_materialAssociationArray.size(); i++)
+	for(UInt32 i = 0; i < m_materialAssociationArray.size(); i++)
 	{
 		if(!qstrcmp(m_materialAssociationArray[i]->maptexturename, texturematname))
 		{
 			material_association_t& matassoc = *m_materialAssociationArray[i];
 
 			// Find the material type based on code
-			for(Uint32 j = 0; j < m_materialCodeTypesAssociations.size(); j++)
+			for(UInt32 j = 0; j < m_materialCodeTypesAssociations.size(); j++)
 			{
 				if(m_materialCodeTypesAssociations[j]->materialcode == matassoc.materialtypecode)
 				{
@@ -626,7 +626,7 @@ void CWADTextureResource::CreateMaterialScript( const dmiptex_t* ptexture, const
 
 	Con_VPrintf("Generating material script '%s'.\n", filepath.c_str());
 
-	const byte* pwritedata = reinterpret_cast<const byte*>(data.c_str());
+	const Byte* pwritedata = reinterpret_cast<const Byte*>(data.c_str());
 	if(!FL_WriteFile(pwritedata, data.length(), filepath.c_str()))
 		Con_WPrintf("Failed to write '%s'.\n", filepath.c_str());
 }
@@ -635,7 +635,7 @@ void CWADTextureResource::CreateMaterialScript( const dmiptex_t* ptexture, const
 // @brief Destructor
 //
 //=============================================
-en_texture_t* CWADTextureResource::GetWADTexture( en_material_t* pmaterial, const Char* pstrContainerName, const Char* pstrTextureName )
+en_texture_t* CWADTextureResource::GetWADTexture( en_material_t* pmaterial, const char* pstrContainerName, const char* pstrTextureName )
 {
 	CString bsptexturename(pstrTextureName);
 	bsptexturename.tolower();
@@ -653,12 +653,12 @@ en_texture_t* CWADTextureResource::GetWADTexture( en_material_t* pmaterial, cons
 		NameIndexMap_t::iterator it = m_bspTextureNameIndexMap.find(pstrTextureName);
 		if(it != m_bspTextureNameIndexMap.end())
 		{
-			const dmiptex_t* pmiptex = reinterpret_cast<const dmiptex_t*>(reinterpret_cast<const byte*>(ptexturelump) + ptexturelump->dataoffsets[it->second]);
+			const dmiptex_t* pmiptex = reinterpret_cast<const dmiptex_t*>(reinterpret_cast<const Byte*>(ptexturelump) + ptexturelump->dataoffsets[it->second]);
 			if(pmiptex->offsets[0])
 			{
-				Uint32 texturesize = pmiptex->height*pmiptex->width;
-				Uint32 paletteoffs = texturesize + (texturesize/4) + (texturesize/16) + (texturesize/64);
-				const byte *pcolorindexes = reinterpret_cast<const byte*>(pmiptex) + pmiptex->offsets[0];
+				UInt32 texturesize = pmiptex->height*pmiptex->width;
+				UInt32 paletteoffs = texturesize + (texturesize/4) + (texturesize/16) + (texturesize/64);
+				const Byte *pcolorindexes = reinterpret_cast<const Byte*>(pmiptex) + pmiptex->offsets[0];
 				const color24_t *ppalette = reinterpret_cast<const color24_t*>(pcolorindexes + paletteoffs + 2);
 
 				en_texture_t* ptexture = pTextureManager->LoadPallettedTexture(pstrTextureName, RS_GAME_LEVEL, pcolorindexes, ppalette, pmiptex->width, pmiptex->height, pmaterial->flags);
@@ -671,13 +671,13 @@ en_texture_t* CWADTextureResource::GetWADTexture( en_material_t* pmaterial, cons
 		return pTextureManager->GetDummyTexture();
 	}
 
-	for(Uint32 i = 0; i < m_pWADFilesArray.size(); i++)
+	for(UInt32 i = 0; i < m_pWADFilesArray.size(); i++)
 	{
 		if(qstrcmp(pstrContainerName, m_pWADFilesArray[i].wadfilename))
 			continue;
 
 		const wad3info_t* pwadinfo = reinterpret_cast<const wad3info_t*>(m_pWADFilesArray[i].pwadfile);
-		const wad3lumpinfo_t* plumps = reinterpret_cast<const wad3lumpinfo_t*>(reinterpret_cast<const byte*>(pwadinfo) + pwadinfo->infotableofs);
+		const wad3lumpinfo_t* plumps = reinterpret_cast<const wad3lumpinfo_t*>(reinterpret_cast<const Byte*>(pwadinfo) + pwadinfo->infotableofs);
 
 		NameIndexMap_t::iterator it = m_pWADFilesArray[i].texturenameindexmap.find(pstrTextureName);
 		if(it != m_pWADFilesArray[i].texturenameindexmap.end())
@@ -690,9 +690,9 @@ en_texture_t* CWADTextureResource::GetWADTexture( en_material_t* pmaterial, cons
 			if(!pmiptex->offsets[0])
 				continue;
 
-			Uint32 texturesize = pmiptex->height*pmiptex->width;
-			Uint32 paletteoffs = texturesize + (texturesize/4) + (texturesize/16) + (texturesize/64);
-			const byte *pcolorindexes = reinterpret_cast<const byte*>(pmiptex) + pmiptex->offsets[0];
+			UInt32 texturesize = pmiptex->height*pmiptex->width;
+			UInt32 paletteoffs = texturesize + (texturesize/4) + (texturesize/16) + (texturesize/64);
+			const Byte *pcolorindexes = reinterpret_cast<const Byte*>(pmiptex) + pmiptex->offsets[0];
 			const color24_t *ppalette = reinterpret_cast<const color24_t*>(pcolorindexes + paletteoffs + 2);
 
 			en_texture_t* ptexture = pTextureManager->LoadPallettedTexture(pstrTextureName, RS_GAME_LEVEL, pcolorindexes, ppalette, pmiptex->width, pmiptex->height, pmaterial->flags);
@@ -712,8 +712,8 @@ en_texture_t* CWADTextureResource::GetWADTexture( en_material_t* pmaterial, cons
 bool WAD_LoadDetailTextureAssociations( CArray<detailtexture_t*>& detailtextures, CArray<detail_association_t*>& associations )
 {
 	// Load detail texture associations
-	Uint32 filesize = 0;
-	const byte* pfile = FL_LoadFile(DETAIL_TEXTURE_ASSOCIATION_FILE_PATH, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = FL_LoadFile(DETAIL_TEXTURE_ASSOCIATION_FILE_PATH, &filesize);
 	if(!pfile)
 	{
 		Con_WPrintf("Failed to load '%s'.\n", DETAIL_TEXTURE_ASSOCIATION_FILE_PATH);
@@ -723,15 +723,15 @@ bool WAD_LoadDetailTextureAssociations( CArray<detailtexture_t*>& detailtextures
 	CTextureManager* pTextureManager = CTextureManager::GetInstance();
 
 	// Count the number of lines
-	static Char line[MAX_LINE_LENGTH];
-	Uint32 linecount = Common::GetFileLineCount(reinterpret_cast<const Char*>(pfile));
+	static char line[MAX_LINE_LENGTH];
+	UInt32 linecount = Common::GetFileLineCount(reinterpret_cast<const char*>(pfile));
 
 	associations.reserve(linecount);
 	detailtextures.reserve(linecount);
 	linecount = 0;
 
 	// Read the contents
-	const Char* pstr = reinterpret_cast<const Char*>(pfile);
+	const char* pstr = reinterpret_cast<const char*>(pfile);
 	while(pstr)
 	{
 		linecount++;
@@ -742,8 +742,8 @@ bool WAD_LoadDetailTextureAssociations( CArray<detailtexture_t*>& detailtextures
 			continue;
 
 		// Read in the map texture name token
-		static Char maptexturename[MAX_PARSE_LENGTH];
-		const Char* plinestr = Common::Parse(line, maptexturename);
+		static char maptexturename[MAX_PARSE_LENGTH];
+		const char* plinestr = Common::Parse(line, maptexturename);
 		if(!plinestr)
 		{
 			Con_Printf("%s - Unexpected end of line %d in '%s'.\n", __FUNCTION__, linecount, DETAIL_TEXTURE_ASSOCIATION_FILE_PATH);
@@ -751,7 +751,7 @@ bool WAD_LoadDetailTextureAssociations( CArray<detailtexture_t*>& detailtextures
 		}
 
 		// Read in the detail texture name token
-		static Char detailtexturename[MAX_PARSE_LENGTH];
+		static char detailtexturename[MAX_PARSE_LENGTH];
 		plinestr = Common::Parse(plinestr, detailtexturename);
 		if(!qstrlen(maptexturename))
 		{
@@ -774,7 +774,7 @@ bool WAD_LoadDetailTextureAssociations( CArray<detailtexture_t*>& detailtextures
 		}
 
 		Int32 detailtexindex = -1;
-		for(Uint32 i = 0; i < detailtextures.size(); i++)
+		for(UInt32 i = 0; i < detailtextures.size(); i++)
 		{
 			if(!qstrcmp(detailtextures[i]->filename, filepath))
 				detailtexindex = i;
@@ -812,7 +812,7 @@ bool WAD_LoadDetailTextureAssociations( CArray<detailtexture_t*>& detailtextures
 // @brief
 //
 //=============================================
-CString WAD_GetWADFolderPath( const Char* pstrContainerName, const Char* pstrBasePath )
+CString WAD_GetWADFolderPath( const char* pstrContainerName, const char* pstrBasePath )
 {
 	// Build folder path
 	CString basename;
@@ -830,7 +830,7 @@ CString WAD_GetWADFolderPath( const Char* pstrContainerName, const Char* pstrBas
 // @brief
 //
 //=============================================
-CString WAD_GetWADTexturePath( const Char* pstrFolderName, const Char* pstrWorldTextureName )
+CString WAD_GetWADTexturePath( const char* pstrFolderName, const char* pstrWorldTextureName )
 {
 	// Create the PMF file
 	CString filepath;

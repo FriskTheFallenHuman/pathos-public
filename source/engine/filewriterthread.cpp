@@ -27,7 +27,7 @@ void FWT_Init( void )
 	InitializeCriticalSection(&g_fileThreadData.criticalsection);
 	InitializeConditionVariable(&g_fileThreadData.condition);
 
-	g_fileThreadData.exitevent = CreateEvent(nullptr, TRUE, FALSE, nullptr);
+	g_fileThreadData.exitevent = CreateEvent(nullptr, true, false, nullptr);
 	if(!g_fileThreadData.exitevent)
 	{
 		Con_Printf("Failed to initialize file writer thread.\n");
@@ -65,7 +65,7 @@ void FWT_Shutdown( void )
 // @brief
 //
 //=============================================
-bool FWT_AddFile( const Char* pstrFilename, const byte* pData, Uint32 dataSize, bool incremental, bool prompt, bool append )
+bool FWT_AddFile( const char* pstrFilename, const Byte* pData, UInt32 dataSize, bool incremental, bool prompt, bool append )
 {
 	if(!g_fileThreadData.available)
 		return false;
@@ -79,8 +79,8 @@ bool FWT_AddFile( const Char* pstrFilename, const byte* pData, Uint32 dataSize, 
 	threadfile_t* pnew = new threadfile_t();
 
 	// Copy data
-	pnew->pdata = new byte[dataSize];
-	memcpy(pnew->pdata, pData, sizeof(byte)*dataSize);
+	pnew->pdata = new Byte[dataSize];
+	memcpy(pnew->pdata, pData, sizeof(Byte)*dataSize);
 
 	pnew->datasize = dataSize;
 	pnew->incremental = incremental;
@@ -134,7 +134,7 @@ DWORD WINAPI FileWriterThread( LPVOID lpParam )
 				}
 				else
 				{
-					Uint32 i = 0;
+					UInt32 i = 0;
 					while(true)
 					{
 						// Build new name
@@ -198,13 +198,13 @@ DWORD WINAPI FileWriterThread( LPVOID lpParam )
 // @param fmt String describing the format
 // @param ... Additional format input parameters
 //=============================================
-void FWT_Con_Printf( writerthread_t* pThreadData, const Char *fmt, ... )
+void FWT_Con_Printf( writerthread_t* pThreadData, const char *fmt, ... )
 {
 	va_list	vArgPtr;
-	static Char cMsg[PRINT_MSG_BUFFER_SIZE];
+	static char cMsg[PRINT_MSG_BUFFER_SIZE];
 	
 	va_start(vArgPtr,fmt);
-	vsprintf_s(cMsg, fmt, vArgPtr);
+	ENGINE_VSPRINTF_S(cMsg, sizeof(cMsg), fmt, vArgPtr);
 	va_end(vArgPtr);
 
 	// Enter critical section

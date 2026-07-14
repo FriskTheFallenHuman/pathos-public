@@ -50,17 +50,17 @@ public:
 
 public:
 	// Number of slots
-	static const Uint32 NUM_SLOTS;
+	static const UInt32 NUM_SLOTS;
 	// Search radius for squad members to recruit
-	static const Float SQUADINIT_SEARCH_RADIUS;
+	static const float SQUADINIT_SEARCH_RADIUS;
 	// Radius to check for cover validation
-	static const Float COVER_VALIDATE_RADIUS;
+	static const float COVER_VALIDATE_RADIUS;
 	// Elude time for enemies
-	static const Float ENEMY_ELUDE_TIME;
+	static const float ENEMY_ELUDE_TIME;
 
 public:
 	// Maximum number of squad members
-	static const Uint32 MAX_SQUAD_MEMBERS = 32;
+	static const UInt32 MAX_SQUAD_MEMBERS = 32;
 
 public:
 	explicit CSquadNPC( edict_t* pedict );
@@ -88,9 +88,9 @@ public:
 	// Returns the squad leader
 	virtual CBaseEntity* GetSquadLeader( void ) override;
 	// Returns the squad slots
-	virtual Uint64 GetSquadSlots( void ) override;
+	virtual UInt64 GetSquadSlots( void ) override;
 	// Returns the squad slots
-	virtual void SetSquadSlots( Uint64 squadSlots ) override;
+	virtual void SetSquadSlots( UInt64 squadSlots ) override;
 	// Removes a squad member
 	virtual void RemoveNPCFromSquad( CBaseEntity* pRemoveNPC ) override;
 	// Sets the squad leader
@@ -102,7 +102,7 @@ public:
 	// Tells whether the enemy has eluded us
 	virtual bool HasEnemyEluded( void ) override;
 	// Returns the squad leader
-	virtual CBaseEntity* GetSquadMember( Uint32 index ) override;
+	virtual CBaseEntity* GetSquadMember( UInt32 index ) override;
 	// Tells if the NPC is of squadNPC type
 	virtual bool IsSquadNPC( void ) const override { return true; }
 	// Tells if this npc is the leader
@@ -118,15 +118,15 @@ public:
 	// Vacates the slot occupied by this NPC
 	void VacateSlot( void );
 	// Tells if we can occupy a given slot, and occupies if possible
-	bool OccupySlot( Uint64 desiredSlots );
+	bool OccupySlot( UInt64 desiredSlots );
 
 	// Tells if the NPC is in a squad
 	bool IsInSquad( void ) const;
 
 	// Tries to recruit any squad members
-	Uint32 SquadRecruit( Float searchRadius, Uint32 maxMembers );
+	UInt32 SquadRecruit( float searchRadius, UInt32 maxMembers );
 	// Returns the number of squad members
-	Uint32 GetNbSquadMembers( void );
+	UInt32 GetNbSquadMembers( void );
 	// Sets the enemy for squad members
 	void SetSquadEnemy( CBaseEntity* pEnemy );
 	// Pastes enemy info to other squad members
@@ -136,11 +136,11 @@ public:
 	// Splits enemies to squad members
 	bool IsSquadSplitOnEnemies( void );
 	// Tells if a squad member is in range
-	bool IsSquadMemberInRange( const Vector& position, Float distance );
+	bool IsSquadMemberInRange( const Vector& position, float distance );
 	// Tells if any squad members see us
 	bool IsVisibleBySquadMembers( void );
 	// Tells if we can toss a grenade
-	bool CheckGrenadeToss( Double& nextGrenadeCheckTime, bool &tossGrenade, Vector& grenadeTossVelocity );
+	bool CheckGrenadeToss( double& nextGrenadeCheckTime, bool &tossGrenade, Vector& grenadeTossVelocity );
 
 protected:
 	// Squad leader NPC
@@ -149,12 +149,12 @@ protected:
 	CEntityHandle	m_squadMembers[MAX_SQUAD_MEMBERS-1];
 
 	// Squad slots
-	Uint64			m_squadSlots;
-	// TRUE if enemy eluded us
+	UInt64			m_squadSlots;
+	// true if enemy eluded us
 	bool			m_enemyEluded;
 
 	// The squad NPC's slot
-	Uint64			m_mySlot;
+	UInt64			m_mySlot;
 	// True if we signalled suppressing fire
 	bool			m_signalledSuppressingFire;
 };

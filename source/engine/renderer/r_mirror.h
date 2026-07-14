@@ -37,10 +37,10 @@ struct cl_mirror_t
 	Vector origin;
 	msurface_t *psurface;
 
-	Uint32 start_vertex;
-	Uint32 num_vertexes;
+	UInt32 start_vertex;
+	UInt32 num_vertexes;
 
-	Uint32 renderpassidx;
+	UInt32 renderpassidx;
 
 	fbobind_t *pfbo;
 	en_texalloc_t *ptexture;
@@ -55,7 +55,7 @@ struct mirror_vertex_t
 	}
 
 	vec4_t origin;
-	byte padding[16];
+	Byte padding[16];
 };
 
 struct mirror_attribs
@@ -102,9 +102,9 @@ class CMirrorManager
 {
 public:
 	// Mirror FBO resolution
-	static const Uint32 MIRROR_FBO_SIZE;
+	static const UInt32 MIRROR_FBO_SIZE;
 	// Mirror render-to-texture resolution
-	static const Uint32 MIRROR_RTT_SIZE;
+	static const UInt32 MIRROR_RTT_SIZE;
 
 public:
 	CMirrorManager( void );

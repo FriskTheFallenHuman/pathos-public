@@ -37,7 +37,7 @@ public:
 	virtual void InitEntity( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual Int32 GetEntityFlags( void ) override { return CAnimatingEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION; }
 
 protected:

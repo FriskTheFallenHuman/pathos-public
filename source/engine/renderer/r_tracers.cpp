@@ -28,9 +28,9 @@ All Rights Reserved.
 //
 
 // Allocation size for tracers
-const Uint32 CTracerRenderer::TRACER_ALLOC_SIZE = 256;
+const UInt32 CTracerRenderer::TRACER_ALLOC_SIZE = 256;
 // Tracer texture file path
-const Char CTracerRenderer::TRACER_TEXTURE_PATH[] = "general/tracer.dds";
+const char CTracerRenderer::TRACER_TEXTURE_PATH[] = "general/tracer.dds";
 
 // Object declaration
 CTracerRenderer gTracers;
@@ -105,7 +105,7 @@ void CTracerRenderer::ClearGame( void )
 
 	if(!m_pTracerAllocationBlocksArray.empty())
 	{
-		for(Uint32 i = 0; i < m_pTracerAllocationBlocksArray.size(); i++)
+		for(UInt32 i = 0; i < m_pTracerAllocationBlocksArray.size(); i++)
 			delete[] m_pTracerAllocationBlocksArray[i];
 
 		m_pTracerAllocationBlocksArray.clear();
@@ -173,16 +173,16 @@ bool CTracerRenderer::DrawTracers( void )
 	Math::VectorScale(right, 1.5, right);
 	Math::VectorScale(up, 1.5, up);
 
-	Uint32 nbVertexes = 0;
+	UInt32 nbVertexes = 0;
 	tracer_t* pnext = m_pActiveTracersHeader;
 	while(pnext)
 	{
-		Float attenuation = pnext->die - rns.time;
+		float attenuation = pnext->die - rns.time;
 		if(attenuation > 0.1)
 			attenuation = 0.1;
 
 		Vector orgvel;
-		Float scale = attenuation * pnext->length;
+		float scale = attenuation * pnext->length;
 		Math::VectorMA(pnext->origin, scale, pnext->velocity, orgvel);
 
 		Vector start = pnext->origin;
@@ -191,7 +191,7 @@ bool CTracerRenderer::DrawTracers( void )
 		// Calc mins maxs
 		Vector mins(NULL_MINS);
 		Vector maxs(NULL_MAXS);
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			if(start[i] < mins[i])
 				mins[i] = start[i];
@@ -296,11 +296,11 @@ void CTracerRenderer::Update( void )
 		return;
 
 	// Fetch and determine gravity
-	Float gravity = m_pCvarGravity->GetValue();
+	float gravity = m_pCvarGravity->GetValue();
 	gravity *= cls.frametime;
 
 	// Determine velocity
-	Float scale = 1.0 - cls.frametime * 0.9;
+	float scale = 1.0 - cls.frametime * 0.9;
 	if(scale < 0)
 		scale = 0;
 
@@ -351,7 +351,7 @@ void CTracerRenderer::Update( void )
 //====================================
 //
 //====================================
-tracer_t* CTracerRenderer::CreateTracer( const Vector& origin, const Vector& velocity, const Vector& color, Float alpha, Float width, Float length, Float life, tracer_type_t type )
+tracer_t* CTracerRenderer::CreateTracer( const Vector& origin, const Vector& velocity, const Vector& color, float alpha, float width, float length, float life, tracer_type_t type )
 {
 	tracer_t* pnew = AllocTracer();
 	pnew->origin = origin;
@@ -370,14 +370,14 @@ tracer_t* CTracerRenderer::CreateTracer( const Vector& origin, const Vector& vel
 //====================================
 //
 //====================================
-void CTracerRenderer::CreateImplosionEffect( const Vector& destination, Float radius, Uint32 count, Float life, const Vector& color, Float alpha, Float width, Float length, bool reverse )
+void CTracerRenderer::CreateImplosionEffect( const Vector& destination, float radius, UInt32 count, float life, const Vector& color, float alpha, float width, float length, bool reverse )
 {
-	Float velscale = (-1.0f / life);
+	float velscale = (-1.0f / life);
 
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
 		Vector tmp;
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			tmp[j] = Common::RandomFloat((j == 2) ? 0 : -100.0f, 100.0f) * (radius/100.0f);
 
 		Vector origin;
@@ -402,15 +402,15 @@ void CTracerRenderer::CreateImplosionEffect( const Vector& destination, Float ra
 //====================================
 //
 //====================================
-void CTracerRenderer::CreateSparkStreak( const Vector& origin, Uint32 count, const Vector& color, Float alpha, Float width, Float length, Float minLifetime, Float maxLifetime, Float minVelocity, Float maxVelocity )
+void CTracerRenderer::CreateSparkStreak( const Vector& origin, UInt32 count, const Vector& color, float alpha, float width, float length, float minLifetime, float maxLifetime, float minVelocity, float maxVelocity )
 {
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
 		Vector velocity;
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			velocity[j] = Common::RandomFloat(minVelocity, maxVelocity);
 
-		Float life = maxLifetime > minLifetime ? Common::RandomFloat(minLifetime, maxLifetime) : minLifetime;
+		float life = maxLifetime > minLifetime ? Common::RandomFloat(minLifetime, maxLifetime) : minLifetime;
 		tracer_t* pnew = CreateTracer(origin, velocity, color, alpha, width, length, life, TRACER_SLOW_GRAVITY);
 		if(!pnew)
 			return;
@@ -419,16 +419,16 @@ void CTracerRenderer::CreateSparkStreak( const Vector& origin, Uint32 count, con
 //====================================
 //
 //====================================
-void CTracerRenderer::CreateStreakSplash( const Vector& origin, const Vector& direction, const Vector& color, Float alpha, Float width, Float length, Uint32 count, Float speed, Float minLifetime, Float maxLifetime, Float minVelocity, Float maxVelocity )
+void CTracerRenderer::CreateStreakSplash( const Vector& origin, const Vector& direction, const Vector& color, float alpha, float width, float length, UInt32 count, float speed, float minLifetime, float maxLifetime, float minVelocity, float maxVelocity )
 {
 	Vector initialVelocity = direction * speed;
-	for(Uint32 i = 0; i < count; i++)
+	for(UInt32 i = 0; i < count; i++)
 	{
 		Vector velocity;
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			velocity[j] = initialVelocity[j] + Common::RandomFloat(minVelocity, maxVelocity);
 
-		Float life = maxLifetime > minLifetime ? Common::RandomFloat(minLifetime, maxLifetime) : minLifetime;
+		float life = maxLifetime > minLifetime ? Common::RandomFloat(minLifetime, maxLifetime) : minLifetime;
 		tracer_t* pnew = CreateTracer(origin, velocity, color, alpha, width, length, life, TRACER_GRAVITY);
 		if(!pnew)
 			return;
@@ -444,7 +444,7 @@ void CTracerRenderer::AllocTracers( void )
 	m_pTracerAllocationBlocksArray.push_back(pnewblock);
 
 	// Allocate particles
-	for(Uint32 i = 0; i < TRACER_ALLOC_SIZE; i++)
+	for(UInt32 i = 0; i < TRACER_ALLOC_SIZE; i++)
 	{
 		tracer_t* pnew = &pnewblock[i];
 

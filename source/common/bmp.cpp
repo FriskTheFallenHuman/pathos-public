@@ -28,9 +28,9 @@ All Rights Reserved.
 // @param size Output size parameter
 // @param compression Output compression parameter
 // @param pfnPrintFn Pointer to print function to use
-// @return TRUE on success, FALSE on failure
+// @return true on success, false on failure
 //=============================================
-bool BMP_Load( const char* pstrFilename, const byte* pfile, byte*& pdata, Uint32& width, Uint32& height, Uint32& bpp, Uint32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn ) 
+bool BMP_Load( const char* pstrFilename, const Byte* pfile, Byte*& pdata, UInt32& width, UInt32& height, UInt32& bpp, UInt32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn ) 
 {
     const bmp_header_t* ptrBmpHeader = reinterpret_cast<const bmp_header_t*>(pfile);
     if (ptrBmpHeader->magic != BMP_MAGIC_NUMBER)
@@ -50,16 +50,16 @@ bool BMP_Load( const char* pstrFilename, const byte* pfile, byte*& pdata, Uint32
         return false;
     }
 
-    Uint32 pxsize = width * height;
+    UInt32 pxsize = width * height;
     bpp = ptrBmpHeader->bits_per_pixel;
-    pdata = new byte[pxsize * 4]; // Always RGBA
+    pdata = new Byte[pxsize * 4]; // Always RGBA
 
     if (bpp == 24) 
     {
-        for (Uint32 i = 0; i < pxsize; i++) 
+        for (UInt32 i = 0; i < pxsize; i++) 
         {
-            const byte* psrc = pfile + ptrBmpHeader->data_offset + i * 3;
-            byte *pdest = pdata + i * 4;
+            const Byte* psrc = pfile + ptrBmpHeader->data_offset + i * 3;
+            Byte *pdest = pdata + i * 4;
 
             pdest[0] = psrc[2];
             pdest[1] = psrc[1];
@@ -69,10 +69,10 @@ bool BMP_Load( const char* pstrFilename, const byte* pfile, byte*& pdata, Uint32
     }
     else if (bpp == 32) 
     {
-        for (Uint32 i = 0; i < size; i++) 
+        for (UInt32 i = 0; i < size; i++) 
         {
-            const byte* psrc = pfile + ptrBmpHeader->data_offset + i * 4;
-            byte *pdest = pdata + i * 4;
+            const Byte* psrc = pfile + ptrBmpHeader->data_offset + i * 4;
+            Byte *pdest = pdata + i * 4;
 
             pdest[0] = psrc[2];
             pdest[1] = psrc[1];
@@ -106,9 +106,9 @@ bool BMP_Load( const char* pstrFilename, const byte* pfile, byte*& pdata, Uint32
 // @param size Output size parameter
 // @param compression Output compression parameter
 // @param pfnPrintFn Pointer to print function to use
-// @return TRUE on success, FALSE on failure
+// @return true on success, false on failure
 //=============================================
-bool BMP_Load8Bit_Original(const char* pstrFilename, const byte* pfile, byte*& ppalette, byte*& pdata, Uint32& width, Uint32& height, Uint32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn)
+bool BMP_Load8Bit_Original(const char* pstrFilename, const Byte* pfile, Byte*& ppalette, Byte*& pdata, UInt32& width, UInt32& height, UInt32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn)
 {
     const bmp_header_t* ptrBmpHeader = reinterpret_cast<const bmp_header_t*>(pfile);
     if (ptrBmpHeader->magic != BMP_MAGIC_NUMBER)
@@ -124,8 +124,8 @@ bool BMP_Load8Bit_Original(const char* pstrFilename, const byte* pfile, byte*& p
         return false;
     }
 
-    Uint32 nbColorsUsed;
-    Uint64 paletteBytesCount;
+    UInt32 nbColorsUsed;
+    UInt64 paletteBytesCount;
     if(ptrBmpHeader->colors_used == 0)
     {
         nbColorsUsed = 256;
@@ -138,13 +138,13 @@ bool BMP_Load8Bit_Original(const char* pstrFilename, const byte* pfile, byte*& p
     }
 
     // Copy over palette
-    const byte* psrc = pfile + sizeof(bmp_header_t);
-    const byte* psrcpalette = psrc;
+    const Byte* psrc = pfile + sizeof(bmp_header_t);
+    const Byte* psrcpalette = psrc;
 
-    ppalette = new byte[256*3];
-    memset(ppalette, 0, sizeof(byte)*256*3);
+    ppalette = new Byte[256*3];
+    memset(ppalette, 0, sizeof(Byte)*256*3);
 
-    for(Uint32 i = 0; i < nbColorsUsed; i++)
+    for(UInt32 i = 0; i < nbColorsUsed; i++)
     {
         ppalette[i*3] = psrcpalette[i*4];
         ppalette[i*3+1] = psrcpalette[i*4+1];
@@ -152,19 +152,19 @@ bool BMP_Load8Bit_Original(const char* pstrFilename, const byte* pfile, byte*& p
     }
 
     // Now load the actual pixel bytes
-    const byte* psrcpixels = psrc + paletteBytesCount;
+    const Byte* psrcpixels = psrc + paletteBytesCount;
 
     width = ptrBmpHeader->width;
     height = ptrBmpHeader->height;
 
-    Uint32 fileOffset = psrcpixels - pfile;
-    Uint32 pixelCount = ptrBmpHeader->file_size - fileOffset;
+    UInt32 fileOffset = psrcpixels - pfile;
+    UInt32 pixelCount = ptrBmpHeader->file_size - fileOffset;
 
     // Data is actually stored rounded up to multiples of 4
-    Uint32 trueWidth = (width % 4) != 0 ? ((width / 4) * 4 + 4) : width;
+    UInt32 trueWidth = (width % 4) != 0 ? ((width / 4) * 4 + 4) : width;
 
-    pdata = new byte[pixelCount];
-    memcpy(pdata, psrcpixels, sizeof(byte)*pixelCount);
+    pdata = new Byte[pixelCount];
+    memcpy(pdata, psrcpixels, sizeof(Byte)*pixelCount);
 
     return true;
 }

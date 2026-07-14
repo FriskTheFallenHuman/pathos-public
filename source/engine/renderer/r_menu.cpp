@@ -43,19 +43,19 @@ All Rights Reserved.
 #include "textschemas.h"
 
 // Brightness values for the menu button
-const Float CMenuButton::DEFAULT_BRIGHTNESS = 0.75;
-const Float CMenuButton::HOVER_BRIGHTNESS = 1.0;
-const Float CMenuButton::DISABLED_BRIGHTNESS = 0.25;
+const float CMenuButton::DEFAULT_BRIGHTNESS = 0.75;
+const float CMenuButton::HOVER_BRIGHTNESS = 1.0;
+const float CMenuButton::DISABLED_BRIGHTNESS = 0.25;
 
 // Alpha values for the menu buttons
-const Float CMenuButton::DEFAULT_ALPHA = 0.75;
-const Float CMenuButton::HOVER_ALPHA = 1.0;
+const float CMenuButton::DEFAULT_ALPHA = 0.75;
+const float CMenuButton::HOVER_ALPHA = 1.0;
 
 // Time it takes for the button to fade to a new color
-const Float CMenuButton::FADE_TIME = 0.75;
+const float CMenuButton::FADE_TIME = 0.75;
 
 // How many pixels to offset by when clicked
-const Float CMenuButton::CLICK_OFFSET = 4;
+const float CMenuButton::CLICK_OFFSET = 4;
 
 // Menu button position relative to 1024x768 resolution
 const Int32 CMenu::MENU_TITLE_XPOS = 50;
@@ -75,21 +75,21 @@ const Int32 CMenu::MENU_TITLE_FONTSIZE = 48;
 const Int32 CMenu::MENU_BUTTON_FONTSIZE = 36;
 
 // Blend time for background texture
-const Float CMenu::MENU_BLEND_TIME = 0.25f;
+const float CMenu::MENU_BLEND_TIME = 0.25f;
 // Post-init blend time for menu
-const Float CMenu::MENU_POST_INIT_BLEND_TIME = 2;
+const float CMenu::MENU_POST_INIT_BLEND_TIME = 2;
 
 // Menu sounds
-const Char CMenu::MENU_HOVER_SOUND[] = "menu/button_glow.wav";
-const Char CMenu::MENU_CLICK_SOUND[] = "menu/button_click.wav";
-const Char CMenu::MENU_MUSIC_FILE_STARTUP[] = "music/gamestartup.ogg";
-const Char CMenu::MENU_MUSIC_FILE_INGAME[] = "music/menumusic_game.ogg";
+const char CMenu::MENU_HOVER_SOUND[] = "menu/button_glow.wav";
+const char CMenu::MENU_CLICK_SOUND[] = "menu/button_click.wav";
+const char CMenu::MENU_MUSIC_FILE_STARTUP[] = "music/gamestartup.ogg";
+const char CMenu::MENU_MUSIC_FILE_INGAME[] = "music/menumusic_game.ogg";
 
 // Menu button font schema
-const Char CMenu::MENU_BUTTON_TEXT_SCHEMA[] = "menubuttons";
+const char CMenu::MENU_BUTTON_TEXT_SCHEMA[] = "menubuttons";
 
 // Menu title font schema
-const Char CMenu::MENU_TITLE_TEXT_SCHEMA[] = "menutitle";
+const char CMenu::MENU_TITLE_TEXT_SCHEMA[] = "menutitle";
 
 // Menu object
 CMenu gMenu;
@@ -140,7 +140,7 @@ CMenu::CMenu( void ):
 
 	// Create the buttons
 	m_buttonsArray.resize(NB_MENU_BTN);
-	for(Uint32 i = 0; i < NB_MENU_BTN; i++)
+	for(UInt32 i = 0; i < NB_MENU_BTN; i++)
 		m_buttonsArray[i] = new CMenuButton(this, static_cast<mbutton_t>(MENU_BTN_FIRST+i), menuBtnNames[i].c_str(), scanCodes[i]);
 
 	// Disabled save game by default
@@ -156,7 +156,7 @@ CMenu::CMenu( void ):
 //=============================================
 CMenu::~CMenu( void )
 {
-	for(Uint32 i = 0; i < NB_MENU_BTN; i++)
+	for(UInt32 i = 0; i < NB_MENU_BTN; i++)
 		delete m_buttonsArray[i];
 }
 
@@ -176,7 +176,7 @@ bool CMenu::Init( void )
 		pTextureManager->DeleteTexture(m_pBgBlurredTexture->filepath.c_str());
 
 	// Determine which texture to use
-	Float aspectRatio = static_cast<Float>(gWindow.GetWidth())/ static_cast<Float>(gWindow.GetHeight());
+	float aspectRatio = static_cast<float>(gWindow.GetWidth())/ static_cast<float>(gWindow.GetHeight());
 	if(aspectRatio > 1.5)
 	{
 		m_pBackgroundTexture = pTextureManager->LoadTexture("menu/background_widescreen.dds", RS_WINDOW_LEVEL, TX_FL_NOMIPMAPS);
@@ -216,7 +216,7 @@ bool CMenu::Init( void )
 	m_pButtonFont = gTextSchemas.GetResolutionSchemaFontSet(MENU_BUTTON_TEXT_SCHEMA, gWindow.GetHeight());
 	if(!m_pButtonFont)
 	{
-		Int32 idealFontSize = static_cast<Uint32>(R_GetRelativeY(MENU_BUTTON_FONTSIZE, MENU_BASE_HEIGHT, gWindow.GetHeight()));
+		Int32 idealFontSize = static_cast<UInt32>(R_GetRelativeY(MENU_BUTTON_FONTSIZE, MENU_BASE_HEIGHT, gWindow.GetHeight()));
 		m_pButtonFont = gText.LoadFont("Lilex-Medium.ttf", idealFontSize, true, nullptr, 2);
 	}
 
@@ -224,7 +224,7 @@ bool CMenu::Init( void )
 	m_pTitleFont = gTextSchemas.GetResolutionSchemaFontSet(MENU_TITLE_TEXT_SCHEMA, gWindow.GetHeight());
 	if(!m_pTitleFont)
 	{
-		Int32 idealFontSize = static_cast<Uint32>(R_GetRelativeY(MENU_TITLE_FONTSIZE, MENU_BASE_HEIGHT, gWindow.GetHeight()));
+		Int32 idealFontSize = static_cast<UInt32>(R_GetRelativeY(MENU_TITLE_FONTSIZE, MENU_BASE_HEIGHT, gWindow.GetHeight()));
 		m_pTitleFont = gText.LoadFont("Lilex-Medium.ttf", idealFontSize, true, nullptr, 2);
 	}
 
@@ -279,7 +279,7 @@ void CMenu::ClearGL( void )
 // Class: CMenu
 // Function: PlayMenuSound
 //=============================================
-void CMenu::PlayMenuSound( const Char* pstrSample )
+void CMenu::PlayMenuSound( const char* pstrSample )
 {
 	gSoundEngine.PlaySound(pstrSample, nullptr, SND_FL_MENU, SND_CHAN_AUTO);
 }
@@ -298,7 +298,7 @@ void CMenu::MouseButtonEvent( Int32 button, bool keyDown )
 		return;
 
 	// Check which button was clicked on
-	for(Uint32 i = 0; i < NB_MENU_BTN; i++)
+	for(UInt32 i = 0; i < NB_MENU_BTN; i++)
 	{
 		if(m_buttonsArray[i]->MouseButtonEvent(button, keyDown))
 			return;
@@ -329,7 +329,7 @@ bool CMenu::KeyEvent( Int32 button, Int16 mod, bool keyDown )
 	}
 
 	// See if we have any buttons mapped
-	for(Uint32 i = 0; i < NB_MENU_BTN; i++)
+	for(UInt32 i = 0; i < NB_MENU_BTN; i++)
 	{
 		if(m_buttonsArray[i]->KeyEvent(button, mod, keyDown))
 			return true;
@@ -371,14 +371,14 @@ void CMenu::SetButtons( void )
 		m_buttonsArray[MENU_BTN_CONTINUE]->SetHidden(true);
 	}
 
-	for(Uint32 i = 0; i < NB_MENU_BTN; i++)
+	for(UInt32 i = 0; i < NB_MENU_BTN; i++)
 	{
 		CMenuButton* pButton = m_buttonsArray[i];
 		if(pButton->IsHidden())
 			continue;
 
 		Int32 ymin;
-		Uint32 width, height;
+		UInt32 width, height;
 		gText.GetStringSize(m_pButtonFont, pButton->GetString(), &width, &height, &ymin);
 
 		pButton->SetProperties(xPos, yPos, width, height);
@@ -443,7 +443,7 @@ bool CMenu::DrawMenuBackground( CBasicDraw* pDraw )
 	if(m_flBlendBeginTime && m_pBlendFromTexture && m_pBlendToTexture)
 	{
 		// Adjust for rectangle textures if needed
-		Float tc1ymod, tc1scalex, tc1scaley;
+		float tc1ymod, tc1scalex, tc1scaley;
 		if(m_pBlendFromTexture->flags & TX_FL_RECTANGLE)
 		{
 			tc1ymod = 1.0;
@@ -467,8 +467,8 @@ bool CMenu::DrawMenuBackground( CBasicDraw* pDraw )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// Draw the blend-from texture
-		Float alpha = 1.0 - ((ens.time - m_flBlendBeginTime) / MENU_BLEND_TIME);
-		alpha = clamp(alpha, 0.0, 1.0);
+		float alpha = 1.0 - ((ens.time - m_flBlendBeginTime) / MENU_BLEND_TIME);
+		alpha = Clamp(alpha, 0.0, 1.0);
 		
 		pDraw->Color4f(GL_ONE, GL_ONE, GL_ONE, alpha);
 
@@ -501,7 +501,7 @@ bool CMenu::DrawMenuBackground( CBasicDraw* pDraw )
 		}
 
 		// Bind the blend-to texture
-		Float tc2ymod, tc2scalex, tc2scaley;
+		float tc2ymod, tc2scalex, tc2scaley;
 		if(m_pBlendToTexture->flags & TX_FL_RECTANGLE)
 		{
 			tc2ymod = 1.0;
@@ -558,7 +558,7 @@ bool CMenu::DrawMenuBackground( CBasicDraw* pDraw )
 	else
 	{
 		// Adjust for rectangle textures if needed
-		Float tcymod, tcscalex, tcscaley;
+		float tcymod, tcscalex, tcscaley;
 		if(m_pCurrentBackgroundTexture->flags & TX_FL_RECTANGLE)
 		{
 			tcymod = 1.0;
@@ -627,7 +627,7 @@ CMenu::rendercode_t CMenu::DrawMenuElements( CBasicDraw* pDraw )
 
 	// Set matrices
 	rns.view.modelview.LoadIdentity();
-	rns.view.modelview.Scale(1.0/ static_cast<Float>(gWindow.GetWidth()), 1.0/ static_cast<Float>(gWindow.GetHeight()), 1.0);
+	rns.view.modelview.Scale(1.0/ static_cast<float>(gWindow.GetWidth()), 1.0/ static_cast<float>(gWindow.GetHeight()), 1.0);
 
 	rns.view.projection.LoadIdentity();
 	rns.view.projection.Ortho(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO, 0.1f, 100);
@@ -652,12 +652,12 @@ CMenu::rendercode_t CMenu::DrawMenuElements( CBasicDraw* pDraw )
 		R_Bind2DTexture(GL_TEXTURE0_ARB, m_pTitleLogoTexture->palloc->gl_index);
 
 		// Determine origin
-		Float titleX = R_GetRelativeX(MENU_TITLE_XPOS, MENU_BASE_WIDTH, gWindow.GetWidth());
-		Float titleY = R_GetRelativeY(MENU_TITLE_YPOS, MENU_BASE_HEIGHT, gWindow.GetHeight());
+		float titleX = R_GetRelativeX(MENU_TITLE_XPOS, MENU_BASE_WIDTH, gWindow.GetWidth());
+		float titleY = R_GetRelativeY(MENU_TITLE_YPOS, MENU_BASE_HEIGHT, gWindow.GetHeight());
 
 		// Determine size
-		Float idealWidth = R_GetRelativeX(m_pTitleLogoTexture->width, MENU_BASE_WIDTH, gWindow.GetWidth());
-		Float idealHeight = R_GetRelativeX(m_pTitleLogoTexture->height, MENU_BASE_WIDTH, gWindow.GetWidth());
+		float idealWidth = R_GetRelativeX(m_pTitleLogoTexture->width, MENU_BASE_WIDTH, gWindow.GetWidth());
+		float idealHeight = R_GetRelativeX(m_pTitleLogoTexture->height, MENU_BASE_WIDTH, gWindow.GetWidth());
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -687,8 +687,8 @@ CMenu::rendercode_t CMenu::DrawMenuElements( CBasicDraw* pDraw )
 	else
 	{
 		// Determine origin
-		Float titleX = R_GetRelativeX(MENU_TITLE_XPOS, MENU_BASE_WIDTH, gWindow.GetWidth()) + 35;
-		Float titleY = R_GetRelativeY(MENU_TITLE_YPOS, MENU_BASE_HEIGHT, gWindow.GetHeight()) + 180;
+		float titleX = R_GetRelativeX(MENU_TITLE_XPOS, MENU_BASE_WIDTH, gWindow.GetWidth()) + 35;
+		float titleY = R_GetRelativeY(MENU_TITLE_YPOS, MENU_BASE_HEIGHT, gWindow.GetHeight()) + 180;
 
 		// Draw the string
 		if(!R_DrawString(color32_t(255, 255, 255, 255), titleX, titleY, ens.gamemainmenutitle.c_str(), m_pTitleFont))
@@ -713,7 +713,7 @@ CMenu::rendercode_t CMenu::DrawMenuElements( CBasicDraw* pDraw )
 
 	// Now draw the buttons
 	bool result = true;
-	for(Uint32 i = 0; i < NB_MENU_BTN; i++)
+	for(UInt32 i = 0; i < NB_MENU_BTN; i++)
 	{
 		result = m_buttonsArray[i]->Draw();
 		if(!result)
@@ -777,16 +777,16 @@ bool CMenu::DrawMenuFade( void )
 
 	R_Bind2DTexture(GL_TEXTURE0_ARB, m_pBgBlurredTexture->palloc->gl_index);
 
-	Float alpha = (ens.time - m_postInitBlendBeginTime)/MENU_POST_INIT_BLEND_TIME;
+	float alpha = (ens.time - m_postInitBlendBeginTime)/MENU_POST_INIT_BLEND_TIME;
 	alpha = 1.0 - alpha;
 
 	pDraw->Color4f(GL_ONE, GL_ONE, GL_ONE, alpha);
 
 	R_ValidateShader(pDraw);
 
-	Float tcymod = 0.0;
-	Float tcscalex = 1.0;
-	Float tcscaley = 1.0;
+	float tcymod = 0.0;
+	float tcscalex = 1.0;
+	float tcscaley = 1.0;
 
 	pDraw->Begin(CBasicDraw::DRAW_TRIANGLES);
 	pDraw->TexCoord2f(0.0, tcymod*tcscaley);
@@ -883,7 +883,7 @@ void CMenu::Think( void )
 		SetButtons();
 
 		// Perform think functions for the buttons
-		for(Uint32 i = 0; i < m_buttonsArray.size(); i++)
+		for(UInt32 i = 0; i < m_buttonsArray.size(); i++)
 			m_buttonsArray[i]->Think();
 	}
 
@@ -1348,7 +1348,7 @@ void CMenu::UpdateContineButton( void )
 	}
 
 	// Retrieve the screenshot from the file
-	const byte* pfile = gSaveRestore.LoadSaveFile(m_latestSaveFileName.c_str());
+	const Byte* pfile = gSaveRestore.LoadSaveFile(m_latestSaveFileName.c_str());
 	if(!pfile)
 		return;
 
@@ -1366,7 +1366,7 @@ void CMenu::UpdateContineButton( void )
 	CTextureManager* pTextureManager = CTextureManager::GetInstance();
 
 	// Bind the texture to GL
-	const byte* pimagedata = pfile + pheader->screenshotoffset;
+	const Byte* pimagedata = pfile + pheader->screenshotoffset;
 	m_pLatestSaveFileBgTexture = pTextureManager->LoadFromMemory(m_latestSaveFileName.c_str(), RS_WINDOW_LEVEL, (TX_FL_DXT1|TX_FL_NOMIPMAPS|TX_FL_CLAMP_S|TX_FL_CLAMP_T), pimagedata, pheader->screenshotwidth, pheader->screenshotheight, pheader->screenshotbpp, pheader->screenshotdatasize);
 	if(!m_pLatestSaveFileBgTexture)
 	{
@@ -1405,7 +1405,7 @@ void CMenu::ClearLatestSaveFile( void )
 // Class: CMenuButton
 // Function: Constructor
 //=============================================
-CMenuButton::CMenuButton( CMenu* pMenu, CMenu::mbutton_t buttonId, const Char* pstrText, SDL_Scancode scancode ):
+CMenuButton::CMenuButton( CMenu* pMenu, CMenu::mbutton_t buttonId, const char* pstrText, SDL_Scancode scancode ):
 	m_text(pstrText),
 	m_brightness(CMenuButton::DEFAULT_BRIGHTNESS),
 	m_alpha(CMenuButton::DEFAULT_ALPHA),
@@ -1448,10 +1448,10 @@ bool CMenuButton::Draw( void )
 	if(m_isClicked)
 	{
 		// Set alpha at 25% for the outline
-		gText.SetColor(static_cast<Uint32>(255*m_brightness),
-			static_cast<Uint32>(255*m_brightness),
-			static_cast<Uint32>(255*m_brightness),
-			static_cast<Uint32>(255*m_alpha*0.25));
+		gText.SetColor(static_cast<UInt32>(255*m_brightness),
+			static_cast<UInt32>(255*m_brightness),
+			static_cast<UInt32>(255*m_brightness),
+			static_cast<UInt32>(255*m_alpha*0.25));
 
 		// Draw a pale outline
 		if(!gText.DrawSimpleString(m_text.c_str(), originX, originY))
@@ -1459,10 +1459,10 @@ bool CMenuButton::Draw( void )
 	}
 
 	// Set brightness and alpha
-	gText.SetColor(static_cast<Uint32>(255*m_brightness),
-		static_cast<Uint32>(255*m_brightness),
-		static_cast<Uint32>(255*m_brightness),
-		static_cast<Uint32>(255*m_alpha));
+	gText.SetColor(static_cast<UInt32>(255*m_brightness),
+		static_cast<UInt32>(255*m_brightness),
+		static_cast<UInt32>(255*m_brightness),
+		static_cast<UInt32>(255*m_alpha));
 
 	if(m_isClicked)
 	{
@@ -1545,8 +1545,8 @@ void CMenuButton::Think( void )
 		m_brightness = DISABLED_BRIGHTNESS;
 
 	// Clamp these values
-	m_alpha = clamp(m_alpha, 0, 1);
-	m_brightness = clamp(m_brightness, 0, 1);
+	m_alpha = Clamp(m_alpha, 0, 1);
+	m_brightness = Clamp(m_brightness, 0, 1);
 
 	// Clear this if the button was released
 	if(m_isClicked)
@@ -1584,7 +1584,7 @@ bool CMenuButton::IsCursorOver( Int32 cursorX, Int32 cursorY ) const
 // Class: CMenuButton
 // Function: SetProperties
 //=============================================
-void CMenuButton::SetProperties( Int32 xPos, Int32 yPos, Uint32 width, Uint32 height )
+void CMenuButton::SetProperties( Int32 xPos, Int32 yPos, UInt32 width, UInt32 height )
 {
 	m_originX = xPos;
 	m_originY = yPos;

@@ -129,7 +129,7 @@ cl_entity_t* CL_AllocStaticSpriteEntity( void )
 //====================================
 //
 //====================================
-cl_entity_t* CL_AllocTempSpriteEntity( Int32 key, Float life )
+cl_entity_t* CL_AllocTempSpriteEntity( Int32 key, float life )
 {
 	return gSpriteRenderer.AllocTempSprite(key, life);
 }
@@ -137,7 +137,7 @@ cl_entity_t* CL_AllocTempSpriteEntity( Int32 key, Float life )
 //====================================
 //
 //====================================
-mlight_t* CL_AllocEntityLight( Int32 key, Float life, Int32 attachment )
+mlight_t* CL_AllocEntityLight( Int32 key, float life, Int32 attachment )
 {
 	Int32 _attachment = attachment;
 	if(_attachment < 0 && _attachment != -1 || _attachment >= MAX_ATTACHMENTS)
@@ -149,7 +149,7 @@ mlight_t* CL_AllocEntityLight( Int32 key, Float life, Int32 attachment )
 	// Try to find one with the same key
 	if(key)
 	{
-		for(Uint32 i = 0; i < MAX_ENTITY_LIGHTS; i++)
+		for(UInt32 i = 0; i < MAX_ENTITY_LIGHTS; i++)
 		{
 			entitylight_t& el = cls.entitylights[i];
 
@@ -170,7 +170,7 @@ mlight_t* CL_AllocEntityLight( Int32 key, Float life, Int32 attachment )
 	}
 
 	// Try to find a dead one
-	for(Uint32 i = 0; i < MAX_ENTITY_LIGHTS; i++)
+	for(UInt32 i = 0; i < MAX_ENTITY_LIGHTS; i++)
 	{
 		entitylight_t& el = cls.entitylights[i];
 
@@ -206,7 +206,7 @@ mlight_t* CL_AllocEntityLight( Int32 key, Float life, Int32 attachment )
 //====================================
 //
 //====================================
-void CL_CreateCableEntity( const Vector& start, const Vector& end, Uint32 depth, Uint32 width, Uint32 numsegments )
+void CL_CreateCableEntity( const Vector& start, const Vector& end, UInt32 depth, UInt32 width, UInt32 numsegments )
 {
 	gCableRenderer.AddCable(start, end, depth, width, numsegments);
 }
@@ -214,7 +214,7 @@ void CL_CreateCableEntity( const Vector& start, const Vector& end, Uint32 depth,
 //====================================
 //
 //====================================
-bool CL_SetupEntityVertexLightVBO( cl_entity_t* pentity, Int32 vlightoffset, Uint32 vertexcount, byte* plightstyles )
+bool CL_SetupEntityVertexLightVBO( cl_entity_t* pentity, Int32 vlightoffset, UInt32 vertexcount, Byte* plightstyles )
 {
 	return gVBMRenderer.SetupEntityVertexLightVBO(pentity, vlightoffset, vertexcount, plightstyles);
 }
@@ -222,7 +222,7 @@ bool CL_SetupEntityVertexLightVBO( cl_entity_t* pentity, Int32 vlightoffset, Uin
 //====================================
 //
 //====================================
-void CL_SetFogParameters( entindex_t entindex, const Vector& color, Float start, Float end, bool affectsky, Float blendtime )
+void CL_SetFogParameters( entindex_t entindex, const Vector& color, float start, float end, bool affectsky, float blendtime )
 {
 	bool active = (end < 1 && start < 1) ? false : true;
 	if(!active && rns.fog.settings.active && entindex != rns.fog.settings.entindex && entindex != NO_ENTITY_INDEX)
@@ -266,7 +266,7 @@ void CL_SetFogParameters( entindex_t entindex, const Vector& color, Float start,
 //====================================
 //
 //====================================
-void CL_SetSkyboxParameters( const Vector& worldorigin, Float skysize, Float fogend, Float fogstart, const Vector& fogcolor, Int32 skytexturesetindex, bool affectskybox, bool isactive )
+void CL_SetSkyboxParameters( const Vector& worldorigin, float skysize, float fogend, float fogstart, const Vector& fogcolor, Int32 skytexturesetindex, bool affectskybox, bool isactive )
 {
 	rns.sky.world_origin = worldorigin;
 	rns.sky.skysize = skysize;
@@ -317,8 +317,8 @@ void CL_SetDayStage( daystage_t daystage )
 	// Get worldmodel ptr
 	brushmodel_t* pworldmodel = ens.pworld;
 	// Data pointers for our load result
-	byte* plmapdatapointers[NB_SURF_LIGHTMAP_LAYERS] = {nullptr};
-	byte* pvertexlightdatapointers[NB_SURF_LIGHTMAP_LAYERS] = {nullptr};
+	Byte* plmapdatapointers[NB_SURF_LIGHTMAP_LAYERS] = {nullptr};
+	Byte* pvertexlightdatapointers[NB_SURF_LIGHTMAP_LAYERS] = {nullptr};
 
 	// If restoring to DAYSTAGE_NORMAL from any other stage, then we
 	// need to load the restore file 
@@ -336,7 +336,7 @@ void CL_SetDayStage( daystage_t daystage )
 	}
 
 	// Set the new pointer
-	for(Uint32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
+	for(UInt32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
 	{
 		// All data was successfully set, so release original data
 		if (pworldmodel->plightdata[i])
@@ -346,7 +346,7 @@ void CL_SetDayStage( daystage_t daystage )
 	}
 
 	// Set the new pointer
-	for(Uint32 i = 0; i < NB_BAKED_VERTEXLIGHT_LAYERS; i++)
+	for(UInt32 i = 0; i < NB_BAKED_VERTEXLIGHT_LAYERS; i++)
 	{
 		// All data was successfully set, so release original data
 		if (pworldmodel->pvertexlightdata[i])
@@ -440,7 +440,7 @@ void CL_FreeEntityData( entindex_t entindex, Int32 flags )
 //====================================
 //
 //====================================
-void CL_AddCustomLightStyle( Int32 style, const Char* pstrpattern, bool interpolate, Float framerate )
+void CL_AddCustomLightStyle( Int32 style, const char* pstrpattern, bool interpolate, float framerate )
 {
 	gLightStyles.AddCustomLightStyle(style, framerate, interpolate, pstrpattern);
 }
@@ -448,7 +448,7 @@ void CL_AddCustomLightStyle( Int32 style, const Char* pstrpattern, bool interpol
 //====================================
 //
 //====================================
-void CL_SetLightStyle( Int32 style, const Char* pstrpattern, bool interpolate, Float framerate )
+void CL_SetLightStyle( Int32 style, const char* pstrpattern, bool interpolate, float framerate )
 {
 	gLightStyles.SetLightStyle(style, framerate, interpolate, pstrpattern);
 }
@@ -472,7 +472,7 @@ void CL_DecalVBMEntity( const Vector& origin, const Vector& normal, decalgroupen
 //====================================
 //
 //====================================
-void CL_CreateGenericDecal( const Char *pstrname, const Vector& origin, const Vector& normal, Int32 flags, entindex_t entindex, Float life, Float fadetime, Float growthtime )
+void CL_CreateGenericDecal( const char *pstrname, const Vector& origin, const Vector& normal, Int32 flags, entindex_t entindex, float life, float fadetime, float growthtime )
 {
 	gDecals.AddCached(nullptr, pstrname, origin, normal, flags, entindex, life, fadetime, growthtime);
 }
@@ -480,15 +480,15 @@ void CL_CreateGenericDecal( const Char *pstrname, const Vector& origin, const Ve
 //====================================
 //
 //====================================
-void CL_PrecacheParticleScript( part_script_type_t type, const Char* pstrFilepath )
+void CL_PrecacheParticleScript( part_script_type_t type, const char* pstrFilepath )
 {
-	gParticleEngine.PrecacheScript(type, pstrFilepath, false);
+	gParticleEngine.PrecacheScript(type, pstrFilepath, nullptr);
 }
 
 //====================================
 //
 //====================================
-void CL_RemoveParticleSystem( Uint32 id, entindex_t entindex, bool keepcached )
+void CL_RemoveParticleSystem( UInt32 id, entindex_t entindex, bool keepcached )
 {
 	gParticleEngine.CacheRemoveSystem(id, entindex, keepcached);
 }
@@ -504,7 +504,7 @@ void CL_KillEntityParticleSystems( Int32 entindex )
 //====================================
 //
 //====================================
-void CL_SpawnParticleSystem( const Vector& origin, const Vector& direction, part_script_type_t scripttype, const Char* pstrFilepath, Int32 id, entindex_t entindex, Int32 attachment, Int32 boneindex, Int32 attachflags )
+void CL_SpawnParticleSystem( const Vector& origin, const Vector& direction, part_script_type_t scripttype, const char* pstrFilepath, Int32 id, entindex_t entindex, Int32 attachment, Int32 boneindex, Int32 attachflags )
 {
 	gParticleEngine.CacheCreateSystem(origin, direction, scripttype, pstrFilepath, id, entindex, attachment, boneindex, attachflags);
 }
@@ -512,7 +512,7 @@ void CL_SpawnParticleSystem( const Vector& origin, const Vector& direction, part
 //====================================
 //
 //====================================
-void CL_SetMotionBlur( bool active, Float blurfade, bool override )
+void CL_SetMotionBlur( bool active, float blurfade, bool override )
 {
 	gPostProcess.SetMotionBlur(active, blurfade, override);
 }
@@ -520,7 +520,7 @@ void CL_SetMotionBlur( bool active, Float blurfade, bool override )
 //====================================
 //
 //====================================
-void CL_SetVignette( bool active, Float strength, Float radius )
+void CL_SetVignette( bool active, float strength, float radius )
 {
 	gPostProcess.SetVignette(active, strength, radius);
 }
@@ -528,7 +528,7 @@ void CL_SetVignette( bool active, Float strength, Float radius )
 //====================================
 // 
 //====================================
-void CL_SetFilmGrain( bool active, Float strength )
+void CL_SetFilmGrain( bool active, float strength )
 {
 	gPostProcess.SetFilmGrain(active, strength);
 }
@@ -536,7 +536,7 @@ void CL_SetFilmGrain( bool active, Float strength )
 //====================================
 //
 //====================================
-void CL_SetBlackAndWhite( bool active, Float strength )
+void CL_SetBlackAndWhite( bool active, float strength )
 {
 	gPostProcess.SetBlackAndWhite(active, strength);
 }
@@ -544,7 +544,7 @@ void CL_SetBlackAndWhite( bool active, Float strength )
 //====================================
 //
 //====================================
-void CL_SetChromatic( bool active, Float strength )
+void CL_SetChromatic( bool active, float strength )
 {
 	gPostProcess.SetChromatic(active, strength);
 }
@@ -552,7 +552,7 @@ void CL_SetChromatic( bool active, Float strength )
 //====================================
 //
 //====================================
-void CL_SetScreenOverlay( Int32 layerindex, const Char* pstrtexturename, overlay_rendermode_t rendermode, const Vector& rendercolor, Float renderamt, overlay_effect_t effect, Float effectspeed, Float effectminalpha, Float fadetime )
+void CL_SetScreenOverlay( Int32 layerindex, const char* pstrtexturename, overlay_rendermode_t rendermode, const Vector& rendercolor, float renderamt, overlay_effect_t effect, float effectspeed, float effectminalpha, float fadetime )
 {
 	gPostProcess.SetOverlay(layerindex, pstrtexturename, rendermode, rendercolor, renderamt, effect, effectspeed, effectminalpha, fadetime);
 }
@@ -560,7 +560,7 @@ void CL_SetScreenOverlay( Int32 layerindex, const Char* pstrtexturename, overlay
 //====================================
 //
 //====================================
-void CL_ClearScreenOverlay( Int32 layerindex, Float fadetime )
+void CL_ClearScreenOverlay( Int32 layerindex, float fadetime )
 {
 	gPostProcess.ClearOverlay(layerindex, fadetime);
 }
@@ -568,7 +568,7 @@ void CL_ClearScreenOverlay( Int32 layerindex, Float fadetime )
 //====================================
 //
 //====================================
-void CL_SetFade( Uint32 layerindex, Float duration, Float holdtime, Int32 flags, const color24_t& color, byte alpha, Float timeoffset )
+void CL_SetFade( UInt32 layerindex, float duration, float holdtime, Int32 flags, const color24_t& color, Byte alpha, float timeoffset )
 {
 	gPostProcess.SetFade(layerindex, duration, holdtime, flags, color, alpha, timeoffset);
 }
@@ -576,7 +576,7 @@ void CL_SetFade( Uint32 layerindex, Float duration, Float holdtime, Int32 flags,
 //====================================
 //
 //====================================
-void CL_SetGaussianBlur( bool active, Float alpha )
+void CL_SetGaussianBlur( bool active, float alpha )
 {
 	gPostProcess.SetGaussianBlur(active, alpha);
 }
@@ -584,7 +584,7 @@ void CL_SetGaussianBlur( bool active, Float alpha )
 //====================================
 //
 //====================================
-void CL_BreakModel( const Vector& origin, const Vector& size, bm_velocity_t velmode, const Vector& velvector, Uint32 randomvelmin, Uint32 randomvelmax, Float life, Uint32 num, Uint32 modelindex, Int32 sound, Float bouyancy, Float waterfriction, Int32 flags )
+void CL_BreakModel( const Vector& origin, const Vector& size, bm_velocity_t velmode, const Vector& velvector, UInt32 randomvelmin, UInt32 randomvelmax, float life, UInt32 num, UInt32 modelindex, Int32 sound, float bouyancy, float waterfriction, Int32 flags )
 {
 	gTempEntities.CreateBreakModel(origin, size, velmode, velvector, randomvelmin, randomvelmax, life, num, modelindex, sound, bouyancy, waterfriction, flags);
 }
@@ -592,7 +592,7 @@ void CL_BreakModel( const Vector& origin, const Vector& size, bm_velocity_t velm
 //====================================
 //
 //====================================
-void CL_Bubbles( const Vector& mins, const Vector& maxs, Float height, Uint32 modelindex, Uint32 num, Float speed )
+void CL_Bubbles( const Vector& mins, const Vector& maxs, float height, UInt32 modelindex, UInt32 num, float speed )
 {
 	gTempEntities.CreateBubbles(mins, maxs, height, modelindex, num, speed);
 }
@@ -600,7 +600,7 @@ void CL_Bubbles( const Vector& mins, const Vector& maxs, Float height, Uint32 mo
 //====================================
 //
 //====================================
-void CL_BubbleTrail( const Vector& start, const Vector& end, Float height, Uint32 modelindex, Uint32 num, Float speed )
+void CL_BubbleTrail( const Vector& start, const Vector& end, float height, UInt32 modelindex, UInt32 num, float speed )
 {
 	gTempEntities.CreateBubbleTrail(start, end, height, modelindex, num, speed);
 }
@@ -608,7 +608,7 @@ void CL_BubbleTrail( const Vector& start, const Vector& end, Float height, Uint3
 //====================================
 //
 //====================================
-void CL_FunnelSprite( const Vector& origin, const Vector& color, Float alpha, Uint32 modelindex, bool reverse )
+void CL_FunnelSprite( const Vector& origin, const Vector& color, float alpha, UInt32 modelindex, bool reverse )
 {
 	gTempEntities.CreateFunnel(origin, color, alpha, modelindex, reverse);
 }
@@ -616,7 +616,7 @@ void CL_FunnelSprite( const Vector& origin, const Vector& color, Float alpha, Ui
 //====================================
 //
 //====================================
-void CL_SphereModel( const Vector& origin, Float speed, Float life, Uint32 num, Uint32 modelindex, Float bouyancy, Float waterfriction, Int32 sound )
+void CL_SphereModel( const Vector& origin, float speed, float life, UInt32 num, UInt32 modelindex, float bouyancy, float waterfriction, Int32 sound )
 {
 	gTempEntities.CreateSphereModel(origin, speed, life, num, modelindex, bouyancy, waterfriction, sound);
 }
@@ -624,7 +624,7 @@ void CL_SphereModel( const Vector& origin, Float speed, Float life, Uint32 num, 
 //====================================
 //
 //====================================
-tempentity_t* CL_TempModel( const Vector& origin, const Vector& velocity, const Vector& angles, Float life, Uint32 modelindex, Int32 sound, Float bouyancy, Float waterfriction, Int32 flags )
+tempentity_t* CL_TempModel( const Vector& origin, const Vector& velocity, const Vector& angles, float life, UInt32 modelindex, Int32 sound, float bouyancy, float waterfriction, Int32 flags )
 {
 	return gTempEntities.CreateTempModel(origin, velocity, angles, life, modelindex, sound, bouyancy, waterfriction, flags);
 }
@@ -632,7 +632,7 @@ tempentity_t* CL_TempModel( const Vector& origin, const Vector& velocity, const 
 //====================================
 //
 //====================================
-tempentity_t* CL_TempSprite( const Vector& origin, const Vector& velocity, Float scale, Uint32 modelindex, Int32 rendermode, Int32 renderfx, Float alpha, Float life, Int32 sound, Int32 flags )
+tempentity_t* CL_TempSprite( const Vector& origin, const Vector& velocity, float scale, UInt32 modelindex, Int32 rendermode, Int32 renderfx, float alpha, float life, Int32 sound, Int32 flags )
 {
 	return gTempEntities.CreateTempSprite(origin, velocity, scale, modelindex, rendermode, renderfx, alpha, life, sound, flags);
 }
@@ -648,7 +648,7 @@ void CL_ParticleExplosion1( const Vector& origin )
 //====================================
 //
 //====================================
-void CL_ParticleExplosion2( const Vector& origin, Uint32 colorstart, Uint32 colorlength )
+void CL_ParticleExplosion2( const Vector& origin, UInt32 colorstart, UInt32 colorlength )
 {
 	gLegacyParticles.CreateParticleExplosion2(origin, colorstart, colorlength);
 }
@@ -664,7 +664,7 @@ void CL_BlobExplosion( const Vector& origin )
 //====================================
 //
 //====================================
-void CL_RocketExplosion( const Vector& origin, Uint32 color )
+void CL_RocketExplosion( const Vector& origin, UInt32 color )
 {
 	gLegacyParticles.CreateRocketExplosion(origin, color);
 }
@@ -672,7 +672,7 @@ void CL_RocketExplosion( const Vector& origin, Uint32 color )
 //====================================
 //
 //====================================
-void CL_ParticleEffect( const Vector& origin, const Vector& velocity, Uint32 color, Uint32 count )
+void CL_ParticleEffect( const Vector& origin, const Vector& velocity, UInt32 color, UInt32 count )
 {
 	gLegacyParticles.CreateParticleEffect(origin, velocity, color, count);
 }
@@ -696,7 +696,7 @@ void CL_TeleportSplash( const Vector& origin )
 //====================================
 //
 //====================================
-void CL_RocketTrail( const Vector& start, const Vector& end, Uint32 type )
+void CL_RocketTrail( const Vector& start, const Vector& end, UInt32 type )
 {
 	gLegacyParticles.CreateRocketTrail(start, end, type);
 }
@@ -704,7 +704,7 @@ void CL_RocketTrail( const Vector& start, const Vector& end, Uint32 type )
 //====================================
 //
 //====================================
-void CL_CreateSparkStreak( const Vector& origin, Uint32 count, const Vector& color, Float alpha, Float width, Float length, Float minLifetime, Float maxLifetime, Float minVelocity, Float maxVelocity )
+void CL_CreateSparkStreak( const Vector& origin, UInt32 count, const Vector& color, float alpha, float width, float length, float minLifetime, float maxLifetime, float minVelocity, float maxVelocity )
 {
 	gTracers.CreateSparkStreak(origin, count, color, alpha, width, length, minLifetime, maxLifetime, minVelocity, maxVelocity);
 }
@@ -712,7 +712,7 @@ void CL_CreateSparkStreak( const Vector& origin, Uint32 count, const Vector& col
 //====================================
 //
 //====================================
-void CL_CreateStreakSplash( const Vector& origin, const Vector& direction, const Vector& color, Float alpha, Float width, Float length, Uint32 count, Float speed, Float minLifetime, Float maxLifetime, Float minVelocity, Float maxVelocity )
+void CL_CreateStreakSplash( const Vector& origin, const Vector& direction, const Vector& color, float alpha, float width, float length, UInt32 count, float speed, float minLifetime, float maxLifetime, float minVelocity, float maxVelocity )
 {
 	gTracers.CreateStreakSplash(origin, direction, color, alpha, width, length, count, speed, minLifetime, maxLifetime, minVelocity, maxVelocity);
 }
@@ -728,7 +728,7 @@ void CL_CreateLargeFunnel( const Vector& origin, bool reverse )
 //====================================
 //
 //====================================
-void CL_CreateBloodStream( const Vector& origin, const Vector& direction, Uint32 color, Float speed )
+void CL_CreateBloodStream( const Vector& origin, const Vector& direction, UInt32 color, float speed )
 {
 	gLegacyParticles.CreateBloodStream(origin, direction, color, speed);
 }
@@ -736,7 +736,7 @@ void CL_CreateBloodStream( const Vector& origin, const Vector& direction, Uint32
 //====================================
 //
 //====================================
-void CL_CreateBloodParticles( const Vector& origin, const Vector& direction, Uint32 color, Float speed )
+void CL_CreateBloodParticles( const Vector& origin, const Vector& direction, UInt32 color, float speed )
 {
 	gLegacyParticles.CreateBloodParticles(origin, direction, color, speed);
 }
@@ -744,7 +744,7 @@ void CL_CreateBloodParticles( const Vector& origin, const Vector& direction, Uin
 //====================================
 //
 //====================================
-void CL_CreateTracerImplosion( const Vector& destination, Float radius, Uint32 count, Float life, const Vector& color, Float alpha, Float width, Float length, bool reverse )
+void CL_CreateTracerImplosion( const Vector& destination, float radius, UInt32 count, float life, const Vector& color, float alpha, float width, float length, bool reverse )
 {
 	gTracers.CreateImplosionEffect(destination, radius, count, life, color, alpha, width, length, reverse);
 }
@@ -760,7 +760,7 @@ void CL_InitEffectsInterface( cl_efxapi_t &efxAPI )
 //====================================
 //
 //====================================
-beam_t* CL_BeamLightning( const Vector& src, const Vector& end, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Int32 flags )
+beam_t* CL_BeamLightning( const Vector& src, const Vector& end, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, Int32 flags )
 {
 	return gBeamRenderer.BeamLightning(src, end, modelindex, life, width, amplitude, brightness, speed, noisespeed, flags);
 }
@@ -768,7 +768,7 @@ beam_t* CL_BeamLightning( const Vector& src, const Vector& end, Int32 modelindex
 //====================================
 //
 //====================================
-beam_t* CL_BeamCirclePoints( beam_types_t type, const Vector& src, const Vector& end, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Uint32 startframe, Float framerate, Float r, Float g, Float b, Int32 flags )
+beam_t* CL_BeamCirclePoints( beam_types_t type, const Vector& src, const Vector& end, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, UInt32 startframe, float framerate, float r, float g, float b, Int32 flags )
 {
 	return gBeamRenderer.BeamCirclePoints(type, src, end, modelindex, life, width, amplitude, brightness, speed, noisespeed, startframe, framerate, r, g, b, flags);
 }
@@ -776,7 +776,7 @@ beam_t* CL_BeamCirclePoints( beam_types_t type, const Vector& src, const Vector&
 //====================================
 //
 //====================================
-beam_t* CL_BeamEntityPoint( entindex_t startentity, Int32 attachment, const Vector& end, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Uint32 startframe, Float framerate, Float r, Float g, Float b, Int32 flags )
+beam_t* CL_BeamEntityPoint( entindex_t startentity, Int32 attachment, const Vector& end, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, UInt32 startframe, float framerate, float r, float g, float b, Int32 flags )
 {
 	return gBeamRenderer.BeamEntityPoint(startentity, attachment, end, modelindex, life, width, amplitude, brightness, speed, noisespeed, startframe, framerate, r, g, b, flags);
 }
@@ -784,7 +784,7 @@ beam_t* CL_BeamEntityPoint( entindex_t startentity, Int32 attachment, const Vect
 //====================================
 //
 //====================================
-beam_t* CL_BeamEntities( entindex_t startentity, entindex_t endentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Uint32 startframe, Float framerate, Float r, Float g, Float b, Int32 flags )
+beam_t* CL_BeamEntities( entindex_t startentity, entindex_t endentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, UInt32 startframe, float framerate, float r, float g, float b, Int32 flags )
 {
 	return gBeamRenderer.BeamEntities(startentity, endentity, attachment1, attachment2, modelindex, life, width, amplitude, brightness, speed, noisespeed, startframe, framerate, r, g, b, flags);
 }
@@ -792,7 +792,7 @@ beam_t* CL_BeamEntities( entindex_t startentity, entindex_t endentity, Int32 att
 //====================================
 //
 //====================================
-beam_t* CL_BeamFollow( entindex_t startentity, Int32 attachment, Int32 modelindex, Float life, Float width, Float brightness, Float r, Float g, Float b )
+beam_t* CL_BeamFollow( entindex_t startentity, Int32 attachment, Int32 modelindex, float life, float width, float brightness, float r, float g, float b )
 {
 	return gBeamRenderer.BeamFollow(startentity, attachment, modelindex, life, width, brightness, r, g, b);
 }
@@ -800,7 +800,7 @@ beam_t* CL_BeamFollow( entindex_t startentity, Int32 attachment, Int32 modelinde
 //====================================
 //
 //====================================
-beam_t* CL_BeamPoints( const Vector& src, const Vector& end, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Uint32 startframe, Float framerate, Float r, Float g, Float b, Int32 flags )
+beam_t* CL_BeamPoints( const Vector& src, const Vector& end, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, UInt32 startframe, float framerate, float r, float g, float b, Int32 flags )
 {
 	return gBeamRenderer.BeamPoints(src, end, modelindex, life, width, amplitude, brightness, speed, noisespeed, startframe, framerate, r, g, b, flags);
 }
@@ -808,7 +808,7 @@ beam_t* CL_BeamPoints( const Vector& src, const Vector& end, Int32 modelindex, F
 //====================================
 //
 //====================================
-beam_t* CL_BeamRing( entindex_t startentity, entindex_t endentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Uint32 startframe, Float framerate, Float r, Float g, Float b, Int32 flags )
+beam_t* CL_BeamRing( entindex_t startentity, entindex_t endentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, float life, float width, float amplitude, float brightness, float speed, float noisespeed, UInt32 startframe, float framerate, float r, float g, float b, Int32 flags )
 {
 	return gBeamRenderer.BeamRing(startentity, endentity, attachment1, attachment2, modelindex, life, width, amplitude, brightness, speed, noisespeed, startframe, framerate, r, g, b, flags);
 }
@@ -816,7 +816,7 @@ beam_t* CL_BeamRing( entindex_t startentity, entindex_t endentity, Int32 attachm
 //====================================
 //
 //====================================
-beam_t* CL_BeamVaporTrail( const Vector& src, const Vector& end, Int32 modelindex1, Int32 modelindex2, Float colorfadedelay, Float colorfadetime, Float life, Float width, Float brightness, Float r1, Float g1, Float b1, Float r2, Float g2, Float b2, Int32 flags )
+beam_t* CL_BeamVaporTrail( const Vector& src, const Vector& end, Int32 modelindex1, Int32 modelindex2, float colorfadedelay, float colorfadetime, float life, float width, float brightness, float r1, float g1, float b1, float r2, float g2, float b2, Int32 flags )
 {
 	return gBeamRenderer.BeamVaporTrail(src, end, modelindex1, modelindex2, colorfadedelay, colorfadetime, life, width, brightness, r1, g1, b1, r2, g2, b2, flags);
 }
@@ -832,7 +832,7 @@ void CL_KillEntityBeams( entindex_t entityindex )
 //====================================
 //
 //====================================
-void CL_CreateBlackHole( Int32 key, const Vector& origin, Float life, Float scale, Float strength, Float rotation, Float growthtime, Float shrinktime )
+void CL_CreateBlackHole( Int32 key, const Vector& origin, float life, float scale, float strength, float rotation, float growthtime, float shrinktime )
 {
 	gBlackHoleRenderer.CreateBlackHole(key, origin, life, scale, strength, rotation, growthtime, shrinktime);
 }
@@ -848,7 +848,7 @@ void CL_KillBlackHole( Int32 key )
 //====================================
 //
 //====================================
-void CL_SetSunFlare( entindex_t entindex, bool active, Float pitch, Float roll, Float scale, const Vector& color, bool portalSunFlare )
+void CL_SetSunFlare( entindex_t entindex, bool active, float pitch, float roll, float scale, const Vector& color, bool portalSunFlare )
 {
 	gLensFlareRenderer.SetSunFlare(entindex, active, pitch, roll, scale, color, portalSunFlare);
 }
@@ -856,7 +856,7 @@ void CL_SetSunFlare( entindex_t entindex, bool active, Float pitch, Float roll, 
 //====================================
 //
 //====================================
-void CL_AddSkyTextureSet( const Char* pstrSkyTextureName, Int32 skysetindex )
+void CL_AddSkyTextureSet( const char* pstrSkyTextureName, Int32 skysetindex )
 {
 	gSkyRenderer.AddSkyTextureSet(pstrSkyTextureName, skysetindex);
 }
@@ -872,7 +872,7 @@ void CL_SetSkyTexture( Int32 skysetindex )
 //====================================
 //
 //====================================
-tracer_t* CL_CreateTracer( const Vector& origin, const Vector& velocity, const Vector& color, Float alpha, Float width, Float length, Float life, tracer_type_t type )
+tracer_t* CL_CreateTracer( const Vector& origin, const Vector& velocity, const Vector& color, float alpha, float width, float length, float life, tracer_type_t type )
 {
 	return gTracers.CreateTracer(origin, velocity, color, alpha, width, length, life, type);
 }

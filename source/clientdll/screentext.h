@@ -22,7 +22,7 @@ public:
 	// Screen text color
 	static const color32_t SCREENTEXT_COLOR;
 	// Screen text text schema name
-	static const Char SCREENTEXT_TEXTSCHEME_FILENAME[];
+	static const char SCREENTEXT_TEXTSCHEME_FILENAME[];
 
 public:
 	struct textmsg_t
@@ -38,7 +38,7 @@ public:
 
 		CString text;
 
-		Double life;
+		double life;
 	};
 
 public:
@@ -58,7 +58,7 @@ public:
 	bool Draw( void );
 
 public:
-	void AddText( const Char* pstrText, Int32 xcoord, Int32 ycoord, Float lifetime );
+	void AddText( const char* pstrText, Int32 xcoord, Int32 ycoord, float lifetime );
 
 private:
 	// List of texts

@@ -13,18 +13,18 @@ All Rights Reserved.
 #include "game.h"
 
 // Number of gibs globally
-Uint32 CGib::m_numGibs = 0;
+UInt32 CGib::m_numGibs = 0;
 
 // Gib default lifetime
-const Float CGib::GIB_DEFAULT_LIFETIME = 25;
+const float CGib::GIB_DEFAULT_LIFETIME = 25;
 // Maximum gibs present ingame
-const Uint32 CGib::MAX_ACTIVE_GIBS = 64;
+const UInt32 CGib::MAX_ACTIVE_GIBS = 64;
 // Max gib velocity
-const Float CGib::MAX_GIB_VELOCITY = 1500;
+const float CGib::MAX_GIB_VELOCITY = 1500;
 // Maximum decals a gib can spawn
-const Uint32 CGib::MAX_NB_DECALS = 4;
+const UInt32 CGib::MAX_NB_DECALS = 4;
 // Full Z velocity at full volume
-const Float CGib::FULL_VOLUME_VELOCITY = 450.0f;
+const float CGib::FULL_VOLUME_VELOCITY = 450.0f;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(gib, CGib);
@@ -154,8 +154,8 @@ void CGib::BounceTouch( CBaseEntity* pOther )
 
 		if(m_material != MAT_NONE && Common::RandomLong(0, 2) == 0)
 		{
-			Float zvelocity = SDL_fabs(m_pState->velocity.z);
-			Float volume = clamp(zvelocity/FULL_VOLUME_VELOCITY, 0.0, VOL_NORM);
+			float zvelocity = SDL_fabs(m_pState->velocity.z);
+			float volume = Clamp(zvelocity/FULL_VOLUME_VELOCITY, 0.0, VOL_NORM);
 
 			CString sound = Util::GetDebrisSound((breakmaterials_t)m_material);
 			Util::EmitEntitySound(this, sound.c_str(), SND_CHAN_BODY, volume);
@@ -203,7 +203,7 @@ void CGib::SetBloodColor( bloodcolor_t color )
 // @brief
 //
 //=============================================
-void CGib::SetLifeTime( Float lifetime )
+void CGib::SetLifeTime( float lifetime )
 {
 	m_lifetime = lifetime;
 }
@@ -221,12 +221,12 @@ void CGib::SetMaterial( Int32 material )
 // @brief
 //
 //=============================================
-void CGib::SpawnRandomGibs( CBaseEntity* pVictim, Uint32 nbGibs, const Vector* pflCenter, Float minvel, Float maxvel )
+void CGib::SpawnRandomGibs( CBaseEntity* pVictim, UInt32 nbGibs, const Vector* pflCenter, float minvel, float maxvel )
 {
 	if(!pVictim)
 		return;
 
-	for(Uint32 i = 0; i < nbGibs; i++)
+	for(UInt32 i = 0; i < nbGibs; i++)
 	{
 		if(m_numGibs >= MAX_ACTIVE_GIBS)
 			return;
@@ -244,7 +244,7 @@ void CGib::SpawnRandomGibs( CBaseEntity* pVictim, Uint32 nbGibs, const Vector* p
 		if(!pGib || !pGib->InitGib(HUMAN_GIBS_MODEL_FILENAME))
 			return;
 
-		Uint32 randomGibsBegin = GIB_SKULL+1;
+		UInt32 randomGibsBegin = GIB_SKULL+1;
 		pGib->SetBody(Common::RandomLong(randomGibsBegin, CGib::NB_GIBS-randomGibsBegin));
 
 		Vector velocity;
@@ -258,7 +258,7 @@ void CGib::SpawnRandomGibs( CBaseEntity* pVictim, Uint32 nbGibs, const Vector* p
 			Math::VectorScale(gMultiDamage.GetDamageDirection(), -1, velocity);
 		}
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			velocity[j] += Common::RandomFloat(-0.25, 0.25);
 
 		Math::VectorScale(velocity, Common::RandomFloat(minvel, maxvel), velocity);
@@ -287,7 +287,7 @@ void CGib::SpawnRandomGibs( CBaseEntity* pVictim, Uint32 nbGibs, const Vector* p
 // @brief
 //
 //=============================================
-void CGib::SpawnHeadGib( CBaseEntity* pVictim, const Vector* pflCenter, Float minvel, Float maxvel )
+void CGib::SpawnHeadGib( CBaseEntity* pVictim, const Vector* pflCenter, float minvel, float maxvel )
 {
 	if(m_numGibs >= MAX_ACTIVE_GIBS)
 		return;
@@ -343,7 +343,7 @@ void CGib::SpawnHeadGib( CBaseEntity* pVictim, const Vector* pflCenter, Float mi
 // @brief
 //
 //=============================================
-void CGib::SpawnChestGib( CBaseEntity* pVictim, const Vector* pflCenter, Float minvel, Float maxvel )
+void CGib::SpawnChestGib( CBaseEntity* pVictim, const Vector* pflCenter, float minvel, float maxvel )
 {
 	if(m_numGibs >= MAX_ACTIVE_GIBS)
 		return;
@@ -395,7 +395,7 @@ void CGib::SpawnChestGib( CBaseEntity* pVictim, const Vector* pflCenter, Float m
 // @brief
 //
 //=============================================
-bool CGib::InitGib( const Char* pstrModelname )
+bool CGib::InitGib( const char* pstrModelname )
 {
 	m_pFields->modelname = gd_engfuncs.pfnAllocString(pstrModelname);
 

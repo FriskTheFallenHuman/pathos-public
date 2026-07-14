@@ -11,7 +11,7 @@ All Rights Reserved.
 #include "cbuffer.h"
 
 // Default allocation size is 1kb
-static constexpr Uint32 DEFAULT_ALLOC_SIZE = 1024;
+static constexpr UInt32 DEFAULT_ALLOC_SIZE = 1024;
 
 //=============================================
 // @brief
@@ -31,7 +31,7 @@ CBuffer::CBuffer( void ):
 // @brief
 //
 //=============================================
-CBuffer::CBuffer( Uint32 allocsize ):
+CBuffer::CBuffer( UInt32 allocsize ):
 	m_pBufferData(nullptr),
 	m_bufferSize(0),
 	m_bufferDataPosition(0),
@@ -47,7 +47,7 @@ CBuffer::CBuffer( Uint32 allocsize ):
 // @brief
 //
 //=============================================
-CBuffer::CBuffer( const void* pdata, Uint32 datasize ):
+CBuffer::CBuffer( const void* pdata, UInt32 datasize ):
 	m_pBufferData(nullptr),
 	m_bufferSize(0),
 	m_bufferDataPosition(0),
@@ -72,7 +72,7 @@ CBuffer::CBuffer( const void* pdata, Uint32 datasize ):
 // @brief
 //
 //=============================================
-CBuffer::CBuffer( Uint32 allocsize, const void* pdata, Uint32 datasize ):
+CBuffer::CBuffer( UInt32 allocsize, const void* pdata, UInt32 datasize ):
 	m_pBufferData(nullptr),
 	m_bufferSize(0),
 	m_bufferDataPosition(0),
@@ -103,7 +103,7 @@ CBuffer::~CBuffer( void )
 {
 	if(m_pBufferData)
 	{
-		byte* pdata = static_cast<byte*>(m_pBufferData);
+		Byte* pdata = static_cast<Byte*>(m_pBufferData);
 		delete[] pdata;
 	}
 }

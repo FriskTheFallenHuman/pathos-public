@@ -70,12 +70,12 @@ struct hud_vertex_t
 	}
 
 	vec4_t origin;
-	Float sizemod[2];
-	Float alphamod[4];
-	Float texcoord[2];
-	Float indent;
-	Float alpha;
-	byte pad[40];
+	float sizemod[2];
+	float alphamod[4];
+	float texcoord[2];
+	float indent;
+	float alpha;
+	Byte pad[40];
 };
 
 /*
@@ -88,13 +88,13 @@ class CHUDDraw
 {
 public:
 	// Edge size 
-	static const Float HUD_EDGE_SIZE;
+	static const float HUD_EDGE_SIZE;
 	// Number of verts in VBO for body
-	static const Uint32 NUM_BODY_VERTEXES;
+	static const UInt32 NUM_BODY_VERTEXES;
 	// Number of verts in VBO for a quad
-	static const Uint32 NUM_QUAD_VERTEXES;
+	static const UInt32 NUM_QUAD_VERTEXES;
 	// Number of verts in VBO total
-	static const Uint32 NUM_TOTAL_VERTEXES;
+	static const UInt32 NUM_TOTAL_VERTEXES;
 
 public:
 	CHUDDraw( void );
@@ -122,31 +122,31 @@ public:
 	// Draws a quad
 	bool DrawQuad( struct en_texture_t *ptexture );
 	// Draws HUD text
-	bool DrawText( const Vector& color, Float alpha, Float x, Float y, const Char *sztext, const font_set_t *pfont );
+	bool DrawText( const Vector& color, float alpha, float x, float y, const char *sztext, const font_set_t *pfont );
 
 	// Sets the color
-	void SetColor( const Vector& rgb, byte a );
+	void SetColor( const Vector& rgb, Byte a );
 	// Sets the color
-	void SetColor( byte r, byte g, byte b, byte a );
+	void SetColor( Byte r, Byte g, Byte b, Byte a );
 	// Sets the alpha mod
-	void SetAlphaMod( byte a1, byte a2, byte a3, byte a4 );
+	void SetAlphaMod( Byte a1, Byte a2, Byte a3, Byte a4 );
 
 	// Sets the origin
-	void SetOrigin( Float x, Float y );
+	void SetOrigin( float x, float y );
 	// Sets the size
-	void SetSize( Float x, Float y );
+	void SetSize( float x, float y );
 
 	// Scales X coordinate by the reference size
-	Float ScaleX( Float x ) const;
+	float ScaleX( float x ) const;
 	// Scales Y coordinate by the reference size
-	Float ScaleY( Float y ) const;
+	float ScaleY( float y ) const;
 	// Returns the relative X coordinate
-	Float ScaleXRelative( Float x ) const;
+	float ScaleXRelative( float x ) const;
 
 	// Tells if the HUD renderer has any errors
 	bool HasError( void ) const;
 	// Returns the error message
-	const Char* GetError( void ) const;
+	const char* GetError( void ) const;
 	// Manages error popup
 	void ManageErrorMessage( void ) const;
 
@@ -167,12 +167,12 @@ private:
 	// Primary color with alpha
 	color32_t			m_color;
 	// Alpha mod for corners
-	byte				m_alphaMod[4];
+	Byte				m_alphaMod[4];
 
 	// Screen width
-	Uint32				m_screenWidth;
+	UInt32				m_screenWidth;
 	// Screen height
-	Uint32				m_screenHeight;
+	UInt32				m_screenHeight;
 };
 extern CHUDDraw gHUDDraw;
 #endif //HUDDRAW_H

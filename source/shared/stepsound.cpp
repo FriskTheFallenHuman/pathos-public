@@ -14,11 +14,11 @@ All Rights Reserved.
 #include "common.h"
 
 // Default footstep type name
-const Char CStepSound::DEFAULT_FOOTSTEP_TYPE[] = "default";
+const char CStepSound::DEFAULT_FOOTSTEP_TYPE[] = "default";
 // Default material type name
-const Char CStepSound::DEFAULT_MATERIAL_TYPE[] = "default";
+const char CStepSound::DEFAULT_MATERIAL_TYPE[] = "default";
 // Concrete material type name
-const Char CStepSound::CONCRETE_MATERIAL_TYPE[] = "concrete";
+const char CStepSound::CONCRETE_MATERIAL_TYPE[] = "concrete";
 
 //=============================================
 //
@@ -38,7 +38,7 @@ CStepSound::~CStepSound( void )
 //=============================================
 //
 //=============================================
-bool CStepSound::Init( const Char* pstrFile, Uint32 filesize )
+bool CStepSound::Init( const char* pstrFile, UInt32 filesize )
 {
 	if(!pstrFile || !filesize)
 		return false;
@@ -51,7 +51,7 @@ bool CStepSound::Init( const Char* pstrFile, Uint32 filesize )
 	// Parse in the script's contents
 	CString token;
 	CString materialtypename;
-	const Char* pstr = pstrFile;
+	const char* pstr = pstrFile;
 	while(pstr && (pstr-pstrFile) < filesize)
 	{
 		// Read in the name token
@@ -161,7 +161,7 @@ bool CStepSound::Init( const Char* pstrFile, Uint32 filesize )
 	}
 
 	// Find the default type
-	for(Uint32 i = 0; i < m_footStepInfoArray.size(); i++)
+	for(UInt32 i = 0; i < m_footStepInfoArray.size(); i++)
 	{
 		footstepinfo_t& info = m_footStepInfoArray[i];
 		if(!qstrcmp(info.materialname, DEFAULT_FOOTSTEP_TYPE))
@@ -179,11 +179,11 @@ bool CStepSound::Init( const Char* pstrFile, Uint32 filesize )
 	}
 
 	// Warn about duplicates
-	for(Uint32 i = 0; i < m_footStepInfoArray.size(); i++)
+	for(UInt32 i = 0; i < m_footStepInfoArray.size(); i++)
 	{
 		footstepinfo_t& info1 = m_footStepInfoArray[i];
 
-		for(Uint32 j = 0; j < m_footStepInfoArray.size(); j++)
+		for(UInt32 j = 0; j < m_footStepInfoArray.size(); j++)
 		{
 			if(i == j)
 				continue;
@@ -209,14 +209,14 @@ void CStepSound::GetPrecacheList( CArray<CString>& outList )
 	if(m_footStepInfoArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_footStepInfoArray.size(); i++)
+	for(UInt32 i = 0; i < m_footStepInfoArray.size(); i++)
 	{
 		footstepinfo_t& info = m_footStepInfoArray[i];
 
-		for(Uint32 j = 0; j < info.leftarray.size(); j++)
+		for(UInt32 j = 0; j < info.leftarray.size(); j++)
 			outList.push_back(info.leftarray[j]);
 
-		for(Uint32 j = 0; j < info.rightarray.size(); j++)
+		for(UInt32 j = 0; j < info.rightarray.size(); j++)
 			outList.push_back(info.rightarray[j]);
 	}
 }
@@ -224,7 +224,7 @@ void CStepSound::GetPrecacheList( CArray<CString>& outList )
 //=============================================
 //
 //=============================================
-bool CStepSound::CheckType( const Char* pstrType, const Char* pstrCheckType )
+bool CStepSound::CheckType( const char* pstrType, const char* pstrCheckType )
 {
 	if(!pstrCheckType || !qstrlen(pstrCheckType) || !qstrcmp(pstrCheckType, DEFAULT_FOOTSTEP_TYPE))
 	{
@@ -242,7 +242,7 @@ bool CStepSound::CheckType( const Char* pstrType, const Char* pstrCheckType )
 //=============================================
 //
 //=============================================
-bool CStepSound::CheckMaterial( const Char* pstrMaterial, const Char* pstrCheckMaterial )
+bool CStepSound::CheckMaterial( const char* pstrMaterial, const char* pstrCheckMaterial )
 {
 	if(!pstrCheckMaterial || !qstrlen(pstrCheckMaterial) 
 		|| !qstrcmp(pstrCheckMaterial, DEFAULT_MATERIAL_TYPE) 
@@ -262,14 +262,14 @@ bool CStepSound::CheckMaterial( const Char* pstrMaterial, const Char* pstrCheckM
 //=============================================
 //
 //=============================================
-const CArray<CString>* CStepSound::GetFootSoundList( foot_t foot, const Char* pmaterialname, const Char* psteptype )
+const CArray<CString>* CStepSound::GetFootSoundList( foot_t foot, const char* pmaterialname, const char* psteptype )
 {
 	if(m_footStepInfoArray.empty())
 		return nullptr;
 
 	// Try to retreive the material relevant sound
 	footstepinfo_t* pinfo = nullptr;
-	for(Uint32 i = 0; i < m_footStepInfoArray.size(); i++)
+	for(UInt32 i = 0; i < m_footStepInfoArray.size(); i++)
 	{
 		footstepinfo_t& info = m_footStepInfoArray[i];
 		if(CheckMaterial(info.materialname.c_str(), pmaterialname) && CheckType(info.type.c_str(), psteptype))
@@ -282,7 +282,7 @@ const CArray<CString>* CStepSound::GetFootSoundList( foot_t foot, const Char* pm
 	// Try without steptype
 	if(!pinfo)
 	{
-		for(Uint32 i = 0; i < m_footStepInfoArray.size(); i++)
+		for(UInt32 i = 0; i < m_footStepInfoArray.size(); i++)
 		{
 			footstepinfo_t& info = m_footStepInfoArray[i];
 			if(CheckMaterial(info.materialname.c_str(), pmaterialname) && CheckType(info.type.c_str(), DEFAULT_FOOTSTEP_TYPE))
@@ -312,13 +312,13 @@ const CArray<CString>* CStepSound::GetFootSoundList( foot_t foot, const Char* pm
 //=============================================
 //
 //=============================================
-bool CStepSound::IsMaterialTypeValid( const Char* pmaterialname )
+bool CStepSound::IsMaterialTypeValid( const char* pmaterialname )
 {
 	if(m_footStepInfoArray.empty())
 		return false;
 
 	// Try to retreive the material relevant sound
-	for(Uint32 i = 0; i < m_footStepInfoArray.size(); i++)
+	for(UInt32 i = 0; i < m_footStepInfoArray.size(); i++)
 	{
 		footstepinfo_t& info = m_footStepInfoArray[i];
 		if(CheckMaterial(info.materialname.c_str(), pmaterialname))
@@ -331,7 +331,7 @@ bool CStepSound::IsMaterialTypeValid( const Char* pmaterialname )
 //=============================================
 //
 //=============================================
-const CStepSound::footstepinfo_t* CStepSound::GetMaterialByIndex( Uint32 index )
+const CStepSound::footstepinfo_t* CStepSound::GetMaterialByIndex( UInt32 index )
 {
 	if(m_footStepInfoArray.empty())
 		return nullptr;
@@ -342,7 +342,7 @@ const CStepSound::footstepinfo_t* CStepSound::GetMaterialByIndex( Uint32 index )
 //=============================================
 //
 //=============================================
-Uint32 CStepSound::GetNbMaterials( void )
+UInt32 CStepSound::GetNbMaterials( void )
 {
 	return m_footStepInfoArray.size();
 }

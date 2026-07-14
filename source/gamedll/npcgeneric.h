@@ -21,9 +21,9 @@ public:
 	// Special renderfx value for mirror only(for legacy support)
 	static const Int32 NPC_GENERIC_MIRROR_ONLY_FX_VALUE;
 	// Yaw speed for npc
-	static const Uint32 NPC_YAW_SPEED;
+	static const UInt32 NPC_YAW_SPEED;
 	// Default health for NPC
-	static const Float NPC_DEFAULT_HEALTH;
+	static const float NPC_DEFAULT_HEALTH;
 
 public:
 	enum hulltype_t
@@ -48,14 +48,14 @@ public:
 	// Sets the ideal yaw speed
 	virtual void SetYawSpeed( void ) override;
 	// Returns the sound mask for the NPC
-	virtual Uint64 GetSoundMask( void ) override;
+	virtual UInt64 GetSoundMask( void ) override;
 	// Returns the gun position
 	virtual Vector GetGunPosition( stance_t stance = STANCE_ACTUAL ) override { return m_pState->origin; }
 
 private:
 	// Hull type
 	Int32 m_hullType;
-	// TRUE if not solid
+	// true if not solid
 	bool m_notSolid;
 };
 #endif //NPCGENERIC_H

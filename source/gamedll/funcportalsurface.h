@@ -30,7 +30,7 @@ public:
 public:
 	virtual bool Spawn( void ) override;
 	virtual bool Restore( void ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 	virtual Int32 GetEntityFlags( void ) override { return CBaseEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION; }
 	virtual bool IsFuncPortalSurfaceEntity( void ) const override { return true; }
@@ -41,9 +41,9 @@ public:
 	static void ClearPortalSurfaceList( void );
 	static void AddPortalSurfaceEntity( CBaseEntity* pMonitor );
 
-	static Uint32 GetNbPortalSurfaces( void );
-	static const CBaseEntity* GetPortalSurfaceByIndex( Uint32 index );
-	static bool CheckVISForEntity( const edict_t* pclient, const edict_t* pedict, const byte* pset );
+	UInt32 GetNbPortalSurfaces( void ) const;
+	const edict_t* GetPortalSurfaceByIndex( UInt32 index ) const;
+	static bool CheckVISForEntity( const edict_t* pclient, const edict_t* pedict, const Byte* pset );
 
 private:
 	static CArray<CBaseEntity*> m_pPortalSurfacesArray;

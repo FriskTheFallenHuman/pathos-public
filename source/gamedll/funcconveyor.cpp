@@ -69,7 +69,7 @@ bool CFuncConveyor::Spawn( void )
 // @brief
 //
 //=============================================
-void CFuncConveyor::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncConveyor::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(HasSpawnFlag(FL_INVISIBLE))
 	{

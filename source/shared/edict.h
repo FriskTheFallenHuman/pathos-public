@@ -76,9 +76,9 @@ struct edict_t
 	// if the edict was freed up
 	bool free;
 	// Time entity was freed
-	Double freetime;
+	double freetime;
 	// unique identifier for this edict
-	Uint32 identifier;
+	UInt32 identifier;
 
 	// area node we're linked to
 	EdictChainType_t* pareachain;
@@ -86,9 +86,9 @@ struct edict_t
 	EdictChainType_t::link_t* parealink;
 
 	// Leafs this entity is touching
-	CArray<Uint32> leafnums;
+	CArray<UInt32> leafnums;
 	// Number of leaves
-	Uint32 numleaves;
+	UInt32 numleaves;
 
 	// Class data
 	void *pprivatedata;

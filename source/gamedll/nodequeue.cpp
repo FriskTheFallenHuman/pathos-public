@@ -52,7 +52,7 @@ bool CNodeQueue::IsFull( void ) const
 // @brief
 //
 //=============================================
-Uint32 CNodeQueue::GetSize( void ) const
+UInt32 CNodeQueue::GetSize( void ) const
 {
 	return m_size;
 }
@@ -61,7 +61,7 @@ Uint32 CNodeQueue::GetSize( void ) const
 // @brief
 //
 //=============================================
-void CNodeQueue::Insert( Int32 value, Float priority )
+void CNodeQueue::Insert( Int32 value, float priority )
 {
 	if(IsFull())
 	{
@@ -80,7 +80,7 @@ void CNodeQueue::Insert( Int32 value, Float priority )
 // @brief
 //
 //=============================================
-Int32 CNodeQueue::Remove( Float& priority )
+Int32 CNodeQueue::Remove( float& priority )
 {
 	if(m_head >= MAX_STACK_NODES)
 		m_head = 0;

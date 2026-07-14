@@ -162,7 +162,7 @@ bool CEnvLaser::KeyValue( const keyvalue_t& kv )
 // @brief Calls use function
 //
 //=============================================
-void CEnvLaser::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvLaser::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool isActive = IsOn();
 	if(!ShouldToggle(useMode, isActive))

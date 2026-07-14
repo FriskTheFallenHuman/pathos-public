@@ -25,17 +25,17 @@ All Rights Reserved.
 CMCDTrace g_mcdTrace;
 
 // Collision epsilon value
-const Float CMCDTrace::COLLISION_EPSILON = 0.01;
+const float CMCDTrace::COLLISION_EPSILON = 0.01;
 // Distance epsilon value
-const Float CMCDTrace::DISTANCE_EPSILON = 0.03125;
+const float CMCDTrace::DISTANCE_EPSILON = 0.03125;
 // On-plane epsilon value
-const Float CMCDTrace::ONPLANE_EPSILON = 0.03125;
+const float CMCDTrace::ONPLANE_EPSILON = 0.03125;
 // Invalid fraction value
-const Float CMCDTrace::INVALID_FRACTION = -MAX_FLOAT_VALUE;
+const float CMCDTrace::INVALID_FRACTION = -MAX_FLOAT_VALUE;
 // SA epsilon value
-const Float CMCDTrace::SA_EPSILON = 0.0f;
+const float CMCDTrace::SA_EPSILON = 0.0f;
 // Triangle index alloc size
-const Uint32 CMCDTrace::TRIANGLE_INDEX_ALLOC_SIZE = 64;
+const UInt32 CMCDTrace::TRIANGLE_INDEX_ALLOC_SIZE = 64;
 
 // Impact normal vectors
 const Vector CMCDTrace::IMPACT_NORMAL_VECTORS[2][3] = {
@@ -83,7 +83,7 @@ CMCDTrace::~CMCDTrace( void )
 // @brief Perform a point-sized traceline against the MCD data
 //
 //=============================================
-bool CMCDTrace::TraceLinePoint( const Vector& start, const Vector& end, const mcdheader_t* pmcdheader, Uint64 bodyvalue, trace_t& tr )
+bool CMCDTrace::TraceLinePoint( const Vector& start, const Vector& end, const mcdheader_t* pmcdheader, UInt64 bodyvalue, trace_t& tr )
 {
 	// Set basics
 	m_mins = ZERO_VECTOR;
@@ -133,12 +133,12 @@ bool CMCDTrace::TraceLinePoint( const Vector& start, const Vector& end, const mc
 		const mcdtrimeshtriangle_t* ptriangles = m_pSubModelTriangleMesh->getTriangles(m_pMCDHeader);
 		const mcdvertex_t* pvertexes = m_pSubModelTriangleMesh->getVertexes(m_pMCDHeader);
 
-		for(Uint32 j = 0; j < m_triangleCount; j++)
+		for(UInt32 j = 0; j < m_triangleCount; j++)
 		{
 			Vector impactPosition;
 			Vector impactNormal;
-			Float planeDistance;
-			Float fraction = 1.0;
+			float planeDistance;
+			float fraction = 1.0;
 
 			Int32 triangleIndex = m_triangleIndexesArray[j];
 			const mcdtrimeshtriangle_t* ptriangle = &ptriangles[triangleIndex];
@@ -178,7 +178,7 @@ bool CMCDTrace::TraceLinePoint( const Vector& start, const Vector& end, const mc
 // @brief Perform an AABB traceline against the MCD data
 //
 //=============================================
-bool CMCDTrace::TraceLineAABB( const Vector& start, const Vector& end, const Vector& clipHullMins, const Vector& clipHullMaxs, const mcdheader_t* pmcdheader, Uint64 bodyvalue, trace_t& tr )
+bool CMCDTrace::TraceLineAABB( const Vector& start, const Vector& end, const Vector& clipHullMins, const Vector& clipHullMaxs, const mcdheader_t* pmcdheader, UInt64 bodyvalue, trace_t& tr )
 {
 	// Set basics
 	m_mins = clipHullMins;
@@ -241,14 +241,14 @@ bool CMCDTrace::TraceLineAABB( const Vector& start, const Vector& end, const Vec
 		const mcdtrimeshtriangle_t* ptriangles = m_pSubModelTriangleMesh->getTriangles(m_pMCDHeader);
 		const mcdvertex_t* pvertexes = m_pSubModelTriangleMesh->getVertexes(m_pMCDHeader);
 
-		for(Uint32 j = 0; j < m_triangleCount; j++)
+		for(UInt32 j = 0; j < m_triangleCount; j++)
 		{
 			Int32 triangleIndex = m_triangleIndexesArray[j];
 
 			Vector impactPosition;
 			Vector impactNormal;
-			Float planeDistance = 0;
-			Float fraction = 1.0;
+			float planeDistance = 0;
+			float fraction = 1.0;
 
 			bool startsolid = false;
 			bool allsolid = false;
@@ -311,11 +311,11 @@ bool CMCDTrace::TraceLineAABB( const Vector& start, const Vector& end, const Vec
 // @brief Set up submodel
 //
 //=============================================
-void CMCDTrace::SetupModel( Uint32 bodypart, Uint64 bodyvalue )
+void CMCDTrace::SetupModel( UInt32 bodypart, UInt64 bodyvalue )
 {
 	const mcdbodypart_t *pbodypart = m_pMCDHeader->getBodyPart(bodypart);
 
-	Uint32 index = bodyvalue / pbodypart->base;
+	UInt32 index = bodyvalue / pbodypart->base;
 	index = index % pbodypart->numsubmodels;
 
 	m_pSubModel = pbodypart->getSubmodel(m_pMCDHeader, index);
@@ -328,12 +328,12 @@ void CMCDTrace::SetupModel( Uint32 bodypart, Uint64 bodyvalue )
 void CMCDTrace::AddBVHNodeTriangles( const mcdbvhnode_t* pbvhnode )
 {
 	const Int32* ptriindexes = pbvhnode->getTriangleIndexes(m_pMCDHeader);
-	for(Uint32 i = 0; i < pbvhnode->numtriangles; i++)
+	for(UInt32 i = 0; i < pbvhnode->numtriangles; i++)
 	{
 		// Check if array needs to be extended
 		if(m_triangleCount == m_triangleIndexesArray.size())
 		{
-			Uint32 arraySize = m_triangleIndexesArray.size()+TRIANGLE_INDEX_ALLOC_SIZE;
+			UInt32 arraySize = m_triangleIndexesArray.size()+TRIANGLE_INDEX_ALLOC_SIZE;
 			m_triangleIndexesArray.resize(arraySize);
 		}
 
@@ -357,12 +357,12 @@ bool CMCDTrace::SeparatingAxisAABBTriangleTest( const Vector& position, const Ve
 	};
 
 	// Test axial planes first
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			pt[j][i] = (*pvertarray[j])[i] - position[i];
 
-		Float min, max;
+		float min, max;
 		Math::FindMinMaxValuesOf3(pt[0][i], pt[1][i], pt[2][i], min, max);
 		if(min > (extents[i] + SA_EPSILON) || max < -(extents[i] + SA_EPSILON))
 			return false;
@@ -375,7 +375,7 @@ bool CMCDTrace::SeparatingAxisAABBTriangleTest( const Vector& position, const Ve
 	// Test on edge 0
 	edge = (*pvertarray[1]) - (*pvertarray[0]);
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		absedge[i] = SDL_fabs(edge[i]);
 
 	if(!AxisTestEdgeCross(AXIS_X, edge.z, edge.y, absedge.z, absedge.y, (*pvertarray[0]), (*pvertarray[2]), extents)
@@ -386,7 +386,7 @@ bool CMCDTrace::SeparatingAxisAABBTriangleTest( const Vector& position, const Ve
 	// Test on edge 1
 	edge = (*pvertarray[2]) - (*pvertarray[1]);
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		absedge[i] = SDL_fabs(edge[i]);
 
 	if(!AxisTestEdgeCross(AXIS_X, edge.z, edge.y, absedge.z, absedge.y, (*pvertarray[0]), (*pvertarray[1]), extents)
@@ -397,7 +397,7 @@ bool CMCDTrace::SeparatingAxisAABBTriangleTest( const Vector& position, const Ve
 	// Test on edge 2
 	edge = (*pvertarray[0]) - (*pvertarray[2]);
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		absedge[i] = SDL_fabs(edge[i]);
 
 	if(!AxisTestEdgeCross(AXIS_X, edge.z, edge.y, absedge.z, absedge.y, (*pvertarray[0]), (*pvertarray[1]), extents)
@@ -429,7 +429,7 @@ bool CMCDTrace::SeparatingAxisAABBTriangleTest( const Vector& position, const Ve
 bool CMCDTrace::TestOverlapPlaneAABB( const mcdtrimeshtriangle_t* ptriangle, const Vector& position, const Vector& extents )
 {
 	Vector min, max;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(ptriangle->normal[i] < 0.0f)
 		{
@@ -443,8 +443,8 @@ bool CMCDTrace::TestOverlapPlaneAABB( const mcdtrimeshtriangle_t* ptriangle, con
 		}
 	}
 
-	Float mindistance = ptriangle->distance - Math::DotProduct(ptriangle->normal, min);
-	Float maxdistance = ptriangle->distance - Math::DotProduct(ptriangle->normal, max);
+	float mindistance = ptriangle->distance - Math::DotProduct(ptriangle->normal, min);
+	float maxdistance = ptriangle->distance - Math::DotProduct(ptriangle->normal, max);
 
 	if((Math::DotProduct(ptriangle->normal, position) - mindistance) > 0.0f)
 		return false;
@@ -458,11 +458,11 @@ bool CMCDTrace::TestOverlapPlaneAABB( const mcdtrimeshtriangle_t* ptriangle, con
 // @brief Test cross-x edge axis
 //
 //=============================================
-bool CMCDTrace::AxisTestEdgeCross( axis_t testaxis, Float edge1, Float edge2, Float absedge1, Float absedge2, const Vector& pt1, const Vector& pt2, const Vector& extents )
+bool CMCDTrace::AxisTestEdgeCross( axis_t testaxis, float edge1, float edge2, float absedge1, float absedge2, const Vector& pt1, const Vector& pt2, const Vector& extents )
 {
-	Float distance1 = 0;
-	Float distance2 = 0;
-	Float boxdistance = 0;
+	float distance1 = 0;
+	float distance2 = 0;
+	float boxdistance = 0;
 
 	switch(testaxis)
 	{
@@ -501,7 +501,7 @@ bool CMCDTrace::AxisTestEdgeCross( axis_t testaxis, Float edge1, Float edge2, Fl
 // @brief Perform a swept AABB test against a triangle
 //
 //=============================================
-bool CMCDTrace::SweptAABBTriangleTest( const Vector& start, const Vector& end, const Vector& extents, const mcdvertex_t* pvertexes, const mcdtrimeshtriangle_t* ptriangle, Vector& impactPosition, Vector& impactNormal, Float& planeDistance, Float& fraction )
+bool CMCDTrace::SweptAABBTriangleTest( const Vector& start, const Vector& end, const Vector& extents, const mcdvertex_t* pvertexes, const mcdtrimeshtriangle_t* ptriangle, Vector& impactPosition, Vector& impactNormal, float& planeDistance, float& fraction )
 {
 	m_currentStartFraction = INVALID_FRACTION;
 	m_currentEndFraction = 1.0f;
@@ -512,7 +512,7 @@ bool CMCDTrace::SweptAABBTriangleTest( const Vector& start, const Vector& end, c
 	dirNormalized.Normalize();
 
 	// Check if the trace is even headed in the direction of this triangle
-	Float dot = Math::DotProduct(ptriangle->normal, traceVector);
+	float dot = Math::DotProduct(ptriangle->normal, traceVector);
 	if(dot > DISTANCE_EPSILON)
 		return false;
 
@@ -582,9 +582,9 @@ bool CMCDTrace::SweptAABBTestFacePlane( const Vector& start, const Vector& end, 
 	Vector pointExtents = CalcClosestExtents(ptriangle->normal, extents);
 
 	// Expand the plane to the box extents, so we can reduce this to a line-triangle test
-	Float expanddistance = ptriangle->distance - Math::DotProduct(ptriangle->normal, pointExtents);
-	Float startdistance = Math::DotProduct(ptriangle->normal, start) - expanddistance;
-	Float enddistance = Math::DotProduct(ptriangle->normal, end) - expanddistance;
+	float expanddistance = ptriangle->distance - Math::DotProduct(ptriangle->normal, pointExtents);
+	float startdistance = Math::DotProduct(ptriangle->normal, start) - expanddistance;
+	float enddistance = Math::DotProduct(ptriangle->normal, end) - expanddistance;
 
 	// Test iwe actually hit the plane or not
 	return ResolveLinePlaneIntersection(startdistance, enddistance, ptriangle->normal, ptriangle->distance);
@@ -605,14 +605,14 @@ bool CMCDTrace::SweptAABBTestAxialPlanesXYZ( const Vector& start, const Vector& 
 	Vector boxpoint = CalcClosestBoxPoint(ptriangle->normal, start, extents);
 	for(Int32 i = 2; i >= 0; i--)
 	{
-		Float raystart = start[i];
-		Float extent = extents[i];
-		Float delta = rayvector[i];
+		float raystart = start[i];
+		float extent = extents[i];
+		float delta = rayvector[i];
 
-		Float distance = Math::FindMinValueOf3(v1[i], v2[i], v3[i]);
-		Float expanddistance = distance - extent;
-		Float startdistance = expanddistance - raystart;
-		Float enddistance = startdistance - delta;
+		float distance = Math::FindMinValueOf3(v1[i], v2[i], v3[i]);
+		float expanddistance = distance - extent;
+		float startdistance = expanddistance - raystart;
+		float enddistance = startdistance - delta;
 		
 		if(!ResolveLinePlaneIntersection(startdistance, enddistance, IMPACT_NORMAL_VECTORS[0][i], distance))
 			return false;
@@ -673,8 +673,8 @@ bool CMCDTrace::EdgeCrossAxisTest( axis_t testaxis, const Vector& start, const V
 	Int32 axis1 = (testaxis+1) % 3;
 	Int32 axis2 = (testaxis+2) % 3;
 
-	Float distance = (normal[axis1] * pointonedge[axis1]) + (normal[axis2] * pointonedge[axis2]);
-	Float offdistance = (normal[axis1] * pointoffedge[axis1]) + (normal[axis2] * pointoffedge[axis2]);
+	float distance = (normal[axis1] * pointonedge[axis1]) + (normal[axis2] * pointonedge[axis2]);
+	float offdistance = (normal[axis1] * pointoffedge[axis1]) + (normal[axis2] * pointoffedge[axis2]);
 	if(!(SDL_fabs(offdistance - distance) < COLLISION_EPSILON) && (offdistance > distance))
 	{
 		Math::VectorScale(normal, -1, normal);
@@ -685,9 +685,9 @@ bool CMCDTrace::EdgeCrossAxisTest( axis_t testaxis, const Vector& start, const V
 	closestextents[axis1] = (normal[axis1] < 0) ? extents[axis1] : -extents[axis1];
 	closestextents[axis2] = (normal[axis2] < 0) ? extents[axis2] : -extents[axis2];
 
-	Float expanddistance = distance - ((normal[axis1] * closestextents[axis1]) + (normal[axis2] * closestextents[axis2]));
-	Float startdistance = ((normal[axis1] * start[axis1]) + (normal[axis2] * start[axis2])) - expanddistance;
-	Float enddistance = ((normal[axis1] * end[axis1]) + (normal[axis2] * end[axis2])) - expanddistance;
+	float expanddistance = distance - ((normal[axis1] * closestextents[axis1]) + (normal[axis2] * closestextents[axis2]));
+	float startdistance = ((normal[axis1] * start[axis1]) + (normal[axis2] * start[axis2])) - expanddistance;
+	float enddistance = ((normal[axis1] * end[axis1]) + (normal[axis2] * end[axis2])) - expanddistance;
 
 	return ResolveLinePlaneIntersection(startdistance, enddistance, normal, distance);
 }
@@ -699,7 +699,7 @@ bool CMCDTrace::EdgeCrossAxisTest( axis_t testaxis, const Vector& start, const V
 Vector CMCDTrace::CalcClosestExtents( const Vector& normal, const Vector& boxExtents )
 {
 	Vector closestExtents;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(normal[i] < 0.0f)
 			closestExtents[i] = boxExtents[i];
@@ -717,7 +717,7 @@ Vector CMCDTrace::CalcClosestExtents( const Vector& normal, const Vector& boxExt
 Vector CMCDTrace::CalcClosestBoxPoint( const Vector& normal, const Vector& start, const Vector& extents )
 {
 	Vector boxPoint;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(normal[i] < 0.0f)
 			boxPoint[i] = start[i] + extents[i];
@@ -732,7 +732,7 @@ Vector CMCDTrace::CalcClosestBoxPoint( const Vector& normal, const Vector& start
 // @brief Resolve ray-plane intersection
 //
 //=============================================
-bool CMCDTrace::ResolveLinePlaneIntersection( Float startDistance, Float endDistance, const Vector& planeNormal, const Float& planeDistance )
+bool CMCDTrace::ResolveLinePlaneIntersection( float startDistance, float endDistance, const Vector& planeNormal, const float& planeDistance )
 {
 	if(startDistance > 0.0f && endDistance > 0.0f)
 		return false;
@@ -740,12 +740,12 @@ bool CMCDTrace::ResolveLinePlaneIntersection( Float startDistance, Float endDist
 	if(startDistance < 0.0f && endDistance < 0.0f)
 		return true;
 
-	Float denominator = startDistance - endDistance;
+	float denominator = startDistance - endDistance;
 	bool isdenominatorzero = (denominator == 0) ? true : false;
 
 	if(startDistance >= 0.0f && endDistance <= 0.0f)
 	{
-		Float fraction = (!isdenominatorzero) ? ((startDistance - DIST_EPSILON) / denominator) : 0.0f;
+		float fraction = (!isdenominatorzero) ? ((startDistance - DIST_EPSILON) / denominator) : 0.0f;
 		if(fraction > m_currentStartFraction)
 		{
 			m_currentStartFraction = fraction;
@@ -755,7 +755,7 @@ bool CMCDTrace::ResolveLinePlaneIntersection( Float startDistance, Float endDist
 	}
 	else
 	{
-		Float fraction = (!isdenominatorzero) ? ((startDistance + DIST_EPSILON) / denominator) : 0.0f;
+		float fraction = (!isdenominatorzero) ? ((startDistance + DIST_EPSILON) / denominator) : 0.0f;
 		if(fraction < m_currentEndFraction)
 			m_currentEndFraction = fraction;		
 	}
@@ -767,7 +767,7 @@ bool CMCDTrace::ResolveLinePlaneIntersection( Float startDistance, Float endDist
 // @brief Perform a line test against a triangle
 //
 //=============================================
-bool CMCDTrace::TestLineTriangleIntersect( const Vector& start, const Vector& end, const mcdvertex_t* pvertexes, const mcdtrimeshtriangle_t* ptriangle, Vector& impactPosition, Vector& impactNormal, Float& planeDistance, Float& fraction )
+bool CMCDTrace::TestLineTriangleIntersect( const Vector& start, const Vector& end, const mcdvertex_t* pvertexes, const mcdtrimeshtriangle_t* ptriangle, Vector& impactPosition, Vector& impactNormal, float& planeDistance, float& fraction )
 {
 	const Vector& vertex0 = pvertexes[ptriangle->trivertexes[0]].origin;
 	const Vector& vertex1 = pvertexes[ptriangle->trivertexes[1]].origin;
@@ -779,23 +779,23 @@ bool CMCDTrace::TestLineTriangleIntersect( const Vector& start, const Vector& en
 	Vector h;
     Math::CrossProduct( m_normDirection, edge2, h );
 
-    Float a = Math::DotProduct( edge1, h );
+    float a = Math::DotProduct( edge1, h );
     if (a > -0.0001f && a < 0.0001f) 
 		return false; // ray parallel to triangle
 
-    Float f = 1 / a;
+    float f = 1 / a;
     Vector s = start - vertex0;
-    const Float u = f * Math::DotProduct( s, h );
+    const float u = f * Math::DotProduct( s, h );
     if (u < 0 || u > 1) 
 		return false;
 
     Vector q;
 	Math::CrossProduct( s, edge1, q );
-    Float v = f * Math::DotProduct( m_normDirection, q );
+    float v = f * Math::DotProduct( m_normDirection, q );
     if (v < 0 || u + v > 1) 
 		return false;
 
-    const Float t = f * Math::DotProduct( edge2, q );
+    const float t = f * Math::DotProduct( edge2, q );
     if (t > 0.0001f && t < m_distance)
 	{
 		impactPosition = start + m_normDirection * t;

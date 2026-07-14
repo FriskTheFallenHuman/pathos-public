@@ -130,12 +130,12 @@ bool CEnvBeamFollow::KeyValue( const keyvalue_t& kv )
 // @brief Calls use function
 //
 //=============================================
-void CEnvBeamFollow::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvBeamFollow::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_pFields->target == NO_STRING_VALUE)
 		return;
 
-	const Char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
 	edict_t* pEdict = Util::FindEntityByTargetName(nullptr, pstrTarget);
 	if(!pEdict)
 	{

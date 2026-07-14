@@ -21,11 +21,11 @@ class CWindow
 {
 public:
 	// Minimum screen width
-	static const Uint32 MIN_SCREEN_WIDTH;
+	static const UInt32 MIN_SCREEN_WIDTH;
 	// Minimum screen height
-	static const Uint32 MIN_SCREEN_HEIGHT;
+	static const UInt32 MIN_SCREEN_HEIGHT;
 	// Maximum MSAA value
-	static const Uint32 MAX_MSAA_VALUE;
+	static const UInt32 MAX_MSAA_VALUE;
 
 public:
 	struct resolution_t
@@ -37,10 +37,10 @@ public:
 			rate(0)
 		{}
 
-		Uint32 index;
-		Uint32 width;
-		Uint32 height;
-		Uint32 rate;
+		UInt32 index;
+		UInt32 width;
+		UInt32 height;
+		UInt32 rate;
 	};
 
 	struct ddevice_t
@@ -73,9 +73,9 @@ public:
 	void SwapWindow( void );
 
 public:
-	Uint32 GetWidth( void ) const;
-	Uint32 GetHeight( void ) const;
-	Uint32 GetRefreshRate( void ) const;
+	UInt32 GetWidth( void ) const;
+	UInt32 GetHeight( void ) const;
+	UInt32 GetRefreshRate( void ) const;
 
 	Int32 GetCenterX( void ) const;
 	Int32 GetCenterY( void ) const;
@@ -84,11 +84,11 @@ public:
 	SDL_GLContext GetGLContext() { return m_sdlContext; }
 
 	Int32 GetNbResolutions( Int32 deviceIndex ) const;
-	void GetResolutionInfo( Int32 deviceIndex, Int32 index, Uint32& width, Uint32& height ) const;
+	void GetResolutionInfo( Int32 deviceIndex, Int32 index, UInt32& width, UInt32& height ) const;
 	Int32 GetCurrentResolutionIndex( void ) const;
 
 	Int32 GetNbDisplayDevices( void ) const;
-	const Char* GetDisplayDeviceName( Int32 index ) const;
+	const char* GetDisplayDeviceName( Int32 index ) const;
 	Int32 GetCurrentDeviceIndex( void ) const;
 
 	bool GetOpenGLInfo( Int32& maxMSAA, bool& fboSupported );
@@ -97,7 +97,7 @@ public:
 	bool IsVerticalSyncEnabled( void ) { return m_bVerticalSync; }
 
 	Int32 GetCurrentMSAASetting( void );
-	Uint32 GetNbMSAASettings( void );
+	UInt32 GetNbMSAASettings( void );
 	Int32 GetMSAASetting( Int32 index );
 
 private:
@@ -106,7 +106,7 @@ private:
 
 	struct conf_group_t* GetConfigGroup( void );
 
-	resolution_t* FindResolution( ddevice_t* pdevice, Uint32 width, Uint32 height );
+	resolution_t* FindResolution( ddevice_t* pdevice, UInt32 width, UInt32 height );
 
 public:
 	void SetActive( bool bActive );
@@ -125,9 +125,9 @@ private:
 	bool			m_areFBOsEnabled;
 
 private:
-	// TRUE if the window is in focus
+	// true if the window is in focus
 	bool			m_bWindowActive;
-	// TRUE if the window is initialized
+	// true if the window is initialized
 	bool			m_bWindowInitialized;
 
 private:

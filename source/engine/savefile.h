@@ -21,7 +21,7 @@ static constexpr Int32 SAVE_FILE_HEADER_MAX_LENGTH = 64;
 // Max generic string length for save files
 static constexpr Int32 SAVE_FILE_FIELD_NAME_MAX_LENGTH = 16;
 // Save file header Id
-static const Char SAVEFILE_HEADER_ID[] = "PSF1";
+static const char SAVEFILE_HEADER_ID[] = "PSF1";
 // Save header in encoded form
 static constexpr Int32 SAVE_HEADER_ENCODED = (('1'<<24)+('F'<<16)+('S'<<8)+'P');
 
@@ -34,7 +34,7 @@ struct save_block_t
 		{}
 
 	Int32 index;
-	Uint64 datasize;
+	UInt64 datasize;
 	Int32 dataoffset;
 };
 
@@ -48,7 +48,7 @@ struct save_field_t
 		{}
 
 	// Index into save file field names array
-	Uint32 fieldnameindex;
+	UInt32 fieldnameindex;
 
 	// Offset into save data
 	Int32 blockindex;
@@ -56,7 +56,7 @@ struct save_field_t
 	Int32 numblocks;
 	
 	// Datatype
-	byte datatype;
+	Byte datatype;
 };
 
 // Data for edicts
@@ -82,18 +82,18 @@ struct save_edict_info_t
 	entindex_t entityindex;
 	
 	// Classname of the entity
-	Char classname[SAVE_FILE_STRING_MAX_LENGTH];
+	char classname[SAVE_FILE_STRING_MAX_LENGTH];
 	// Globalname of the entity
-	Char globalname[SAVE_FILE_STRING_MAX_LENGTH];
+	char globalname[SAVE_FILE_STRING_MAX_LENGTH];
 
 	// Entity mins, used for transition adjustments
 	Vector mins;
 
-	// TRUE if this is the worldspawn entity
+	// true if this is the worldspawn entity
 	bool isworldspawn;
-	// TRUE if the player entity
+	// true if the player entity
 	bool isplayer;
-	// TRUE if this is an entity with a globalname
+	// true if this is an entity with a globalname
 	bool isglobalentity;
 
 	// Offset to entity state array in save data buffer
@@ -128,12 +128,12 @@ struct save_decalinfo_t
 	Vector normal;
 
 	// Decal texture name
-	Char texturename[SAVE_FILE_STRING_MAX_LENGTH];
+	char texturename[SAVE_FILE_STRING_MAX_LENGTH];
 
 	// Entity index into local array
 	entindex_t entityindex;
 	// Edict's identifier
-	Uint32 identifier;
+	UInt32 identifier;
 
 	// Decal flags
 	Int32 flags;
@@ -149,9 +149,9 @@ struct save_level_connection_t
 	}
 	
 	// Name of the map at connection
-	Char othermapname[SAVE_FILE_STRING_MAX_LENGTH];
+	char othermapname[SAVE_FILE_STRING_MAX_LENGTH];
 	// Landmark name at connection
-	Char landmarkname[SAVE_FILE_STRING_MAX_LENGTH];
+	char landmarkname[SAVE_FILE_STRING_MAX_LENGTH];
 };
 
 // Connections for single level
@@ -166,9 +166,9 @@ struct save_levelinfo_t
 	}
 
 	// Name of the level
-	Char mapname[SAVE_FILE_STRING_MAX_LENGTH];
+	char mapname[SAVE_FILE_STRING_MAX_LENGTH];
 	// Save file tied to the level
-	Char mapsavename[SAVE_FILE_STRING_MAX_LENGTH];
+	char mapsavename[SAVE_FILE_STRING_MAX_LENGTH];
 
 	// Offset to connections array
 	Int32 connectioninfoindex;
@@ -186,9 +186,9 @@ struct save_global_t
 		}
 
 	// Name of global
-	Char name[SAVE_FILE_STRING_MAX_LENGTH];
+	char name[SAVE_FILE_STRING_MAX_LENGTH];
 	// Name of level where this was created
-	Char levelname[SAVE_FILE_STRING_MAX_LENGTH];
+	char levelname[SAVE_FILE_STRING_MAX_LENGTH];
 	// Global state
 	Int32 state;
 };
@@ -203,9 +203,9 @@ struct save_cvar_t
 	}
 
 	// Name of cvar
-	Char name[SAVE_FILE_STRING_MAX_LENGTH];
+	char name[SAVE_FILE_STRING_MAX_LENGTH];
 	// Value of cvar
-	Char value[SAVE_FILE_STRING_MAX_LENGTH];
+	char value[SAVE_FILE_STRING_MAX_LENGTH];
 	// Type of cvar
 	Int32 type;
 };
@@ -260,20 +260,20 @@ struct save_header_t
 	savefile_type_t type;
 
 	// Save file name
-	Char name[MAX_PARSE_LENGTH];
+	char name[MAX_PARSE_LENGTH];
 
 	// Header for save file
-	Char saveheader[SAVE_FILE_HEADER_MAX_LENGTH];
+	char saveheader[SAVE_FILE_HEADER_MAX_LENGTH];
 	// Name of map on which we saved
-	Char mapname[SAVE_FILE_STRING_MAX_LENGTH];
+	char mapname[SAVE_FILE_STRING_MAX_LENGTH];
 
 	// Time spent on level
-	Double svtime;
+	double svtime;
 	// Total game time
-	Double gametime;
+	double gametime;
 
 	// Skybox name
-	Char skyname[SAVE_FILE_STRING_MAX_LENGTH];
+	char skyname[SAVE_FILE_STRING_MAX_LENGTH];
 
 	// Saved cvars offset
 	Int32 cvarsoffset;
@@ -325,11 +325,11 @@ struct save_header_t
 	// Screenshot size
 	Int32 screenshotdatasize;
 	// Screenshot width
-	Uint32 screenshotwidth;
+	UInt32 screenshotwidth;
 	// Screenshot height
-	Uint32 screenshotheight;
+	UInt32 screenshotheight;
 	// Screenshot bpp
-	Uint32 screenshotbpp;
+	UInt32 screenshotbpp;
 
 	// Level info data offset
 	Int32 levelinfosdataoffset;

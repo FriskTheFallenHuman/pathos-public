@@ -87,7 +87,7 @@ bool CTriggerChance::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerChance::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerChance::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	Int32 random = Common::RandomLong(0, 100);
 	Int32 treshold = (100-m_chancePercentage);

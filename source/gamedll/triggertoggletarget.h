@@ -13,7 +13,7 @@ All Rights Reserved.
 #include "pointentity.h"
 
 // Max entities remembered by trigger_toggletarget
-static const Uint32 MAX_TOGGLETARGET_ENTITIES = 64;
+static const UInt32 MAX_TOGGLETARGET_ENTITIES = 64;
 
 //=============================================
 //
@@ -34,7 +34,7 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	
 private:
 	Int32 m_triggerMode;

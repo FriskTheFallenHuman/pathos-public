@@ -34,6 +34,6 @@ public:
 	void EXPORTFN RestoreThink( void );
 
 private:
-	Float m_waitTime;
+	float m_waitTime;
 };
 #endif //TRIGGERONCE_H

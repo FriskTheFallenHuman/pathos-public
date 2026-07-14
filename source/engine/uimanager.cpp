@@ -32,7 +32,7 @@ All Rights Reserved.
 #include "textschemas.h"
 
 // Default font schema of the game UI
-const Char CUIManager::DEFAULT_TEXT_SCHEMA[] = "uidefault";
+const char CUIManager::DEFAULT_TEXT_SCHEMA[] = "uidefault";
 
 // Class definition
 CUIManager gUIManager;
@@ -151,7 +151,7 @@ void CUIManager::Shutdown( void )
 
 	if(!m_windowDescriptionArray.empty())
 	{
-		for(Uint32 i = 0; i < m_windowDescriptionArray.size(); i++)
+		for(UInt32 i = 0; i < m_windowDescriptionArray.size(); i++)
 			delete m_windowDescriptionArray[i];
 
 		m_windowDescriptionArray.clear();
@@ -455,12 +455,12 @@ void CUIManager::ShowWindows( Int32 windowFlags )
 void CUIManager::ReorderWindows( void )
 {
 	// Probably not the most efficient setup
-	Uint32 currentFocusIdx = m_currentFocusIndex;
+	UInt32 currentFocusIdx = m_currentFocusIndex;
 
 	// Temporary list to hold vars
 	CLinkedList<CUIWindow*> tmpList;
 
-	while(TRUE)
+	while(true)
 	{
 		// Last nearest value to focus index
 		Int32 lastNearest = -1;
@@ -470,7 +470,7 @@ void CUIManager::ReorderWindows( void )
 		while(!m_windowList.end())
 		{
 			CUIWindow* pWindow = m_windowList.get();
-			Uint32 focusIndex = pWindow->getFocusIndex();
+			UInt32 focusIndex = pWindow->getFocusIndex();
 			
 			if(focusIndex < currentFocusIdx 
 				&& lastNearest < static_cast<Int32>(focusIndex))
@@ -514,8 +514,8 @@ void CUIManager::RepositionWindows( void )
 	if(m_windowList.empty())
 		return;
 
-	Uint32 winWidth = gWindow.GetWidth();
-	Uint32 winHeight = gWindow.GetHeight();
+	UInt32 winWidth = gWindow.GetWidth();
+	UInt32 winHeight = gWindow.GetHeight();
 
 	m_windowList.begin();
 	while(!m_windowList.end())
@@ -525,7 +525,7 @@ void CUIManager::RepositionWindows( void )
 		Int32 originX, originY;
 		pWindow->getAbsPosition(originX, originY);
 
-		Uint32 width, height;
+		UInt32 width, height;
 		pWindow->getSize(width, height);
 
 		Int32 newOriginX = originX;
@@ -577,7 +577,7 @@ void CUIManager::DestroyWindow( CUIWindow* pWindow )
 			CUIWindow* pListWnd = m_windowList.get();
 			if(pListWnd != pWindow)
 			{
-				Uint32 focusIndex = pWindow->getFocusIndex();
+				UInt32 focusIndex = pWindow->getFocusIndex();
 				if(static_cast<Int32>(focusIndex) > lastHighest || lastHighest == -1)
 				{
 					pBestWindow = pListWnd;
@@ -627,7 +627,7 @@ bool CUIManager::HasActiveWindows( void )
 // @param pstrFilename Name of the UI scheme file
 // @return Pointer to scheme object
 //=============================================
-ui_schemeinfo_t* CUIManager::LoadSchemaFile( const Char* pstrFilename )
+ui_schemeinfo_t* CUIManager::LoadSchemaFile( const char* pstrFilename )
 {
 	ui_schemeinfo_t* presult = m_schemaManager.LoadSchemaFile(pstrFilename);
 	if(!presult)
@@ -640,10 +640,10 @@ ui_schemeinfo_t* CUIManager::LoadSchemaFile( const Char* pstrFilename )
 	}
 	else
 	{
-		Uint32 nbWarnings = m_schemaManager.GetNbWarnings();
+		UInt32 nbWarnings = m_schemaManager.GetNbWarnings();
 		if(nbWarnings > 0)
 		{
-			for(Uint32 i = 0; i < nbWarnings; i++)
+			for(UInt32 i = 0; i < nbWarnings; i++)
 				Con_Printf(m_schemaManager.GetWarning(i).c_str());
 
 			m_schemaManager.ClearWarnings();
@@ -659,10 +659,10 @@ ui_schemeinfo_t* CUIManager::LoadSchemaFile( const Char* pstrFilename )
 // @param pstrFilename Name of the UI scheme file
 // @return Pointer to scheme object
 //=============================================
-ui_windowdescription_t* CUIManager::LoadWindowDescriptionFile( const Char* pstrWindowName, const Char* pstrFilename )
+ui_windowdescription_t* CUIManager::LoadWindowDescriptionFile( const char* pstrWindowName, const char* pstrFilename )
 {
 	// Try to find it in the cache first
-	for(Uint32 i = 0; i < m_windowDescriptionArray.size(); i++)
+	for(UInt32 i = 0; i < m_windowDescriptionArray.size(); i++)
 	{
 		if(!qstrcmp(m_windowDescriptionArray[i]->windowName, pstrWindowName))
 			return m_windowDescriptionArray[i];
@@ -672,8 +672,8 @@ ui_windowdescription_t* CUIManager::LoadWindowDescriptionFile( const Char* pstrW
 	CString scriptPath;
 	scriptPath << "resources/windows/" << pstrFilename;
 
-	Uint32 fileSize = 0;
-	const Char* pfile = reinterpret_cast<const Char*>(FL_LoadFile(scriptPath.c_str(), &fileSize));
+	UInt32 fileSize = 0;
+	const char* pfile = reinterpret_cast<const char*>(FL_LoadFile(scriptPath.c_str(), &fileSize));
 	if(!pfile)
 	{
 		Con_EPrintf("Failed to load UI schema script %s.\n", scriptPath.c_str());
@@ -681,7 +681,7 @@ ui_windowdescription_t* CUIManager::LoadWindowDescriptionFile( const Char* pstrW
 	}
 
 	// Convert file content to string
-	CString jsonStr(reinterpret_cast<const Char*>(pfile));
+	CString jsonStr(reinterpret_cast<const char*>(pfile));
 	FL_FreeFile(pfile);
 
 	// Parse JSON
@@ -813,11 +813,11 @@ ui_windowdescription_t* CUIManager::LoadWindowDescriptionFile( const Char* pstrW
 		};
 
 		// Read numbers into int, then assign to Uint32
-		auto readInt = [&](const char* key, Uint32& out) -> bool {
+		auto readInt = [&](const char* key, UInt32& out) -> bool {
 			if (itemObj->has_key(key)) {
 				const TJValue* val = itemObj->try_get_value(key);
 				if (val && val->is_number()) {
-					out = static_cast<Uint32>(val->get_number());
+					out = static_cast<UInt32>(val->get_number());
 					return true;
 				}
 			}
@@ -846,7 +846,7 @@ ui_windowdescription_t* CUIManager::LoadWindowDescriptionFile( const Char* pstrW
 			return false;
 		};
 
-		Uint32 tempInt;
+		UInt32 tempInt;
 		if(readInt("width", tempInt))
 		{
 			newObject.width = tempInt;
@@ -859,7 +859,7 @@ ui_windowdescription_t* CUIManager::LoadWindowDescriptionFile( const Char* pstrW
 		newObject.text = readString("text");
 		newObject.schema = readString("schema");
 
-		Float tempFloat;
+		float tempFloat;
 		if(readFloat("alpha", tempFloat))
 		{
 			newObject.alpha = tempFloat;

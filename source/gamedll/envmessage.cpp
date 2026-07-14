@@ -125,7 +125,7 @@ bool CEnvMessage::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvMessage::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvMessage::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(HasSpawnFlag(FL_ALL_PLAYERS))
 	{

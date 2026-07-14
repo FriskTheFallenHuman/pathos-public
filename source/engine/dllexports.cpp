@@ -17,20 +17,20 @@ All Rights Reserved.
 #include "datatypes.h"
 #include "dllexports.h"
 
-extern Int32 Rva2Offset( Uint32 rva, Uint32 numSections, sectionheader_t* pSections ) ;
+extern Int32 Rva2Offset( UInt32 rva, UInt32 numSections, sectionheader_t* pSections ) ;
 
 //=============================================
 // @brief Initializes the basic systems
 // 
 // @param pparams Launch parameters
-// @return TRUE if successful, FALSE on error
+// @return true if successful, false on error
 //=============================================
-Int32 Rva2Offset( Uint32 rva, Uint32 numSections, sectionheader_t* pSections ) 
+Int32 Rva2Offset( UInt32 rva, UInt32 numSections, sectionheader_t* pSections ) 
 {
 	Int32 i = 0;
 	for (; i < numSections; i++)
 	{
-		Uint32 x = pSections[i].VirtualAddress + pSections[i].SizeOfRawData;
+		UInt32 x = pSections[i].VirtualAddress + pSections[i].SizeOfRawData;
 
 		if (x >= rva)
 			return pSections[i].PointerToRawData + (rva + pSections[i].SizeOfRawData) - x;
@@ -42,16 +42,16 @@ Int32 Rva2Offset( Uint32 rva, Uint32 numSections, sectionheader_t* pSections )
 // @brief Initializes the basic systems
 // 
 // @param pparams Launch parameters
-// @return TRUE if successful, FALSE on error
+// @return true if successful, false on error
 //=============================================
-bool EnumExportedFunctions ( const Char *szFilename, void (*pfnCallBack)(Char*) ) 
+bool EnumExportedFunctions ( const char *szFilename, void (*pfnCallBack)(char*) ) 
 {
 	FILE *hFile = fopen (szFilename, "rb");
 	if (!hFile)
 		return false;
 
 	sectionheader_t *pSections;
-	Uint32 numSections = 0;
+	UInt32 numSections = 0;
 
 	if (fgetc (hFile) != 'M' || fgetc (hFile) != 'Z')
 	{
@@ -59,10 +59,10 @@ bool EnumExportedFunctions ( const Char *szFilename, void (*pfnCallBack)(Char*) 
 		return false;
 	}
 
-	Uint32 e_lfanew = 0;
-	Uint32 numberOfRvaAndSizes = 0;
-	Uint32 exportVirtualAddress = 0;
-	Uint32 exportSize = 0;
+	UInt32 e_lfanew = 0;
+	UInt32 numberOfRvaAndSizes = 0;
+	UInt32 exportVirtualAddress = 0;
+	UInt32 exportSize = 0;
 	Int32 i = 0;
 
 	fseek(hFile, 0x3C, SEEK_SET);
@@ -111,8 +111,8 @@ bool EnumExportedFunctions ( const Char *szFilename, void (*pfnCallBack)(Char*) 
 		fread(&pSections[i].Characteristics, 4, 1, hFile);
 	}
 
-	Uint32 numberOfNames = 0;
-	Uint32 addressOfNames = 0;
+	UInt32 numberOfNames = 0;
+	UInt32 addressOfNames = 0;
 
 	Int32 offset = Rva2Offset (exportVirtualAddress, numSections, pSections);
 	fseek(hFile, offset + 24, SEEK_SET);
@@ -131,7 +131,7 @@ bool EnumExportedFunctions ( const Char *szFilename, void (*pfnCallBack)(Char*) 
 		pos = ftell (hFile);
 		fseek (hFile, Rva2Offset (y, numSections, pSections), SEEK_SET);
 
-		Char c = fgetc (hFile);
+		char c = fgetc (hFile);
 		int szNameLen = 0;
 
 		while (c != '\0') 
@@ -141,7 +141,7 @@ bool EnumExportedFunctions ( const Char *szFilename, void (*pfnCallBack)(Char*) 
 		}
 
 		fseek (hFile, (-szNameLen)-1, SEEK_CUR);
-		Char* szName = static_cast<Char*>(calloc (szNameLen + 1, 1));
+		char* szName = static_cast<char*>(calloc (szNameLen + 1, 1));
 		fread (szName, szNameLen, 1, hFile);
 
 		pfnCallBack (szName);

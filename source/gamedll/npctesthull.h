@@ -43,7 +43,7 @@ public:
 	// Sets the yaw speed
 	virtual void SetYawSpeed( void ) override;
 	// Returns the sound mask
-	virtual Uint64 GetSoundMask( void ) override;
+	virtual UInt64 GetSoundMask( void ) override;
 	// Returns the gun position
 	virtual Vector GetGunPosition( stance_t stance = STANCE_ACTUAL ) override { return m_pState->origin; }
 

@@ -12,9 +12,9 @@ All Rights Reserved.
 #include "lightstyles.h"
 
 // start lightstyle index for dynlights
-const Uint32 CLightStyles::CUSTOM_LIGHTSTYLE_START_INDEX = 255;
+const UInt32 CLightStyles::CUSTOM_LIGHTSTYLE_START_INDEX = 255;
 // Default framerate value
-const Float CLightStyles::DEFAULT_LIGHTSTYLE_FRAMERATE = 10;
+const float CLightStyles::DEFAULT_LIGHTSTYLE_FRAMERATE = 10;
 
 // Class object definition
 CLightStyles gSVLightStyles;
@@ -52,9 +52,9 @@ void CLightStyles::ResetStyles( void )
 // @brief
 //
 //=============================================
-Int32 CLightStyles::AddCustomLightStyle( const Char* pstrpattern, bool interpolate, Float framerate )
+Int32 CLightStyles::AddCustomLightStyle( const char* pstrpattern, bool interpolate, float framerate )
 {
-	for(Uint32 i = 0; i < m_lightStylesArray.size(); i++)
+	for(UInt32 i = 0; i < m_lightStylesArray.size(); i++)
 	{
 		lightstyle_t& style = m_lightStylesArray[i];
 
@@ -95,7 +95,7 @@ Int32 CLightStyles::AddCustomLightStyle( const Char* pstrpattern, bool interpola
 // @brief
 //
 //=============================================
-void CLightStyles::SetLightStyle( const Char* pstrpattern, bool interpolate, Float framerate, Uint32 styleindex )
+void CLightStyles::SetLightStyle( const char* pstrpattern, bool interpolate, float framerate, UInt32 styleindex )
 {
 	if(styleindex >= CUSTOM_LIGHTSTYLE_START_INDEX)
 	{
@@ -104,7 +104,7 @@ void CLightStyles::SetLightStyle( const Char* pstrpattern, bool interpolate, Flo
 	}
 
 	lightstyle_t* pstyle = nullptr;
-	for(Uint32 i = 0; i < m_lightStylesArray.size(); i++)
+	for(UInt32 i = 0; i < m_lightStylesArray.size(); i++)
 	{
 		lightstyle_t& style = m_lightStylesArray[i];
 		if(style.styleindex == styleindex)
@@ -116,7 +116,7 @@ void CLightStyles::SetLightStyle( const Char* pstrpattern, bool interpolate, Flo
 
 	if(!pstyle)
 	{
-		Uint32 prevSize = m_lightStylesArray.size();
+		UInt32 prevSize = m_lightStylesArray.size();
 		m_lightStylesArray.resize(prevSize+1);
 		pstyle = &m_lightStylesArray[prevSize];
 	}
@@ -149,7 +149,7 @@ void CLightStyles::SetLightStyle( const Char* pstrpattern, bool interpolate, Flo
 //=============================================
 void CLightStyles::Think( void )
 {
-	for(Uint32 i = 0; i < m_lightStylesArray.size(); i++)
+	for(UInt32 i = 0; i < m_lightStylesArray.size(); i++)
 	{
 		lightstyle_t& style = m_lightStylesArray[i];
 		if(!style.pattern.length())
@@ -160,8 +160,8 @@ void CLightStyles::Think( void )
 
 		if(style.interpolate)
 		{
-			const Float frame = (g_pGameVars->time*style.framerate);
-			const Float interp = frame - floor(frame);
+			const float frame = (g_pGameVars->time*style.framerate);
+			const float interp = frame - floor(frame);
 
 			Int32 i1 = static_cast<Int32>(frame) % style.pattern.length();
 			Int32 i2 = (static_cast<Int32>(frame) + 1) % style.pattern.length();
@@ -169,16 +169,16 @@ void CLightStyles::Think( void )
 			const Int32 v1 = (style.pattern[i1] - 'a')*22;
 			const Int32 v2 = (style.pattern[i2] - 'a')*22;
 
-			Float value = ((static_cast<Float>(v1))*(1.0-interp)) + ((static_cast<Float>(v2))*interp);
+			float value = ((static_cast<float>(v1))*(1.0-interp)) + ((static_cast<float>(v2))*interp);
 			m_lightStyleValuesArray[style.styleindex] = value / 256.0f;
 		}
 		else
 		{
-			const Float frame = (g_pGameVars->time*style.framerate);
+			const float frame = (g_pGameVars->time*style.framerate);
 			Int32 i1 = static_cast<Int32>(frame) % style.pattern.length();
 			const Int32 v = (style.pattern[i1] - 'a')*22;
 
-			m_lightStyleValuesArray[style.styleindex] = static_cast<Float>(v)/256.0f;
+			m_lightStyleValuesArray[style.styleindex] = static_cast<float>(v)/256.0f;
 		}
 	}
 }
@@ -187,7 +187,7 @@ void CLightStyles::Think( void )
 // @brief
 //
 //=============================================
-CArray<Float>* CLightStyles::GetLightStyleValuesArray( void )
+CArray<float>* CLightStyles::GetLightStyleValuesArray( void )
 {
 	return &m_lightStyleValuesArray;
 }
@@ -201,7 +201,7 @@ void CLightStyles::SendLightStylesToClient( edict_t* pPlayer )
 	if(m_lightStylesArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_lightStylesArray.size(); i++)
+	for(UInt32 i = 0; i < m_lightStylesArray.size(); i++)
 	{
 		lightstyle_t& style = m_lightStylesArray[i];
 

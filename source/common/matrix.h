@@ -29,53 +29,53 @@ public:
 				matrix[i] = 0;
 		}
 
-		Float matrix[16];
+		float matrix[16];
 		matrix_t *next;
 	};
 
 public:
 	CMatrix ( void );
-	explicit CMatrix ( const Float *pMatrix );
+	explicit CMatrix ( const float *pMatrix );
 	virtual ~CMatrix( void );
 	CMatrix( const CMatrix& src );
 
 public:
-	const Float *GetMatrix( void );
-	const Float *GetInverse( void );
-	const Float *Transpose( void );
-	void SetMatrix( const Float *pMatrix );
+	const float *GetMatrix( void );
+	const float *GetInverse( void );
+	const float *Transpose( void );
+	void SetMatrix( const float *pMatrix );
 
 	void LoadIdentity( void );
 	void PushMatrix( void );
 	void PopMatrix( void );
 
-	void MultMatrix ( const Float *pMatrix );
-	void Translate ( Float x, Float y, Float z );
-	void Rotate ( Float angle, Float x, Float y, Float z );
-	void Scale ( Float x, Float y, Float z );
+	void MultMatrix ( const float *pMatrix );
+	void Translate ( float x, float y, float z );
+	void Rotate ( float angle, float x, float y, float z );
+	void Scale ( float x, float y, float z );
 
-	void SetFrustum( Float l, Float r, Float b, Float t, Float n, Float f );
-	void Ortho(Float l, Float r, Float b, Float t, Float n, Float f);
-	void LookAt( Float eyex, Float eyey, Float eyez, Float centerx, Float centery, Float centerz, Float upx, Float upy, Float upz );
+	void SetFrustum( float l, float r, float b, float t, float n, float f );
+	void Ortho(float l, float r, float b, float t, float n, float f);
+	void LookAt( float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz );
 
 public:
-	inline void operator=( const CMatrix& src );
+	DO_INLINE void operator=( const CMatrix& src );
 
 private:
 	// working matrix
-	Float	m_workingMatrix[16];
+	float	m_workingMatrix[16];
 	// output matrix
-	Float	m_outMatrix[16];
+	float	m_outMatrix[16];
 	// multiply matrix
-	Float	m_multMatrix[16];
+	float	m_multMatrix[16];
 	// rotation matrix
-	Float	m_rotationMatrix[16];
+	float	m_rotationMatrix[16];
 	// inverse transpose matrix
-	Float	m_matrixTranspose[16];
+	float	m_matrixTranspose[16];
 
 private:
 	// pointer to current
-	Float *m_pCurrentMatrix;
+	float *m_pCurrentMatrix;
 	// matrix stack
 	matrix_t *m_pMatrixHeader;
 };

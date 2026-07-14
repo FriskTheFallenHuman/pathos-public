@@ -24,7 +24,7 @@ ammoinfo_t CPlayerWeapon::AMMO_INFO_LIST[MAX_AMMO_TYPES];
 //=============================================
 //
 //=============================================
-void Weapon_Precache( const Char* pstrClassname )
+void Weapon_Precache( const char* pstrClassname )
 {
 	edict_t* pedict = gd_engfuncs.pfnCreateEntity(pstrClassname);
 	if(!pedict)
@@ -251,7 +251,7 @@ bool CPlayerWeapon::ExtractAmmo( CPlayerWeapon* pWeapon )
 {
 	bool result = true;
 
-	const Char* pstrAmmoTypeName = GetAmmoTypeName();
+	const char* pstrAmmoTypeName = GetAmmoTypeName();
 	if(pstrAmmoTypeName)
 	{
 		result = pWeapon->AddAmmo(m_defaultAmmo, pstrAmmoTypeName, GetMaxClip(), GetMaxAmmo(), this);
@@ -310,7 +310,7 @@ bool CPlayerWeapon::CheckFriendlyFire( const Vector& shootOrigin, const Vector& 
 // @brief
 //
 //=============================================
-void CPlayerWeapon::SetWeaponAnimation( const Char* pstrsequence, Int64 body, Int32 skin, bool blend )
+void CPlayerWeapon::SetWeaponAnimation( const char* pstrsequence, Int64 body, Int32 skin, bool blend )
 {
 	if(!m_pPlayer)
 		return;
@@ -350,7 +350,7 @@ Vector CPlayerWeapon::GetCone( void )
 // @brief
 //
 //=============================================
-bool CPlayerWeapon::DefaultDeploy( const Char* pstrviewmodel, const Char* pstrsequence, Int64 body, Int32 skin )
+bool CPlayerWeapon::DefaultDeploy( const char* pstrviewmodel, const char* pstrsequence, Int64 body, Int32 skin )
 {
 	if(!CanDeploy())
 		return false;
@@ -365,7 +365,7 @@ bool CPlayerWeapon::DefaultDeploy( const Char* pstrviewmodel, const Char* pstrse
 	SetWeaponAnimation(pstrsequence, body, skin, m_dontBlendNextDeploy ? false : true);
 
 	// Set time
-	Float sequencetime = GetSequenceTime(pstrsequence);
+	float sequencetime = GetSequenceTime(pstrsequence);
 	m_nextAttackTime = g_pGameVars->time + sequencetime;
 	m_nextIdleTime = m_nextAttackTime;
 	m_nextThinkTime = m_nextAttackTime;
@@ -383,7 +383,7 @@ bool CPlayerWeapon::DefaultDeploy( const Char* pstrviewmodel, const Char* pstrse
 			gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.removeparticlesystem, nullptr, m_pPlayer->GetEdict());
 			gd_engfuncs.pfnMsgWriteInt32((i+1));
 			gd_engfuncs.pfnMsgWriteInt32(VIEWMODEL_ENTITY_INDEX);
-			gd_engfuncs.pfnMsgWriteByte(FALSE);
+			gd_engfuncs.pfnMsgWriteByte(false);
 			gd_engfuncs.pfnUserMessageEnd();
 		}
 	}
@@ -395,15 +395,15 @@ bool CPlayerWeapon::DefaultDeploy( const Char* pstrviewmodel, const Char* pstrse
 // @brief
 //
 //=============================================
-bool CPlayerWeapon::DefaultReload( Int32 clipsize, const Char* pstrsequence, Int64 body, Int32 skin, bool blendanimation )
+bool CPlayerWeapon::DefaultReload( Int32 clipsize, const char* pstrsequence, Int64 body, Int32 skin, bool blendanimation )
 {
 	// Don't reload if clip is full
 	if(m_clip == clipsize)
 		return false;
 
 	// Make sure we have any ammo
-	Uint32 playerammo = m_pPlayer->GetAmmoCount(m_ammoType);
-	Uint32 ammoneeded = clipsize - m_clip;
+	UInt32 playerammo = m_pPlayer->GetAmmoCount(m_ammoType);
+	UInt32 ammoneeded = clipsize - m_clip;
 	if(ammoneeded > playerammo)
 		ammoneeded = playerammo;
 
@@ -413,7 +413,7 @@ bool CPlayerWeapon::DefaultReload( Int32 clipsize, const Char* pstrsequence, Int
 	SetWeaponAnimation(pstrsequence, body, skin, blendanimation);
 
 	// Set time
-	Float sequencetime = GetSequenceTime(pstrsequence);
+	float sequencetime = GetSequenceTime(pstrsequence);
 	m_nextAttackTime = g_pGameVars->time + sequencetime;
 	m_nextIdleTime = m_nextAttackTime;
 	m_reloadTime = m_nextAttackTime;
@@ -440,7 +440,7 @@ void CPlayerWeapon::DestroyWeapon( void )
 // @brief
 //
 //=============================================
-bool CPlayerWeapon::AddAmmo( Int32 count, const Char* pstrname, Int32 maxclip, Int32 maxcarry, CBaseEntity* pWeapon )
+bool CPlayerWeapon::AddAmmo( Int32 count, const char* pstrname, Int32 maxclip, Int32 maxcarry, CBaseEntity* pWeapon )
 {
 	Int32 ammoid;
 	if(maxclip < 1)
@@ -450,7 +450,7 @@ bool CPlayerWeapon::AddAmmo( Int32 count, const Char* pstrname, Int32 maxclip, I
 	}
 	else if(!m_clip && !qstrcmp(pWeapon->GetClassName(), GetClassName()))
 	{
-		Uint32 prevClip = m_clip;
+		UInt32 prevClip = m_clip;
 		Int32 clipgive = m_clip+count;
 		if(clipgive > maxclip)
 			clipgive = maxclip;
@@ -459,7 +459,7 @@ bool CPlayerWeapon::AddAmmo( Int32 count, const Char* pstrname, Int32 maxclip, I
 		m_clip += clipgive;
 
 		// We need ammoid regardless
-		Uint32 numgive = count - clipgive;
+		UInt32 numgive = count - clipgive;
 		if (numgive)
 			ammoid = m_pPlayer->GiveAmmo(count - clipgive, pstrname, maxcarry, true, pWeapon);
 		else
@@ -656,8 +656,8 @@ void CPlayerWeapon::Holster( void )
 //=============================================
 void CPlayerWeapon::FinishReload( void )
 {
-	Uint32 playerammo = m_pPlayer->GetAmmoCount(m_ammoType);
-	Uint32 ammoneeded = GetMaxClip() - m_clip;
+	UInt32 playerammo = m_pPlayer->GetAmmoCount(m_ammoType);
+	UInt32 ammoneeded = GetMaxClip() - m_clip;
 	if(ammoneeded > playerammo)
 		ammoneeded = playerammo;
 
@@ -852,10 +852,10 @@ void CPlayerWeapon::DropWeapon( bool destroy )
 	if(GetWeaponFlags() & FL_WEAPON_EXHAUSTIBLE)
 	{
 		// Spawn n minus one number of extra objects
-		Uint32 ammocount = pPlayer->GetAmmoCount(m_ammoType);
+		UInt32 ammocount = pPlayer->GetAmmoCount(m_ammoType);
 		pPlayer->RemoveAmmo(m_ammoType, ammocount);
 
-		for(Uint32 i = 1; i < ammocount; i++)
+		for(UInt32 i = 1; i < ammocount; i++)
 		{
 			Vector pieceOrigin = origin + forward*2*i + Common::RandomLong(-2, 2)*right*i;
 			avelocity = Vector(Common::RandomFloat(-25, 25),
@@ -970,7 +970,7 @@ bool CPlayerWeapon::IsUsable( void )
 //=============================================
 bool CPlayerWeapon::UpdateClientData( CPlayerEntity* pPlayer )
 {
-	// TRUE if we need to update data
+	// true if we need to update data
 	bool updateData = false;
 
 	if(m_pPlayer->ForceWeaponUpdate())
@@ -992,7 +992,7 @@ bool CPlayerWeapon::UpdateClientData( CPlayerEntity* pPlayer )
 
 	if(updateData)
 	{
-		Uint32 coneindex = GetConeIndex();
+		UInt32 coneindex = GetConeIndex();
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.hudcurrentweapon, nullptr, m_pPlayer->GetEdict());
 			gd_engfuncs.pfnMsgWriteByte((m_pPlayer->GetActiveWeapon() == this) ? 1 : 0);
 			gd_engfuncs.pfnMsgWriteByte(m_weaponId);
@@ -1093,7 +1093,7 @@ Int32 CPlayerWeapon::GetHUDPosition( void )
 // @brief
 //
 //=============================================
-const Char* CPlayerWeapon::GetAmmoTypeName( void )
+const char* CPlayerWeapon::GetAmmoTypeName( void )
 {
 	assert(m_weaponId >= 0 && m_weaponId < NUM_WEAPONS);
 	return WEAPON_INFO_LIST[m_weaponId].ammo.c_str();
@@ -1103,7 +1103,7 @@ const Char* CPlayerWeapon::GetAmmoTypeName( void )
 // @brief
 //
 //=============================================
-const Char* CPlayerWeapon::GetWeaponName( void )
+const char* CPlayerWeapon::GetWeaponName( void )
 {
 	assert(m_weaponId >= 0 && m_weaponId < NUM_WEAPONS);
 	return WEAPON_INFO_LIST[m_weaponId].name.c_str();
@@ -1143,7 +1143,7 @@ Int32 CPlayerWeapon::GetWeaponFlags( void )
 // @brief
 //
 //=============================================
-Uint32 CPlayerWeapon::GetConeIndex( void )
+UInt32 CPlayerWeapon::GetConeIndex( void )
 {
 	assert(m_weaponId >= 0 && m_weaponId < NUM_WEAPONS);
 	return WEAPON_INFO_LIST[m_weaponId].cone;
@@ -1187,11 +1187,11 @@ void CPlayerWeapon::DegradeRecoil( void )
 // @brief
 //
 //=============================================
-void CPlayerWeapon::AddRecoil( Float recoil )
+void CPlayerWeapon::AddRecoil( float recoil )
 {
 	m_recoilMultiplier += recoil;
 
-	Float limit = GetRecoilLimit();
+	float limit = GetRecoilLimit();
 	if(m_recoilMultiplier > limit)
 		m_recoilMultiplier = limit;
 }
@@ -1200,7 +1200,7 @@ void CPlayerWeapon::AddRecoil( Float recoil )
 // @brief
 //
 //=============================================
-void CPlayerWeapon::ApplyWeaponKickbackVelocity( const Vector& forwardVector, Float velMin, Float velMax )
+void CPlayerWeapon::ApplyWeaponKickbackVelocity( const Vector& forwardVector, float velMin, float velMax )
 {
 	Vector plrForward(forwardVector);
 	plrForward[2] = 0;
@@ -1233,7 +1233,7 @@ void CPlayerWeapon::ApplyWeaponKickbackVelocity( const Vector& forwardVector, Fl
 // @brief
 //
 //=============================================
-Float CPlayerWeapon::GetAutoAimDegrees( void )
+float CPlayerWeapon::GetAutoAimDegrees( void )
 {
 	assert(WEAPON_INFO_LIST[m_weaponId].autoaimdegrees >= 0 
 		&& WEAPON_INFO_LIST[m_weaponId].autoaimdegrees < NB_AUTOAIM_DEGREES);
@@ -1334,10 +1334,10 @@ void CPlayerWeapon::RegisterWeapon( CBaseEntity* pWeapon )
 // @brief
 //
 //=============================================
-void CPlayerWeapon::RegisterAmmoType( const Char* pstrAmmoTypeName )
+void CPlayerWeapon::RegisterAmmoType( const char* pstrAmmoTypeName )
 {
 	Int32 emptyindex = NO_AMMO_INDEX;
-	for(Uint32 i = 0; i < MAX_AMMO_TYPES; i++)
+	for(UInt32 i = 0; i < MAX_AMMO_TYPES; i++)
 	{
 		// Skip empty ones
 		if(AMMO_INFO_LIST[i].name.empty())
@@ -1371,10 +1371,10 @@ void CPlayerWeapon::RegisterAmmoType( const Char* pstrAmmoTypeName )
 //=============================================
 void CPlayerWeapon::ClearWeaponInfos( void )
 {
-	for(Uint32 i = 0; i < MAX_WEAPONS; i++)
+	for(UInt32 i = 0; i < MAX_WEAPONS; i++)
 		WEAPON_INFO_LIST[i] = weaponinfo_t();
 
-	for(Uint32 i = 0; i < MAX_AMMO_TYPES; i++)
+	for(UInt32 i = 0; i < MAX_AMMO_TYPES; i++)
 		AMMO_INFO_LIST[i] = ammoinfo_t();
 }
 
@@ -1382,9 +1382,9 @@ void CPlayerWeapon::ClearWeaponInfos( void )
 // @brief
 //
 //=============================================
-Int32 CPlayerWeapon::GetAmmoTypeIndex( const Char* pstrAmmoTypeName )
+Int32 CPlayerWeapon::GetAmmoTypeIndex( const char* pstrAmmoTypeName )
 {
-	for(Uint32 i = 0; i < MAX_AMMO_TYPES; i++)
+	for(UInt32 i = 0; i < MAX_AMMO_TYPES; i++)
 	{
 		if(AMMO_INFO_LIST[i].name.empty())
 			continue;

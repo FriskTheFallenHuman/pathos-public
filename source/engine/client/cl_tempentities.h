@@ -25,9 +25,9 @@ class CTempEntityManager
 {
 public:
 	// Tempentity allocation size
-	static const Uint32 TEMPENT_ALLOC_SIZE;
+	static const UInt32 TEMPENT_ALLOC_SIZE;
 	// One shard every n^3 units
-	static const Float SHARD_VOLUME;
+	static const float SHARD_VOLUME;
 
 public:
 	CTempEntityManager( void );
@@ -51,19 +51,19 @@ public:
 	void UpdateTempEntities( void );
 
 	// Creates a sprite funnel effect
-	void CreateFunnel( const Vector& origin, const Vector& color, Float alpha, Uint32 modelindex, bool reverse );
+	void CreateFunnel( const Vector& origin, const Vector& color, float alpha, UInt32 modelindex, bool reverse );
 	// Creates a box of gib models
-	void CreateBreakModel( const Vector& origin, const Vector& size, bm_velocity_t velmode, const Vector& velvector, Uint32 randomvelmin, Uint32 randomvelmax, Float life, Uint32 num, Uint32 modelindex, Int32 sound, Float buoyancy, Float waterfriction, Int32 flags );
+	void CreateBreakModel( const Vector& origin, const Vector& size, bm_velocity_t velmode, const Vector& velvector, UInt32 randomvelmin, UInt32 randomvelmax, float life, UInt32 num, UInt32 modelindex, Int32 sound, float buoyancy, float waterfriction, Int32 flags );
 	// Creates a box of bubbles
-	void CreateBubbles( const Vector& mins, const Vector& maxs, Float height, Uint32 modelindex, Uint32 num, Float speed );
+	void CreateBubbles( const Vector& mins, const Vector& maxs, float height, UInt32 modelindex, UInt32 num, float speed );
 	// Creates a trail of bubbles
-	void CreateBubbleTrail( const Vector& start, const Vector& end, Float height, Uint32 modelindex, Uint32 num, Float speed );
+	void CreateBubbleTrail( const Vector& start, const Vector& end, float height, UInt32 modelindex, UInt32 num, float speed );
 	// Creates a spherical shower of models
-	void CreateSphereModel( const Vector& origin, Float speed, Float life, Uint32 num, Uint32 modelindex, Float buoyancy, Float waterfriction, Int32 sound );
+	void CreateSphereModel( const Vector& origin, float speed, float life, UInt32 num, UInt32 modelindex, float buoyancy, float waterfriction, Int32 sound );
 	// Creates a temporary model
-	tempentity_t* CreateTempModel( const Vector& origin, const Vector& velocity, const Vector& angles, Float life, Uint32 modelindex, Int32 sound, Float buoyancy, Float waterfriction, Int32 flags );
+	tempentity_t* CreateTempModel( const Vector& origin, const Vector& velocity, const Vector& angles, float life, UInt32 modelindex, Int32 sound, float buoyancy, float waterfriction, Int32 flags );
 	// Creates a temporary sprite
-	tempentity_t* CreateTempSprite( const Vector& origin, const Vector& velocity, Float scale, Uint32 modelindex, Int32 rendermode, Int32 renderfx, Float alpha, Float life, Int32 sound, Int32 flags );
+	tempentity_t* CreateTempSprite( const Vector& origin, const Vector& velocity, float scale, UInt32 modelindex, Int32 rendermode, Int32 renderfx, float alpha, float life, Int32 sound, Int32 flags );
 
 private:
 	// Allocates new tempentity block
@@ -79,7 +79,7 @@ private:
 	bool UpdateTempEntity( tempentity_t* ptemp ) const;
 
 	// Plays a tempentity sound
-	static void PlayTempEntitySound( tempentity_t *ptempentity, Float volume );
+	static void PlayTempEntitySound( tempentity_t *ptempentity, float volume );
 
 private:
 	// Linked list of free tempentities

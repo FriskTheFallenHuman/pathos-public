@@ -19,7 +19,7 @@ class CGrenade : public CAnimatingEntity
 {
 public:
 	// Model file path
-	static const Char MODEL_FILENAME[];
+	static const char MODEL_FILENAME[];
 
 public:
 	explicit CGrenade( edict_t* pedict );
@@ -42,26 +42,26 @@ public:
 	void BounceSound( void );
 
 public:
-	void SetExplodeTime( Float explodeTime );
-	void SetExplodeDelay( Float delay );
-	void SetDamageAmount( Float dmgAmount );
-	void SetDamageRadius( Float dmgRadius );
-	void SetDamageTime( Float dmgtime );
+	void SetExplodeTime( float explodeTime );
+	void SetExplodeDelay( float delay );
+	void SetDamageAmount( float dmgAmount );
+	void SetDamageRadius( float dmgRadius );
+	void SetDamageTime( float dmgtime );
 	void SetAttacker( CBaseEntity* pAttacker );
 	void SetWeapon( CPlayerWeapon* pWeapon );
 
 public:
-	static CGrenade* CreateTimed( CBaseEntity* pOwner, const Vector& origin, const Vector& velocity, Float time, Float radius, Float damage, bool contactDelayCountdown = false, CPlayerWeapon* pWeapon = nullptr );
-	static CGrenade* CreateContact( CBaseEntity* pOwner, const Vector& origin, const Vector& velocity, Float radius, Float damage, CPlayerWeapon* pWeapon = nullptr );
+	static CGrenade* CreateTimed( CBaseEntity* pOwner, const Vector& origin, const Vector& velocity, float time, float radius, float damage, bool contactDelayCountdown = false, CPlayerWeapon* pWeapon = nullptr );
+	static CGrenade* CreateContact( CBaseEntity* pOwner, const Vector& origin, const Vector& velocity, float radius, float damage, CPlayerWeapon* pWeapon = nullptr );
 
 private:
-	Double m_nextDmgTime;
-	Double m_explodeTime;
-	Float m_explodeDelay;
+	double m_nextDmgTime;
+	double m_explodeTime;
+	float m_explodeDelay;
 	bool m_emittedNPCSound;
 
-	Float m_damageAmount;
-	Float m_damageRadius;
+	float m_damageAmount;
+	float m_damageRadius;
 	CEntityHandle m_attacker;
 	CEntityHandle m_hitEntity;
 	CPlayerWeapon* m_pWeapon;

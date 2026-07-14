@@ -27,7 +27,7 @@ class CUIManager
 {
 public:
 	// Default font schema of the game UI
-	static const Char DEFAULT_TEXT_SCHEMA[];
+	static const char DEFAULT_TEXT_SCHEMA[];
 
 public:
 	CUIManager( void );
@@ -82,9 +82,9 @@ public:
 	bool HasActiveWindows( void );
 
 	// Loads in a schema file
-	ui_schemeinfo_t* LoadSchemaFile( const Char* pstrFilename );
+	ui_schemeinfo_t* LoadSchemaFile( const char* pstrFilename );
 	// Loads in a schema file
-	ui_windowdescription_t* LoadWindowDescriptionFile( const Char* pstrWindowName, const Char* pstrFilename );
+	ui_windowdescription_t* LoadWindowDescriptionFile( const char* pstrWindowName, const char* pstrFilename );
 
 	// Returns the default font set
 	const font_set_t* GetDefaultFontSet( void ) const { return m_pFontSet; }
@@ -106,7 +106,7 @@ private:
 	// Window in focus
 	CUIWindow* m_pFocusWindow;
 	// Last click index
-	Uint32 m_currentFocusIndex;
+	UInt32 m_currentFocusIndex;
 	// Window filter flags
 	Int32 m_windowFilterFlags;
 

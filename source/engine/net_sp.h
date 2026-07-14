@@ -24,12 +24,12 @@ public:
 
 public:
 	// Initializes networking functions
-	virtual bool Init( const Char* pstrhost ) override;
+	virtual bool Init( const char* pstrhost ) override;
 
 	// Close off and cache a message
 	virtual void SVC_MessageEnd( void ) override;
 	// Retrieves a cache pointer
-	virtual net_msgcache_t* SVC_GetWriteCache( Uint32 clientidx ) override;
+	virtual net_msgcache_t* SVC_GetWriteCache( UInt32 clientidx ) override;
 
 	// Close off and cache a message
 	virtual void CLS_MessageEnd( void ) override;
@@ -37,7 +37,7 @@ public:
 	virtual net_msgcache_t* CLS_GetWriteCache( void ) override;
 
 	// Disconnects from the host server
-	virtual void Disconnect( Uint32 clindex ) override {};
+	virtual void Disconnect( UInt32 clindex ) override {};
 
 	// Tries to reconnect to the host server
 	virtual bool AttemptConnection( void ) override { return true; };

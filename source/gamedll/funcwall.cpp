@@ -66,7 +66,7 @@ bool CFuncWall::Spawn( void )
 // @brief
 //
 //=============================================
-void CFuncWall::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncWall::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{

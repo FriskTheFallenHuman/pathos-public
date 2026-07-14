@@ -9,7 +9,6 @@ All Rights Reserved.
 
 #ifndef CLIENTDLL_H
 #define CLIENTDLL_H
-#define DLLEXPORT __declspec( dllexport )
 
 #include "includes.h"
 #include "cldll_interface.h"
@@ -33,7 +32,7 @@ extern cl_efxapi_t cl_efxapi;
 // Stepsound structure
 extern class CStepSound g_stepSound;
 
-// TRUE if we're executing a level change when ClientGameReset is called
+// true if we're executing a level change when ClientGameReset is called
 extern bool g_isLevelChangeReset;
 
 extern bool ClientDLLInit( void );
@@ -61,8 +60,8 @@ extern void CL_WindowFocusRegained( void );
 
 extern void CL_RunPlayerMovement( const usercmd_t& cmd, pm_info_t* pminfo, bool playSounds );
 extern void CL_DecalExternalEntities( const Vector& vpos, const Vector& vnorm, decalgroupentry_t *texptr, Int32 flags );
-extern bool CL_AddSubtitle( const Char* pstrSubtitleName, Float duration );
-extern void CL_RemoveSubtitle( const Char* pstrSubtitleName );
+extern bool CL_AddSubtitle( const char* pstrSubtitleName, float duration );
+extern void CL_RemoveSubtitle( const char* pstrSubtitleName );
 extern bool CL_IsInputOverridden( void );
 extern bool CL_IsMouseOverridden( void );
 extern bool CL_IsEscapeKeyOverridden( void );

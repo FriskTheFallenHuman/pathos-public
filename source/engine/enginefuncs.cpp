@@ -35,7 +35,7 @@ All Rights Reserved.
 //=============================================
 //
 //=============================================
-const en_material_t* Engine_GetMaterialScript( const Char* pstrTextureName )
+const en_material_t* Engine_GetMaterialScript( const char* pstrTextureName )
 {
 	return CTextureManager::GetInstance()->FindMaterialScript(pstrTextureName, RS_GAME_LEVEL);
 }
@@ -51,7 +51,7 @@ const mleaf_t* Engine_PointInLeaf( const Vector& position )
 //=============================================
 //
 //=============================================
-const cache_model_t* Engine_LoadModel( const Char* pstrModelPath )
+const cache_model_t* Engine_LoadModel( const char* pstrModelPath )
 {
 	return gModelCache.LoadModel(pstrModelPath);
 }
@@ -59,7 +59,7 @@ const cache_model_t* Engine_LoadModel( const Char* pstrModelPath )
 //=============================================
 //
 //=============================================
-const Char* Engine_GetLevelName( void )
+const char* Engine_GetLevelName( void )
 {
 	cache_model_t* pworld = gModelCache.GetModelByIndex(WORLD_MODEL_INDEX);
 	if(!pworld)
@@ -71,7 +71,7 @@ const Char* Engine_GetLevelName( void )
 //=============================================
 //
 //=============================================
-Double Engine_GetEngineTime( void )
+double Engine_GetEngineTime( void )
 {
 	return ens.time;
 }
@@ -79,7 +79,7 @@ Double Engine_GetEngineTime( void )
 //=============================================
 //
 //=============================================
-CCVar* Engine_CreateCVar( cvar_type_t type, Int32 flags, const Char* pstrName, const Char* pstrValue, const Char* pstrDescription )
+CCVar* Engine_CreateCVar( cvar_type_t type, Int32 flags, const char* pstrName, const char* pstrValue, const char* pstrDescription )
 {
 	return gConsole.CreateCVar(type, flags, pstrName, pstrValue, pstrDescription);
 }
@@ -87,7 +87,7 @@ CCVar* Engine_CreateCVar( cvar_type_t type, Int32 flags, const Char* pstrName, c
 //=============================================
 //
 //=============================================
-CCVar* Engine_CreateCVarCallback( cvar_type_t type, Int32 flags, const Char* pstrName, const Char* pstrValue, const Char* pstrDescription, pfnCVarCallback_t pfnCallback )
+CCVar* Engine_CreateCVarCallback( cvar_type_t type, Int32 flags, const char* pstrName, const char* pstrValue, const char* pstrDescription, pfnCVarCallback_t pfnCallback )
 {
 	return gConsole.CreateCVar(type, flags, pstrName, pstrValue, pstrDescription, pfnCallback);
 }
@@ -95,7 +95,7 @@ CCVar* Engine_CreateCVarCallback( cvar_type_t type, Int32 flags, const Char* pst
 //=============================================
 //
 //=============================================
-CCVar* Engine_GetCVarPointer( const Char* pstrName )
+CCVar* Engine_GetCVarPointer( const char* pstrName )
 {
 	return gConsole.GetCVar(pstrName);
 }
@@ -103,7 +103,7 @@ CCVar* Engine_GetCVarPointer( const Char* pstrName )
 //=============================================
 //
 //=============================================
-void Engine_SetCVarFloat( const Char* pstrName, Float value )
+void Engine_SetCVarFloat( const char* pstrName, float value )
 {
 	gConsole.CVarSetFloatValue(pstrName, value);
 }
@@ -111,7 +111,7 @@ void Engine_SetCVarFloat( const Char* pstrName, Float value )
 //=============================================
 //
 //=============================================
-void Engine_SetCVarString( const Char* pstrName, const Char* pstrValue )
+void Engine_SetCVarString( const char* pstrName, const char* pstrValue )
 {
 	gConsole.CVarSetStringValue(pstrName, pstrValue);
 }
@@ -119,7 +119,7 @@ void Engine_SetCVarString( const Char* pstrName, const Char* pstrValue )
 //=============================================
 //
 //=============================================
-void Engine_CreateCommand( const Char* name, cmdfunc_t pfn, const Char* description )
+void Engine_CreateCommand( const char* name, cmdfunc_t pfn, const char* description )
 {
 	gCommands.CreateCommand(name, pfn, description);
 }
@@ -127,7 +127,7 @@ void Engine_CreateCommand( const Char* name, cmdfunc_t pfn, const Char* descript
 //=============================================
 //
 //=============================================
-Uint32 Engine_Cmd_Argc( void )
+UInt32 Engine_Cmd_Argc( void )
 {
 	return gCommands.Cmd_Argc();
 }
@@ -135,7 +135,7 @@ Uint32 Engine_Cmd_Argc( void )
 //=============================================
 //
 //=============================================
-const Char* Engine_Cmd_Argv( Uint32 index )
+const char* Engine_Cmd_Argv( UInt32 index )
 {
 	return gCommands.Cmd_Argv(index);
 }
@@ -143,7 +143,7 @@ const Char* Engine_Cmd_Argv( Uint32 index )
 //=============================================
 //
 //=============================================
-Float Engine_GetCvarFloatValue( const Char* pstrCvarName )
+float Engine_GetCvarFloatValue( const char* pstrCvarName )
 {
 	CCVar* pCvar = gConsole.GetCVar(pstrCvarName);
 	if(!pCvar)
@@ -164,7 +164,7 @@ Float Engine_GetCvarFloatValue( const Char* pstrCvarName )
 //=============================================
 //
 //=============================================
-const Char* Engine_GetCvarStringValue( const Char* pstrCvarName )
+const char* Engine_GetCvarStringValue( const char* pstrCvarName )
 {
 	CCVar* pCvar = gConsole.GetCVar(pstrCvarName);
 	if(!pCvar)
@@ -185,7 +185,7 @@ const Char* Engine_GetCvarStringValue( const Char* pstrCvarName )
 //=============================================
 //
 //=============================================
-Uint32 Engine_GetVISBufferSize( void )
+UInt32 Engine_GetVISBufferSize( void )
 {
 	return ens.visbuffersize;
 }

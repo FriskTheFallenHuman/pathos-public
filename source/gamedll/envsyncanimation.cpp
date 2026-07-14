@@ -68,10 +68,10 @@ bool CEnvSyncAnimation::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvSyncAnimation::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSyncAnimation::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
-	const Char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
-	const Char* pstrSyncTargetName = gd_engfuncs.pfnGetString(m_pFields->netname);
+	const char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrSyncTargetName = gd_engfuncs.pfnGetString(m_pFields->netname);
 
 	edict_t* pTargetEdict = Util::FindEntityByTargetName(nullptr, pstrEntityName);
 	if(!pTargetEdict)

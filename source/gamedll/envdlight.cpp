@@ -190,7 +190,7 @@ void CEnvDLight::SetMinsMaxs( void )
 {
 	// Set mins/maxs
 	Vector mins, maxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		mins[i] = -m_pState->renderamt;
 		maxs[i] = m_pState->renderamt;
@@ -203,7 +203,7 @@ void CEnvDLight::SetMinsMaxs( void )
 // @brief
 //
 //=============================================
-void CEnvDLight::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvDLight::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{
@@ -227,7 +227,7 @@ void CEnvDLight::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode
 // @brief
 //
 //=============================================
-void CEnvDLight::SetValues( const Vector& origin, const Vector& color, Uint32 radius )
+void CEnvDLight::SetValues( const Vector& origin, const Vector& color, UInt32 radius )
 {
 	m_pState->origin = origin;
 	m_pState->rendercolor = color;
@@ -249,7 +249,7 @@ void CEnvDLight::ManageLightStyle( void )
 		m_framerate = CLightStyles::DEFAULT_LIGHTSTYLE_FRAMERATE;
 
 	// Get the pattern string
-	const Char* pstrpattern = gd_engfuncs.pfnGetString(m_pattern);
+	const char* pstrpattern = gd_engfuncs.pfnGetString(m_pattern);
 	if(!pstrpattern)
 		return;
 
@@ -264,7 +264,7 @@ void CEnvDLight::ManageLightStyle( void )
 void CEnvDLight::OscillateThink( void )
 {
 	Vector newOrigin;
-	Float oscillatevar = SDL_sin(g_pGameVars->time*2) - SDL_sin(g_pGameVars->time*5);
+	float oscillatevar = SDL_sin(g_pGameVars->time*2) - SDL_sin(g_pGameVars->time*5);
 	newOrigin.x = m_baseOrigin.x + SDL_sin(g_pGameVars->time)*m_oscillationh*oscillatevar;
 	newOrigin.y = m_baseOrigin.y + SDL_sin(g_pGameVars->time)*m_oscillationh*(1.0-oscillatevar);
 	newOrigin.z = m_baseOrigin.z + SDL_sin(g_pGameVars->time)*m_oscillationv;
@@ -284,7 +284,7 @@ void CEnvDLight::OscillateThink( void )
 // @brief
 //
 //=============================================
-bool CEnvDLight::ShouldOverrideKeyValue( const Char* pstrKeyValue )
+bool CEnvDLight::ShouldOverrideKeyValue( const char* pstrKeyValue )
 {
 	// framerate is handled by this entity specially
 	if(!qstrcmp(pstrKeyValue, "framerate"))
@@ -298,7 +298,7 @@ bool CEnvDLight::ShouldOverrideKeyValue( const Char* pstrKeyValue )
 // @brief
 //
 //=============================================
-CEnvDLight* CEnvDLight::SpawnLight( const Vector& origin, const Vector& color, Uint32 radius )
+CEnvDLight* CEnvDLight::SpawnLight( const Vector& origin, const Vector& color, UInt32 radius )
 {
 	edict_t* pedict = gd_engfuncs.pfnCreateEntity("env_dlight");
 	if(!pedict)

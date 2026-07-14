@@ -13,9 +13,9 @@ All Rights Reserved.
 #include "snd_shared.h"
 
 // Comma delay amount
-const Float CSentencesFile::COMMA_DELAY = 0.5;
+const float CSentencesFile::COMMA_DELAY = 0.5;
 // Default folder for sentences - Seems HL takes "vox" as the default dir
-const Char CSentencesFile::DEFAULT_FOLDER[] = "vox";
+const char CSentencesFile::DEFAULT_FOLDER[] = "vox";
 
 //=============================================
 // @brief
@@ -50,17 +50,17 @@ CSentencesFile::~CSentencesFile( void )
 // @brief
 //
 //=============================================
-bool CSentencesFile::Init( const byte* pfile )
+bool CSentencesFile::Init( const Byte* pfile )
 {
 	// Make sure the arrays are cleared
 	Clear();
 
-	Char lineBuffer[MAX_LINE_LENGTH];
-	Char tokenBuffer[MAX_PARSE_LENGTH];
-	Char chunkTokenBuffer[MAX_PARSE_LENGTH];
+	char lineBuffer[MAX_LINE_LENGTH];
+	char tokenBuffer[MAX_PARSE_LENGTH];
+	char chunkTokenBuffer[MAX_PARSE_LENGTH];
 
-	Uint32 lineNb = 0;
-	const Char* pstr = reinterpret_cast<const Char*>(pfile);
+	UInt32 lineNb = 0;
+	const char* pstr = reinterpret_cast<const char*>(pfile);
 	while(pstr)
 	{
 		// Read in the line
@@ -71,7 +71,7 @@ bool CSentencesFile::Init( const byte* pfile )
 			continue;
 
 		// Get first token of the line
-		const Char* plstr = Common::Parse(lineBuffer, tokenBuffer);
+		const char* plstr = Common::Parse(lineBuffer, tokenBuffer);
 		if(!plstr && qstrncmp(lineBuffer, "//", 2))
 		{
 			CString warning;
@@ -101,10 +101,10 @@ bool CSentencesFile::Init( const byte* pfile )
 
 		// Get the group's name from the entry
 		CString groupName;
-		Uint32 nameLength = qstrlen(tokenBuffer);
+		UInt32 nameLength = qstrlen(tokenBuffer);
 		if(SDL_isdigit(tokenBuffer[nameLength-1]))
 		{
-			Uint32 digitOffs = nameLength-1;
+			UInt32 digitOffs = nameLength-1;
 			while(SDL_isdigit(tokenBuffer[digitOffs]))
 				digitOffs--;
 
@@ -120,7 +120,7 @@ bool CSentencesFile::Init( const byte* pfile )
 
 			// Try to find an existing group
 			sentencegroup_t* pgroup = nullptr;
-			for(Uint32 i = 0; i < m_sentenceGroupsArray.size(); i++)
+			for(UInt32 i = 0; i < m_sentenceGroupsArray.size(); i++)
 			{
 				if(!qstrcmp(m_sentenceGroupsArray[i]->groupname, groupName))
 				{
@@ -145,19 +145,19 @@ bool CSentencesFile::Init( const byte* pfile )
 		}
 
 		// Set the defaults
-		Uint32 defaultpitch = 100;
-		Uint32 defaulttime = 0;
-		Uint32 defaultstart = 0;
-		Uint32 defaultend = 0;
-		Uint32 defaultvolume = 100;
+		UInt32 defaultpitch = 100;
+		UInt32 defaulttime = 0;
+		UInt32 defaultstart = 0;
+		UInt32 defaultend = 0;
+		UInt32 defaultvolume = 100;
 
 		// Set the chunk-specific ones
-		Float chunkdelay = 0;
-		Uint32 chunkpitch = PITCH_NORM;
-		Uint32 chunktime = 0;
-		Uint32 chunkstart = 0;
-		Uint32 chunkend = 0;
-		Uint32 chunkvolume = VOL_NORM*100;
+		float chunkdelay = 0;
+		UInt32 chunkpitch = PITCH_NORM;
+		UInt32 chunktime = 0;
+		UInt32 chunkstart = 0;
+		UInt32 chunkend = 0;
+		UInt32 chunkvolume = VOL_NORM*100;
 
 		bool hasError = false;
 
@@ -182,11 +182,11 @@ bool CSentencesFile::Init( const byte* pfile )
 			else
 			{
 				// Get pointer to beginning
-				const Char* ptstr = tokenBuffer;
+				const char* ptstr = tokenBuffer;
 				chunkTokenBuffer[0] = '\0';
 
 				// Check for bracketed content first
-				const Char* ptbstr = qstrstr(ptstr, "(");
+				const char* ptbstr = qstrstr(ptstr, "(");
 
 				// Outer loop on chunk contents
 				while(ptstr && (*ptstr) != '\0' && !hasError)
@@ -209,16 +209,16 @@ bool CSentencesFile::Init( const byte* pfile )
 								break;
 
 							// Set default options
-							Uint32 pitch = defaultpitch;
-							Uint32 time = defaulttime;
-							Uint32 start = defaultstart;
-							Uint32 end = defaultend;
-							Uint32 volume = defaultvolume;
+							UInt32 pitch = defaultpitch;
+							UInt32 time = defaulttime;
+							UInt32 start = defaultstart;
+							UInt32 end = defaultend;
+							UInt32 volume = defaultvolume;
 
 							if(!ParseOptionToken(&ptbstr, ptbstr, pitch, time, start, end, volume))
 							{
 								CString warning;
-								warning << __FUNCTION__ " - Error on line " << lineNb << " while parsing options";
+								warning << __FUNCTION__ << " - Error on line " << lineNb << " while parsing options";
 								m_warningMessagesArray.push_back(warning);
 								hasError = true;
 								break;
@@ -251,7 +251,7 @@ bool CSentencesFile::Init( const byte* pfile )
 							ptstr = ptbstr;
 
 						// Parse in the name token
-						Uint32 tokenLength = 0;
+						UInt32 tokenLength = 0;
 						while(ptstr && (*ptstr) != '\0' && (*ptstr) != '(')
 						{
 							// Handle comma specially
@@ -341,12 +341,12 @@ bool CSentencesFile::Init( const byte* pfile )
 // @brief
 //
 //=============================================
-bool CSentencesFile::ParseOptionToken( const Char** ppoutstr, const Char* pstroption, Uint32& pitch, Uint32& time, Uint32& start, Uint32& end, Uint32& volume )
+bool CSentencesFile::ParseOptionToken( const char** ppoutstr, const char* pstroption, UInt32& pitch, UInt32& time, UInt32& start, UInt32& end, UInt32& volume )
 {
-	Char optionchar = '\0';
-	Char tokenbuffer[MAX_PARSE_LENGTH+1];
+	char optionchar = '\0';
+	char tokenbuffer[MAX_PARSE_LENGTH+1];
 
-	const Char* pstr = pstroption;
+	const char* pstr = pstroption;
 	if((*pstr) == '(')
 		pstr++;
 
@@ -378,7 +378,7 @@ bool CSentencesFile::ParseOptionToken( const Char** ppoutstr, const Char* pstrop
 		else
 		{
 			// Parse the value in
-			Uint32 length = 0;
+			UInt32 length = 0;
 			while((*pstr) && SDL_isdigit((*pstr)) && length < MAX_PARSE_LENGTH)
 			{
 				tokenbuffer[length] = (*pstr);
@@ -388,7 +388,7 @@ bool CSentencesFile::ParseOptionToken( const Char** ppoutstr, const Char* pstrop
 			// null terminate
 			tokenbuffer[length] = '\0';
 
-			Uint32 value = SDL_atoi(tokenbuffer);
+			UInt32 value = SDL_atoi(tokenbuffer);
 			switch(optionchar)
 			{
 			case 'p':
@@ -432,7 +432,7 @@ void CSentencesFile::Clear( void )
 {
 	if(!m_sentenceGroupsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_sentenceGroupsArray.size(); i++)
+		for(UInt32 i = 0; i < m_sentenceGroupsArray.size(); i++)
 			delete m_sentenceGroupsArray[i];
 
 		m_sentenceGroupsArray.clear();
@@ -440,7 +440,7 @@ void CSentencesFile::Clear( void )
 
 	if(!m_sentencesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_sentencesArray.size(); i++)
+		for(UInt32 i = 0; i < m_sentencesArray.size(); i++)
 			delete m_sentencesArray[i];
 
 		m_sentencesArray.clear();
@@ -454,18 +454,18 @@ void CSentencesFile::Clear( void )
 // @brief
 //
 //=============================================
-const Char* CSentencesFile::GetRandomSentence( const Char* pstrGroupName, Float* pDuration )
+const char* CSentencesFile::GetRandomSentence( const char* pstrGroupName, float* pDuration )
 {
 	if(!m_errorMessage.empty())
 		m_errorMessage.clear();
 
-	for(Uint32 i = 0; i < m_sentenceGroupsArray.size(); i++)
+	for(UInt32 i = 0; i < m_sentenceGroupsArray.size(); i++)
 	{
 		sentencegroup_t* pgrp = m_sentenceGroupsArray[i];
 		if(!qstrcicmp(pgrp->groupname, pstrGroupName))
 		{
-			Uint32 endindex = pgrp->startindex + pgrp->numsentences - 1;
-			Uint32 sentenceindex = Common::RandomLong(pgrp->startindex, endindex);
+			UInt32 endindex = pgrp->startindex + pgrp->numsentences - 1;
+			UInt32 sentenceindex = Common::RandomLong(pgrp->startindex, endindex);
  			if(sentenceindex > m_sentencesArray.size())
 			{
 				m_errorMessage << __FUNCTION__ << " - Invalid sentence index '" << sentenceindex << "' in group '" << pgrp->groupname << "'";
@@ -491,7 +491,7 @@ const Char* CSentencesFile::GetRandomSentence( const Char* pstrGroupName, Float*
 // @brief
 //
 //=============================================
-const Char* CSentencesFile::GetSentence( const Char* pstrSentenceName, Float* pDuration )
+const char* CSentencesFile::GetSentence( const char* pstrSentenceName, float* pDuration )
 {
 	if(!m_errorMessage.empty())
 		m_errorMessage.clear();
@@ -499,13 +499,13 @@ const Char* CSentencesFile::GetSentence( const Char* pstrSentenceName, Float* pD
 	if(!pstrSentenceName || !qstrlen(pstrSentenceName))
 		return nullptr;
 
-	const Char* pstrName;
+	const char* pstrName;
 	if(pstrSentenceName[0] == '!')
 		pstrName = pstrSentenceName + 1;
 	else
 		pstrName = pstrSentenceName;
 
-	for(Uint32 i = 0; i < m_sentencesArray.size(); i++)
+	for(UInt32 i = 0; i < m_sentencesArray.size(); i++)
 	{
 		sentence_t* psent = m_sentencesArray[i];
 		if(!qstrcicmp(psent->name, pstrName))
@@ -528,14 +528,14 @@ const Char* CSentencesFile::GetSentence( const Char* pstrSentenceName, Float* pD
 // @brief
 //
 //=============================================
-void CSentencesFile::PrecacheGroup( const Char* pstrGroupName )
+void CSentencesFile::PrecacheGroup( const char* pstrGroupName )
 {
 	if(!pstrGroupName || !qstrlen(pstrGroupName) || !m_pfnPrecacheSound)
 		return;
 
 	sentencegroup_t* pgroup = nullptr;
 
-	for(Uint32 i = 0; i < m_sentenceGroupsArray.size(); i++)
+	for(UInt32 i = 0; i < m_sentenceGroupsArray.size(); i++)
 	{
 		sentencegroup_t* pcheckgrp = m_sentenceGroupsArray[i];
 		if(!qstrcicmp(pcheckgrp->groupname, pstrGroupName))
@@ -548,7 +548,7 @@ void CSentencesFile::PrecacheGroup( const Char* pstrGroupName )
 	if(!pgroup)
 		return;
 
-	for(Uint32 i = 0; i < pgroup->numsentences; i++)
+	for(UInt32 i = 0; i < pgroup->numsentences; i++)
 	{
 		CString sentname;
 		sentname << pgroup->groupname << static_cast<Int32>(i);
@@ -565,7 +565,7 @@ void CSentencesFile::PrecacheGroup( const Char* pstrGroupName )
 				// Reset duration
 				psentence->duration = 0;
 
-				for(Uint32 j = 0; j < psentence->chunks.size(); j++)
+				for(UInt32 j = 0; j < psentence->chunks.size(); j++)
 				{
 					sent_chunk_t* pchunk = psentence->chunks[j];
 					if(!pchunk)
@@ -575,7 +575,7 @@ void CSentencesFile::PrecacheGroup( const Char* pstrGroupName )
 					filepath << psentence->folder << PATH_SLASH_CHAR;
 					filepath << pchunk->soundname << ".wav";
 
-					Float duration = m_pfnGetSoundDuration(filepath.c_str(), pchunk->pitch);
+					float duration = m_pfnGetSoundDuration(filepath.c_str(), pchunk->pitch);
 					psentence->duration += duration;
 				}
 			}
@@ -587,7 +587,7 @@ void CSentencesFile::PrecacheGroup( const Char* pstrGroupName )
 // @brief
 //
 //=============================================
-void CSentencesFile::PrecacheSentence( const Char* pstrSentenceName )
+void CSentencesFile::PrecacheSentence( const char* pstrSentenceName )
 {
 	if(!pstrSentenceName || !qstrlen(pstrSentenceName) || !m_pfnPrecacheSound)
 		return;
@@ -620,7 +620,7 @@ void CSentencesFile::PrecacheSentence( sentence_t* psentence )
 	// Reset this
 	psentence->duration = 0;
 
-	for(Uint32 i = 0; i < psentence->chunks.size(); i++)
+	for(UInt32 i = 0; i < psentence->chunks.size(); i++)
 	{
 		sent_chunk_t* pchunk = psentence->chunks[i];
 		if(!pchunk)
@@ -630,7 +630,7 @@ void CSentencesFile::PrecacheSentence( sentence_t* psentence )
 		filepath << psentence->folder << PATH_SLASH_CHAR;
 		filepath << pchunk->soundname << ".wav";
 
-		Float duration = (*m_pfnGetSoundDuration)(filepath.c_str(), pchunk->pitch);
+		float duration = (*m_pfnGetSoundDuration)(filepath.c_str(), pchunk->pitch);
 		psentence->duration += duration;
 	}
 }
@@ -639,7 +639,7 @@ void CSentencesFile::PrecacheSentence( sentence_t* psentence )
 // @brief
 //
 //=============================================
-CSentencesFile::sentence_t* CSentencesFile::GetSentenceDefinition( const Char* pstrSentenceName )
+CSentencesFile::sentence_t* CSentencesFile::GetSentenceDefinition( const char* pstrSentenceName )
 {
 	if(!pstrSentenceName || !qstrlen(pstrSentenceName))
 		return nullptr;
@@ -657,7 +657,7 @@ CSentencesFile::sentence_t* CSentencesFile::GetSentenceDefinition( const Char* p
 	}
 	else
 	{
-		for(Uint32 i = 0; i < m_sentencesArray.size(); i++)
+		for(UInt32 i = 0; i < m_sentencesArray.size(); i++)
 		{
 			sentence_t* psent = m_sentencesArray[i];
 			if(!qstrcicmp(psent->name, pstrSentenceName))
@@ -685,7 +685,7 @@ const CSentencesFile::sentence_t* CSentencesFile::GetSentenceDefinition( Int32 i
 // @brief
 //
 //=============================================
-const CSentencesFile::sentence_t* CSentencesFile::GetSentenceDefinition( const Char* pstrSentenceName ) const
+const CSentencesFile::sentence_t* CSentencesFile::GetSentenceDefinition( const char* pstrSentenceName ) const
 {
 	if(!pstrSentenceName || !qstrlen(pstrSentenceName))
 		return nullptr;
@@ -700,7 +700,7 @@ const CSentencesFile::sentence_t* CSentencesFile::GetSentenceDefinition( const C
 	}
 	else
 	{
-		for(Uint32 i = 0; i < m_sentencesArray.size(); i++)
+		for(UInt32 i = 0; i < m_sentencesArray.size(); i++)
 		{
 			sentence_t* psent = m_sentencesArray[i];
 			if(!qstrcicmp(psent->name, pstrSentenceName))
@@ -714,7 +714,7 @@ const CSentencesFile::sentence_t* CSentencesFile::GetSentenceDefinition( const C
 // @brief
 //
 //=============================================
-Float CSentencesFile::GetSentenceDuration( Int32 index )
+float CSentencesFile::GetSentenceDuration( Int32 index )
 {
 	if(index < 0 || index >= static_cast<Int32>(m_sentencesArray.size()))
 		return 0;
@@ -735,7 +735,7 @@ Float CSentencesFile::GetSentenceDuration( Int32 index )
 // @brief
 //
 //=============================================
-Float CSentencesFile::GetSentenceDuration( const Char* pstrSentenceName )
+float CSentencesFile::GetSentenceDuration( const char* pstrSentenceName )
 {
 	if(!pstrSentenceName || !qstrlen(pstrSentenceName))
 		return 0;
@@ -777,7 +777,7 @@ bool CSentencesFile::HasWarnings( void ) const
 // @brief
 //
 //=============================================
-const Char* CSentencesFile::GetWarning( Uint32 index )
+const char* CSentencesFile::GetWarning( UInt32 index )
 {
 	if(index >= m_warningMessagesArray.size())
 		return nullptr;
@@ -789,7 +789,7 @@ const Char* CSentencesFile::GetWarning( Uint32 index )
 // @brief
 //
 //=============================================
-Uint32 CSentencesFile::GetNbWarnings( void ) const
+UInt32 CSentencesFile::GetNbWarnings( void ) const
 {
 	return m_warningMessagesArray.size();
 }
@@ -807,7 +807,7 @@ bool CSentencesFile::HasError( void ) const
 // @brief
 //
 //=============================================
-const Char* CSentencesFile::GetError( void ) const
+const char* CSentencesFile::GetError( void ) const
 {
 	if(!m_errorMessage.empty())
 		return m_errorMessage.c_str();

@@ -20,9 +20,9 @@ struct filechunk_t
 		{}
 
 	Int32 fileid;
-	Uint32 chunkindex;
+	UInt32 chunkindex;
 
-	Uint32 dataoffset;
-	Uint32 datasize;
+	UInt32 dataoffset;
+	UInt32 datasize;
 };
 #endif

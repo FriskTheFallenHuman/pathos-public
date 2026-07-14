@@ -13,21 +13,21 @@ All Rights Reserved.
 // Max generic string length for save files
 static constexpr Int32 SAVE_FILE_STRING_MAX_LENGTH = 256;
 // Maximum transitioning entities
-static constexpr Uint32 MAX_TRANSITIONING_ENTITIES = 512;
+static constexpr UInt32 MAX_TRANSITIONING_ENTITIES = 512;
 
 // Save file extension
-static const Char SAVE_FILE_EXTENSION[] = ".psf";
+static const char SAVE_FILE_EXTENSION[] = ".psf";
 // Quicksave file name
-static const Char QUICKSAVE_FILE_NAME[] = "quick";
+static const char QUICKSAVE_FILE_NAME[] = "quick";
 // Autosave file name
-static const Char AUTOSAVE_FILE_NAME[] = "autosave";
+static const char AUTOSAVE_FILE_NAME[] = "autosave";
 
 // Entity field types
 enum entfieldtype_t
 {
 	EFIELD_UNDEFINED = -1,
 	EFIELD_FLOAT,				// A float vlaue
-	EFIELD_DOUBLE,				// Double precision float
+	EFIELD_DOUBLE,				// double precision float
 	EFIELD_STRING,				// string_t object
 	EFIELD_ENTINDEX,			// Server side entindex
 	EFIELD_ENTPOINTER,			// Entity private data pointer

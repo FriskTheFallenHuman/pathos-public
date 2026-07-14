@@ -44,13 +44,13 @@ class CSkyRenderer
 {
 public:
 	// Skybox surface distance
-	static const Float SKYBOX_SURFACE_DISTANCE;
+	static const float SKYBOX_SURFACE_DISTANCE;
 	// Number of skybox textures
-	static const Uint32 NB_SKYBOX_TEXTURES = 6;
+	static const UInt32 NB_SKYBOX_TEXTURES = 6;
 	// Skybox texture base directory
-	static const Char SKYBOX_TEXTURE_DIR[];
+	static const char SKYBOX_TEXTURE_DIR[];
 	// Skybox texture postfixes
-	static const Char* SKY_TEXTURE_POSTFIXES[NB_SKYBOX_TEXTURES];
+	static const char* SKY_TEXTURE_POSTFIXES[NB_SKYBOX_TEXTURES];
 
 public:
 	enum shader_modes_t
@@ -64,7 +64,7 @@ public:
 		skytextureset_t():
 			serverindex(NO_POSITION)
 		{
-			for(Uint32 i = 0; i < NB_SKYBOX_TEXTURES; i++)
+			for(UInt32 i = 0; i < NB_SKYBOX_TEXTURES; i++)
 				ptextures[i] = nullptr;
 		}
 
@@ -103,7 +103,7 @@ public:
 	bool DrawSky( void );
 
 	// Add a sky set
-	void AddSkyTextureSet( const Char* pstrSkyTextureName, Int32 skysetindex );
+	void AddSkyTextureSet( const char* pstrSkyTextureName, Int32 skysetindex );
 
 	// Sets current sky set
 	void SetCurrentSkySet( Int32 skysetindex );
@@ -114,7 +114,7 @@ public:
 
 private:
 	// Load sky textures
-	void LoadSkyTextures( const Char* pstrName, en_texture_t** pArray );
+	void LoadSkyTextures( const char* pstrName, en_texture_t** pArray );
 	// Creates skybox VBO
 	void CreateVBO( void );
 	// Finds a sky set
@@ -123,10 +123,10 @@ private:
 private:
 	// Skybox related
 	en_texture_t* m_pSkyboxTextures[NB_SKYBOX_TEXTURES];
-	Uint32 m_skyIndexBase;
+	UInt32 m_skyIndexBase;
 
 	// Screen quad
-	Uint32 m_screenQuadBase;
+	UInt32 m_screenQuadBase;
 
 	// Cvar for toggling sky rendering
 	CCVar* m_pCvarDrawSky;

@@ -14,19 +14,19 @@ All Rights Reserved.
 #include "player.h"
 
 // Max number of patrol failures before the patrol history is flushed
-const Uint32 CPatrolNPC::MAX_PATROL_FAILURES = 2;
+const UInt32 CPatrolNPC::MAX_PATROL_FAILURES = 2;
 // Minimum patrol distance
-const Float CPatrolNPC::MIN_PATROL_DISTANCE = 1024;
+const float CPatrolNPC::MIN_PATROL_DISTANCE = 1024;
 // Minimum visible patrol distance
-const Float CPatrolNPC::MIN_VISIBLE_PATROL_DISTANCE = 512;
+const float CPatrolNPC::MIN_VISIBLE_PATROL_DISTANCE = 512;
 // Default patrol radius
-const Float CPatrolNPC::DEFAULT_PATROL_RADIUS = 4096;
+const float CPatrolNPC::DEFAULT_PATROL_RADIUS = 4096;
 // Maximum distance a destination can have from the player's position
-const Float CPatrolNPC::MAX_PATROL_DEST_PLAYER_DISTANCE = 2048;
+const float CPatrolNPC::MAX_PATROL_DEST_PLAYER_DISTANCE = 2048;
 // Minimum distance from a budge attempt we'll accept
-const Float CPatrolNPC::MIN_BUDGE_MOVE_DISTANCE = 64;
+const float CPatrolNPC::MIN_BUDGE_MOVE_DISTANCE = 64;
 // Distance to which we'll try to budge out of a stuck spot
-const Float CPatrolNPC::BUDGE_MOVE_DISTANCE = 256;
+const float CPatrolNPC::BUDGE_MOVE_DISTANCE = 256;
 
 //==========================================================================
 //
@@ -40,7 +40,7 @@ const Float CPatrolNPC::BUDGE_MOVE_DISTANCE = 256;
 //=============================================
 ai_task_t taskListSchedulePatrolNPCPatrol[] = 
 {
-	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(Float)AI_PATROLNPC_SCHED_PATROL_FAIL),
+	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(float)AI_PATROLNPC_SCHED_PATROL_FAIL),
 	AITASK(AI_TASK_STOP_MOVING,					0),
 	AITASK(AI_PATROLNPC_TASK_FIND_DEST,			0),
 	AITASK(AI_TASK_FACE_IDEAL,					0),
@@ -48,14 +48,14 @@ ai_task_t taskListSchedulePatrolNPCPatrol[] =
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
 	AITASK(AI_PATROLNPC_TASK_PATROL_DONE,		0),
 	AITASK(AI_TASK_TURN_LEFT,					180),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT,						3),
 	AITASK(AI_TASK_TURN_LEFT,					180),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT,						2)
 };
 
-Uint32 interruptBitsSchedulePatrolNPCPatrol[] =
+UInt32 interruptBitsSchedulePatrolNPCPatrol[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -93,10 +93,10 @@ ai_task_t taskListSchedulePatrolNPCPatrolFail[] =
 	AITASK(AI_PATROLNPC_TASK_MOVE_BUDGE,		0),
 	AITASK(AI_TASK_WALK_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE)
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE)
 };
 
-Uint32 interruptBitsSchedulePatrolNPCPatrolFail[] =
+UInt32 interruptBitsSchedulePatrolNPCPatrolFail[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -133,7 +133,7 @@ ai_task_t taskListSchedulePatrolNPCPatrolPrompt[] =
 	AITASK(AI_PATROLNPC_TASK_PATROL_FLUSH,		0)
 };
 
-Uint32 interruptBitsSchedulePatrolNPCPatrolPrompt[] =
+UInt32 interruptBitsSchedulePatrolNPCPatrolPrompt[] =
 {
 	AI_COND_SCHEDULE_DONE,
 	AI_COND_HEAR_SOUND
@@ -264,7 +264,7 @@ bool CPatrolNPC::ValidatePatrolDestination( const Vector& destPosition )
 		CBaseEntity* pPlayer = Util::GetHostPlayer();
 		if(pPlayer)
 		{
-			Float distance = (pPlayer->GetNavigablePosition() - destPosition).Length2D();
+			float distance = (pPlayer->GetNavigablePosition() - destPosition).Length2D();
 			if(distance > MAX_PATROL_DEST_PLAYER_DISTANCE)
 				return false;
 		}
@@ -274,13 +274,13 @@ bool CPatrolNPC::ValidatePatrolDestination( const Vector& destPosition )
 	Vector eyesPosition = destPosition + m_pState->view_offset;
 
 	// Check each already visited position
-	for(Uint32 i = 0; i < MAX_PATROL_HISTORY; i++)
+	for(UInt32 i = 0; i < MAX_PATROL_HISTORY; i++)
 	{
 		if(m_patrolHistoryArray[i].IsZero())
 			continue;
 
 		// Make sure it's not too near any already visited position
-		Float distance = (m_patrolHistoryArray[i] - destPosition).Length();
+		float distance = (m_patrolHistoryArray[i] - destPosition).Length();
 		if(distance < GetMinimumPatrolDistance())
 			return false;
 
@@ -447,7 +447,7 @@ void CPatrolNPC::StartTask( const ai_task_t* pTask )
 	case AI_PATROLNPC_TASK_MOVE_BUDGE:
 		{
 			// Try to find an angle out of this stuck position
-			for(Float yaw = 0; yaw < 360; yaw += 20)
+			for(float yaw = 0; yaw < 360; yaw += 20)
 			{
 				// Build move direction
 				Vector angles;
@@ -457,7 +457,7 @@ void CPatrolNPC::StartTask( const ai_task_t* pTask )
 				Math::AngleVectors(angles, &forward);
 
 				// Move the distance
-				Float moveDistance = 0;
+				float moveDistance = 0;
 				Vector finalPosition;
 				WalkMoveTrace(m_pState->origin, forward, finalPosition, BUDGE_MOVE_DISTANCE, moveDistance);
 				if(moveDistance < MIN_BUDGE_MOVE_DISTANCE)
@@ -517,7 +517,7 @@ void CPatrolNPC::SetNPCState( npcstate_t state )
 // @brief Returns the minimum patrol distance for non-visible destinations
 //
 //=============================================
-Float CPatrolNPC::GetMinimumPatrolDistance( void ) const
+float CPatrolNPC::GetMinimumPatrolDistance( void ) const
 {
 	return MIN_PATROL_DISTANCE;
 }
@@ -526,7 +526,7 @@ Float CPatrolNPC::GetMinimumPatrolDistance( void ) const
 // @brief Returns the minimum patrol distance for visible destinations
 //
 //=============================================
-Float CPatrolNPC::GetMinimumVisiblePatrolDistance( void ) const
+float CPatrolNPC::GetMinimumVisiblePatrolDistance( void ) const
 {
 	return MIN_VISIBLE_PATROL_DISTANCE;
 }
@@ -550,12 +550,12 @@ void CPatrolNPC::PushPatrolDestination( const Vector& destPosition )
 //=============================================
 void CPatrolNPC::ClearPatrolHistory( void )
 {
-	for(Uint32 i = 0; i < MAX_PATROL_HISTORY; i++)
+	for(UInt32 i = 0; i < MAX_PATROL_HISTORY; i++)
 		m_patrolHistoryArray[i].Clear();
 
 	m_numPatrolHistory = 0;
 
-	for(Uint32 i = 0; i < (MAX_SQUAD_MEMBERS-1); i++)
+	for(UInt32 i = 0; i < (MAX_SQUAD_MEMBERS-1); i++)
 		m_squadMembersWithErrorsArray[i].reset();
 
 	m_numPatrolErrorPrompts = 0;
@@ -573,7 +573,7 @@ void CPatrolNPC::PatrolErrorPrompt( CBaseEntity* pEntity )
 		return;
 	}
 
-	for(Uint32 i = 0; i < m_numPatrolErrorPrompts; i++)
+	for(UInt32 i = 0; i < m_numPatrolErrorPrompts; i++)
 	{
 		if(m_squadMembersWithErrorsArray[i] == const_cast<const CBaseEntity*>(pEntity))
 			return;
@@ -593,7 +593,7 @@ void CPatrolNPC::PatrolErrorPrompt( CBaseEntity* pEntity )
 // @brief Builds a patrol path
 //
 //=============================================
-bool CPatrolNPC::BuildPatrolPath( Float minDistance, Float maxDistance )
+bool CPatrolNPC::BuildPatrolPath( float minDistance, float maxDistance )
 {
 	if(!gNodeGraph.IsNodeGraphValid())
 	{
@@ -622,12 +622,12 @@ bool CPatrolNPC::BuildPatrolPath( Float minDistance, Float maxDistance )
 		g_lastActiveIdleSearchNodeIndex = 0;
 
 	// Make sure min distance is valid
-	Float _minDistance = minDistance;
+	float _minDistance = minDistance;
 	if(_minDistance > 0.5*maxDistance)
 		_minDistance = 0.5*maxDistance;
 
 	// Get node type
-	Uint64 nodeType = Util::GetNodeTypeForNPC(this);
+	UInt64 nodeType = Util::GetNodeTypeForNPC(this);
 
 	// Get node hull
 	node_hull_types_t hullType = Util::GetNodeHullForNPC(this);
@@ -646,7 +646,7 @@ bool CPatrolNPC::BuildPatrolPath( Float minDistance, Float maxDistance )
 	Vector eyesPosition = GetEyePosition();
 	
 	Int32 lastClosestNodeIndex = NO_POSITION;
-	Float lastClosestDistance = maxDistance;
+	float lastClosestDistance = maxDistance;
 
 	Int32 numNodes = gNodeGraph.GetNumNodes();
 	bool retryLookup = true;
@@ -670,7 +670,7 @@ bool CPatrolNPC::BuildPatrolPath( Float minDistance, Float maxDistance )
 				continue;
 
 			// Make sure distance is valid
-			Float distance = (m_pState->origin - pNode->origin).Length();
+			float distance = (m_pState->origin - pNode->origin).Length();
 			if(distance < _minDistance || distance > maxDistance)
 				continue;
 

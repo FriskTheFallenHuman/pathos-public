@@ -97,7 +97,7 @@ bool CTriggerCounter::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerCounter::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerCounter::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!m_nbTriggersLeft)
 		return;

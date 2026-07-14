@@ -89,7 +89,7 @@ bool CEnvSun::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvSun::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSun::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool prevstate = m_isActive;
 	switch(useMode)
@@ -131,7 +131,7 @@ void CEnvSun::SendInitMessage( const CBaseEntity* pPlayer )
 		gd_engfuncs.pfnMsgWriteSmallFloat(m_roll);
 		gd_engfuncs.pfnMsgWriteSmallFloat(m_pState->scale);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteByte(m_pState->rendercolor[i]);
 
 		gd_engfuncs.pfnMsgWriteByte(HasSpawnFlag(FL_PORTAL_SUN));

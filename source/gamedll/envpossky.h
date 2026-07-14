@@ -19,7 +19,7 @@ class CEnvPosSky : public CFuncTrain
 {
 public:
 	// Distance between PVS updates
-	static const Float PVS_UPDATE_DIST;
+	static const float PVS_UPDATE_DIST;
 
 public:
 	explicit CEnvPosSky( edict_t* pedict );
@@ -34,14 +34,14 @@ public:
 	virtual void SetPVSData( void ) override;
 
 public:
-	const byte* GetPVSData( void );
+	const Byte* GetPVSData( void );
 
 public:
 	static bool CheckSkyboxVisibility( const edict_t* pedict );
 	static void ClearSkyboxEntity( void );
 
 private:
-	byte*	m_pPVSData;
+	Byte*	m_pPVSData;
 	Vector	m_lastPVSOrigin;
 
 private:

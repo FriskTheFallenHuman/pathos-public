@@ -103,7 +103,7 @@ void CFuncPlatRot::HitBottom( void )
 // @brief
 //
 //=============================================
-void CFuncPlatRot::RotateMove( const Vector& destAngle, Double time )
+void CFuncPlatRot::RotateMove( const Vector& destAngle, double time )
 {
 	Vector destDelta = destAngle - m_pState->angles;
 	if(time >= 0.1)

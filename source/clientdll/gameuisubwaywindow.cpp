@@ -19,36 +19,36 @@ All Rights Reserved.
 #include "gameui_shared.h"
 
 // Object x inset for login window
-const Uint32 CGameUISubwayWindow::SUBWAYWINDOW_TAB_X_INSET = 30;
+const UInt32 CGameUISubwayWindow::SUBWAYWINDOW_TAB_X_INSET = 30;
 // Object y inset for login window
-const Uint32 CGameUISubwayWindow::SUBWAYWINDOW_TAB_Y_INSET = 60;
+const UInt32 CGameUISubwayWindow::SUBWAYWINDOW_TAB_Y_INSET = 60;
 // Object y spacing for login window
-const Uint32 CGameUISubwayWindow::SUBWAYWINDOW_TAB_Y_SPACING = 30;
+const UInt32 CGameUISubwayWindow::SUBWAYWINDOW_TAB_Y_SPACING = 30;
 // Object x spacing for login window
-const Uint32 CGameUISubwayWindow::SUBWAYWINDOW_TAB_X_SPACING = 80;
+const UInt32 CGameUISubwayWindow::SUBWAYWINDOW_TAB_X_SPACING = 80;
 // Text inset for subway window
-const Uint32 CGameUISubwayWindow::SUBWAYWINDOW_TAB_TEXT_INSET = 10;
+const UInt32 CGameUISubwayWindow::SUBWAYWINDOW_TAB_TEXT_INSET = 10;
 // Default text color
 const color32_t CGameUISubwayWindow::SUBWAYWINDOW_TEXT_COLOR = color32_t(255, 255, 255, 255);
 // Height of the title surface
-const Uint32 CGameUISubwayWindow::SUBWAYWINDOW_TITLE_SURFACE_HEIGHT = 100;
+const UInt32 CGameUISubwayWindow::SUBWAYWINDOW_TITLE_SURFACE_HEIGHT = 100;
 // Height of the button surface
-const Uint32 CGameUISubwayWindow::SUBWAYWINDOW_BUTTON_SURFACE_HEIGHT = 300;
+const UInt32 CGameUISubwayWindow::SUBWAYWINDOW_BUTTON_SURFACE_HEIGHT = 300;
 // Height of the info surface
-const Uint32 CGameUISubwayWindow::SUBWAYWINDOW_INFO_SURFACE_HEIGHT = 200;
+const UInt32 CGameUISubwayWindow::SUBWAYWINDOW_INFO_SURFACE_HEIGHT = 200;
 // Height of the exit button surface
-const Uint32 CGameUISubwayWindow::SUBWAYWINDOW_EXIT_BUTTON_SURFACE_HEIGHT = 100;
+const UInt32 CGameUISubwayWindow::SUBWAYWINDOW_EXIT_BUTTON_SURFACE_HEIGHT = 100;
 // Number of destination buttons
-const Uint32 CGameUISubwayWindow::NB_DESTINATION_BUTTONS = 4;
+const UInt32 CGameUISubwayWindow::NB_DESTINATION_BUTTONS = 4;
 // Title text default schema set name
-const Char CGameUISubwayWindow::SUBWAYWINDOW_TITLE_TEXTSCHEMA_NAME[] = "subwaytitle";
+const char CGameUISubwayWindow::SUBWAYWINDOW_TITLE_TEXTSCHEMA_NAME[] = "subwaytitle";
 // Text default font schema name
-const Char CGameUISubwayWindow::SUBWAYWINDOW_TEXTSCHEMA_NAME[] = "subwaytext";
+const char CGameUISubwayWindow::SUBWAYWINDOW_TEXTSCHEMA_NAME[] = "subwaytext";
 
 //====================================
 //
 //====================================
-CGameUISubwayWindow::CGameUISubwayWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUISubwayWindow::CGameUISubwayWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIWindow(flags, originX, originY, width, height),
 	m_pWindowTitleText(nullptr),
 	m_pDefaultDescription(nullptr),
@@ -71,32 +71,32 @@ CGameUISubwayWindow::~CGameUISubwayWindow( void )
 void CGameUISubwayWindow::init( void )
 {
 	// Init basic window elements
-	Uint32 verticalbarheight, middlebarwidth, barThickness;
+	UInt32 verticalbarheight, middlebarwidth, barThickness;
 	CGameUIWindow::initBackground(verticalbarheight, middlebarwidth, barThickness);
 
-	Uint32 tabTopInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_TOP_INSET);
-	Uint32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
-	Uint32 tabSideInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_SIDE_INSET);
-	Uint32 mainTabMaxWidth = gHUDDraw.ScaleX(GAMEUIWINDOW_MAIN_TAB_MAX_WIDTH);
-	Uint32 edgeThickness = gHUDDraw.ScaleX(GAMEUIWINDOW_EDGE_THICKNESS);
-	Uint32 titleSurfaceHeight = gHUDDraw.ScaleY(SUBWAYWINDOW_TITLE_SURFACE_HEIGHT);
-	Uint32 buttonSurfaceHeight = gHUDDraw.ScaleY(SUBWAYWINDOW_BUTTON_SURFACE_HEIGHT);
-	Uint32 infoSurfaceHeight = gHUDDraw.ScaleY(SUBWAYWINDOW_INFO_SURFACE_HEIGHT);
-	Uint32 exitButtonSurfaceHeight = gHUDDraw.ScaleY(SUBWAYWINDOW_EXIT_BUTTON_SURFACE_HEIGHT);
-	Uint32 tabXSpacing = gHUDDraw.ScaleX(SUBWAYWINDOW_TAB_X_SPACING);
-	Uint32 tabYSpacing = gHUDDraw.ScaleY(SUBWAYWINDOW_TAB_Y_SPACING);
-	Uint32 textInset = gHUDDraw.ScaleY(SUBWAYWINDOW_TAB_TEXT_INSET);
+	UInt32 tabTopInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_TOP_INSET);
+	UInt32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
+	UInt32 tabSideInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_SIDE_INSET);
+	UInt32 mainTabMaxWidth = gHUDDraw.ScaleX(GAMEUIWINDOW_MAIN_TAB_MAX_WIDTH);
+	UInt32 edgeThickness = gHUDDraw.ScaleX(GAMEUIWINDOW_EDGE_THICKNESS);
+	UInt32 titleSurfaceHeight = gHUDDraw.ScaleY(SUBWAYWINDOW_TITLE_SURFACE_HEIGHT);
+	UInt32 buttonSurfaceHeight = gHUDDraw.ScaleY(SUBWAYWINDOW_BUTTON_SURFACE_HEIGHT);
+	UInt32 infoSurfaceHeight = gHUDDraw.ScaleY(SUBWAYWINDOW_INFO_SURFACE_HEIGHT);
+	UInt32 exitButtonSurfaceHeight = gHUDDraw.ScaleY(SUBWAYWINDOW_EXIT_BUTTON_SURFACE_HEIGHT);
+	UInt32 tabXSpacing = gHUDDraw.ScaleX(SUBWAYWINDOW_TAB_X_SPACING);
+	UInt32 tabYSpacing = gHUDDraw.ScaleY(SUBWAYWINDOW_TAB_Y_SPACING);
+	UInt32 textInset = gHUDDraw.ScaleY(SUBWAYWINDOW_TAB_TEXT_INSET);
 
 	//
 	// Create the title text object
 	//
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	//
 	// Create the tab objects
 	//
-	Uint32 tabWidth = middlebarwidth - barThickness*2 - tabSideInset*2;
+	UInt32 tabWidth = middlebarwidth - barThickness*2 - tabSideInset*2;
 	if(tabWidth > mainTabMaxWidth)
 		tabWidth = mainTabMaxWidth;
 
@@ -163,8 +163,8 @@ void CGameUISubwayWindow::init( void )
 	m_pWindowTitleText->setParent(pTitleTab);
 
 	// Create the buttons
-	Uint32 buttonWidth = tabWidth - 2*tabXSpacing;
-	Uint32 buttonHeight = (buttonSurfaceHeight - tabYSpacing * 5)/4;
+	UInt32 buttonWidth = tabWidth - 2*tabXSpacing;
+	UInt32 buttonHeight = (buttonSurfaceHeight - tabYSpacing * 5)/4;
 
 	Int32 buttonXPos = tabXSpacing;
 	Int32 buttonYPos = tabYSpacing;
@@ -172,7 +172,7 @@ void CGameUISubwayWindow::init( void )
 	// Allocate buttons
 	m_buttonsArray.resize(NB_DESTINATION_BUTTONS);
 
-	for(Uint32 i = 0; i < NB_DESTINATION_BUTTONS; i++)
+	for(UInt32 i = 0; i < NB_DESTINATION_BUTTONS; i++)
 	{
 		CGameUISubwayWindowCallbackEvent* pEvent = new CGameUISubwayWindowCallbackEvent(this, SUBWAY_BUTTON_1+i);
 		m_buttonsArray[i].pButton = new CGameUIButton(CGameUIObject::FL_NONE,
@@ -242,7 +242,7 @@ void CGameUISubwayWindow::init( void )
 void CGameUISubwayWindow::think( void )
 {
 	bool hasVisible = false;
-	for(Uint32 i = 0; i < m_buttonsArray.size(); i++)
+	for(UInt32 i = 0; i < m_buttonsArray.size(); i++)
 	{
 		if(m_buttonsArray[i].pButton->isMouseOver())
 		{
@@ -270,9 +270,9 @@ void CGameUISubwayWindow::think( void )
 //====================================
 //
 //====================================
-bool CGameUISubwayWindow::initData( const Char* pstrScriptFile, Int32 flags, Int32 subwayLineIndex )
+bool CGameUISubwayWindow::initData( const char* pstrScriptFile, Int32 flags, Int32 subwayLineIndex )
 {
-	const byte* pfile = cl_filefuncs.pfnLoadFile(pstrScriptFile, nullptr);
+	const Byte* pfile = cl_filefuncs.pfnLoadFile(pstrScriptFile, nullptr);
 	if(!pfile)
 	{
 		cl_engfuncs.pfnCon_EPrintf("%s - Failed to load '%s'.\n", __FUNCTION__, pstrScriptFile);
@@ -283,7 +283,7 @@ bool CGameUISubwayWindow::initData( const Char* pstrScriptFile, Int32 flags, Int
 	buttonschemas.resize(NB_SUBWAY_BUTTON_TYPES);
 
 	CString token;
-	const Char* pstr = reinterpret_cast<const Char*>(pfile);
+	const char* pstr = reinterpret_cast<const char*>(pfile);
 	while(pstr)
 	{
 		// Read the token in
@@ -405,7 +405,7 @@ bool CGameUISubwayWindow::initData( const Char* pstrScriptFile, Int32 flags, Int
 						pstr++;
 					
 					// Find the ending bracket
-					const Char* pstrend = qstrstr(pstr, "}");
+					const char* pstrend = qstrstr(pstr, "}");
 					if(!pstrend)
 					{
 						cl_engfuncs.pfnCon_EPrintf("%s - Unexpected EOF while reading $button definition in '%s'.\n", __FUNCTION__, pstrScriptFile);
@@ -414,13 +414,13 @@ bool CGameUISubwayWindow::initData( const Char* pstrScriptFile, Int32 flags, Int
 					}
 
 					// Assign contents
-					Uint32 length = pstrend - pstr;
+					UInt32 length = pstrend - pstr;
 					schema.description.assign(pstr, length);
 
 					// Erase any tabulations
 					while(true)
 					{
-						Uint32 tabpos = schema.description.find(0, "\t");
+						UInt32 tabpos = schema.description.find(0, "\t");
 						if(tabpos == CString::CSTRING_NO_POSITION)
 							break;
 
@@ -461,7 +461,7 @@ bool CGameUISubwayWindow::initData( const Char* pstrScriptFile, Int32 flags, Int
 				pstr++;
 					
 			// Find the ending bracket
-			const Char* pstrend = qstrstr(pstr, "}");
+			const char* pstrend = qstrstr(pstr, "}");
 			if(!pstrend)
 			{
 				cl_engfuncs.pfnCon_EPrintf("%s - Unexpected EOF while reading $button definition in '%s'.\n", __FUNCTION__, pstrScriptFile);
@@ -470,14 +470,14 @@ bool CGameUISubwayWindow::initData( const Char* pstrScriptFile, Int32 flags, Int
 			}
 
 			// Assign contents
-			Uint32 length = pstrend - pstr;
+			UInt32 length = pstrend - pstr;
 			CString defaultdescription;
 			defaultdescription.assign(pstr, length);
 
 			// Erase any tabulations
 			while(true)
 			{
-				Uint32 tabpos = defaultdescription.find(0, "\t");
+				UInt32 tabpos = defaultdescription.find(0, "\t");
 				if(tabpos == CString::CSTRING_NO_POSITION)
 					break;
 
@@ -499,7 +499,7 @@ bool CGameUISubwayWindow::initData( const Char* pstrScriptFile, Int32 flags, Int
 	cl_filefuncs.pfnFreeFile(pfile);
 
 	// Assign the button descriptions
-	for(Uint32 i = 0; i < NB_DESTINATION_BUTTONS; i++)
+	for(UInt32 i = 0; i < NB_DESTINATION_BUTTONS; i++)
 	{
 		Int32 j = 0;
 
@@ -634,7 +634,7 @@ void CGameUISubwayWindow::ManageEvent( subwaybuttonevent_t event )
 				}
 
 				// Send message to server
-				Uint32 msgid = g_pGUIManager->GetServerUIMessageId();
+				UInt32 msgid = g_pGUIManager->GetServerUIMessageId();
 				if(!msgid)
 				{
 					cl_engfuncs.pfnCon_Printf("%s - Message 'GameUIMessage' not registered on client.\n", __FUNCTION__);
@@ -660,7 +660,7 @@ void CGameUISubwayWindow::ManageEvent( subwaybuttonevent_t event )
 //====================================
 //
 //====================================
-void CGameUISubwayWindowCallbackEvent::PerformAction( Float param )
+void CGameUISubwayWindowCallbackEvent::PerformAction( float param )
 {
 	if(!m_pSubwayWindow)
 		return;

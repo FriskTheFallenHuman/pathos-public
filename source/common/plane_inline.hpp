@@ -14,7 +14,7 @@ All Rights Reserved.
 // @brief
 //
 //=============================================
-inline Int32 SignbitsForPlane( const plane_t& plane )
+DO_INLINE Int32 SignbitsForPlane( const plane_t& plane )
 {
 	Int32 bits = 0;
 	for(Uint32 i = 0; i < 3; i++)

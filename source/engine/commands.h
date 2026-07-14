@@ -51,7 +51,7 @@ public:
 		CString name;
 		CString description;
 
-		Uint64 flags;
+		UInt64 flags;
 
 		cmdfunc_t pfn;
 	};
@@ -72,23 +72,23 @@ public:
 
 public:
 	// Creates a new command definition
-	void CreateCommand( const Char* name, cmdfunc_t pfn, const Char* description = nullptr, Int32 flags = CMD_FL_NONE );
+	void CreateCommand( const char* name, cmdfunc_t pfn, const char* description = nullptr, Int32 flags = CMD_FL_NONE );
 	// Adds a command to the buffer for execution
-	void AddCommand( const Char* pstrCommand );
+	void AddCommand( const char* pstrCommand );
 	// Inserts a command right after the current one
-	void InsertCommand( const Char* pstrCommand );
+	void InsertCommand( const char* pstrCommand );
 
 	// Executes all cached commands
 	void ExecuteCommands( void );
 	// Executes a command
-	bool ExecuteCommand( const Char* pstrCommand, bool isServerCall );
+	bool ExecuteCommand( const char* pstrCommand, bool isServerCall );
 	// Caches a command into the argument arrays
-	void CacheCommand( const Char* pstrCommand );
+	void CacheCommand( const char* pstrCommand );
 
 	// Tells if a command already exists with the specified name
-	bool CommandExists( const Char* pstrName ) const;
+	bool CommandExists( const char* pstrName ) const;
 	// Retreives flags for a command name
-	Int32 GetCommandFlags( const Char* pstrName ) const;
+	Int32 GetCommandFlags( const char* pstrName ) const;
 	// Retrieves the invoking player's index
 	Int32 GetInvokerPlayerIndex( void ) const;
 	// Retrieves the invoking player's index
@@ -99,9 +99,9 @@ public:
 
 public:
 	// Returns the argument count
-	Uint32 Cmd_Argc( void ) const { return m_numArgs; }
+	UInt32 Cmd_Argc( void ) const { return m_numArgs; }
 	// Returns the argument at a given index
-	const Char* Cmd_Argv( Uint32 index ) const;
+	const char* Cmd_Argv( UInt32 index ) const;
 
 private:
 	// Increases the buffer size
@@ -111,16 +111,16 @@ public:
 	// Array of command definitions
 	CArray<cmd_definition_t> m_cmdDefinitionsArray;
 	// Command buffer
-	Char* m_pCommandBuffer;
+	char* m_pCommandBuffer;
 	// Current load of the command buffer
-	Uint32 m_cmdBufSize;
+	UInt32 m_cmdBufSize;
 	// Current load of the command buffer
-	Uint64 m_cmdBufUsageLength;
+	UInt64 m_cmdBufUsageLength;
 
 	// Current command arguments
 	CString m_commandArgs[MAX_CMD_ARGS];
 	// Number of arguments
-	Uint32 m_numArgs;
+	UInt32 m_numArgs;
 
 	// Invoker player index
 	Int32 m_invokerPlayerIndex;

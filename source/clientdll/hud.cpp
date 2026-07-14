@@ -32,9 +32,9 @@ All Rights Reserved.
 CGameHUD gHUD;
 
 // Time an item spends active
-const Float CHUDHistory::HUD_HISTORY_DRAW_TIME = 10;
+const float CHUDHistory::HUD_HISTORY_DRAW_TIME = 10;
 // Max history height
-const Float CHUDHistory::MAX_HISTORY_HEIGHT = 400;
+const float CHUDHistory::MAX_HISTORY_HEIGHT = 400;
 
 // HUD white color
 const Vector CGameHUD::HUD_COLOR_WHITE = Vector(255, 255, 255);
@@ -50,112 +50,112 @@ const Vector CGameHUD::HUD_COLOR_BLUE = Vector(100, 100, 250);
 const Vector CGameHUD::HUD_COLOR_ORANGE = Vector(255, 160, 0);
 
 // History spacing
-const Uint32 CHUDHistory::HISTORY_SPACING = 5;
+const UInt32 CHUDHistory::HISTORY_SPACING = 5;
 // Text color
 color32_t CHUDHistory::HISTORY_TEXT_COLOR = color32_t(150, 150, 250, 255);
 // Fade time for history texts
-const Float CHUDHistory::HISTORY_FADE_TIME = 1.0;
+const float CHUDHistory::HISTORY_FADE_TIME = 1.0;
 
 // Default HUD alpha value
-const Float CGameHUD::HUD_DEFAULT_ALPHA = 128;
+const float CGameHUD::HUD_DEFAULT_ALPHA = 128;
 
 // Tilt amount
-const Uint32 CGameHUD::TILT_AMOUNT = 6;
+const UInt32 CGameHUD::TILT_AMOUNT = 6;
 
 // Generic tab size
-const Uint32 CGameHUD::TAB_GENERIC_SIZE_X = 225;
-const Uint32 CGameHUD::TAB_GENERIC_SIZE_Y = 35;
-const Uint32 CGameHUD::TAB_MOVENOISE_SIZE_X = 115;
+const UInt32 CGameHUD::TAB_GENERIC_SIZE_X = 225;
+const UInt32 CGameHUD::TAB_GENERIC_SIZE_Y = 35;
+const UInt32 CGameHUD::TAB_MOVENOISE_SIZE_X = 115;
 
 // Radio message tab width
-const Uint32 CGameHUD::RADIO_MSGTAB_SIZE_X = 300;
-const Uint32 CGameHUD::RADIO_MSGTAB_SIZE_Y = 60;
-const Uint32 CGameHUD::RADIO_MSGTAB_SPACING = 10;
-const Float CGameHUD::RADIO_MSG_FADETIME = 0.5;
+const UInt32 CGameHUD::RADIO_MSGTAB_SIZE_X = 300;
+const UInt32 CGameHUD::RADIO_MSGTAB_SIZE_Y = 60;
+const UInt32 CGameHUD::RADIO_MSGTAB_SPACING = 10;
+const float CGameHUD::RADIO_MSG_FADETIME = 0.5;
 
 // Tab label size
-const Uint32 CGameHUD::TAB_LABEL_SIZE_X = 75;
+const UInt32 CGameHUD::TAB_LABEL_SIZE_X = 75;
 // Heal tab width
-const Uint32 CGameHUD::TAB_HEAL_SIZE_X = 300;
+const UInt32 CGameHUD::TAB_HEAL_SIZE_X = 300;
 
 // Healthkit tab width
-const Uint32 CGameHUD::TAB_HEALTHKIT_SIZE_X = 110;
+const UInt32 CGameHUD::TAB_HEALTHKIT_SIZE_X = 110;
 
 // Tactical icon width
-const Uint32 CGameHUD::TACTICAL_ICON_X = 25;
+const UInt32 CGameHUD::TACTICAL_ICON_X = 25;
 // Tactical icon height
-const Uint32 CGameHUD::TACTICAL_ICON_Y = 15;
+const UInt32 CGameHUD::TACTICAL_ICON_Y = 15;
 // Tactical tab width
-const Uint32 CGameHUD::TAB_TACTICAL_SIZE_X = 180;
+const UInt32 CGameHUD::TAB_TACTICAL_SIZE_X = 180;
 
 // Weapon tab width
-const Uint32 CGameHUD::TAB_WEAPON_SIZE_X = 300;
+const UInt32 CGameHUD::TAB_WEAPON_SIZE_X = 300;
 // Clip label width
-const Uint32 CGameHUD::LABEL_CLIP_SIZE_X = 70;
+const UInt32 CGameHUD::LABEL_CLIP_SIZE_X = 70;
 
 // Percentage bar height
-const Uint32 CGameHUD::PERCENTAGE_BAR_HEIGHT = 5;
+const UInt32 CGameHUD::PERCENTAGE_BAR_HEIGHT = 5;
 
 // Icon size
-const Uint32 CGameHUD::ICON_SIZE = 30;
+const UInt32 CGameHUD::ICON_SIZE = 30;
 // Ammo icon width
-const Float CGameHUD::AMMOICON_SIZE_X = 20;
+const float CGameHUD::AMMOICON_SIZE_X = 20;
 // Ammo icon height
-const Float CGameHUD::AMMOICON_SIZE_Y = 12.5;
+const float CGameHUD::AMMOICON_SIZE_Y = 12.5;
 
 // Weapon rubicle width
-const Uint32 CGameHUD::RUBICLE_WEAPONINFO_SIZE_X = 250;
+const UInt32 CGameHUD::RUBICLE_WEAPONINFO_SIZE_X = 250;
 
 // List label T width
-const Uint32 CGameHUD::LIST_LABEL_T_X = 26;
+const UInt32 CGameHUD::LIST_LABEL_T_X = 26;
 // List label T height
-const Uint32 CGameHUD::LIST_LABEL_T_Y = 6;
+const UInt32 CGameHUD::LIST_LABEL_T_Y = 6;
 // List label S width
-const Uint32 CGameHUD::LIST_LABEL_S_X = 6;
+const UInt32 CGameHUD::LIST_LABEL_S_X = 6;
 // List label S height
-const Uint32 CGameHUD::LIST_LABEL_S_Y = 20;
+const UInt32 CGameHUD::LIST_LABEL_S_Y = 20;
 
 // Weapon tab X
-const Uint32 CGameHUD::LIST_WEAPONTAB_X = 200;
+const UInt32 CGameHUD::LIST_WEAPONTAB_X = 200;
 // Weapon tab Y
-const Uint32 CGameHUD::LIST_WEAPONTAB_Y = 75;
+const UInt32 CGameHUD::LIST_WEAPONTAB_Y = 75;
 // List edge size
-const Uint32 CGameHUD::LIST_EDGE_SIZE = 2;
+const UInt32 CGameHUD::LIST_EDGE_SIZE = 2;
 
 // Subtitle tab width
-const Uint32 CGameHUD::SUBTITLE_TAB_SIZE_X = 600;
+const UInt32 CGameHUD::SUBTITLE_TAB_SIZE_X = 600;
 // Subtitle tab height
-const Uint32 CGameHUD::SUBTITLE_TAB_SIZE_Y = 120;
+const UInt32 CGameHUD::SUBTITLE_TAB_SIZE_Y = 120;
 // Subtitle timeout duration
-const Float CGameHUD::SUBTITLE_TAB_TIMEOUT = 1;
+const float CGameHUD::SUBTITLE_TAB_TIMEOUT = 1;
 // Subtitle tab fade out time
-const Float	CGameHUD::SUBTITLE_TAB_FADETIME = 0.5;
+const float	CGameHUD::SUBTITLE_TAB_FADETIME = 0.5;
 // Subtitle tab fade in time
-const Float	CGameHUD::SUBTITLE_TAB_FADEINTIME = 0.5;
+const float	CGameHUD::SUBTITLE_TAB_FADEINTIME = 0.5;
 
 // Ammo bar height
-const Uint32 CGameHUD::AMMOBAR_SIZE_Y = 15;
+const UInt32 CGameHUD::AMMOBAR_SIZE_Y = 15;
 // Ammo bar width
-const Uint32 CGameHUD::AMMOBAR_SIZE_X = 50;
+const UInt32 CGameHUD::AMMOBAR_SIZE_X = 50;
 
 // Stamina fade time
-const Uint32 CGameHUD::STAMINA_FADE_TIME = 2;
+const UInt32 CGameHUD::STAMINA_FADE_TIME = 2;
 
 // Subtitle spacing
-const Float CGameHUD::SUBTITLE_GAP = 25;
+const float CGameHUD::SUBTITLE_GAP = 25;
 
 // Subtitle inset
-const Float CGameHUD::SUBTITLE_INSET = 5;
+const float CGameHUD::SUBTITLE_INSET = 5;
 
 // HUD description script path
-const Char CGameHUD::HUD_DESCRIPTION_SCRIPT_PATH[] = "/scripts/hud.txt";
+const char CGameHUD::HUD_DESCRIPTION_SCRIPT_PATH[] = "/scripts/hud.txt";
 
 // Font set for HUD
-const Char CGameHUD::HUD_FONT_SCHEMA_FILENAME[] = "hud_text";
+const char CGameHUD::HUD_FONT_SCHEMA_FILENAME[] = "hud_text";
 // Font set for counters
-const Char CGameHUD::HUD_COUNTER_FONT_SCHEMA_FILENAME[] = "hud_counter";
+const char CGameHUD::HUD_COUNTER_FONT_SCHEMA_FILENAME[] = "hud_counter";
 // Font set for subtitles
-const Char CGameHUD::HUD_SUBTITLE_FONT_SCHEMA_FILENAME[] = "hud_subtitles";
+const char CGameHUD::HUD_SUBTITLE_FONT_SCHEMA_FILENAME[] = "hud_subtitles";
 
 weapon_mapping_t WEAPONMAPPINGS[] = {
 	DEFINE_WEAPON_MAPPING(WEAPON_NONE),
@@ -332,7 +332,7 @@ bool CGameHUD::InitGame( void )
 //=============================================
 bool CGameHUD::InitGL( void ) 
 {
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	m_pFontSet = cl_engfuncs.pfnGetResolutionSchemaFontSet(HUD_FONT_SCHEMA_FILENAME, screenHeight);
@@ -436,9 +436,9 @@ void CGameHUD::ClearGame( void )
 // @brief Returns an icon texture by name 
 //
 //=============================================
-en_texture_t* CGameHUD::GetIconTextureByName( const Char* pstrName )
+en_texture_t* CGameHUD::GetIconTextureByName( const char* pstrName )
 {
-	for(Uint32 i = 0; i < m_iconInfoArray.size(); i++)
+	for(UInt32 i = 0; i < m_iconInfoArray.size(); i++)
 	{
 		if(!qstrcmp(pstrName, m_iconInfoArray[i].name))
 			return m_iconInfoArray[i].ptexture;
@@ -452,9 +452,9 @@ en_texture_t* CGameHUD::GetIconTextureByName( const Char* pstrName )
 // @brief Returns an item description by name
 //
 //=============================================
-bool CGameHUD::GetItemDescriptionByName( const Char* pstrName, CString& outDescription, CString& outUnitName, bool singular )
+bool CGameHUD::GetItemDescriptionByName( const char* pstrName, CString& outDescription, CString& outUnitName, bool singular )
 {
-	for(Uint32 i = 0; i < m_itemInfoArray.size(); i++)
+	for(UInt32 i = 0; i < m_itemInfoArray.size(); i++)
 	{
 		const hud_iteminfo_t& info = m_itemInfoArray[i];
 		if (!qstrcmp(info.name, pstrName))
@@ -474,7 +474,7 @@ bool CGameHUD::GetItemDescriptionByName( const Char* pstrName, CString& outDescr
 //=============================================
 bool CGameHUD::GetItemDescriptionByWeaponId( weaponid_t weaponid, CString& outDescription, CString& outUnitName, bool singular )
 {
-	for (Uint32 i = 0; i < m_itemInfoArray.size(); i++)
+	for (UInt32 i = 0; i < m_itemInfoArray.size(); i++)
 	{
 		const hud_iteminfo_t& info = m_itemInfoArray[i];
 		if (info.weaponid == weaponid)
@@ -494,7 +494,7 @@ bool CGameHUD::GetItemDescriptionByWeaponId( weaponid_t weaponid, CString& outDe
 //=============================================
 const CGameHUD::hud_weaponinfo_t* CGameHUD::GetWeaponInfoById( weaponid_t weaponid )
 {
-	for(Uint32 i = 0; i < m_weaponInfoArray.size(); i++)
+	for(UInt32 i = 0; i < m_weaponInfoArray.size(); i++)
 	{
 		if(m_weaponInfoArray[i].weaponid == weaponid)
 			return &m_weaponInfoArray[i];
@@ -509,7 +509,7 @@ const CGameHUD::hud_weaponinfo_t* CGameHUD::GetWeaponInfoById( weaponid_t weapon
 //=============================================
 en_texture_t* CGameHUD::GetWeaponIconById( weaponid_t weaponid )
 {
-	for(Uint32 i = 0; i < m_weaponInfoArray.size(); i++)
+	for(UInt32 i = 0; i < m_weaponInfoArray.size(); i++)
 	{
 		if(m_weaponInfoArray[i].weaponid == weaponid)
 			return m_weaponInfoArray[i].pweapon_icon;
@@ -524,8 +524,8 @@ en_texture_t* CGameHUD::GetWeaponIconById( weaponid_t weaponid )
 //=============================================
 bool CGameHUD::InitSubtitles( void ) 
 {
-	Uint32 isize = 0;
-	const Char *pfile = reinterpret_cast<const Char *>(cl_filefuncs.pfnLoadFile("scripts/subtitles.txt", &isize));
+	UInt32 isize = 0;
+	const char *pfile = reinterpret_cast<const char *>(cl_filefuncs.pfnLoadFile("scripts/subtitles.txt", &isize));
 	if(!pfile || !isize)
 		return false;
 	
@@ -536,18 +536,18 @@ bool CGameHUD::InitSubtitles( void )
 	// Reserver 2048 entires
 	m_subtitlesArray.reserve(2048);
 
-	const Char *pscan = pfile;
+	const char *pscan = pfile;
 	while(pscan)
 	{
-		Float r, g, b;
-		Float delay;	
+		float r, g, b;
+		float delay;	
 		
 		// Reset these to defaults
 		delay = 0;
 		r = g = b = 255;
 
 		// try reading any options
-		while(TRUE)
+		while(true)
 		{
 			// Parse the line in
 			pscan = Common::ReadLine(pscan, szline);
@@ -555,7 +555,7 @@ bool CGameHUD::InitSubtitles( void )
 				break;
 
 			// Read the token in
-			const Char* pslinescan = Common::Parse(szline.c_str(), sztoken);
+			const char* pslinescan = Common::Parse(szline.c_str(), sztoken);
 			if(sztoken.empty())
 				continue;
 
@@ -626,7 +626,7 @@ bool CGameHUD::InitSubtitles( void )
 		newsubtitle.szname.tolower();
 
 		// Find the end
-		const Char *pend = qstrstr(pscan, "}");
+		const char *pend = qstrstr(pscan, "}");
 		if(!pend)
 		{
 			cl_engfuncs.pfnCon_Printf("Error in subtitles.txt: definition %s is missing the closing (}) brace.\n", sztoken.c_str());
@@ -635,7 +635,7 @@ bool CGameHUD::InitSubtitles( void )
 		}
 
 		// Check for user errors
-		const Char *ptest = pscan;
+		const char *ptest = pscan;
 		while(ptest < pend)
 		{
 			if(*ptest == '{')
@@ -671,8 +671,8 @@ bool CGameHUD::InitSubtitles( void )
 //=============================================
 void CGameHUD::Think( void )
 {
-	Double currenttime = cl_engfuncs.pfnGetClientTime();
-	Double frametime = currenttime - m_lastThinkTime;
+	double currenttime = cl_engfuncs.pfnGetClientTime();
+	double frametime = currenttime - m_lastThinkTime;
 	m_lastThinkTime = currenttime;
 
 	// Don't render if player is dead
@@ -760,7 +760,7 @@ bool CGameHUD::Draw( void )
 	if(gGameUIManager.HasActiveWindows())
 		return true;
 
-	Float sizex, sizey;
+	float sizex, sizey;
 
 	if(!gHUDDraw.SetupDraw())
 	{
@@ -768,12 +768,12 @@ bool CGameHUD::Draw( void )
 		return false;
 	}
 
-	Double fltime = cl_engfuncs.pfnGetClientTime();
+	double fltime = cl_engfuncs.pfnGetClientTime();
 
 	if (m_isActive)
 	{
-		Float x = gHUDDraw.ScaleX(50);
-		Float y = gHUDDraw.ScaleY(BASE_RESOLUTION_Y-50-TAB_GENERIC_SIZE_Y);
+		float x = gHUDDraw.ScaleX(50);
+		float y = gHUDDraw.ScaleY(BASE_RESOLUTION_Y-50-TAB_GENERIC_SIZE_Y);
 
 		// Draw armor
 		if(!DrawTab_Bar(x, y, nullptr, m_pKevlarIcon, m_kevlar, TAB_GENERIC_SIZE_X, 1.0, &sizex, &sizey))
@@ -800,7 +800,7 @@ bool CGameHUD::Draw( void )
 			y = gHUDDraw.ScaleY(BASE_RESOLUTION_Y-50-TAB_GENERIC_SIZE_Y);
 
 			// calculate alpha
-			Float alpha = (m_staminaFadeTime - fltime)/STAMINA_FADE_TIME;
+			float alpha = (m_staminaFadeTime - fltime)/STAMINA_FADE_TIME;
 			if(alpha > 1.0)
 				alpha = 1.0;
 
@@ -832,7 +832,7 @@ bool CGameHUD::Draw( void )
 		// Draw heal bar if we're healing
 		if(m_healProgress != -2 && m_healProgress != -1)
 		{
-			Float center = gHUDDraw.ScaleXRelative(BASE_RESOLUTION_X*0.5 - TAB_HEAL_SIZE_X*0.5);
+			float center = gHUDDraw.ScaleXRelative(BASE_RESOLUTION_X*0.5 - TAB_HEAL_SIZE_X*0.5);
 			if(!DrawTab_Bar(center, y, nullptr, nullptr, m_healProgress*100, gHUDDraw.ScaleXRelative(TAB_HEAL_SIZE_X), 1.0))
 				return false;
 		}
@@ -905,13 +905,13 @@ bool CGameHUD::Draw( void )
 	{
 		en_texture_t* picon = m_pNewObjectivesIcon;
 
-		Float widthScale = gHUDDraw.ScaleXRelative(picon->width);
-		Float heightScale = gHUDDraw.ScaleXRelative(picon->height);
+		float widthScale = gHUDDraw.ScaleXRelative(picon->width);
+		float heightScale = gHUDDraw.ScaleXRelative(picon->height);
 
-		Float x = gHUDDraw.ScaleXRelative(BASE_RESOLUTION_X) - gHUDDraw.ScaleX(50) - widthScale;
-		Float y = gHUDDraw.ScaleY(50);
+		float x = gHUDDraw.ScaleXRelative(BASE_RESOLUTION_X) - gHUDDraw.ScaleX(50) - widthScale;
+		float y = gHUDDraw.ScaleY(50);
 
-		Float flalpha = SDL_fabs(SDL_sin(fltime*4));
+		float flalpha = SDL_fabs(SDL_sin(fltime*4));
 		gHUDDraw.SetColor(HUD_COLOR_BLUE*(0.25+flalpha*0.75), 255);
 
 		glBlendFunc(GL_ONE, GL_ONE);
@@ -955,13 +955,13 @@ bool CGameHUD::Draw( void )
 // @brief
 //
 //=============================================
-bool CGameHUD::AddSubtitle( const Char *szname, Float holdtime )
+bool CGameHUD::AddSubtitle( const char *szname, float holdtime )
 {
 	CString szsubtitlename(szname);
 	szsubtitlename.tolower();
 
 	subtitle_t *psubtitle = nullptr;
-	for(Uint32 i = 0; i < m_subtitlesArray.size(); i++)
+	for(UInt32 i = 0; i < m_subtitlesArray.size(); i++)
 	{
 		if(!qstrcmp(m_subtitlesArray[i].szname, szsubtitlename))
 		{
@@ -981,7 +981,7 @@ bool CGameHUD::AddSubtitle( const Char *szname, Float holdtime )
 // @brief
 //
 //=============================================
-void CGameHUD::RemoveSubtitle( const Char *szname )
+void CGameHUD::RemoveSubtitle( const char *szname )
 {
 	CString szsubtitlename(szname);
 	szsubtitlename.tolower();
@@ -1007,7 +1007,7 @@ void CGameHUD::RemoveSubtitle( const Char *szname )
 // @brief
 //
 //=============================================
-void CGameHUD::AddActiveSubtitle( subtitle_t* psubtitle, Float holdtime, Float timeout )
+void CGameHUD::AddActiveSubtitle( subtitle_t* psubtitle, float holdtime, float timeout )
 {
 	if(!m_activeSubtitlesList.empty())
 	{
@@ -1024,7 +1024,7 @@ void CGameHUD::AddActiveSubtitle( subtitle_t* psubtitle, Float holdtime, Float t
 
 	active_subtitle_t newsubtitle;
 
-	Float fltime = cl_engfuncs.pfnGetClientTime();
+	float fltime = cl_engfuncs.pfnGetClientTime();
 	newsubtitle.holdtime = fltime + holdtime;
 	newsubtitle.timeout = newsubtitle.holdtime + timeout;
 	newsubtitle.spawntime = fltime;
@@ -1047,8 +1047,8 @@ bool CGameHUD::DrawSubtitles( void )
 		return true;
 
 	// vertical offset
-	Float baseycoord = gHUDDraw.ScaleY(BASE_RESOLUTION_Y) - gHUDDraw.ScaleY(SUBTITLE_GAP) * 4;
-	Float fltime = cl_engfuncs.pfnGetClientTime();
+	float baseycoord = gHUDDraw.ScaleY(BASE_RESOLUTION_Y) - gHUDDraw.ScaleY(SUBTITLE_GAP) * 4;
+	float fltime = cl_engfuncs.pfnGetClientTime();
 
 	m_activeSubtitlesList.begin();
 	while(!m_activeSubtitlesList.end())
@@ -1068,23 +1068,23 @@ bool CGameHUD::DrawSubtitles( void )
 			continue;
 		}
 
-		Float flalhpa = 1.0;
+		float flalhpa = 1.0;
 		if((subtitle.timeout-SUBTITLE_TAB_FADETIME) <= fltime)
 		{
-			Float begintime = subtitle.timeout-SUBTITLE_TAB_FADETIME;
+			float begintime = subtitle.timeout-SUBTITLE_TAB_FADETIME;
 			flalhpa = 1.0-((fltime-begintime)/SUBTITLE_TAB_FADETIME);
 		}
 		else if((subtitle.spawntime + subtitle.psubtitle->delay + SUBTITLE_TAB_FADEINTIME) >= fltime)
 		{
-			Float begintime = subtitle.spawntime + subtitle.psubtitle->delay;
+			float begintime = subtitle.spawntime + subtitle.psubtitle->delay;
 			flalhpa = (fltime - begintime) / SUBTITLE_TAB_FADEINTIME;
 		}
 
-		Float xsize = gHUDDraw.ScaleX(SUBTITLE_TAB_SIZE_X);
-		Float yrefsize = gHUDDraw.ScaleY(SUBTITLE_TAB_SIZE_Y);
+		float xsize = gHUDDraw.ScaleX(SUBTITLE_TAB_SIZE_X);
+		float yrefsize = gHUDDraw.ScaleY(SUBTITLE_TAB_SIZE_Y);
 
-		Float ysize;
-		Float ysizefontfrac = yrefsize / (Float)m_pSubtitleSet->fontsize;
+		float ysize;
+		float ysizefontfrac = yrefsize / (float)m_pSubtitleSet->fontsize;
 		if((ysizefontfrac - SDL_floor(ysizefontfrac)) >= 0.5)
 			ysize = SDL_ceil(ysizefontfrac) * m_pSubtitleSet->fontsize;
 		else
@@ -1092,12 +1092,12 @@ bool CGameHUD::DrawSubtitles( void )
 
 		ysize += SUBTITLE_INSET * 2;
 
-		Float xcenter = gHUDDraw.ScaleXRelative(BASE_RESOLUTION_X/2);
-		Float xcoord = xcenter - xsize/2;
+		float xcenter = gHUDDraw.ScaleXRelative(BASE_RESOLUTION_X/2);
+		float xcoord = xcenter - xsize/2;
 
 		Int32 offset = 0;
 		cl_renderfuncs.pfnSetStringRectangle(0, 0, xsize, (ysize*flalhpa), SUBTITLE_INSET, SUBTITLE_INSET);
-		Float height = cl_renderfuncs.pfnEstimateStringHeight(m_pSubtitleSet, subtitle.psubtitle->subtitle.c_str(), m_pSubtitleSet->fontsize);
+		float height = cl_renderfuncs.pfnEstimateStringHeight(m_pSubtitleSet, subtitle.psubtitle->subtitle.c_str(), m_pSubtitleSet->fontsize);
 
 		if((height+gHUDDraw.ScaleY(SUBTITLE_GAP)) < ysize)
 		{
@@ -1105,10 +1105,10 @@ bool CGameHUD::DrawSubtitles( void )
 		}
 		else if(height > (ysize-gHUDDraw.ScaleY(SUBTITLE_GAP)))
 		{
-			Float diff = height - (ysize-gHUDDraw.ScaleY(SUBTITLE_GAP));
-			Int32 numlines = diff/(Float)m_pSubtitleSet->fontsize;
+			float diff = height - (ysize-gHUDDraw.ScaleY(SUBTITLE_GAP));
+			Int32 numlines = diff/(float)m_pSubtitleSet->fontsize;
 
-			Float flfrac = fltime-(subtitle.spawntime+subtitle.psubtitle->delay);
+			float flfrac = fltime-(subtitle.spawntime+subtitle.psubtitle->delay);
 			flfrac = flfrac/(subtitle.holdtime-(subtitle.spawntime+subtitle.psubtitle->delay));
 			offset += (numlines)*flfrac;
 
@@ -1117,7 +1117,7 @@ bool CGameHUD::DrawSubtitles( void )
 		}
 
 		// Set the final one
-		Float ycoord = baseycoord - (ysize * flalhpa);
+		float ycoord = baseycoord - (ysize * flalhpa);
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		gHUDDraw.SetOrigin(xcoord, ycoord);
@@ -1164,7 +1164,7 @@ bool CGameHUD::DrawCrosshair( void )
 
 	cl_entity_t* pplayer = cl_engfuncs.pfnGetLocalPlayer();
 	
-	Float coordX, coordY;
+	float coordX, coordY;
 	if(!m_currentAutoAimVector.IsZero())
 	{
 		Vector angles = cl_engfuncs.pfnGetViewAngles();
@@ -1174,17 +1174,17 @@ bool CGameHUD::DrawCrosshair( void )
 		Math::AngleVectors(angles, &forward);
 		Vector offsetPos = g_viewOrigin + forward;
 
-		Uint32 screenWidth, screenHeight;
+		UInt32 screenWidth, screenHeight;
 		cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
-		Float vOrigin [] = { offsetPos[0], offsetPos[1], offsetPos[2], 1.0 };
+		float vOrigin [] = { offsetPos[0], offsetPos[1], offsetPos[2], 1.0 };
 
 		// Multiply with modelview
-		Float viewPos[4];
+		float viewPos[4];
 		Math::MatMult4(m_modelviewMatrix.GetMatrix(), vOrigin, viewPos);
 
 		// Multiply with projection
-		Float screenCoords[4];
+		float screenCoords[4];
 		Math::MatMult4(m_projectionMatrix.GetMatrix(), viewPos, screenCoords);
 
 		// Calculate uniform values
@@ -1217,14 +1217,14 @@ bool CGameHUD::DrawCrosshair( void )
 
 	Math::VectorScale(vspread, 500, vspread);
 
-	Float mod = (1/(tan(M_PI/180*(90/2))));
+	float mod = (1/(tan(M_PI/180*(90/2))));
 	Int32 dir = ((vspread.Length() * coordX) / 500) * mod;
 
-	Uint32 in_barsize = gHUDDraw.ScaleX(9);
+	UInt32 in_barsize = gHUDDraw.ScaleX(9);
 	if(in_barsize % 2 == 0)
 		in_barsize += 1;
 
-	Uint32 out_barsize = gHUDDraw.ScaleX(6);
+	UInt32 out_barsize = gHUDDraw.ScaleX(6);
 	if(out_barsize % 2 == 0)
 		out_barsize += 1;
 
@@ -1286,10 +1286,10 @@ bool CGameHUD::DrawWeaponList( void )
 	else 
 		iActiveSlot = m_pActiveSelection->slot;
 
-	Float x = gHUDDraw.ScaleX(50);
-	Float y = gHUDDraw.ScaleY(50);
+	float x = gHUDDraw.ScaleX(50);
+	float y = gHUDDraw.ScaleY(50);
 
-	Double fltime = cl_engfuncs.pfnGetClientTime();
+	double fltime = cl_engfuncs.pfnGetClientTime();
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -1319,7 +1319,7 @@ bool CGameHUD::DrawWeaponList( void )
 
 		x += gHUDDraw.ScaleX(LIST_LABEL_S_X);
 
-		Float cur_x = x;
+		float cur_x = x;
 		for(Int32 j = 0; j < MAX_SLOT_POSITIONS; j++)
 		{
 			pweapon = m_weaponInfo.GetWeaponFromSlot( i, j );
@@ -1339,7 +1339,7 @@ bool CGameHUD::DrawWeaponList( void )
 			{
 				if (m_pActiveSelection == pweapon)
 				{
-					Float flalpha = SDL_fabs(SDL_sin(fltime*4));
+					float flalpha = SDL_fabs(SDL_sin(fltime*4));
 					gHUDDraw.SetColor(HUD_COLOR_BLUE*(0.25+flalpha*0.75), 255);
 				}
 				else
@@ -1349,7 +1349,7 @@ bool CGameHUD::DrawWeaponList( void )
 			}
 			else
 			{
-				Float flalpha = SDL_fabs(SDL_sin(fltime*4));
+				float flalpha = SDL_fabs(SDL_sin(fltime*4));
 				gHUDDraw.SetColor(HUD_COLOR_RED*(0.25+flalpha*0.75), 255);
 			}
 
@@ -1394,9 +1394,9 @@ bool CGameHUD::DrawWeaponList( void )
 			if(pweapon->ammotype != -1 && pweapon->maxammo != -1)
 			{
 				// Draw ammo bar
-				Float bar = (Float)m_weaponInfo.GetAmmoCount(pweapon->ammotype)/(Float)pweapon->maxammo;
-				Float bar_fraction = 1/gHUDDraw.ScaleX(AMMOBAR_SIZE_X);
-				Float frac = bar-(floor(bar/bar_fraction)/gHUDDraw.ScaleX(AMMOBAR_SIZE_X));
+				float bar = (float)m_weaponInfo.GetAmmoCount(pweapon->ammotype)/(float)pweapon->maxammo;
+				float bar_fraction = 1/gHUDDraw.ScaleX(AMMOBAR_SIZE_X);
+				float frac = bar-(floor(bar/bar_fraction)/gHUDDraw.ScaleX(AMMOBAR_SIZE_X));
 				bar -= frac;
 
 				gHUDDraw.SetColor(HUD_COLOR_GRAY, HUD_DEFAULT_ALPHA);
@@ -1444,12 +1444,12 @@ bool CGameHUD::DrawWeaponList( void )
 // @brief
 //
 //=============================================
-bool CGameHUD::DrawTab_Bar( Float x, Float y, Char *sztext, en_texture_t *picon, Float bar, Int32 width, Float alpha, Float *ox, Float *oy, bool reverseColor, color24_t* pcolor )
+bool CGameHUD::DrawTab_Bar( float x, float y, char *sztext, en_texture_t *picon, float bar, Int32 width, float alpha, float *ox, float *oy, bool reverseColor, color24_t* pcolor )
 {
-	Float cur_x = x;
-	Float cur_y = y;
+	float cur_x = x;
+	float cur_y = y;
 	
-	Double fltime = cl_engfuncs.pfnGetClientTime();
+	double fltime = cl_engfuncs.pfnGetClientTime();
 
 	if(bar > 100)
 		bar = 100;
@@ -1478,7 +1478,7 @@ bool CGameHUD::DrawTab_Bar( Float x, Float y, Char *sztext, en_texture_t *picon,
 		}
 		else
 		{
-			Float flalpha = SDL_fabs(SDL_sin(fltime * 4));
+			float flalpha = SDL_fabs(SDL_sin(fltime * 4));
 			gHUDDraw.SetColor(HUD_COLOR_RED * (0.25 + flalpha * 0.75) * alpha, 255);
 		}
 	}
@@ -1488,12 +1488,12 @@ bool CGameHUD::DrawTab_Bar( Float x, Float y, Char *sztext, en_texture_t *picon,
 		gHUDDraw.SetColor(customColor * alpha, 255);
 	}
 
-	Float edge = 0;
-	Float flsize = 0;
+	float edge = 0;
+	float flsize = 0;
 	if(picon)
 	{
-		Float widthScale = picon->height > picon->width ? ((Float)picon->width/(Float)picon->height) : 1.0;
-		Float heightScale = picon->width > picon->height ? ((Float)picon->height/(Float)picon->width) : 1.0;
+		float widthScale = picon->height > picon->width ? ((float)picon->width/(float)picon->height) : 1.0;
+		float heightScale = picon->width > picon->height ? ((float)picon->height/(float)picon->width) : 1.0;
 
 		edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y)-gHUDDraw.ScaleY(ICON_SIZE)*heightScale;
 		edge = edge/2.0f;
@@ -1511,7 +1511,7 @@ bool CGameHUD::DrawTab_Bar( Float x, Float y, Char *sztext, en_texture_t *picon,
 	}
 	else if(sztext)
 	{
-		Char *pscan = sztext;
+		char *pscan = sztext;
 		while(*pscan != '\0')
 		{
 			flsize += m_pFontSet->glyphs[*pscan].advancex;
@@ -1520,14 +1520,14 @@ bool CGameHUD::DrawTab_Bar( Float x, Float y, Char *sztext, en_texture_t *picon,
 		edge = gHUDDraw.ScaleX(4);
 	}
 
-	Float bar_edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y)-gHUDDraw.ScaleY(PERCENTAGE_BAR_HEIGHT);
+	float bar_edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y)-gHUDDraw.ScaleY(PERCENTAGE_BAR_HEIGHT);
 	bar_edge = bar_edge/2.0f;
 
-	Float bar_x = cur_x+flsize+edge*2;
+	float bar_x = cur_x+flsize+edge*2;
 	if(!picon)
 		bar_x += bar_edge; 
 
-	Float bar_size = (cur_x+gHUDDraw.ScaleX(width))-bar_x-bar_edge;
+	float bar_size = (cur_x+gHUDDraw.ScaleX(width))-bar_x-bar_edge;
 
 	// Draw empty
 	if(bar < 100)
@@ -1547,7 +1547,7 @@ bool CGameHUD::DrawTab_Bar( Float x, Float y, Char *sztext, en_texture_t *picon,
 			if (shouldFlash)
 			{
 				Vector vColor;
-				Float flsin = SDL_fabs(SDL_sin(fltime * 4));
+				float flsin = SDL_fabs(SDL_sin(fltime * 4));
 				Math::VectorScale(HUD_COLOR_RED, flsin, vColor);
 				Math::VectorMA(vColor, 1.0 - flsin, HUD_COLOR_WHITE, vColor);
 				gHUDDraw.SetColor(vColor, 255 * alpha);
@@ -1563,7 +1563,7 @@ bool CGameHUD::DrawTab_Bar( Float x, Float y, Char *sztext, en_texture_t *picon,
 			gHUDDraw.SetColor(customColor * alpha, 255);
 		}
 
-		Float size = bar_size*(bar/100);
+		float size = bar_size*(bar/100);
 		gHUDDraw.SetOrigin(bar_x, cur_y+bar_edge);
 		gHUDDraw.SetSize(size, gHUDDraw.ScaleY(PERCENTAGE_BAR_HEIGHT));
 		if(!gHUDDraw.DrawBody())
@@ -1573,7 +1573,7 @@ bool CGameHUD::DrawTab_Bar( Float x, Float y, Char *sztext, en_texture_t *picon,
 	// Draw text if we have any
 	if(sztext)
 	{
-		Float font_edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y)-m_pFontSet->fontsize;
+		float font_edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y)-m_pFontSet->fontsize;
 		font_edge = font_edge/2.0f;		
 
 		gHUDDraw.SetOrigin(cur_x+gHUDDraw.ScaleX(CHUDDraw::HUD_EDGE_SIZE), cur_y+gHUDDraw.ScaleY(CHUDDraw::HUD_EDGE_SIZE));
@@ -1596,7 +1596,7 @@ bool CGameHUD::DrawTab_Bar( Float x, Float y, Char *sztext, en_texture_t *picon,
 // @brief
 //
 //=============================================
-bool CGameHUD::DrawHealthkitTab( Float x, Float y ) 
+bool CGameHUD::DrawHealthkitTab( float x, float y ) 
 {
 	// Main body
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -1607,7 +1607,7 @@ bool CGameHUD::DrawHealthkitTab( Float x, Float y )
 		return false;
 
 	// Draw the Icon
-	Float edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y)-gHUDDraw.ScaleY(ICON_SIZE);
+	float edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y)-gHUDDraw.ScaleY(ICON_SIZE);
 	edge = edge/2.0f;
 
 	glBlendFunc(GL_ONE, GL_ONE);
@@ -1630,14 +1630,14 @@ bool CGameHUD::DrawHealthkitTab( Float x, Float y )
 	CString digit;
 	digit << m_numMedkits;
 
-	Uint32 width = 0;
-	Uint32 height = 0;
+	UInt32 width = 0;
+	UInt32 height = 0;
 	Int32 yMin = 0;
 	cl_renderfuncs.pfnGetStringSize(m_pCounterFont, digit.c_str(), &width, &height, &yMin);
 
-	Float digitSpace = gHUDDraw.ScaleX(TAB_HEALTHKIT_SIZE_X) - (edge + gHUDDraw.ScaleX(ICON_SIZE));
-	Float xCoord = x + edge + gHUDDraw.ScaleX(ICON_SIZE) + digitSpace * 0.5 - width * 0.5;
-	Float yCoord = y + gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y) * 0.5f + (Float)height * 0.5;
+	float digitSpace = gHUDDraw.ScaleX(TAB_HEALTHKIT_SIZE_X) - (edge + gHUDDraw.ScaleX(ICON_SIZE));
+	float xCoord = x + edge + gHUDDraw.ScaleX(ICON_SIZE) + digitSpace * 0.5 - width * 0.5;
+	float yCoord = y + gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y) * 0.5f + (float)height * 0.5;
 
 	if(!gHUDDraw.DrawText(m_numMedkits > 0 ? HUD_COLOR_WHITE : HUD_COLOR_RED, 255, xCoord, yCoord, digit.c_str(), m_pCounterFont))
 		return false;
@@ -1649,12 +1649,12 @@ bool CGameHUD::DrawHealthkitTab( Float x, Float y )
 // @brief
 //
 //=============================================
-bool CGameHUD::DrawTacticalTab( Float x, Float y ) 
+bool CGameHUD::DrawTacticalTab( float x, float y ) 
 {
-	Float cur_x = x;
-	Float cur_y = y;
+	float cur_x = x;
+	float cur_y = y;
 
-	Double fltime = cl_engfuncs.pfnGetClientTime();
+	double fltime = cl_engfuncs.pfnGetClientTime();
 
 	// Main body
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -1664,7 +1664,7 @@ bool CGameHUD::DrawTacticalTab( Float x, Float y )
 	if(!gHUDDraw.DrawBody())
 		return false;
 
-	Float alpha = 1.0;
+	float alpha = 1.0;
 	if(!m_isTacticalOn)
 		alpha *= 0.5;
 
@@ -1675,14 +1675,14 @@ bool CGameHUD::DrawTacticalTab( Float x, Float y )
 	}
 	else
 	{
-		Float flalpha = SDL_fabs(SDL_sin(fltime*4));
+		float flalpha = SDL_fabs(SDL_sin(fltime*4));
 		gHUDDraw.SetColor(HUD_COLOR_RED*(0.25+flalpha*0.75), 255);
 	}
 
-	Float edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y)-gHUDDraw.ScaleY(TACTICAL_ICON_Y);
+	float edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y)-gHUDDraw.ScaleY(TACTICAL_ICON_Y);
 	edge = edge/2.0f;
 
-	Float flsize = gHUDDraw.ScaleX(TACTICAL_ICON_X);
+	float flsize = gHUDDraw.ScaleX(TACTICAL_ICON_X);
 
 	glBlendFunc(GL_ONE, GL_ONE);
 
@@ -1693,11 +1693,11 @@ bool CGameHUD::DrawTacticalTab( Float x, Float y )
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	Float bar_edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y)-gHUDDraw.ScaleY(PERCENTAGE_BAR_HEIGHT);
+	float bar_edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y)-gHUDDraw.ScaleY(PERCENTAGE_BAR_HEIGHT);
 	bar_edge = bar_edge/2.0f;
 
-	Float bar_x = cur_x+flsize+edge*2;
-	Float bar_size = (cur_x+gHUDDraw.ScaleX(TAB_TACTICAL_SIZE_X))-bar_x-gHUDDraw.ScaleX(8);
+	float bar_x = cur_x+flsize+edge*2;
+	float bar_size = (cur_x+gHUDDraw.ScaleX(TAB_TACTICAL_SIZE_X))-bar_x-gHUDDraw.ScaleX(8);
 
 	// Draw empty
 	if(m_tacticalAmount < 100)
@@ -1715,7 +1715,7 @@ bool CGameHUD::DrawTacticalTab( Float x, Float y )
 		if(m_tacticalAmount <= 25)
 		{
 			Vector vColor;
-			Float flsin = SDL_fabs(SDL_sin(fltime*4));
+			float flsin = SDL_fabs(SDL_sin(fltime*4));
 			Math::VectorScale(HUD_COLOR_RED, flsin, vColor);
 			Math::VectorMA(vColor, 1.0-flsin, HUD_COLOR_WHITE, vColor);
 			gHUDDraw.SetColor(vColor, 255);
@@ -1725,7 +1725,7 @@ bool CGameHUD::DrawTacticalTab( Float x, Float y )
 			gHUDDraw.SetColor(HUD_COLOR_WHITE, 255);
 		}	
 
-		Float size = bar_size*(m_tacticalAmount/100);
+		float size = bar_size*(m_tacticalAmount/100);
 		gHUDDraw.SetOrigin(bar_x, cur_y+bar_edge);
 		gHUDDraw.SetSize(size, PERCENTAGE_BAR_HEIGHT);
 		if(!gHUDDraw.DrawBody())
@@ -1748,31 +1748,31 @@ bool CGameHUD::DrawWeaponTab( void )
 	if(!m_pWeapon)
 		return true;
 
-	Double fltime = cl_engfuncs.pfnGetClientTime();
+	double fltime = cl_engfuncs.pfnGetClientTime();
 
 	bool dual = false; // No dual weapons in public release
 	GetWeaponInfo(m_pWeapon->weaponid, dual, picon, name, ammo);
 
-	Float x = gHUDDraw.ScaleXRelative(BASE_RESOLUTION_X) - gHUDDraw.ScaleX(50) - gHUDDraw.ScaleX(TAB_WEAPON_SIZE_X);
-	Float y = BASE_RESOLUTION_Y-50-TAB_GENERIC_SIZE_Y*2-CHUDDraw::HUD_EDGE_SIZE*2-2;
+	float x = gHUDDraw.ScaleXRelative(BASE_RESOLUTION_X) - gHUDDraw.ScaleX(50) - gHUDDraw.ScaleX(TAB_WEAPON_SIZE_X);
+	float y = BASE_RESOLUTION_Y-50-TAB_GENERIC_SIZE_Y*2-CHUDDraw::HUD_EDGE_SIZE*2-2;
 	y = gHUDDraw.ScaleY(y);
 
-	Float ammoInnerTabSize = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y-CHUDDraw::HUD_EDGE_SIZE*2);
+	float ammoInnerTabSize = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y-CHUDDraw::HUD_EDGE_SIZE*2);
 
-	Float weaponInfoTabXCoord = 0, weaponInfoTabYCoord = 0;
-	Float weaponInfoTabWidth = 0, weaponInfoTabHeight = 0;
+	float weaponInfoTabXCoord = 0, weaponInfoTabYCoord = 0;
+	float weaponInfoTabWidth = 0, weaponInfoTabHeight = 0;
 
-	Float ammoInfoTabXCoord = 0, ammoInfoTabYCoord = 0;
-	Float ammoInfoTabWidth = 0, ammoInfoTabHeight = 0;
+	float ammoInfoTabXCoord = 0, ammoInfoTabYCoord = 0;
+	float ammoInfoTabWidth = 0, ammoInfoTabHeight = 0;
 
-	Float counter1XCoord = 0, counter1YCoord = 0;
-	Float counter1Width = 0, counter1Height = 0;
+	float counter1XCoord = 0, counter1YCoord = 0;
+	float counter1Width = 0, counter1Height = 0;
 
-	Float counter2XCoord = 0, counter2YCoord = 0;
-	Float counter2Width = 0, counter2Height = 0;
+	float counter2XCoord = 0, counter2YCoord = 0;
+	float counter2Width = 0, counter2Height = 0;
 
-	Float ammoTabXCoord = 0, ammoTabYCoord = 0;
-	Float ammoTabWidth = 0, ammoTabHeight = 0;
+	float ammoTabXCoord = 0, ammoTabYCoord = 0;
+	float ammoTabWidth = 0, ammoTabHeight = 0;
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -1838,7 +1838,7 @@ bool CGameHUD::DrawWeaponTab( void )
 			Int32 clippercentage = ((float)clip / (float)m_pWeapon->maxclip) * 100;
 			if(clippercentage <= 25)
 			{
-				Float flalpha = SDL_fabs(SDL_sin(fltime*4));
+				float flalpha = SDL_fabs(SDL_sin(fltime*4));
 				gHUDDraw.SetColor(HUD_COLOR_RED, 128+flalpha*128);
 			}
 			else
@@ -1866,7 +1866,7 @@ bool CGameHUD::DrawWeaponTab( void )
 			Int32 clippercentage = ((float)m_pWeapon->dualclipright / (float)m_pWeapon->maxclip) * 100;
 			if(clippercentage <= 25)
 			{
-				Float flalpha = SDL_fabs(SDL_sin(fltime*4));
+				float flalpha = SDL_fabs(SDL_sin(fltime*4));
 				gHUDDraw.SetColor(HUD_COLOR_RED, 128+flalpha*128);
 			}
 			else
@@ -1895,14 +1895,14 @@ bool CGameHUD::DrawWeaponTab( void )
 			y = BASE_RESOLUTION_Y-50-TAB_GENERIC_SIZE_Y*2-CHUDDraw::HUD_EDGE_SIZE*2-2;
 			y = gHUDDraw.ScaleY(y);
 
-			Float edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y-AMMOICON_SIZE_Y);
+			float edge = gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y-AMMOICON_SIZE_Y);
 			edge = edge/2;
 
-			Float ammoIconXCoord = x + gHUDDraw.ScaleX(TAB_WEAPON_SIZE_X) - edge - gHUDDraw.ScaleX(AMMOICON_SIZE_X);
-			Float ammoIconYCoord = y+edge;
+			float ammoIconXCoord = x + gHUDDraw.ScaleX(TAB_WEAPON_SIZE_X) - edge - gHUDDraw.ScaleX(AMMOICON_SIZE_X);
+			float ammoIconYCoord = y+edge;
 
-			Float ammoIconWidth = gHUDDraw.ScaleX(AMMOICON_SIZE_X);
-			Float ammoIconHeight = gHUDDraw.ScaleY(AMMOICON_SIZE_Y);
+			float ammoIconWidth = gHUDDraw.ScaleX(AMMOICON_SIZE_X);
+			float ammoIconHeight = gHUDDraw.ScaleY(AMMOICON_SIZE_Y);
 			ammoInfoTabWidth -= ammoIconWidth + edge;
 
 			gHUDDraw.SetOrigin(ammoIconXCoord, ammoIconYCoord);
@@ -1932,8 +1932,8 @@ bool CGameHUD::DrawWeaponTab( void )
 	}
 
 	// Draw the weapon's name
-	Uint32 width = 0;
-	Uint32 height = 0;
+	UInt32 width = 0;
+	UInt32 height = 0;
 	cl_renderfuncs.pfnGetStringSize(m_pFontSet, name.c_str(), &width, &height, nullptr);
 
 	x = weaponInfoTabXCoord + weaponInfoTabWidth * 0.5f - width * 0.5f;
@@ -2037,7 +2037,7 @@ void CGameHUD::GetWeaponInfo( Int32 id, bool dual, en_texture_t *&picon, CString
 // @brief
 //
 //=============================================
-void CGameHUD::SetStamina( Float stamina )
+void CGameHUD::SetStamina( float stamina )
 {
 	m_stamina = stamina;
 	m_staminaFadeTime = cl_engfuncs.pfnGetClientTime() + STAMINA_FADE_TIME;
@@ -2047,7 +2047,7 @@ void CGameHUD::SetStamina( Float stamina )
 // @brief
 //
 //=============================================
-void CGameHUD::SetHealth( Float health )
+void CGameHUD::SetHealth( float health )
 {
 	m_health = health;
 }
@@ -2056,7 +2056,7 @@ void CGameHUD::SetHealth( Float health )
 // @brief
 //
 //=============================================
-void CGameHUD::SetKevlar( Float kevlar )
+void CGameHUD::SetKevlar( float kevlar )
 {
 	m_kevlar = kevlar;
 }
@@ -2065,7 +2065,7 @@ void CGameHUD::SetKevlar( Float kevlar )
 // @brief
 //
 //=============================================
-void CGameHUD::SetMovementNoise( Float noise )
+void CGameHUD::SetMovementNoise( float noise )
 {
 	m_movementNoise = noise;
 }
@@ -2074,7 +2074,7 @@ void CGameHUD::SetMovementNoise( Float noise )
 // @brief
 //
 //=============================================
-void CGameHUD::SetNPCAwareness( Float awareness, color24_t& color )
+void CGameHUD::SetNPCAwareness( float awareness, color24_t& color )
 {
 	m_npcAwareness = awareness;
 	m_npcAwarenessColor = color;
@@ -2093,7 +2093,7 @@ void CGameHUD::SetNewObjective( bool newObjective )
 // @brief
 //
 //=============================================
-void CGameHUD::SetHealthkitNumber( Uint32 numhealthkits )
+void CGameHUD::SetHealthkitNumber( UInt32 numhealthkits )
 {
 	m_numMedkits = numhealthkits;
 }
@@ -2102,7 +2102,7 @@ void CGameHUD::SetHealthkitNumber( Uint32 numhealthkits )
 // @brief
 //
 //=============================================
-void CGameHUD::SetHealProgress( Float progress )
+void CGameHUD::SetHealProgress( float progress )
 {
 	m_healProgress = progress;
 	if(m_healProgress > 1.0)
@@ -2124,7 +2124,7 @@ void CGameHUD::SetUsableObjectMinsMaxs( const Vector& mins, const Vector& maxs, 
 // @brief Sets countdown timer
 //
 //=============================================
-void CGameHUD::SetCountdownTime( Double endTime, const Char* pstrTitle )
+void CGameHUD::SetCountdownTime( double endTime, const char* pstrTitle )
 {
 	if(!m_countdownTimerTitle.empty())
 		m_countdownTimerTitle.clear();
@@ -2149,7 +2149,7 @@ void CGameHUD::SetCountdownTime( Double endTime, const Char* pstrTitle )
 //=============================================
 bool CGameHUD::LoadHUDScript( void )
 {
-	const Char* pfile = reinterpret_cast<const Char*>(cl_filefuncs.pfnLoadFile(HUD_DESCRIPTION_SCRIPT_PATH, nullptr));
+	const char* pfile = reinterpret_cast<const char*>(cl_filefuncs.pfnLoadFile(HUD_DESCRIPTION_SCRIPT_PATH, nullptr));
 	if(!pfile)
 	{
 		cl_engfuncs.pfnCon_EPrintf("%s - failed to load '%s'.\n", __FUNCTION__, HUD_DESCRIPTION_SCRIPT_PATH);
@@ -2168,8 +2168,8 @@ bool CGameHUD::LoadHUDScript( void )
 	// Texture flags used by all HUD textures
 	Int32 textureflags = (TX_FL_NOMIPMAPS|TX_FL_CLAMP_S|TX_FL_CLAMP_T);
 
-	Char token[256];
-	const Char* pstr = pfile;
+	char token[256];
+	const char* pstr = pfile;
 	while(pstr)
 	{
 		// Read in first token
@@ -2246,7 +2246,7 @@ bool CGameHUD::LoadHUDScript( void )
 		if(!qstrcmp(typeToken, "$icon"))
 		{
 			// Current item's index as it'll be set
-			Uint32 index = m_iconInfoArray.size();
+			UInt32 index = m_iconInfoArray.size();
 
 			hud_iconinfo_t newIcon;
 			newIcon.name = GetValueForKey(infoPairArray, "name");
@@ -2273,7 +2273,7 @@ bool CGameHUD::LoadHUDScript( void )
 			if(!newIcon.ptexture)
 				newIcon.ptexture = cl_renderfuncs.pfnGetDummyTexture();
 
-			Uint32 i = 0;
+			UInt32 i = 0;
 			for(; i < m_iconInfoArray.size(); i++)
 			{
 				if(!qstrcmp(m_iconInfoArray[i].name, newIcon.name))
@@ -2289,7 +2289,7 @@ bool CGameHUD::LoadHUDScript( void )
 		else if(!qstrcmp(typeToken, "$weapon"))
 		{
 			// Current item's index as it'll be set
-			Uint32 index = m_iconInfoArray.size();
+			UInt32 index = m_iconInfoArray.size();
 
 			hud_weaponinfo_t newWeapon;
 			CString name = GetValueForKey(infoPairArray, "name");
@@ -2365,7 +2365,7 @@ bool CGameHUD::LoadHUDScript( void )
 			newWeapon.description_dual = GetValueForKey(infoPairArray, "description_dual");
 			newWeapon.description_ammo = GetValueForKey(infoPairArray, "description_ammo");
 
-			Uint32 i = 0;
+			UInt32 i = 0;
 			for(; i < m_weaponInfoArray.size(); i++)
 			{
 				if(m_weaponInfoArray[i].weaponid == newWeapon.weaponid)
@@ -2381,7 +2381,7 @@ bool CGameHUD::LoadHUDScript( void )
 		else if(!qstrcmp(typeToken, "$item"))
 		{
 			// Current item's index as it'll be set
-			Uint32 index = m_itemInfoArray.size();
+			UInt32 index = m_itemInfoArray.size();
 
 			hud_iteminfo_t newItem;
 			newItem.name = GetValueForKey(infoPairArray, "name");
@@ -2413,7 +2413,7 @@ bool CGameHUD::LoadHUDScript( void )
 				}
 			}
 
-			Uint32 i = 0;
+			UInt32 i = 0;
 			for(; i < m_itemInfoArray.size(); i++)
 			{
 				if(!qstrcmp(m_itemInfoArray[i].name, newItem.name))
@@ -2472,9 +2472,9 @@ bool CGameHUD::LoadHUDScript( void )
 // @brief Returns value for a key
 //
 //=============================================
-const Char* CGameHUD::GetValueForKey( const CArray<hud_infopair_t>& srcArray, const Char* pstrKey )
+const char* CGameHUD::GetValueForKey( const CArray<hud_infopair_t>& srcArray, const char* pstrKey )
 {
-	for(Uint32 i = 0; i < srcArray.size(); i++)
+	for(UInt32 i = 0; i < srcArray.size(); i++)
 	{
 		if(!qstrcmp(srcArray[i].key, pstrKey))
 			return srcArray[i].value.c_str();
@@ -2487,7 +2487,7 @@ const Char* CGameHUD::GetValueForKey( const CArray<hud_infopair_t>& srcArray, co
 // @brief
 //
 //=============================================
-void CGameHUD::SetCurrentWeapon( Int32 state, Int32 id, Uint32 clip, Uint32 clipright, Uint32 clipleft, Uint32 cone )
+void CGameHUD::SetCurrentWeapon( Int32 state, Int32 id, UInt32 clip, UInt32 clipright, UInt32 clipleft, UInt32 cone )
 {
 	if(id == -1)
 		return;
@@ -2512,7 +2512,7 @@ void CGameHUD::SetCurrentWeapon( Int32 state, Int32 id, Uint32 clip, Uint32 clip
 // @brief
 //
 //=============================================
-void CGameHUD::AddWeaponList( const Char* pstrname, Int32 ammotype, Int32 maxammo, Int32 maxclip, Uint32 slot, Uint32 slotposition, Uint32 weaponid, Int32 flags )
+void CGameHUD::AddWeaponList( const char* pstrname, Int32 ammotype, Int32 maxammo, Int32 maxclip, UInt32 slot, UInt32 slotposition, UInt32 weaponid, Int32 flags )
 {
 	weapon_t weapon;
 	weapon.name = pstrname;
@@ -2539,7 +2539,7 @@ void CGameHUD::AddWeaponList( const Char* pstrname, Int32 ammotype, Int32 maxamm
 // @brief
 //
 //=============================================
-void CGameHUD::SetAmmoCount( Uint32 ammoIndex, Uint32 ammoCount )
+void CGameHUD::SetAmmoCount( UInt32 ammoIndex, UInt32 ammoCount )
 {
 	m_weaponInfo.SetAmmoCount(ammoIndex, ammoCount);
 }
@@ -2548,7 +2548,7 @@ void CGameHUD::SetAmmoCount( Uint32 ammoIndex, Uint32 ammoCount )
 // @brief
 //
 //=============================================
-void CGameHUD::AmmoPickup( const Char* pstrentityname, Uint32 count )
+void CGameHUD::AmmoPickup( const char* pstrentityname, UInt32 count )
 {
 	m_pHistory->AddElement(CHUDHistory::HISTORY_AMMO, pstrentityname, count);
 }
@@ -2557,7 +2557,7 @@ void CGameHUD::AmmoPickup( const Char* pstrentityname, Uint32 count )
 // @brief
 //
 //=============================================
-void CGameHUD::WeaponPickup( Int32 id, Uint32 ammoCount)
+void CGameHUD::WeaponPickup( Int32 id, UInt32 ammoCount)
 {
 	m_pHistory->AddElement(CHUDHistory::HISTORY_WEAPON, id, ammoCount);
 }
@@ -2566,7 +2566,7 @@ void CGameHUD::WeaponPickup( Int32 id, Uint32 ammoCount)
 // @brief
 //
 //=============================================
-void CGameHUD::ItemPickup( const Char* pstrentityname )
+void CGameHUD::ItemPickup( const char* pstrentityname )
 {
 	m_pHistory->AddElement(CHUDHistory::HISTORY_ITEM, pstrentityname, 0);
 }
@@ -2575,7 +2575,7 @@ void CGameHUD::ItemPickup( const Char* pstrentityname )
 // @brief
 //
 //=============================================
-void CGameHUD::CustomPickupMessage( const Char* pstrpickuptext )
+void CGameHUD::CustomPickupMessage( const char* pstrpickuptext )
 {
 	m_pHistory->AddElement(CHUDHistory::HISTORY_CUSTOM_MSG, pstrpickuptext);
 }
@@ -2593,7 +2593,7 @@ void CGameHUD::SetActive( bool active )
 // @brief
 //
 //=============================================
-void CGameHUD::SetTacticalBattery( bool ison, Float amount )
+void CGameHUD::SetTacticalBattery( bool ison, float amount )
 {
 	m_isTacticalOn = ison;
 	m_tacticalAmount = amount;
@@ -2742,7 +2742,7 @@ bool CGameHUD::IsActive( void ) const
 // @brief
 //
 //=============================================
-void CGameHUD::SelectWeaponSlot( Uint32 slot, bool advance, Int32 direction )
+void CGameHUD::SelectWeaponSlot( UInt32 slot, bool advance, Int32 direction )
 {
 	assert(slot < MAX_WEAPON_SLOTS);
 
@@ -2777,7 +2777,7 @@ void CGameHUD::SelectWeaponSlot( Uint32 slot, bool advance, Int32 direction )
 // @brief
 //
 //=============================================
-void CGameHUD::PlaySound( const Char* pstrfilepath )
+void CGameHUD::PlaySound( const char* pstrfilepath )
 {
 	// Play menu sound
 	cl_engfuncs.pfnPlayAmbientSound(0, ZERO_VECTOR, SND_CHAN_AUTO, pstrfilepath, VOL_NORM, ATTN_NORM, PITCH_NORM, SND_FL_MENU, 0);
@@ -2787,7 +2787,7 @@ void CGameHUD::PlaySound( const Char* pstrfilepath )
 // @brief
 //
 //=============================================
-void CGameHUD::AddRadioMessage( const Char* pstrcallername, const color32_t& color, Float lifetime, entindex_t entindex )
+void CGameHUD::AddRadioMessage( const char* pstrcallername, const color32_t& color, float lifetime, entindex_t entindex )
 {
 	m_radioMessagesList.begin();
 	while(!m_radioMessagesList.end())
@@ -2821,10 +2821,10 @@ void CGameHUD::AddRadioMessage( const Char* pstrcallername, const color32_t& col
 //=============================================
 bool CGameHUD::DrawNoiseTab( void )
 {
-	Float x = gHUDDraw.ScaleX(50);
-	Float y = gHUDDraw.ScaleY(BASE_RESOLUTION_Y-50-TAB_GENERIC_SIZE_Y) - 2*(gHUDDraw.ScaleY(10) + gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y));
+	float x = gHUDDraw.ScaleX(50);
+	float y = gHUDDraw.ScaleY(BASE_RESOLUTION_Y-50-TAB_GENERIC_SIZE_Y) - 2*(gHUDDraw.ScaleY(10) + gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y));
 
-	Float tabFullness = (m_movementNoise / PLAYER_MAX_NOISE_LEVEL)*100;
+	float tabFullness = (m_movementNoise / PLAYER_MAX_NOISE_LEVEL)*100;
 
 	// Draw speed tab
 	return DrawTab_Bar(x, y, nullptr, m_pNoiseIcon, tabFullness, TAB_MOVENOISE_SIZE_X, 1.0, nullptr, nullptr, true);
@@ -2836,10 +2836,10 @@ bool CGameHUD::DrawNoiseTab( void )
 //=============================================
 bool CGameHUD::DrawNPCAwarenessTab( void )
 {
-	Float x = gHUDDraw.ScaleX(50);
-	Float y = gHUDDraw.ScaleY(BASE_RESOLUTION_Y-95-TAB_GENERIC_SIZE_Y) - 2*(gHUDDraw.ScaleY(10) + gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y));
+	float x = gHUDDraw.ScaleX(50);
+	float y = gHUDDraw.ScaleY(BASE_RESOLUTION_Y-95-TAB_GENERIC_SIZE_Y) - 2*(gHUDDraw.ScaleY(10) + gHUDDraw.ScaleY(TAB_GENERIC_SIZE_Y));
 
-	Float tabFullness = m_npcAwareness*100;
+	float tabFullness = m_npcAwareness*100;
 
 	// Draw speed tab
 	return DrawTab_Bar(x, y, nullptr, m_pAwarenessIcon, tabFullness, TAB_MOVENOISE_SIZE_X, 1.0, nullptr, nullptr, true, tabFullness > 0 ? &m_npcAwarenessColor : nullptr);
@@ -2860,12 +2860,12 @@ bool CGameHUD::DrawUsableObjectReticle( void )
 	if(m_usableObjectMins.IsZero() && m_usableObjectMaxs.IsZero())
 		return true;
 
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	Vector vTemp;
 	static Vector vBounds[8];
-	for (Uint32 i = 0; i < 8; i++)
+	for (UInt32 i = 0; i < 8; i++)
 	{
 		if ( i & 1 ) vTemp[0] = m_usableObjectMins[0];
 		else vTemp[0] = m_usableObjectMaxs[0];
@@ -2876,21 +2876,21 @@ bool CGameHUD::DrawUsableObjectReticle( void )
 		Math::VectorCopy( vTemp, vBounds[i] );
 	}
 
-	Float screenMins[2] = {999999, 999999};
-	Float screenMaxs[2] = {-999999, -999999};
+	float screenMins[2] = {999999, 999999};
+	float screenMaxs[2] = {-999999, -999999};
 
 	// Calculate screen mins/maxs
 	bool allOccluded = true;
-	for(Uint32 i = 0; i < 8; i++)
+	for(UInt32 i = 0; i < 8; i++)
 	{
-		Float vOrigin [] = { vBounds[i][0], vBounds[i][1], vBounds[i][2], 1.0 };
+		float vOrigin [] = { vBounds[i][0], vBounds[i][1], vBounds[i][2], 1.0 };
 
 		// Multiply with modelview
-		Float viewPos[4];
+		float viewPos[4];
 		Math::MatMult4(m_modelviewMatrix.GetMatrix(), vOrigin, viewPos);
 
 		// Multiply with projection
-		Float screenCoords[4];
+		float screenCoords[4];
 		Math::MatMult4(m_projectionMatrix.GetMatrix(), viewPos, screenCoords);
 
 		// See if it's z-clipped
@@ -2898,14 +2898,14 @@ bool CGameHUD::DrawUsableObjectReticle( void )
 			continue;
 
 		// Calculate uniform values
-		Float coordX = (screenCoords[0]/screenCoords[3])*0.5 + 0.5;
+		float coordX = (screenCoords[0]/screenCoords[3])*0.5 + 0.5;
 		coordX *= screenWidth;
 		if(coordX > screenWidth)
 			coordX = screenWidth;
 		else if(coordX < 0)
 			coordX = 0;
 
-		Float coordY = (screenCoords[1]/screenCoords[3])*0.5 + 0.5;
+		float coordY = (screenCoords[1]/screenCoords[3])*0.5 + 0.5;
 		coordY *= screenHeight;
 		coordY = (screenHeight - coordY);
 
@@ -2931,16 +2931,16 @@ bool CGameHUD::DrawUsableObjectReticle( void )
 		return true;
 
 	// Draw the reticle based on the mins/maxs
-	Float boxX = screenMins[0];
-	Float boxY = screenMins[1];
-	Float boxWidth = screenMaxs[0] - screenMins[0];
-	Float boxHeight = screenMaxs[1] - screenMins[1];
+	float boxX = screenMins[0];
+	float boxY = screenMins[1];
+	float boxWidth = screenMaxs[0] - screenMins[0];
+	float boxHeight = screenMaxs[1] - screenMins[1];
 
-	const Float outwardDistanceRef = 15;
-	Float outwardDistance = gHUDDraw.ScaleX(outwardDistanceRef);
+	const float outwardDistanceRef = 15;
+	float outwardDistance = gHUDDraw.ScaleX(outwardDistanceRef);
 
-	Double time = cl_engfuncs.pfnGetClientTime();
-	Float outwardMotion = time * 3 * outwardDistance;
+	double time = cl_engfuncs.pfnGetClientTime();
+	float outwardMotion = time * 3 * outwardDistance;
 	outwardMotion = (Int32)outwardMotion % (Int32)outwardDistance;
 	outwardMotion = gHUDDraw.ScaleX(outwardMotion);
 
@@ -2978,19 +2978,19 @@ bool CGameHUD::DrawUsableObjectReticle( void )
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	gHUDDraw.SetColor(reticleColor, 255);
 
-	Float baseEdgeSize = 2;
-	Float edgeSize = gHUDDraw.ScaleX(baseEdgeSize);
+	float baseEdgeSize = 2;
+	float edgeSize = gHUDDraw.ScaleX(baseEdgeSize);
 	if(edgeSize < 1)
 		edgeSize = 1;
 
 	if(boxWidth > 0 && boxHeight > 0)
 	{
 		// Size of a reticle corner
-		const Float reticleCornerSize = 35;
+		const float reticleCornerSize = 35;
 		// Size of a corner adjusted
-		Float adjCornerSize = gHUDDraw.ScaleX(reticleCornerSize) + outwardMotion;
+		float adjCornerSize = gHUDDraw.ScaleX(reticleCornerSize) + outwardMotion;
 
-		Float maxSize = (boxWidth > boxHeight) ? boxHeight : boxWidth;
+		float maxSize = (boxWidth > boxHeight) ? boxHeight : boxWidth;
 		maxSize = maxSize * 0.5f;
 
 		if(adjCornerSize > maxSize)
@@ -3015,11 +3015,11 @@ bool CGameHUD::DrawUsableObjectReticle( void )
 
 		// Draw left lower reticle corner
 		{
-			Float width = edgeSize;
-			Float height = adjCornerSize;
+			float width = edgeSize;
+			float height = adjCornerSize;
 
-			Float originX = boxX;
-			Float originY = boxY + boxHeight - adjCornerSize;
+			float originX = boxX;
+			float originY = boxY + boxHeight - adjCornerSize;
 
 			gHUDDraw.SetOrigin(originX, originY);
 			gHUDDraw.SetSize(width, height);
@@ -3044,11 +3044,11 @@ bool CGameHUD::DrawUsableObjectReticle( void )
 
 		// Draw right upper reticle corner
 		{
-			Float originX = boxX + boxWidth - adjCornerSize;
-			Float originY = boxY;
+			float originX = boxX + boxWidth - adjCornerSize;
+			float originY = boxY;
 
-			Float width = adjCornerSize;
-			Float height = edgeSize;
+			float width = adjCornerSize;
+			float height = edgeSize;
 
 			gHUDDraw.SetOrigin(originX, originY);
 			gHUDDraw.SetSize(width, height);
@@ -3073,11 +3073,11 @@ bool CGameHUD::DrawUsableObjectReticle( void )
 		
 		// Draw right lower reticle corner
 		{
-			Float originX = boxX + boxWidth - edgeSize;
-			Float originY = boxY + boxHeight - adjCornerSize;
+			float originX = boxX + boxWidth - edgeSize;
+			float originY = boxY + boxHeight - adjCornerSize;
 
-			Float width = edgeSize;
-			Float height = adjCornerSize;
+			float width = edgeSize;
+			float height = adjCornerSize;
 
 			gHUDDraw.SetOrigin(originX, originY);
 			gHUDDraw.SetSize(width, height);
@@ -3113,8 +3113,8 @@ bool CGameHUD::DrawCountdownTimer( void )
 	if(m_countdownTimerTitle.empty() && !m_countdownTimerTime)
 		return true;
 
-	Double time = cl_engfuncs.pfnGetClientTime();
-	Double timeLeft = m_countdownTimerTime - time;
+	double time = cl_engfuncs.pfnGetClientTime();
+	double timeLeft = m_countdownTimerTime - time;
 	if(timeLeft < 0)
 		timeLeft = 0;
 
@@ -3131,11 +3131,11 @@ bool CGameHUD::DrawCountdownTimer( void )
 	Int32 totalWidth = counterWidth;
 	Int32 totalHeight = m_pCounterFont->fontsize + CHUDDraw::HUD_EDGE_SIZE;
 
-	Float textDrawPosition = 0;
+	float textDrawPosition = 0;
 	if(!m_countdownTimerTitle.empty())
 	{
 		// Determine width
-		Uint32 width = 0;
+		UInt32 width = 0;
 		cl_renderfuncs.pfnGetStringSize(m_pFontSet, m_countdownTimerTitle.c_str(), &width, nullptr, nullptr);
 		width += CHUDDraw::HUD_EDGE_SIZE;
 		if(width > totalWidth)
@@ -3148,8 +3148,8 @@ bool CGameHUD::DrawCountdownTimer( void )
 		totalHeight += m_pFontSet->fontsize;
 	}
 
-	Float positionX = m_screenWidth / 2.0f - totalWidth / 2.0f;
-	Float positionY = gHUDDraw.ScaleY(50);
+	float positionX = m_screenWidth / 2.0f - totalWidth / 2.0f;
+	float positionY = gHUDDraw.ScaleY(50);
 
 	// Draw the quad
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -3161,7 +3161,7 @@ bool CGameHUD::DrawCountdownTimer( void )
 	if(!gHUDDraw.DrawBody())
 		return false;
 
-	Float drawPositionY = positionY;
+	float drawPositionY = positionY;
 
 	// Draw the title text
 	if(!m_countdownTimerTitle.empty())
@@ -3216,11 +3216,11 @@ bool CGameHUD::DrawCountdownTimer( void )
 	else
 		color = HUD_COLOR_WHITE;
 
-	Float drawPositionX = m_screenWidth / 2.0f - counterWidth / 2.0f;
-	const Char* pstr = counterText.c_str();
+	float drawPositionX = m_screenWidth / 2.0f - counterWidth / 2.0f;
+	const char* pstr = counterText.c_str();
 	while(*pstr)
 	{
-		Float nudgeSize = 0;
+		float nudgeSize = 0;
 		Int32 characterSize = m_pCounterFont->glyphs[*pstr].advancex;
 		if(characterSize < digitWidth)
 			nudgeSize = (digitWidth - characterSize) / 2.0f;
@@ -3250,29 +3250,29 @@ bool CGameHUD::DrawRadioMessages( void )
 	if(m_radioMessagesList.empty())
 		return true;
 
-	Double time = cl_engfuncs.pfnGetClientTime();
+	double time = cl_engfuncs.pfnGetClientTime();
 
 	// Size of the radio tab
-	Uint32 radiotabwidth = gHUDDraw.ScaleY(RADIO_MSGTAB_SIZE_X);
-	Uint32 radiotabheight = gHUDDraw.ScaleY(RADIO_MSGTAB_SIZE_Y);
+	UInt32 radiotabwidth = gHUDDraw.ScaleY(RADIO_MSGTAB_SIZE_X);
+	UInt32 radiotabheight = gHUDDraw.ScaleY(RADIO_MSGTAB_SIZE_Y);
 
 	// Base X Position
 	Int32 baseXPosition = gHUDDraw.ScaleX(BASE_RESOLUTION_X) - radiotabwidth - gHUDDraw.ScaleX(RADIO_MSGTAB_SPACING);
 	Int32 baseYPosition = gHUDDraw.ScaleY(BASE_RESOLUTION_Y) / 2.0f;
 
 	// Size of the radio icon
-	Uint32 radioiconwidth = gHUDDraw.ScaleX(m_pRadioIcon->width);
-	Uint32 radioiconheight = gHUDDraw.ScaleY(m_pRadioIcon->height);
-	Uint32 radioiconspacing = (radiotabheight-radioiconheight)/2.0f;
+	UInt32 radioiconwidth = gHUDDraw.ScaleX(m_pRadioIcon->width);
+	UInt32 radioiconheight = gHUDDraw.ScaleY(m_pRadioIcon->height);
+	UInt32 radioiconspacing = (radiotabheight-radioiconheight)/2.0f;
 
 	// Calculate the total height of all messages
-	Uint32 totalheight = 0;
+	UInt32 totalheight = 0;
 	m_radioMessagesList.begin();
 	while(!m_radioMessagesList.end())
 	{
 		const radiomessage_t& msg = m_radioMessagesList.get();
 
-		Float msgalpha = 1.0;
+		float msgalpha = 1.0;
 		if(msg.spawntime + RADIO_MSG_FADETIME > time)
 			msgalpha = (time - msg.spawntime)/RADIO_MSG_FADETIME;
 		else if(msg.life - RADIO_MSG_FADETIME < time)
@@ -3296,13 +3296,13 @@ bool CGameHUD::DrawRadioMessages( void )
 	baseYPosition -= totalheight * 0.5;
 
 	// Now draw the radio message tabs
-	Uint32 offset = 0;
+	UInt32 offset = 0;
 	m_radioMessagesList.begin();
 	while(!m_radioMessagesList.end())
 	{
 		radiomessage_t& msg = m_radioMessagesList.get();
 	
-		Float msgalpha = 1.0;
+		float msgalpha = 1.0;
 		if(msg.spawntime + RADIO_MSG_FADETIME > time)
 			msgalpha = (time - msg.spawntime)/RADIO_MSG_FADETIME;
 		else if(msg.life - RADIO_MSG_FADETIME < time)
@@ -3333,7 +3333,7 @@ bool CGameHUD::DrawRadioMessages( void )
 			return false;
 
 		// Determine text position
-		Uint32 textHeight = cl_renderfuncs.pfnEstimateStringHeight(m_pSubtitleSet, msg.callername.c_str(), 0);
+		UInt32 textHeight = cl_renderfuncs.pfnEstimateStringHeight(m_pSubtitleSet, msg.callername.c_str(), 0);
 		Int32 textXPosition = baseXPosition + gHUDDraw.ScaleX(RADIO_MSGTAB_SPACING);
 		Int32 textYPosition = yPosition + (radiotabheight/2.0f) + (textHeight/2.0f);
 
@@ -3353,7 +3353,7 @@ bool CGameHUD::DrawRadioMessages( void )
 // @brief
 //
 //=============================================
-void CGameHUD::SetAutoaimVector( Float autoAimX, Float autoAimY, bool isOnTarget )
+void CGameHUD::SetAutoaimVector( float autoAimX, float autoAimY, bool isOnTarget )
 {
 	m_idealAutoAimVector[0] = autoAimX;
 	m_idealAutoAimVector[1] = autoAimY;
@@ -3366,7 +3366,7 @@ void CGameHUD::SetAutoaimVector( Float autoAimX, Float autoAimY, bool isOnTarget
 //=============================================
 bool CGameHUD::HasAnyWeapons( void ) const
 {
-	for(Uint32 i = 0; i < NUM_WEAPONS; i++)
+	for(UInt32 i = 0; i < NUM_WEAPONS; i++)
 	{
 		if(m_weaponBits & (1<<(i)))
 			return true;
@@ -3398,12 +3398,12 @@ CWeaponInfo::~CWeaponInfo( void )
 //=============================================
 void CWeaponInfo::Reset( void )
 {
-	for(Uint32 i = 0; i < MAX_WEAPONS; i++)
+	for(UInt32 i = 0; i < MAX_WEAPONS; i++)
 		m_weaponsArray[i] = weapon_t();
 
 	memset(m_pSlotsArray, 0, sizeof(m_pSlotsArray));
 
-	for(Uint32 i = 0; i < MAX_AMMO_TYPES; i++)
+	for(UInt32 i = 0; i < MAX_AMMO_TYPES; i++)
 		m_ammoCounts[i] = 0;
 }
 
@@ -3441,7 +3441,7 @@ void CWeaponInfo::AssignWeapon( weapon_t* pweapon )
 // @brief
 //
 //=============================================
-weapon_t* CWeaponInfo::GetWeapon( Uint32 id )
+weapon_t* CWeaponInfo::GetWeapon( UInt32 id )
 {
 	assert(id < MAX_WEAPONS);
 	return &m_weaponsArray[id];
@@ -3469,7 +3469,7 @@ void CWeaponInfo::RemoveWeapon( weapon_t* pweapon )
 //=============================================
 void CWeaponInfo::RemoveAllWeapons( void )
 {
-	for(Uint32 i = 0; i < MAX_WEAPONS; i++)
+	for(UInt32 i = 0; i < MAX_WEAPONS; i++)
 	{
 		if(m_weaponsArray[i].weaponid)
 			RemoveWeapon(&m_weaponsArray[i]);
@@ -3480,7 +3480,7 @@ void CWeaponInfo::RemoveAllWeapons( void )
 // @brief
 //
 //=============================================
-weapon_t* CWeaponInfo::GetWeaponFromSlot( Uint32 slot, Uint32 position )
+weapon_t* CWeaponInfo::GetWeaponFromSlot( UInt32 slot, UInt32 position )
 {
 	assert(slot < MAX_WEAPON_SLOTS);
 	assert(position < MAX_SLOT_POSITIONS);
@@ -3492,11 +3492,11 @@ weapon_t* CWeaponInfo::GetWeaponFromSlot( Uint32 slot, Uint32 position )
 // @brief
 //
 //=============================================
-weapon_t* CWeaponInfo::GetSlotFirstWeapon( Uint32 slot )
+weapon_t* CWeaponInfo::GetSlotFirstWeapon( UInt32 slot )
 {
 	assert(slot < MAX_WEAPON_SLOTS);
 
-	for(Uint32 i = 0; i < MAX_SLOT_POSITIONS; i++)
+	for(UInt32 i = 0; i < MAX_SLOT_POSITIONS; i++)
 	{
 		if(m_pSlotsArray[slot][i])
 			return m_pSlotsArray[slot][i];
@@ -3509,7 +3509,7 @@ weapon_t* CWeaponInfo::GetSlotFirstWeapon( Uint32 slot )
 // @brief
 //
 //=============================================
-weapon_t* CWeaponInfo::GetNextSlotWeapon( Uint32 slot, Uint32 position )
+weapon_t* CWeaponInfo::GetNextSlotWeapon( UInt32 slot, UInt32 position )
 {
 	assert(slot < MAX_WEAPON_SLOTS);
 	assert(position < MAX_SLOT_POSITIONS);
@@ -3518,7 +3518,7 @@ weapon_t* CWeaponInfo::GetNextSlotWeapon( Uint32 slot, Uint32 position )
 		return GetSlotFirstWeapon(slot);
 
 	weapon_t* pweapon = nullptr;
-	for(Uint32 i = position+1; i < MAX_SLOT_POSITIONS; i++)
+	for(UInt32 i = position+1; i < MAX_SLOT_POSITIONS; i++)
 	{
 		if(m_pSlotsArray[slot][i])
 		{
@@ -3555,7 +3555,7 @@ bool CWeaponInfo::WeaponHasAmmo( weapon_t* pweapon ) const
 // @brief
 //
 //=============================================
-Uint32 CWeaponInfo::GetAmmoCount( Int32 ammoId ) const
+UInt32 CWeaponInfo::GetAmmoCount( Int32 ammoId ) const
 {
 	assert(ammoId < MAX_AMMO_TYPES);
 
@@ -3569,7 +3569,7 @@ Uint32 CWeaponInfo::GetAmmoCount( Int32 ammoId ) const
 // @brief
 //
 //=============================================
-void CWeaponInfo::SetAmmoCount( Int32 ammoId, Uint32 count )
+void CWeaponInfo::SetAmmoCount( Int32 ammoId, UInt32 count )
 {
 	assert(ammoId < MAX_AMMO_TYPES);
 
@@ -3610,7 +3610,7 @@ void CHUDHistory::Reset( void )
 // @brief
 //
 //=============================================
-void CHUDHistory::AddElement( Uint32 type, Uint32 id, Uint32 count )
+void CHUDHistory::AddElement( UInt32 type, UInt32 id, UInt32 count )
 {
 	if(type == HISTORY_AMMO && !count)
 		return;
@@ -3647,7 +3647,7 @@ void CHUDHistory::AddElement( Uint32 type, Uint32 id, Uint32 count )
 // @brief
 //
 //=============================================
-void CHUDHistory::AddElement( Uint32 type, const Char* pstrname, Uint32 count )
+void CHUDHistory::AddElement( UInt32 type, const char* pstrname, UInt32 count )
 {
 	if(type == HISTORY_AMMO && !count)
 		return;
@@ -3683,7 +3683,7 @@ void CHUDHistory::AddElement( Uint32 type, const Char* pstrname, Uint32 count )
 // @brief
 //
 //=============================================
-void CHUDHistory::AddElement( Uint32 type, const Char* pstrmsg )
+void CHUDHistory::AddElement( UInt32 type, const char* pstrmsg )
 {
 	if(type != HISTORY_CUSTOM_MSG)
 	{
@@ -3716,11 +3716,11 @@ bool CHUDHistory::Draw( void )
 	if(!HasActiveElements())
 		return true;
 
-	Float height = 0;
-	Float xcoord = gHUDDraw.ScaleXRelative(BASE_RESOLUTION_X - 50);
-	Float ycoord = gHUDDraw.ScaleY(BASE_RESOLUTION_Y - 250 - MAX_HISTORY_HEIGHT);
+	float height = 0;
+	float xcoord = gHUDDraw.ScaleXRelative(BASE_RESOLUTION_X - 50);
+	float ycoord = gHUDDraw.ScaleY(BASE_RESOLUTION_Y - 250 - MAX_HISTORY_HEIGHT);
 
-	Double fltime = cl_engfuncs.pfnGetClientTime();
+	double fltime = cl_engfuncs.pfnGetClientTime();
 	const font_set_t* pset = cl_renderfuncs.pfnGetDefaultFontSet();
 
 	m_historyList.begin();
@@ -3734,8 +3734,8 @@ bool CHUDHistory::Draw( void )
 			continue;
 		}
 
-		Float textwidth = 0;
-		const Char* pstr = history.description.c_str();
+		float textwidth = 0;
+		const char* pstr = history.description.c_str();
 		while(*pstr)
 		{
 			textwidth += pset->glyphs[*pstr].advancex;
@@ -3743,11 +3743,11 @@ bool CHUDHistory::Draw( void )
 		}
 
 		color32_t color = HISTORY_TEXT_COLOR;
-		Double fadeBeginTime = history.die - HISTORY_FADE_TIME;
+		double fadeBeginTime = history.die - HISTORY_FADE_TIME;
 		if(fadeBeginTime <= fltime)
 			color.a *= 1.0 - (fltime - fadeBeginTime) / HISTORY_FADE_TIME;
 
-		Float textxcoord = xcoord - textwidth;
+		float textxcoord = xcoord - textwidth;
 		if(!cl_renderfuncs.pfnDrawSimpleString(color, textxcoord, ycoord, history.description.c_str(), pset))
 		{
 			cl_engfuncs.pfnErrorPopup("Shader error: %s.", cl_renderfuncs.pfnGetStringDrawError());

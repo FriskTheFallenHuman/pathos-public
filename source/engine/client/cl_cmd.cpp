@@ -98,7 +98,7 @@ void Cmd_DownloadFile( void )
 		return;
 	}
 
-	const Char* pstrFilename = gCommands.Cmd_Argv(1);
+	const char* pstrFilename = gCommands.Cmd_Argv(1);
 	if(!pstrFilename)
 	{
 		Con_Printf("download: no file specified.\n");

@@ -19,17 +19,17 @@ class CFuncButton : public CToggleEntity
 {
 public:
 	// Locked sound wait time
-	static const Float LOCKED_SOUND_WAIT_TIME;
+	static const float LOCKED_SOUND_WAIT_TIME;
 	// Default button speed
-	static const Float DEFAULT_SPEED;
+	static const float DEFAULT_SPEED;
 	// Default button wait time
-	static const Float DEFAULT_WAIT_TIME;
+	static const float DEFAULT_WAIT_TIME;
 	// Default button lip value
-	static const Float DEFAULT_LIP_VALUE;
+	static const float DEFAULT_LIP_VALUE;
 	// Legacy button sound count
-	static const Uint32 NUM_LEGACY_BUTTON_SOUNDS;
+	static const UInt32 NUM_LEGACY_BUTTON_SOUNDS;
 	// Legacy button sounds
-	static const Char* LEGACY_BUTTON_SOUNDS[];
+	static const char* LEGACY_BUTTON_SOUNDS[];
 
 public:
 	enum
@@ -61,11 +61,11 @@ public:
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	virtual Int32 GetEntityFlags( void ) override { return ((CToggleEntity::GetFlags() & ~FL_ENTITY_TRANSITION) | FL_ENTITY_PLAYER_USABLE); }
 	virtual bool IsFuncButtonEntity( void ) const override { return true; }
-	virtual void SetPairedButtonDelay( Float delayTime ) override;
+	virtual void SetPairedButtonDelay( float delayTime ) override;
 	virtual usableobject_type_t GetUsableObjectType( void ) override;
 
 public:
-	void EXPORTFN ButtonUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	void EXPORTFN ButtonUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 	void EXPORTFN ButtonTouch( CBaseEntity* pOther );
 	void EXPORTFN SparkThink( void );
 	void EXPORTFN TriggerAndWait( void );
@@ -95,7 +95,7 @@ protected:
 
 	string_t m_useSoundFile;
 
-	Double m_nextLockSoundTime;
-	Double m_nextUsableTime;
+	double m_nextLockSoundTime;
+	double m_nextUsableTime;
 };
 #endif //FUNCBUTTONH

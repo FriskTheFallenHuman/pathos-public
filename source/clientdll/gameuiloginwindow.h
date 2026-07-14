@@ -30,21 +30,21 @@ class CGameUILoginWindow : public CGameUIWindow
 {
 public:
 	// Object x inset for login window
-	static const Uint32 LOGINWINDOW_TAB_X_INSET;
+	static const UInt32 LOGINWINDOW_TAB_X_INSET;
 	// Object y inset for login window
-	static const Uint32 LOGINWINDOW_TAB_Y_INSET;
+	static const UInt32 LOGINWINDOW_TAB_Y_INSET;
 	// Object y spacing for login window
-	static const Uint32 LOGINWINDOW_TAB_X_SPACING;
+	static const UInt32 LOGINWINDOW_TAB_X_SPACING;
 	// Object x spacing for login window
-	static const Uint32 LOGINWINDOW_TAB_Y_SPACING;
+	static const UInt32 LOGINWINDOW_TAB_Y_SPACING;
 	// Space before info tab on y axis for login window
-	static const Uint32 LOGINWINDOW_INFO_TAB_Y_SPACING;
+	static const UInt32 LOGINWINDOW_INFO_TAB_Y_SPACING;
 	// Input tab width
-	static const Uint32 LOGINWINDOW_INPUT_TAB_WIDTH;
+	static const UInt32 LOGINWINDOW_INPUT_TAB_WIDTH;
 	// Input tab height
-	static const Uint32 LOGINWINDOW_INPUT_TAB_HEIGHT;
+	static const UInt32 LOGINWINDOW_INPUT_TAB_HEIGHT;
 	// Input tab text inset
-	static const Uint32 LOGINWINDOW_INPUT_TAB_TEXT_INSET;
+	static const UInt32 LOGINWINDOW_INPUT_TAB_TEXT_INSET;
 	// Default text color
 	static const color32_t LOGINWINDOW_TEXT_COLOR;
 	// Default text color
@@ -54,30 +54,30 @@ public:
 	// Default text color
 	static const color32_t LOGINWINDOW_PROMPT_SUCCESS_TEXT_COLOR;
 	// Button y spacing for login window
-	static const Uint32 LOGINWINDOW_BUTTON_X_SPACING;
+	static const UInt32 LOGINWINDOW_BUTTON_X_SPACING;
 	// Prompt text lifetime
-	static const Double LOGINWINDOW_PROMPT_LIFETIME;
+	static const double LOGINWINDOW_PROMPT_LIFETIME;
 	// Title text default schema set name
-	static const Char LOGINWINDOW_TITLE_TEXTSCHEMA_NAME[];
+	static const char LOGINWINDOW_TITLE_TEXTSCHEMA_NAME[];
 	// Text default font schema name
-	static const Char LOGINWINDOW_TEXTSCHEMA_NAME[];
+	static const char LOGINWINDOW_TEXTSCHEMA_NAME[];
 
 public:
-	CGameUILoginWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
+	CGameUILoginWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
 	~CGameUILoginWindow();
 
 public:
 	// Initializes the window
 	void init( void ) override;
 	// Initializes the data
-	bool initData( const Char* pstrUsername, const Char* pstrPassword, const Char* pstrUsernameInput, const Char* pstrPasswordInput, bool stayTillNext );
+	bool initData( const char* pstrUsername, const char* pstrPassword, const char* pstrUsernameInput, const char* pstrPasswordInput, bool stayTillNext );
 
 	// Think function for window
 	void think( void ) override;
 	// Called when window is removed
 	void onRemove( void ) override;
 	// Mark for delayed removal
-	void setDelayedRemoval( Double delay ) override;
+	void setDelayedRemoval( double delay ) override;
 
 	// Manages a key event
 	virtual bool keyEvent( Int32 button, Int16 mod, bool keyDown ) override;
@@ -101,9 +101,9 @@ private:
 	// Prompt text
 	CGameUIText* m_pPromptText;
 	// Prompt text disappear time
-	Double m_promptTextTime;
+	double m_promptTextTime;
 	// Time at which window dies
-	Double m_loginWindowTime;
+	double m_loginWindowTime;
 
 	// Username text label
 	CGameUIText* m_pInfoLabelUsername;
@@ -118,12 +118,12 @@ private:
 	CString m_username;
 	// Password
 	CString m_password;
-	// TRUE if login was successful
+	// true if login was successful
 	bool m_loginSuccessful;
-	// TRUE if we should stay till next window spawn
+	// true if we should stay till next window spawn
 	bool m_stayTillNextWindow;
 	// Message send time
-	Double m_messageSendTime;
+	double m_messageSendTime;
 };
 
 /*
@@ -144,7 +144,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) override;
+	virtual void PerformAction( float param ) override;
 	// Handles a special key event
 	virtual bool KeyEvent( Int32 button, Int16 mod, bool keyDown ) override { return false; }
 	// Handles a mouse button event

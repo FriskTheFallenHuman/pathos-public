@@ -39,17 +39,17 @@ struct dsprite_t
 	Int32 id;
 	Int32 version;
 
-	Uint32 type;
-	Uint32 format;
+	UInt32 type;
+	UInt32 format;
 
-	Float boundingradius;
-	Uint32 maxwidth;
-	Uint32 maxheight;
-	Uint32 numframes;
+	float boundingradius;
+	UInt32 maxwidth;
+	UInt32 maxheight;
+	UInt32 numframes;
 
-	Float beamlength;
+	float beamlength;
 
-	Uint32 synctype;
+	UInt32 synctype;
 };
 
 struct dspriteframe_t
@@ -63,8 +63,8 @@ struct dspriteframe_t
 
 	Int32 originx;
 	Int32 originy;
-	Uint32 width;
-	Uint32 height;
+	UInt32 width;
+	UInt32 height;
 };
 
 enum spr_orientation_t
@@ -104,12 +104,12 @@ struct mspriteframe_t
 
 	Int32				width;
 	Int32				height;
-	Float				up;
-	Float				down;
-	Float				left;
-	Float				right;
+	float				up;
+	float				down;
+	float				left;
+	float				right;
 	en_texture_t*		ptexture;
-	byte				*pdata;
+	Byte				*pdata;
 };
 
 struct mspritegroup_t
@@ -118,11 +118,11 @@ struct mspritegroup_t
 		{}
 	~mspritegroup_t()
 	{
-		for(Uint32 i = 0; i < frames.size(); i++)
+		for(UInt32 i = 0; i < frames.size(); i++)
 			delete frames[i];
 	}
 
-	CArray<Float>			intervals;
+	CArray<float>			intervals;
 	CArray<mspriteframe_t*> frames;
 };
 
@@ -174,6 +174,6 @@ struct msprite_t
 	Int32 synctype;
 
 	CArray<mspriteframedesc_t>	frames;
-	byte* palette;
+	Byte* palette;
 };
 #endif //SPRFORMAT_H

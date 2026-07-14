@@ -51,51 +51,51 @@ public:
 	};
 
 public:
-	inline CLinkedList( void );
-	inline CLinkedList( CLinkedList& src );
-	inline ~CLinkedList( void );
+	DO_INLINE CLinkedList( void );
+	DO_INLINE CLinkedList( CLinkedList& src );
+	DO_INLINE ~CLinkedList( void );
 
 	// Adds an element to the list
-	inline link_t* add( T element );
+	DO_INLINE link_t* add( T element );
 	// Adds an element to the list at the tail
-	inline link_t* radd( T element );
+	DO_INLINE link_t* radd( T element );
 	// Adds an element to the list before the link
-	inline link_t* insert_before( link_t* link, T element );
+	DO_INLINE link_t* insert_before( link_t* link, T element );
 	// Adds an element to the list after the link
-	inline link_t* insert_after( link_t* link, T element );
+	DO_INLINE link_t* insert_after( link_t* link, T element );
 	// Removes an element from the list
-	inline void remove( const link_t* link );
+	DO_INLINE void remove( const link_t* link );
 	// Removes an element from the list
-	inline bool remove( const T element );
+	DO_INLINE bool remove( const T element );
 	// Returns the current element link
-	inline link_t* get_link( void );
+	DO_INLINE link_t* get_link( void );
 	// Returns the current element
-	inline T& get( void );
+	DO_INLINE T& get( void );
 	// Sets up for iteration
-	inline void begin( void );
+	DO_INLINE void begin( void );
 	// Sets up for iteration
-	inline void begin( link_t* link );
+	DO_INLINE void begin( link_t* link );
 	// Sets up for iteration from the end
-	inline void rbegin( void );
+	DO_INLINE void rbegin( void );
 	// Tells if we've reached the end
-	inline bool end( void ) const;
+	DO_INLINE bool end( void ) const;
 	// Goes to the next element in the link
-	inline void next( void );
+	DO_INLINE void next( void );
 	// Goes to the previous element in the link
-	inline void prev( void );
+	DO_INLINE void prev( void );
 	// Clears the linked list
-	inline void clear( void );
+	DO_INLINE void clear( void );
 	// Tells if the list is empty
-	inline bool empty( void ) const;
+	DO_INLINE bool empty( void ) const;
 	// Returns the size of the list
-	inline Uint32 size( void ) const;
+	DO_INLINE Uint32 size( void ) const;
 	// Pushes an iterator
-	inline void push_iterator( void );
+	DO_INLINE void push_iterator( void );
 	// Pushes an iterator
-	inline void pop_iterator( void );
+	DO_INLINE void pop_iterator( void );
 
 	// assignment operator
-	inline CLinkedList<T>& operator=( const CLinkedList<T>& src );
+	DO_INLINE CLinkedList<T>& operator=( const CLinkedList<T>& src );
 
 private:
 	// Pointer to first link in the chain

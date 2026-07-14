@@ -34,7 +34,7 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void InitEntity( void ) override;
 	virtual bool IsPathTrackEntity( void ) const override { return true; }
 
@@ -43,17 +43,17 @@ public:
 	void Link( void );
 	
 	CPathTrack* GetValidPath( CPathTrack* pPath, bool testflag );
-	static void Project( CPathTrack* pStart, CPathTrack* pEnd, Vector& origin, Float dist );
+	static void Project( CPathTrack* pStart, CPathTrack* pEnd, Vector& origin, float dist );
 	
 public:
-	CPathTrack* GetLookAhead( Vector& origin, Float dist, bool test );
+	CPathTrack* GetLookAhead( Vector& origin, float dist, bool test );
 	CPathTrack* GetNearest( const Vector& origin );
 
 	CPathTrack* GetNext( void );
 	CPathTrack* GetPrevious( void );
 
 private:
-	Float m_length;
+	float m_length;
 	string_t m_alternateName;
 
 	CPathTrack* m_pNext;

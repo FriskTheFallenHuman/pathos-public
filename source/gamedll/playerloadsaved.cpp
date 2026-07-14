@@ -109,7 +109,7 @@ bool CPlayerLoadSaved::Spawn( void )
 // @brief
 //
 //=============================================
-void CPlayerLoadSaved::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CPlayerLoadSaved::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	Util::ScreenFadeAllPlayers(m_pState->rendercolor, m_duration, m_holdTime, m_pState->renderamt, FL_FADE_OUT|FL_FADE_CLEARGAME);
 
@@ -136,7 +136,7 @@ void CPlayerLoadSaved::MessageThink( void )
 {
 	Util::ShowMessageAllPlayers(gd_engfuncs.pfnGetString(m_pFields->message));
 
-	Double loadTime = m_loadTime - m_messageTime;
+	double loadTime = m_loadTime - m_messageTime;
 	if(loadTime <= 0)
 	{
 		LoadThink();

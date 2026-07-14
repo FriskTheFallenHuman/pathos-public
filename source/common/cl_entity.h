@@ -27,7 +27,7 @@ struct mouth_t
 		mouthopen(0)
 		{}
 
-	byte mouthopen;
+	Byte mouthopen;
 };
 
 struct latchedstates_t
@@ -45,20 +45,20 @@ struct latchedstates_t
 			memset(prevseqblending, 0, sizeof(prevseqblending));
 		}
 
-	Double animtime;
-	Double gaitanimtime;
-	Double sequencetime;
-	Double gaitsequencetime;
+	double animtime;
+	double gaitanimtime;
+	double sequencetime;
+	double gaitsequencetime;
 
 	Vector origin;
 	Vector angles;
 
 	Int32 sequence;
-	Float frame;
+	float frame;
 
-	Float controllers[MAX_CONTROLLERS];
-	Float blending[MAX_BLENDING];
-	Float prevseqblending[MAX_BLENDING];
+	float controllers[MAX_CONTROLLERS];
+	float blending[MAX_BLENDING];
+	float prevseqblending[MAX_BLENDING];
 
 	Vector prevgaitorigin;
 };
@@ -71,9 +71,9 @@ struct glowstate_t
 		{
 		}
 
-	Float currentalpha;
-	Double lastrendertime;
-	CArray<Float> lastfrac;
+	float currentalpha;
+	double lastrendertime;
+	CArray<float> lastfrac;
 };
 
 struct cl_entity_t
@@ -102,8 +102,8 @@ public:
 	// Index into cl_entities
 	entindex_t entindex;
 	// Identifier of entity edict
-	Uint32 identifier;
-	// TRUE if it's a player
+	UInt32 identifier;
+	// true if it's a player
 	bool player;
 
 	// State from previous frame
@@ -133,7 +133,7 @@ public:
 	entity_vbmhulldata_t* pvbmhulldata;
 
 	// Last frame on which an event was played
-	Float eventframe;
+	float eventframe;
 };
 
 #endif //CL_ENTITY_H

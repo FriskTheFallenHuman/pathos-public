@@ -90,7 +90,7 @@ bool CTriggerLogin::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerLogin::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerLogin::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pEntity;
@@ -105,9 +105,9 @@ void CTriggerLogin::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usem
 		return;
 	}
 
-	const Char* pstruser = gd_engfuncs.pfnGetString(m_username);
-	const Char* pstrpassword = gd_engfuncs.pfnGetString(m_password);
-	const Char* pstrcodeid = gd_engfuncs.pfnGetString(m_codeid);
+	const char* pstruser = gd_engfuncs.pfnGetString(m_username);
+	const char* pstrpassword = gd_engfuncs.pfnGetString(m_password);
+	const char* pstrcodeid = gd_engfuncs.pfnGetString(m_codeid);
 
 	pEntity->SpawnLoginWindow(pstruser, pstrpassword, pstrcodeid, this, HasSpawnFlag(FL_STAY_TILL_NEXT) ? true : false);
 }

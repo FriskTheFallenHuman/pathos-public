@@ -12,6 +12,9 @@ All Rights Reserved.
 
 #include "constants.h"
 #include "activity.h"
+#include "gameui_shared.h"
+#include "weapons_shared.h"
+#include "entity_enums.h"
 #include "util.h"
 
 enum usemode_t
@@ -39,8 +42,6 @@ enum subwayline_t;
 enum activity_t;
 enum deathstate_t;
 enum weaponid_t;
-enum scripted_sequence_anim_t;
-enum ai_condition_bits_t;
 
 struct weaponinfo_t;
 
@@ -59,17 +60,17 @@ enum entity_flags_t
 #ifdef _DEBUG
 typedef void (CBaseEntity::*THINKFNPTR)( void );
 typedef void (CBaseEntity::*INTERACTFNPTR)( CBaseEntity* pOther );
-typedef void (CBaseEntity::*USEFNPTR)( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+typedef void (CBaseEntity::*USEFNPTR)( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 
 #define SetThink( function ) _SetThink(static_cast <void (CBaseEntity::*)( void )>(function), #function)
 #define SetTouch( function ) _SetTouch(static_cast <void (CBaseEntity::*)( CBaseEntity* pOther )>(function), #function)
 #define SetBlocked( function ) _SetBlocked(static_cast <void (CBaseEntity::*)( CBaseEntity* pOther )>(function), #function)
-#define SetUse( function ) _SetUse(static_cast <void (CBaseEntity::*)( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )>(function), #function)
+#define SetUse( function ) _SetUse(static_cast <void (CBaseEntity::*)( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )>(function), #function)
 #else
 #define SetThink( function ) m_pfnThinkFunction = static_cast <void (CBaseEntity::*)( void )>(function)
 #define SetTouch( function ) m_pfnTouchFunction = static_cast <void (CBaseEntity::*)( CBaseEntity* pOther )>(function)
 #define SetBlocked( function ) m_pfnBlockedFunction = static_cast <void (CBaseEntity::*)( CBaseEntity* pOther )>(function)
-#define SetUse( function ) m_pfnUseFunction = static_cast <void (CBaseEntity::*)( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )>(function)
+#define SetUse( function ) m_pfnUseFunction = static_cast <void (CBaseEntity::*)( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )>(function)
 #endif
 
 #define STUBWARNING Util::EntityConPrintf(m_pEdict, "Stub function '%s' called.\n", __FUNCTION__);
@@ -131,7 +132,7 @@ public:
 	// Calls blocked function
 	virtual void CallBlocked( CBaseEntity* pOther );
 	// Calls use function
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 	// Initializes parenting
 	virtual void InitParenting( void );
 	// Sets the entity to be removed
@@ -141,13 +142,13 @@ public:
 	virtual bool ShouldToggle( usemode_t useMode, bool currentState );
 
 	// Takes an amount of health
-	virtual bool TakeHealth( Float amount, Int32 damageFlags );
+	virtual bool TakeHealth( float amount, Int32 damageFlags );
 	// Makes the entity take on damage
-	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags );
+	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags );
 	// Handles damage calculation for a hitscan
-	virtual void TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags );
+	virtual void TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags );
 	// Manages spawning of decals
-	virtual void SpawnBloodDecals( Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags );
+	virtual void SpawnBloodDecals( float damage, const Vector& direction, trace_t& tr, Int32 damageFlags );
 	// Manages dying
 	virtual void Killed( CBaseEntity* pAttacker, gibbing_t gibbing, deathmode_t deathMode = DEATH_NORMAL );
 	// Returns blood color setting
@@ -184,7 +185,7 @@ public:
 	virtual CBaseEntity* GetTargetEntity( void ) { return nullptr; }
 
 	// Gets the damage decal
-	virtual const Char* GetDamageDecal( Int32 damageFlags );
+	virtual const char* GetDamageDecal( Int32 damageFlags );
 
 	// Returns entity property flags
 	virtual Int32 GetEntityFlags( void ) { return FL_ENTITY_TRANSITION; }
@@ -245,7 +246,7 @@ public:
 	virtual bool IsFuncWallToggleEntity( void ) const { return false; }
 	// Tells if the entity is a scripted_sequence entity
 	virtual bool IsScriptedSequenceEntity( void ) const { return false; }
-	// TRUE if a black hole can pull this entity
+	// true if a black hole can pull this entity
 	virtual bool CanBlackHolePull( void ) const { return false; }
 	// Tells if this entity is a trigger_auto entity
 	virtual bool IsTriggerAutoEntity( void ) const { return false; }
@@ -257,7 +258,7 @@ public:
 	virtual bool IsLightEnvironment( void ) const { return false; };
 
 	// Triggers targets of this entity
-	virtual void UseTargets( CBaseEntity* pActivator, usemode_t useMode, Float value, string_t target = NO_STRING_VALUE );
+	virtual void UseTargets( CBaseEntity* pActivator, usemode_t useMode, float value, string_t target = NO_STRING_VALUE );
 
 	// Advances states on diaries
 	virtual void AdvanceState( void ) { }
@@ -274,21 +275,21 @@ public:
 	// Sets a door to be forced to close
 	virtual void SetForcedClose( void ) { STUBWARNING; }
 	// Reroutes a train to another path_corner
-	virtual void Reroute( CBaseEntity* pTarget, Float speed ) { STUBWARNING;  };
+	virtual void Reroute( CBaseEntity* pTarget, float speed ) { STUBWARNING;  };
 	// Moves a train to a specified path_corner entity
 	virtual void MoveTrainToPathCorner( CBaseEntity* pPathCorner, CBaseEntity* pTargetingPathCorner ) { STUBWARNING; };
 	// Returns the number of monitors tied to an info_monitorcamera entity
-	virtual Uint32 GetNbCameraMonitors( void ) const { STUBWARNING;  return 0; }
+	virtual UInt32 GetNbCameraMonitors( void ) const { STUBWARNING;  return 0; }
 	// Returns a monitor by it's index
-	virtual const edict_t* GetMonitorByIndex( Uint32 index ) const { STUBWARNING; return nullptr; }
+	virtual const edict_t* GetMonitorByIndex( UInt32 index ) const { STUBWARNING; return nullptr; }
 	// Checks entity against info_monitorcamera's bounding box
 	virtual bool CheckCameraBBox( const edict_t* pedict ) const { STUBWARNING; return false; }
 	// Tells the trigger_multiple to wait
 	virtual void TriggerWait( CBaseEntity* pActivator ) { STUBWARNING; };
 	// Tells the wait time for toggle entities
-	virtual Float GetWaitTime( void ) { STUBWARNING;  return -1; }
+	virtual float GetWaitTime( void ) { STUBWARNING;  return -1; }
 	// Tells the func_button to become unusable for n seconds
-	virtual void SetPairedButtonDelay( Float delayTime ) { STUBWARNING; };
+	virtual void SetPairedButtonDelay( float delayTime ) { STUBWARNING; };
 	// Tells an light_environment to set the cvar values
 	virtual bool SetLightEnvValues( daystage_t daystage ) { STUBWARNING; return false; };
 
@@ -310,9 +311,9 @@ public:
 	virtual void SetToggleState( togglestate_t state, bool reverse ) { };
 
 	// Returns the number of portal surfaces tied to an envpos_portal entity
-	virtual Uint32 GetNbPortalSurfaces( void ) const { return 0; }
+	virtual UInt32 GetNbPortalSurfaces( void ) const { return 0; }
 	// Returns a particular func_portal_surface entity by index
-	virtual const edict_t* GetPortalSurfaceByIndex( Uint32 index ) const { return nullptr; }
+	virtual const edict_t* GetPortalSurfaceByIndex( UInt32 index ) const { return nullptr; }
 
 	// Returns the entity's toggle state
 	virtual togglestate_t GetToggleState( void ) { return TSTATE_NONE; }
@@ -331,17 +332,17 @@ public:
 	// Sets PVS data for entities that meed it
 	virtual void SetPVSData( void ) { };
 	// Returns PVS data from entities that need it
-	virtual const byte* GetPVSData( void ) const { return nullptr; }
+	virtual const Byte* GetPVSData( void ) const { return nullptr; }
 
 	// Returns the delay
-	virtual Float GetDelay( void ) { return 0; }
+	virtual float GetDelay( void ) { return 0; }
 	// Returns the next target entity
 	virtual CBaseEntity* GetNextTarget( void );
 
 	// Copies edict data from one entity to the current one
 	virtual void CopyEdictData( CBaseEntity* pSrcEntity );
 	// Tells if keyvalue can be overridden by base entity class
-	virtual bool ShouldOverrideKeyValue( const Char* pstrKeyValue );
+	virtual bool ShouldOverrideKeyValue( const char* pstrKeyValue );
 
 	// Sets extra model info after setting the model
 	virtual void PostModelSet( void ) { };
@@ -365,18 +366,18 @@ public:
 	// Sets a sequence index as the current sequence
 	virtual bool SetSequence( Int32 sequenceIndex ) { return false; };
 	// Sets a sequence by name
-	virtual bool SetSequence( const Char* pstrSequenceName ) { return false; };
+	virtual bool SetSequence( const char* pstrSequenceName ) { return false; };
 	// Sets a sequence index as the current sequence
 	virtual Int32 GetSequence( void ) { STUBWARNING; return NO_SEQUENCE_VALUE; };
 	// Tells if a sequence is looped
-	virtual bool IsSequenceLooped( const Char* pstrSequenceName ) { return false; };
+	virtual bool IsSequenceLooped( const char* pstrSequenceName ) { return false; };
 	// Resets animation states
 	virtual void ResetSequenceInfo( void ) { };
 	// Sets sequence blending
-	virtual Float SetBlending( Int32 blenderIndex, Float value ) { STUBWARNING; return 0; };
+	virtual float SetBlending( Int32 blenderIndex, float value ) { STUBWARNING; return 0; };
 	// Returns the number of sequence blenders
-	virtual Uint32 GetNbBlenders( void ) { return 0; };
-	// TRUE if entity is an animating entity
+	virtual UInt32 GetNbBlenders( void ) { return 0; };
+	// true if entity is an animating entity
 	virtual bool IsAnimatingEntity( void ) { return false; }
 
 	// Precaches sounds for a sequence
@@ -384,18 +385,18 @@ public:
 	// Precaches sounds for a sequence
 	virtual void PrecacheSequenceSounds( Int32 modelIndex, Int32 sequenceIndex ) { };
 	// Precaches sounds for a sequence
-	virtual void PrecacheSequenceSounds( const Char* pstrSequenceName ) { };
+	virtual void PrecacheSequenceSounds( const char* pstrSequenceName ) { };
 
 	// Returns the bodygroup index by name
-	virtual Int32 GetBodyGroupIndexByName( const Char* pstrBodygroupName ) { STUBWARNING; return NO_POSITION; }
+	virtual Int32 GetBodyGroupIndexByName( const char* pstrBodygroupName ) { STUBWARNING; return NO_POSITION; }
 	// Returns the submodel index in a bodygroup by name
-	virtual Int32 GetSubmodelIndexByName( Int32 bodygroupindex, const Char* pstrSubmodelName ) { return NO_SEQUENCE_VALUE; }
+	virtual Int32 GetSubmodelIndexByName( Int32 bodygroupindex, const char* pstrSubmodelName ) { return NO_SEQUENCE_VALUE; }
 	// Sets bodygroup setting
 	virtual void SetBodyGroup( Int32 groupindex, Int32 value ) { STUBWARNING; }
 	// Finds a sequence by name
 	virtual Int32 FindSequence( const char* pstrsequencename ) { return NO_SEQUENCE_VALUE; }
 	// Returns sequence duration
-	virtual Float GetSequenceTime( Int32 sequenceIndex ) { STUBWARNING; return 0; }
+	virtual float GetSequenceTime( Int32 sequenceIndex ) { STUBWARNING; return 0; }
 
 public:
 	//
@@ -448,36 +449,36 @@ public:
 	// Returns the AI state of the NPC
 	virtual npcstate_t GetNPCState( void ) { STUBWARNING; return NPC_STATE_NONE; }
 	// Sets the last activity time
-	virtual void SetLastActivityTime( Double time ) { STUBWARNING; };
+	virtual void SetLastActivityTime( double time ) { STUBWARNING; };
 	// Returns the ideal activity
 	virtual Int32 GetIdealActivity( void ) { STUBWARNING; return ACT_RESET; };
 
 	// Clears an AI condition
-	virtual void ClearCondition( Uint32 conditionBit ) { STUBWARNING; };
+	virtual void ClearCondition( UInt32 conditionBit ) { STUBWARNING; };
 	// Clears AI conditions specified in a bitset
 	virtual void ClearConditions( const CBitSet& conditionBitSet ) { STUBWARNING; };
 	// Sets an AI condition
-	virtual void SetCondition( Uint32 conditionBit ) { STUBWARNING; };
+	virtual void SetCondition( UInt32 conditionBit ) { STUBWARNING; };
 	// Sets AI conditions specified in a bitset
 	virtual void SetConditions( const CBitSet& conditionBitSet ) { STUBWARNING; };
 	// Checks conditions
-	virtual bool CheckCondition( Uint32 conditionBit ) const { STUBWARNING; return false; };
+	virtual bool CheckCondition( UInt32 conditionBit ) const { STUBWARNING; return false; };
 	// Checks conditions specified in a bitset
 	virtual bool CheckConditions( const CBitSet& conditionBitSet ) const { STUBWARNING; return false; };
 
 	// Adds a new enemy
-	virtual void PushEnemy( CBaseEntity* pEnemy, const Vector& lastPosition, const Vector& lastAngles, Double lastSightTime ) { STUBWARNING; };
+	virtual void PushEnemy( CBaseEntity* pEnemy, const Vector& lastPosition, const Vector& lastAngles, double lastSightTime ) { STUBWARNING; };
 	// Sets the current enemy
 	virtual void SetEnemy( CBaseEntity* pEnemy ) { STUBWARNING; };
 	// Sets the last time the enemy was sighted
-	virtual void SetLastEnemySightTime( Double time ) { STUBWARNING; };
+	virtual void SetLastEnemySightTime( double time ) { STUBWARNING; };
 	// Sets the last enemy sight time
-	virtual Double GetLastEnemySightTime( void ) { STUBWARNING; return 0; };
+	virtual double GetLastEnemySightTime( void ) { STUBWARNING; return 0; };
 	// Forgets the player
 	virtual void ForgetPlayer( CBaseEntity* pPlayer ) { STUBWARNING; };
 
 	// Set memory bits
-	virtual void SetMemory( Uint32 memoryBit ) { STUBWARNING; };
+	virtual void SetMemory( UInt32 memoryBit ) { STUBWARNING; };
 	// Sets current activity for npcs
 	virtual void SetCurrentActivity( enum activity_t activity ) { STUBWARNING; };
 	// Exits the current scripted_sequence
@@ -490,12 +491,12 @@ public:
 	virtual bool CanPlaySentence( bool disregardState ) { STUBWARNING; return false; }
 
 	// Tells if an NPC has a specific capability
-	virtual bool HasCapability( Uint32 capabilityBits ) const {  STUBWARNING; return false; }
+	virtual bool HasCapability( UInt32 capabilityBits ) const {  STUBWARNING; return false; }
 
 	// Performs pfnWalkMove on the entity
-	bool WalkMove( Float yaw, Float dist, enum walkmove_t movemode );
+	bool WalkMove( float yaw, float dist, enum walkmove_t movemode );
 	// Checks a localmove between two points
-	virtual localmove_t CheckLocalMove( const Vector startPosition, const Vector& endPosition, const CBaseEntity* pTargetEntity, Float* pDistance = nullptr, bool isInitial = false, bool isPerformingMovement = false ) { STUBWARNING; return LOCAL_MOVE_INVALID_NO_TRIANGULATION; }
+	virtual localmove_t CheckLocalMove( const Vector startPosition, const Vector& endPosition, const CBaseEntity* pTargetEntity, float* pDistance = nullptr, bool isInitial = false, bool isPerformingMovement = false ) { STUBWARNING; return LOCAL_MOVE_INVALID_NO_TRIANGULATION; }
 
 	// Sets the goal entity for npcs
 	virtual void SetGoalEntity( CBaseEntity* pEntity ) { STUBWARNING; };
@@ -509,13 +510,13 @@ public:
 	virtual void ClearSchedule( void ) { STUBWARNING; };
 
 	// Plays a scripted_sentence
-	virtual void PlayScriptedSentence( const Char* pstrSentenceName, Float duration, Float volume, Float attenuation, Float timeOffset, bool subtitleOnlyInRadius, bool isConcurrent, CBaseEntity* pListener, CBaseEntity* pPlayer = nullptr ) { STUBWARNING; };
+	virtual void PlayScriptedSentence( const char* pstrSentenceName, float duration, float volume, float attenuation, float timeOffset, bool subtitleOnlyInRadius, bool isConcurrent, CBaseEntity* pListener, CBaseEntity* pPlayer = nullptr ) { STUBWARNING; };
 
 	// Reports the current AI state
 	virtual void ReportAIState( void ) { STUBWARNING; };
 
 	// Sets a trigger condition
-	virtual void SetAITriggerCondition( Int32 conditionIndex, Int32 condition, const Char* pstrTarget ) { STUBWARNING; };
+	virtual void SetAITriggerCondition( Int32 conditionIndex, Int32 condition, const char* pstrTarget ) { STUBWARNING; };
 
 	// Tells if weapons can be dropped
 	virtual bool CanDropWeapons( void ) const { STUBWARNING; return false; };
@@ -537,7 +538,7 @@ public:
 	virtual void OnGibSpawnCallback( CBaseEntity* pGib ) { };
 
 	// Return damage multiplier for hitgroup
-	virtual Float GetHitgroupDmgMultiplier( Int32 hitgroup ) { return 1.0; };
+	virtual float GetHitgroupDmgMultiplier( Int32 hitgroup ) { return 1.0; };
 
 	// Sets the NPC to be pulled by a trigger_pullnpc
 	virtual void SetNPCPuller( CBaseEntity* pPuller, const Vector& pullPosition ) { };
@@ -555,9 +556,9 @@ public:
 	//
 
 	// Returns the squad slots
-	virtual Uint64 GetSquadSlots( void ) { STUBWARNING; return 0; };
+	virtual UInt64 GetSquadSlots( void ) { STUBWARNING; return 0; };
 	// Returns the squad slots
-	virtual void SetSquadSlots( Uint64 squadSlots ) { STUBWARNING; };
+	virtual void SetSquadSlots( UInt64 squadSlots ) { STUBWARNING; };
 	// Removes a squad member
 	virtual void RemoveNPCFromSquad( CBaseEntity* pRemoveNPC ) { STUBWARNING; };
 	// Sets the squad leader
@@ -567,13 +568,13 @@ public:
 	// Sets the enemy's last known position and angles
 	virtual void SetEnemyInfo( const Vector& enemyLKP, const Vector& enemyLKA ) { STUBWARNING; };
 	// Gets the enemy information
-	virtual void GetEnemyInfo( Vector& enemyLKP, Vector& enemyLKA, Double& enemyLST ) { STUBWARNING; };
+	virtual void GetEnemyInfo( Vector& enemyLKP, Vector& enemyLKA, double& enemyLST ) { STUBWARNING; };
 	// Sets whether the enemy has eluded us
 	virtual void SetEnemyEluded( bool enemyEluded ) { STUBWARNING; };
 	// Tells whether the enemy has eluded us
 	virtual bool HasEnemyEluded( void ) { STUBWARNING; return false; }
 	// Returns the squad leader
-	virtual CBaseEntity* GetSquadMember( Uint32 index ) { STUBWARNING; return nullptr; };
+	virtual CBaseEntity* GetSquadMember( UInt32 index ) { STUBWARNING; return nullptr; };
 	// Tells if the NPC is of squadNPC type
 	virtual bool IsSquadNPC( void ) const { return false; }
 	// Tells if this npc is the leader
@@ -597,7 +598,7 @@ public:
 	// Tells if talking npc can answer
 	virtual bool CanAnswer( void ) { STUBWARNING; return true; };
 	// Sets to answer a question
-	virtual void SetAnswerQuestion( CBaseEntity* pSpeaker, Double talkTime ) { STUBWARNING; };
+	virtual void SetAnswerQuestion( CBaseEntity* pSpeaker, double talkTime ) { STUBWARNING; };
 	// Sets the follow target for this NPC
 	virtual void SetFollowTarget( CBaseEntity* pTarget ) { STUBWARNING; };
 	// Tells if NPC is following a player
@@ -643,9 +644,9 @@ public:
 	//
 	
 	// Tells how many grenades this NPC has
-	virtual Uint32 GetNumGrenades( void ) { STUBWARNING; return 0; }
+	virtual UInt32 GetNumGrenades( void ) { STUBWARNING; return 0; }
 	// Sets grenade count on NPC
-	virtual void SetNumGrenades( Uint32 numGrenades ) { STUBWARNING; }
+	virtual void SetNumGrenades( UInt32 numGrenades ) { STUBWARNING; }
 
 public:
 	// 
@@ -665,7 +666,7 @@ public:
 	// Tells if the entity is a weapon
 	virtual bool IsWeapon( void ) const { return false; }
 	// Set default ammo value
-	virtual void SetDefaultAmmo( Uint32 ammoCount ) { STUBWARNING; }
+	virtual void SetDefaultAmmo( UInt32 ammoCount ) { STUBWARNING; }
 
 public:
 	//
@@ -675,13 +676,13 @@ public:
 	// Returns the weapon information
 	virtual bool GetWeaponInfo( weaponinfo_t* pWeapon ) { STUBWARNING; return false; };
 	// Gives ammo to the player
-	virtual Int32 GiveAmmo( Int32 amount, const Char* pstrammoname, Int32 max, bool display, CBaseEntity* pentity ) { STUBWARNING; return -1; };
+	virtual Int32 GiveAmmo( Int32 amount, const char* pstrammoname, Int32 max, bool display, CBaseEntity* pentity ) { STUBWARNING; return -1; };
 	// Manages textmessage and textmessage_team functions
-	virtual void HostSay( const Char* pstrText, bool teamonly ) { STUBWARNING; };
+	virtual void HostSay( const char* pstrText, bool teamonly ) { STUBWARNING; };
 	// Drops active weapon
 	virtual void DropCurrentWeapon( void ) { STUBWARNING; };
 	// Gives an item by clasname
-	virtual void GiveItemByName( const Char* pstrClassname, const Char* pstrTargetName, Uint32 amount, bool removeunneeded ) { STUBWARNING; };
+	virtual void GiveItemByName( const char* pstrClassname, const char* pstrTargetName, UInt32 amount, bool removeunneeded ) { STUBWARNING; };
 	// Selects the last weapon used
 	virtual void SelectPreviousWeapon( void ) { STUBWARNING; };
 	// Tells if the entity is a player
@@ -699,23 +700,23 @@ public:
 	// Sets day state
 	virtual void SetDayStage( daystage_t daystage ) { STUBWARNING; };
 	// Sets dialogue duration for player
-	virtual void SetDialogueDuration( Float duration ) { STUBWARNING; }
+	virtual void SetDialogueDuration( float duration ) { STUBWARNING; }
 
 	// Set NPC awareness
-	virtual void SetNPCAwareness( Float awareness, CBaseEntity* pNPC, Float timeoutDelay, bool isLeanAwareness ) { STUBWARNING; };
+	virtual void SetNPCAwareness( float awareness, CBaseEntity* pNPC, float timeoutDelay, bool isLeanAwareness ) { STUBWARNING; };
 
 	// Adds a medkit to the player
-	virtual bool AddMedkit( const Char* pstrClassname, bool noNotice ) { STUBWARNING; return false; };
+	virtual bool AddMedkit( const char* pstrClassname, bool noNotice ) { STUBWARNING; return false; };
 	// Adds a medkit to the player
-	virtual bool AddKevlar( const Char* pstrClassname, bool noNotice ) { STUBWARNING; return false; };
+	virtual bool AddKevlar( const char* pstrClassname, bool noNotice ) { STUBWARNING; return false; };
 	// Adds a shoulder light to the player
-	virtual bool AddShoulderLight( const Char* pstrClassname, bool noNotice ) { STUBWARNING; return false; };
+	virtual bool AddShoulderLight( const char* pstrClassname, bool noNotice ) { STUBWARNING; return false; };
 
 	// When player gets on the bike
 	virtual void EnterBike( CItemMotorBike *pEntity ) { STUBWARNING; };
 
 	// Adds a new passcode
-	virtual void AddPasscode( const Char* pstrid, const Char* pstrpasscode ) { STUBWARNING; };
+	virtual void AddPasscode( const char* pstrid, const char* pstrpasscode ) { STUBWARNING; };
 
 	// Tells if forced holstering is set
 	virtual bool IsForceHolsterSet( void ) const { STUBWARNING; return false; }
@@ -727,18 +728,18 @@ public:
 	virtual void SetIsInDream( bool isindream ) { STUBWARNING; };
 
 	// Spawns a text window
-	virtual void SpawnTextWindow( const Char* pstrfilepath, const Char* pstrpasscode, const Char* pstrid ) { STUBWARNING; };
+	virtual void SpawnTextWindow( const char* pstrfilepath, const char* pstrpasscode, const char* pstrid ) { STUBWARNING; };
 	// Spawns a keypad window
-	virtual void SpawnKeypadWindow( const Char* pstrid, const Char* pstrkeypadcode, CTriggerKeypad* pkeypad, bool staytillnext ) { STUBWARNING; };
+	virtual void SpawnKeypadWindow( const char* pstrid, const char* pstrkeypadcode, CTriggerKeypad* pkeypad, bool staytillnext ) { STUBWARNING; };
 	// Spawns a subway window
 	virtual void SpawnSubwayWindow( subwayline_t type, CTriggerSubwayController* pcontroller, bool isdummy ) { STUBWARNING; };
 	// Spawns a login window
-	virtual void SpawnLoginWindow( const Char* pstruser, const Char* pstrpasscode, const Char* pstrid, CTriggerLogin* plogin, bool staytillnext ) { STUBWARNING; };
+	virtual void SpawnLoginWindow( const char* pstruser, const char* pstrpasscode, const char* pstrid, CTriggerLogin* plogin, bool staytillnext ) { STUBWARNING; };
 	// Sets subway flag
 	virtual void SetSubwayFlag( Int32 flag ) { STUBWARNING; };
 
 	// Selects a named weapon
-	virtual void SelectWeapon( const Char* pstrWeaponName ) { STUBWARNING; };
+	virtual void SelectWeapon( const char* pstrWeaponName ) { STUBWARNING; };
 	// Selects a weapon by weapon Id
 	virtual void SelectWeapon( weaponid_t weaponId ) { STUBWARNING; };
 	// Returns the active weapon
@@ -752,15 +753,15 @@ public:
 	// Adds item to player
 	virtual bool AddPlayerWeapon( CPlayerWeapon* pWeapon, bool& triggerTarget ) { STUBWARNING; return false; };
 	// Sets the save-game title
-	virtual void SetSaveGameTitle( const Char* pstrtitle ) { STUBWARNING; };
+	virtual void SetSaveGameTitle( const char* pstrtitle ) { STUBWARNING; };
 	// Returns the save-game title
-	virtual const Char* GetSaveGameTitle( void ) { STUBWARNING; return ""; };
+	virtual const char* GetSaveGameTitle( void ) { STUBWARNING; return ""; };
 	// Tells if the player can have a weapon
 	virtual bool CanHaveWeapon( CPlayerWeapon* pWeapon ) const { STUBWARNING; return false; };
 	// Callback for firing a round
 	virtual void OnWeaponShotImpact( const Vector& traceStart, const trace_t& tr, bool isPenetrationShot ) { };
 	// Callback for getting skill cvar multiplier for weapon
-	virtual Float GetWeaponDmgMultiplier( CBaseEntity* pOther ) { return 1.0; }
+	virtual float GetWeaponDmgMultiplier( CBaseEntity* pOther ) { return 1.0; }
 
 	// Sets the view entity
 	virtual void SetViewEntity( CBaseEntity* pEntity ) { STUBWARNING; };
@@ -776,77 +777,77 @@ public:
 	// Adds full ammo for dual-wielded weapons
 	virtual bool AddFullAmmoDual( CPlayerWeapon* pWeapon ) const { STUBWARNING; return false; };
 	// Tells if the player can have an ammo type
-	virtual bool CanHaveAmmo( const Char* pstrammotype, Int32 maxammo ) const { STUBWARNING; return false; };
+	virtual bool CanHaveAmmo( const char* pstrammotype, Int32 maxammo ) const { STUBWARNING; return false; };
 	// Tries to add accessories from pWeapon
 	virtual void AddAccessories( CPlayerWeapon* pWeapon ) { };
 
 	// Plays a music track for a player
-	virtual void PlayMusic( const Char* pstrFilename, Int32 channel, Float fadeInTime, Int32 flags ) { STUBWARNING; };
+	virtual void PlayMusic( const char* pstrFilename, Int32 channel, float fadeInTime, Int32 flags ) { STUBWARNING; };
 	// Stops any playing music tracks
-	virtual void StopMusic( const Char* pstrFilename, Int32 channel, Float fadeTime ) { STUBWARNING; };
+	virtual void StopMusic( const char* pstrFilename, Int32 channel, float fadeTime ) { STUBWARNING; };
 
 	// Unducks the player
 	virtual void UnDuckPlayer( void ) { STUBWARNING; };
 
 	// Begins playback of a tape track
-	virtual void PlaybackTapeTrack( const Char* pstrTrackFilename, Float duration, const Char* pstrPlaybackTitle, const Vector& titleColor, Float titleAlpha ) { STUBWARNING; };
+	virtual void PlaybackTapeTrack( const char* pstrTrackFilename, float duration, const char* pstrPlaybackTitle, const Vector& titleColor, float titleAlpha ) { STUBWARNING; };
 	// Stops playback of a tape track
-	virtual void StopTapeTrack( const Char* pstrTrackFilename ) { STUBWARNING; };
+	virtual void StopTapeTrack( const char* pstrTrackFilename ) { STUBWARNING; };
 
 	// Begins playback of a diary
-	virtual void BeginDiaryPlayback( const Char* pstrFilename, Float duration, CBaseEntity* pDiaryEntity ) { STUBWARNING; };
+	virtual void BeginDiaryPlayback( const char* pstrFilename, float duration, CBaseEntity* pDiaryEntity ) { STUBWARNING; };
 
 	// Adds a new mission objective
-	virtual void AddMissionObjective( const Char* pstrObjectiveIdentifier, bool notify ) { STUBWARNING; };
+	virtual void AddMissionObjective( const char* pstrObjectiveIdentifier, bool notify ) { STUBWARNING; };
 	// Removes a new mission objective
-	virtual void RemoveMissionObjective( const Char* pstrObjectiveIdentifier, bool notify ) { STUBWARNING; };
+	virtual void RemoveMissionObjective( const char* pstrObjectiveIdentifier, bool notify ) { STUBWARNING; };
 	// Spawns an objectives window
 	virtual void SpawnObjectivesWindow( void ) { STUBWARNING; };
 	// Spawns the documents window
 	virtual void SpawnDocumentsWindow( void ) { STUBWARNING; };
 
 	// Sets countdown timer
-	virtual void SetCountdownTimer( Float duration, const Char* pstrTitle ) { STUBWARNING; };
+	virtual void SetCountdownTimer( float duration, const char* pstrTitle ) { STUBWARNING; };
 	// Clears countdown timer
 	virtual void ClearCountdownTimer( void ) { STUBWARNING; };
 
 	// Sets a global delayed trigger
-	virtual void SetGlobalDelayedTrigger( Float delay, const Char* pstrTargetName ) { STUBWARNING; };
+	virtual void SetGlobalDelayedTrigger( float delay, const char* pstrTargetName ) { STUBWARNING; };
 	// Clears a global delayed trigger
 	virtual void ClearGlobalDelayedTrigger( void ) { STUBWARNING; };
 
 	// Set stamina modifiers
-	virtual void SetStaminaModifiers( Float sprintStaminaDrainMultiplier, Float normalMovementStaminaDrainFactor ) { STUBWARNING; };
+	virtual void SetStaminaModifiers( float sprintStaminaDrainMultiplier, float normalMovementStaminaDrainFactor ) { STUBWARNING; };
 
 	// Set motion blur values
-	virtual void SetMotionBlur( bool isActive, Float blurFade ) { STUBWARNING; }
+	virtual void SetMotionBlur( bool isActive, float blurFade ) { STUBWARNING; }
 	// Tells if motion blur is active
 	virtual bool IsMotionBlurActive( void ) const { STUBWARNING; return false; }
 
 	// Set chromatic aberration values
-	virtual void SetChromaticAberration( bool isActive, Float strength ) { STUBWARNING; }
+	virtual void SetChromaticAberration( bool isActive, float strength ) { STUBWARNING; }
 	// Tells if chromatic aberration is active
 	virtual bool IsChromaticAberrationActive( void ) const { STUBWARNING; return false; }
 
 	// Set chromatic aberration values
-	virtual void SetBlackAndWhite( bool isActive, Float strength ) { STUBWARNING; }
+	virtual void SetBlackAndWhite( bool isActive, float strength ) { STUBWARNING; }
 	// Tells if chromatic aberration is active
 	virtual bool IsBlackAndwhiteActive( void ) const { STUBWARNING; return false; }
 
 	// Set vignette effect values
-	virtual void SetVignetteEffect( bool isActive, Float radius, Float strength ) { STUBWARNING; } 
+	virtual void SetVignetteEffect( bool isActive, float radius, float strength ) { STUBWARNING; } 
 	// Tells if vignette is active
 	virtual bool IsVignetteEffectActive( void ) const { STUBWARNING; return false; }
 
 	// Set chromatic aberration values
-	virtual void SetFilmGrain( bool isActive, Float strength ) { STUBWARNING; }
+	virtual void SetFilmGrain( bool isActive, float strength ) { STUBWARNING; }
 	// Tells if chromatic aberration is active
 	virtual bool IsFilmGrainActive( void ) const { STUBWARNING; return false; }
 
 	// Set overlay effect
-	virtual void SetScreenOverlay( Int32 layerindex, const Char* pstrTextureName, overlay_rendermode_t rendermode, const Vector& rendercolor, Float renderamt, overlay_effect_t effect, Float effectspeed, Float effectminalpha, Float fadetime ) { STUBWARNING; }
+	virtual void SetScreenOverlay( Int32 layerindex, const char* pstrTextureName, overlay_rendermode_t rendermode, const Vector& rendercolor, float renderamt, overlay_effect_t effect, float effectspeed, float effectminalpha, float fadetime ) { STUBWARNING; }
 	// Clears an overlay
-	virtual void ClearOverlay( Int32 layerindex, Float fadetime ) { STUBWARNING; }
+	virtual void ClearOverlay( Int32 layerindex, float fadetime ) { STUBWARNING; }
 
 public:
 	//
@@ -864,329 +865,329 @@ public:
 	//
 
 	// Returns the entity index
-	inline entindex_t GetEntityIndex( void ) const;
+	DO_INLINE entindex_t GetEntityIndex( void ) const;
 	// Returns the edict pointer
-	inline const edict_t* GetEdict( void ) const;
+	DO_INLINE const edict_t* GetEdict( void ) const;
 
 	// Returns the entity's origin
-	inline const Vector& GetOrigin( void ) const;
+	DO_INLINE const Vector& GetOrigin( void ) const;
 	// Sets the entity's origin
-	inline void SetOrigin( const Vector& origin );
+	DO_INLINE void SetOrigin( const Vector& origin );
 
 	// Returns the entity's angles
-	inline const Vector& GetAngles( void ) const;
+	DO_INLINE const Vector& GetAngles( void ) const;
 	// Sets the entity's angles
-	inline void SetAngles( const Vector& angles );
+	DO_INLINE void SetAngles( const Vector& angles );
 
 	// Returns the entity's velocity
-	inline const Vector& GetVelocity( void ) const;
+	DO_INLINE const Vector& GetVelocity( void ) const;
 	// Sets the entity's velocity
-	inline void SetVelocity( const Vector& velocity );
+	DO_INLINE void SetVelocity( const Vector& velocity );
 
 	// Returns the angular velocity
-	inline const Vector& GetAngularVelocity( void ) const;
+	DO_INLINE const Vector& GetAngularVelocity( void ) const;
 	// Sets the angular velocity
-	inline void SetAngularVelocity( const Vector& velocity );
+	DO_INLINE void SetAngularVelocity( const Vector& velocity );
 
 	// Returns the entity's base velocity
-	inline const Vector& GetBaseVelocity( void ) const;
+	DO_INLINE const Vector& GetBaseVelocity( void ) const;
 	// Sets the entity's base velocity
-	inline void SetBaseVelocity( const Vector& basevelocity );
+	DO_INLINE void SetBaseVelocity( const Vector& basevelocity );
 
 	// Sets the entity's flag
-	inline void SetFlags( Uint64 flagbits );
+	DO_INLINE void SetFlags( UInt64 flagbits );
 	// Sets the entity's flag
-	inline void RemoveFlags( Uint64 flagbits );
+	DO_INLINE void RemoveFlags( UInt64 flagbits );
 	// Returns the entity's flags
-	inline Int64 GetFlags( void ) const;
+	DO_INLINE Int64 GetFlags( void ) const;
 
 	// Tells if the entity has a targetname
-	inline bool HasTargetName( void ) const;
+	DO_INLINE bool HasTargetName( void ) const;
 	// Returns the targetname of the entity
-	inline const Char* GetTargetName( void ) const;
+	DO_INLINE const char* GetTargetName( void ) const;
 	// Sets the entity's targetname
-	inline void SetTargetName( const Char* pstrtargetname );
+	DO_INLINE void SetTargetName( const char* pstrtargetname );
 	// Sets the entity's targetname
-	inline void SetTargetName( const string_t targetname );
+	DO_INLINE void SetTargetName( const string_t targetname );
 
 	// Tells if the entity has a targetname
-	inline bool HasModelName( void ) const;
+	DO_INLINE bool HasModelName( void ) const;
 	// Returns the model name of the entity
-	inline const Char* GetModelName( void ) const;
+	DO_INLINE const char* GetModelName( void ) const;
 	// Sets the entity's model name
-	inline void SetModelName( const Char* pstrmodelname );
+	DO_INLINE void SetModelName( const char* pstrmodelname );
 	// Sets the entity's model name
-	inline void SetModelName( const string_t modelname );
+	DO_INLINE void SetModelName( const string_t modelname );
 
 	// Get entity's modelindex
-	inline Int32 GetModelIndex( void ) const;
+	DO_INLINE Int32 GetModelIndex( void ) const;
 
 	// Tells if the entity is a visible entity
-	inline bool IsVisible( void ) const;
+	DO_INLINE bool IsVisible( void ) const;
 
 	// Tells if the entity has a targetname
-	inline bool HasTarget( void ) const;
+	DO_INLINE bool HasTarget( void ) const;
 	// Returns the target of the entity
-	inline const Char* GetTarget( void ) const;
+	DO_INLINE const char* GetTarget( void ) const;
 	// Sets the entity's target
-	inline void SetTarget( const Char* pstrtarget );
+	DO_INLINE void SetTarget( const char* pstrtarget );
 	// Sets the entity's target
-	inline void SetTarget( const string_t target );
+	DO_INLINE void SetTarget( const string_t target );
 
 	// Returns the entity's solidity
-	inline solid_t GetSolidity( void ) const;
+	DO_INLINE solid_t GetSolidity( void ) const;
 	// Sets the entity's solidity
-	inline void SetSolidity( solid_t solid );
+	DO_INLINE void SetSolidity( solid_t solid );
 
 	// Returns absolute world mins
-	inline const Vector& GetAbsMins( void ) const;
+	DO_INLINE const Vector& GetAbsMins( void ) const;
 	// Returns absolute world maxs
-	inline const Vector& GetAbsMaxs( void ) const;
+	DO_INLINE const Vector& GetAbsMaxs( void ) const;
 
 	// Sets mins/maxs
-	inline void SetMinsMaxs( const Vector& mins, const Vector& maxs );
+	DO_INLINE void SetMinsMaxs( const Vector& mins, const Vector& maxs );
 	// Returns relative mins
-	inline const Vector& GetMins( void ) const;
+	DO_INLINE const Vector& GetMins( void ) const;
 	// Returns relative maxs
-	inline const Vector& GetMaxs( void ) const;
+	DO_INLINE const Vector& GetMaxs( void ) const;
 
 	// Returns thw classname of this entity
-	inline const Char* GetClassName( void ) const;
+	DO_INLINE const char* GetClassName( void ) const;
 	// Returns takedamage setting
-	inline takedamage_t GetTakeDamage( void ) const;
+	DO_INLINE takedamage_t GetTakeDamage( void ) const;
 
 	// Returns button bits(for player)
-	inline Int32 GetButtonBits( void ) const;
+	DO_INLINE Int32 GetButtonBits( void ) const;
 	// Sets button bits(for player)
-	inline void SetButtonBits( Int32 bitflags );
+	DO_INLINE void SetButtonBits( Int32 bitflags );
 	// Clears specific button bits(for player)
-	inline void ClearButtonBits( Int32 bitflags );
+	DO_INLINE void ClearButtonBits( Int32 bitflags );
 
 	// Returns the entity's view offset
-	inline Vector GetViewOffset( bool fromNavigable = false ) const;
+	DO_INLINE Vector GetViewOffset( bool fromNavigable = false ) const;
 	// Sets the entity's view offset
-	inline void SetViewOffset( const Vector& offset );
+	DO_INLINE void SetViewOffset( const Vector& offset );
 
 	// Returns view angles(for player)
-	inline const Vector& GetViewAngles( void ) const;
+	DO_INLINE const Vector& GetViewAngles( void ) const;
 	// Sets view angles(for player)
-	inline void SetViewAngles( const Vector& angles );
+	DO_INLINE void SetViewAngles( const Vector& angles );
 
 	// Sets aiment
-	inline void SetAiment( CBaseEntity* pEntity );
+	DO_INLINE void SetAiment( CBaseEntity* pEntity );
 	// Returns the aiment
-	inline CBaseEntity* GetAiment( void ) const;
+	DO_INLINE CBaseEntity* GetAiment( void ) const;
 
 	// Sets owner
-	inline void SetOwner( CBaseEntity* pEntity );
+	DO_INLINE void SetOwner( CBaseEntity* pEntity );
 	// Returns owner
-	inline CBaseEntity* GetOwner( void ) const;
+	DO_INLINE CBaseEntity* GetOwner( void ) const;
 
 	// Sets ground entity
-	inline void SetGroundEntity( CBaseEntity* pEntity );
+	DO_INLINE void SetGroundEntity( CBaseEntity* pEntity );
 	// Returns ground entity
-	inline CBaseEntity* GetGroundEntity( void ) const;
+	DO_INLINE CBaseEntity* GetGroundEntity( void ) const;
 
 	// Returns the entity's waterlevel
-	inline waterlevel_t GetWaterLevel( void ) const;
+	DO_INLINE waterlevel_t GetWaterLevel( void ) const;
 	// Sets the entity's waterlevel
-	inline void SetWaterLevel( waterlevel_t level );
+	DO_INLINE void SetWaterLevel( waterlevel_t level );
 
 	// Returns the size of the object
-	inline const Vector& GetSize( void ) const;
+	DO_INLINE const Vector& GetSize( void ) const;
 	// Sets the size of the object
-	inline void SetSize( const Vector& size );
+	DO_INLINE void SetSize( const Vector& size );
 
 	// Returns the punch angles
-	inline const Vector& GetPunchAngle( void ) const;
+	DO_INLINE const Vector& GetPunchAngle( void ) const;
 	// Sets punch angles
-	inline void SetPunchAngle( const Vector& value );
+	DO_INLINE void SetPunchAngle( const Vector& value );
 
 	// Returns the punch angles
-	inline const Vector& GetPunchAmount( void ) const;
+	DO_INLINE const Vector& GetPunchAmount( void ) const;
 	// Sets punch amount
-	inline void SetPunchAmount( const Vector& value );
+	DO_INLINE void SetPunchAmount( const Vector& value );
 
 	// Returns the spawnflags
-	inline Int64 GetSpawnFlags( void ) const;
+	DO_INLINE Int64 GetSpawnFlags( void ) const;
 	// Tells if a spawnflag is set
-	inline bool HasSpawnFlag( Int64 bit ) const;
+	DO_INLINE bool HasSpawnFlag( Int64 bit ) const;
 	// Sets a spawnflag
-	inline void SetSpawnFlag( Int64 flag );
+	DO_INLINE void SetSpawnFlag( Int64 flag );
 	// Sets a spawnflag
-	inline void RemoveSpawnFlag( Int64 flag );
+	DO_INLINE void RemoveSpawnFlag( Int64 flag );
 
 	// Return the render color
-	inline const Vector& GetRenderColor( void ) const;
+	DO_INLINE const Vector& GetRenderColor( void ) const;
 	// Sets the render color
-	inline void SetRenderColor( const Vector& color );
+	DO_INLINE void SetRenderColor( const Vector& color );
 	// Sets the render color
-	inline void SetRenderColor( Int32 r, Int32 g, Int32 b );
+	DO_INLINE void SetRenderColor( Int32 r, Int32 g, Int32 b );
 
 	// Returns the rendermode of the entity
-	inline rendermode_t GetRenderMode( void ) const;
+	DO_INLINE rendermode_t GetRenderMode( void ) const;
 	// Sets the rendermode of the entity
-	inline void SetRenderMode( rendermode_t rendermode );
+	DO_INLINE void SetRenderMode( rendermode_t rendermode );
 
 	// Gets the render amount
-	inline const Float GetRenderAmount( void ) const;
+	DO_INLINE const float GetRenderAmount( void ) const;
 	// Sets the render amount
-	inline void SetRenderAmount( Float amount );
+	DO_INLINE void SetRenderAmount( float amount );
 
 	// Gets the scale
-	inline const Float GetScale( void ) const;
+	DO_INLINE const float GetScale( void ) const;
 	// Sets the scale
-	inline void SetScale( Float scale );
+	DO_INLINE void SetScale( float scale );
 
 	// Gets the renderfx
-	inline const Int32 GetRenderFx( void ) const;
+	DO_INLINE const Int32 GetRenderFx( void ) const;
 	// Sets the renderfx
-	inline void SetRenderFx( Int32 renderfx );
+	DO_INLINE void SetRenderFx( Int32 renderfx );
 
 	// Gets the render type
-	inline const rendertype_t GetRenderType( void ) const;
+	DO_INLINE const rendertype_t GetRenderType( void ) const;
 
 	// Gets the scale
-	inline const Float GetFramerate( void ) const;
+	DO_INLINE const float GetFramerate( void ) const;
 	// Sets the scale
-	inline void SetFramerate( Float framerate );
+	DO_INLINE void SetFramerate( float framerate );
 
 	// Gets the frame
-	inline const Float GetFrame( void ) const;
+	DO_INLINE const float GetFrame( void ) const;
 	// Sets the frame
-	inline void SetFrame( Float frame );
+	DO_INLINE void SetFrame( float frame );
 
 	// Gets the animation time
-	inline const Double GetAnimationTime( void ) const;
+	DO_INLINE const double GetAnimationTime( void ) const;
 	// Sets the animation time
-	inline void SetAnimationTime( Double animtime );
+	DO_INLINE void SetAnimationTime( double animtime );
 
 	// Returns the spawnflags
-	inline Int64 GetEffectFlags( void ) const;
+	DO_INLINE Int64 GetEffectFlags( void ) const;
 	// Tells if a spawnflag is set
-	inline bool HasEffectFlag( Int64 bit ) const;
+	DO_INLINE bool HasEffectFlag( Int64 bit ) const;
 	// Sets a spawnflag
-	inline void SetEffectFlag( Int64 flag );
+	DO_INLINE void SetEffectFlag( Int64 flag );
 	// Sets a spawnflag
-	inline void RemoveEffectFlag( Int64 flag );
+	DO_INLINE void RemoveEffectFlag( Int64 flag );
 
 	// Returns the speed of the entity
-	inline Float GetSpeed( void ) const;
+	DO_INLINE float GetSpeed( void ) const;
 	// Sets the speed of the entity
-	inline void SetSpeed( Float speed );
+	DO_INLINE void SetSpeed( float speed );
 
 	// Returns the parent
-	inline CBaseEntity* GetParent( void ) const;
+	DO_INLINE CBaseEntity* GetParent( void ) const;
 	// Sets the parent
-	inline void SetParent( CBaseEntity* pEntity );
+	DO_INLINE void SetParent( CBaseEntity* pEntity );
 	// Tells if entity is parented
-	inline bool IsParented( void ) const;
+	DO_INLINE bool IsParented( void ) const;
 
 	// Returns the skin value
-	inline Int32 GetSkin( void ) const;
+	DO_INLINE Int32 GetSkin( void ) const;
 	// Sets the skin value
-	inline void SetSkin( Int32 value );
+	DO_INLINE void SetSkin( Int32 value );
 
 	// Returns the body value
-	inline Int64 GetBody( void ) const;
+	DO_INLINE Int64 GetBody( void ) const;
 	// Sets the skin value
-	inline void SetBody( Int64 value );
+	DO_INLINE void SetBody( Int64 value );
 
 	// Returns the health value
-	inline Float GetHealth( void ) const;
+	DO_INLINE float GetHealth( void ) const;
 	// Sets the health value
-	inline void SetHealth( Float value );
+	DO_INLINE void SetHealth( float value );
 
 	// Returns the max health value
-	inline Float GetMaxHealth( void ) const;
+	DO_INLINE float GetMaxHealth( void ) const;
 	// Sets the max health value
-	inline void SetMaxHealth( Float value );
+	DO_INLINE void SetMaxHealth( float value );
 
 	// Returns the body value
-	inline Float GetArmorValue( void ) const;
+	DO_INLINE float GetArmorValue( void ) const;
 	// Sets the skin value
-	inline void SetArmorValue( Float value );
+	DO_INLINE void SetArmorValue( float value );
 
 	// Tells if the entity has a netname
-	inline bool HasNetname( void ) const;
+	DO_INLINE bool HasNetname( void ) const;
 	// Returns the netname of the entity
-	inline const Char* GetNetname( void ) const;
+	DO_INLINE const char* GetNetname( void ) const;
 	// Sets the netname of the entity
-	inline void SetNetname( const Char* pstrValue );
+	DO_INLINE void SetNetname( const char* pstrValue );
 
 	// Tells if the entity has a message set
-	inline bool HasMessage( void ) const;
+	DO_INLINE bool HasMessage( void ) const;
 	// Returns the netname of the entity
-	inline const Char* GetMessage( void ) const;
+	DO_INLINE const char* GetMessage( void ) const;
 	// Sets the netname of the entity
-	inline void SetMessage( const Char* pstrValue );
+	DO_INLINE void SetMessage( const char* pstrValue );
 
 	// Tells if the entity has a globalname set
-	inline bool HasGlobalName( void ) const;
+	DO_INLINE bool HasGlobalName( void ) const;
 	// Returns the globalname of the entity
-	inline const Char* GetGlobalName( void ) const;
+	DO_INLINE const char* GetGlobalName( void ) const;
 	// Sets the globalname of the entity
-	inline void SetGlobalName( const Char* pstrValue );
+	DO_INLINE void SetGlobalName( const char* pstrValue );
 
 	// Returns the move type
-	inline movetype_t GetMoveType( void ) const;
+	DO_INLINE movetype_t GetMoveType( void ) const;
 	// Sets the move type
-	inline void SetMoveType( movetype_t movetype );
+	DO_INLINE void SetMoveType( movetype_t movetype );
 
 	// Returns the next think time
-	inline Double GetNextThinkTime( void ) const;
+	DO_INLINE double GetNextThinkTime( void ) const;
 	// Sets the next thinking time
-	inline void SetNextThinkTime( Double thinktime );
+	DO_INLINE void SetNextThinkTime( double thinktime );
 	// Sets next think time
-	inline void SetNextThink( Double delay );
+	DO_INLINE void SetNextThink( double delay );
 	// Returns the local time variable's value
-	inline Double GetLocalTime( void ) const;
+	DO_INLINE double GetLocalTime( void ) const;
 
 	// Gets the ideal yaw
-	inline const Float GetIdealYaw( void ) const;
+	DO_INLINE const float GetIdealYaw( void ) const;
 	// Sets the ideal yaw
-	inline void SetIdealYaw( Float idealyaw );
+	DO_INLINE void SetIdealYaw( float idealyaw );
 
 	// Returns the entity's gravity setting
-	inline Float GetGravity( void ) const;
+	DO_INLINE float GetGravity( void ) const;
 	// Sets the entity's gravity
-	inline void SetGravity( Float gravity );
+	DO_INLINE void SetGravity( float gravity );
 
 	// Returns the fall velocity
-	inline Float GetFallingVelocity( void ) const;
+	DO_INLINE float GetFallingVelocity( void ) const;
 	// Sets the falling velocity
-	virtual void SetFallingVelocity( Float velocity );
+	virtual void SetFallingVelocity( float velocity );
 
 	// Returns the friction value
-	inline Float GetFriction( void ) const;
+	DO_INLINE float GetFriction( void ) const;
 	// Sets the friction value
-	inline void SetFriction( Float friction );
+	DO_INLINE void SetFriction( float friction );
 
 	// Returns the plane z cap value
-	inline Float GetPlaneZCap( void ) const;
+	DO_INLINE float GetPlaneZCap( void ) const;
 	// Sets the plane z cap value
-	inline void SetPlaneZCap( Float planeZCap );
+	DO_INLINE void SetPlaneZCap( float planeZCap );
 
 	// Returns the deadstate
-	inline deathstate_t GetDeadState( void ) const;
+	DO_INLINE deathstate_t GetDeadState( void ) const;
 	// Sets the dead state
-	inline void SetDeadState( deathstate_t state );
+	DO_INLINE void SetDeadState( deathstate_t state );
 
 	// Returns the weapons value
-	inline Int64 GetWeapons( void ) const;
+	DO_INLINE Int64 GetWeapons( void ) const;
 	// Sets the weapons value
-	inline void SetWeapons( Int64 weapons );
+	DO_INLINE void SetWeapons( Int64 weapons );
 
 	// Drops the entity to the floor
-	inline bool DropToFloor( void );
+	DO_INLINE bool DropToFloor( void );
 
 	// Sets the next think time(used by trains only)
-	virtual void SetNextThink( Double thinkTime, bool alwaysThink ) { };
+	virtual void SetNextThink( double thinkTime, bool alwaysThink ) { };
 
 	// Sets the model
-	inline bool SetModel( const Char* pstrModelName, bool setbounds = true );
+	DO_INLINE bool SetModel( const char* pstrModelName, bool setbounds = true );
 	// Sets the model
-	inline bool SetModel( string_t modelNameString, bool setbounds = true );
+	DO_INLINE bool SetModel( string_t modelNameString, bool setbounds = true );
 
 	// Set current think time
 	void UpdateLastThinkTime( void );
@@ -1195,9 +1196,9 @@ public:
 	// Saves all data for the entity
 	void SaveEntityClassData( bool istransitionsave );
 	// Reads entity class data
-	bool ReadEntityClassData( const Char* fieldname, const byte* pdata, Uint32 datasize, Uint32 blockindex, bool istransferglobalentity );
+	bool ReadEntityClassData( const char* fieldname, const Byte* pdata, UInt32 datasize, UInt32 blockindex, bool istransferglobalentity );
 	// Prepare arrays for reading saves
-	bool PrepareEntityClassData( const Char* fieldname, Uint32 numblocks, bool istransferglobalentity );
+	bool PrepareEntityClassData( const char* fieldname, UInt32 numblocks, bool istransferglobalentity );
 
 public:
 	// Retreive class data for an edict
@@ -1212,15 +1213,15 @@ public:
 #ifdef _DEBUG
 public:
 	// Verifies that the function is properly exported
-	static void CheckFunction( void* pfnptr, const Char* pstrFunctionName );
+	static void CheckFunction( void* pfnptr, const char* pstrFunctionName );
 	// Sets the think function in Debug mode
-	THINKFNPTR _SetThink( THINKFNPTR pfnptr, const Char* pstrFunctionName );
+	THINKFNPTR _SetThink( THINKFNPTR pfnptr, const char* pstrFunctionName );
 	// Sets the touch function in Debug mode 
-	INTERACTFNPTR _SetTouch( INTERACTFNPTR pfnptr, const Char* pstrFunctionName );
+	INTERACTFNPTR _SetTouch( INTERACTFNPTR pfnptr, const char* pstrFunctionName );
 	// Sets the blocked function in Debug mode
-	INTERACTFNPTR _SetBlocked( INTERACTFNPTR pfnptr, const Char* pstrFunctionName );
+	INTERACTFNPTR _SetBlocked( INTERACTFNPTR pfnptr, const char* pstrFunctionName );
 	// Sets the blocked function in Debug mode
-	USEFNPTR _SetUse( USEFNPTR pfnptr, const Char* pstrFunctionName );
+	USEFNPTR _SetUse( USEFNPTR pfnptr, const char* pstrFunctionName );
 #endif
 
 protected:
@@ -1231,21 +1232,21 @@ protected:
 	// Blocked function pointer
 	void (CBaseEntity::*m_pfnBlockedFunction)( CBaseEntity* pOther );
 	// Use function pointer
-	void (CBaseEntity::*m_pfnUseFunction)( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	void (CBaseEntity::*m_pfnUseFunction)( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 
 protected:
 	// Only managed by base class
 	void DeclareSaveField( entity_data_desc_t desc );
 	// Sets field size and ptr based on field data for saving
-	bool GetEntityFieldDataForSave( const entity_data_desc_t& field, byte*& dataPtr, Uint32& fieldSize );
+	bool GetEntityFieldDataForSave( const entity_data_desc_t& field, Byte*& dataPtr, UInt32& fieldSize );
 	// Sets pointer and allocates array position for restore
-	bool GetEntityFieldDataForRestore( const entity_data_desc_t& field, byte*& dataPtr, Uint32 arrayIndex, Uint32 dataSize );
+	bool GetEntityFieldDataForRestore( const entity_data_desc_t& field, Byte*& dataPtr, UInt32 arrayIndex, UInt32 dataSize );
 
 public:
 	// Creates a new entity
-	static CBaseEntity* CreateEntity( const Char* pstrClassName, const Vector& origin, const Vector& angles, CBaseEntity* powner );
+	static CBaseEntity* CreateEntity( const char* pstrClassName, const Vector& origin, const Vector& angles, CBaseEntity* powner );
 	// Creates a new entity
-	static CBaseEntity* CreateEntity( const Char* pstrClassName, CBaseEntity* powner );
+	static CBaseEntity* CreateEntity( const char* pstrClassName, CBaseEntity* powner );
 
 protected:
 	// Save data info for particular entity
@@ -1257,7 +1258,7 @@ protected:
 	// Edict pointer
 	edict_t* m_pEdict;
 	// Previous think time
-	Double m_lastThinkTime;
+	double m_lastThinkTime;
 
 	// Visibility cull distance
 	Int32 m_visibilityCullDistance;

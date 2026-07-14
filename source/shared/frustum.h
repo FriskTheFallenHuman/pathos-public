@@ -29,9 +29,9 @@ public:
 
 public:
 	// Sets up the frustum planes, etc
-	void SetFrustum( const Vector& angles, const Vector& origin, Float fov, Float farplanedist );
+	void SetFrustum( const Vector& angles, const Vector& origin, float fov, float farplanedist );
 	// Sets up the frustum planes, etc
-	void SetFrustum( const Vector& angles, const Vector& origin, Float fovx, Float fovy, Float farplanedist );
+	void SetFrustum( const Vector& angles, const Vector& origin, float fovx, float fovy, float farplanedist );
 	// Tells if a bounding box was culled out
 	bool CullBBox( const Vector& mins, const Vector& maxs ) const;
 
@@ -50,7 +50,7 @@ private:
 	// Frustum planes
 	plane_t m_frustumPlanes[NUM_FRUSTUM_PLANES];
 	// Far clipping distance
-	Uint32 m_farClipDistance;
+	UInt32 m_farClipDistance;
 
 	// bounding box mins
 	Vector m_cullBoxMins;
@@ -67,9 +67,9 @@ private:
 	bool m_useExtraCullBox;
 };
 
-extern inline Uint32 BoxOnPlaneSide( const Vector& mins, const Vector& maxs, const plane_t* pplane );
-extern inline void RotatePointAroundVector( const Vector& dir, const Vector& point, Float deg, Vector& dest );
-extern inline Float GetXFOVFromY( Float fovY, Float ratio );
+extern DO_INLINE UInt32 BoxOnPlaneSide( const Vector& mins, const Vector& maxs, const plane_t* pplane );
+extern DO_INLINE void RotatePointAroundVector( const Vector& dir, const Vector& point, float deg, Vector& dest );
+extern DO_INLINE float GetXFOVFromY( float fovY, float ratio );
 
 #include "frustum_inline.hpp"
 #endif //FRUSTUM_H

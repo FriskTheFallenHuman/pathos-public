@@ -25,15 +25,15 @@ All Rights Reserved.
 //
 //
 //=============================================
-void VBM_CalculateBoneAdjustments( const studiohdr_t* phdr, Float dadt, const CArray<Float>& padj, const Float* pcontroller1, const Float* pcontroller2, byte mouth )
+void VBM_CalculateBoneAdjustments( const studiohdr_t* phdr, float dadt, const CArray<float>& padj, const float* pcontroller1, const float* pcontroller2, Byte mouth )
 {
 	// Get pointer to bone controller
 	for(Int32 i = 0; i < phdr->numbonecontrollers; i++)
 	{
 		const mstudiobonecontroller_t* pbonecontroller = phdr->getBoneController(i);
 
-		Float value = 0;
-		Uint32 index = pbonecontroller->index;
+		float value = 0;
+		UInt32 index = pbonecontroller->index;
 		if(index <= 3)
 		{
 			if(pbonecontroller->type & STUDIO_RLOOP)
@@ -52,14 +52,14 @@ void VBM_CalculateBoneAdjustments( const studiohdr_t* phdr, Float dadt, const CA
 			}
 			else
 			{
-				value = clamp((pcontroller1[i]*dadt+pcontroller2[i]*(1.0-dadt))/255.0f, 0.0, 1.0);
+				value = Clamp((pcontroller1[i]*dadt+pcontroller2[i]*(1.0-dadt))/255.0f, 0.0, 1.0);
 				value = (1.0f-value)*pbonecontroller->start + value*pbonecontroller->end;
 			}
 		}
 		else
 		{
-			value = static_cast<Float>(mouth)/64.0f;
-			clamp(value, 0.0f, 1.0f);
+			value = static_cast<float>(mouth)/64.0f;
+			Clamp(value, 0.0f, 1.0f);
 
 			value = (1.0-value) * pbonecontroller->start + value*pbonecontroller->end;
 		}
@@ -86,12 +86,12 @@ void VBM_CalculateBoneAdjustments( const studiohdr_t* phdr, Float dadt, const CA
 //
 //
 //=============================================
-void VBM_InterpolateBones( const studiohdr_t* phdr, const CArray<vec4_t>& quaternions1, const CArray<Vector>& positions1, CArray<vec4_t>& quaternions2, const CArray<Vector>& positions2, Float interpolant, CArray<vec4_t>& outquaternions, CArray<Vector>& outpositions )
+void VBM_InterpolateBones( const studiohdr_t* phdr, const CArray<vec4_t>& quaternions1, const CArray<Vector>& positions1, CArray<vec4_t>& quaternions2, const CArray<Vector>& positions2, float interpolant, CArray<vec4_t>& outquaternions, CArray<Vector>& outpositions )
 {
 	// Cap interpolant
-	Float interp = interpolant;
-	interp = clamp(interp, 0.0, 1.0);
-	Float ninterp = 1.0 - interp;
+	float interp = interpolant;
+	interp = Clamp(interp, 0.0, 1.0);
+	float ninterp = 1.0 - interp;
 
 	for(Int32 i = 0; i < phdr->numbones; i++)
 	{
@@ -100,10 +100,10 @@ void VBM_InterpolateBones( const studiohdr_t* phdr, const CArray<vec4_t>& quater
 		// Don't blend non-blended bones
 		if(pbone->flags & STUDIO_DONT_BLEND)
 		{
-			for(Uint32 j = 0; j < 4; j++)
+			for(UInt32 j = 0; j < 4; j++)
 				outquaternions[i][j] = quaternions1[i][j];
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				outpositions[i][j] = positions1[i][j];
 		}
 		else
@@ -112,7 +112,7 @@ void VBM_InterpolateBones( const studiohdr_t* phdr, const CArray<vec4_t>& quater
 			Math::QuaternionBlend(quaternions1[i], quaternions2[i], interp, outquaternions[i]);
 		
 			// Blend the positions
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				outpositions[i][j] = positions1[i][j] * ninterp + positions2[i][j] * interp;
 		}
 	}
@@ -128,18 +128,18 @@ const mstudioanim_t* VBM_GetAnimation( const studiohdr_t* phdr, const mstudioseq
 		return nullptr;
 
 	const mstudioseqgroup_t* pseqgroup = phdr->getSequenceGroup(psequencedesc->seqgroup);
-	return reinterpret_cast<const mstudioanim_t*>(reinterpret_cast<const byte*>(phdr) + pseqgroup->data + psequencedesc->animindex);
+	return reinterpret_cast<const mstudioanim_t*>(reinterpret_cast<const Byte*>(phdr) + pseqgroup->data + psequencedesc->animindex);
 }
 
 //=============================================
 //
 //
 //=============================================
-void VBM_CalculateBoneQuaternion( Int32 frame, Float interpolant, const mstudiobone_t* pbone, const mstudioanim_t* panimation, const CArray<Float>& padj, vec4_t& quaternion )
+void VBM_CalculateBoneQuaternion( Int32 frame, float interpolant, const mstudiobone_t* pbone, const mstudioanim_t* panimation, const CArray<float>& padj, vec4_t& quaternion )
 {
 	Vector angle1, angle2;
 
-	for (Uint32 i = 0; i < 3; i++)
+	for (UInt32 i = 0; i < 3; i++)
 	{
 		if (panimation->offset[i+3] == 0)
 		{
@@ -212,9 +212,9 @@ void VBM_CalculateBoneQuaternion( Int32 frame, Float interpolant, const mstudiob
 //
 //
 //=============================================
-void VBM_CalculateBonePosition( Int32 frame, Float interpolant, const mstudiobone_t* pbone, const mstudioanim_t* panimation, const CArray<Float>& padj, Vector& outpos )
+void VBM_CalculateBonePosition( Int32 frame, float interpolant, const mstudiobone_t* pbone, const mstudioanim_t* panimation, const CArray<float>& padj, Vector& outpos )
 {
-	for (Uint32 i = 0; i < 3; i++)
+	for (UInt32 i = 0; i < 3; i++)
 	{
 		outpos[i] = pbone->value[i]; // default;
 		if (panimation->offset[i] != 0)
@@ -237,17 +237,17 @@ void VBM_CalculateBonePosition( Int32 frame, Float interpolant, const mstudiobon
 			if (panimvalue->num.valid > j)
 			{
 				if (panimvalue->num.valid > j + 1)
-					outpos[i] += (static_cast<Double>(panimvalue[j+1].value) * (1.0 - interpolant) + interpolant * static_cast<Double>(panimvalue[j+2].value)) * pbone->scale[i];
+					outpos[i] += (static_cast<double>(panimvalue[j+1].value) * (1.0 - interpolant) + interpolant * static_cast<double>(panimvalue[j+2].value)) * pbone->scale[i];
 				else
-					outpos[i] += static_cast<Double>(panimvalue[j+1].value) * pbone->scale[i];
+					outpos[i] += static_cast<double>(panimvalue[j+1].value) * pbone->scale[i];
 			}
 			else
 			{
 				// are we at the end of the repeating values section and there'interpolant another section with data?
 				if (panimvalue->num.total <= j + 1)
-					outpos[i] += (static_cast<Double>(panimvalue[panimvalue->num.valid].value) * (1.0 - interpolant) + interpolant * static_cast<Double>(panimvalue[panimvalue->num.valid + 2].value)) * pbone->scale[i];
+					outpos[i] += (static_cast<double>(panimvalue[panimvalue->num.valid].value) * (1.0 - interpolant) + interpolant * static_cast<double>(panimvalue[panimvalue->num.valid + 2].value)) * pbone->scale[i];
 				else
-					outpos[i] += static_cast<Double>(panimvalue[panimvalue->num.valid].value) * pbone->scale[i];
+					outpos[i] += static_cast<double>(panimvalue[panimvalue->num.valid].value) * pbone->scale[i];
 			}
 		}
 
@@ -260,12 +260,12 @@ void VBM_CalculateBonePosition( Int32 frame, Float interpolant, const mstudiobon
 //
 //
 //=============================================
-Float VBM_EstimateFrame( const mstudioseqdesc_t* pseqdesc, Double time, Float entframe, Double animtime, Float framerate, Int64 effects )
+float VBM_EstimateFrame( const mstudioseqdesc_t* pseqdesc, double time, float entframe, double animtime, float framerate, Int64 effects )
 {
 	if(effects & EF_STATICENTITY)
 		return 0;
 
-	Double frame = 0;
+	double frame = 0;
 	if(pseqdesc->numframes > 1)
 		frame = (entframe * (pseqdesc->numframes-1))/256.0;
 
@@ -296,7 +296,7 @@ Float VBM_EstimateFrame( const mstudioseqdesc_t* pseqdesc, Double time, Float en
 //
 //
 //=============================================
-bool VBM_HasTransparentParts( vbmheader_t* pvbmheader, Uint64 body, Int32 skin )
+bool VBM_HasTransparentParts( vbmheader_t* pvbmheader, UInt64 body, Int32 skin )
 {
 	return (pvbmheader->flags & VBM_HAS_BLEND_TEXTURE) ? true : false;
 }
@@ -305,17 +305,17 @@ bool VBM_HasTransparentParts( vbmheader_t* pvbmheader, Uint64 body, Int32 skin )
 //
 //
 //=============================================
-void VBM_NormalizeWeights( Float* pflweights, Uint32 maxweights )
+void VBM_NormalizeWeights( float* pflweights, UInt32 maxweights )
 {
 	// The idea to normalize weights like this came from
 	// browsing Xash code ages ago, so thanks to Misha for the idea.
 	// Not sure how necessary this is, but better safe than sorry.
-	Float totalweight = 0;
-	for(Uint32 i = 0; i < maxweights; i++)
+	float totalweight = 0;
+	for(UInt32 i = 0; i < maxweights; i++)
 		totalweight += pflweights[i];
 
-	const Float scale = 1.0f/totalweight;
-	for(Uint32 i = 0; i < maxweights; i++)
+	const float scale = 1.0f/totalweight;
+	for(UInt32 i = 0; i < maxweights; i++)
 	{
 		if(pflweights[i] > 0)
 			pflweights[i] *= scale;
@@ -326,9 +326,9 @@ void VBM_NormalizeWeights( Float* pflweights, Uint32 maxweights )
 //
 //
 //=============================================
-Float VBM_EstimateInterpolant( Float time, Float animtime, Float prevanimtime )
+float VBM_EstimateInterpolant( float time, float animtime, float prevanimtime )
 {
-	Float interpolant = 1.0;
+	float interpolant = 1.0;
 	if(animtime >= prevanimtime + 0.01f)
 	{
 		interpolant = time - animtime;
@@ -344,10 +344,10 @@ Float VBM_EstimateInterpolant( Float time, Float animtime, Float prevanimtime )
 //
 //
 //=============================================
-void VBM_CalculateRotations( const studiohdr_t* phdr, Float time, Float animtime, Float prevanimtime, CArray<Vector>& positions, CArray<vec4_t>& quaternions, const mstudioseqdesc_t* pseqdesc, const mstudioanim_t* panim, Float frame, const Float* pcontroller1, const Float* pcontroller2, byte mouth )
+void VBM_CalculateRotations( const studiohdr_t* phdr, float time, float animtime, float prevanimtime, CArray<Vector>& positions, CArray<vec4_t>& quaternions, const mstudioseqdesc_t* pseqdesc, const mstudioanim_t* panim, float frame, const float* pcontroller1, const float* pcontroller2, Byte mouth )
 {
 	// Cap frame value
-	Float _frame = frame;
+	float _frame = frame;
 	if(_frame > (pseqdesc->numframes-1))
 		_frame = 0;
 	else if(_frame < -0.01f)
@@ -355,12 +355,12 @@ void VBM_CalculateRotations( const studiohdr_t* phdr, Float time, Float animtime
 
 	// Calculate interpolant value
 	const Int32 intframe = static_cast<Int32>(_frame);
-	const Float dadt = VBM_EstimateInterpolant(time, animtime, prevanimtime);
-	const Float interp = _frame - intframe;
+	const float dadt = VBM_EstimateInterpolant(time, animtime, prevanimtime);
+	const float interp = _frame - intframe;
 	
 	// Estimate controller values
-	CArray<Float> controlleradj(phdr->numbonecontrollers);
-	for(Uint32 i = 0; i < phdr->numbonecontrollers; i++)
+	CArray<float> controlleradj(phdr->numbonecontrollers);
+	for(UInt32 i = 0; i < phdr->numbonecontrollers; i++)
 		controlleradj[i] = 0;
 
 	VBM_CalculateBoneAdjustments(phdr, dadt, controlleradj, pcontroller1, pcontroller2, mouth);
@@ -387,7 +387,7 @@ void VBM_CalculateRotations( const studiohdr_t* phdr, Float time, Float animtime
 // @brief
 //
 //=============================================
-Int32 VBM_FindSequence( const studiohdr_t* pstudiohdr, const Char* pstrsequencename )
+Int32 VBM_FindSequence( const studiohdr_t* pstudiohdr, const char* pstrsequencename )
 {
 	if(!pstudiohdr)
 		return NO_SEQUENCE_VALUE;
@@ -406,7 +406,7 @@ Int32 VBM_FindSequence( const studiohdr_t* pstudiohdr, const Char* pstrsequencen
 // @brief
 //
 //=============================================
-Float VBM_GetSequenceTime( const studiohdr_t* pstudiohdr, Int32 sequence, Float framerate )
+float VBM_GetSequenceTime( const studiohdr_t* pstudiohdr, Int32 sequence, float framerate )
 {
 	if(!pstudiohdr)
 		return 0;
@@ -553,7 +553,7 @@ bool VBM_PostLoadVBMCheck( vbmheader_t* pvbm, en_material_t* (*pfnFindMaterialSc
 // @brief
 //
 //=============================================
-Float VBM_SetController( const cache_model_t* pmodel, Uint32 controllerindex, Float value, Float* pcontrollers, void (*pfnCon_Printf)( const Char *fmt, ... ) )
+float VBM_SetController( const cache_model_t* pmodel, UInt32 controllerindex, float value, float* pcontrollers, void (*pfnCon_Printf)( const char *fmt, ... ) )
 {
 	if(pmodel->type != MOD_VBM)
 	{
@@ -571,7 +571,7 @@ Float VBM_SetController( const cache_model_t* pmodel, Uint32 controllerindex, Fl
 	}
 
 	// Get bone controller
-	const mstudiobonecontroller_t* pbonecontrollers = reinterpret_cast<const mstudiobonecontroller_t*>(reinterpret_cast<const byte*>(pstudiohdr) + pstudiohdr->bonecontrollerindex);
+	const mstudiobonecontroller_t* pbonecontrollers = reinterpret_cast<const mstudiobonecontroller_t*>(reinterpret_cast<const Byte*>(pstudiohdr) + pstudiohdr->bonecontrollerindex);
 
 	Int32 i = 0;
 	for(; i < pstudiohdr->numbonecontrollers; i++)
@@ -604,8 +604,8 @@ Float VBM_SetController( const cache_model_t* pmodel, Uint32 controllerindex, Fl
 		}
 	}
 
-	Float controllersetting = 255*(value - pbonecontrollers[i].start)/(pbonecontrollers[i].end-pbonecontrollers[i].start);
-	controllersetting = clamp(controllersetting, 0, 255);
+	float controllersetting = 255*(value - pbonecontrollers[i].start)/(pbonecontrollers[i].end-pbonecontrollers[i].start);
+	controllersetting = Clamp(controllersetting, 0, 255);
 	pcontrollers[i] = controllersetting;
 
 	return controllersetting*(1.0/255.0)*(pbonecontrollers[i].end-pbonecontrollers[i].start)+pbonecontrollers[i].start;

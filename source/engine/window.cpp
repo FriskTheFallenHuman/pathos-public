@@ -22,11 +22,11 @@ All Rights Reserved.
 #define DEFAULT_REFRESH_RATE 60
 
 // Minimum screen width
-const Uint32 CWindow::MIN_SCREEN_WIDTH = 640;
+const UInt32 CWindow::MIN_SCREEN_WIDTH = 640;
 // Minimum screen height
-const Uint32 CWindow::MIN_SCREEN_HEIGHT = 480;
+const UInt32 CWindow::MIN_SCREEN_HEIGHT = 480;
 // Maximum MSAA value
-const Uint32 CWindow::MAX_MSAA_VALUE = 8;
+const UInt32 CWindow::MAX_MSAA_VALUE = 8;
 
 //CWindow class definition
 CWindow gWindow;
@@ -37,8 +37,8 @@ CWindow gWindow;
 //=============================================
 static void SetWindowIconFromFile(SDL_Window* pWindow, const char* pstrFilePath)
 {
-    Uint32 fileSize = 0;
-    const byte* pFileData = FL_LoadFile(pstrFilePath, &fileSize);
+    UInt32 fileSize = 0;
+    const Byte* pFileData = FL_LoadFile(pstrFilePath, &fileSize);
     if(!pFileData)
     {
         Con_WPrintf("Failed to load icon '%s'\n", pstrFilePath);
@@ -115,7 +115,7 @@ CWindow::~CWindow( void )
 	// Delete lists
 	if(!m_devicesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_devicesArray.size(); i++)
+		for(UInt32 i = 0; i < m_devicesArray.size(); i++)
 		{
 			m_devicesArray[i]->resolutions.clear();
 			delete m_devicesArray[i];
@@ -139,7 +139,7 @@ bool CWindow::GetOpenGLInfo(Int32& maxMSAA, bool& fboSupported)
 		return false;
 
 	SDL_GLContext tempContext = SDL_GL_CreateContext(pTempWindow);
-	const Char* pstrError = SDL_GetError();
+	const char* pstrError = SDL_GetError();
 	if(pstrError[0] != '\0')
 	{
 		SDL_DestroyWindow(pTempWindow);
@@ -165,7 +165,7 @@ bool CWindow::GetOpenGLInfo(Int32& maxMSAA, bool& fboSupported)
 	Int32 i = 0;
 	for (; i < numExtensions; i++)
 	{
-		const Char* pstrExtension = reinterpret_cast<const Char*>(glGetStringi(GL_EXTENSIONS, i));
+		const char* pstrExtension = reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i));
 		
 		if (!msaaSupported && !qstrcicmp(pstrExtension, "GL_ARB_multisample"))
 		{
@@ -325,7 +325,7 @@ bool CWindow::Init( void )
 		m_areFBOsEnabled = gConfig.GetInt(GetConfigGroup(), "FramebufferObjects");
 		if (m_areFBOsEnabled)
 		{
-			gConfig.SetValue(GetConfigGroup(), "FramebufferObjects", FALSE, true);
+			gConfig.SetValue(GetConfigGroup(), "FramebufferObjects", false, true);
 			m_areFBOsEnabled = false;
 		}
 	}
@@ -347,7 +347,7 @@ bool CWindow::Init( void )
 		if (gConfig.GetStatus() != CONF_ERR_NONE)
 		{
 			m_areFBOsEnabled = true;
-			gConfig.SetValue(GetConfigGroup(), "FramebufferObjects", TRUE, true);
+			gConfig.SetValue(GetConfigGroup(), "FramebufferObjects", true, true);
 		}
 	}
 
@@ -390,7 +390,7 @@ bool CWindow::Init( void )
 	}
 
 	m_sdlContext = SDL_GL_CreateContext(m_pSDLWindow);
-	const Char* pstrError = SDL_GetError();
+	const char* pstrError = SDL_GetError();
 	if(pstrError[0] != '\0')
 	{
 		Con_EPrintf("Failed to create GL context. SDL: %s.", pstrError);
@@ -449,7 +449,7 @@ bool CWindow::BuildDeviceList( void )
 	// Rebuild the list
 	if(!m_devicesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_devicesArray.size(); i++)
+		for(UInt32 i = 0; i < m_devicesArray.size(); i++)
 		{
 			m_devicesArray[i]->resolutions.clear();
 			delete m_devicesArray[i];
@@ -459,7 +459,7 @@ bool CWindow::BuildDeviceList( void )
 	}
 
 	Int32 numDisplays = SDL_GetNumVideoDisplays();
-	for( Uint32 i = 0; i < static_cast<Uint32>(numDisplays); i++ ) 
+	for( UInt32 i = 0; i < static_cast<UInt32>(numDisplays); i++ ) 
 	{
 		ddevice_t *newDevice = new ddevice_t;
 		CString deviceName;
@@ -506,8 +506,8 @@ bool CWindow::FetchResolutions( ddevice_t* pdevice )
 
 	pdevice->resolutions.reserve(nbResolutions);
 
-	Uint32 resindex = 0;
-	for(Uint32 i = 0; i < static_cast<Uint32>(nbResolutions); i++)
+	UInt32 resindex = 0;
+	for(UInt32 i = 0; i < static_cast<UInt32>(nbResolutions); i++)
 	{
 		SDL_DisplayMode dMode;
 		dMode.driverdata = nullptr;
@@ -521,11 +521,11 @@ bool CWindow::FetchResolutions( ddevice_t* pdevice )
 		if(dMode.w < MIN_SCREEN_WIDTH || dMode.h < MIN_SCREEN_HEIGHT)
 			continue;
 
-		Uint32 j = 0;
+		UInt32 j = 0;
 		for(; j < pdevice->resolutions.size(); j++)
 		{
-			if(pdevice->resolutions[j].width == static_cast<Uint32>(dMode.w)
-				&& pdevice->resolutions[j].height == static_cast<Uint32>(dMode.h))
+			if(pdevice->resolutions[j].width == static_cast<UInt32>(dMode.w)
+				&& pdevice->resolutions[j].height == static_cast<UInt32>(dMode.h))
 				break;
 		}
 
@@ -557,9 +557,9 @@ bool CWindow::FetchResolutions( ddevice_t* pdevice )
 // Class: CWindow
 // Function: FindResolution
 //=============================================
-CWindow::resolution_t* CWindow::FindResolution( ddevice_t* pdevice, Uint32 width, Uint32 height )
+CWindow::resolution_t* CWindow::FindResolution( ddevice_t* pdevice, UInt32 width, UInt32 height )
 {
-	for(Uint32 i = 0; i < pdevice->resolutions.size(); i++)
+	for(UInt32 i = 0; i < pdevice->resolutions.size(); i++)
 	{
 		resolution_t *pResolution = &pdevice->resolutions[i];
 
@@ -579,7 +579,7 @@ bool CWindow::SetDisplayProperties( void )
 	CString deviceName = gConfig.GetString(GetConfigGroup(), "Device");
 	if(gConfig.GetStatus() == CONF_ERR_NONE)
 	{
-		for(Uint32 i = 0; i < m_devicesArray.size(); i++)
+		for(UInt32 i = 0; i < m_devicesArray.size(); i++)
 		{
 			if(!qstrcmp(m_devicesArray[i]->name, deviceName))
 			{
@@ -593,7 +593,7 @@ bool CWindow::SetDisplayProperties( void )
 	bool setDisplayDeviceConfig = false;
 	if(ens.requestedDisplayDevice != -1)
 	{
-		if(ens.requestedDisplayDevice < 0 || static_cast<Uint32>(ens.requestedDisplayDevice) >= m_devicesArray.size())
+		if(ens.requestedDisplayDevice < 0 || static_cast<UInt32>(ens.requestedDisplayDevice) >= m_devicesArray.size())
 		{
 			Con_EPrintf("Invalid display device requested. Option discarded.\n");
 			}
@@ -744,7 +744,7 @@ bool CWindow::IsActive ( void ) const
 // Class: CWindow
 // Function: GetWidth
 //=============================================
-Uint32 CWindow::GetWidth ( void ) const
+UInt32 CWindow::GetWidth ( void ) const
 {
 	if(!m_pCurrentRes)
 		return 0;
@@ -756,7 +756,7 @@ Uint32 CWindow::GetWidth ( void ) const
 // Class: CWindow
 // Function: GetHeight
 //=============================================
-Uint32 CWindow::GetHeight ( void ) const
+UInt32 CWindow::GetHeight ( void ) const
 {
 	if(!m_pCurrentRes)
 		return 0;
@@ -768,7 +768,7 @@ Uint32 CWindow::GetHeight ( void ) const
 // Class: CWindow
 // Function: GetHeight
 //=============================================
-Uint32 CWindow::GetRefreshRate ( void ) const
+UInt32 CWindow::GetRefreshRate ( void ) const
 {
 	if(!m_pCurrentRes)
 		return 0;
@@ -813,7 +813,7 @@ Int32 CWindow::GetNbResolutions( Int32 deviceIndex ) const
 // Class: CWindow
 // Function: GetResolutionInfo
 //=============================================
-void CWindow::GetResolutionInfo( Int32 deviceIndex, Int32 index, Uint32& width, Uint32& height ) const
+void CWindow::GetResolutionInfo( Int32 deviceIndex, Int32 index, UInt32& width, UInt32& height ) const
 {
 	assert(deviceIndex >= 0 && deviceIndex < (Int32)m_devicesArray.size());
 	assert(index >= 0 && index < (Int32)m_devicesArray[deviceIndex]->resolutions.size());
@@ -847,7 +847,7 @@ Int32 CWindow::GetNbDisplayDevices( void ) const
 // Class: CWindow
 // Function: GetResolution
 //=============================================
-const Char* CWindow::GetDisplayDeviceName( Int32 index ) const
+const char* CWindow::GetDisplayDeviceName( Int32 index ) const
 {
 	assert(index >= 0 && index < static_cast<Int32>(m_devicesArray.size()));
 	return m_devicesArray[index]->name.c_str();
@@ -890,7 +890,7 @@ Int32 CWindow::GetCenterY( void ) const
 Int32 CWindow::GetCurrentMSAASetting( void )
 {
 	Int32 msaaSettingValue = gConfig.GetInt(GetConfigGroup(), "MSAASetting");
-	for(Uint32 i = 0; i < m_multiSampleSettingsArray.size(); i++)
+	for(UInt32 i = 0; i < m_multiSampleSettingsArray.size(); i++)
 	{
 		if(m_multiSampleSettingsArray[i] == msaaSettingValue)
 			return i;
@@ -903,7 +903,7 @@ Int32 CWindow::GetCurrentMSAASetting( void )
 // Class: CWindow
 // Function: GetNbMSAASettings
 //=============================================
-Uint32 CWindow::GetNbMSAASettings( void )
+UInt32 CWindow::GetNbMSAASettings( void )
 {
 	return m_multiSampleSettingsArray.size();
 }

@@ -10,7 +10,8 @@ All Rights Reserved.
 #ifndef GAMEDLL_H
 #define GAMEDLL_H
 
-#define DLLEXPORT __declspec( dllexport )
+#include "constants.h"
+#include "save_shared.h"
 
 struct gdll_engfuncs_t;
 struct trace_interface_t;
@@ -29,11 +30,11 @@ extern file_interface_t gd_filefuncs;
 extern gamevars_t* g_pGameVars;
 
 // VIS buffer for server
-extern byte* g_pVISBuffer;
+extern Byte* g_pVISBuffer;
 // VIS buffer size
 extern Uint32 g_visBufferSize;
 
-// TRUE if game initialization has occurred
+// true if game initialization has occurred
 extern bool g_gameInitializationDone;
 
 extern bool GameDLLInit( void );
@@ -50,20 +51,20 @@ extern void SaveEntityClassData( edict_t* pedict, bool istransitionsave );
 extern bool IsGlobalTransitioningEntity( edict_t* pedict );
 extern bool ShouldTransitionEntity( edict_t* pedict );
 extern bool ShouldSaveEntity( edict_t* pedict );
-extern void GetSaveGameTitle( Char* pstrBuffer, Int32 maxlength );
-extern bool InconsistentFile( const Char* pstrFilename );
+extern void GetSaveGameTitle( char* pstrBuffer, Int32 maxlength );
+extern bool InconsistentFile( const char* pstrFilename );
 extern bool AreCheatsEnabled( void );
 extern void DumpCheatCodes( void );
 extern void StopMusic( void );
-extern void AdjustLandmarkPVSData( edict_t* pLandmarkEdict, byte* pPVS, Uint32 pvsBufferSize );
-extern void SetConnectionSaveFile( const Char* pstrLevelName, const Char* pstrLandmarkName, const Char* pstrSaveFileName );
+extern void AdjustLandmarkPVSData( edict_t* pLandmarkEdict, Byte* pPVS, Uint32 pvsBufferSize );
+extern void SetConnectionSaveFile( const char* pstrLevelName, const char* pstrLandmarkName, const char* pstrSaveFileName );
 extern void PrecacheResources( void );
 extern bool CanSaveGame( enum savefile_type_t type );
 extern bool CanLoadGame( void );
 extern void ShowSaveGameMessage( void );
 extern void ShowAutoSaveGameMessage( void );
 extern void ShowSaveGameBlockedMessage( void );
-extern void RestoreDecal( const Vector& origin, const Vector& normal, edict_t* pedict, const Char* pstrDecalTexture, Int32 decalflags );
-extern void FormatKeyValue( const Char* pstrKeyValueName, Char* pstrValue, Uint32 maxLength );
+extern void RestoreDecal( const Vector& origin, const Vector& normal, edict_t* pedict, const char* pstrDecalTexture, Int32 decalflags );
+extern void FormatKeyValue( const char* pstrKeyValueName, char* pstrValue, Uint32 maxLength );
 extern void PostSpawnGame( void );
 #endif //GAMEDLL_H

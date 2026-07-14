@@ -133,7 +133,7 @@ const CBaseEntity* CFuncPortalSurface::GetEnvPosPortalEntity( void ) const
 // @brief
 //
 //=============================================
-void CFuncPortalSurface::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncPortalSurface::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{
@@ -172,7 +172,7 @@ void CFuncPortalSurface::ClearPortalSurfaceList( void )
 //=============================================
 void CFuncPortalSurface::AddPortalSurfaceEntity( CBaseEntity* pPortalSurface )
 {
-	for(Uint32 i = 0; i < m_pPortalSurfacesArray.size(); i++)
+	for(UInt32 i = 0; i < m_pPortalSurfacesArray.size(); i++)
 	{
 		if(m_pPortalSurfacesArray[i] == pPortalSurface)
 			return;
@@ -185,7 +185,7 @@ void CFuncPortalSurface::AddPortalSurfaceEntity( CBaseEntity* pPortalSurface )
 // @brief
 //
 //=============================================
-Uint32 CFuncPortalSurface::GetNbPortalSurfaces( void )
+UInt32 CFuncPortalSurface::GetNbPortalSurfaces( void ) const
 {
 	return m_pPortalSurfacesArray.size();
 }
@@ -194,17 +194,17 @@ Uint32 CFuncPortalSurface::GetNbPortalSurfaces( void )
 // @brief
 //
 //=============================================
-const CBaseEntity* CFuncPortalSurface::GetPortalSurfaceByIndex( Uint32 index )
+const edict_t* CFuncPortalSurface::GetPortalSurfaceByIndex( UInt32 index ) const
 {
 	assert(index < m_pPortalSurfacesArray.size());
-	return m_pPortalSurfacesArray[index];
+	return m_pPortalSurfacesArray[index]->GetEdict();
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-bool CFuncPortalSurface::CheckVISForEntity( const edict_t* pclient, const edict_t* pedict, const byte* pset )
+bool CFuncPortalSurface::CheckVISForEntity( const edict_t* pclient, const edict_t* pedict, const Byte* pset )
 {
 	if(m_pPortalSurfacesArray.empty())
 		return false;
@@ -212,7 +212,7 @@ bool CFuncPortalSurface::CheckVISForEntity( const edict_t* pclient, const edict_
 	const CBaseEntity* pEntity = CBaseEntity::GetClass(pedict);
 	if(!pEntity->IsEnvPosPortalEntity() && !pEntity->IsFuncPortalSurfaceEntity())
 	{
-		for(Uint32 i = 0; i < m_pPortalSurfacesArray.size(); i++)
+		for(UInt32 i = 0; i < m_pPortalSurfacesArray.size(); i++)
 		{
 			CBaseEntity* pPortalSurfaceEntity = m_pPortalSurfacesArray[i];
 			if(!pPortalSurfaceEntity || (pPortalSurfaceEntity->HasEffectFlag(EF_NODRAW)))
@@ -225,7 +225,7 @@ bool CFuncPortalSurface::CheckVISForEntity( const edict_t* pclient, const edict_
 				if(!pPortalEntity)
 					continue;
 
-				const byte* pPortalPVS = pPortalEntity->GetPVSData();
+				const Byte* pPortalPVS = pPortalEntity->GetPVSData();
 				if(pPortalPVS && Common::CheckVisibility(pedict->leafnums, pedict->numleaves, pPortalPVS) && pPortalEntity->CheckPortalBBox(pedict))
 					return true;
 			}
@@ -233,8 +233,8 @@ bool CFuncPortalSurface::CheckVISForEntity( const edict_t* pclient, const edict_
 	}
 	else if(pEntity->IsEnvPosPortalEntity())
 	{
-		Uint32 nbportalsurfaces = pEntity->GetNbPortalSurfaces();
-		for(Uint32 i = 0; i < nbportalsurfaces; i++)
+		UInt32 nbportalsurfaces = pEntity->GetNbPortalSurfaces();
+		for(UInt32 i = 0; i < nbportalsurfaces; i++)
 		{
 			const edict_t* pPortalSurface = pEntity->GetPortalSurfaceByIndex(i);
 			if(pPortalSurface && !(pPortalSurface->state.effects & EF_NODRAW) 

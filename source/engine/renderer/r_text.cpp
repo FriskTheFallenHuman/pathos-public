@@ -29,7 +29,7 @@ All Rights Reserved.
 #include "stb_truetype.h"
 
 // Font set base directory
-const Char CText::FONT_DIRECTORY[] = "resources/fonts";
+const char CText::FONT_DIRECTORY[] = "resources/fonts";
 
 //
 // Class definition
@@ -46,10 +46,10 @@ CText::CText ( void ):
 	m_pShader(nullptr),
 	m_pDefaultSet(nullptr)
 { 
-	for(Uint32 i = 0; i < 4; i++)
+	for(UInt32 i = 0; i < 4; i++)
 		m_rectangleBounds[i] = 0;
 
-	for(Uint32 i = 0; i < 2; i++)
+	for(UInt32 i = 0; i < 2; i++)
 		m_textInset[i] = 0;
 }
 
@@ -81,7 +81,7 @@ void CText::Shutdown ( void )
 
 	if(!m_fontSetsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_fontSetsArray.size(); i++)
+		for(UInt32 i = 0; i < m_fontSetsArray.size(); i++)
 			delete m_fontSetsArray[i];
 
 		m_fontSetsArray.clear();
@@ -129,7 +129,7 @@ bool CText::InitGL ( void )
 			return false;
 	}
 
-	for(Uint32 i = 0; i < m_fontSetsArray.size(); i++)
+	for(UInt32 i = 0; i < m_fontSetsArray.size(); i++)
 	{
 		if(!LoadFont(m_fontSetsArray[i]->name.c_str(), m_fontSetsArray[i]->fontsize, m_fontSetsArray[i]->outline, &m_fontSetsArray[i]->outlinecolor, m_fontSetsArray[i]->outlineradius))
 			return false;
@@ -146,14 +146,14 @@ void CText::ClearGL ( void )
 { 
 	if(!m_fontInfoArray.empty())
 	{
-		for(Uint32 i = 0; i < m_fontInfoArray.size(); i++)
+		for(UInt32 i = 0; i < m_fontInfoArray.size(); i++)
 			delete m_fontInfoArray[i];
 		m_fontInfoArray.clear();
 	}
 
 	if(!m_fontSetsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_fontSetsArray.size(); i++)
+		for(UInt32 i = 0; i < m_fontSetsArray.size(); i++)
 			m_fontSetsArray[i]->infoindex = NO_GL_INFO_INDEX;
 	}
 
@@ -168,7 +168,7 @@ void CText::ClearGL ( void )
 // @brief Loads a font set
 //
 //=============================================
-const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bool outline, const color32_t* poutlinecolor, Uint32 outlineradius )
+const font_set_t *CText::LoadFont ( const char *pstrFilename, Int32 fontsize, bool outline, const color32_t* poutlinecolor, UInt32 outlineradius )
 {
 	// Always have this
 	color32_t outlinecolor;
@@ -177,7 +177,7 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 
 	// Try to find an existing entry
 	font_set_t* pset = nullptr;
-	for(Uint32 i = 0; i < m_fontSetsArray.size(); i++)
+	for(UInt32 i = 0; i < m_fontSetsArray.size(); i++)
 	{
 		// Make sure it's actually usable, if not, load the font in again
 		font_set_t* pcheck = m_fontSetsArray[i];
@@ -201,8 +201,8 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 	filepath << FONT_DIRECTORY << PATH_SLASH_CHAR << pstrFilename;
 
 	// Load in the file
-	Uint32 size = 0;
-	const byte *pdata = FL_LoadFile(filepath.c_str(), &size);
+	UInt32 size = 0;
+	const Byte *pdata = FL_LoadFile(filepath.c_str(), &size);
 	if(!pdata)
 	{
 		Con_EPrintf("Failed to load font '%s'.\n", pstrFilename);
@@ -241,7 +241,7 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 	}
 
 	// Determine ideal texture size
-	Uint32 glyphsize, sizex, sizey, padding;
+	UInt32 glyphsize, sizex, sizey, padding;
 	GetIdealSizes(fontsize, &sizex, &sizey, &glyphsize, &padding); 
 
 	// Pack outline chars into same texture
@@ -250,7 +250,7 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 		sizey *= 2;
 
 	// Offset into height
-	Uint32 yoffset = 0;
+	UInt32 yoffset = 0;
 
 	// Allocate new slot
 	font_set_t* pnew = nullptr;
@@ -268,9 +268,9 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 	pglinfo->pvbo = new CVBO(gGLExtF, true, false);
 
 	// Create texture buffer
-	Uint32 imagedatasize = sizex*sizey*4;
-	byte* ptexturedata = new byte[imagedatasize];
-	memset(ptexturedata, 0, sizeof(byte)*imagedatasize);
+	UInt32 imagedatasize = sizex*sizey*4;
+	Byte* ptexturedata = new Byte[imagedatasize];
+	memset(ptexturedata, 0, sizeof(Byte)*imagedatasize);
 
 	// Render normal glyph set
 	if(!RenderGlyphs(pnew, pglinfo, pnew->glyphs, &fontInfo, fontsize, sizex, yoffset, basesizey, sizey, glyphsize, padding, 0, false, ptexturedata, 0))
@@ -293,7 +293,7 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 		pglinfo->index_offset_outline = pglinfo->pvbo->GetVBODataSize() / sizeof(font_vertex_t);
 
 		yoffset += basesizey;
-		byte *poutlinedata = ptexturedata + (sizex*basesizey*4);
+		Byte *poutlinedata = ptexturedata + (sizex*basesizey*4);
 
 		if(!RenderGlyphs(pnew, pglinfo, pnew->glyphs_outline, &fontInfo, fontsize, sizex, yoffset, basesizey, sizey, glyphsize, padding, pglinfo->index_offset_outline, true, poutlinedata, outlineradius))
 		{
@@ -347,16 +347,16 @@ const font_set_t *CText::LoadFont ( const Char *pstrFilename, Int32 fontsize, bo
 // @brief Renders glyphs for a font set
 //
 //=============================================
-bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyph_t* pglyphs, const stbtt_fontinfo* pfont, Int32 fontsize, Uint32 sizex, Uint32 yoffset, Uint32 basesizey, Uint32 sizey, Uint32 glyphsize, Uint32 padding, Uint32 bufferoffset, bool outline, byte* poutbuffer, Uint32 outlineradius )
+bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyph_t* pglyphs, const stbtt_fontinfo* pfont, Int32 fontsize, UInt32 sizex, UInt32 yoffset, UInt32 basesizey, UInt32 sizey, UInt32 glyphsize, UInt32 padding, UInt32 bufferoffset, bool outline, Byte* poutbuffer, UInt32 outlineradius )
 {
 	// Allocate buffer to store data into
-	byte *pglyphbuffer[NUM_GLYPHS] = { nullptr };
+	Byte *pglyphbuffer[NUM_GLYPHS] = { nullptr };
 
 	float scale = stbtt_ScaleForPixelHeight(pfont, static_cast<float>(fontsize));
 	
 	// Get data from the .ttf
 	bool result = true;
-	for(Uint32 i = 32; i < NUM_GLYPHS; i++)
+	for(UInt32 i = 32; i < NUM_GLYPHS; i++)
 	{
 		int x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 		stbtt_GetCodepointBitmapBox(pfont, i, scale, scale, &x0, &y0, &x1, &y1);
@@ -371,8 +371,8 @@ bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyp
 		}
 
 		font_glyph_t *pglyph = &pglyphs[i];
-		pglyph->width = static_cast<Uint16>(x1 - x0);
-		pglyph->height = static_cast<Uint16>(y1 - y0);
+		pglyph->width = static_cast<UInt16>(x1 - x0);
+		pglyph->height = static_cast<UInt16>(y1 - y0);
 		pglyph->bitmap_left = x0;
 		pglyph->bitmap_top = -y0; // FreeType top orientation inversion
 
@@ -394,16 +394,16 @@ bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyp
 			raw_h -= (static_cast<int>(outlineradius) * 2);
 		}
 
-		byte* raw_buf = nullptr;
+		Byte* raw_buf = nullptr;
 		if (raw_w > 0 && raw_h > 0)
 		{
-			raw_buf = new byte[raw_w * raw_h];
+			raw_buf = new Byte[raw_w * raw_h];
 			memset(raw_buf, 0, raw_w * raw_h);
 			stbtt_MakeCodepointBitmap(pfont, raw_buf, raw_w, raw_h, raw_w, scale, scale, i);
 		}
 
-		Uint32 glyphdatasize = pglyph->width * pglyph->height;
-		pglyphbuffer[i] = new byte[glyphdatasize];
+		UInt32 glyphdatasize = pglyph->width * pglyph->height;
+		pglyphbuffer[i] = new Byte[glyphdatasize];
 		memset(pglyphbuffer[i], 0, glyphdatasize);
 
 		if (outline)
@@ -432,7 +432,7 @@ bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyp
 							}
 						}
 					}
-					pglyphbuffer[i][oy * pglyph->width + ox] = static_cast<byte>(max_val);
+					pglyphbuffer[i][oy * pglyph->width + ox] = static_cast<Byte>(max_val);
 				}
 			}
 		}
@@ -458,20 +458,20 @@ bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyp
 		Int32 row = (i-32)/(sizex/glyphsize);
 
 		// Fill in texcoords
-		pglyph->texcoords[0][0] = (column*glyphsize+(padding/2.0f))/static_cast<Float>(sizex);
-		pglyph->texcoords[0][1] = (row*glyphsize+(padding/2.0f)+yoffset)/static_cast<Float>(sizey);
-		pglyph->texcoords[1][0] = (column*glyphsize+pglyph->width+(padding/2.0f))/static_cast<Float>(sizex);
-		pglyph->texcoords[1][1] = (row*glyphsize+(padding/2.0f)+yoffset)/static_cast<Float>(sizey);
-		pglyph->texcoords[2][0] = (column*glyphsize+pglyph->width+(padding/2.0f))/static_cast<Float>(sizex);
-		pglyph->texcoords[2][1] = (row*glyphsize+pglyph->height+(padding/2.0f)+yoffset)/static_cast<Float>(sizey);
-		pglyph->texcoords[3][0] = (column*glyphsize+(padding/2.0f))/static_cast<Float>(sizex);
-		pglyph->texcoords[3][1] = (row*glyphsize+pglyph->height+(padding/2.0f)+yoffset)/static_cast<Float>(sizey);
+		pglyph->texcoords[0][0] = (column*glyphsize+(padding/2.0f))/static_cast<float>(sizex);
+		pglyph->texcoords[0][1] = (row*glyphsize+(padding/2.0f)+yoffset)/static_cast<float>(sizey);
+		pglyph->texcoords[1][0] = (column*glyphsize+pglyph->width+(padding/2.0f))/static_cast<float>(sizex);
+		pglyph->texcoords[1][1] = (row*glyphsize+(padding/2.0f)+yoffset)/static_cast<float>(sizey);
+		pglyph->texcoords[2][0] = (column*glyphsize+pglyph->width+(padding/2.0f))/static_cast<float>(sizex);
+		pglyph->texcoords[2][1] = (row*glyphsize+pglyph->height+(padding/2.0f)+yoffset)/static_cast<float>(sizey);
+		pglyph->texcoords[3][0] = (column*glyphsize+(padding/2.0f))/static_cast<float>(sizex);
+		pglyph->texcoords[3][1] = (row*glyphsize+pglyph->height+(padding/2.0f)+yoffset)/static_cast<float>(sizey);
 	}
 
 	if(!result)
 	{
 		// Clear anything that's been allocated
-		for(Uint32 j = 0; j < NUM_GLYPHS; j++)
+		for(UInt32 j = 0; j < NUM_GLYPHS; j++)
 		{
 			if(pglyphbuffer[j]) 
 				delete[] pglyphbuffer[j];
@@ -481,15 +481,15 @@ bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyp
 	}
 
 	// Fill into output
-	Uint32 bufferindex = 0;
-	for (Uint32 y = 0; y < basesizey; y++) 
+	UInt32 bufferindex = 0;
+	for (UInt32 y = 0; y < basesizey; y++) 
 	{
-		for (Uint32 x = 0; x < sizex; x++) 
+		for (UInt32 x = 0; x < sizex; x++) 
 		{
-			Uint32 col = x / glyphsize;
-			Uint32 row = y / glyphsize;
-			Uint32 order = row * (sizex/glyphsize) + col;
-			Uint32 glyph_index = order + 32;
+			UInt32 col = x / glyphsize;
+			UInt32 row = y / glyphsize;
+			UInt32 order = row * (sizex/glyphsize) + col;
+			UInt32 glyph_index = order + 32;
 
 			if (glyph_index > 32 && glyph_index < NUM_GLYPHS) 
 			{
@@ -523,7 +523,7 @@ bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyp
 	}
 
 	// Delete the data we used
-	for(Uint32 i = 0; i < NUM_GLYPHS; i++)
+	for(UInt32 i = 0; i < NUM_GLYPHS; i++)
 	{
 		if(pglyphbuffer[i]) 
 			delete[] pglyphbuffer[i];
@@ -532,17 +532,17 @@ bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyp
 	// Now create the VBO
 	font_vertex_t *pbuffer = new font_vertex_t[NUM_GLYPHS*6];
 
-	Uint32 k = 0;
-	for(Uint32 j = 0; j < NUM_GLYPHS; j++)
+	UInt32 k = 0;
+	for(UInt32 j = 0; j < NUM_GLYPHS; j++)
 	{
 		font_glyph_t *pglyph = &pglyphs[j];
 		pglyph->start_vertex = bufferoffset + k;
 
-		Float flwidth = pglyph->width;
-		Float flheight = pglyph->height;
+		float flwidth = pglyph->width;
+		float flheight = pglyph->height;
 
-		Float xstart = static_cast<Float>(pglyph->bitmap_left);
-		Float ystart = static_cast<Float>(-pglyph->bitmap_top);
+		float xstart = static_cast<float>(pglyph->bitmap_left);
+		float ystart = static_cast<float>(-pglyph->bitmap_top);
 
 		pbuffer[k].texcoord[0] = pglyph->texcoords[0][0];
 		pbuffer[k].texcoord[1] = pglyph->texcoords[0][1];
@@ -603,15 +603,15 @@ bool CText::RenderGlyphs( font_set_t *pset, fontsetglinfo_t* psetinfo, font_glyp
 // @brief Returns the ideal resolution for a font set texture
 //
 //=============================================
-void CText::GetIdealSizes( Uint32 fontsize, Uint32 *resx, Uint32 *resy, Uint32 *pglyphsize, Uint32 *padding )
+void CText::GetIdealSizes( UInt32 fontsize, UInt32 *resx, UInt32 *resy, UInt32 *pglyphsize, UInt32 *padding )
 {
-	Uint32 glyphsize = 2;
+	UInt32 glyphsize = 2;
 	while(glyphsize < fontsize)
 		glyphsize = glyphsize*2;
 
-	Uint32 sizex, sizey;
+	UInt32 sizex, sizey;
 	sizex = sizey = 128;
-	Uint32 size = NUM_GLYPHS*glyphsize*glyphsize;
+	UInt32 size = NUM_GLYPHS*glyphsize*glyphsize;
 
 	while(sizex*sizey < size)
 	{
@@ -653,7 +653,7 @@ void CText::SetRectangle( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int32 
 // @brief Returns the size of a string in pixels
 //
 //=============================================
-void CText::GetStringSize( const font_set_t *pset, const Char *pstring, Uint32 *width, Uint32 *height, Int32 *ymin )
+void CText::GetStringSize( const font_set_t *pset, const char *pstring, UInt32 *width, UInt32 *height, Int32 *ymin )
 {
 	if(!pset)
 	{
@@ -673,10 +673,10 @@ void CText::GetStringSize( const font_set_t *pset, const Char *pstring, Uint32 *
 	if(!pstring)
 		return;
 
-	const Char *pscan = pstring;
+	const char *pscan = pstring;
 	while(*pscan != '\0')
 	{
-		Uint32 glyphindex = static_cast<byte>(*pscan);
+		UInt32 glyphindex = static_cast<Byte>(*pscan);
 		if(glyphindex > 254)
 			glyphindex = 254;
 
@@ -703,7 +703,7 @@ void CText::GetStringSize( const font_set_t *pset, const Char *pstring, Uint32 *
 // @brief Tells if the string should be newlined
 //
 //=============================================
-bool CText::ShouldNewline( Int32 offsx, Int32 x, const font_set_t *pFont, const Char *pString )
+bool CText::ShouldNewline( Int32 offsx, Int32 x, const font_set_t *pFont, const char *pString )
 {
 	if(!pString)
 		return true;
@@ -711,7 +711,7 @@ bool CText::ShouldNewline( Int32 offsx, Int32 x, const font_set_t *pFont, const 
 	if(*pString == '\n' || *pString == '\r' || *pString == '\0')
 		return true;
 
-	Uint32 screenwidth = gWindow.GetWidth();
+	UInt32 screenwidth = gWindow.GetWidth();
 
 	// Try to break full words off
 	if(*pString == ' ')
@@ -719,7 +719,7 @@ bool CText::ShouldNewline( Int32 offsx, Int32 x, const font_set_t *pFont, const 
 		Int32 xadd = 0;
 		while(*pString == ' ') 
 		{ 
-			Uint32 glyphindex = static_cast<byte>(*pString);
+			UInt32 glyphindex = static_cast<Byte>(*pString);
 			if(glyphindex > 254)
 				glyphindex = 254;
 
@@ -729,7 +729,7 @@ bool CText::ShouldNewline( Int32 offsx, Int32 x, const font_set_t *pFont, const 
 
 		while(*pString != ' ' && *pString != '\n' && *pString != '\0')
 		{
-			Uint32 glyphindex = static_cast<byte>(*pString);
+			UInt32 glyphindex = static_cast<Byte>(*pString);
 			if(glyphindex > 254)
 				glyphindex = 254;
 
@@ -750,7 +750,7 @@ bool CText::ShouldNewline( Int32 offsx, Int32 x, const font_set_t *pFont, const 
 		}
 	}
 
-	Uint32 glyphindex = static_cast<byte>(*pString);
+	UInt32 glyphindex = static_cast<Byte>(*pString);
 	if(glyphindex > 254)
 		glyphindex = 254;
 
@@ -773,7 +773,7 @@ bool CText::ShouldNewline( Int32 offsx, Int32 x, const font_set_t *pFont, const 
 // @brief Estimates the height of a string drawn onscreen
 //
 //=============================================
-Int32 CText::EstimateHeight( const font_set_t *pFontSet, const Char *pstrString, Uint32 minlineheight )
+Int32 CText::EstimateHeight( const font_set_t *pFontSet, const char *pstrString, UInt32 minlineheight )
 {
 	if(!pstrString)
 		return 0;
@@ -785,13 +785,13 @@ Int32 CText::EstimateHeight( const font_set_t *pFontSet, const Char *pstrString,
 	line_chunk_t curchunk;
 	line_t curline;
 	curchunk.pstringbegin = pstrString;
-	const Char* pstrerrorpos = nullptr;
+	const char* pstrerrorpos = nullptr;
 
 	Int32 totalHeight = 0;
-	const Char *pstr = pstrString;
+	const char *pstr = pstrString;
 	while(true)
 	{
-		Uint32 glyphindex = static_cast<byte>(*pstr);
+		UInt32 glyphindex = static_cast<Byte>(*pstr);
 		if(glyphindex > 254)
 			glyphindex = 254;
 
@@ -837,7 +837,7 @@ Int32 CText::EstimateHeight( const font_set_t *pFontSet, const Char *pstrString,
 				// Clear this
 				pstrerrorpos = nullptr;
 				// Skip the [color token
-				const Char* pstr_parse = pstr + 6;
+				const char* pstr_parse = pstr + 6;
 
 				// Read out the values
 				while(true)
@@ -929,7 +929,7 @@ Int32 CText::EstimateHeight( const font_set_t *pFontSet, const Char *pstrString,
 // @brief Draws a string using faster routines without newlining or bounds checks
 //
 //=============================================
-bool CText::DrawSimpleString( const Char *pstrString, Int32 x, Int32 y, Int32 maxlenght )
+bool CText::DrawSimpleString( const char *pstrString, Int32 x, Int32 y, Int32 maxlenght )
 {
 	if(!pstrString)
 		return true;
@@ -967,7 +967,7 @@ bool CText::DrawSimpleString( const Char *pstrString, Int32 x, Int32 y, Int32 ma
 	{
 		Int32 _a = m_textColor.a;
 		if(m_pBoundFontSet->outlinecolor.a != 0)
-			_a *= static_cast<Float>(m_pBoundFontSet->outlinecolor.a) / 255.0f;
+			_a *= static_cast<float>(m_pBoundFontSet->outlinecolor.a) / 255.0f;
 
 		// Draw the outline characters
 		DrawSimpleStringChars(pstrString, m_pBoundFontSet->glyphs_outline, _x, _y, m_pBoundFontSet->outlinecolor.r, 
@@ -984,7 +984,7 @@ bool CText::DrawSimpleString( const Char *pstrString, Int32 x, Int32 y, Int32 ma
 // @brief Draws simple string characters
 //
 //=============================================
-void CText::DrawSimpleStringChars( const Char* pstrString, const font_glyph_t* pglyphs, Int32 x, Int32 y, Int32 r, Int32 g, Int32 b, Int32 a, Int32 maxlenght, bool outline, Int32* padvancex, Int32* padvancey  )
+void CText::DrawSimpleStringChars( const char* pstrString, const font_glyph_t* pglyphs, Int32 x, Int32 y, Int32 r, Int32 g, Int32 b, Int32 a, Int32 maxlenght, bool outline, Int32* padvancex, Int32* padvancey  )
 {
 	m_pShader->SetUniform4f(m_attribs.u_color, r/255.0f, g/255.0f, b/255.0f, a/255.0f);
 
@@ -999,7 +999,7 @@ void CText::DrawSimpleStringChars( const Char* pstrString, const font_glyph_t* p
 		if(maxlenght && (pstr - pstrString) >= maxlenght)
 			break;
 
-		Uint32 glyphindex = static_cast<byte>(*pstr);
+		UInt32 glyphindex = static_cast<Byte>(*pstr);
 		if(glyphindex > 254)
 			glyphindex = 254;
 
@@ -1007,7 +1007,7 @@ void CText::DrawSimpleStringChars( const Char* pstrString, const font_glyph_t* p
 
 		if(!SDL_isspace(*pstr))
 		{
-			m_pShader->SetUniform2f(m_attribs.u_offset, static_cast<Float>(_x), static_cast<Float>(_y));
+			m_pShader->SetUniform2f(m_attribs.u_offset, static_cast<float>(_x), static_cast<float>(_y));
 			m_pShader->DrawArrays(GL_TRIANGLES, pglyph->start_vertex, 6);
 		}
 
@@ -1028,7 +1028,7 @@ void CText::DrawSimpleStringChars( const Char* pstrString, const font_glyph_t* p
 // @brief Draws a single string on the screen
 //
 //=============================================
-bool CText::DrawString( const Char *pstrString, Int32 x, Int32 y, bool reverse, Uint32 lineoffset, Uint32 minlineheight, Uint32 xoffset )
+bool CText::DrawString( const char *pstrString, Int32 x, Int32 y, bool reverse, UInt32 lineoffset, UInt32 minlineheight, UInt32 xoffset )
 {
 	if(!pstrString || *pstrString == '\0')
 		return true;
@@ -1058,13 +1058,13 @@ bool CText::DrawString( const Char *pstrString, Int32 x, Int32 y, bool reverse, 
 	line_chunk_t curchunk;
 	line_t curline;
 	curchunk.pstringbegin = pstrString;
-	const Char* pstrerrorpos = nullptr;
+	const char* pstrerrorpos = nullptr;
 
-	const Char *pstr = pstrString;
+	const char *pstr = pstrString;
 	while(true)
 	{
 		// Grab current glyph
-		Uint32 glyphindex = static_cast<byte>(*pstr);
+		UInt32 glyphindex = static_cast<Byte>(*pstr);
 		if(glyphindex > 254)
 			glyphindex = 254;
 
@@ -1121,7 +1121,7 @@ bool CText::DrawString( const Char *pstrString, Int32 x, Int32 y, bool reverse, 
 				char buffer[4];
 
 				// Skip the [color token
-				const Char* pstr_parse = pstr + 6;
+				const char* pstr_parse = pstr + 6;
 
 				// Read out the values
 				while(true)
@@ -1154,7 +1154,7 @@ bool CText::DrawString( const Char *pstrString, Int32 x, Int32 y, bool reverse, 
 						break;
 					}
 
-					byte* pcolorelement;
+					Byte* pcolorelement;
 					if(*pstr_parse == 'r')
 						pcolorelement = &color.r;
 					else if(*pstr_parse == 'g')
@@ -1178,7 +1178,7 @@ bool CText::DrawString( const Char *pstrString, Int32 x, Int32 y, bool reverse, 
 					}
 
 					// Next should be a digit
-					Uint32 length = 0;
+					UInt32 length = 0;
 					while(SDL_isdigit(*pstr_parse))
 					{
 						buffer[length] = *pstr_parse;
@@ -1198,7 +1198,7 @@ bool CText::DrawString( const Char *pstrString, Int32 x, Int32 y, bool reverse, 
 
 					// Read into integer
 					int component = SDL_atoi(buffer);
-					component = clamp(component, 0, 255);
+					component = Clamp(component, 0, 255);
 
 					// Put into final position
 					if(pcolorelement)
@@ -1297,7 +1297,7 @@ bool CText::DrawString( const Char *pstrString, Int32 x, Int32 y, bool reverse, 
 		m_linesList.begin();
 
 	// Draw line by line
-	Uint32 lineIdx = 0;
+	UInt32 lineIdx = 0;
 	while(!m_linesList.end())
 	{	
 		line_t& line = m_linesList.get();
@@ -1381,7 +1381,7 @@ bool CText::DrawString( const Char *pstrString, Int32 x, Int32 y, bool reverse, 
 				Int32 _ob = m_pBoundFontSet->outlinecolor.b;
 				Int32 _a = m_textColor.a;
 				if(m_pBoundFontSet->outlinecolor.a != 0)
-					_a *= static_cast<Float>(m_pBoundFontSet->outlinecolor.a) / 255.0f;
+					_a *= static_cast<float>(m_pBoundFontSet->outlinecolor.a) / 255.0f;
 
 				// Draw the string
 				DrawSimpleStringChars(chunk.pstringbegin, m_pBoundFontSet->glyphs_outline, _x, _y, _or, _og, _ob, _a, chunk.length, true);
@@ -1423,7 +1423,7 @@ bool CText::DrawString( const Char *pstrString, Int32 x, Int32 y, bool reverse, 
 // @brief Draws a single character on the screen
 //
 //=============================================
-bool CText::DrawChar( Char character, Int32 x, Int32 y, Uint32 r, Uint32 g, Uint32 b, Uint32 a )
+bool CText::DrawChar( char character, Int32 x, Int32 y, UInt32 r, UInt32 g, UInt32 b, UInt32 a )
 {
 	if(SDL_isspace(character))
 		return true;
@@ -1460,11 +1460,11 @@ bool CText::DrawChar( Char character, Int32 x, Int32 y, Uint32 r, Uint32 g, Uint
 
 		Int32 _a = a;
 		if(m_pBoundFontSet->outlinecolor.a != 0)
-			_a *= static_cast<Float>(m_pBoundFontSet->outlinecolor.a) / 255.0f;
+			_a *= static_cast<float>(m_pBoundFontSet->outlinecolor.a) / 255.0f;
 
-		m_pShader->SetUniform4f(m_attribs.u_color, static_cast<Float>(_r)/255.0f, static_cast<Float>(_g)/255.0f, static_cast<Float>(_b)/255.0f, static_cast<Float>(_a)/255.0f);
+		m_pShader->SetUniform4f(m_attribs.u_color, static_cast<float>(_r)/255.0f, static_cast<float>(_g)/255.0f, static_cast<float>(_b)/255.0f, static_cast<float>(_a)/255.0f);
 
-		Uint32 glyphindex = static_cast<byte>(character);
+		UInt32 glyphindex = static_cast<Byte>(character);
 		if(glyphindex > 254)
 			glyphindex = 254;
 
@@ -1472,14 +1472,14 @@ bool CText::DrawChar( Char character, Int32 x, Int32 y, Uint32 r, Uint32 g, Uint
 
 		R_ValidateShader(m_pShader);
 
-		m_pShader->SetUniform2f(m_attribs.u_offset, static_cast<Float>(x), static_cast<Float>(y));
+		m_pShader->SetUniform2f(m_attribs.u_offset, static_cast<float>(x), static_cast<float>(y));
 		m_pShader->DrawArrays(GL_TRIANGLES, pglyph->start_vertex, 6);
 	}
 
 	// Draw normal character
-	m_pShader->SetUniform4f(m_attribs.u_color, static_cast<Float>(r)/255.0f, static_cast<Float>(g)/255.0f, static_cast<Float>(b)/255.0f, static_cast<Float>(a)/255.0f);
+	m_pShader->SetUniform4f(m_attribs.u_color, static_cast<float>(r)/255.0f, static_cast<float>(g)/255.0f, static_cast<float>(b)/255.0f, static_cast<float>(a)/255.0f);
 
-	Uint32 glyphindex = static_cast<byte>(character);
+	UInt32 glyphindex = static_cast<Byte>(character);
 	if(glyphindex > 254)
 		glyphindex = 254;
 
@@ -1487,7 +1487,7 @@ bool CText::DrawChar( Char character, Int32 x, Int32 y, Uint32 r, Uint32 g, Uint
 
 	R_ValidateShader(m_pShader);
 
-	m_pShader->SetUniform2f(m_attribs.u_offset, static_cast<Float>(x), static_cast<Float>(y));
+	m_pShader->SetUniform2f(m_attribs.u_offset, static_cast<float>(x), static_cast<float>(y));
 	m_pShader->DrawArrays(GL_TRIANGLES, pglyph->start_vertex, 6);
 
 	return true;
@@ -1557,7 +1557,7 @@ void CText::Reset( void )
 // @brief Sets the font color
 //
 //=============================================
-void CText::SetColor( Uint32 r, Uint32 g, Uint32 b, Uint32 a )
+void CText::SetColor( UInt32 r, UInt32 g, UInt32 b, UInt32 a )
 {
 	m_textColor.r = r;
 	m_textColor.g = g;
@@ -1628,7 +1628,7 @@ void CText::UnBindCurrentSet( void )
 //
 // @return Error string pointer
 //=============================================
-const Char* CText::GetShaderError( void )
+const char* CText::GetShaderError( void )
 {
 	if(!m_pShader)
 		return "";
@@ -1640,7 +1640,7 @@ const Char* CText::GetShaderError( void )
 //=============================================
 // @brief Tells if the shader has an error
 //
-// @return TRUE if shader has an error, FALSE otherwise
+// @return true if shader has an error, false otherwise
 //=============================================
 bool CText::HasError( void )
 {

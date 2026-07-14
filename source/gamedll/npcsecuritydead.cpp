@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "npcsecuritydead.h"
 
 // Pose sequence names for corpse
-const Char* CNPCSecurityDead::NPC_CORPSE_POSES[NPC_NB_CORPSE_POSES] = 
+const char* CNPCSecurityDead::NPC_CORPSE_POSES[NPC_NB_CORPSE_POSES] = 
 {
 	"lying_on_back",
 	"lying_on_side",
@@ -21,12 +21,12 @@ const Char* CNPCSecurityDead::NPC_CORPSE_POSES[NPC_NB_CORPSE_POSES] =
 };
 
 // Model name for the npc
-const Char CNPCSecurityDead::NPC_MODEL_NAME[] = "models/security.mdl";
+const char CNPCSecurityDead::NPC_MODEL_NAME[] = "models/security.mdl";
 
 // Bodygroup name for guns
-const Char CNPCSecurityDead::NPC_BODYGROUP_WEAPONS_NAME[] = "weapons";
+const char CNPCSecurityDead::NPC_BODYGROUP_WEAPONS_NAME[] = "weapons";
 // Submodel name for blank weapon
-const Char CNPCSecurityDead::NPC_SUBMODEL_WEAPON_BLANK_NAME[] = "blank";
+const char CNPCSecurityDead::NPC_SUBMODEL_WEAPON_BLANK_NAME[] = "blank";
 
 LINK_ENTITY_TO_CLASS( npc_security_dead, CNPCSecurityDead );
 
@@ -101,7 +101,7 @@ bool CNPCSecurityDead::KeyValue( const keyvalue_t& kv )
 // @brief Returns the sound mask for the NPC
 //
 //=============================================
-Uint64 CNPCSecurityDead::GetSoundMask( void )
+UInt64 CNPCSecurityDead::GetSoundMask( void )
 {
 	return AI_SOUND_NONE;
 }

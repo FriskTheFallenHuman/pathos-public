@@ -92,7 +92,7 @@ bool CTriggerRelay::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerRelay::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerRelay::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	UseTargets(this, (usemode_t)m_triggerMode, 0);
 	if(HasSpawnFlag(FL_REMOVE_ON_FIRE))

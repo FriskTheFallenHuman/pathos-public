@@ -38,19 +38,19 @@ static constexpr Int32 NEW_SAVE_INDEX = -1;
 CUISaveLoadWindow* CUISaveLoadWindow::m_pInstance = nullptr;
 
 // Window description file
-const Char CUISaveLoadWindow::WINDOW_DESC_FILE[] = "saveloadwindow.json";
+const char CUISaveLoadWindow::WINDOW_DESC_FILE[] = "saveloadwindow.json";
 // Window description file
-const Char CUISaveLoadWindow::WINDOW_OBJ_NAME[] = "SaveLoadWindow";
+const char CUISaveLoadWindow::WINDOW_OBJ_NAME[] = "SaveLoadWindow";
 // Save list object name
-const Char CUISaveLoadWindow::SAVELIST_OBJ_NAME[] = "SaveList";
+const char CUISaveLoadWindow::SAVELIST_OBJ_NAME[] = "SaveList";
 // Cancel button object name
-const Char CUISaveLoadWindow::CANCEL_BUTTON_OBJ_NAME[] = "CancelButton";
+const char CUISaveLoadWindow::CANCEL_BUTTON_OBJ_NAME[] = "CancelButton";
 // Load game button object name
-const Char CUISaveLoadWindow::LOAD_GAME_BUTTON_OBJ_NAME[] = "LoadGameButton";
+const char CUISaveLoadWindow::LOAD_GAME_BUTTON_OBJ_NAME[] = "LoadGameButton";
 // Save game button object name
-const Char CUISaveLoadWindow::SAVE_GAME_BUTTON_OBJ_NAME[] = "SaveGameButton";
+const char CUISaveLoadWindow::SAVE_GAME_BUTTON_OBJ_NAME[] = "SaveGameButton";
 // Delete save button object name
-const Char CUISaveLoadWindow::DELETE_SAVE_BUTTON_OBJ_NAME[] = "DeleteSaveButton";
+const char CUISaveLoadWindow::DELETE_SAVE_BUTTON_OBJ_NAME[] = "DeleteSaveButton";
 
 //=============================================
 // @brief Comparator function for save file ordering
@@ -71,7 +71,7 @@ static Int32 SortSaves( const void* p1, const void* p2 )
 // @brief Constructor
 //
 //=============================================
-CUISaveLoadWindow::CUISaveLoadWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUISaveLoadWindow::CUISaveLoadWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIWindow(UIW_FL_MENUWINDOW, flags, width, height, originx, originy),
 	m_pSaveList(nullptr),
 	m_lastSelectedSave(-1),
@@ -170,10 +170,10 @@ CUISaveLoadWindow* CUISaveLoadWindow::GetInstance( void )
 // @brief Returns the current instance of the console window
 //
 //=============================================
-void CUISaveLoadWindow::AddSaveFileInfo( const CString& filePath, FILETIME& fileTime )
+void CUISaveLoadWindow::AddSaveFileInfo( const CString& filePath, const file_dateinfo_t& fileDate )
 {
 	// Load the file
-	const byte* pdata = gSaveRestore.LoadSaveFile(filePath.c_str());
+	const Byte* pdata = gSaveRestore.LoadSaveFile(filePath.c_str());
 	if(!pdata)
 		return;
 
@@ -185,47 +185,24 @@ void CUISaveLoadWindow::AddSaveFileInfo( const CString& filePath, FILETIME& file
 		return;
 	}
 
-	// Get file time
-	SYSTEMTIME sysTime;
-	if(!FileTimeToSystemTime(&fileTime, &sysTime))
-	{
-		Con_EPrintf("Failed to get file creation time for '%s'. Error code returned is %d.\n", filePath.c_str(), GetLastError());
-		return;
-	}
-	
-	TIME_ZONE_INFORMATION tzInfo;
-	DWORD tzResult = GetTimeZoneInformation(&tzInfo);
-	if (tzResult == TIME_ZONE_ID_INVALID)
-	{
-		Con_EPrintf("Failed to get time zone info for '%s'. Error code returned is %d.\n", filePath.c_str(), GetLastError());
-		return;
-	}
-
-	SYSTEMTIME tzTime;
-	if(!SystemTimeToTzSpecificLocalTime(&tzInfo, &sysTime, &tzTime))
-	{
-		Con_EPrintf("Failed to get time zone specific time information for '%s'. Error code returned is %d.\n", filePath.c_str(), GetLastError());
-		return;
-	}
-
 	CString dateString;
-	dateString << tzTime.wYear << "/";
+	dateString << fileDate.year << "/";
 	
-	if(tzTime.wMonth < 10)
+	if(fileDate.month < 10)
 		dateString << '0';
-	dateString << tzTime.wMonth << "/";
+	dateString << fileDate.month << "/";
 
-	if(tzTime.wDay < 10)
+	if(fileDate.day < 10)
 		dateString << '0';
-	dateString << tzTime.wDay << " - ";
+	dateString << fileDate.day << " - ";
 	
-	if(tzTime.wHour < 10)
+	if(fileDate.hour < 10)
 		dateString << '0';
-	dateString << tzTime.wHour << ":";
+	dateString << fileDate.hour << ":";
 	
-	if(tzTime.wMinute < 10)
+	if(fileDate.minute < 10)
 		dateString << '0';
-	dateString << tzTime.wMinute;
+	dateString << fileDate.minute;
 
 	save_file_t saveFile;
 
@@ -236,12 +213,12 @@ void CUISaveLoadWindow::AddSaveFileInfo( const CString& filePath, FILETIME& file
 	saveFile.datestring = dateString;
 	saveFile.type = pheader->type;
 
-	saveFile.date.year = tzTime.wYear;
-	saveFile.date.month = tzTime.wMonth;
-	saveFile.date.day = tzTime.wDay;
-	saveFile.date.hour = tzTime.wHour;
-	saveFile.date.minute = tzTime.wMinute;
-	saveFile.date.second = tzTime.wSecond;
+	saveFile.date.year = fileDate.year;
+	saveFile.date.month = fileDate.month;
+	saveFile.date.day = fileDate.day;
+	saveFile.date.hour = fileDate.hour;
+	saveFile.date.minute = fileDate.minute;
+	saveFile.date.second = fileDate.second;
 
 	m_saveFilesArray.push_back(saveFile);
 
@@ -253,9 +230,9 @@ void CUISaveLoadWindow::AddSaveFileInfo( const CString& filePath, FILETIME& file
 // @brief Returns the current instance of the console window
 //
 //=============================================
-void CUISaveLoadWindow::CreateSaveFileRow( save_file_t& saveFile, Uint32 fileindex )
+void CUISaveLoadWindow::CreateSaveFileRow( save_file_t& saveFile, UInt32 fileindex )
 {
-	Uint32 rowIndex = m_pSaveList->getNbRows();
+	UInt32 rowIndex = m_pSaveList->getNbRows();
 	CUISaveLoadWindowRowEvent* pEvent = new CUISaveLoadWindowRowEvent(this, rowIndex, fileindex);
 
 	// Add row
@@ -571,20 +548,20 @@ void CUISaveLoadWindow::LoadSaves( bool isIngame )
 	CString searchPath;
 	searchPath << ens.gamedir << PATH_SLASH_CHAR << CSaveRestore::SAVE_DIR_PATH << "*" << SAVE_FILE_EXTENSION;
 
-	WIN32_FIND_DATAA findData;
-	HANDLE hFind = FindFirstFileA(searchPath.c_str(), &findData);
-	if(hFind != INVALID_HANDLE_VALUE)
+	file_dateinfo_t dateInfo;
+	for(Int32 i = 0; i < 1000; ++i)
 	{
-		do
-		{
-			CString filePath;
-			filePath << CSaveRestore::SAVE_DIR_PATH << findData.cFileName;
-			
-			AddSaveFileInfo(filePath, findData.ftLastWriteTime);
-
-		} while(FindNextFileA(hFind, &findData));
-		
-		FindClose(hFind);
+		CString filePath;
+		filePath << searchPath.c_str();
+		if(i > 0)
+			filePath << i;
+		if(!FL_GetFileDate(filePath.c_str(), dateInfo))
+			break;
+		if(!qstrcmp(filePath.c_str(), searchPath.c_str()))
+			continue;
+		CString savePath;
+		savePath << CSaveRestore::SAVE_DIR_PATH << filePath.c_str();
+		AddSaveFileInfo(savePath, dateInfo);
 	}
 
 	// Re-organize save files based on date
@@ -592,7 +569,7 @@ void CUISaveLoadWindow::LoadSaves( bool isIngame )
 	{
 		qsort(&m_saveFilesArray[0], m_saveFilesArray.size(), sizeof(save_file_t), SortSaves);
 
-		for(Uint32 i = 0; i < m_saveFilesArray.size(); i++)
+		for(UInt32 i = 0; i < m_saveFilesArray.size(); i++)
 			CreateSaveFileRow(m_saveFilesArray[i], i);
 	}
 }
@@ -661,7 +638,7 @@ void CUISaveLoadWindow::SetBackgroundTexture( save_file_t* psave )
 	}
 
 	// Retrieve the screenshot from the file
-	const byte* pfile = gSaveRestore.LoadSaveFile(psave->filepath);
+	const Byte* pfile = gSaveRestore.LoadSaveFile(psave->filepath);
 	if(!pfile)
 		return;
 
@@ -676,7 +653,7 @@ void CUISaveLoadWindow::SetBackgroundTexture( save_file_t* psave )
 	}
 
 	// Bind the texture to GL
-	const byte* pimagedata = pfile + pheader->screenshotoffset;
+	const Byte* pimagedata = pfile + pheader->screenshotoffset;
 	ptexture = pTextureManager->LoadFromMemory(psave->filepath, RS_WINDOW_LEVEL, (TX_FL_DXT1|TX_FL_NOMIPMAPS|TX_FL_CLAMP_S|TX_FL_CLAMP_T), pimagedata, pheader->screenshotwidth, pheader->screenshotheight, pheader->screenshotbpp, pheader->screenshotdatasize);
 	if(!ptexture)
 	{
@@ -766,7 +743,7 @@ void CUISaveLoadWindow::RowDoubleClickEvent( Int32 rowIndex )
 // @brief Loads a save
 //
 //=============================================
-void CUISaveLoadWindow::LoadSave( const Char* pstrSavePath )
+void CUISaveLoadWindow::LoadSave( const char* pstrSavePath )
 {
 	// Load the mentioned save
 	CString command;
@@ -779,7 +756,7 @@ void CUISaveLoadWindow::LoadSave( const Char* pstrSavePath )
 // @brief Deletes a save
 //
 //=============================================
-void CUISaveLoadWindow::DeleteSave( const Char* pstrSavePath )
+void CUISaveLoadWindow::DeleteSave( const char* pstrSavePath )
 {
 	// Load the mentioned save
 	if(!FL_DeleteFile(pstrSavePath))
@@ -858,7 +835,7 @@ bool CUISaveLoadWindowRowEvent::MouseButtonEvent( Int32 mouseX, Int32 mouseY, In
 
 	if(keyDown)
 	{
-		Float interval = static_cast<Float>(ens.time) - m_lastClickTime;
+		float interval = static_cast<float>(ens.time) - m_lastClickTime;
 		if(interval < 0.5)
 		{
 			// Enter bind mode
@@ -880,7 +857,7 @@ bool CUISaveLoadWindowRowEvent::MouseButtonEvent( Int32 mouseX, Int32 mouseY, In
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUISaveLoadWindowButtonEvent::PerformAction( Float param )
+void CUISaveLoadWindowButtonEvent::PerformAction( float param )
 {
 	m_pWindow->ButtonEvent(m_buttonId);
 }

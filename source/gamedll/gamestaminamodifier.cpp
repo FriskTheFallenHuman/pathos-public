@@ -71,7 +71,7 @@ bool CGameStaminaModifier::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CGameStaminaModifier::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CGameStaminaModifier::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	CBaseEntity* pPlayer;
 	if(pActivator && pActivator->IsPlayer())

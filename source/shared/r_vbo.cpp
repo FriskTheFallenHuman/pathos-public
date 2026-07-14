@@ -22,7 +22,7 @@ All Rights Reserved.
 // @param iibodatasize Size of the IBO data in bytes
 // @param keepcache Determines whether data is freed after binding
 //=============================================
-CVBO::CVBO ( const CGLExtF& glExtF, const void *pvbodata, Uint32 ivbodatasize, const void *pibodata, Uint32 iibodatasize, bool keepcache, bool usevao ) :
+CVBO::CVBO ( const CGLExtF& glExtF, const void *pvbodata, UInt32 ivbodatasize, const void *pibodata, UInt32 iibodatasize, bool keepcache, bool usevao ) :
 	m_uiVBOIndex(0),
 	m_uiIBOIndex(0),
 	m_uiVAOIndex(0),
@@ -61,8 +61,8 @@ CVBO::CVBO ( const CGLExtF& glExtF, const void *pvbodata, Uint32 ivbodatasize, c
 
 		if(keepcache)
 		{
-			m_pVBOData = new byte[ivbodatasize];
-			memcpy(m_pVBOData, pvbodata, sizeof(byte)*ivbodatasize);
+			m_pVBOData = new Byte[ivbodatasize];
+			memcpy(m_pVBOData, pvbodata, sizeof(Byte)*ivbodatasize);
 			m_iVBOSize = ivbodatasize;
 		}
 
@@ -77,8 +77,8 @@ CVBO::CVBO ( const CGLExtF& glExtF, const void *pvbodata, Uint32 ivbodatasize, c
 
 		if(keepcache)
 		{
-			m_pIBOData = new byte[iibodatasize];
-			memcpy(m_pIBOData, pibodata, sizeof(byte)*iibodatasize);
+			m_pIBOData = new Byte[iibodatasize];
+			memcpy(m_pIBOData, pibodata, sizeof(Byte)*iibodatasize);
 			m_iIBOSize = iibodatasize;
 		}
 
@@ -153,10 +153,10 @@ CVBO::~CVBO ( void )
 	ClearGL();
 
 	if(m_pIBOData)
-		delete[] m_pIBOData;
+        delete[] static_cast<Byte*>(m_pIBOData);
 
 	if(m_pVBOData)
-		delete[] m_pVBOData;
+        delete[] static_cast<Byte*>(m_pVBOData);
 }
 
 //=============================================
@@ -239,7 +239,7 @@ void CVBO::RebindGL( void )
 //=============================================
 void CVBO::Clear ( void  )
 {
-	for(Uint32 i = 0; i < MAX_ATTRIBS; i++)
+	for(UInt32 i = 0; i < MAX_ATTRIBS; i++)
 		m_pAttribPointers[i] = attrib_t();
 }
 
@@ -251,7 +251,7 @@ void CVBO::Clear ( void  )
 // @param pibodata Pointer to IBO data
 // @param iibodatasize Size of the IBO data to append
 //=============================================
-bool CVBO::Append ( const void *pvbodata, Uint32 ivbodatasize, const void *pibodata, Uint32 iibodatasize )
+bool CVBO::Append ( const void *pvbodata, UInt32 ivbodatasize, const void *pibodata, UInt32 iibodatasize )
 {
 	if(!m_bCache)
 		return false;
@@ -263,18 +263,18 @@ bool CVBO::Append ( const void *pvbodata, Uint32 ivbodatasize, const void *pibod
 	{
 		if(m_pVBOData)
 		{
-			byte *pnew = new byte[m_iVBOSize+ivbodatasize];
-			memcpy(pnew, m_pVBOData, sizeof(byte)*m_iVBOSize);
-			memcpy((pnew+m_iVBOSize), pvbodata, sizeof(byte)*ivbodatasize);
+			Byte *pnew = new Byte[m_iVBOSize+ivbodatasize];
+			memcpy(pnew, m_pVBOData, sizeof(Byte)*m_iVBOSize);
+			memcpy((pnew+m_iVBOSize), pvbodata, sizeof(Byte)*ivbodatasize);
 
-			delete[] m_pVBOData;
+			delete[] static_cast<Byte*>(m_pVBOData);
 			m_pVBOData = pnew; 
 			m_iVBOSize += ivbodatasize;
 		}
 		else
 		{
-			m_pVBOData = new byte[ivbodatasize];
-			memcpy(m_pVBOData, pvbodata, sizeof(byte)*ivbodatasize);
+			m_pVBOData = new Byte[ivbodatasize];
+			memcpy(m_pVBOData, pvbodata, sizeof(Byte)*ivbodatasize);
 			m_iVBOSize = ivbodatasize;
 		}
 
@@ -291,18 +291,18 @@ bool CVBO::Append ( const void *pvbodata, Uint32 ivbodatasize, const void *pibod
 	{
 		if(m_pIBOData)
 		{
-			byte *pnew = new byte[m_iIBOSize+iibodatasize];
-			memcpy(pnew, m_pIBOData, sizeof(byte)*m_iIBOSize);
-			memcpy(pnew+m_iIBOSize, pibodata, sizeof(byte)*iibodatasize);
+			Byte *pnew = new Byte[m_iIBOSize+iibodatasize];
+			memcpy(pnew, m_pIBOData, sizeof(Byte)*m_iIBOSize);
+			memcpy(pnew+m_iIBOSize, pibodata, sizeof(Byte)*iibodatasize);
 
-			delete[] m_pIBOData;
+			delete[] static_cast<Byte*>(m_pIBOData);
 			m_pIBOData = pnew;
 			m_iIBOSize += iibodatasize;
 		}
 		else
 		{
-			m_pIBOData = new byte[iibodatasize];
-			memcpy(m_pIBOData, pibodata, sizeof(byte)*iibodatasize);
+			m_pIBOData = new Byte[iibodatasize];
+			memcpy(m_pIBOData, pibodata, sizeof(Byte)*iibodatasize);
 			m_iIBOSize = iibodatasize;
 		}
 
@@ -336,14 +336,14 @@ void CVBO::DeleteCaches ( void )
 {
 	if(m_pVBOData)
 	{
-		delete[] m_pVBOData;
+		delete[] static_cast<Byte*>(m_pVBOData);
 		m_pVBOData = nullptr;
 		m_iVBOSize = 0;
 	}
 
 	if(m_pIBOData)
 	{
-		delete[] m_pIBOData;
+		delete[] static_cast<Byte*>(m_pIBOData);
 		m_pIBOData = nullptr;
 		m_iIBOSize = 0;
 	}
@@ -360,7 +360,7 @@ void CVBO::DeleteCaches ( void )
 // @param stride Size of the vertex VBO datatype
 // @param pointer Offset in bytes to the attribute in the datatype
 //=============================================
-void CVBO::SetAttribPointer ( Int32 index, Uint32 size, Uint32 type, Uint32 stride, const void *pointer )
+void CVBO::SetAttribPointer ( Int32 index, UInt32 size, UInt32 type, UInt32 stride, const void *pointer )
 {
 	assert(index >= 0 && index < MAX_ATTRIBS);
 	attrib_t *pattrib = &m_pAttribPointers[index];
@@ -407,7 +407,7 @@ void CVBO::DisableAttribPointer ( Int32 index )
 // @param pdata Pointer to VBO data
 // @param size Size of the data in bytes
 //=============================================
-void CVBO :: VBOSubBufferData ( Uint32 offset, const void *pdata, Uint32 size )
+void CVBO :: VBOSubBufferData ( UInt32 offset, const void *pdata, UInt32 size )
 {
 	if(!m_isVBOBound)
 	{
@@ -421,8 +421,8 @@ void CVBO :: VBOSubBufferData ( Uint32 offset, const void *pdata, Uint32 size )
 
 	if(m_pVBOData)
 	{
-		byte* pdest = static_cast<byte*>(m_pVBOData) + offset;
-		memmove(pdest, pdata, sizeof(byte)*size);
+		Byte* pdest = static_cast<Byte*>(m_pVBOData) + offset;
+		memmove(pdest, pdata, sizeof(Byte)*size);
 	}
 
 	if(!m_isVBOBound)
@@ -441,7 +441,7 @@ void CVBO :: VBOSubBufferData ( Uint32 offset, const void *pdata, Uint32 size )
 // @param pdata Pointer to IBO data
 // @param size Size of the data in bytes
 //=============================================
-void CVBO::IBOSubBufferData ( Uint32 offset, const void *pdata, Uint32 size )
+void CVBO::IBOSubBufferData ( UInt32 offset, const void *pdata, UInt32 size )
 {
 	if(!m_isIBOBound)
 	{
@@ -455,8 +455,8 @@ void CVBO::IBOSubBufferData ( Uint32 offset, const void *pdata, Uint32 size )
 
 	if(m_pVBOData)
 	{
-		byte* pdest = static_cast<byte*>(m_pIBOData) + offset;
-		memmove(pdest, pdata, sizeof(byte)*size);
+		Byte* pdest = static_cast<Byte*>(m_pIBOData) + offset;
+		memmove(pdest, pdata, sizeof(Byte)*size);
 	}
 
 	if(!m_isIBOBound)

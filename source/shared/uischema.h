@@ -27,8 +27,8 @@ struct ui_schemeobject_t
 
 	CString typeName;
 
-	Uint32 width;
-	Uint32 height;
+	UInt32 width;
+	UInt32 height;
 
 	en_texture_t* defaultTexture;
 	en_texture_t* focusTexture;
@@ -38,9 +38,9 @@ struct ui_schemeobject_t
 
 struct ui_schemeinfo_t
 {
-	inline const ui_schemeobject_t* getObject( const Char* pstrName ) const
+	DO_INLINE const ui_schemeobject_t* getObject( const char* pstrName ) const
 	{
-		for(Uint32 i = 0; i < tabObjects.size(); i++)
+		for(UInt32 i = 0; i < tabObjects.size(); i++)
 		{
 			if(!qstrcmp(tabObjects[i].typeName, pstrName))
 				return &tabObjects[i];
@@ -63,7 +63,7 @@ class CUISchemaManager
 {
 public:
 	typedef en_texture_t* (*pfnGetDummyTexture_t)( void );
-	typedef en_texture_t* (*pfnLoadTexture_t)( const Char* pstrFilename, rs_level_t level, Int32 flags, const GLint* pborder );
+	typedef en_texture_t* (*pfnLoadTexture_t)( const char* pstrFilename, rs_level_t level, Int32 flags, const GLint* pborder );
 
 public:
 	CUISchemaManager( const file_interface_t& fileInterface, pfnGetDummyTexture_t pfnGetDummyTexture, pfnLoadTexture_t pfnLoadTexture );
@@ -73,12 +73,12 @@ public:
 	// Clears all data
 	void Clear( void );
 	// Loads in a schema file
-	ui_schemeinfo_t* LoadSchemaFile( const Char* pstrFilename );
+	ui_schemeinfo_t* LoadSchemaFile( const char* pstrFilename );
 
 	// Get nb of warnings
-	Uint32 GetNbWarnings( void ) const;
+	UInt32 GetNbWarnings( void ) const;
 	// Get warning
-	CString GetWarning( Uint32 index ) const;
+	CString GetWarning( UInt32 index ) const;
 	// Clear warnings
 	void ClearWarnings( void );
 

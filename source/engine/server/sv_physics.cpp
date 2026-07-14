@@ -58,7 +58,7 @@ void SV_Physics_Init( void )
 	g_psv_stopspeed = gConsole.CreateCVar(CVAR_FLOAT, (FL_CV_SV_ONLY|FL_CV_NOTIFY), "sv_stopspeed", "100", "Stop speed.");
 
 	// Get max edicts
-	Uint32 maxEdicts;
+	UInt32 maxEdicts;
 	if(ens.arg_max_edicts != 0)
 		maxEdicts = ens.arg_max_edicts;
 	else
@@ -76,7 +76,7 @@ void SV_Physics_Init( void )
 //=============================================
 void SV_CheckVelocity( edict_t* pedict )
 {
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		// Check velocity
 		if(pedict->state.velocity.IsNAN(i))
@@ -93,7 +93,7 @@ void SV_CheckVelocity( edict_t* pedict )
 		}
 
 		// Check velocity bounds
-		Float maxvelocity = g_psv_maxvelocity->GetValue();
+		float maxvelocity = g_psv_maxvelocity->GetValue();
 		if(pedict->state.velocity[i] > maxvelocity)
 		{
 			Con_WPrintf("Velocity %f too high on %s.\n", pedict->state.velocity[i], SV_GetString(pedict->fields.classname));
@@ -110,13 +110,13 @@ void SV_CheckVelocity( edict_t* pedict )
 //=============================================
 //
 //=============================================
-void SV_ClipVelocity( const Vector& in, const Vector& normal, Vector& out, Float overbounce )
+void SV_ClipVelocity( const Vector& in, const Vector& normal, Vector& out, float overbounce )
 {
-	Float backoff = Math::DotProduct(in, normal)*overbounce;
+	float backoff = Math::DotProduct(in, normal)*overbounce;
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
-		Float change = normal[i] * backoff;
+		float change = normal[i] * backoff;
 		out[i] = in[i] - change;
 
 		// Cap if it's too low
@@ -128,7 +128,7 @@ void SV_ClipVelocity( const Vector& in, const Vector& normal, Vector& out, Float
 //=============================================
 //
 //=============================================
-void SV_FlyMove( edict_t* pedict, Double time, Float bounce )
+void SV_FlyMove( edict_t* pedict, double time, float bounce )
 {
 	Vector planes[MAX_CLIP_PLANES];
 
@@ -145,9 +145,9 @@ void SV_FlyMove( edict_t* pedict, Double time, Float bounce )
 
 	// total time for this movement
 	Int32 numplanes = 0;
-	Double timeleft = time;
+	double timeleft = time;
 
-	for(Uint32 i = 0; i < MAX_CLIP_PLANES-1; i++)
+	for(UInt32 i = 0; i < MAX_CLIP_PLANES-1; i++)
 	{
 		if(Math::IsVectorZero(pedict->state.velocity))
 			break;
@@ -234,7 +234,7 @@ void SV_FlyMove( edict_t* pedict, Double time, Float bounce )
 		if(numplanes == 1 && pedict->state.movetype == MOVETYPE_WALK 
 			&& (!(pedict->state.flags & FL_ONGROUND) || pedict->state.friction != 1.0))
 		{
-			Float d;
+			float d;
 			if(planes[0][2] <= 0.7)
 				d = (1.0 - pedict->state.friction)*g_psv_bounce->GetValue() + 1.0f;
 			else
@@ -278,7 +278,7 @@ void SV_FlyMove( edict_t* pedict, Double time, Float bounce )
 
 				Vector dir;
 				Math::CrossProduct(planes[0], planes[1], dir);
-				Float d = Math::DotProduct(dir, pedict->state.velocity);
+				float d = Math::DotProduct(dir, pedict->state.velocity);
 				Math::VectorScale(dir, d, pedict->state.velocity);
 			}
 
@@ -299,7 +299,7 @@ bool SV_CheckWater( edict_t* pedict )
 {
 	// Set origin to center
 	Vector origin;
-	for(Uint32 i = 0; i < 2; i++)
+	for(UInt32 i = 0; i < 2; i++)
 		origin[i] = (pedict->state.absmax[i] + pedict->state.absmin[i])*0.5;
 	origin[2] = pedict->state.absmin[2] + 1;
 
@@ -386,9 +386,9 @@ void SV_WaterMove( edict_t* pedict )
 //=============================================
 //
 //=============================================
-Float SV_RecursiveWaterLevel( const Vector& origin, Float mins, Float maxs, Int32 depth )
+float SV_RecursiveWaterLevel( const Vector& origin, float mins, float maxs, Int32 depth )
 {
-	Float waterlevel = ((mins - maxs)*0.5f + maxs);
+	float waterlevel = ((mins - maxs)*0.5f + maxs);
 	
 	Int32 _depth = depth;
 	_depth++;
@@ -408,13 +408,13 @@ Float SV_RecursiveWaterLevel( const Vector& origin, Float mins, Float maxs, Int3
 //=============================================
 //
 //=============================================
-Float SV_Submerged( edict_t* pedict )
+float SV_Submerged( edict_t* pedict )
 {
 	Vector center;
 	Math::VectorScale(pedict->state.absmax, 0.5, center);
 	Math::VectorMA(center, 0.5, pedict->state.absmin, center);
 
-	Float waterlevel = pedict->state.absmin[2] - center[2];
+	float waterlevel = pedict->state.absmin[2] - center[2];
 	switch(pedict->state.waterlevel)
 	{
 	case WATERLEVEL_LOW:
@@ -446,7 +446,7 @@ void SV_CheckWaterTransition( edict_t* pedict )
 {
 	// Set origin to center
 	Vector origin;
-	for(Uint32 i = 0; i < 2; i++)
+	for(UInt32 i = 0; i < 2; i++)
 		origin[i] = (pedict->state.absmax[i] + pedict->state.absmin[i])*0.5;
 	origin[2] = pedict->state.absmin[2] + 1;
 
@@ -516,9 +516,9 @@ bool SV_CheckGround( edict_t* pedict )
 
 	origin[2] = absmin[2] - 1.0f;
 
-	for(Uint32 x = 0; x <= 1; x++)
+	for(UInt32 x = 0; x <= 1; x++)
 	{
-		for(Uint32 y = 0; y <= 1; y++)
+		for(UInt32 y = 0; y <= 1; y++)
 		{
 			origin[0] = x ? absmax[0] : absmin[0];
 			origin[1] = y ? absmax[1] : absmin[1];
@@ -543,10 +543,10 @@ bool SV_CheckBottomPrecise( edict_t* pedict, const Vector& mins, const Vector& m
 	origin[2] = mins[2] + g_psv_stepsize->GetValue();
 
 	Vector stop;
-	for(Uint32 i = 0; i < 2; i++)
+	for(UInt32 i = 0; i < 2; i++)
 		origin[i] = stop[i] = (mins[i] + maxs[i]) * 0.5f;
 
-	Float stepsize = g_psv_stepsize->GetValue();
+	float stepsize = g_psv_stepsize->GetValue();
 	stop[2] = origin[2] - 2.0f * stepsize;
 
 	Int32 moveFlags = FL_TRACE_NO_NPCS;
@@ -559,13 +559,13 @@ bool SV_CheckBottomPrecise( edict_t* pedict, const Vector& mins, const Vector& m
 	if(trace.fraction == 1.0f)
 		return false;
 
-	Float mid, bottom;
+	float mid, bottom;
 	mid = bottom = trace.endpos[2];
 
 	// the corners must be within 16 units of the midpoint
-	for(Uint32 x2 = 0; x2 <= 1; x2++)
+	for(UInt32 x2 = 0; x2 <= 1; x2++)
 	{
-		for(Uint32 y2 = 0; y2 <= 1; y2++)
+		for(UInt32 y2 = 0; y2 <= 1; y2++)
 		{
 			origin[0] = stop[0] = x2 ? maxs[0] : mins[0];
 			origin[1] = stop[1] = y2 ? maxs[1] : mins[1];
@@ -593,9 +593,9 @@ bool SV_CheckBottom( edict_t* pedict )
 
 	origin[2] = absmin[2] - 1.0f;
 
-	for(Uint32 x1 = 0; x1 <= 1; x1++)
+	for(UInt32 x1 = 0; x1 <= 1; x1++)
 	{
-		for(Uint32 y1 = 0; y1 <= 1; y1++)
+		for(UInt32 y1 = 0; y1 <= 1; y1++)
 		{
 			origin[0] = x1 ? absmax[0] : absmin[0];
 			origin[1] = y1 ? absmax[1] : absmin[1];
@@ -615,7 +615,7 @@ bool SV_CheckBottom( edict_t* pedict )
 //=============================================
 void SV_AddGravity( edict_t* pedict )
 {
-	Float edictGravity;
+	float edictGravity;
 	if(pedict->state.gravity)
 		edictGravity = pedict->state.gravity;
 	else
@@ -702,7 +702,7 @@ void SV_PushEntity( edict_t* pentity, const Vector& push, trace_t& trace )
 //=============================================
 //
 //=============================================
-bool SV_PushRotate( edict_t* ppusher, Float movetime )
+bool SV_PushRotate( edict_t* ppusher, float movetime )
 {
 	trace_t trace;
 	Vector amove, pushorig;
@@ -823,16 +823,16 @@ bool SV_PushRotate( edict_t* ppusher, Float movetime )
 				continue;
 
 			Math::VectorCopy(entityOrigin, pother->state.origin);
-			SV_LinkEdict(pother, TRUE);
+			SV_LinkEdict(pother, true);
 
 			Math::VectorCopy(pushorig, ppusher->state.angles);
-			SV_LinkEdict(ppusher, FALSE);
+			SV_LinkEdict(ppusher, false);
 
 			ppusher->state.ltime -= movetime;
 			svs.dllfuncs.pfnDispatchBlocked(ppusher, pother);
 
 			// Move back any entities we already moved
-			for(Uint32 j = 0; j < g_serverPhysics.numsavedmovingents; j++)
+			for(UInt32 j = 0; j < g_serverPhysics.numsavedmovingents; j++)
 			{
 				saved_move_t* psaved = &g_serverPhysics.savedmovingentities[j];
 				Math::VectorCopy(psaved->saved_origin, psaved->psave_edict->state.origin);
@@ -842,7 +842,7 @@ bool SV_PushRotate( edict_t* ppusher, Float movetime )
 				else if(psaved->psave_edict->state.movetype != MOVETYPE_PUSHSTEP)
 					psaved->psave_edict->state.angles[YAW] -= amove[YAW];
 
-				SV_LinkEdict(psaved->psave_edict, FALSE);
+				SV_LinkEdict(psaved->psave_edict, false);
 			}
 
 			return false;
@@ -858,7 +858,7 @@ bool SV_PushRotate( edict_t* ppusher, Float movetime )
 bool SV_PushMove_UnstickGroundEntity( edict_t* ppusher, edict_t* pother, const Vector& prevOrigin, const Vector& movedOrigin )
 {
 	// Try by moving back the npc a bit on the distance traveled
-	Double fraction = 0;
+	double fraction = 0;
 	bool canUnstick = false;
 	while(fraction < 1.0f)
 	{
@@ -882,7 +882,7 @@ bool SV_PushMove_UnstickGroundEntity( edict_t* ppusher, edict_t* pother, const V
 		moveDirection.Normalize();
 
 		// Go to a maximum of 4 units
-		for(Float dist = 0.1; dist < 4.0f; dist += 0.1)
+		for(float dist = 0.1; dist < 4.0f; dist += 0.1)
 		{
 			Vector testOrigin = movedOrigin + moveDirection * dist;
 			pother->state.origin = testOrigin;
@@ -917,7 +917,7 @@ bool SV_PushMove_UnstickGroundEntity( edict_t* ppusher, edict_t* pother, const V
 //=============================================
 //
 //=============================================
-void SV_PushMove( edict_t* ppusher, Float movetime )
+void SV_PushMove( edict_t* ppusher, float movetime )
 {
 	if(Math::IsVectorZero(ppusher->state.velocity))
 	{
@@ -937,7 +937,7 @@ void SV_PushMove( edict_t* ppusher, Float movetime )
 	// Move the pusher to it's final position
 	Math::VectorAdd(ppusher->state.origin, move, ppusher->state.origin);
 	ppusher->state.ltime += movetime;
-	SV_LinkEdict(ppusher, FALSE);
+	SV_LinkEdict(ppusher, false);
 
 	if(ppusher->state.solid == SOLID_NOT)
 		return;
@@ -1008,20 +1008,20 @@ void SV_PushMove( edict_t* ppusher, Float movetime )
 			}
 
 			Math::VectorCopy(entityOrigin, pother->state.origin);
-			SV_LinkEdict(pother, TRUE);
+			SV_LinkEdict(pother, true);
 
 			Math::VectorCopy(pushorigin, ppusher->state.origin);
-			SV_LinkEdict(ppusher, FALSE);
+			SV_LinkEdict(ppusher, false);
 
 			ppusher->state.ltime -= movetime;
 			svs.dllfuncs.pfnDispatchBlocked(ppusher, pother);
 
 			// Move back any entities we already moved
-			for(Uint32 j = 0; j < g_serverPhysics.numsavedmovingents; j++)
+			for(UInt32 j = 0; j < g_serverPhysics.numsavedmovingents; j++)
 			{
 				saved_move_t* psaved = &g_serverPhysics.savedmovingentities[j];
 				Math::VectorCopy(psaved->saved_origin, psaved->psave_edict->state.origin);
-				SV_LinkEdict(psaved->psave_edict, FALSE);
+				SV_LinkEdict(psaved->psave_edict, false);
 			}
 
 			return;
@@ -1036,7 +1036,7 @@ bool SV_RunThink( edict_t* pedict )
 {
 	if(!(pedict->state.flags & FL_KILLME))
 	{
-		Float thinktime = pedict->state.nextthink;
+		float thinktime = pedict->state.nextthink;
 
 		// Not thinking yet
 		if(thinktime <= 0 || thinktime > (svs.time + svs.frametime))
@@ -1104,9 +1104,9 @@ void SV_Physics_None( edict_t* pedict )
 //=============================================
 void SV_Physics_Pusher( edict_t* pedict )
 {
-	Double thinktime = pedict->state.nextthink;
-	Double oldtime = pedict->state.ltime;
-	Double movetime;
+	double thinktime = pedict->state.nextthink;
+	double oldtime = pedict->state.ltime;
+	double movetime;
 
 	// Estimate movetime
 	if(thinktime < oldtime + svs.frametime)
@@ -1126,7 +1126,7 @@ void SV_Physics_Pusher( edict_t* pedict )
 			{
 				if(SV_PushRotate(pedict, movetime))
 				{
-					Float savetime = pedict->state.ltime;
+					float savetime = pedict->state.ltime;
 					// Reset the local time before rotation
 					pedict->state.ltime = oldtime;
 					SV_PushMove(pedict, movetime);
@@ -1147,7 +1147,7 @@ void SV_Physics_Pusher( edict_t* pedict )
 	}
 
 	// Limit the angles
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(pedict->state.angles[i] < -3600 || pedict->state.angles[i] > 3600)
 			pedict->state.angles[i] = SDL_fmod(pedict->state.angles[i], 3600);
@@ -1239,7 +1239,7 @@ void SV_Physics_Step( edict_t* pedict )
 
 	if((pedict->state.flags & FL_FLOAT) && pedict->state.waterlevel > WATERLEVEL_NONE)
 	{
-		Float buoyancy = SV_Submerged(pedict) * pedict->state.skin * svs.frametime;
+		float buoyancy = SV_Submerged(pedict) * pedict->state.skin * svs.frametime;
 
 		SV_AddGravity(pedict);
 		pedict->state.velocity[2] += buoyancy;
@@ -1257,16 +1257,16 @@ void SV_Physics_Step( edict_t* pedict )
 		// apply friction
 		if(prevonground && (pedict->state.health > 0 || SV_CheckBottom(pedict)))
 		{
-			Float speed = SDL_sqrt(pedict->state.velocity[0] * pedict->state.velocity[0] + 
+			float speed = SDL_sqrt(pedict->state.velocity[0] * pedict->state.velocity[0] + 
 				pedict->state.velocity[1] * pedict->state.velocity[1]);
 			if(speed)
 			{
-				Float friction = g_psv_friction->GetValue() * pedict->state.friction;
+				float friction = g_psv_friction->GetValue() * pedict->state.friction;
 				pedict->state.friction = 1.0;
 
-				Float stopspeed = g_psv_stopspeed->GetValue();
-				Float control = (speed < stopspeed) ? stopspeed : speed;
-				Float newspeed = speed - (svs.frametime * control * friction);
+				float stopspeed = g_psv_stopspeed->GetValue();
+				float control = (speed < stopspeed) ? stopspeed : speed;
+				float newspeed = speed - (svs.frametime * control * friction);
 				newspeed = _min(newspeed, 0);
 
 				newspeed = newspeed / speed;
@@ -1436,7 +1436,7 @@ void SV_Physics_Bounce( edict_t* pedict )
 	if(pedict->free)
 		return;
 
-	Float backoff;
+	float backoff;
 	if(pedict->state.movetype == MOVETYPE_BOUNCE)
 		backoff = 2.0f - pedict->state.friction;
 	else
@@ -1449,7 +1449,7 @@ void SV_Physics_Bounce( edict_t* pedict )
 	if(trace.plane.normal[2] > 0.7f)
 	{
 		Math::VectorAdd(pedict->state.velocity, pedict->state.basevelocity, move);
-		Float velocity = Math::DotProduct(move, move);
+		float velocity = Math::DotProduct(move, move);
 
 		if(move[2] < g_psv_gravity->GetValue() * svs.frametime)
 		{
@@ -1473,7 +1473,7 @@ void SV_Physics_Bounce( edict_t* pedict )
 		}
 		else
 		{
-			Float scale = (1.0f - trace.fraction) * svs.frametime * 0.9f;
+			float scale = (1.0f - trace.fraction) * svs.frametime * 0.9f;
 			Math::VectorScale(pedict->state.velocity, scale, move);
 			Math::VectorMA(move, scale, pedict->state.basevelocity, move);
 
@@ -1496,8 +1496,8 @@ void SV_Physics( void )
 	svs.gamevars.frametime = ens.frametime;
 	svs.gamevars.time = svs.time;
 
-	Uint32 nbEdicts = gEdicts.GetNbEdicts();
-	for(Uint32 i = 0; i < nbEdicts; i++)
+	UInt32 nbEdicts = gEdicts.GetNbEdicts();
+	for(UInt32 i = 0; i < nbEdicts; i++)
 	{
 		edict_t* pedict = gEdicts.GetEdict(i);
 		if(pedict->free || (pedict->state.flags & FL_PARENTED))
@@ -1581,7 +1581,7 @@ void SV_Physics( void )
 	}
 
 	nbEdicts = gEdicts.GetNbEdicts();
-	for(Uint32 i = 0; i < nbEdicts; i++)
+	for(UInt32 i = 0; i < nbEdicts; i++)
 	{
 		edict_t* pedict = gEdicts.GetEdict(i);
 		if(pedict->free || !(pedict->state.flags & FL_PARENTED))

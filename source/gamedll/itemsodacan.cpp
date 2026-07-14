@@ -13,7 +13,7 @@ All Rights Reserved.
 #include "player.h"
 
 // Sodacan model
-const Char CItemSodaCan::SODACAN_MODEL_FILENAME[] = "models/can.mdl";
+const char CItemSodaCan::SODACAN_MODEL_FILENAME[] = "models/can.mdl";
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(item_sodacan, CItemSodaCan);

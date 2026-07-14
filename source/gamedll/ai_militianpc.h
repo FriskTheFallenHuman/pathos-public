@@ -49,7 +49,7 @@ public:
 	};
 
 	// Array of clone soldier sentences
-	static const Char* NPC_SENTENCE_POSTFIXES[NUM_NPC_SENTENCES];
+	static const char* NPC_SENTENCE_POSTFIXES[NUM_NPC_SENTENCES];
 
 public:
 	explicit CMilitiaNPC( edict_t* pedict );
@@ -67,7 +67,7 @@ public:
 	// Plays idle sounds
 	virtual void EmitIdleSound( void ) override;
 	// Returns the voice pitch
-	virtual Uint32 GetVoicePitch( void ) override;
+	virtual UInt32 GetVoicePitch( void ) override;
 
 	// Returns a schedule by it's index
 	virtual const CAISchedule* GetScheduleByIndex( Int32 scheduleIndex ) override;
@@ -82,7 +82,7 @@ public:
 
 public:
 	// Get the sentence prefix
-	virtual const Char* GetSentencePrefix( void ) = 0;
+	virtual const char* GetSentencePrefix( void ) = 0;
 
 public:
 	// Resets global npc states
@@ -92,13 +92,13 @@ protected:
 	// Last sentence said
 	Int32 m_sentence;
 	// Voice pitch
-	Uint32 m_voicePitch;
+	UInt32 m_voicePitch;
 
 protected:
 	// Question asked
 	static npc_question_types_t g_questionAsked;
 	// Time until we talk again
-	static Double g_talkWaitTime;
+	static double g_talkWaitTime;
 	// NPC who asked
 	static CBaseEntity* g_pAskerNPC;
 };

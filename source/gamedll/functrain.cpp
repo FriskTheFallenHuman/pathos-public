@@ -13,9 +13,9 @@ All Rights Reserved.
 #include "pathcorner.h"
 
 // Default train speed
-const Float CFuncTrain::DEFAULT_SPEED = 100;
+const float CFuncTrain::DEFAULT_SPEED = 100;
 // Default train volume
-const Float CFuncTrain::DEFAULT_VOLUME = 0.85;
+const float CFuncTrain::DEFAULT_VOLUME = 0.85;
 // Train center correction offset(to match with HL)
 const Vector CFuncTrain::TRAIN_CENTER_OFFSET = Vector(1, 1, 1);
 
@@ -222,7 +222,7 @@ void CFuncTrain::OnOverrideEntity( void )
 // @brief
 //
 //=============================================
-void CFuncTrain::Reroute( CBaseEntity* pTarget, Float speed )
+void CFuncTrain::Reroute( CBaseEntity* pTarget, float speed )
 {
 	// Remember the last target for level changes
 	m_currentPathCornerName = m_pFields->target;
@@ -234,7 +234,7 @@ void CFuncTrain::Reroute( CBaseEntity* pTarget, Float speed )
 	if(m_pCurrentTarget)
 	{
 		// Set speed if path_corner's speed is not zero
-		Float cornerSpeed = m_pCurrentTarget->GetSpeed();
+		float cornerSpeed = m_pCurrentTarget->GetSpeed();
 		if(cornerSpeed != 0)
 		{
 			m_pState->speed = cornerSpeed;
@@ -286,7 +286,7 @@ void CFuncTrain::Reroute( CBaseEntity* pTarget, Float speed )
 // @brief
 //
 //=============================================
-void CFuncTrain::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncTrain::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(HasSpawnFlag(FL_WAIT_RETRIGGER))
 	{
@@ -302,7 +302,7 @@ void CFuncTrain::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode
 
 		if(m_moveSoundFile != NO_STRING_VALUE)
 		{
-			const Char* pstrSoundFile = gd_engfuncs.pfnGetString(m_moveSoundFile);
+			const char* pstrSoundFile = gd_engfuncs.pfnGetString(m_moveSoundFile);
 			gd_engfuncs.pfnPlayEntitySound(m_pEdict->entindex, pstrSoundFile, SND_FL_STOP, SND_CHAN_VOICE, 0, 0, 0, 0, NO_CLIENT_INDEX);
 
 			// Remember if sound is playing or not
@@ -349,7 +349,7 @@ void CFuncTrain::Wait( void )
 	if(!HasSpawnFlag(FL_NO_PASS_TRIGGER) && m_pCurrentTarget->HasMessage())
 	{
 		// Trigger path_corner's track if set
-		const Char* pstrPathTarget = m_pCurrentTarget->GetMessage();
+		const char* pstrPathTarget = m_pCurrentTarget->GetMessage();
 		Util::FireTargets(pstrPathTarget, this, this, USE_TOGGLE, 0);
 		if(m_pCurrentTarget->HasSpawnFlag(CPathCorner::FL_FIRE_ONCE))
 			m_pCurrentTarget->SetMessage(nullptr);
@@ -363,7 +363,7 @@ void CFuncTrain::Wait( void )
 		{
 			if(m_moveSoundFile != NO_STRING_VALUE)
 			{
-				const Char* pstrSoundFile = gd_engfuncs.pfnGetString(m_moveSoundFile);
+				const char* pstrSoundFile = gd_engfuncs.pfnGetString(m_moveSoundFile);
 				gd_engfuncs.pfnPlayEntitySound(m_pEdict->entindex, pstrSoundFile, SND_FL_STOP, SND_CHAN_VOICE, 0, 0, 0, 0, NO_CLIENT_INDEX);
 			}
 
@@ -393,7 +393,7 @@ void CFuncTrain::Wait( void )
 		{
 			if(m_moveSoundFile != NO_STRING_VALUE)
 			{
-				const Char* pstrSoundFile = gd_engfuncs.pfnGetString(m_moveSoundFile);
+				const char* pstrSoundFile = gd_engfuncs.pfnGetString(m_moveSoundFile);
 				gd_engfuncs.pfnPlayEntitySound(m_pEdict->entindex, pstrSoundFile, SND_FL_STOP, SND_CHAN_VOICE, 0, 0, 0, 0, NO_CLIENT_INDEX);
 			}
 
@@ -430,7 +430,7 @@ void CFuncTrain::Next( void )
 	{
 		if(m_moveSoundFile != NO_STRING_VALUE)
 		{
-			const Char* pstrSoundFile = gd_engfuncs.pfnGetString(m_moveSoundFile);
+			const char* pstrSoundFile = gd_engfuncs.pfnGetString(m_moveSoundFile);
 			gd_engfuncs.pfnPlayEntitySound(m_pEdict->entindex, pstrSoundFile, SND_FL_STOP, SND_CHAN_VOICE, 0, 0, 0, 0, NO_CLIENT_INDEX);
 		}
 
@@ -458,7 +458,7 @@ void CFuncTrain::Next( void )
 	if(m_pCurrentTarget)
 	{
 		// Set speed if path_corner's speed is not zero
-		Float cornerSpeed = m_pCurrentTarget->GetSpeed();
+		float cornerSpeed = m_pCurrentTarget->GetSpeed();
 		if(cornerSpeed != 0)
 		{
 			m_pState->speed = cornerSpeed;
@@ -525,7 +525,7 @@ void CFuncTrain::MoveTrainToPathCorner( CBaseEntity* pPathCorner, CBaseEntity* p
 		return;
 
 	// Get the name of the entity
-	const Char* pstrPathCornerName = pPathCorner->GetTargetName();
+	const char* pstrPathCornerName = pPathCorner->GetTargetName();
 
 	// Verify if it's a path_corner entity
 	if(!pPathCorner->IsPathCornerEntity())

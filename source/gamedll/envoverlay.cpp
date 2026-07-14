@@ -181,7 +181,7 @@ bool CEnvOverlay::KeyValue( const keyvalue_t& kv )
 //=============================================
 // @brief
 //=============================================
-void CEnvOverlay::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvOverlay::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
     CBaseEntity* pPlayer = Util::GetHostPlayer();
     if(!pPlayer)

@@ -35,9 +35,9 @@ struct cached_decal_t
 	Int32 leafnum;
 	entindex_t entityindex;
 
-	Float life;
-	Float fadetime;
-	Float growthtime;
+	float life;
+	float fadetime;
+	float growthtime;
 };
 
 /*
@@ -50,9 +50,9 @@ class CDecalManager
 {
 public:
 	// Distance which decals trace against
-	static const Float DECAL_CHECK_DIST;
+	static const float DECAL_CHECK_DIST;
 	// Decal texture folder path
-	static const Char DECAL_TEXTURE_PATH[];
+	static const char DECAL_TEXTURE_PATH[];
 
 public:
 	CDecalManager( void );
@@ -68,7 +68,7 @@ public:
 	void ClearGame( void );
 
 	// Adds a cached decal
-	void AddCached( decalgroupentry_t* pentry, const Char *pstrname, const Vector& origin, const Vector& normal, Int32 flags, entindex_t entityindex = NO_ENTITY_INDEX, Float life = 0, Float fadetime = 0, Float growthtime = 0 );
+	void AddCached( decalgroupentry_t* pentry, const char *pstrname, const Vector& origin, const Vector& normal, Int32 flags, entindex_t entityindex = NO_ENTITY_INDEX, float life = 0, float fadetime = 0, float growthtime = 0 );
 	// Creates cached decals
 	void CreateCached( void );
 
@@ -79,9 +79,9 @@ public:
 	// Loads a decal texture
 	static void LoadTexture( decalgroupentry_t *pentry );
 	// Precaches a group's textures
-	void PrecacheGroup( const Char *szgroupname );
+	void PrecacheGroup( const char *szgroupname );
 	// Precaches a texture by name
-	void PrecacheTexture( const Char *sztexturename );
+	void PrecacheTexture( const char *sztexturename );
 
 	// Returns the decal list
 	CDecalList& GetDecalList( void ) { return m_decalList; }
@@ -108,10 +108,10 @@ private:
 	CDecalList m_decalList;
 
 	// Spawn client decal usermsg
-	Uint32 m_spawnClientDecalMsgId;
+	UInt32 m_spawnClientDecalMsgId;
 };
 extern CDecalManager gDecals;
 
 // Utility function for cutting polygons
-extern Uint32 Decal_ClipPolygon( const Vector *arrIn, Int32 numpoints, const Vector& normal, const Vector& planepoint, Vector *arrOut );
+extern UInt32 Decal_ClipPolygon( const Vector *arrIn, Int32 numpoints, const Vector& normal, const Vector& planepoint, Vector *arrOut );
 #endif

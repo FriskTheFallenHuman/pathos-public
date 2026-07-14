@@ -76,7 +76,7 @@ bool CTriggerKeypad::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerKeypad::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerKeypad::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pEntity;
@@ -91,7 +91,7 @@ void CTriggerKeypad::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, use
 		return;
 	}
 
-	const Char* pstrPasscode = nullptr;
+	const char* pstrPasscode = nullptr;
 	if(m_pFields->message != NO_STRING_VALUE)
 		pstrPasscode = gd_engfuncs.pfnGetString(m_pFields->message);
 

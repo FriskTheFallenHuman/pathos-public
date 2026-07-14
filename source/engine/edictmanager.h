@@ -40,21 +40,21 @@ public:
 	edict_t* GetEdict( Int32 index );
 
 	// Returns the number of edicts
-	Uint32 GetNbEdicts( void ) const { return m_numEdicts; }
+	UInt32 GetNbEdicts( void ) const { return m_numEdicts; }
 	// Returns the mas possible nb of ectis
-	Uint32 GetMaxEdicts( void ) const { return m_edictsArray.size(); }
+	UInt32 GetMaxEdicts( void ) const { return m_edictsArray.size(); }
 
 public:
 	// Parses entdata, allocates entities
-	bool LoadEntities( const Char* pstrEntdata );
+	bool LoadEntities( const char* pstrEntdata );
 	// Creates an edict and initializes it's class data
-	edict_t* CreateEntity( const Char* pstrClassname );
+	edict_t* CreateEntity( const char* pstrClassname );
 	// Creates a player edict and initializes it's class data
-	edict_t* CreatePlayerEntity( Uint32 player_index );
+	edict_t* CreatePlayerEntity( UInt32 player_index );
 
 private:
 	// Allocates a new identifier
-	Uint32 AllocIdentifier( void );
+	UInt32 AllocIdentifier( void );
 	// Clears an edict for use
 	static void ClearEdict( edict_t* pedict );
 
@@ -62,9 +62,9 @@ public:
 	// Array of all available edicts
 	CArray<edict_t> m_edictsArray;
 	// Number of edicts total used so far
-	Uint32 m_numEdicts;
+	UInt32 m_numEdicts;
 	// Last identifier assigned to an entity
-	Uint32 m_lastIdentifier;
+	UInt32 m_lastIdentifier;
 };
 extern CEdictManager gEdicts;
 #endif //EDICTMANAGER_H

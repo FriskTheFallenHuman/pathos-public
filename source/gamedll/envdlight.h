@@ -32,12 +32,12 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void Precache( void ) override;
 	virtual bool Restore( void ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	virtual bool ShouldSetBoundsOnRestore( void ) override { return false; }
-	virtual bool ShouldOverrideKeyValue( const Char* pstrKeyValue ) override;
+	virtual bool ShouldOverrideKeyValue( const char* pstrKeyValue ) override;
 
 public:
 	void ManageLightStyle( void );
@@ -47,18 +47,18 @@ public:
 
 private:
 	// Only CEnvSpotlight can call this, not derived/parent classes
-	void SetValues( const Vector& origin, const Vector& color, Uint32 radius );
+	void SetValues( const Vector& origin, const Vector& color, UInt32 radius );
 
 public:
-	static CEnvDLight* SpawnLight( const Vector& origin, const Vector& color, Uint32 radius );
+	static CEnvDLight* SpawnLight( const Vector& origin, const Vector& color, UInt32 radius );
 
 private:
 	string_t m_pattern;
-	Uint32 m_style;
+	UInt32 m_style;
 	bool m_interpolate;
-	Float m_framerate;
-	Uint32 m_oscillationh;
-	Uint32 m_oscillationv;
+	float m_framerate;
+	UInt32 m_oscillationh;
+	UInt32 m_oscillationv;
 	Vector m_baseOrigin;
 };
 #endif //ENVDLIGHT_H

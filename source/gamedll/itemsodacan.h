@@ -19,7 +19,7 @@ class CItemSodaCan : public CPlayerItem
 {
 public:
 	// Sodacan model
-	static const Char SODACAN_MODEL_FILENAME[];
+	static const char SODACAN_MODEL_FILENAME[];
 
 public:
 	explicit CItemSodaCan( edict_t* pedict );

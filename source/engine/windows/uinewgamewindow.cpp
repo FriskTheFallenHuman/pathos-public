@@ -34,23 +34,23 @@ All Rights Reserved.
 CUINewGameWindow* CUINewGameWindow::m_pInstance = nullptr;
 
 // Window description file
-const Char CUINewGameWindow::WINDOW_DESC_FILE[] = "newgamewindow.json";
+const char CUINewGameWindow::WINDOW_DESC_FILE[] = "newgamewindow.json";
 // Window description file
-const Char CUINewGameWindow::WINDOW_OBJ_NAME[] = "NewGameWindow";
+const char CUINewGameWindow::WINDOW_OBJ_NAME[] = "NewGameWindow";
 // Cancel button object name
-const Char CUINewGameWindow::CANCEL_BUTTON_OBJ_NAME[] = "CancelButton";
+const char CUINewGameWindow::CANCEL_BUTTON_OBJ_NAME[] = "CancelButton";
 // 'Easy' button object name
-const Char CUINewGameWindow::NEW_GAME_EASY_BUTTON_OBJ_NAME[] = "NewGameEasyButton";
+const char CUINewGameWindow::NEW_GAME_EASY_BUTTON_OBJ_NAME[] = "NewGameEasyButton";
 // 'Normal' button object name
-const Char CUINewGameWindow::NEW_GAME_NORMAL_BUTTON_OBJ_NAME[] = "NewGameNormalButton";
+const char CUINewGameWindow::NEW_GAME_NORMAL_BUTTON_OBJ_NAME[] = "NewGameNormalButton";
 // 'Hard' button object name
-const Char CUINewGameWindow::NEW_GAME_HARD_BUTTON_OBJ_NAME[] = "NewGameHardButton";
+const char CUINewGameWindow::NEW_GAME_HARD_BUTTON_OBJ_NAME[] = "NewGameHardButton";
 
 //=============================================
 // @brief Constructor
 //
 //=============================================
-CUINewGameWindow::CUINewGameWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUINewGameWindow::CUINewGameWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIWindow(UIW_FL_MENUWINDOW, flags, width, height, originx, originy)
 {
 }
@@ -140,7 +140,7 @@ CUINewGameWindow* CUINewGameWindow::GetInstance( void )
 bool CUINewGameWindow::init( const ui_windowdescription_t* pWinDesc, const ui_objectinfo_t* pWindowObject, bool isIngame )
 {
 	// Retreive schema for the window object
-	const Char* pstrSchemaName = pWindowObject->getSchema().c_str();
+	const char* pstrSchemaName = pWindowObject->getSchema().c_str();
 	if(!CUIWindow::init(pstrSchemaName))
 	{
 		Con_EPrintf("Failed to initialize schema '%s' for console window.\n", pstrSchemaName);
@@ -265,7 +265,7 @@ bool CUINewGameWindow::init( const ui_windowdescription_t* pWinDesc, const ui_ob
 // @brief Manages a button event
 //
 //=============================================
-void CUINewGameWindow::buttonPressed( Uint32 buttonId )
+void CUINewGameWindow::buttonPressed( UInt32 buttonId )
 {
 	switch(buttonId)
 	{

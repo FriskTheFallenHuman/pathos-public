@@ -66,13 +66,13 @@ bool CPlatTrigger::Spawn( void )
 	Vector platformMins = m_pPlatform->GetMins() + m_pPlatform->GetOrigin();
 	Vector platformMaxs = m_pPlatform->GetMaxs() + m_pPlatform->GetOrigin();
 
-	Float xInset = (platformMaxs.x - platformMins.x)*0.25;
-	Float yInset = (platformMaxs.y - platformMins.y)*0.25;
+	float xInset = (platformMaxs.x - platformMins.x)*0.25;
+	float yInset = (platformMaxs.y - platformMins.y)*0.25;
 
 	Vector platPosition1 = m_pPlatform->GetPosition1();
 	Vector platPosition2 = m_pPlatform->GetPosition2();
 
-	Float minZ, maxZ;
+	float minZ, maxZ;
 	if(platPosition1.z < platPosition2.z)
 	{
 		maxZ = platformMaxs.z;
@@ -84,7 +84,7 @@ bool CPlatTrigger::Spawn( void )
 		minZ = platformMins.z;
 	}
 
-	Float platHeight = platformMaxs.z - platformMins.z;
+	float platHeight = platformMaxs.z - platformMins.z;
 
 	Vector triggerMins = Vector(platformMins.x + xInset, platformMins.y + yInset, minZ - platHeight);
 	Vector triggerMaxs = Vector(platformMaxs.x - xInset, platformMaxs.y - yInset, maxZ + platHeight);

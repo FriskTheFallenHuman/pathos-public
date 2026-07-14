@@ -39,6 +39,6 @@ protected:
 private:
 	Int32 m_hintType;
 	Int32 m_activity;
-	Float m_range;
+	float m_range;
 };
 #endif //INFONODE_H

@@ -56,9 +56,9 @@ void CEnvSpotlight::SetMinsMaxs( void )
 	Vector mins(NULL_MINS);
 	Vector maxs(NULL_MAXS);
 
-	for(Uint32 i = 0; i < 2; i++)
+	for(UInt32 i = 0; i < 2; i++)
 	{
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			if(points[i][j] > maxs[j])
 				maxs[j] = points[i][j];
@@ -78,7 +78,7 @@ void CEnvSpotlight::SetMinsMaxs( void )
 // @brief
 //
 //=============================================
-void CEnvSpotlight::SetSpotlightValues( const Vector& origin, const Vector& angles, const Vector& color, Uint32 radius, Uint32 conesize )
+void CEnvSpotlight::SetSpotlightValues( const Vector& origin, const Vector& angles, const Vector& color, UInt32 radius, UInt32 conesize )
 {
 	m_pState->origin = origin;
 	m_pState->angles = angles;
@@ -93,7 +93,7 @@ void CEnvSpotlight::SetSpotlightValues( const Vector& origin, const Vector& angl
 // @brief
 //
 //=============================================
-CEnvSpotlight* CEnvSpotlight::SpawnSpotlight( const Vector& origin, const Vector& angles, const Vector& color, Uint32 radius, Uint32 conesize )
+CEnvSpotlight* CEnvSpotlight::SpawnSpotlight( const Vector& origin, const Vector& angles, const Vector& color, UInt32 radius, UInt32 conesize )
 {
 	edict_t* pedict = gd_engfuncs.pfnCreateEntity("env_spotlight");
 	if(!pedict)

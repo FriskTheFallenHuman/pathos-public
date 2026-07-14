@@ -14,7 +14,7 @@ All Rights Reserved.
 #include "pathcorner.h"
 
 // Default angular speed
-const Float CTriggerCamera::DEFAULT_ANGULAR_SPEED = 40;
+const float CTriggerCamera::DEFAULT_ANGULAR_SPEED = 40;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(trigger_camera, CTriggerCamera);
@@ -161,7 +161,7 @@ void CTriggerCamera::SendInitMessage( const CBaseEntity* pPlayer )
 // @brief
 //
 //=============================================
-void CTriggerCamera::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerCamera::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!ShouldToggle(useMode, m_isActive))
 		return;
@@ -285,7 +285,7 @@ void CTriggerCamera::Move( void )
 		// Fire pass target
 		if(m_pPathEntity->HasMessage())
 		{
-			const Char* pstrMessage = m_pPathEntity->GetMessage();
+			const char* pstrMessage = m_pPathEntity->GetMessage();
 			Util::FireTargets(pstrMessage, this, this, USE_TOGGLE, 0);
 			if(m_pPathEntity->HasSpawnFlag(CPathCorner::FL_FIRE_ONCE))
 				m_pPathEntity->SetMessage(nullptr);
@@ -321,7 +321,7 @@ void CTriggerCamera::Move( void )
 		else 
 			m_pState->speed = Util::Approach(m_targetSpeed, m_pState->speed, m_acceleration * g_pGameVars->frametime);
 
-		Float fraction = 2*g_pGameVars->frametime;
+		float fraction = 2*g_pGameVars->frametime;
 		m_pState->velocity = ((m_pState->movedir*m_pState->speed)*fraction)+(m_pState->velocity*(1.0-fraction));
 	}
 	else
@@ -390,8 +390,8 @@ void CTriggerCamera::FollowTarget( void )
 	if(m_pState->angles.y < 0)
 		m_pState->angles.y += 360;
 
-	Float dx = vecDestAngles.x - m_pState->angles.x;
-	Float dy = vecDestAngles.y - m_pState->angles.y;
+	float dx = vecDestAngles.x - m_pState->angles.x;
+	float dy = vecDestAngles.y - m_pState->angles.y;
 
 	if(dx < -180) dx += 360;
 	if(dx > 180) dx -= 360;

@@ -51,7 +51,7 @@ public:
 	};
 
 public:
-	CGameUIObject( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
+	CGameUIObject( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
 	virtual ~CGameUIObject( void );
 
 public:
@@ -68,13 +68,13 @@ public:
 	void getAbsolutePosition( Int32& xcoord, Int32& ycoord );
 
 	// Sets the size of the object
-	void setSize( Uint32 width, Uint32 height );
+	void setSize( UInt32 width, UInt32 height );
 	// Returns the size of the object
-	void getSize( Uint32& width, Uint32& height ) const;
+	void getSize( UInt32& width, UInt32& height ) const;
 	// Retrieves the width of the object
-	Uint32 getWidth( void ) const;
+	UInt32 getWidth( void ) const;
 	// Retrieves the height of the object
-	Uint32 getHeight( void ) const;
+	UInt32 getHeight( void ) const;
 
 	// Sets visibility for the object
 	void setVisible( bool visible );
@@ -111,9 +111,9 @@ public:
 	virtual bool isInteractive( void ) { return true; }
 	
 	// Sets offset for objects that use it
-	virtual void setOffsetValue( Float offset ) { };
+	virtual void setOffsetValue( float offset ) { };
 	// Returns the full range(for scrollers)
-	virtual Uint32 getFullRange( void ) { return 0; }
+	virtual UInt32 getFullRange( void ) { return 0; }
 	// Sets offset for objects that use it
 	virtual void resetScrollerPosition( void ) { };
 
@@ -158,9 +158,9 @@ protected:
 	Int32 m_baseOriginY;
 
 	// Width of the object
-	Uint32 m_width;
+	UInt32 m_width;
 	// Height of the object
-	Uint32 m_height;
+	UInt32 m_height;
 
 	// Parent of this object
 	CGameUIObject* m_pParent;
@@ -170,9 +170,9 @@ protected:
 	// Linked object
 	CGameUIObject* m_pLinkedObject;
 
-	// TRUE if visible
+	// true if visible
 	bool m_isVisible;
-	// TRUE if this is the input focus object of the parent window
+	// true if this is the input focus object of the parent window
 	bool m_isInputFocusObject;
 
 protected:
@@ -199,7 +199,7 @@ public:
 	};
 
 public:
-	CGameUIBar( Int32 flags, const color32_t& color, byte minalpha, Int32 fadeflags, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
+	CGameUIBar( Int32 flags, const color32_t& color, Byte minalpha, Int32 fadeflags, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
 	virtual ~CGameUIBar( void );
 
 	// Tells if the object is interactive
@@ -214,7 +214,7 @@ private:
 	// Bar color
 	color32_t m_color;
 	// Minimum fade alpha
-	byte m_minAlpha;
+	Byte m_minAlpha;
 };
 
 /*
@@ -226,7 +226,7 @@ CGameUISurface
 class CGameUISurface : public CGameUIObject
 {
 public:
-	CGameUISurface( Int32 flags, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
+	CGameUISurface( Int32 flags, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
 	virtual ~CGameUISurface( void );
 
 public:
@@ -239,7 +239,7 @@ protected:
 	// Background color
 	color32_t m_backgroundColor;
 	// Edge thickness
-	Uint32 m_edgeThickness;
+	UInt32 m_edgeThickness;
 };
 
 /*
@@ -256,7 +256,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) = 0;
+	virtual void PerformAction( float param ) = 0;
 	// Handles a special key event
 	virtual bool KeyEvent( Int32 button, Int16 mod, bool keyDown ) { return false; }
 	// Handles a mouse button event
@@ -272,9 +272,9 @@ CGameUIText
 class CGameUIText : public CGameUIObject
 {
 public:
-	CGameUIText( Int32 flags, const color32_t& color, const font_set_t* pfontset, const Char* pstrText, Int32 originX, Int32 originY );
+	CGameUIText( Int32 flags, const color32_t& color, const font_set_t* pfontset, const char* pstrText, Int32 originX, Int32 originY );
 	CGameUIText( Int32 flags, const color32_t& color, const font_set_t* pfontset, Int32 originX, Int32 originY );
-	CGameUIText( Int32 flags, const color32_t& color, const font_set_t* pfontset, const Char* pstrText, Int32 originX, Int32 originY, Uint32 maxwidth, Uint32 maxheight, Uint32 textInset );
+	CGameUIText( Int32 flags, const color32_t& color, const font_set_t* pfontset, const char* pstrText, Int32 originX, Int32 originY, UInt32 maxwidth, UInt32 maxheight, UInt32 textInset );
 	virtual ~CGameUIText( void );
 
 public:
@@ -282,7 +282,7 @@ public:
 	virtual bool draw( void ) override;
 
 	// Sets the text to use
-	virtual void setText( const Char* pstrText );
+	virtual void setText( const char* pstrText );
 	// Sets the text to use
 	virtual void setFontSet( const font_set_t* pFontSet );
 	// Sets the color to use
@@ -300,11 +300,11 @@ private:
 	// Font set used
 	const font_set_t* m_pFontSet;
 	// Text inset
-	Uint32 m_textInset;
+	UInt32 m_textInset;
 	// Maximum width
-	Uint32 m_maxWidth;
+	UInt32 m_maxWidth;
 	// Maximum height
-	Uint32 m_maxHeight;
+	UInt32 m_maxHeight;
 };
 
 /*
@@ -316,9 +316,9 @@ CGameUIButton
 class CGameUIButton : public CGameUIObject
 {
 public:
-	CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
-	CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, SDL_Keycode keycode, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
-	CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, const CArray<SDL_Keycode>& keycodesArray, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
+	CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
+	CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, SDL_Keycode keycode, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
+	CGameUIButton( Int32 flags, CGameUICallbackEvent* pEvent, const CArray<SDL_Keycode>& keycodesArray, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
 	virtual ~CGameUIButton( void );
 
 public:
@@ -333,7 +333,7 @@ public:
 	// Performs think functions
 	virtual void think( void ) override;
 	// Sets text for the button
-	virtual void setText( const Char* pstrText );
+	virtual void setText( const char* pstrText );
 
 	// Sets object enabled state
 	virtual void setDisabled( bool isDisabled ) override;
@@ -349,11 +349,11 @@ public:
 	void setBgColor( const color32_t& color );
 
 protected:
-	// TRUE if the button is clicked on
+	// true if the button is clicked on
 	bool m_isClickedOn;
-	// TRUE if the button is disabled
+	// true if the button is disabled
 	bool m_isDisabled;
-	// TRUE if button is highlighted
+	// true if button is highlighted
 	bool m_isHighlighted;
 	// Callback event on click
 	CGameUICallbackEvent *m_pEvent;
@@ -367,7 +367,7 @@ protected:
 	// Clicked-on color
 	color32_t m_highlightColor;
 	// Edge thickness
-	Uint32 m_edgeThickness;
+	UInt32 m_edgeThickness;
 
 	// Text to display if any
 	CGameUIText* m_pButtonText;
@@ -382,7 +382,7 @@ CGameUITextTab
 class CGameUITextTab : public CGameUISurface
 {
 public:
-	CGameUITextTab( Int32 flags, const font_set_t* pfontset, Uint32 textinset, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const color32_t& textcolor, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
+	CGameUITextTab( Int32 flags, const font_set_t* pfontset, UInt32 textinset, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const color32_t& textcolor, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
 	virtual ~CGameUITextTab( void );
 
 public:
@@ -391,10 +391,10 @@ public:
 	// Performs rendering functions
 	virtual bool draw( void ) override;
 	// Initializes the data
-	virtual void initData( const byte* pdata, Uint32 datasize = 0 );
+	virtual void initData( const Byte* pdata, UInt32 datasize = 0 );
 
 	// Sets offset for objects that use it
-	virtual void setOffsetValue( Float offset ) override;
+	virtual void setOffsetValue( float offset ) override;
 	// Updates range size
 	virtual void updateRangeSize( void );
 
@@ -410,13 +410,13 @@ public:
 
 private:
 	// Text inset
-	Uint32 m_textInset;
+	UInt32 m_textInset;
 	// Text data
 	CString m_displayText;
 	// Font set used
 	const font_set_t* m_pFontSet;
 	// Text offset
-	Uint32 m_textOffset;
+	UInt32 m_textOffset;
 	// Text color
 	color32_t m_textColor;
 
@@ -443,16 +443,16 @@ public:
 	};
 
 public:
-	CGameUIWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
+	CGameUIWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
 	virtual ~CGameUIWindow( void );
 
 public:
 	// Initializes the window
 	virtual void init( void ) = 0;
 	// Initializes the window
-	virtual void initBackground( Uint32& verticalbarheight, Uint32& middlebarwidth, Uint32& barThickness );
+	virtual void initBackground( UInt32& verticalbarheight, UInt32& middlebarwidth, UInt32& barThickness );
 	// Initializes the data
-	virtual void initData( const byte* pdata, Uint32 datasize = 0 ) {};
+	virtual void initData( const Byte* pdata, UInt32 datasize = 0 ) {};
 	// Returns the window flags
 	virtual Int32 getWindowFlags() { return m_windowFlags; }
 
@@ -469,9 +469,9 @@ public:
 	// Called when the window is removed
 	virtual void onRemove( void ) {};
 	// Returns the time at which the window is to be removed
-	virtual Double getWindowRemoveTime() { return m_windowRemoveTime; }
+	virtual double getWindowRemoveTime() { return m_windowRemoveTime; }
 	// Mark for delayed removal
-	virtual void setDelayedRemoval( Double delay );
+	virtual void setDelayedRemoval( double delay );
 	// Returns the type of the window
 	virtual gameui_windows_t getWindowType( void ) const { return GAMEUI_WINDOW_NONE; }
 
@@ -481,7 +481,7 @@ protected:
 	// Input focus object
 	CGameUIObject* m_pInputFocusObject;
 	// Delay until window close
-	Double m_windowRemoveTime;
+	double m_windowRemoveTime;
 };
 
 /*
@@ -493,7 +493,7 @@ CGameUIDragButton
 class CGameUIDragButton : public CGameUIButton
 {
 public:
-	CGameUIDragButton( Int32 flags, gui_scroller_align_t alignment, CGameUICallbackEvent* pEvent, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CGameUIDragButton( Int32 flags, gui_scroller_align_t alignment, CGameUICallbackEvent* pEvent, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CGameUIDragButton( void );
 
 public:
@@ -508,16 +508,16 @@ public:
 	virtual void think( void ) override;
 
 	// Sets the position of the button
-	virtual void setPosition( Float position );
+	virtual void setPosition( float position );
 	// Gets the position of the button
-	virtual Float getPosition( void );
+	virtual float getPosition( void );
 	// Adjusts the position of the button
 	virtual bool adjPosition( Int32 adjAmt, bool isMouseDrag, bool callEvent = true );
 
 	// Sets the length of the button
-	virtual void setLength( Uint32 length );
+	virtual void setLength( UInt32 length );
 	// Gets the length of the button
-	virtual Uint32 getLength( void );
+	virtual UInt32 getLength( void );
 
 	// Repositions the element according to alignment after the parent is set
 	virtual void adjustPosition( void ) override;
@@ -537,9 +537,9 @@ protected:
 	Int32 m_endInset;
 
 	// Current position of the slider
-	Float m_position;
+	float m_position;
 	// Last parent length the position was set on
-	Uint32 m_lastParentLength;
+	UInt32 m_lastParentLength;
 };
 
 /*
@@ -561,14 +561,14 @@ public:
 			virtual ~CGameUIScrollerDragBtnAction( void ) { };
 			
 		public:
-			virtual void PerformAction( Float param ) override;
+			virtual void PerformAction( float param ) override;
 
 		private:
 			// Window that created this
 			CGameUIScroller* m_pScroller;
 	};
 public:
-	CGameUIScroller( Int32 flags, gui_scroller_align_t alignment, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, Uint32 unitSize, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CGameUIScroller( Int32 flags, gui_scroller_align_t alignment, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, UInt32 unitSize, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 	virtual ~CGameUIScroller( void );
 
 public:
@@ -580,11 +580,11 @@ public:
 	// Sets the full range's size
 	virtual void setFullRange( Int32 fullRangeSize );
 	// Returns the full range's size
-	virtual Uint32 getFullRange( void ) override { return m_fullRangeSize; }
+	virtual UInt32 getFullRange( void ) override { return m_fullRangeSize; }
 	// Readjusts the scroll drag button's position and size
 	virtual void readjustDragButton( void );
 	// Sets the unit size
-	virtual void setUnitSize( Uint32 unitsize );
+	virtual void setUnitSize( UInt32 unitsize );
 
 	// Returns the dragger button
 	CGameUIDragButton* getDragButton( void ) { return m_pDragButton; }
@@ -607,7 +607,7 @@ protected:
 	// Previous range we considered
 	Int32 m_prevFullRangeSize;
 	// Size of a single jump unit
-	Uint32 m_unitSize;
+	UInt32 m_unitSize;
 };
 
 /*
@@ -619,7 +619,7 @@ CGameUITextInputTab
 class CGameUITextInputTab : public CGameUIObject
 {
 public:
-	CGameUITextInputTab( Int32 flags, CGameUICallbackEvent* pAction, Uint32 textinset, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const font_set_t* pFont, Int32 originx, Int32 originy, Uint32 width, Uint32 height );
+	CGameUITextInputTab( Int32 flags, CGameUICallbackEvent* pAction, UInt32 textinset, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const font_set_t* pFont, Int32 originx, Int32 originy, UInt32 width, UInt32 height );
 	virtual ~CGameUITextInputTab( void );
 
 public:
@@ -633,11 +633,11 @@ public:
 	virtual void think( void ) override;
 
 	// Specifies the text inset
-	virtual void setTextInset( Uint32 inset ) { m_inset = inset; }
+	virtual void setTextInset( UInt32 inset ) { m_inset = inset; }
 	// Returns the buffer's contents
-	virtual const Char* getText( void ) { return m_szBuffer; }
+	virtual const char* getText( void ) { return m_szBuffer; }
 	// Sets the buffer's contents
-	virtual void setText( const Char* pstrText );
+	virtual void setText( const char* pstrText );
 	// Clears the buffer
 	virtual void clearText( void );
 
@@ -645,11 +645,11 @@ protected:
 	// Font set used
 	const font_set_t* m_pFont;
 	// Next marker blink time
-	Float m_nextBlinkTime;
+	float m_nextBlinkTime;
 	// Boolean for market
 	bool m_drawMarker;
 	// Text inset on x axis
-	Uint32 m_inset;
+	UInt32 m_inset;
 
 	// Surface color
 	color32_t m_color;
@@ -658,12 +658,12 @@ protected:
 	// Clicked-on color
 	color32_t m_highlightColor;
 	// Edge thickness
-	Uint32 m_edgeThickness;
+	UInt32 m_edgeThickness;
 
 	// Current input string
-	Char m_szBuffer[GAMEUI_MAX_INPUT_LENGTH+1];
+	char m_szBuffer[GAMEUI_MAX_INPUT_LENGTH+1];
 	// Marker position
-	Uint32 m_inputPosition;
+	UInt32 m_inputPosition;
 
 	// Callback handler
 	CGameUICallbackEvent* m_pAction;
@@ -678,7 +678,7 @@ CGameUIScrollableSurface
 class CGameUIScrollableSurface : public CGameUIObject
 {
 public:
-	CGameUIScrollableSurface( Int32 flags, Uint32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const font_set_t* pFont, Int32 originx, Int32 originy, Uint32 width, Uint32 height, Uint32 postspacing );
+	CGameUIScrollableSurface( Int32 flags, UInt32 edgethickness, const color32_t& color, const color32_t& bgcolor, const color32_t& highlightcolor, const font_set_t* pFont, Int32 originx, Int32 originy, UInt32 width, UInt32 height, UInt32 postspacing );
 	virtual ~CGameUIScrollableSurface( void );
 
 public:
@@ -686,7 +686,7 @@ public:
 	virtual bool isInteractive( void ) override { return true; }
 
 	// Sets the scroller offset value(only for text tabs/lists
-	virtual void setOffsetValue( Float offset ) override;
+	virtual void setOffsetValue( float offset ) override;
 
 	// Manages a mouse wheel event
 	virtual bool mouseWheelEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool keyDown, Int32 scroll ) override;
@@ -709,7 +709,7 @@ public:
 public:
 	// Adjusts the element's size by x and y amount
 	bool adjustSize( void );
-	// TRUE if child should be shifted
+	// true if child should be shifted
 	bool shouldShiftChild( CGameUIObject* pChild );
 	// Tells if child is visible
 	bool isChildVisible( CGameUIObject* pChild, Int32 offsetAmount );
@@ -722,15 +722,15 @@ public:
 	// Scroller object
 	CGameUIScroller* m_pScroller;
 	// Offset value
-	Float m_scrollOffset;
+	float m_scrollOffset;
 	// Base Y offset
-	Uint32 m_baseYOffset;
+	UInt32 m_baseYOffset;
 	// Edge thickness
-	Uint32 m_borderEdgeThickness;
+	UInt32 m_borderEdgeThickness;
 	// Base height
-	Uint32 m_baseHeight;
+	UInt32 m_baseHeight;
 	// Element after-spacing
-	Uint32 m_postElementSpacing;
+	UInt32 m_postElementSpacing;
 
 	// Font set used
 	const font_set_t* m_pFont;

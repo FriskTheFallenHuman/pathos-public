@@ -234,13 +234,13 @@ struct bsp_vertex_t
 	Vector binormal; // 40
 	Vector normal; // 52
 
-	Float lmapcoord[MAX_SURFACE_STYLES][2]; // 60
-	Float texcoord[2]; // 68
-	Float dtexcoord[2]; // 76
+	float lmapcoord[MAX_SURFACE_STYLES][2]; // 60
+	float texcoord[2]; // 68
+	float dtexcoord[2]; // 76
 
-	Float fogcoord; // 104
+	float fogcoord; // 104
 
-	byte padding[22]; // 128
+	Byte padding[22]; // 128
 };
 
 struct drawbatch_t
@@ -260,7 +260,7 @@ struct drawbatch_t
 	Uint32 start_index;
 	Uint32 end_index;
 
-	byte pad[24];
+	Byte pad[24];
 };
 
 struct stylebatches_t
@@ -376,7 +376,7 @@ struct decalpolygroup_t
 	Vector localmins;
 	Vector localmaxs;
 	Vector localorigin;
-	Float radius;
+	float radius;
 
 	mtexture_t* ptexture;
 	bool alphatest;
@@ -412,12 +412,12 @@ struct bsp_decal_t
 	CArray<Uint32> leafnums;
 	Uint32 numleafs;
 
-	Float life;
-	Float fadetime;
-	Float size;
+	float life;
+	float fadetime;
+	float size;
 
-	Double spawntime;
-	Float growthtime;
+	double spawntime;
+	float growthtime;
 };
 
 /*
@@ -445,7 +445,7 @@ public:
 	// Default decal vertex cache size
 	static const Uint32 NB_BSP_DECAL_VERTS;
 	// Backface epsilon value
-	static const Float BACKFACE_EPSILON;
+	static const float BACKFACE_EPSILON;
 	// Max overlapping decals in a place
 	static const Uint32 MAX_DECAL_OVERLAP;
 	// Decal vertex allocation size
@@ -453,7 +453,7 @@ public:
 	// Temporary decal vertex array allocation size
 	static const Uint32 TEMP_DECAL_VERTEX_ALLOC_SIZE;
 	// Specialfog distance
-	static const Float SPECIALFOG_DISTANCE;
+	static const float SPECIALFOG_DISTANCE;
 
 public:
 	CBSPRenderer( void );
@@ -488,7 +488,7 @@ public:
 	bool DrawSkyBox( bool inZElements );
 
 	// Creates a decal
-	void CreateDecal( const Vector& origin, const Vector& normal, decalgroupentry_t* pentry, byte flags, Float life, Float fadetime, Float growthtime );
+	void CreateDecal( const Vector& origin, const Vector& normal, decalgroupentry_t* pentry, Byte flags, float life, float fadetime, float growthtime );
 
 	// Creates lightmaps
 	void InitLightmaps( void );
@@ -515,7 +515,7 @@ private:
 	// Loads in-memory textures
 	void LoadTextures( void );
 	// Loads a map texture
-	en_material_t* LoadMapTexture( CWADTextureResource& wadTextures, const CArray<CString>& wadFilesList, const Char* pstrtexturename );
+	en_material_t* LoadMapTexture( CWADTextureResource& wadTextures, const CArray<CString>& wadFilesList, const char* pstrtexturename );
 
 	// Draws the world and brush entities
 	bool DrawWorld( void );
@@ -534,13 +534,13 @@ private:
 	// Binds textures for rendering in single-pass mode
 	bool BindTextures( bsp_texture_t* phandle, cubemapinfo_t* pcubemapinfo, cubemapinfo_t* pprevcubemap, GLuint& cubemapUnit, bool& alphaToCoverageEnabled );
 	// Calculates fog cordinate for special fog
-	Float CalcFogCoord( Float z );
+	float CalcFogCoord( float z );
 
 private:
 	// Batches a surface
-	__forceinline void BatchSurface( msurface_t* psurface );
+	FORCE_INLINE void BatchSurface( msurface_t* psurface );
 	// Adds a render batch to the array
-	__forceinline void AddBatch( CArray<drawbatch_t>& batches, Uint32& numbatches, bsp_surface_t *psurface );
+	FORCE_INLINE void AddBatch( CArray<drawbatch_t>& batches, Uint32& numbatches, bsp_surface_t *psurface );
 
 private:
 	// Prepares for rendering an object
@@ -576,7 +576,7 @@ private:
 	// Applies a decal to a surface
 	void DecalSurface( const msurface_t *surf, bsp_decal_t *pdecal, const Vector& normal, const Vector& origin, bool transparent );
 	// Recursively applies decals on the world surfaces
-	void RecursivePasteDecal( struct mnode_t *node, bsp_decal_t *pdecal, byte flags, const Vector& mins, const Vector& maxs );
+	void RecursivePasteDecal( struct mnode_t *node, bsp_decal_t *pdecal, Byte flags, const Vector& mins, const Vector& maxs );
 	// Deletes a decal from the chain
 	void DeleteDecal( bsp_decal_t *pdecal );
 	// Removes decal from VBO
@@ -585,7 +585,7 @@ private:
 private:
 	// Current entity being rendered
 	struct cl_entity_t* m_pCurrentEntity;
-	// TRUE if current render entity is transparent
+	// true if current render entity is transparent
 	bool m_isEntityTransparent;
 
 	// Array of allocated surfaces
@@ -594,13 +594,13 @@ private:
 	CArray<bsp_texture_t> m_texturesArray;
 
 private:
-	// TRUE if rendering in multi-pass
+	// true if rendering in multi-pass
 	bool m_multiPass;
-	// TRUE if object/surface should be added to multi-pass rendering
+	// true if object/surface should be added to multi-pass rendering
 	bool m_addMulti;
-	// TRUE if bump maps are present
+	// true if bump maps are present
 	bool m_bumpMaps;
-	// TRUE if lightstyles are supported
+	// true if lightstyles are supported
 	bool m_useLightStyles;
 	// Multipass mode
 	multipass_mode_t m_multiPassMode;
@@ -637,7 +637,7 @@ private:
 	CArray<bsp_vertex_t> m_tempDecalVertsArray;
 
 	// Pointer to lightstyle values array
-	CArray<Float>* m_pLightStyleValuesArray;
+	CArray<float>* m_pLightStyleValuesArray;
 
 private:
 	CCVar* m_pCvarDetailTextures;

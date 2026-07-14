@@ -21,14 +21,14 @@ namespace Common
 	//
 	// @param character Character to check
 	// @param pbreakchars Array of break characters
-	// @return TRUE if break character, FALSE otherwise
+	// @return true if break character, false otherwise
 	//=============================================
-	bool IsBreakCharacter( Char character, const Char* pbreakchars )
+	bool IsBreakCharacter( char character, const char* pbreakchars )
 	{
 		if(!pbreakchars)
 			return false;
 
-		const Char* pstr = pbreakchars;
+		const char* pstr = pbreakchars;
 		while((*pstr))
 		{
 			if(character == (*pstr))
@@ -51,10 +51,10 @@ namespace Common
 	// @param checkCurlyBrackets If true, curly brackets are treated like quotes
 	// @return Rest of the string or null if reached end
 	//=============================================
-	const Char* Parse( const Char *pstr, CString& str, const Char* pbreakchars, bool ignoreComma, bool checkCurlyBrackets )
+	const char* Parse( const char *pstr, CString& str, const char* pbreakchars, bool ignoreComma, bool checkCurlyBrackets )
 	{
-		static Char string[MAX_PARSE_LENGTH];
-		const Char* preturn = Parse(pstr, string, pbreakchars, ignoreComma);
+		static char string[MAX_PARSE_LENGTH];
+		const char* preturn = Parse(pstr, string, pbreakchars, ignoreComma);
 
 		str = string;
 		return preturn;
@@ -71,7 +71,7 @@ namespace Common
 	// @param checkCurlyBrackets If true, curly brackets are treated like quotes
 	// @return Rest of the string or null if reached end
 	//=============================================
-	const Char* Parse( const Char *pstr, Char* pdest, const Char* pbreakchars, bool ignoreComma, bool checkCurlyBrackets )
+	const char* Parse( const char *pstr, char* pdest, const char* pbreakchars, bool ignoreComma, bool checkCurlyBrackets )
 	{
 		if (!pdest)
 			return nullptr;
@@ -81,7 +81,7 @@ namespace Common
 
 		bool includeSpaces = false;
 		Uint32 strLength = 0;
-		const Char* ppstr = pstr;
+		const char* ppstr = pstr;
 
 		// skip whitespaces
 		while(*ppstr && SDL_isspace(*ppstr) && !IsBreakCharacter((*ppstr), pbreakchars))
@@ -169,10 +169,10 @@ namespace Common
 	// @param pstr String to parse
 	// @param pdest Destination string object
 	//=============================================
-	const Char* ReadLine( const Char* pstr, Char* pdest )
+	const char* ReadLine( const char* pstr, char* pdest )
 	{
-		Char* ppdest = pdest;
-		const Char* ppstr = pstr;
+		char* ppdest = pdest;
+		const char* ppstr = pstr;
 
 		// skip whitespaces
 		while(*ppstr && SDL_isspace(*ppstr) && *ppstr != '\n' && *ppstr != '\r')
@@ -214,10 +214,10 @@ namespace Common
 	// @param pstr String to parse
 	// @param str Destination string object
 	//=============================================
-	const Char* ReadLine( const Char* pstr, CString& str )
+	const char* ReadLine( const char* pstr, CString& str )
 	{
-		static Char buffer[1024];
-		const Char *ppstr = ReadLine(pstr, buffer);
+		static char buffer[1024];
+		const char *ppstr = ReadLine(pstr, buffer);
 
 		str = buffer;
 		return ppstr;
@@ -232,7 +232,7 @@ namespace Common
 	{
 		const time_t curtime = time(0);
 		struct tm tstruct;
-		Char buffer[80];
+		char buffer[80];
 		tstruct = *localtime(&curtime);
 
 		// Get the date and time format
@@ -249,7 +249,7 @@ namespace Common
 	{
 		const time_t curtime = time(0);
 		struct tm tstruct;
-		Char buffer[80];
+		char buffer[80];
 		tstruct = *localtime(&curtime);
 
 		// Get the date and time format
@@ -269,12 +269,12 @@ namespace Common
 	void *ResizeArray( void *parray, Uint64 size, Uint64 count, Uint64 countNew )
 	{
 		const Uint64 allocSize = size*(count+countNew);
-		byte *pnew = new byte[allocSize]();
+		Byte *pnew = new Byte[allocSize]();
 
 		if(parray && count)
 		{
 			memmove(pnew, parray, size*count);
-			delete[] parray;
+			delete[] static_cast<Byte*>(parray);
 		}
 
 		return pnew;
@@ -286,9 +286,9 @@ namespace Common
 	// @param pstrin Input string's pointer
 	// @param strOut Output string object
 	//=============================================
-	void Basename( const Char *pstrin, CString& strOut )
+	void Basename( const char *pstrin, CString& strOut )
 	{
-		Char* pstrPath = new Char[qstrlen(pstrin)+1];
+		char* pstrPath = new char[qstrlen(pstrin)+1];
 		Basename(pstrin, pstrPath);
 
 		strOut = pstrPath;
@@ -301,7 +301,7 @@ namespace Common
 	// @param pstrin Input string's pointer
 	// @param pstrout Output string's pointer
 	//=============================================
-	void Basename( const Char *pstrin, Char *pstrout )
+	void Basename( const char *pstrin, char *pstrout )
 	{
 		Uint32 lastdot = 0;
 		Uint32 lastbar = 0;
@@ -336,9 +336,9 @@ namespace Common
 	//
 	// @param pstr Input string's pointer
 	//=============================================
-	bool IsNumber( const Char *pstr )
+	bool IsNumber( const char *pstr )
 	{
-		const Char* ppstr = pstr;
+		const char* ppstr = pstr;
 		while(*ppstr)
 		{
 			if(!SDL_isdigit(*ppstr) && *ppstr != '.' && *ppstr != '-')
@@ -366,12 +366,12 @@ namespace Common
 	// @param pstrString Input string
 	// @param pflVector Output vector
 	//=============================================
-	void StringToVector( const Char* pstrString, Vector& outVector )
+	void StringToVector( const char* pstrString, Vector& outVector )
 	{
-		static Char tmp[MAX_PARSE_LENGTH];
+		static char tmp[MAX_PARSE_LENGTH];
 
 		Uint32 i = 0;
-		const Char* pstr = pstrString;
+		const char* pstr = pstrString;
 		while(pstr)
 		{
 			// Skip any commas
@@ -394,7 +394,7 @@ namespace Common
 	// @brief Tells if the input is a power of two value
 	//
 	// @param size Size to check
-	// @return TRUE if it's a power of two value, FALSE otherwise
+	// @return true if it's a power of two value, false otherwise
 	//=============================================
 	bool IsPowerOfTwo( Uint32 size )
 	{
@@ -415,7 +415,7 @@ namespace Common
 	//
 	// @param pstr Reference to input string object
 	//=============================================
-	Char GetShiftedChar( Char c )
+	char GetShiftedChar( char c )
 	{
 		switch(c)
 		{
@@ -451,7 +451,7 @@ namespace Common
 	// @param pitch Pitch value
 	// @return true or false
 	//=============================================
-	Int32 IsPitchReversed( Float pitch )
+	Int32 IsPitchReversed( float pitch )
 	{
 		const Int32 quadrant = static_cast<Int32>(pitch / 90) % 4;
 		if ((quadrant == 1) || (quadrant == 2)) 
@@ -466,7 +466,7 @@ namespace Common
 	// @param pitch Pitch value
 	// @return true or false
 	//=============================================
-	void FixVector( Float* pflVector )
+	void FixVector( float* pflVector )
 	{
 		Vector in(pflVector);
 		Common::NormalizeAngles(in);
@@ -495,13 +495,13 @@ namespace Common
 	// @return high Maximum value
 	// @return Random value
 	//=============================================
-	Float RandomFloat( Float low, Float high )
+	float RandomFloat( float low, float high )
 	{
 		constexpr Int32 floatRandomMaxResolution = 1000;
 		const Int32 randomvalue = rand() % floatRandomMaxResolution;
 
 		// Constrict to 0-1 range first
-		Float value = static_cast<Float>(randomvalue) / static_cast<Float>(floatRandomMaxResolution);
+		float value = static_cast<float>(randomvalue) / static_cast<float>(floatRandomMaxResolution);
 		// Then to the range of low-high
 		value = value * (high - low) + low;
 
@@ -529,12 +529,12 @@ namespace Common
 	// @param pstring String to format
 	// @return Formatted string
 	//=============================================
-	CString FixSlashes( const Char* pstring )
+	CString FixSlashes( const char* pstring )
 	{
-		Char* pbuffer = new Char[qstrlen(pstring)+1];
+		char* pbuffer = new char[qstrlen(pstring)+1];
 		strcpy(pbuffer, pstring);
 
-		Char* pstr = pbuffer;
+		char* pstr = pbuffer;
 		while(*pstr != '\0')
 		{
 			if(*pstr == '\\')
@@ -552,7 +552,7 @@ namespace Common
 	// @brief Checks visibility on a set of leaf numbers
 	//
 	//=============================================
-	bool CheckVisibility( const CArray<Uint32>& leafnums, Uint32 numleafs, const byte* pset )
+	bool CheckVisibility( const CArray<Uint32>& leafnums, Uint32 numleafs, const Byte* pset )
 	{
 		if(leafnums.empty())
 			return false;
@@ -573,10 +573,10 @@ namespace Common
 	// @brief Returns the number of lines in a text file
 	//
 	//=============================================
-	Uint32 GetFileLineCount( const Char* pstrdata )
+	Uint32 GetFileLineCount( const char* pstrdata )
 	{
 		Uint32 linecount = 0;
-		const Char* pstr = pstrdata;
+		const char* pstr = pstrdata;
 		while(*pstr)
 		{
 			while(*pstr && pstr[0] != '\n')
@@ -597,12 +597,12 @@ namespace Common
 	// @brief Checks visibility on a set of leaf numbers
 	//
 	//=============================================
-	bool GetWADList( const Char* pstrEntityData, CArray<CString>& outputArray )
+	bool GetWADList( const char* pstrEntityData, CArray<CString>& outputArray )
 	{
 		// Retrieve the wad list from the entdata
 		CString wadlist;
-		Char token[MAX_PARSE_LENGTH];
-		const Char* pscan = pstrEntityData;
+		char token[MAX_PARSE_LENGTH];
+		const char* pscan = pstrEntityData;
 		while(pscan && *pscan != '\0')
 		{
 			// Read first token
@@ -637,7 +637,7 @@ namespace Common
 			}
 
 			// Check if it's the worldspawn entity
-			const Char *pValue = ValueForKey(entity, "classname");
+			const char *pValue = ValueForKey(entity, "classname");
 			if(pValue && !qstrcmp(pValue, "worldspawn"))
 			{
 				// Retrieve the wad list
@@ -655,7 +655,7 @@ namespace Common
 		if(wadlist.empty())
 			return true;
 
-		const Char* pwadstr = wadlist.c_str();
+		const char* pwadstr = wadlist.c_str();
 		while(pwadstr)
 		{
 			pwadstr = Parse(pwadstr, token, ";");
@@ -695,9 +695,9 @@ namespace Common
 	// @brief Converts the string to lowercase chars
 	//
 	//=============================================
-	void ConvertStringToLowerCase( Char* pstring )
+	void ConvertStringToLowerCase( char* pstring )
 	{
-		for (Char *temp = pstring; *temp; temp++) 
+		for (char *temp = pstring; *temp; temp++) 
 			*temp = ::tolower(*temp);
 	}
 
@@ -705,9 +705,9 @@ namespace Common
 	// @brief Gets the CRC32 hash of a string
 	//
 	//=============================================
-	Uint32 GetStringCRC32Hash( const Char* pstrString )
+	Uint32 GetStringCRC32Hash( const char* pstrString )
 	{
-		const byte* pdata = reinterpret_cast<const byte*>(pstrString);
+		const Byte* pdata = reinterpret_cast<const Byte*>(pstrString);
 		Uint32 stringlength = qstrlen(pstrString);
 
 		CCRC32Hash hash(pdata, stringlength);
@@ -718,7 +718,7 @@ namespace Common
 	// @brief Extracts directory path from a file path
 	//
 	//=============================================
-	void GetDirectoryPath( const Char* pstrPath, CString& output )
+	void GetDirectoryPath( const char* pstrPath, CString& output )
 	{
 		if(!pstrPath)
 			return;
@@ -746,7 +746,7 @@ namespace Common
 	// @brief Extracts directory path from a file path
 	//
 	//=============================================
-	CString CleanupPath( const Char* pstrPath )
+	CString CleanupPath( const char* pstrPath )
 	{
 		CString output = pstrPath;
 
@@ -754,7 +754,7 @@ namespace Common
 		Uint32 i = 0;
 		while(i < length)
 		{
-			Char character = output[i];
+			char character = output[i];
 			if(character == '/' || character == '\\')
 			{
 				if(character == '\\')
@@ -770,7 +770,7 @@ namespace Common
 					Uint32 j = i + 1;
 					while(j < length)
 					{
-						Char nextCharacter = output[j];
+						char nextCharacter = output[j];
 						if(nextCharacter != '/' && nextCharacter != '\\')
 							break;
 
@@ -790,7 +790,7 @@ namespace Common
 			}
 			else if(i > 1 && (i + 1) < length && character == '.')
 			{
-				Char nextCharacter = output[i + 1];
+				char nextCharacter = output[i + 1];
 				if(nextCharacter == '/' || nextCharacter == '\\')
 				{
 					output.erase(i, 2);
@@ -806,7 +806,7 @@ namespace Common
 					Uint32 j = i - 1;
 					while(j > 0)
 					{
-						Char checkCharacter = output[j];
+						char checkCharacter = output[j];
 						if(checkCharacter == '/' || checkCharacter == '\\')
 						{
 							slashCount++;
@@ -846,16 +846,16 @@ namespace Common
 	// @brief Convert byte count to megabyte float value
 	//
 	//=============================================
-	extern Float BytesToMegaBytes( Uint32 bytesCount )
+	extern float BytesToMegaBytes( Uint32 bytesCount )
 	{
-		return static_cast<Float>(bytesCount) / (1024.0*1024.0);
+		return static_cast<float>(bytesCount) / (1024.0*1024.0);
 	}
 
 	//=============================================
 	//
 	// Function:
 	//=============================================
-	void ResizeTextureToPOT( Uint32& outwidth, Uint32& outheight, byte*& pdata )
+	void ResizeTextureToPOT( Uint32& outwidth, Uint32& outheight, Byte*& pdata )
 	{
 		color32_t pix1, pix2, pix3, pix4;
 
@@ -872,19 +872,19 @@ namespace Common
 		Int32* pcol2 = new Int32[outwidth];
 
 		color32_t* psrcdata = reinterpret_cast<color32_t*>(pdata);
-		byte* poutdata = new byte[(outwidth*outheight*4*sizeof(byte))];
-		byte* pout = poutdata;
+		Byte* poutdata = new Byte[(outwidth*outheight*4*sizeof(Byte))];
+		Byte* pout = poutdata;
 
 		for (Uint32 i = 0; i < outwidth; i++)
 		{
-			pcol1[i] = static_cast<Int32>((i + 0.25) * (width / (Float)outwidth));
-			pcol2[i] = static_cast<Int32>((i + 0.75) * (width / (Float)outwidth));
+			pcol1[i] = static_cast<Int32>((i + 0.25) * (width / (float)outwidth));
+			pcol2[i] = static_cast<Int32>((i + 0.75) * (width / (float)outwidth));
 		}
 
 		for (Uint32 i = 0; i < outheight; i++)
 		{
-			prow1[i] = static_cast<Int32>((i + 0.25) * (height / (Float)outheight)) * width;
-			prow2[i] = static_cast<Int32>((i + 0.75) * (height / (Float)outheight)) * width;
+			prow1[i] = static_cast<Int32>((i + 0.25) * (height / (float)outheight)) * width;
+			prow2[i] = static_cast<Int32>((i + 0.75) * (height / (float)outheight)) * width;
 		}
 
 		for (Uint32 i = 0; i < outheight; i++)
@@ -927,18 +927,18 @@ namespace Common
 		Int32* pcol2 = new Int32[targetwidth];
 
 		poutdata = new color32_t[targetwidth*targetheight];
-		byte* pout = reinterpret_cast<byte*>(poutdata);
+		Byte* pout = reinterpret_cast<Byte*>(poutdata);
 
 		for (Uint32 i = 0; i < targetwidth; i++)
 		{
-			pcol1[i] = static_cast<Int32>((i + 0.25) * (width / static_cast<Float>(targetwidth)));
-			pcol2[i] = static_cast<Int32>((i + 0.75) * (width / static_cast<Float>(targetwidth)));
+			pcol1[i] = static_cast<Int32>((i + 0.25) * (width / static_cast<float>(targetwidth)));
+			pcol2[i] = static_cast<Int32>((i + 0.75) * (width / static_cast<float>(targetwidth)));
 		}
 
 		for (Uint32 i = 0; i < targetheight; i++)
 		{
-			prow1[i] = static_cast<Int32>((i + 0.25) * (height / static_cast<Float>(targetheight))) * width;
-			prow2[i] = static_cast<Int32>((i + 0.75) * (height / static_cast<Float>(targetheight))) * width;
+			prow1[i] = static_cast<Int32>((i + 0.25) * (height / static_cast<float>(targetheight))) * width;
+			prow2[i] = static_cast<Int32>((i + 0.75) * (height / static_cast<float>(targetheight))) * width;
 		}
 
 		for (Uint32 i = 0; i < targetheight; i++)
@@ -977,18 +977,18 @@ namespace Common
 		Int32* pcol1 = new Int32[targetwidth];
 		Int32* pcol2 = new Int32[targetwidth];
 
-		byte* pout = reinterpret_cast<byte*>(poutdata);
+		Byte* pout = reinterpret_cast<Byte*>(poutdata);
 
 		for (Uint32 i = 0; i < targetwidth; i++)
 		{
-			pcol1[i] = static_cast<Int32>((i + 0.25) * (width / static_cast<Float>(targetwidth)));
-			pcol2[i] = static_cast<Int32>((i + 0.75) * (width / static_cast<Float>(targetwidth)));
+			pcol1[i] = static_cast<Int32>((i + 0.25) * (width / static_cast<float>(targetwidth)));
+			pcol2[i] = static_cast<Int32>((i + 0.75) * (width / static_cast<float>(targetwidth)));
 		}
 
 		for (Uint32 i = 0; i < targetheight; i++)
 		{
-			prow1[i] = static_cast<Int32>((i + 0.25) * (height / static_cast<Float>(targetheight))) * width;
-			prow2[i] = static_cast<Int32>((i + 0.75) * (height / static_cast<Float>(targetheight))) * width;
+			prow1[i] = static_cast<Int32>((i + 0.25) * (height / static_cast<float>(targetheight))) * width;
+			prow2[i] = static_cast<Int32>((i + 0.75) * (height / static_cast<float>(targetheight))) * width;
 		}
 
 		for (Uint32 i = 0; i < targetheight; i++)
@@ -1016,16 +1016,16 @@ namespace Common
 	//
 	// Function:
 	//=============================================
-	void FlipTexture( Uint32 width, Uint32 height, Uint32 bpp, bool fliph, bool flipv, byte*& pdata )
+	void FlipTexture( Uint32 width, Uint32 height, Uint32 bpp, bool fliph, bool flipv, Byte*& pdata )
 	{
 		// Flip vertically and/or horizontally if needed
 		Uint32 outputSize = width*height*bpp;
-		byte *pflipped = new byte[outputSize];
+		Byte *pflipped = new Byte[outputSize];
 		for(Uint32 i = 0; i < height; i++)
 		{
-			byte *dst = pflipped + i*width*bpp;
+			Byte *dst = pflipped + i*width*bpp;
 
-			const byte *src;
+			const Byte *src;
 			if(flipv)
 				src = pdata + (height-i-1)*width*bpp;
 			else
@@ -1034,10 +1034,10 @@ namespace Common
 			if(fliph)
 			{
 				for(Uint32 j = 0; j < width; j++)
-					memcpy(&dst[j*bpp], &src[((width-j-1)*bpp)], sizeof(byte)*bpp);
+					memcpy(&dst[j*bpp], &src[((width-j-1)*bpp)], sizeof(Byte)*bpp);
 			}
 			else
-				memcpy(dst, src, sizeof(byte)*width*bpp);
+				memcpy(dst, src, sizeof(Byte)*width*bpp);
 		}
 
 		delete[] pdata;

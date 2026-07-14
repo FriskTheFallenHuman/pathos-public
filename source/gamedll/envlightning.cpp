@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "envlightning.h"
 
 // Number of random loops
-const Uint32 CEnvLightning::NUM_RANDOM_LOOPS = 10;
+const UInt32 CEnvLightning::NUM_RANDOM_LOOPS = 10;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(env_lightning, CEnvLightning);
@@ -289,7 +289,7 @@ bool CEnvLightning::KeyValue( const keyvalue_t& kv )
 // @brief Use function for striking the beam
 //
 //=============================================
-void CEnvLightning::StrikeUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvLightning::StrikeUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!ShouldToggle(useMode, m_isActive))
 		return;
@@ -313,7 +313,7 @@ void CEnvLightning::StrikeUse( CBaseEntity* pActivator, CBaseEntity* pCaller, us
 // @brief Use function for toggling the beam
 //
 //=============================================
-void CEnvLightning::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvLightning::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!ShouldToggle(useMode, m_isActive))
 		return;
@@ -363,7 +363,7 @@ void CEnvLightning::StrikeThink( void )
 		}
 		else
 		{
-			const Char* pstrStartEntityName = gd_engfuncs.pfnGetString(m_startEntityName);
+			const char* pstrStartEntityName = gd_engfuncs.pfnGetString(m_startEntityName);
 			CBaseEntity* pStart = GetRandomTargetName(pstrStartEntityName);
 			if(pStart)
 				RandomPoint(pStart->GetOrigin());
@@ -373,7 +373,7 @@ void CEnvLightning::StrikeThink( void )
 	}
 	else
 	{
-		const Char* pstrStartEntityName = gd_engfuncs.pfnGetString(m_startEntityName);
+		const char* pstrStartEntityName = gd_engfuncs.pfnGetString(m_startEntityName);
 		CBaseEntity* pStart = GetRandomTargetName(pstrStartEntityName);
 		if(!pStart)
 		{
@@ -381,7 +381,7 @@ void CEnvLightning::StrikeThink( void )
 			return;
 		}
 
-		const Char* pstrEndEntityName = gd_engfuncs.pfnGetString(m_endEntityName);
+		const char* pstrEndEntityName = gd_engfuncs.pfnGetString(m_endEntityName);
 		CBaseEntity* pEnd = GetRandomTargetName(pstrEndEntityName);
 		if(!pEnd)
 		{
@@ -459,7 +459,7 @@ void CEnvLightning::DamageThink( void )
 //=============================================
 void CEnvLightning::RandomArea( void )
 {
-	for(Uint32 i = 0; i < NUM_RANDOM_LOOPS; i++)
+	for(UInt32 i = 0; i < NUM_RANDOM_LOOPS; i++)
 	{
 		Vector src = m_pState->origin;
 		Vector dir1 = Vector(Common::RandomFloat(-1, 1), Common::RandomFloat(-1, 1), Common::RandomFloat(-1, 1));
@@ -511,7 +511,7 @@ void CEnvLightning::RandomArea( void )
 //=============================================
 void CEnvLightning::RandomPoint( const Vector& src )
 {
-	for(Uint32 i = 0; i < NUM_RANDOM_LOOPS; i++)
+	for(UInt32 i = 0; i < NUM_RANDOM_LOOPS; i++)
 	{
 		Vector dir1 = Vector(Common::RandomFloat(-1, 1), Common::RandomFloat(-1, 1), Common::RandomFloat(-1, 1));
 		dir1.Normalize();
@@ -564,7 +564,7 @@ bool CEnvLightning::IsServerSide( void )
 //=============================================
 void CEnvLightning::UpdateBeamVars( void )
 {
-	const Char* pstrStartEntityName = gd_engfuncs.pfnGetString(m_startEntityName);
+	const char* pstrStartEntityName = gd_engfuncs.pfnGetString(m_startEntityName);
 	CBaseEntity* pStart = GetRandomTargetName(pstrStartEntityName);
 	if(!pStart)
 	{
@@ -572,7 +572,7 @@ void CEnvLightning::UpdateBeamVars( void )
 		return;
 	}
 
-	const Char* pstrEndEntityName = gd_engfuncs.pfnGetString(m_endEntityName);
+	const char* pstrEndEntityName = gd_engfuncs.pfnGetString(m_endEntityName);
 	CBaseEntity* pEnd = GetRandomTargetName(pstrEndEntityName);
 	if(!pEnd)
 	{
@@ -586,7 +586,7 @@ void CEnvLightning::UpdateBeamVars( void )
 	SetBeamStartEntity(nullptr);
 	SetBeamEndEntity(nullptr);
 	
-	const Char* pstrSpriteModelName = gd_engfuncs.pfnGetString(m_spriteModelName);
+	const char* pstrSpriteModelName = gd_engfuncs.pfnGetString(m_spriteModelName);
 	if(!gd_engfuncs.pfnSetModel(m_pEdict, pstrSpriteModelName, false))
 	{
 		Util::EntityConPrintf(m_pEdict, "Beam sprite '%s' not found.\n", pstrSpriteModelName);

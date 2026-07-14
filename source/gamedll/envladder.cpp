@@ -79,7 +79,7 @@ bool CEnvLadder::Spawn( void )
 		m_pState->body = 1;
 
 	// Round down origin
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		float flfrac = m_pState->origin[i] - floor(m_pState->origin[i]);
 		m_pState->origin[i] = (flfrac > 0.5) ? ceil(m_pState->origin[i]) : floor(m_pState->origin[i]);
@@ -99,7 +99,7 @@ void CEnvLadder::InitEntity( void )
 		return;
 
 	// Find endpoint and verify accessibility
-	const Char* pstrTargetname = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTargetname = gd_engfuncs.pfnGetString(m_pFields->target);
 	if(!pstrTargetname)
 	{
 		Util::RemoveEntity(this);
@@ -129,7 +129,7 @@ void CEnvLadder::InitEntity( void )
 	Vector seqMins, seqMaxs;
 	GetSequenceBox((*m_pState), seqMins, seqMaxs, false);
 
-	Float rounded_height = m_pState->numsegments * LADDER_PIECE_HEIGHT;
+	float rounded_height = m_pState->numsegments * LADDER_PIECE_HEIGHT;
 	Vector vMins = Vector(seqMins.x, seqMins.y, -rounded_height);
 	Vector vMaxs = Vector(seqMaxs.x, seqMaxs.y, LADDER_PIECE_HEIGHT);
 
@@ -140,20 +140,20 @@ void CEnvLadder::InitEntity( void )
 // @brief
 //
 //=============================================
-void CEnvLadder::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvLadder::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!pCaller->IsPlayer())
 	{
 		if(useMode == USE_ON)
-			m_isActive = TRUE;
+			m_isActive = true;
 		else if(useMode == USE_OFF)
-			m_isActive = FALSE;
+			m_isActive = false;
 		else
 		{
 			if(m_isActive)
-				m_isActive = FALSE;
+				m_isActive = false;
 			else
-				m_isActive = TRUE;
+				m_isActive = true;
 		}
 		return;
 	}
@@ -256,14 +256,14 @@ void CEnvLadder::RepositionPlayer( CBaseEntity* pPlayer, Vector* porigin, Vector
 	Vector vOffset = vForward * LADDER_FORWARD_OFFSET;
 
 	Int32 iLastClosestSegment = -1;
-	Float flLastClosestDist = 0;
+	float flLastClosestDist = 0;
 
 	// Never allow entry at the two end segments
-	Float flPlayerZ = pPlayer->GetOrigin().z;
+	float flPlayerZ = pPlayer->GetOrigin().z;
 	for(Int32 i = 1; i < m_numSegments; i++)
 	{
-		Float flSegmentZ = m_pState->origin.z - i*LADDER_PIECE_HEIGHT;
-		Float flDist = abs(flSegmentZ-flPlayerZ);
+		float flSegmentZ = m_pState->origin.z - i*LADDER_PIECE_HEIGHT;
+		float flDist = abs(flSegmentZ-flPlayerZ);
 
 		if(iLastClosestSegment == -1 || flLastClosestDist > flDist)
 		{
@@ -274,7 +274,7 @@ void CEnvLadder::RepositionPlayer( CBaseEntity* pPlayer, Vector* porigin, Vector
 
 	if(porigin)
 	{
-		Float flOffset = iLastClosestSegment * LADDER_PIECE_HEIGHT;
+		float flOffset = iLastClosestSegment * LADDER_PIECE_HEIGHT;
 		(*porigin) = m_pState->origin + vOffset;
 		(*porigin).z += - flOffset;
 	}
@@ -298,7 +298,7 @@ void CEnvLadder::RepositionPlayer( CBaseEntity* pPlayer, Vector* porigin, Vector
 // @brief
 //
 //=============================================
-bool CEnvLadder::GetExitVectors( ladder_exitpoints_t exit, Vector* porigin, Vector* pangles, Float* pfldiff )
+bool CEnvLadder::GetExitVectors( ladder_exitpoints_t exit, Vector* porigin, Vector* pangles, float* pfldiff )
 {
 	Vector vOffset, vAngles;
 	Vector vForward, vRight, vUp;
@@ -330,12 +330,12 @@ bool CEnvLadder::GetExitVectors( ladder_exitpoints_t exit, Vector* porigin, Vect
 	vExitOrigin.z = playerOrigin.z;
 	vExitOrigin = vExitOrigin + vOffset;
 
-	Float diff = 0;
+	float diff = 0;
 	Vector finalAngles;
 	Vector finalOrigin;
 	bool result = false;
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		// Determine if the player can fit there
 		Vector vStart = vExitOrigin;
@@ -402,7 +402,7 @@ bool CEnvLadder::GetExitVectors( ladder_exitpoints_t exit, Vector* porigin, Vect
 // @brief
 //
 //=============================================
-ladder_exitpoints_t CEnvLadder::CanUseExit( Vector* pangles, Vector* porigin, Float* pfltime, Float* pfldiff )
+ladder_exitpoints_t CEnvLadder::CanUseExit( Vector* pangles, Vector* porigin, float* pfltime, float* pfldiff )
 {
 	if(GetExitVectors(LADDER_EXIT_LEFT, porigin, pangles, pfldiff))
 	{
@@ -418,7 +418,7 @@ ladder_exitpoints_t CEnvLadder::CanUseExit( Vector* pangles, Vector* porigin, Fl
 
 	if(HasSpawnFlag(FL_TOP_ACCESS))
 	{
-		Float flMoveHeight = m_pPlayer->GetOrigin().z+LADDER_PIECE_HEIGHT;
+		float flMoveHeight = m_pPlayer->GetOrigin().z+LADDER_PIECE_HEIGHT;
 		if((flMoveHeight >= m_pState->origin.z) && GetExitVectors(LADDER_EXIT_TOP, porigin, pangles, pfldiff))
 		{
 			*pfltime = LADDER_LEAVE_TOP_TIME;
@@ -441,7 +441,7 @@ ladder_exitpoints_t CEnvLadder::CanUseExit( Vector* pangles, Vector* porigin, Fl
 //=============================================
 ladder_verify_codes_t CEnvLadder::VerifyMove( const Vector& origin, CBaseEntity* pPlayer, Int32 direction )
 {
-	Float flPlayerMove = direction * LADDER_STEP_SIZE;
+	float flPlayerMove = direction * LADDER_STEP_SIZE;
 
 	trace_t tr;
 	Util::TraceHull(origin, origin+Vector(0, 0, flPlayerMove), m_pPlayer ? false : true, false, HULL_HUMAN, pPlayer->GetEdict(), tr);
@@ -564,7 +564,7 @@ void CEnvLadder::GetUseReticleMinsMaxs( Vector& outMins, Vector& outMaxs, CBaseE
 	Vector forward;
 	Math::AngleVectors(playerViewAngles, &forward);
 
-	Float playerUseDistance = Vector(CPlayerEntity::PLAYER_USE_RADIUS, CPlayerEntity::PLAYER_USE_RADIUS, CPlayerEntity::PLAYER_USE_RADIUS).Length();
+	float playerUseDistance = Vector(CPlayerEntity::PLAYER_USE_RADIUS, CPlayerEntity::PLAYER_USE_RADIUS, CPlayerEntity::PLAYER_USE_RADIUS).Length();
 	Vector endPosition = playerEyePosition + playerUseDistance * forward;
 
 	trace_t tr;
@@ -586,7 +586,7 @@ void CEnvLadder::GetUseReticleMinsMaxs( Vector& outMins, Vector& outMaxs, CBaseE
 // @brief
 //
 //=============================================
-void CEnvLadder::TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
+void CEnvLadder::TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
 {
 	Util::Ricochet( tr.endpos, tr.plane.normal, true );
 	Util::CreateVBMDecal( tr.endpos, tr.plane.normal, "shot_metal", m_pEdict, FL_DECAL_NORMAL_PERMISSIVE);

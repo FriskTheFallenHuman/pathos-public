@@ -56,7 +56,7 @@ void CEdictManager::AllocEdicts( void )
 	ClearEdicts();
 
 	// Determine the max size
-	Uint32 maxEdicts;
+	UInt32 maxEdicts;
 	if(ens.arg_max_edicts != 0)
 	{
 		if(ens.arg_max_edicts > MAX_SERVER_ENTITIES)
@@ -71,7 +71,7 @@ void CEdictManager::AllocEdicts( void )
 	m_edictsArray.resize(maxEdicts);
 	m_numEdicts = svs.maxclients+1;
 
-	for(Uint32 i = 0; i < maxEdicts; i++)
+	for(UInt32 i = 0; i < maxEdicts; i++)
 	{
 		m_edictsArray[i].entindex = i;
 		m_edictsArray[i].state.entindex = i;
@@ -88,7 +88,7 @@ void CEdictManager::ClearEdicts( void )
 	if(m_edictsArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_edictsArray.size(); i++)
+	for(UInt32 i = 0; i < m_edictsArray.size(); i++)
 	{
 		edict_t* pedict = &m_edictsArray[i];
 		if(pedict->free)
@@ -105,17 +105,17 @@ void CEdictManager::ClearEdicts( void )
 // @brief
 //
 //=============================================
-bool CEdictManager::LoadEntities( const Char* pstrEntdata )
+bool CEdictManager::LoadEntities( const char* pstrEntdata )
 {
 	if(!pstrEntdata)
 		return false;
 
-	Char token[MAX_PARSE_LENGTH];
-	Char value[MAX_PARSE_LENGTH];
+	char token[MAX_PARSE_LENGTH];
+	char value[MAX_PARSE_LENGTH];
 
 	Int32 eindex = 0;
 	// Parse the entdata strings
-	const Char* pstr = pstrEntdata;
+	const char* pstr = pstrEntdata;
 	while(pstr)
 	{
 		// Parse the opening brace
@@ -173,7 +173,7 @@ bool CEdictManager::LoadEntities( const Char* pstrEntdata )
 			// Manage "angle" keyvalue
 			if(!qstrcmp(token, "angle"))
 			{
-				Float flvalue = SDL_atof(value);
+				float flvalue = SDL_atof(value);
 				if(flvalue >= 0.0)
 					sprintf(value, "0 %f 0", flvalue);
 				else if(static_cast<Int32>(flvalue) == -1)
@@ -217,7 +217,7 @@ bool CEdictManager::LoadEntities( const Char* pstrEntdata )
 		}
 
 		// Initialize keyvalues
-		for(Uint32 i = 0; i < entity.values.size(); i++)
+		for(UInt32 i = 0; i < entity.values.size(); i++)
 		{
 			if(!svs.dllfuncs.pfnKeyValue(pedict, *entity.values[i]))
 				Con_DPrintf("[flags=onlyonce_game]Entity %s - Unhandled keyvalue '%s'.\n", entity.classname.c_str(), entity.values[i]->keyname);
@@ -246,7 +246,7 @@ bool CEdictManager::LoadEntities( const Char* pstrEntdata )
 // @brief
 //
 //=============================================
-edict_t* CEdictManager::CreateEntity( const Char* pstrClassname )
+edict_t* CEdictManager::CreateEntity( const char* pstrClassname )
 {
 	// Initialize the entity
 	edict_t* pedict = AllocEdict();
@@ -267,7 +267,7 @@ edict_t* CEdictManager::CreateEntity( const Char* pstrClassname )
 // @brief
 //
 //=============================================
-edict_t* CEdictManager::CreatePlayerEntity( Uint32 player_index )
+edict_t* CEdictManager::CreatePlayerEntity( UInt32 player_index )
 {
 	if(player_index >= svs.maxclients)
 	{
@@ -297,14 +297,14 @@ edict_t* CEdictManager::CreatePlayerEntity( Uint32 player_index )
 // @brief
 //
 //=============================================
-Uint32 CEdictManager::AllocIdentifier( void )
+UInt32 CEdictManager::AllocIdentifier( void )
 {
 	// Jump over the reserved space
 	if(m_lastIdentifier == (ENTITY_IDENTIFIER_RESERVED_MIN - 1))
 		m_lastIdentifier = ENTITY_IDENTIFIER_RESERVED_MAX + 1;
 
 	// Set new identifier
-	Uint32 identifier = m_lastIdentifier;
+	UInt32 identifier = m_lastIdentifier;
 	m_lastIdentifier++;
 
 	return identifier;
@@ -317,7 +317,7 @@ Uint32 CEdictManager::AllocIdentifier( void )
 edict_t* CEdictManager::AllocEdict( void )
 {
 	// skip clients and world
-	Uint32 i = svs.maxclients + 1; 
+	UInt32 i = svs.maxclients + 1; 
 	for(; i < m_numEdicts; i++)
 	{
 		edict_t* pedict = GetEdict(i);
@@ -359,7 +359,7 @@ edict_t* CEdictManager::AllocEdict( void )
 //=============================================
 void CEdictManager::FreeEdict( edict_t* pedict, edict_removed_t freeMode )
 {
-	for(Uint32 i = 0; i < m_numEdicts; i++)
+	for(UInt32 i = 0; i < m_numEdicts; i++)
 	{
 		edict_t* pother = GetEdict(i);
 		if(pother->pprivatedata && !pother->free 

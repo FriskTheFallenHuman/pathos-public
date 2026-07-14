@@ -7,87 +7,84 @@ All Rights Reserved.
 ===============================================
 */
 
-#include <assert.h>
-
 #ifndef DATATYPES_H
 #define DATATYPES_H
-typedef	char				Char;
-typedef	unsigned char		Uchar;
-typedef	unsigned __int8		byte;
-typedef	__int32				Int32;
-typedef unsigned __int32	Uint32;
-typedef __int16				Int16;
-typedef	unsigned __int16	Uint16;
-typedef __int64				Int64;
-typedef unsigned __int64	Uint64;
-typedef float				Float;
-typedef double				Double;
-typedef Uint32				string_t;
+
+typedef	uint8_t				Uchar;
+typedef	uint8_t				Byte;
+typedef	int32_t				Int32;
+typedef uint32_t			UInt32;
+typedef int16_t				Int16;
+typedef	uint16_t			UInt16;
+typedef int64_t				Int64;
+typedef uint64_t			UInt64;
+typedef UInt32				string_t;
 typedef Int32				entindex_t;
+typedef UInt32				Dword;
 
 struct vec4_t
 {
-	inline vec4_t()
+	DO_INLINE vec4_t()
 	{
-		for(Uint32 i = 0; i < 4; i++)
+		for(UInt32 i = 0; i < 4; i++)
 			v[i] = 0;
 	}
 
-	inline vec4_t(const vec4_t& src)
+	DO_INLINE vec4_t(const vec4_t& src)
 	{
-		for(Uint32 i = 0; i < 4; i++)
+		for(UInt32 i = 0; i < 4; i++)
 			v[i] = src.v[i];
 	}
 
-	inline vec4_t( Float coords[4] )
+	DO_INLINE vec4_t( float coords[4] )
 	{
-		for(Uint32 i = 0; i < 4; i++)
+		for(UInt32 i = 0; i < 4; i++)
 			v[i] = coords[i];
 	}
 
-	inline vec4_t& operator=( const vec4_t& src )
+	DO_INLINE vec4_t& operator=( const vec4_t& src )
 	{
-		for(Uint32 i = 0; i < 4; i++)
+		for(UInt32 i = 0; i < 4; i++)
 			v[i] = src.v[i];
 
 		return *this;
 	}
 
-	inline Float& operator[]( Uint32 n )
+	DO_INLINE float& operator[]( UInt32 n )
 	{
 		assert(n <= 4);
 		return v[n];
 	}
 
-	inline Float operator[]( Uint32 n ) const
+	DO_INLINE float operator[]( UInt32 n ) const
 	{
 		assert(n <= 4);
 		return v[n];
 	}
 
-	inline Float& operator[]( Int32 n )
+	DO_INLINE float& operator[]( Int32 n )
 	{
 		assert(n <= 4);
 		return v[n];
 	}
 
-	inline Float operator[]( Int32 n ) const
+	DO_INLINE float operator[]( Int32 n ) const
 	{
 		assert(n <= 4);
 		return v[n];
 	}
 
-	inline operator Float*( void )
+	DO_INLINE operator float*( void )
 	{
 		return v;
 	}
 
-	inline operator const Float*( void ) const
+	DO_INLINE operator const float*( void ) const
 	{
 		return v;
 	}
 
-	Float v[4];
+	float v[4];
 };
 
 struct color32_t
@@ -98,14 +95,14 @@ struct color32_t
 		b(0),
 		a(255)
 	{}
-	color32_t( byte _r, byte _g, byte _b, byte _a )
+	color32_t( Byte _r, Byte _g, Byte _b, Byte _a )
 	{
 		r = _r;
 		g = _g;
 		b = _b;
 		a = _a;
 	}
-	byte& operator[]( Uint32 n )
+	Byte& operator[]( UInt32 n )
 	{
 		assert(n <= 3);
 
@@ -119,10 +116,10 @@ struct color32_t
 			return a;
 	}
 
-	byte r;
-	byte g;
-	byte b;
-	byte a;
+	Byte r;
+	Byte g;
+	Byte b;
+	Byte a;
 };
 
 struct color24_t
@@ -132,13 +129,13 @@ struct color24_t
 		g(0),
 		b(0)
 	{}
-	color24_t( byte _r, byte _g, byte _b )
+	color24_t( Byte _r, Byte _g, Byte _b )
 	{
 		r = _r;
 		g = _g;
 		b = _b;
 	}
-	byte& operator[]( Uint32 n )
+	Byte& operator[]( UInt32 n )
 	{
 		assert(n <= 2);
 
@@ -150,9 +147,9 @@ struct color24_t
 			return b;
 	}
 
-	byte r;
-	byte g;
-	byte b;
+	Byte r;
+	Byte g;
+	Byte b;
 };
 
 struct pmatrix3x4_t
@@ -162,6 +159,6 @@ struct pmatrix3x4_t
 		memset(matrix, 0, sizeof(matrix));
 	}
 
-	Float matrix[3][4];
+	float matrix[3][4];
 };
 #endif

@@ -34,152 +34,152 @@ All Rights Reserved.
 #include "cl_snd.h"
 
 // Window description file
-const Char CUISettingsWindow::WINDOW_DESC_FILE[] = "settingswindow.json";
+const char CUISettingsWindow::WINDOW_DESC_FILE[] = "settingswindow.json";
 // Window description file
-const Char CUISettingsWindow::WINDOW_OBJ_NAME[] = "SettingsWindow";
+const char CUISettingsWindow::WINDOW_OBJ_NAME[] = "SettingsWindow";
 // Apply button object name
-const Char CUISettingsWindow::APPLY_BUTTON_OBJ_NAME[] = "ApplyButton";
+const char CUISettingsWindow::APPLY_BUTTON_OBJ_NAME[] = "ApplyButton";
 // Cancel button object name
-const Char CUISettingsWindow::CANCEL_BUTTON_OBJ_NAME[] = "CancelButton";
+const char CUISettingsWindow::CANCEL_BUTTON_OBJ_NAME[] = "CancelButton";
 // Settings tab object name
-const Char CUISettingsWindow::SETTINGS_TAB_OBJ_NAME[] = "SettingsTab";
+const char CUISettingsWindow::SETTINGS_TAB_OBJ_NAME[] = "SettingsTab";
 // Binds list tab object name
-const Char CUISettingsWindow::BINDSTAB_LIST_OBJ_NAME[] = "BindsTabList";
+const char CUISettingsWindow::BINDSTAB_LIST_OBJ_NAME[] = "BindsTabList";
 // Binds list tab object name
-const Char CUISettingsWindow::BINDSTAB_CLEAR_BTN_OBJ_NAME[] = "Bind_ClearButton";
+const char CUISettingsWindow::BINDSTAB_CLEAR_BTN_OBJ_NAME[] = "Bind_ClearButton";
 // Binds list tab object name
-const Char CUISettingsWindow::BINDSTAB_BIND_BTN_OBJ_NAME[] = "Bind_BindButton";
+const char CUISettingsWindow::BINDSTAB_BIND_BTN_OBJ_NAME[] = "Bind_BindButton";
 // Binds list tab object name
-const Char CUISettingsWindow::BINDSTAB_RESTORE_DEFAULTS_BTN_OBJ_NAME[] = "Bind_RestoreDefaults";
+const char CUISettingsWindow::BINDSTAB_RESTORE_DEFAULTS_BTN_OBJ_NAME[] = "Bind_RestoreDefaults";
 // Video tab display device label object name
-const Char CUISettingsWindow::VIDEOTAB_DISPLAY_DEVICE_LABEL_OBJ_NAME[] = "DisplayDeviceLabel";
+const char CUISettingsWindow::VIDEOTAB_DISPLAY_DEVICE_LABEL_OBJ_NAME[] = "DisplayDeviceLabel";
 // Video tab display device dropdown list object name
-const Char CUISettingsWindow::VIDEOTAB_DISPLAY_DEVICE_LIST_OBJ_NAME[] = "DisplayDeviceList";
+const char CUISettingsWindow::VIDEOTAB_DISPLAY_DEVICE_LIST_OBJ_NAME[] = "DisplayDeviceList";
 // Video tab display device label object name
-const Char CUISettingsWindow::VIDEOTAB_RESOLUTION_LABEL_OBJ_NAME[] = "DisplayResolutionLabel";
+const char CUISettingsWindow::VIDEOTAB_RESOLUTION_LABEL_OBJ_NAME[] = "DisplayResolutionLabel";
 // Video tab display resolution dropdown list object name
-const Char CUISettingsWindow::VIDEOTAB_DISPLAY_RESOLUTION_LIST_OBJ_NAME[] = "DisplayResolutionList";
+const char CUISettingsWindow::VIDEOTAB_DISPLAY_RESOLUTION_LIST_OBJ_NAME[] = "DisplayResolutionList";
 // Video tab display device label object name
-const Char CUISettingsWindow::VIDEOTAB_WINDOW_MODE_LABEL_OBJ_NAME[] = "WindowModeLabel";
+const char CUISettingsWindow::VIDEOTAB_WINDOW_MODE_LABEL_OBJ_NAME[] = "WindowModeLabel";
 // Video tab display resolution dropdown list object name
-const Char CUISettingsWindow::VIDEOTAB_DISPLAY_WINDOWMODE_LIST_OBJ_NAME[] = "WindowModeList";
+const char CUISettingsWindow::VIDEOTAB_DISPLAY_WINDOWMODE_LIST_OBJ_NAME[] = "WindowModeList";
 // Video tab anisotropy label object name
-const Char CUISettingsWindow::VIDEOTAB_ANISOTROPY_LABEL_OBJ_NAME[] = "AnisotropyLabel";
+const char CUISettingsWindow::VIDEOTAB_ANISOTROPY_LABEL_OBJ_NAME[] = "AnisotropyLabel";
 // Video tab anisotropy dropdown list object name
-const Char CUISettingsWindow::VIDEOTAB_ANISOTROPY_LIST_OBJ_NAME[] = "AnisotropyList";
+const char CUISettingsWindow::VIDEOTAB_ANISOTROPY_LIST_OBJ_NAME[] = "AnisotropyList";
 // Video tab antialias label object name
-const Char CUISettingsWindow::VIDEOTAB_ANTIALIAS_LABEL_OBJ_NAME[] = "AntiAliasLabel";
+const char CUISettingsWindow::VIDEOTAB_ANTIALIAS_LABEL_OBJ_NAME[] = "AntiAliasLabel";
 // Video tab antialiasing dropdown list object name
-const Char CUISettingsWindow::VIDEOTAB_ANTIALIAS_LIST_OBJ_NAME[] = "AntiAliasList";
+const char CUISettingsWindow::VIDEOTAB_ANTIALIAS_LIST_OBJ_NAME[] = "AntiAliasList";
 // Video tab vertical sync label object name
-const Char CUISettingsWindow::VIDEOTAB_VERTICAL_SYNC_LABEL_OBJ_NAME[] = "VerticalSyncLabel";
+const char CUISettingsWindow::VIDEOTAB_VERTICAL_SYNC_LABEL_OBJ_NAME[] = "VerticalSyncLabel";
 // Video tab vertical sync dropdown list object name
-const Char CUISettingsWindow::VIDEOTAB_VERTICAL_SYNC_LIST_OBJ_NAME[] = "VerticalSyncList";
+const char CUISettingsWindow::VIDEOTAB_VERTICAL_SYNC_LIST_OBJ_NAME[] = "VerticalSyncList";
 // Video tab framebuffer object label object name
-const Char CUISettingsWindow::VIDEOTAB_FRAMEBUFFER_OBJECTS_LABEL_OBJ_NAME[] = "FramebufferObjectsLabel";
+const char CUISettingsWindow::VIDEOTAB_FRAMEBUFFER_OBJECTS_LABEL_OBJ_NAME[] = "FramebufferObjectsLabel";
 // Video tab framebuffer object dropdown list object name
-const Char CUISettingsWindow::VIDEOTAB_FRAMEBUFFER_OBJECTS_LIST_OBJ_NAME[] = "FramebufferObjectsList";
+const char CUISettingsWindow::VIDEOTAB_FRAMEBUFFER_OBJECTS_LIST_OBJ_NAME[] = "FramebufferObjectsList";
 // Video tab display device label object name
-const Char CUISettingsWindow::VIDEOTAB_GAMMA_LABEL_OBJ_NAME[] = "GammaLabel";
+const char CUISettingsWindow::VIDEOTAB_GAMMA_LABEL_OBJ_NAME[] = "GammaLabel";
 // Video tab display resolution dropdown list object name
-const Char CUISettingsWindow::VIDEOTAB_GAMMA_SLIDER_OBJ_NAME[] = "GammaSlider";
+const char CUISettingsWindow::VIDEOTAB_GAMMA_SLIDER_OBJ_NAME[] = "GammaSlider";
 // Advance tab list object name
-const Char CUISettingsWindow::ADVANCED_TAB_LIST_OBJ_NAME[] = "AdvancedTabList";
+const char CUISettingsWindow::ADVANCED_TAB_LIST_OBJ_NAME[] = "AdvancedTabList";
 // Advanced tab options list file
-const Char CUISettingsWindow::ADVANCED_DESC_FILE[] = "scripts/advanced_default.scr";
+const char CUISettingsWindow::ADVANCED_DESC_FILE[] = "scripts/advanced_default.scr";
 // Advanced tab options list file
-const Char CUISettingsWindow::SCROLLSURFACE_OPTION_LABEL_OBJ_NAME[] = "ScrollSurfaceOptionLabel";
+const char CUISettingsWindow::SCROLLSURFACE_OPTION_LABEL_OBJ_NAME[] = "ScrollSurfaceOptionLabel";
 // Advanced tab options list file
-const Char CUISettingsWindow::SCROLLSURFACE_OPTION_LIST_OBJ_NAME[] = "ScrollSurfaceOptionList";
+const char CUISettingsWindow::SCROLLSURFACE_OPTION_LIST_OBJ_NAME[] = "ScrollSurfaceOptionList";
 // Advanced tab options list file
-const Char CUISettingsWindow::SCROLLSURFACE_OPTION_TAB_OBJ_NAME[] = "ScrollSurfaceOptionTab";
+const char CUISettingsWindow::SCROLLSURFACE_OPTION_TAB_OBJ_NAME[] = "ScrollSurfaceOptionTab";
 // "Reverse Mouse" tickbox object name
-const Char CUISettingsWindow::MOUSE_TAB_REVERSE_MOUSE_BOX_OBJ_NAME[] = "ReverseMouseTickBox";
+const char CUISettingsWindow::MOUSE_TAB_REVERSE_MOUSE_BOX_OBJ_NAME[] = "ReverseMouseTickBox";
 // "Reverse Mouse" label object name
-const Char CUISettingsWindow::MOUSE_TAB_REVERSE_MOUSE_LABEL_OBJ_NAME[] = "ReverseMouseLabel";
+const char CUISettingsWindow::MOUSE_TAB_REVERSE_MOUSE_LABEL_OBJ_NAME[] = "ReverseMouseLabel";
 // "Filter Mouse" tickbox object name
-const Char CUISettingsWindow::MOUSE_TAB_FILTER_MOUSE_BOX_OBJ_NAME[] = "FilterMouseTickBox";
+const char CUISettingsWindow::MOUSE_TAB_FILTER_MOUSE_BOX_OBJ_NAME[] = "FilterMouseTickBox";
 // "Filter Mouse" object name
-const Char CUISettingsWindow::MOUSE_TAB_FILTER_MOUSE_LABEL_OBJ_NAME[] = "FilterMouseLabel";
+const char CUISettingsWindow::MOUSE_TAB_FILTER_MOUSE_LABEL_OBJ_NAME[] = "FilterMouseLabel";
 // Auto-aim tickbox object name
-const Char CUISettingsWindow::MOUSE_TAB_AUTOAIM_BOX_OBJ_NAME[] = "AutoAimTickBox";
+const char CUISettingsWindow::MOUSE_TAB_AUTOAIM_BOX_OBJ_NAME[] = "AutoAimTickBox";
 // Auto-aim label object name
-const Char CUISettingsWindow::MOUSE_TAB_AUTOAIM_LABEL_OBJ_NAME[] = "AutoAimLabel";
+const char CUISettingsWindow::MOUSE_TAB_AUTOAIM_LABEL_OBJ_NAME[] = "AutoAimLabel";
 // Raw input tickbox object name
-const Char CUISettingsWindow::MOUSE_TAB_RAWINPUT_BOX_OBJ_NAME[] = "RawInputTickBox";
+const char CUISettingsWindow::MOUSE_TAB_RAWINPUT_BOX_OBJ_NAME[] = "RawInputTickBox";
 // Raw input label object name
-const Char CUISettingsWindow::MOUSE_TAB_RAWINPUT_LABEL_OBJ_NAME[] = "RawInputLabel";
+const char CUISettingsWindow::MOUSE_TAB_RAWINPUT_LABEL_OBJ_NAME[] = "RawInputLabel";
 // Mouse sensitivity slider object name
-const Char CUISettingsWindow::MOUSE_TAB_SENSITIVITY_SLIDER_OBJ_NAME[] = "MouseSensitivitySlider";
+const char CUISettingsWindow::MOUSE_TAB_SENSITIVITY_SLIDER_OBJ_NAME[] = "MouseSensitivitySlider";
 // Mouse sensitivity slider object name
-const Char CUISettingsWindow::MOUSE_TAB_SENSITIVITY_LABEL_OBJ_NAME[] = "MouseSensitivityLabel";
+const char CUISettingsWindow::MOUSE_TAB_SENSITIVITY_LABEL_OBJ_NAME[] = "MouseSensitivityLabel";
 // Mouse sensitivity value tab object name
-const Char CUISettingsWindow::MOUSE_TAB_SENSITIVITY_TAB_OBJ_NAME[] = "MouseSensitivityTab";
+const char CUISettingsWindow::MOUSE_TAB_SENSITIVITY_TAB_OBJ_NAME[] = "MouseSensitivityTab";
 // Mouse sensitivity value text object name
-const Char CUISettingsWindow::MOUSE_TAB_SENSITIVITY_TEXT_OBJ_NAME[] = "MouseSensitivityText";
+const char CUISettingsWindow::MOUSE_TAB_SENSITIVITY_TEXT_OBJ_NAME[] = "MouseSensitivityText";
 // Mouse filter frames slider object name
-const Char CUISettingsWindow::MOUSE_TAB_FILTER_FRAMES_SLIDER_OBJ_NAME[] = "MouseFilterFramesSlider";
+const char CUISettingsWindow::MOUSE_TAB_FILTER_FRAMES_SLIDER_OBJ_NAME[] = "MouseFilterFramesSlider";
 // Mouse filter frames slider object name
-const Char CUISettingsWindow::MOUSE_TAB_FILTER_FRAMES_LABEL_OBJ_NAME[] = "MouseFilterFramesLabel";
+const char CUISettingsWindow::MOUSE_TAB_FILTER_FRAMES_LABEL_OBJ_NAME[] = "MouseFilterFramesLabel";
 // Mouse filter frames value tab object name
-const Char CUISettingsWindow::MOUSE_TAB_FILTER_FRAMES_TAB_OBJ_NAME[] = "MouseFilterFramesTab";
+const char CUISettingsWindow::MOUSE_TAB_FILTER_FRAMES_TAB_OBJ_NAME[] = "MouseFilterFramesTab";
 // Mouse filter frames value text object name
-const Char CUISettingsWindow::MOUSE_TAB_FILTER_FRAMES_TEXT_OBJ_NAME[] = "MouseFilterFramesText";
+const char CUISettingsWindow::MOUSE_TAB_FILTER_FRAMES_TEXT_OBJ_NAME[] = "MouseFilterFramesText";
 // Mouse sensitivity value tab object name
-const Char CUISettingsWindow::AUDIO_TAB_MASTER_VOLUME_LABEL_OBJ_NAME[] = "MasterVolumeLabel";
+const char CUISettingsWindow::AUDIO_TAB_MASTER_VOLUME_LABEL_OBJ_NAME[] = "MasterVolumeLabel";
 // Mouse sensitivity value text object name
-const Char CUISettingsWindow::AUDIO_TAB_MASTER_VOLUME_SLIDER_OBJ_NAME[] = "MasterVolumeSlider";
+const char CUISettingsWindow::AUDIO_TAB_MASTER_VOLUME_SLIDER_OBJ_NAME[] = "MasterVolumeSlider";
 // Game volume label object name
-const Char CUISettingsWindow::AUDIO_TAB_GAME_VOLUME_LABEL_OBJ_NAME[] = "GameVolumeLabel";
+const char CUISettingsWindow::AUDIO_TAB_GAME_VOLUME_LABEL_OBJ_NAME[] = "GameVolumeLabel";
 // Game volume slider object name
-const Char CUISettingsWindow::AUDIO_TAB_GAME_VOLUME_SLIDER_OBJ_NAME[] = "GameVolumeSlider";
+const char CUISettingsWindow::AUDIO_TAB_GAME_VOLUME_SLIDER_OBJ_NAME[] = "GameVolumeSlider";
 // Mouse sensitivity value tab object name
-const Char CUISettingsWindow::AUDIO_TAB_MUSIC_VOLUME_LABEL_OBJ_NAME[] = "MusicVolumeLabel";
+const char CUISettingsWindow::AUDIO_TAB_MUSIC_VOLUME_LABEL_OBJ_NAME[] = "MusicVolumeLabel";
 // Mouse sensitivity value text object name
-const Char CUISettingsWindow::AUDIO_TAB_MUSIC_VOLUME_SLIDER_OBJ_NAME[] = "MusicVolumeSlider";
+const char CUISettingsWindow::AUDIO_TAB_MUSIC_VOLUME_SLIDER_OBJ_NAME[] = "MusicVolumeSlider";
 // Mouse sensitivity value text object name
-const Char CUISettingsWindow::AUDIO_TAB_OCCLUSION_LABEL_OBJ_NAME[] = "SoundOcclusionLabel";
+const char CUISettingsWindow::AUDIO_TAB_OCCLUSION_LABEL_OBJ_NAME[] = "SoundOcclusionLabel";
 // Mouse sensitivity value text object name
-const Char CUISettingsWindow::AUDIO_TAB_OCCLUSION_TICKBOX_OBJ_NAME[] = "SoundOcclusionTickBox";
+const char CUISettingsWindow::AUDIO_TAB_OCCLUSION_TICKBOX_OBJ_NAME[] = "SoundOcclusionTickBox";
 // HRTF text object name
-const Char CUISettingsWindow::AUDIO_TAB_HRTF_LABEL_OBJ_NAME[] = "HRTFLabel";
+const char CUISettingsWindow::AUDIO_TAB_HRTF_LABEL_OBJ_NAME[] = "HRTFLabel";
 // HRTF tick box object name
-const Char CUISettingsWindow::AUDIO_TAB_HRTF_TICKBOX_OBJ_NAME[] = "HRTFTickBox";
+const char CUISettingsWindow::AUDIO_TAB_HRTF_TICKBOX_OBJ_NAME[] = "HRTFTickBox";
 // Subtitles text object name
-const Char CUISettingsWindow::AUDIO_TAB_SUBTITLES_LABEL_OBJ_NAME[] = "SubtitlesLabel";
+const char CUISettingsWindow::AUDIO_TAB_SUBTITLES_LABEL_OBJ_NAME[] = "SubtitlesLabel";
 // Subtitles tick box object name
-const Char CUISettingsWindow::AUDIO_TAB_SUBTITLES_TICKBOX_OBJ_NAME[] = "SubtitlesTickBox";
+const char CUISettingsWindow::AUDIO_TAB_SUBTITLES_TICKBOX_OBJ_NAME[] = "SubtitlesTickBox";
 // View bob slider object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_VIEWBOB_SLIDER_OBJ_NAME[] = "ViewBobSlider";
+const char CUISettingsWindow::GAMEPLAY_TAB_VIEWBOB_SLIDER_OBJ_NAME[] = "ViewBobSlider";
 // View boby slider object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_VIEWBOB_LABEL_OBJ_NAME[] = "ViewBobLabel";
+const char CUISettingsWindow::GAMEPLAY_TAB_VIEWBOB_LABEL_OBJ_NAME[] = "ViewBobLabel";
 // View bob value tab object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_VIEWBOB_TAB_OBJ_NAME[] = "ViewBobTab";
+const char CUISettingsWindow::GAMEPLAY_TAB_VIEWBOB_TAB_OBJ_NAME[] = "ViewBobTab";
 // View bob value text object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_VIEWBOB_TEXT_OBJ_NAME[] = "ViewBobText";
+const char CUISettingsWindow::GAMEPLAY_TAB_VIEWBOB_TEXT_OBJ_NAME[] = "ViewBobText";
 // View roll slider object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_VIEWROLL_SLIDER_OBJ_NAME[] = "ViewRollSlider";
+const char CUISettingsWindow::GAMEPLAY_TAB_VIEWROLL_SLIDER_OBJ_NAME[] = "ViewRollSlider";
 // View roll slider object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_VIEWROLL_LABEL_OBJ_NAME[] = "ViewRollLabel";
+const char CUISettingsWindow::GAMEPLAY_TAB_VIEWROLL_LABEL_OBJ_NAME[] = "ViewRollLabel";
 // View roll value tab object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_VIEWROLL_TAB_OBJ_NAME[] = "ViewRollTab";
+const char CUISettingsWindow::GAMEPLAY_TAB_VIEWROLL_TAB_OBJ_NAME[] = "ViewRollTab";
 // View roll value text object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_VIEWROLL_TEXT_OBJ_NAME[] = "ViewRollText";
+const char CUISettingsWindow::GAMEPLAY_TAB_VIEWROLL_TEXT_OBJ_NAME[] = "ViewRollText";
 // FOV slider object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_FOV_SLIDER_OBJ_NAME[] = "FOVSlider";
+const char CUISettingsWindow::GAMEPLAY_TAB_FOV_SLIDER_OBJ_NAME[] = "FOVSlider";
 // FOV slider object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_FOV_LABEL_OBJ_NAME[] = "FOVLabel";
+const char CUISettingsWindow::GAMEPLAY_TAB_FOV_LABEL_OBJ_NAME[] = "FOVLabel";
 // FOV value tab object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_FOV_TAB_OBJ_NAME[] = "FOVTab";
+const char CUISettingsWindow::GAMEPLAY_TAB_FOV_TAB_OBJ_NAME[] = "FOVTab";
 // FOV value text object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_FOV_TEXT_OBJ_NAME[] = "FOVText";
+const char CUISettingsWindow::GAMEPLAY_TAB_FOV_TEXT_OBJ_NAME[] = "FOVText";
 // Gameplay tab list object name
-const Char CUISettingsWindow::GAMEPLAY_TAB_LIST_OBJ_NAME[] = "GameplayTabList";
+const char CUISettingsWindow::GAMEPLAY_TAB_LIST_OBJ_NAME[] = "GameplayTabList";
 // Advanced tab options list file
-const Char CUISettingsWindow::GAMEPLAY_DESC_FILE[] = "scripts/gameplay_default.scr";
+const char CUISettingsWindow::GAMEPLAY_DESC_FILE[] = "scripts/gameplay_default.scr";
 
 // Binds file path
-const Char CUISettingsWindow::BINDS_FILE_PATH[] = "scripts/kb_act.lst";
+const char CUISettingsWindow::BINDS_FILE_PATH[] = "scripts/kb_act.lst";
 
 // Current instance of the window
 CUISettingsWindow* CUISettingsWindow::m_pInstance = nullptr;
@@ -188,7 +188,7 @@ CUISettingsWindow* CUISettingsWindow::m_pInstance = nullptr;
 // @brief Constructor
 //
 //=============================================
-CUISettingsWindow::CUISettingsWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUISettingsWindow::CUISettingsWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIWindow(UIW_FL_MENUWINDOW, flags, width, height, originx, originy),
 	m_pResolutionDropList(nullptr),
 	m_pMSAADropList(nullptr),
@@ -417,10 +417,10 @@ CUITabBody* CUISettingsWindow::InitAdvancedTab( CUITabList* pTabList, const ui_w
 	// Create the advanced settings tab
 	CUITabBody* pAdvancedTab = pTabList->createTab("Advanced");
 	if(!pAdvancedTab)
-		return false;
+		return nullptr;
 
 	if(!LoadScrollableOptionsList(pAdvancedTab, pWinDesc, pTabObject, ADVANCED_TAB_LIST_OBJ_NAME, ADVANCED_DESC_FILE))
-		return false;
+		return nullptr;
 
 	return pAdvancedTab;
 }
@@ -429,14 +429,14 @@ CUITabBody* CUISettingsWindow::InitAdvancedTab( CUITabList* pTabList, const ui_w
 // @brief Loads a scrollable options list
 //
 //=============================================
-bool CUISettingsWindow::LoadScrollableOptionsList( CUITabBody* pTab, const ui_windowdescription_t* pWinDesc, const ui_objectinfo_t* pTabObject, const Char* pstrTabObjectName, const Char* pstrOptionsFilename )
+bool CUISettingsWindow::LoadScrollableOptionsList( CUITabBody* pTab, const ui_windowdescription_t* pWinDesc, const ui_objectinfo_t* pTabObject, const char* pstrTabObjectName, const char* pstrOptionsFilename )
 {
 	// Create the scrollable surface for the advanced options
 	const ui_objectinfo_t* pTabListObjectInfo = pWinDesc->getObject(UI_OBJECT_LIST, pstrTabObjectName);
 	if(!pTabListObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, ADVANCED_TAB_LIST_OBJ_NAME);
-		return nullptr;
+		return false;
 	}
 	
 	CUIScrollableSurface* pScrollSurface = new CUIScrollableSurface(pTabListObjectInfo->getFlags(), 
@@ -453,15 +453,15 @@ bool CUISettingsWindow::LoadScrollableOptionsList( CUITabBody* pTab, const ui_wi
 	}
 
 	// Where we need to start adding stuff from
-	Uint32 startIndex = m_scrollSurfaceOptionsArray.size();
+	UInt32 startIndex = m_scrollSurfaceOptionsArray.size();
 
 	// Open the file describing the options
-	Uint32 iSize = 0;
-	const byte* pOptionsFile = FL_LoadFile(pstrOptionsFilename, &iSize);
+	UInt32 iSize = 0;
+	const Byte* pOptionsFile = FL_LoadFile(pstrOptionsFilename, &iSize);
 
 	// Parse the options
-	const Char* pstr = reinterpret_cast<const Char*>(pOptionsFile);
-	while(pstr && (pstr - reinterpret_cast<const Char*>(pOptionsFile)) < iSize)
+	const char* pstr = reinterpret_cast<const char*>(pOptionsFile);
+	while(pstr && (pstr - reinterpret_cast<const char*>(pOptionsFile)) < iSize)
 	{
 		// Parse the cvar name
 		CString cvarname;
@@ -535,7 +535,7 @@ bool CUISettingsWindow::LoadScrollableOptionsList( CUITabBody* pTab, const ui_wi
 			// Set type
 			newOption.type = UI_OBJECT_LIST;
 
-			while(pstr && (pstr - reinterpret_cast<const Char*>(pOptionsFile)) < iSize)
+			while(pstr && (pstr - reinterpret_cast<const char*>(pOptionsFile)) < iSize)
 			{
 				// Read in the option name
 				pstr = Common::Parse(pstr, token);
@@ -707,28 +707,28 @@ bool CUISettingsWindow::LoadScrollableOptionsList( CUITabBody* pTab, const ui_wi
 	if(!pScrollSurfaceOptionLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, SCROLLSURFACE_OPTION_LABEL_OBJ_NAME);
-		return nullptr;
+		return false;
 	}
 
 	const ui_objectinfo_t* pScrollSurfaceOptionListObjectInfo = pWinDesc->getObject(UI_OBJECT_LIST, SCROLLSURFACE_OPTION_LIST_OBJ_NAME);
 	if(!pScrollSurfaceOptionListObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, SCROLLSURFACE_OPTION_LIST_OBJ_NAME);
-		return nullptr;
+		return false;
 	}
 
 	const ui_objectinfo_t* pScrollSurfaceOptionTabObjectInfo = pWinDesc->getObject(UI_OBJECT_TAB, SCROLLSURFACE_OPTION_TAB_OBJ_NAME);
 	if(!pScrollSurfaceOptionTabObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, SCROLLSURFACE_OPTION_TAB_OBJ_NAME);
-		return nullptr;
+		return false;
 	}
 
 	// Add the new elements to the list
 	Int32 yOffset = 0;
-	Uint32 heightAdd = 0;
+	UInt32 heightAdd = 0;
 
-	for(Uint32 i = startIndex; i < m_scrollSurfaceOptionsArray.size(); i++)
+	for(UInt32 i = startIndex; i < m_scrollSurfaceOptionsArray.size(); i++)
 	{
 		scrollsurf_option_t* poption = &m_scrollSurfaceOptionsArray[i];
 
@@ -739,7 +739,7 @@ bool CUISettingsWindow::LoadScrollableOptionsList( CUITabBody* pTab, const ui_wi
 		m_scrollSurfaceOptionsRowObjects.push_back(pRowObject);
 
 		// Add the frist column in
-		Uint32 columnWidth = pScrollSurface->getWidth()/2;
+		UInt32 columnWidth = pScrollSurface->getWidth()/2;
 
 		// Add the left row column object
 		CUIObject* pLeftRowObject = new CUIObject(UIEL_FL_NONE, columnWidth, pScrollSurfaceOptionListObjectInfo->getListRowHeight(), 0, 0);
@@ -784,7 +784,7 @@ bool CUISettingsWindow::LoadScrollableOptionsList( CUITabBody* pTab, const ui_wi
 			}
 
 			// Add each choice
-			for(Uint32 j = 0; j < poption->choices.size(); j++)
+			for(UInt32 j = 0; j < poption->choices.size(); j++)
 			{
 				adv_choice_t& choice = poption->choices[j];
 				pList->addChoice(choice.name.c_str());
@@ -797,15 +797,15 @@ bool CUISettingsWindow::LoadScrollableOptionsList( CUITabBody* pTab, const ui_wi
 				if(pCVar->GetType() == CVAR_FLOAT)
 				{
 					// Retreive current value
-					Float curValue = pCVar->GetValue();
+					float curValue = pCVar->GetValue();
 
-					Uint32 j = 0;
+					UInt32 j = 0;
 					for(; j < poption->choices.size(); j++)
 					{
 						adv_choice_t& choice = poption->choices[j];
 
 						// Convert string to float
-						Float choiceValue = SDL_atof(choice.value.c_str());
+						float choiceValue = SDL_atof(choice.value.c_str());
 						if(choiceValue == curValue)
 						{
 							pList->setSelection(j);
@@ -820,7 +820,7 @@ bool CUISettingsWindow::LoadScrollableOptionsList( CUITabBody* pTab, const ui_wi
 				{
 					CString curvalue = pCVar->GetStrValue();
 
-					Uint32 j = 0;
+					UInt32 j = 0;
 					for(; j < poption->choices.size(); j++)
 					{
 						adv_choice_t& choice = poption->choices[j];
@@ -872,7 +872,7 @@ bool CUISettingsWindow::LoadScrollableOptionsList( CUITabBody* pTab, const ui_wi
 				if(pCVar->GetType() == CVAR_FLOAT)
 				{
 					// Retreive current value
-					Float curValue = pCVar->GetValue();
+					float curValue = pCVar->GetValue();
 
 					CString value;
 					value << curValue;
@@ -900,7 +900,7 @@ bool CUISettingsWindow::LoadScrollableOptionsList( CUITabBody* pTab, const ui_wi
 // @brief Sets the clicked advanced option to be on top
 //
 //=============================================
-void CUISettingsWindow::SetAdvancedOptionFocus( Uint32 rowIndex, bool isOpen )
+void CUISettingsWindow::SetAdvancedOptionFocus( UInt32 rowIndex, bool isOpen )
 {
 	assert(rowIndex >= 0 && rowIndex < m_scrollSurfaceOptionsRowObjects.size());
 	CUIInteractiveObject* pObject = m_scrollSurfaceOptionsRowObjects[rowIndex];
@@ -915,7 +915,7 @@ void CUISettingsWindow::SetAdvancedOptionFocus( Uint32 rowIndex, bool isOpen )
 // @brief Sets up the Video tab
 //
 //=============================================
-void CUISettingsWindow::AdvancedOptionSelect( Uint32 rowIndex, Uint32 selectionIndex )
+void CUISettingsWindow::AdvancedOptionSelect( UInt32 rowIndex, UInt32 selectionIndex )
 {
 	assert(rowIndex >= 0 && rowIndex < m_scrollSurfaceOptionsRowObjects.size());
 	CUIInteractiveObject* pObject = m_scrollSurfaceOptionsRowObjects[rowIndex];
@@ -954,7 +954,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pDeviceLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_DISPLAY_DEVICE_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create the label
@@ -971,7 +971,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pDeviceListObject)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_DISPLAY_DEVICE_LIST_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIDeviceSelectEvent* pDeviceSelectEvent = new CUIDeviceSelectEvent(this);
@@ -996,7 +996,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pDeviceLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_RESOLUTION_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIText* pResolutionLabel = new CUIText(pResolutionLabelObjectInfo->getFlags(), 
@@ -1012,7 +1012,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pDeviceListObject)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_DISPLAY_RESOLUTION_LIST_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIResolutionSelectEvent* pResSelectEvent = new CUIResolutionSelectEvent(this);
@@ -1041,7 +1041,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	for(Int32 i = 0; i < nbDevices; i++)
 	{
 		// Add the device to the list
-		const Char* pstrDeviceName = gWindow.GetDisplayDeviceName(i);
+		const char* pstrDeviceName = gWindow.GetDisplayDeviceName(i);
 		pDeviceDropList->addChoice(pstrDeviceName);
 
 		if(m_displayDeviceIndex == i)
@@ -1056,7 +1056,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pWindowModeLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_WINDOW_MODE_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIText* pModeLabel = new CUIText(pWindowModeLabelObjectInfo->getFlags(), 
@@ -1072,7 +1072,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pWindowModeListObject)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_DISPLAY_WINDOWMODE_LIST_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIWindowModeSelectEvent* pModeSelectEvent = new CUIWindowModeSelectEvent(this);
@@ -1107,7 +1107,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pGammaLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_GAMMA_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIText* pText = new CUIText(pGammaLabelObjectInfo->getFlags(),
@@ -1123,7 +1123,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pGammaSliderObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_GAMMA_SLIDER_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create object
@@ -1143,7 +1143,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pSlider->init(pGammaSliderObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize slider object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	CCVar* pCVar = gConsole.GetCVar(GAMMA_CVAR_NAME);
@@ -1153,7 +1153,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 			Con_EPrintf("CVar '%s' for 'CUISlider' object is not of float type.\n", GAMMA_CVAR_NAME);
 		else
 		{
-			Float value = pCVar->GetValue();
+			float value = pCVar->GetValue();
 			pSlider->setValue(value);
 		}
 	}
@@ -1167,7 +1167,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pAnisotropyLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_ANISOTROPY_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create the label
@@ -1184,7 +1184,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pAnisotropyListObject)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_ANISOTROPY_LIST_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIAnisotropySelectEvent* pAnisotropySelectEvent = new CUIAnisotropySelectEvent(this);
@@ -1207,10 +1207,10 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	// Populate the tab
 	CTextureManager* pTextureManager = CTextureManager::GetInstance();
 
-	Uint32 nbAnisotropySettings = pTextureManager->GetNbAnisotropySettings();
-	for (Uint32 i = 0; i < nbAnisotropySettings; i++)
+	UInt32 nbAnisotropySettings = pTextureManager->GetNbAnisotropySettings();
+	for (UInt32 i = 0; i < nbAnisotropySettings; i++)
 	{
-		Uint32 value = pTextureManager->GetAnisotropySettingValue(i);
+		UInt32 value = pTextureManager->GetAnisotropySettingValue(i);
 
 		CString valueName;
 		if (value == CTextureManager::ANISOTROPY_OFF_VALUE)
@@ -1243,7 +1243,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pAntiAliasLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_ANTIALIAS_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create the label
@@ -1260,7 +1260,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pAntiAliasListObject)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_ANTIALIAS_LIST_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIAntiAliasSelectEvent* pAntiAliasSelectEvent = new CUIAntiAliasSelectEvent(this);
@@ -1288,7 +1288,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pVerticalSyncLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_VERTICAL_SYNC_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create the label
@@ -1305,7 +1305,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if(!pVerticalSyncListObject)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_VERTICAL_SYNC_LIST_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIVerticalSyncSelectEvent* pVerticalSyncSelectEvent = new CUIVerticalSyncSelectEvent(this);
@@ -1340,7 +1340,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if (!pFramebufferObjectsLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_FRAMEBUFFER_OBJECTS_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create the label
@@ -1357,7 +1357,7 @@ CUITabBody* CUISettingsWindow::InitVideoTab( CUITabList* pTabList, const ui_wind
 	if (!pFramebufferObjectsListObject)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, VIDEOTAB_FRAMEBUFFER_OBJECTS_LIST_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIFramebufferObjectsSelectEvent* pFramebufferObjectsSelectEvent = new CUIFramebufferObjectsSelectEvent(this);
@@ -1410,7 +1410,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 	if(!pMasterVolumeLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, AUDIO_TAB_MASTER_VOLUME_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIText* pText = new CUIText(pMasterVolumeLabelObjectInfo->getFlags(),
@@ -1426,7 +1426,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 	if(!pMasterVolumeSliderObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, AUDIO_TAB_MASTER_VOLUME_SLIDER_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create object
@@ -1446,7 +1446,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 	if(!pSlider->init(pMasterVolumeSliderObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize slider object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	CCVar* pCVar = gConsole.GetCVar(VOLUME_CVAR_NAME);
@@ -1456,7 +1456,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 			Con_EPrintf("CVar '%s' for 'CUISlider' object is not of float type.\n", VOLUME_CVAR_NAME);
 		else
 		{
-			Float value = pCVar->GetValue();
+			float value = pCVar->GetValue();
 			pSlider->setValue(value);
 		}
 	}
@@ -1470,7 +1470,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 	if(!pGameVolumeLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, AUDIO_TAB_GAME_VOLUME_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	pText = new CUIText(pGameVolumeLabelObjectInfo->getFlags(),
@@ -1486,7 +1486,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 	if(!pGameVolumeSliderObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, AUDIO_TAB_GAME_VOLUME_SLIDER_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create object
@@ -1506,7 +1506,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 	if(!pSlider->init(pGameVolumeSliderObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize slider object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	pCVar = gConsole.GetCVar(GAME_VOLUME_CVAR_NAME);
@@ -1516,7 +1516,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 			Con_EPrintf("CVar '%s' for 'CUISlider' object is not of float type.\n", VOLUME_CVAR_NAME);
 		else
 		{
-			Float value = pCVar->GetValue();
+			float value = pCVar->GetValue();
 			pSlider->setValue(value);
 		}
 	}
@@ -1530,7 +1530,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 	if(!pMusicVolumeLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, AUDIO_TAB_MUSIC_VOLUME_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	pText = new CUIText(pMusicVolumeLabelObjectInfo->getFlags(),
@@ -1546,7 +1546,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 	if(!pMusicVolumeSliderObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, AUDIO_TAB_MUSIC_VOLUME_SLIDER_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create object
@@ -1566,7 +1566,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 	if(!pSlider->init(pMusicVolumeSliderObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize slider object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	pCVar = gConsole.GetCVar(MUSIC_VOLUME_CVAR_NAME);
@@ -1576,7 +1576,7 @@ CUITabBody* CUISettingsWindow::InitAudioTab( CUITabList* pTabList, const ui_wind
 			Con_EPrintf("CVar '%s' for 'CUISlider' object is not of float type.\n", MUSIC_VOLUME_CVAR_NAME);
 		else
 		{
-			Float value = pCVar->GetValue();
+			float value = pCVar->GetValue();
 			pSlider->setValue(value);
 		}
 	}
@@ -1627,7 +1627,7 @@ void CUISettingsWindow::PopulateResolutions( Int32 deviceIndex )
 	Int32 nbResolutions = gWindow.GetNbResolutions(deviceIndex);
 	for(Int32 i = 0; i < nbResolutions; i++)
 	{
-		Uint32 width, height;
+		UInt32 width, height;
 		gWindow.GetResolutionInfo(deviceIndex, i, width, height);
 
 		CString strResChoice;
@@ -1659,7 +1659,7 @@ void CUISettingsWindow::PopulateMSAAList( void )
 	Int32 nbMSAASettings = gWindow.GetNbMSAASettings();
 	for(Int32 i = 0; i < nbMSAASettings; i++)
 	{
-		Uint32 msaaValue = gWindow.GetMSAASetting(i);
+		UInt32 msaaValue = gWindow.GetMSAASetting(i);
 
 		CString strChoice;
 		if(i == 0)
@@ -1722,7 +1722,7 @@ CUITabBody* CUISettingsWindow::InitBindsTab( CUITabList* pTabList, const ui_wind
 	if(!pBindClearKeyObjInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, BINDSTAB_CLEAR_BTN_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIBindsClearBtnEvent* pClearEvent = new CUIBindsClearBtnEvent(this);
@@ -1739,7 +1739,7 @@ CUITabBody* CUISettingsWindow::InitBindsTab( CUITabList* pTabList, const ui_wind
 	if(!pClearButton->init(pBindClearKeyObjInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize button object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the Bind Key button
@@ -1747,7 +1747,7 @@ CUITabBody* CUISettingsWindow::InitBindsTab( CUITabList* pTabList, const ui_wind
 	if(!pBindBindButtonObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, BINDSTAB_BIND_BTN_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIBindsBindBtnEvent* pBindEvent = new CUIBindsBindBtnEvent(this);
@@ -1765,7 +1765,7 @@ CUITabBody* CUISettingsWindow::InitBindsTab( CUITabList* pTabList, const ui_wind
 	if(!pBindButton->init(pBindBindButtonObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize button object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the "Restore Defaults" button
@@ -1773,7 +1773,7 @@ CUITabBody* CUISettingsWindow::InitBindsTab( CUITabList* pTabList, const ui_wind
 	if(!pBindRestoreDefaultsButtonInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, BINDSTAB_RESTORE_DEFAULTS_BTN_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIBindsRestoreButtonEvent* pRestoreButtonEvent = new CUIBindsRestoreButtonEvent(this);
@@ -1791,7 +1791,7 @@ CUITabBody* CUISettingsWindow::InitBindsTab( CUITabList* pTabList, const ui_wind
 	if(!pRestoreButton->init(pBindRestoreDefaultsButtonInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize button object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	return pBindsTab;
@@ -1839,7 +1839,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pSensitivitySliderObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, MOUSE_TAB_SENSITIVITY_SLIDER_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create object
@@ -1859,7 +1859,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pSensitivitySlider->init(pSensitivitySliderObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize slider object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the slider label
@@ -1867,7 +1867,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pSensitivityLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, MOUSE_TAB_SENSITIVITY_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIText* pSensitivityText = new CUIText(pSensitivityLabelObjectInfo->getFlags(),
@@ -1883,7 +1883,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pSensitivityTabObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, MOUSE_TAB_SENSITIVITY_TAB_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUISurface* pSensitivitySurface = new CUISurface(pSensitivityTabObjectInfo->getFlags(),
@@ -1897,7 +1897,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pSensitivitySurface->init(pSensitivityTabObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize tab object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the display for the value
@@ -1905,7 +1905,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pSensitivityTextObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, MOUSE_TAB_SENSITIVITY_TEXT_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	m_pSensitivityValueText = new CUIText(pSensitivityTextObjectInfo->getFlags(), 
@@ -1926,10 +1926,10 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 		}
 		else
 		{
-			Float value = pSensitivityCVar->GetValue();
+			float value = pSensitivityCVar->GetValue();
 			pSensitivitySlider->setValue(value);
 
-			Char szValue[64];
+			char szValue[64];
 			sprintf(szValue, "%0.1f", value);
 
 			m_pSensitivityValueText->setText(szValue);
@@ -1945,7 +1945,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pFilterFramesSliderObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, MOUSE_TAB_FILTER_FRAMES_SLIDER_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create object
@@ -1965,7 +1965,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pFilterFramesSlider->init(pFilterFramesSliderObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize slider object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the slider label
@@ -1973,7 +1973,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pFilterFramesLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, MOUSE_TAB_FILTER_FRAMES_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIText* pFilterFramesText = new CUIText(pFilterFramesLabelObjectInfo->getFlags(),
@@ -1989,7 +1989,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pFilterFramesTabObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, MOUSE_TAB_FILTER_FRAMES_TAB_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUISurface* pFilterFramesSurface = new CUISurface(pFilterFramesTabObjectInfo->getFlags(),
@@ -2003,7 +2003,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pFilterFramesSurface->init(pFilterFramesTabObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize tab object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the display for the value
@@ -2011,7 +2011,7 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 	if(!pFilterFramesTextObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, MOUSE_TAB_FILTER_FRAMES_TEXT_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	m_pFilterFramesValueText = new CUIText(pFilterFramesTextObjectInfo->getFlags(), 
@@ -2032,11 +2032,11 @@ CUITabBody* CUISettingsWindow::InitMouseTab( CUITabList* pTabList, const ui_wind
 		}
 		else
 		{
-			Float value = pFilterFramesCVar->GetValue();
+			float value = pFilterFramesCVar->GetValue();
 			pFilterFramesSlider->setValue(value);
 
-			Char szValue[64];
-			sprintf_s(szValue, "%d", static_cast<Int32>(value));
+			char szValue[64];
+			ENGINE_SPRINTF_S(szValue, sizeof(szValue), "%d", static_cast<Int32>(value));
 
 			m_pFilterFramesValueText->setText(szValue);
 		}
@@ -2063,7 +2063,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewBobSliderObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_VIEWBOB_SLIDER_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create object
@@ -2083,7 +2083,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewBobSlider->init(pViewBobSliderObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize slider object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the slider label
@@ -2091,7 +2091,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewBobLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_VIEWBOB_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIText* pViewBobText = new CUIText(pViewBobLabelObjectInfo->getFlags(),
@@ -2107,7 +2107,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewBobTabObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_VIEWBOB_TAB_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUISurface* pViewBobSurface = new CUISurface(pViewBobTabObjectInfo->getFlags(),
@@ -2121,7 +2121,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewBobSurface->init(pViewBobTabObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize tab object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the text
@@ -2129,7 +2129,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewBobTextObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_VIEWBOB_TEXT_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	m_pViewBobValueText = new CUIText(pViewBobTextObjectInfo->getFlags(), 
@@ -2150,10 +2150,10 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 		}
 		else
 		{
-			Float value = pViewBobCVar->GetValue();
+			float value = pViewBobCVar->GetValue();
 			pViewBobSlider->setValue(value);
 
-			Char szValue[64];
+			char szValue[64];
 			sprintf(szValue, "%0.1f", value);
 
 			m_pViewBobValueText->setText(szValue);
@@ -2169,7 +2169,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewRollSliderObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_VIEWROLL_SLIDER_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create object
@@ -2189,7 +2189,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewRollSlider->init(pViewRollSliderObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize slider object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the slider label
@@ -2197,7 +2197,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewRollLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_VIEWROLL_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIText* pViewRollText = new CUIText(pViewRollLabelObjectInfo->getFlags(),
@@ -2213,7 +2213,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewRollTabObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_VIEWROLL_TAB_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUISurface* pViewRollSurface = new CUISurface(pViewRollTabObjectInfo->getFlags(),
@@ -2227,7 +2227,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewRollSurface->init(pViewRollTabObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize tab object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the text
@@ -2235,7 +2235,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pViewRollTextObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_VIEWROLL_TEXT_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	m_pViewRollValueText = new CUIText(pViewRollTextObjectInfo->getFlags(), 
@@ -2256,10 +2256,10 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 		}
 		else
 		{
-			Float value = pViewRollCVar->GetValue();
+			float value = pViewRollCVar->GetValue();
 			pViewRollSlider->setValue(value);
 
-			Char szValue[64];
+			char szValue[64];
 			sprintf(szValue, "%0.1f", value);
 
 			m_pViewRollValueText->setText(szValue);
@@ -2275,7 +2275,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pFOVSliderObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_FOV_SLIDER_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	// Create object
@@ -2295,7 +2295,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pFOVSlider->init(pFOVSliderObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize slider object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the slider label
@@ -2303,7 +2303,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pFOVLabelObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_FOV_LABEL_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUIText* pFOVText = new CUIText(pFOVLabelObjectInfo->getFlags(),
@@ -2319,7 +2319,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pFOVTabObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_FOV_TAB_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	CUISurface* pFOVSurface = new CUISurface(pFOVTabObjectInfo->getFlags(),
@@ -2333,7 +2333,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pFOVSurface->init(pFOVTabObjectInfo->getSchema().c_str()))
 	{
 		Con_EPrintf("Failed to initialize tab object for settings UI window.\n");
-		return false;
+		return nullptr;
 	}
 
 	// Create the text
@@ -2341,7 +2341,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	if(!pFOVTextObjectInfo)
 	{
 		Con_EPrintf("Window description file '%s' has no definition for '%s'.\n", WINDOW_DESC_FILE, GAMEPLAY_TAB_FOV_TEXT_OBJ_NAME);
-		return false;
+		return nullptr;
 	}
 
 	m_pFOVValueText = new CUIText(pFOVTextObjectInfo->getFlags(), 
@@ -2362,10 +2362,10 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 		}
 		else
 		{
-			Float value = pFOVCVar->GetValue();
+			float value = pFOVCVar->GetValue();
 			pFOVSlider->setValue(value);
 
-			Char szValue[64];
+			char szValue[64];
 			sprintf(szValue, "%0.1f", value);
 
 			m_pFOVValueText->setText(szValue);
@@ -2377,7 +2377,7 @@ CUITabBody* CUISettingsWindow::InitGameplayTab( CUITabList* pTabList, const ui_w
 	}
 
 	if(!LoadScrollableOptionsList(pGameplayTab, pWinDesc, pTabObject, GAMEPLAY_TAB_LIST_OBJ_NAME, GAMEPLAY_DESC_FILE))
-		return false;
+		return nullptr;
 
 	return pGameplayTab;
 }
@@ -2392,8 +2392,8 @@ bool CUISettingsWindow::AddTickBox( CUITabBody* pTab,
 	const CString& tickBoxObjectName, 
 	const CString& labelObjectName, 
 	const CString& consoleObjectName,
-	const Char* pstrConfigGrpName, 
-	const Char* pstrConfigValueName )
+	const char* pstrConfigGrpName, 
+	const char* pstrConfigValueName )
 {
 	// Create the tick box for "reverse mouse"
 	const ui_objectinfo_t* pCheckBoxObjectInfo = pWinDesc->getObject(UI_OBJECT_TICKBOX, tickBoxObjectName.c_str());
@@ -2486,7 +2486,7 @@ bool CUISettingsWindow::AddTickBox( CUITabBody* pTab,
 void CUISettingsWindow::LoadBindsList( void )
 {
 	// Parse the binds list
-	const Char* pstrFile = reinterpret_cast<const Char*>(FL_LoadFile(BINDS_FILE_PATH));
+	const char* pstrFile = reinterpret_cast<const char*>(FL_LoadFile(BINDS_FILE_PATH));
 	if(!pstrFile)
 	{
 		Con_EPrintf("Failed to load binds list.\n");
@@ -2498,8 +2498,8 @@ void CUISettingsWindow::LoadBindsList( void )
 	CString line;
 
 	// Parse the script line by line
-	Uint32 lineNum = 0;
-	const Char* pstr = pstrFile;
+	UInt32 lineNum = 0;
+	const char* pstr = pstrFile;
 	while(pstr)
 	{
 		pstr = Common::ReadLine(pstr, line);
@@ -2507,7 +2507,7 @@ void CUISettingsWindow::LoadBindsList( void )
 			continue;
 
 		// Read in the bind name
-		const Char* ppstr = Common::Parse(line.c_str(), bind);
+		const char* ppstr = Common::Parse(line.c_str(), bind);
 		if(!ppstr)
 		{
 			Con_EPrintf("Incomplete line %d in %s.", lineNum, BINDS_FILE_PATH);
@@ -2565,13 +2565,13 @@ void CUISettingsWindow::ResetBindsList( void )
 	if(m_bindsCommandArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_bindsCommandArray.size(); i++)
+	for(UInt32 i = 0; i < m_bindsCommandArray.size(); i++)
 	{
-		const Char* pstrCmdName = m_bindsCommandArray[i].c_str();
+		const char* pstrCmdName = m_bindsCommandArray[i].c_str();
 		if(!pstrCmdName)
 			continue;
 
-		const Char* keyName = gInput.GetKeynameForBind(pstrCmdName);
+		const char* keyName = gInput.GetKeynameForBind(pstrCmdName);
 		CUIText* pText = reinterpret_cast<CUIText*>(m_pBindsList->getRowColumnObject(i, 1));
 
 		if(keyName)
@@ -2585,7 +2585,7 @@ void CUISettingsWindow::ResetBindsList( void )
 // @brief Sets focus on a specific row
 //
 //=============================================
-void CUISettingsWindow::SetFocusOnBindsRow( Uint32 rowIndex )
+void CUISettingsWindow::SetFocusOnBindsRow( UInt32 rowIndex )
 {
 	m_pBindsList->setHighlightOnRow(rowIndex, true);
 	m_selectedRowIndex = rowIndex;
@@ -2595,12 +2595,12 @@ void CUISettingsWindow::SetFocusOnBindsRow( Uint32 rowIndex )
 // @brief Sets focus on a specific row
 //
 //=============================================
-void CUISettingsWindow::AddPendingSetting( const Char* pstrId, const Char* pstrCmd )
+void CUISettingsWindow::AddPendingSetting( const char* pstrId, const char* pstrCmd )
 {
 	// Overwrite an existing command if possible
 	if(!m_queuedCommandsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_queuedCommandsArray.size(); i++)
+		for(UInt32 i = 0; i < m_queuedCommandsArray.size(); i++)
 		{
 			setting_t& setting = m_queuedCommandsArray[i];
 			if(!qstrcmp(setting.id, pstrId))
@@ -2623,7 +2623,7 @@ void CUISettingsWindow::AddPendingSetting( const Char* pstrId, const Char* pstrC
 // @brief Enters bind mode
 //
 //=============================================
-void CUISettingsWindow::EnterBindMode( Uint32 rowIndex )
+void CUISettingsWindow::EnterBindMode( UInt32 rowIndex )
 {
 	// Hide the mouse
 	gInput.HideMouse();
@@ -2682,7 +2682,7 @@ bool CUISettingsWindow::mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 butt
 			if(keyDown)
 			{
 				// Get the key name
-				const Char* pstrKeyname = gInput.GetMouseButtonName(button);
+				const char* pstrKeyname = gInput.GetMouseButtonName(button);
 				if(pstrKeyname)
 					SetBind(pstrKeyname, m_bindsCommandArray[m_bindRowIndex].c_str());
 
@@ -2710,7 +2710,7 @@ bool CUISettingsWindow::mouseWheelEvent( Int32 mouseX, Int32 mouseY, Int32 butto
 			if(keyDown)
 			{
 				// Get the key name
-				const Char* pstrKeyname = gInput.GetMouseWheelEventName(button);
+				const char* pstrKeyname = gInput.GetMouseWheelEventName(button);
 				if(pstrKeyname)
 					SetBind(pstrKeyname, m_bindsCommandArray[m_bindRowIndex].c_str());
 
@@ -2745,7 +2745,7 @@ bool CUISettingsWindow::keyEvent( Int32 button, Int16 mod, bool keyDown )
 				}
 
 				// Get the key name
-				const Char* pstrKeyname = gInput.GetKeynameForScancode(button);
+				const char* pstrKeyname = gInput.GetKeynameForScancode(button);
 				if(pstrKeyname)
 					SetBind(pstrKeyname, m_bindsCommandArray[m_bindRowIndex].c_str());
 
@@ -2781,7 +2781,7 @@ bool CUISettingsWindow::keyEvent( Int32 button, Int16 mod, bool keyDown )
 // @brief
 //
 //=============================================
-void CUISettingsWindow::SetBind( const Char* pstrKeyname, const Char* pstrBind )
+void CUISettingsWindow::SetBind( const char* pstrKeyname, const char* pstrBind )
 {
 	// Make sure no other row has this key set
 	Int32 nbRows = m_pBindsList->getNbRows();
@@ -2807,7 +2807,7 @@ void CUISettingsWindow::SetBind( const Char* pstrKeyname, const Char* pstrBind )
 	newCmd << "bind \"" << pstrKeyname << "\" \"" << pstrBind << "\"";
 
 	// Get the bind id
-	const Char* pstrId = m_bindsCommandArray[m_bindRowIndex].c_str();
+	const char* pstrId = m_bindsCommandArray[m_bindRowIndex].c_str();
 	AddPendingSetting(pstrId, newCmd.c_str());
 }
 
@@ -2829,7 +2829,7 @@ void CUISettingsWindow::ClearSelectedKey( void )
 	newCmd << "unbind \"" << pText->getText() << "\"";
 
 	// Get the bind id
-	const Char* pstrId = m_bindsCommandArray[m_selectedRowIndex].c_str();
+	const char* pstrId = m_bindsCommandArray[m_selectedRowIndex].c_str();
 	AddPendingSetting(pstrId, newCmd.c_str());
 
 	pText->setText("");
@@ -2854,7 +2854,7 @@ void CUISettingsWindow::ApplyChanges( void )
 	if(m_queuedCommandsArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_queuedCommandsArray.size(); i++)
+	for(UInt32 i = 0; i < m_queuedCommandsArray.size(); i++)
 	{
 		// Send to the command buffer
 		CString& cmd = m_queuedCommandsArray[i].cmd;
@@ -2921,7 +2921,7 @@ void CUISettingsWindow::SelectResolution( Int32 resIndex )
 	if(m_resolutionIndex == resIndex)
 		return;
 
-	Uint32 width, height;
+	UInt32 width, height;
 	gWindow.GetResolutionInfo(m_displayDeviceIndex, resIndex, width, height);
 
 	// Add the commands to the queue
@@ -3034,7 +3034,7 @@ void CUISettingsWindow::RestoreDefaultBinds( void )
 // @brief
 //
 //=============================================
-void CUISettingsWindow::CVarChanged( const Char* pstrCvarName, Float value )
+void CUISettingsWindow::CVarChanged( const char* pstrCvarName, float value )
 {
 	CString cmd;
 	cmd << pstrCvarName << " " << value;
@@ -3046,7 +3046,7 @@ void CUISettingsWindow::CVarChanged( const Char* pstrCvarName, Float value )
 // @brief
 //
 //=============================================
-void CUISettingsWindow::SetMouseSensitivityTabText( const Char* pstrText )
+void CUISettingsWindow::SetMouseSensitivityTabText( const char* pstrText )
 {
 	m_pSensitivityValueText->setText(pstrText);
 }
@@ -3055,7 +3055,7 @@ void CUISettingsWindow::SetMouseSensitivityTabText( const Char* pstrText )
 // @brief Sets mouse filter frames tab text
 //
 //=============================================
-void CUISettingsWindow::SetMouseFilterFramesTabText( const Char* pstrText )
+void CUISettingsWindow::SetMouseFilterFramesTabText( const char* pstrText )
 {
 	m_pFilterFramesValueText->setText(pstrText);
 }
@@ -3064,7 +3064,7 @@ void CUISettingsWindow::SetMouseFilterFramesTabText( const Char* pstrText )
 // @brief
 //
 //=============================================
-void CUISettingsWindow::SetViewRollTabText( const Char* pstrText )
+void CUISettingsWindow::SetViewRollTabText( const char* pstrText )
 {
 	m_pViewRollValueText->setText(pstrText);
 }
@@ -3073,7 +3073,7 @@ void CUISettingsWindow::SetViewRollTabText( const Char* pstrText )
 // @brief Sets mouse filter frames tab text
 //
 //=============================================
-void CUISettingsWindow::SetViewBobTabText( const Char* pstrText )
+void CUISettingsWindow::SetViewBobTabText( const char* pstrText )
 {
 	m_pViewBobValueText->setText(pstrText);
 }
@@ -3082,7 +3082,7 @@ void CUISettingsWindow::SetViewBobTabText( const Char* pstrText )
 // @brief
 //
 //=============================================
-void CUISettingsWindow::SetFOVTabText( const Char* pstrText )
+void CUISettingsWindow::SetFOVTabText( const char* pstrText )
 {
 	m_pFOVValueText->setText(pstrText);
 }
@@ -3091,7 +3091,7 @@ void CUISettingsWindow::SetFOVTabText( const Char* pstrText )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUISettingsCancelEvent::PerformAction( Float param )
+void CUISettingsCancelEvent::PerformAction( float param )
 {
 	if(m_pWindow)
 		m_pWindow->setWindowFlags(CUIWindow::UIW_FL_KILLME);
@@ -3101,7 +3101,7 @@ void CUISettingsCancelEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUISettingsApplyEvent::PerformAction( Float param )
+void CUISettingsApplyEvent::PerformAction( float param )
 {
 	if(m_pWindow)
 		m_pWindow->ApplyChanges();
@@ -3119,7 +3119,7 @@ bool CUIBindsRowEvent::MouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 butto
 
 	if(keyDown)
 	{
-		Float interval = static_cast<Float>(ens.time) - m_lastClickTime;
+		float interval = static_cast<float>(ens.time) - m_lastClickTime;
 		if(interval < 0.5)
 		{
 			// Enter bind mode
@@ -3141,7 +3141,7 @@ bool CUIBindsRowEvent::MouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 butto
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUITabSelectEvent::PerformAction( Float param )
+void CUITabSelectEvent::PerformAction( float param )
 {
 	if(m_pWindow)
 		m_pWindow->SetCurrentTabIndex(param);
@@ -3151,7 +3151,7 @@ void CUITabSelectEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIBindsClearBtnEvent::PerformAction( Float param )
+void CUIBindsClearBtnEvent::PerformAction( float param )
 {
 	if(m_pWindow)
 		m_pWindow->ClearSelectedKey();
@@ -3161,7 +3161,7 @@ void CUIBindsClearBtnEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIBindsRestoreButtonEvent::PerformAction( Float param )
+void CUIBindsRestoreButtonEvent::PerformAction( float param )
 {
 	if(m_pWindow)
 		m_pWindow->RestoreDefaultBinds();
@@ -3171,7 +3171,7 @@ void CUIBindsRestoreButtonEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIBindsBindBtnEvent::PerformAction( Float param )
+void CUIBindsBindBtnEvent::PerformAction( float param )
 {
 	if(m_pWindow)
 		m_pWindow->BindSelectedKey();
@@ -3181,7 +3181,7 @@ void CUIBindsBindBtnEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIDeviceSelectEvent::PerformAction( Float param )
+void CUIDeviceSelectEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;
@@ -3193,7 +3193,7 @@ void CUIDeviceSelectEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIResolutionSelectEvent::PerformAction( Float param )
+void CUIResolutionSelectEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;
@@ -3205,7 +3205,7 @@ void CUIResolutionSelectEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIWindowModeSelectEvent::PerformAction( Float param )
+void CUIWindowModeSelectEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;
@@ -3217,7 +3217,7 @@ void CUIWindowModeSelectEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIAnisotropySelectEvent::PerformAction( Float param )
+void CUIAnisotropySelectEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;
@@ -3229,7 +3229,7 @@ void CUIAnisotropySelectEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIAntiAliasSelectEvent::PerformAction( Float param )
+void CUIAntiAliasSelectEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;
@@ -3241,7 +3241,7 @@ void CUIAntiAliasSelectEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIVerticalSyncSelectEvent::PerformAction( Float param )
+void CUIVerticalSyncSelectEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;
@@ -3253,7 +3253,7 @@ void CUIVerticalSyncSelectEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIScrollSurfaceDropListToggleEvent::PerformAction( Float param )
+void CUIScrollSurfaceDropListToggleEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;
@@ -3265,7 +3265,7 @@ void CUIScrollSurfaceDropListToggleEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIScrollSurfaceDropListSelectEvent::PerformAction( Float param )
+void CUIScrollSurfaceDropListSelectEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;
@@ -3277,7 +3277,7 @@ void CUIScrollSurfaceDropListSelectEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUITickBoxEvent::PerformAction( Float param )
+void CUITickBoxEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;
@@ -3289,7 +3289,7 @@ void CUITickBoxEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUISliderAdjustEvent::PerformAction( Float param )
+void CUISliderAdjustEvent::PerformAction( float param )
 {
 	if(!m_pWindow)
 		return;
@@ -3298,31 +3298,31 @@ void CUISliderAdjustEvent::PerformAction( Float param )
 
 	if(!qstrcmp(m_cvarName, MOUSE_SENSITIVITY_CVAR_NAME))
 	{
-		Char szValue[64];
+		char szValue[64];
 		sprintf(szValue, "%0.1f", param);
 		m_pWindow->SetMouseSensitivityTabText(szValue);
 	}
 	else if(!qstrcmp(m_cvarName, MOUSE_FILTER_FRAMES_CVAR_NAME))
 	{
-		Char szValue[64];
+		char szValue[64];
 		sprintf(szValue, "%d", static_cast<Int32>(param));
 		m_pWindow->SetMouseFilterFramesTabText(szValue);
 	}
 	else if(!qstrcmp(m_cvarName, VIEW_ROLL_CVAR_NAME))
 	{
-		Char szValue[64];
+		char szValue[64];
 		sprintf(szValue, "%0.1f", param);
 		m_pWindow->SetViewRollTabText(szValue);
 	}
 	else if(!qstrcmp(m_cvarName, VIEW_BOB_CVAR_NAME))
 	{
-		Char szValue[64];
+		char szValue[64];
 		sprintf(szValue, "%0.1f", param);
 		m_pWindow->SetViewBobTabText(szValue);
 	}
 	else if(!qstrcmp(m_cvarName, DEFAULT_FOV_CVAR_NAME))
 	{
-		Char szValue[64];
+		char szValue[64];
 		sprintf(szValue, "%d", static_cast<Int32>(param));
 		m_pWindow->SetFOVTabText(szValue);
 	}
@@ -3332,7 +3332,7 @@ void CUISliderAdjustEvent::PerformAction( Float param )
 // @brief Peforms the action of the button
 //
 //=============================================
-void CUIFramebufferObjectsSelectEvent::PerformAction(Float param)
+void CUIFramebufferObjectsSelectEvent::PerformAction(float param)
 {
 	if (!m_pWindow)
 		return;

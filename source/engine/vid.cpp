@@ -69,7 +69,7 @@ void Cmd_VID_SetDisplayDevice( void )
 {
 	if(gCommands.Cmd_Argc() == 2) 
 	{
-		const Char *pstrDisplayIdx = gCommands.Cmd_Argv(1);
+		const char *pstrDisplayIdx = gCommands.Cmd_Argv(1);
 		if(!Common::IsNumber(pstrDisplayIdx))
 		{
 			Con_EPrintf("%s: Invalid value '%s' set.\n", gCommands.Cmd_Argv(0), pstrDisplayIdx);
@@ -88,7 +88,7 @@ void Cmd_VID_SetWidth( void )
 { 
 	if(gCommands.Cmd_Argc() == 2) 
 	{
-		const Char *pstrWidth = gCommands.Cmd_Argv(1);
+		const char *pstrWidth = gCommands.Cmd_Argv(1);
 		if(!Common::IsNumber(pstrWidth))
 		{
 			Con_EPrintf("%s: Invalid value '%s' set.\n", gCommands.Cmd_Argv(0), pstrWidth);
@@ -107,7 +107,7 @@ void Cmd_VID_SetHeight( void )
 { 
 	if(gCommands.Cmd_Argc() == 2) 
 	{
-		const Char *pstrHeight = gCommands.Cmd_Argv(1);
+		const char *pstrHeight = gCommands.Cmd_Argv(1);
 		if(!Common::IsNumber(pstrHeight))
 		{
 			Con_EPrintf("%s: Invalid value '%s' set.\n", gCommands.Cmd_Argv(0), pstrHeight);
@@ -126,7 +126,7 @@ void Cmd_VID_SetMSAA( void )
 { 
 	if(gCommands.Cmd_Argc() == 2) 
 	{
-		const Char *pstrMSAASetting = gCommands.Cmd_Argv(1);
+		const char *pstrMSAASetting = gCommands.Cmd_Argv(1);
 		if(!Common::IsNumber(pstrMSAASetting))
 		{
 			Con_EPrintf("%s: Invalid value '%s' set.\n", gCommands.Cmd_Argv(0), pstrMSAASetting);
@@ -145,7 +145,7 @@ void Cmd_VID_SetVSync( void )
 { 
 	if(gCommands.Cmd_Argc() == 2) 
 	{
-		const Char *pstrSetting = gCommands.Cmd_Argv(1);
+		const char *pstrSetting = gCommands.Cmd_Argv(1);
 		if(!Common::IsNumber(pstrSetting))
 		{
 			Con_EPrintf("%s: Invalid value '%s' set.\n", gCommands.Cmd_Argv(0), pstrSetting);
@@ -164,7 +164,7 @@ void Cmd_VID_SetFBOEnabled(void)
 {
 	if (gCommands.Cmd_Argc() == 2)
 	{
-		const Char* pstrSetting = gCommands.Cmd_Argv(1);
+		const char* pstrSetting = gCommands.Cmd_Argv(1);
 		if (!Common::IsNumber(pstrSetting))
 		{
 			Con_EPrintf("%s: Invalid value '%s' set.\n", gCommands.Cmd_Argv(0), pstrSetting);
@@ -354,7 +354,7 @@ bool VID_Init( void )
 	rns.screenheight = gWindow.GetHeight();
 
 	Con_Printf("OpenGL info:\n");
-	const Char* pstrGLInfo = reinterpret_cast<const Char*>(glGetString(GL_RENDERER));
+	const char* pstrGLInfo = reinterpret_cast<const char*>(glGetString(GL_RENDERER));
 	if(pstrGLInfo)
 	{
 		Con_Printf(" - Renderer: %s.\n", pstrGLInfo);
@@ -368,7 +368,7 @@ bool VID_Init( void )
 			ens.pgllogfile->Printf(" - Couldn't get renderer information.\n");
 	}
 
-	pstrGLInfo = reinterpret_cast<const Char*>(glGetString(GL_VERSION));
+	pstrGLInfo = reinterpret_cast<const char*>(glGetString(GL_VERSION));
 	if(pstrGLInfo)
 	{
 		Con_Printf(" - Version: %s.\n", pstrGLInfo);
@@ -382,7 +382,7 @@ bool VID_Init( void )
 			ens.pgllogfile->Printf(" - Couldn't get version information.\n");
 	}
 
-	pstrGLInfo = reinterpret_cast<const Char*>(glGetString(GL_VENDOR));
+	pstrGLInfo = reinterpret_cast<const char*>(glGetString(GL_VENDOR));
 	if(pstrGLInfo)
 	{
 		Con_Printf(" - Vendor: %s.\n", pstrGLInfo);
@@ -396,7 +396,7 @@ bool VID_Init( void )
 			ens.pgllogfile->Printf(" - Couldn't get vendor information.\n");
 	}
 
-	pstrGLInfo = reinterpret_cast<const Char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
+	pstrGLInfo = reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
 	if(pstrGLInfo)
 	{
 		Con_Printf(" - Shading language version: %s.\n", pstrGLInfo);
@@ -729,7 +729,7 @@ void VID_Draw( void )
 
 //=============================================
 //=============================================
-void VID_DrawLoadingScreen( const Char* pstrText )
+void VID_DrawLoadingScreen( const char* pstrText )
 {
 	if(rns.isdrawingloadingscreen)
 		return;
@@ -821,13 +821,13 @@ void VID_DrawSceneOnly( void )
 
 //=============================================
 //=============================================
-void VID_GetScreenContents( Uint32& width, Uint32& height, Uint32& bpp, byte** pdata )
+void VID_GetScreenContents( UInt32& width, UInt32& height, UInt32& bpp, Byte** pdata )
 {
 	width = rns.screenwidth;
 	height = rns.screenheight;
 	bpp = 4;
 
-	(*pdata) = new byte[width*height*bpp];
+	(*pdata) = new Byte[width*height*bpp];
 
 	glFinish();
 
@@ -838,9 +838,9 @@ void VID_GetScreenContents( Uint32& width, Uint32& height, Uint32& bpp, byte** p
 // @brief Callback function for shader compile progress
 //
 //=============================================
-void VID_ShaderCompileCallback( const Char* pstrShaderName, Uint32 totalCount, Uint32 completedCount, bool buildingCache )
+void VID_ShaderCompileCallback( const char* pstrShaderName, UInt32 totalCount, UInt32 completedCount, bool buildingCache )
 {
-	Float progressPercentage = (static_cast<Float>(completedCount)/ static_cast<Float>(totalCount))*100;
+	float progressPercentage = (static_cast<float>(completedCount)/ static_cast<float>(totalCount))*100;
 
 	CString strProgressText;
 	if (!buildingCache)

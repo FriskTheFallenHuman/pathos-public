@@ -13,7 +13,7 @@ All Rights Reserved.
 #include "networking.h"
 
 // Usermsg buffer allocation size
-static constexpr Uint32 USERMSG_ALLOC_SIZE = 512;
+static constexpr UInt32 USERMSG_ALLOC_SIZE = 512;
 
 struct usermsg_t
 {
@@ -23,7 +23,7 @@ struct usermsg_t
 		{}
 
 	// Usermsg ID
-	Uint32 id;
+	UInt32 id;
 	// Name of usermsg
 	CString name;
 	// Message size
@@ -41,7 +41,7 @@ struct usermsgdata_t
 		pedict(nullptr),
 		originset(false)
 	{
-		pmsgbuffer = new byte[bufsize];
+		pmsgbuffer = new Byte[bufsize];
 	}
 	usermsgdata_t( const usermsgdata_t& src ):
 		pmsgbuffer(nullptr),
@@ -53,8 +53,8 @@ struct usermsgdata_t
 		pvsorigin(src.pvsorigin),
 		originset(src.originset)
 	{
-		pmsgbuffer = new byte[src.msgsize];
-		memcpy(pmsgbuffer, src.pmsgbuffer, sizeof(byte)*src.msgsize);
+		pmsgbuffer = new Byte[src.msgsize];
+		memcpy(pmsgbuffer, src.pmsgbuffer, sizeof(Byte)*src.msgsize);
 	}
 	~usermsgdata_t()
 	{
@@ -66,8 +66,8 @@ struct usermsgdata_t
 		if(&src == this)
 			return *this;
 
-		pmsgbuffer = new byte[src.msgsize];
-		memcpy(pmsgbuffer, src.pmsgbuffer, sizeof(byte)*src.msgsize);
+		pmsgbuffer = new Byte[src.msgsize];
+		memcpy(pmsgbuffer, src.pmsgbuffer, sizeof(Byte)*src.msgsize);
 
 		bufsize = src.msgsize;
 		msgsize = src.msgsize;
@@ -81,9 +81,9 @@ struct usermsgdata_t
 	}
 
 	// Message data buffer
-	byte* pmsgbuffer;
+	Byte* pmsgbuffer;
 	// Buffer size
-	Uint32 bufsize;
+	UInt32 bufsize;
 	// Message size
 	Int32 msgsize;
 
@@ -95,26 +95,26 @@ struct usermsgdata_t
 	const edict_t* pedict;
 	// origin to test PVS with
 	Vector pvsorigin;
-	// TRUE if origin was set
+	// true if origin was set
 	bool originset;
 };
 
 extern void UserMSG_Msg_WriteEntindex( usermsgdata_t& msgdata, entindex_t entindex );
-extern void UserMSG_Msg_WriteBuffer( usermsgdata_t& msgdata, const byte* pdata, Uint32 size );
-extern void UserMSG_Msg_WriteString( usermsgdata_t& msgdata, const Char* pstrstring );
-extern void UserMSG_Msg_WriteFloat( usermsgdata_t& msgdata, Float value );
-extern void UserMSG_Msg_WriteSmallFloat( usermsgdata_t& msgdata, Float value );
-extern void UserMSG_Msg_WriteDouble( usermsgdata_t& msgdata, Double value );
-extern void UserMSG_Msg_WriteUint64( usermsgdata_t& msgdata, Uint64 value );
+extern void UserMSG_Msg_WriteBuffer( usermsgdata_t& msgdata, const Byte* pdata, UInt32 size );
+extern void UserMSG_Msg_WriteString( usermsgdata_t& msgdata, const char* pstrstring );
+extern void UserMSG_Msg_WriteFloat( usermsgdata_t& msgdata, float value );
+extern void UserMSG_Msg_WriteSmallFloat( usermsgdata_t& msgdata, float value );
+extern void UserMSG_Msg_WriteDouble( usermsgdata_t& msgdata, double value );
+extern void UserMSG_Msg_WriteUint64( usermsgdata_t& msgdata, UInt64 value );
 extern void UserMSG_Msg_WriteInt64( usermsgdata_t& msgdata, Int64 value );
-extern void UserMSG_Msg_WriteUint32( usermsgdata_t& msgdata, Uint32 value );
+extern void UserMSG_Msg_WriteUint32( usermsgdata_t& msgdata, UInt32 value );
 extern void UserMSG_Msg_WriteInt32( usermsgdata_t& msgdata, Int32 value );
-extern void UserMSG_Msg_WriteUint16( usermsgdata_t& msgdata, Uint16 value );
+extern void UserMSG_Msg_WriteUint16( usermsgdata_t& msgdata, UInt16 value );
 extern void UserMSG_Msg_WriteInt16( usermsgdata_t& msgdata, Int16 value );
-extern void UserMSG_Msg_WriteChar( usermsgdata_t& msgdata, Char value );
-extern void UserMSG_Msg_WriteByte( usermsgdata_t& msgdata, byte value );
-extern void UserMSG_Msg_WriteBitSet( usermsgdata_t& msgdata, const byte* pdataarray, Uint32 numbits, Uint32 numbytes );
-extern void UserMSG_Msg_CheckBuffer( usermsgdata_t& msgdata, Uint32 size );
+extern void UserMSG_Msg_WriteChar( usermsgdata_t& msgdata, char value );
+extern void UserMSG_Msg_WriteByte( usermsgdata_t& msgdata, Byte value );
+extern void UserMSG_Msg_WriteBitSet( usermsgdata_t& msgdata, const Byte* pdataarray, UInt32 numbits, UInt32 numbytes );
+extern void UserMSG_Msg_CheckBuffer( usermsgdata_t& msgdata, UInt32 size );
 extern void UserMSG_UserMessageBegin( CArray<usermsg_t>& usermsgarray, usermsgdata_t& msgdata, msgdest_t dest, Int32 msgid, const Vector* porigin, const edict_t* pedict );
-extern Int32 UserMSG_RegisterUserMessage( CArray<usermsg_t>& usermsgarray, const Char* pstrMsgName, Int32 msgsize );
+extern Int32 UserMSG_RegisterUserMessage( CArray<usermsg_t>& usermsgarray, const char* pstrMsgName, Int32 msgsize );
 #endif //USERMSG_H

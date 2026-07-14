@@ -75,7 +75,7 @@ bool CWorldSpawn::Spawn( void )
 
 	if(m_skyboxName != NO_STRING_VALUE)
 	{
-		const Char* pstrSkyName = gd_engfuncs.pfnGetString(m_skyboxName);
+		const char* pstrSkyName = gd_engfuncs.pfnGetString(m_skyboxName);
 		gd_engfuncs.pfnSetCVarString("sv_skyname", pstrSkyName);
 	}
 
@@ -140,7 +140,7 @@ void CWorldSpawn::InitEntity( void )
 	CEnvMessage* pMessage = reinterpret_cast<CEnvMessage*>(CBaseEntity::CreateEntity("env_message", nullptr));
 	if(pMessage)
 	{
-		const Char* pstrMessage = gd_engfuncs.pfnGetString(m_chapterTitle);
+		const char* pstrMessage = gd_engfuncs.pfnGetString(m_chapterTitle);
 		pMessage->SetMessage(pstrMessage);
 
 		if(!pMessage->Spawn())

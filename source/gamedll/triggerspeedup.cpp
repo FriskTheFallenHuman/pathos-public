@@ -97,7 +97,7 @@ bool CTriggerSpeedup::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerSpeedup::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerSpeedup::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	m_pState->flags |= FL_ALWAYSTHINK;
 	m_pState->nextthink = m_pState->ltime + 0.1;
@@ -111,7 +111,7 @@ void CTriggerSpeedup::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, us
 //=============================================
 void CTriggerSpeedup::SpeedupThink( void )
 {
-	Float speed;
+	float speed;
 	if(m_beginTime + m_duration <= g_pGameVars->time)
 	{
 		speed = m_targetSpeed;
@@ -121,14 +121,14 @@ void CTriggerSpeedup::SpeedupThink( void )
 	else
 	{
 		// Calculate speed
-		Float frac = (g_pGameVars->time-m_beginTime)/m_duration;
+		float frac = (g_pGameVars->time-m_beginTime)/m_duration;
 		speed = m_startSpeed+(m_targetSpeed-m_startSpeed)*frac;
 
 		// Set nextthink
 		m_pState->nextthink = m_pState->ltime + 0.1;
 	}
 
-	const Char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
 	if(!pstrTarget || !qstrlen(pstrTarget))
 		return;
 

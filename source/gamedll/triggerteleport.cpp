@@ -72,7 +72,7 @@ void CTriggerTeleport::CallTouch( CBaseEntity* pOther )
 	if(!IsMasterTriggered())
 		return;
 
-	const Char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTarget = gd_engfuncs.pfnGetString(m_pFields->target);
 	edict_t* pTargetEdict = Util::FindEntityByTargetName(nullptr, pstrTarget);
 	if(Util::IsNullEntity(pTargetEdict))
 	{
@@ -121,7 +121,7 @@ void CTriggerTeleport::CallTouch( CBaseEntity* pOther )
 	}
 	else
 	{
-		const Char* pstrLandmark = gd_engfuncs.pfnGetString(m_pFields->message);
+		const char* pstrLandmark = gd_engfuncs.pfnGetString(m_pFields->message);
 		edict_t* pLandmarkEdict = Util::FindEntityByTargetName(nullptr, pstrLandmark);
 		if(Util::IsNullEntity(pLandmarkEdict))
 		{
@@ -148,7 +148,7 @@ void CTriggerTeleport::CallTouch( CBaseEntity* pOther )
 	// Trigger target if set
 	if(m_pFields->netname != NO_STRING_VALUE)
 	{
-		const Char* pstrTriggerEntity = gd_engfuncs.pfnGetString(m_pFields->netname);
+		const char* pstrTriggerEntity = gd_engfuncs.pfnGetString(m_pFields->netname);
 		edict_t* pTriggerEdict = Util::FindEntityByTargetName(nullptr, pstrTriggerEntity);
 		if(Util::IsNullEntity(pTriggerEdict))
 		{

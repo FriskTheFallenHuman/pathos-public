@@ -90,7 +90,7 @@ bool CPathCorner::Spawn( void )
 // @brief
 //
 //=============================================
-Float CPathCorner::GetDelay( void )
+float CPathCorner::GetDelay( void )
 {
 	return m_waitTime;
 }

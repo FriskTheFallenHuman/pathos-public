@@ -131,7 +131,7 @@ const CBaseEntity* CFuncMonitor::GetCameraEntity( void ) const
 // @brief
 //
 //=============================================
-void CFuncMonitor::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncMonitor::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{
@@ -170,7 +170,7 @@ void CFuncMonitor::ClearMonitorList( void )
 //=============================================
 void CFuncMonitor::AddMonitor( CBaseEntity* pMonitor )
 {
-	for(Uint32 i = 0; i < m_pMonitorsArray.size(); i++)
+	for(UInt32 i = 0; i < m_pMonitorsArray.size(); i++)
 	{
 		if(m_pMonitorsArray[i] == pMonitor)
 			return;
@@ -183,7 +183,7 @@ void CFuncMonitor::AddMonitor( CBaseEntity* pMonitor )
 // @brief
 //
 //=============================================
-Uint32 CFuncMonitor::GetNbMonitors( void )
+UInt32 CFuncMonitor::GetNbMonitors( void )
 {
 	return m_pMonitorsArray.size();
 }
@@ -192,17 +192,17 @@ Uint32 CFuncMonitor::GetNbMonitors( void )
 // @brief
 //
 //=============================================
-const CBaseEntity* CFuncMonitor::GetMonitorByIndex( Uint32 index )
+const edict_t* CFuncMonitor::GetMonitorByIndex( UInt32 index ) const
 {
 	assert(index < m_pMonitorsArray.size());
-	return m_pMonitorsArray[index];
+	return m_pMonitorsArray[index]->GetEdict();
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-bool CFuncMonitor::CheckVISForEntity( const edict_t* pclient, const edict_t* pedict, const byte* pset )
+bool CFuncMonitor::CheckVISForEntity( const edict_t* pclient, const edict_t* pedict, const Byte* pset )
 {
 	if(m_pMonitorsArray.empty())
 		return false;
@@ -210,7 +210,7 @@ bool CFuncMonitor::CheckVISForEntity( const edict_t* pclient, const edict_t* ped
 	const CBaseEntity* pEntity = CBaseEntity::GetClass(pedict);
 	if(!pEntity->IsInfoMonitorCameraEntity() && !pEntity->IsFuncMonitorEntity())
 	{
-		for(Uint32 i = 0; i < m_pMonitorsArray.size(); i++)
+		for(UInt32 i = 0; i < m_pMonitorsArray.size(); i++)
 		{
 			CBaseEntity* pMonitorEntity = m_pMonitorsArray[i];
 			if(!pMonitorEntity || (pMonitorEntity->HasEffectFlag(EF_NODRAW)))
@@ -223,7 +223,7 @@ bool CFuncMonitor::CheckVISForEntity( const edict_t* pclient, const edict_t* ped
 				if(!pCameraEntity)
 					continue;
 
-				const byte* pCameraPVS = pCameraEntity->GetPVSData();
+				const Byte* pCameraPVS = pCameraEntity->GetPVSData();
 				if(pCameraPVS && Common::CheckVisibility(pedict->leafnums, pedict->numleaves, pCameraPVS) && pCameraEntity->CheckCameraBBox(pedict))
 					return true;
 			}
@@ -231,8 +231,8 @@ bool CFuncMonitor::CheckVISForEntity( const edict_t* pclient, const edict_t* ped
 	}
 	else if(pEntity->IsInfoMonitorCameraEntity())
 	{
-		Uint32 nbcameramonitors = pEntity->GetNbCameraMonitors();
-		for(Uint32 i = 0; i < nbcameramonitors; i++)
+		UInt32 nbcameramonitors = pEntity->GetNbCameraMonitors();
+		for(UInt32 i = 0; i < nbcameramonitors; i++)
 		{
 			const edict_t* pmonitor = pEntity->GetMonitorByIndex(i);
 			if(pmonitor && !(pmonitor->state.effects & EF_NODRAW) 

@@ -22,54 +22,54 @@ public:
 	struct ammo_assocation_t
 	{
 		weaponid_t weaponId;
-		const Char* pstrAmmoName;
+		const char* pstrAmmoName;
 	};
 
 public:
 	// Spawn object types count
-	static const Uint32 SPAWN_OBJECT_TYPES_COUNT = 6;
+	static const UInt32 SPAWN_OBJECT_TYPES_COUNT = 6;
 	// Object types spawned by breakable
-	static const Char* SPAWN_OBJECT_TYPES[SPAWN_OBJECT_TYPES_COUNT];
+	static const char* SPAWN_OBJECT_TYPES[SPAWN_OBJECT_TYPES_COUNT];
 	// Wood gibs model file
-	static const Char GIB_MODEL_WOOD_FILENAME[];
+	static const char GIB_MODEL_WOOD_FILENAME[];
 	// Flesh gibs model file
-	static const Char GIB_MODEL_FLESH_FILENAME[];
+	static const char GIB_MODEL_FLESH_FILENAME[];
 	// Computer gibs model file
-	static const Char GIB_MODEL_COMPUTER_FILENAME[];
+	static const char GIB_MODEL_COMPUTER_FILENAME[];
 	// Glass gibs model file
-	static const Char GIB_MODEL_GLASS_FILENAME[];
+	static const char GIB_MODEL_GLASS_FILENAME[];
 	// Metal gibs model file
-	static const Char GIB_MODEL_METAL_FILENAME[];
+	static const char GIB_MODEL_METAL_FILENAME[];
 	// Cinder block gibs model file
-	static const Char GIB_MODEL_CINDERBLOCKS_FILENAME[];
+	static const char GIB_MODEL_CINDERBLOCKS_FILENAME[];
 	// Rock gibs model file
-	static const Char GIB_MODEL_ROCK_FILENAME[];
+	static const char GIB_MODEL_ROCK_FILENAME[];
 	// Ceiling gibs model file
-	static const Char GIB_MODEL_CEILING_FILENAME[];
+	static const char GIB_MODEL_CEILING_FILENAME[];
 
 	// Wood damage sounds pattern
-	static const Char WOOD_DMG_SOUNDS_PATTERN[];
+	static const char WOOD_DMG_SOUNDS_PATTERN[];
 	// Wood break sounds pattern
-	static const Char WOOD_BREAK_SOUNDS_PATTERN[];
+	static const char WOOD_BREAK_SOUNDS_PATTERN[];
 	// Flesh sounds pattern
-	static const Char FLESH_DMG_SOUNDS_PATTERN[];
+	static const char FLESH_DMG_SOUNDS_PATTERN[];
 	// Glass damage sounds pattern
-	static const Char GLASS_DMG_SOUNDS_PATTERN[];
+	static const char GLASS_DMG_SOUNDS_PATTERN[];
 	// Glass break sounds pattern
-	static const Char GLASS_BREAK_SOUNDS_PATTERN[];
+	static const char GLASS_BREAK_SOUNDS_PATTERN[];
 	// Metal damage sounds pattern
-	static const Char METAL_DMG_SOUNDS_PATTERN[];
+	static const char METAL_DMG_SOUNDS_PATTERN[];
 	// Metal break sounds pattern
-	static const Char METAL_BREAK_SOUNDS_PATTERN[];
+	static const char METAL_BREAK_SOUNDS_PATTERN[];
 	// Concrete damage sounds pattern
-	static const Char CONCRETE_DMG_SOUNDS_PATTERN[];
+	static const char CONCRETE_DMG_SOUNDS_PATTERN[];
 	// Concrete break sounds pattern
-	static const Char CONCRETE_BREAK_SOUNDS_PATTERN[];
+	static const char CONCRETE_BREAK_SOUNDS_PATTERN[];
 	// Computer break sounds pattern
-	static const Char COMPUTER_DMG_SOUNDS_PATTERN[];
+	static const char COMPUTER_DMG_SOUNDS_PATTERN[];
 
 	// Gib model lifetime
-	static const Float GIB_MODEL_LIFETIME;
+	static const float GIB_MODEL_LIFETIME;
 
 	// Weapon->ammo associations
 	static const ammo_assocation_t WPN_AMMO_ASSOCIATIONS[NUM_WEAPONS];
@@ -102,13 +102,13 @@ public:
 	virtual void Precache( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual bool IsFuncBreakableEntity( void ) const override;
 	virtual Int32 GetEntityFlags( void ) override { return CDelayEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION; }
 	virtual void SetBoundingBox( void ) { }
 
-	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags ) override;
-	virtual void TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
+	virtual bool TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags ) override;
+	virtual void TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
 
 	virtual Vector GetEyePosition( bool addlean = false, bool usebone = false ) const override { return GetBrushModelCenter(); };
 	virtual Vector GetNavigablePosition( void ) const override { return GetBrushModelCenter(); }
@@ -132,23 +132,23 @@ protected:
 	Int32 m_tempentSoundFlag;
 
 	Int32 m_breakModelIndex;
-	Float m_angle;
+	float m_angle;
 	Int32 m_explodeMagnitude;
 
 	string_t m_gibModelName;
 	string_t m_spawnEntityName;
 
 	string_t m_dmgSoundsPattern;
-	Uint32 m_nbDmgSounds;
+	UInt32 m_nbDmgSounds;
 
 	string_t m_breakSoundsPattern;
-	Uint32 m_nbBreakSounds;
+	UInt32 m_nbBreakSounds;
 
-	Uint32 m_spawnChance;
+	UInt32 m_spawnChance;
 
 	CEntityHandle m_attacker;
 
 	Vector m_breakVector;
-	Float m_breakDamage;
+	float m_breakDamage;
 };
 #endif //FUNCBREAKABLE_H

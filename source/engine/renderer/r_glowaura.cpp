@@ -27,9 +27,9 @@ All Rights Reserved.
 #include "r_vbm.h"
 
 // Radius of aura effect
-const Float CGlowAura::AURA_RADIUS = 256;
+const float CGlowAura::AURA_RADIUS = 256;
 // Maximum aura resolution
-const Uint32 CGlowAura::AURA_RESOLUTION = 512;
+const UInt32 CGlowAura::AURA_RESOLUTION = 512;
 
 // Class define
 CGlowAura gGlowAura;
@@ -131,7 +131,7 @@ bool CGlowAura::InitGL( void )
 		aura_vertex_t *pverts = new aura_vertex_t[6];
 
 		// Normal quad
-		Uint32 numverts = 0;
+		UInt32 numverts = 0;
 		pverts[numverts].origin[0] = 0; pverts[numverts].origin[1] = 1; 
 		pverts[numverts].origin[2] = -1; pverts[numverts].origin[3] = 1;
 		pverts[numverts].texcoord[0] = 0; pverts[numverts].texcoord[1] = 0;
@@ -195,7 +195,7 @@ void CGlowAura::GetEntities( void )
 {
 	m_iNumEntities = 0;
 
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t* pentity = rns.objects.pvisents[i];
 
@@ -229,7 +229,7 @@ bool CGlowAura::DrawSolid( void )
 	glClearColor(GL_ZERO, GL_ZERO, GL_ZERO, GL_ZERO);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	for(Uint32 i = 0; i < m_iNumEntities; i++)
+	for(UInt32 i = 0; i < m_iNumEntities; i++)
 	{
 		if(!gVBMRenderer.DrawAura(m_pEntities[i], Vector(1.0, 1.0, 1.0), 1.0))
 		{
@@ -260,10 +260,10 @@ bool CGlowAura::DrawColors( void )
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	for(Uint32 i = 0; i < m_iNumEntities; i++)
+	for(UInt32 i = 0; i < m_iNumEntities; i++)
 	{
-		Float alpha = 1.0;
-		Float dist = (rns.view.v_origin-m_pEntities[i]->curstate.origin).Length();
+		float alpha = 1.0;
+		float dist = (rns.view.v_origin-m_pEntities[i]->curstate.origin).Length();
 		if(dist >= 172) 
 		{
 			alpha = 1.0-((dist-172.0f)/64.0f);
@@ -275,9 +275,9 @@ bool CGlowAura::DrawColors( void )
 		Vector color;
 		if(m_pEntities[i]->curstate.rendercolor.x || m_pEntities[i]->curstate.rendercolor.y || m_pEntities[i]->curstate.rendercolor.z)
 		{
-			color[0] = static_cast<Float>(m_pEntities[i]->curstate.rendercolor.x)/255.0f;
-			color[1] = static_cast<Float>(m_pEntities[i]->curstate.rendercolor.y)/255.0f;
-			color[2] = static_cast<Float>(m_pEntities[i]->curstate.rendercolor.z)/255.0f;
+			color[0] = static_cast<float>(m_pEntities[i]->curstate.rendercolor.x)/255.0f;
+			color[1] = static_cast<float>(m_pEntities[i]->curstate.rendercolor.y)/255.0f;
+			color[2] = static_cast<float>(m_pEntities[i]->curstate.rendercolor.z)/255.0f;
 		}
 		else
 		{

@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "envfunnel.h"
 
 // The default sprite model
-const Char CEnvFunnel::DEFAULT_SPRITE_NAME[] = "sprites/flare6.spr";
+const char CEnvFunnel::DEFAULT_SPRITE_NAME[] = "sprites/flare6.spr";
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(env_funnel, CEnvFunnel);
@@ -101,7 +101,7 @@ bool CEnvFunnel::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvFunnel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvFunnel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool isReverse = HasSpawnFlag(FL_REVERSE) ? true : false;
 	// Create using sprite version

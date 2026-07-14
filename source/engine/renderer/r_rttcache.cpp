@@ -19,7 +19,7 @@ All Rights Reserved.
 CRenderToTextureCache gRTTCache;
 
 // Time until an unused texture is freed
-const Float CRenderToTextureCache::TEXTURE_RELEASE_DELAY = 15;
+const float CRenderToTextureCache::TEXTURE_RELEASE_DELAY = 15;
 
 //=======================================
 // CRenderToTextureCache :: CRenderToTextureCache
@@ -66,7 +66,7 @@ void CRenderToTextureCache :: Clear ( rs_level_t level )
 
 	CTextureManager* pTextureManager = CTextureManager::GetInstance();
 
-	Uint32 numDeleted = 0;
+	UInt32 numDeleted = 0;
 	m_pCacheHeader.begin();
 	while(!m_pCacheHeader.end())
 	{
@@ -125,7 +125,7 @@ void CRenderToTextureCache :: Shutdown ( void )
 // CRenderToTextureCache :: Alloc
 // Purpose:
 //=======================================
-rtt_texture_t* CRenderToTextureCache :: Alloc( Uint32 width, Uint32 height, bool rectangle, GLenum internalformat, rs_level_t level )
+rtt_texture_t* CRenderToTextureCache :: Alloc( UInt32 width, UInt32 height, bool rectangle, GLenum internalformat, rs_level_t level )
 {
 	// Seek an available texture
 	m_pCacheHeader.begin();

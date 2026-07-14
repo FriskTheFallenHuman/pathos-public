@@ -17,9 +17,9 @@ All Rights Reserved.
 struct net_msgcache_t;
 
 // Max size of a UDP packet, with the IPv4 header accounted for
-static constexpr Uint32 MAX_UDP_PACKET_SIZE = 548;
+static constexpr UInt32 MAX_UDP_PACKET_SIZE = 548;
 // Max timeout limit is 30 seconds
-static constexpr Float CLIENT_TIMEOUT_LIMIT = 30;
+static constexpr float CLIENT_TIMEOUT_LIMIT = 30;
 
 //
 // Network client states
@@ -94,9 +94,9 @@ struct msgheader_t
 		flags(0)
 		{};
 
-	Uint16 msgsize; // size of the message total
+	UInt16 msgsize; // size of the message total
 	Int32 msgid; // unique id, usually message number
-	byte flags; // message flags
+	Byte flags; // message flags
 };
 
 //
@@ -115,17 +115,17 @@ struct net_msg_t
 		{}
 
 	// message buffer pointer
-	byte** pmsg_base;
+	Byte** pmsg_base;
 	// message buffer size
-	Uint32* pmsg_bufsize;
+	UInt32* pmsg_bufsize;
 
 	// offset into the buffer
-	Uint64 msg_offset;
+	UInt64 msg_offset;
 	// message size
-	Uint32 msg_size;
+	UInt32 msg_size;
 
 	// destination client index
-	Uint32 clientidx;
+	UInt32 clientidx;
 	// destination type
 	msgdest_t dest;
 	// Flags for the message
@@ -137,7 +137,7 @@ struct net_msg_t
 // 
 struct net_msgcache_t
 {
-	net_msgcache_t( Uint32 arraysize, Uint32 buffsize ):
+	net_msgcache_t( UInt32 arraysize, UInt32 buffsize ):
 		num_msg(0),
 		msg_index(0),
 		pwritebuffer(nullptr),
@@ -146,8 +146,8 @@ struct net_msgcache_t
 		{
 			msgarray.resize(arraysize);
 
-			pwritebuffer = new byte[buffersize];
-			memset(pwritebuffer, 0, sizeof(byte)*buffersize);
+			pwritebuffer = new Byte[buffersize];
+			memset(pwritebuffer, 0, sizeof(Byte)*buffersize);
 		}
 	net_msgcache_t( const net_msgcache_t& src ):
 		msgarray(src.msgarray),
@@ -157,8 +157,8 @@ struct net_msgcache_t
 		bufferdatasize(src.bufferdatasize),
 		buffersize(src.buffersize)
 		{
-			pwritebuffer = new byte[buffersize];
-			memcpy(pwritebuffer, src.pwritebuffer, sizeof(byte)*buffersize);
+			pwritebuffer = new Byte[buffersize];
+			memcpy(pwritebuffer, src.pwritebuffer, sizeof(Byte)*buffersize);
 		}
 		~net_msgcache_t()
 		{
@@ -179,8 +179,8 @@ struct net_msgcache_t
 			if(pwritebuffer)
 				delete[] pwritebuffer;
 
-			pwritebuffer = new byte[buffersize];
-			memcpy(pwritebuffer, src.pwritebuffer, sizeof(byte)*buffersize);
+			pwritebuffer = new Byte[buffersize];
+			memcpy(pwritebuffer, src.pwritebuffer, sizeof(Byte)*buffersize);
 
 			return *this;
 		}
@@ -188,16 +188,16 @@ struct net_msgcache_t
 	// Message array
 	CArray<net_msg_t> msgarray;
 	// Number of messages cached
-	Uint32 num_msg;
+	UInt32 num_msg;
 	// Current message's index
-	Uint32 msg_index;
+	UInt32 msg_index;
 
 	// Write buffer
-	byte* pwritebuffer;
+	Byte* pwritebuffer;
 	// Current data usage
-	Uint32 bufferdatasize;
+	UInt32 bufferdatasize;
 	// Buffer space available
-	Uint32 buffersize;
+	UInt32 buffersize;
 };
 
 //
@@ -222,7 +222,7 @@ struct net_client_t
 		}
 
 	// client's index
-	Uint32 index;
+	UInt32 index;
 
 	// IP address of client
 	ENetAddress ip_address;
@@ -235,9 +235,9 @@ struct net_client_t
 	net_msgcache_t *pcls_cache;
 
 	// amount of messages recieved this frame
-	Uint32 nbmsgbrecieved;
+	UInt32 nbmsgbrecieved;
 	// amount of messages sent this frame
-	Uint32 nbmsgsent;
+	UInt32 nbmsgsent;
 
 	// state of the client
 	netcl_state_t cl_state;
@@ -247,9 +247,9 @@ struct net_client_t
 	Int32 errorcode;
 
 	// Last time we got anything from this client
-	Double timeoutbegintime;
+	double timeoutbegintime;
 	// Last time we received any messages
-	Double lastmsgtime;
+	double lastmsgtime;
 };
 
 /*
@@ -262,9 +262,9 @@ class CNetworking
 {
 public:
 	// Client to server message buffer allocation size
-	static const Uint32 MSG_BUFFER_ALLOC_SIZE;
+	static const UInt32 MSG_BUFFER_ALLOC_SIZE;
 	// Client to server message buffer allocation size
-	static const Uint32 MSG_DATA_BUFFER_ALLOC_SIZE;
+	static const UInt32 MSG_DATA_BUFFER_ALLOC_SIZE;
 
 public:
 	CNetworking( void );
@@ -277,7 +277,7 @@ public:
 
 public:
 	// Initializes networking functions
-	virtual bool Init( const Char* pstrhost );
+	virtual bool Init( const char* pstrhost );
 	// Clears networking info
 	virtual void ClearCache( net_msgcache_t *pcache );
 
@@ -285,40 +285,40 @@ public:
 	virtual bool AttemptConnection( void ) = 0;
 
 	// Begin writing a message
-	void SVC_MessageBegin( msgdest_t dest, Uint32 type, const struct edict_t* pedict, Int32 flags = MSG_FL_NONE );
+	void SVC_MessageBegin( msgdest_t dest, UInt32 type, const struct edict_t* pedict, Int32 flags = MSG_FL_NONE );
 	// Close off and cache a message
 	virtual void SVC_MessageEnd( void ) = 0;
 	// Retrieve an SVC message
-	bool SVC_GetMessage( byte*& pmsgdata, Uint32& msgsize );
+	bool SVC_GetMessage( Byte*& pmsgdata, UInt32& msgsize );
 	// Clear out SVC message arrays
 	void SVC_ClearMessages( void );
 	// Retrieves a cache pointer
-	virtual net_msgcache_t* SVC_GetWriteCache( Uint32 clientidx ) = 0;
+	virtual net_msgcache_t* SVC_GetWriteCache( UInt32 clientidx ) = 0;
 
 	// Begin writing a message
-	void CLS_MessageBegin( Uint32 type, Int32 flags = MSG_FL_NONE );
+	void CLS_MessageBegin( UInt32 type, Int32 flags = MSG_FL_NONE );
 	// Close off and cache a message
 	virtual void CLS_MessageEnd( void ) = 0;
 	// Retrieve a CLS message
-	bool CLS_GetMessage( Uint32 cl_index, byte*& pmsgdata, Uint32& msgsize );
+	bool CLS_GetMessage( UInt32 cl_index, Byte*& pmsgdata, UInt32& msgsize );
 	// Clear out CLS message arrays
-	void CLS_ClearMessages( Uint32 cl_index );
+	void CLS_ClearMessages( UInt32 cl_index );
 	// Retrieves a cache pointer
 	virtual net_msgcache_t* CLS_GetWriteCache( void ) = 0;
 
 	// Disconnects from the host server
-	virtual void Disconnect( Uint32 clindex ) = 0;
+	virtual void Disconnect( UInt32 clindex ) = 0;
 	// Retrieve any packets
 	virtual void Poll( void );
 
 	// Gets the last time client received any messages
-	Double GetLastMessageTime( Uint32 cl_index );
+	double GetLastMessageTime( UInt32 cl_index );
 
 protected:
 	// Close off and cache a message
 	bool SVC_MessageEnd_Local( void );
 	// Retrieves a cache pointer
-	net_msgcache_t* SVC_GetWriteCache_Local( Uint32 clientidx );
+	net_msgcache_t* SVC_GetWriteCache_Local( UInt32 clientidx );
 
 	// Close off and cache a message
 	bool CLS_MessageEnd_Local( void );
@@ -326,7 +326,7 @@ protected:
 	net_msgcache_t* CLS_GetWriteCache_Local( void );
 
 	// Allocates a client's data
-	void InitClient( Uint32 index, net_client_t& cl, bool allocsvc );
+	void InitClient( UInt32 index, net_client_t& cl, bool allocsvc );
 	// Resets a client's states
 	void ResetClient( net_client_t& cl );
 	// Allocate a message
@@ -334,45 +334,45 @@ protected:
 
 public:
 	// Tells if a client can recieve/read messages
-	netcl_state_t GetClientState( Uint32 cl_index );
+	netcl_state_t GetClientState( UInt32 cl_index );
 	// Retrieves an IP address
-	CString GetIPAddress( Uint32 cl_index );
+	CString GetIPAddress( UInt32 cl_index );
 	// Retrieves the disconnect reason string
-	const Char* GetInfoString( Uint32 cl_index );
+	const char* GetInfoString( UInt32 cl_index );
 
 public:
-	// Writes a single byte
-	void WriteByte( byte value );
+	// Writes a single Byte
+	void WriteByte( Byte value );
 	// Writes a single char
-	void WriteChar( Char value );
+	void WriteChar( char value );
 	// Writes a signed short
 	void WriteInt16( Int16 value );
 	// Writes an unsigned short
-	void WriteUint16( Uint16 value );
+	void WriteUint16( UInt16 value );
 	// Writes a 32-bit integer
 	void WriteInt32( Int32 value );
 	// Writes an unsigned 32-bit integer
-	void WriteUint32( Uint32 value );
+	void WriteUint32( UInt32 value );
 	// Writes a 64-bit integer
 	void WriteInt64( Int64 value );
 	// Writes a 64-bit unsigned integer
-	void WriteUint64( Uint64 value );
-	// Writes a 2-byte float
-	void WriteSmallFloat( Float value );
+	void WriteUint64( UInt64 value );
+	// Writes a 2-Byte float
+	void WriteSmallFloat( float value );
 	// Writes a float
-	void WriteFloat( Float value );
-	// Writes a float
-	void WriteDouble( Float value );
+	void WriteFloat( float value );
+	// Writes a double
+	void WriteDouble( double value );
 	// Writes a buffer of bytes
-	void WriteBuffer( const byte* pdata, Uint32 size );
+	void WriteBuffer( const Byte* pdata, UInt32 size );
 	// Writes a buffer of bytes
-	void WriteString( const Char* pstring );
+	void WriteString( const char* pstring );
 	// Writes a bitset
-	void WriteBitSet( const byte* pdataarray, Uint32 numbits, Uint32 numbytes );
+	void WriteBitSet( const Byte* pdataarray, UInt32 numbits, UInt32 numbytes );
 
 protected:
 	// Checks if the buffer used by the message needs to be resized
-	static void CheckBuffer( net_msg_t& msg, Uint32 size ); 
+	static void CheckBuffer( net_msg_t& msg, UInt32 size ); 
 
 protected:
 	// Local client
@@ -381,22 +381,22 @@ protected:
 	net_msg_t* m_pCurrentMessage;
 
 	// For the message being read
-	const byte* m_pReadBuffer;
+	const Byte* m_pReadBuffer;
 	// Read buffer size
-	Uint32 m_readBufferSize;
+	UInt32 m_readBufferSize;
 	// Current read position
-	Uint32 m_readOffset;
+	UInt32 m_readOffset;
 
 	// Array of clients
 	CArray<net_client_t> m_clientsArray;
 	// Number of messages sent total
-	Uint32 m_nbSVCMessagesSent;
+	UInt32 m_nbSVCMessagesSent;
 	// Number of messages sent total
-	Uint32 m_nbSVCMessagesRecieved;
+	UInt32 m_nbSVCMessagesRecieved;
 	// Number of messages sent total
-	Uint32 m_nbCLSMessagesSent;
+	UInt32 m_nbCLSMessagesSent;
 	// Number of messages sent total
-	Uint32 m_nbCLSMessagesRecieved;
+	UInt32 m_nbCLSMessagesRecieved;
 
 	// Error string
 	CString m_errorString;

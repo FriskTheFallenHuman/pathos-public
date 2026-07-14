@@ -20,7 +20,7 @@ All Rights Reserved.
 #include "r_common.h"
 
 // Increment by 4096 vertexes
-const Uint32 CBasicDraw::BASICDRAW_VERTEX_CACHE_SIZE = 4096;
+const UInt32 CBasicDraw::BASICDRAW_VERTEX_CACHE_SIZE = 4096;
 
 // Current instance of the class
 CBasicDraw* CBasicDraw::g_pInstance = nullptr;
@@ -37,7 +37,7 @@ CBasicDraw::CBasicDraw( void ):
 	m_pShader(nullptr),
 	m_brightness(1.0)
 {
-	for(Uint32 i = 0; i < 4; i++)
+	for(UInt32 i = 0; i < 4; i++)
 		m_vertexColor[i] = 1.0;
 }
 
@@ -63,10 +63,10 @@ bool CBasicDraw::InitGL( const CGLExtF& gGlExtF, const file_interface_t& fileFun
 		m_vertexesArray.resize(BASICDRAW_VERTEX_CACHE_SIZE);
 
 		// Append triangle index array for GL_QUADs
-		Uint32 allocSize = BASICDRAW_VERTEX_CACHE_SIZE*6;
+		UInt32 allocSize = BASICDRAW_VERTEX_CACHE_SIZE*6;
 		m_quadIndexesArray.resize(allocSize);
 
-		for(Uint32 i = 0, j = 0; i < allocSize; i += 6, j += 4)
+		for(UInt32 i = 0, j = 0; i < allocSize; i += 6, j += 4)
 		{
 			// Set triangle indexes
 			m_quadIndexesArray[i] = j; m_quadIndexesArray[i+1] = j+1; m_quadIndexesArray[i+2] = j+2;
@@ -76,7 +76,7 @@ bool CBasicDraw::InitGL( const CGLExtF& gGlExtF, const file_interface_t& fileFun
 
 	// Allocate VBO if needed
 	if(!m_pVBO)
-		m_pVBO = new CVBO(gGlExtF, &m_vertexesArray[0], sizeof(basic_vertex_t)*m_vertexesArray.size(), &m_quadIndexesArray[0], sizeof(Uint32)*m_quadIndexesArray.size(), true);
+		m_pVBO = new CVBO(gGlExtF, &m_vertexesArray[0], sizeof(basic_vertex_t)*m_vertexesArray.size(), &m_quadIndexesArray[0], sizeof(UInt32)*m_quadIndexesArray.size(), true);
 
 	// Load shader in if needed
 	if(!m_pShader)
@@ -192,7 +192,7 @@ void CBasicDraw::End( bool clearData )
 			break;
 		case DRAW_QUADS:
 		{
-			Uint32 numTriangleIndexes = (m_numVertexes / 4) * 6;
+			UInt32 numTriangleIndexes = (m_numVertexes / 4) * 6;
 			m_pShader->DrawElements(GL_TRIANGLES, numTriangleIndexes, GL_UNSIGNED_INT, BUFFER_OFFSET(0));
 		}
 		break;
@@ -286,7 +286,7 @@ void CBasicDraw::Disable( void )
 //
 // @param pMatrix Pointer to array of matrix values
 //=============================================
-void CBasicDraw::SetProjection( const Float* pMatrix )
+void CBasicDraw::SetProjection( const float* pMatrix )
 {
 	m_pShader->SetUniformMatrix4fv(m_shaderAttribs.u_projection, pMatrix);
 }
@@ -296,7 +296,7 @@ void CBasicDraw::SetProjection( const Float* pMatrix )
 //
 // @param pMatrix Pointer to array of matrix values
 //=============================================
-void CBasicDraw::SetModelview( const Float* pMatrix )
+void CBasicDraw::SetModelview( const float* pMatrix )
 {
 	m_pShader->SetUniformMatrix4fv(m_shaderAttribs.u_modelview, pMatrix);
 }
@@ -309,7 +309,7 @@ void CBasicDraw::SetModelview( const Float* pMatrix )
 // @param b Blue value in 0 - 1 range
 // @param a Alpha value in 0 - 1 range
 //=============================================
-void CBasicDraw::Color4f( Float r, Float g, Float b, Float a )
+void CBasicDraw::Color4f( float r, float g, float b, float a )
 {
 	m_vertexColor[0] = r;
 	m_vertexColor[1] = g;
@@ -322,9 +322,9 @@ void CBasicDraw::Color4f( Float r, Float g, Float b, Float a )
 //
 // @param pfc Pointer to color values
 //=============================================
-void CBasicDraw::Color4fv( const Float* pfc )
+void CBasicDraw::Color4fv( const float* pfc )
 {
-	for(Uint32 i = 0; i < 4; i++)
+	for(UInt32 i = 0; i < 4; i++)
 		m_vertexColor[i] = pfc[i];
 }
 
@@ -333,7 +333,7 @@ void CBasicDraw::Color4fv( const Float* pfc )
 //
 // @param brightness Brightness from 0-1
 //=============================================
-void CBasicDraw::Brightness1f( Float brightness )
+void CBasicDraw::Brightness1f( float brightness )
 {
 	m_brightness = brightness;
 }
@@ -343,7 +343,7 @@ void CBasicDraw::Brightness1f( Float brightness )
 //
 // @param brightness Brightness from 0-1
 //=============================================
-void CBasicDraw::SetColorMultiplier( Float multiplier )
+void CBasicDraw::SetColorMultiplier( float multiplier )
 {
 	m_pShader->SetUniform1f(m_shaderAttribs.u_multiplier, multiplier);
 }
@@ -354,7 +354,7 @@ void CBasicDraw::SetColorMultiplier( Float multiplier )
 // @param u U coordinate
 // @param v V coordinate
 //=============================================
-void CBasicDraw::TexCoord2f( Float u, Float v )
+void CBasicDraw::TexCoord2f( float u, float v )
 {
 	basic_vertex_t* pvertex = &m_vertexesArray[m_numVertexes];
 
@@ -367,7 +367,7 @@ void CBasicDraw::TexCoord2f( Float u, Float v )
 //
 // @param pfc Pointer to texcoords
 //=============================================
-void CBasicDraw::TexCoord2fv( const Float* ptc )
+void CBasicDraw::TexCoord2fv( const float* ptc )
 {
 	basic_vertex_t* pvertex = &m_vertexesArray[m_numVertexes];
 
@@ -382,7 +382,7 @@ void CBasicDraw::TexCoord2fv( const Float* ptc )
 // @param y Coordinate on y axis
 // @param z Coordinate on z axis
 //=============================================
-void CBasicDraw::Vertex3f( Float x, Float y, Float z )
+void CBasicDraw::Vertex3f( float x, float y, float z )
 {
 	Vector vOrigin(x, y, z);
 	Vertex3fv(vOrigin);
@@ -393,12 +393,12 @@ void CBasicDraw::Vertex3f( Float x, Float y, Float z )
 //
 // @param pfv Pointer to coordinates
 //=============================================
-void CBasicDraw::Vertex3fv( const Float* pfv )
+void CBasicDraw::Vertex3fv( const float* pfv )
 {
 	basic_vertex_t* pvertex = &m_vertexesArray[m_numVertexes];
 	m_numVertexes++;
 
-	for(Uint32 i = 0; i < 4; i++)
+	for(UInt32 i = 0; i < 4; i++)
 		pvertex->color[i] = m_vertexColor[i] * m_brightness;
 
 	Math::VectorCopy(pfv, pvertex->origin);
@@ -407,15 +407,15 @@ void CBasicDraw::Vertex3fv( const Float* pfv )
 	if(m_numVertexes == m_vertexesArray.size())
 	{
 		// Append the vertex array
-		Uint32 firstVertexIndex = m_vertexesArray.size();
+		UInt32 firstVertexIndex = m_vertexesArray.size();
 		m_vertexesArray.resize(m_vertexesArray.size()+BASICDRAW_VERTEX_CACHE_SIZE);
 
 		// Append triangle index array for GL_QUADs
-		Uint32 beginPosition = m_quadIndexesArray.size();
-		Uint32 allocSize = m_quadIndexesArray.size() + (BASICDRAW_VERTEX_CACHE_SIZE*6);
+		UInt32 beginPosition = m_quadIndexesArray.size();
+		UInt32 allocSize = m_quadIndexesArray.size() + (BASICDRAW_VERTEX_CACHE_SIZE*6);
 		m_quadIndexesArray.resize(allocSize);
 
-		for(Uint32 i = beginPosition, j = firstVertexIndex; i < allocSize; i += 6, j += 4)
+		for(UInt32 i = beginPosition, j = firstVertexIndex; i < allocSize; i += 6, j += 4)
 		{
 			// Set triangle indexes
 			m_quadIndexesArray[i] = j; m_quadIndexesArray[i+1] = j+1; m_quadIndexesArray[i+2] = j+2;
@@ -423,7 +423,7 @@ void CBasicDraw::Vertex3fv( const Float* pfv )
 		}
 
 		// Now update the VBO
-		m_pVBO->Append(&m_vertexesArray[0], sizeof(basic_vertex_t)*m_vertexesArray.size(), &m_quadIndexesArray[0], sizeof(Uint32)*m_quadIndexesArray.size());
+		m_pVBO->Append(&m_vertexesArray[0], sizeof(basic_vertex_t)*m_vertexesArray.size(), &m_quadIndexesArray[0], sizeof(UInt32)*m_quadIndexesArray.size());
 	}
 }
 
@@ -441,10 +441,10 @@ bool CBasicDraw::EnableFog( void )
 // @brief Sets fog parameters
 //
 //=============================================
-void CBasicDraw::SetFogParams( const Vector& fogcolor, Float startdist, Float enddist )
+void CBasicDraw::SetFogParams( const Vector& fogcolor, float startdist, float enddist )
 {
 	m_pShader->SetUniform3f(m_shaderAttribs.u_fogcolor, fogcolor[0], fogcolor[1], fogcolor[2]);
-	m_pShader->SetUniform2f(m_shaderAttribs.u_fogparams, enddist, 1.0f/(static_cast<Float>(enddist)- static_cast<Float>(startdist)));
+	m_pShader->SetUniform2f(m_shaderAttribs.u_fogparams, enddist, 1.0f/(static_cast<float>(enddist)- static_cast<float>(startdist)));
 }
 
 //=============================================
@@ -462,7 +462,7 @@ bool CBasicDraw::DisableFog( void )
 //
 // @return Error string pointer
 //=============================================
-const Char* CBasicDraw::GetShaderError( void ) const
+const char* CBasicDraw::GetShaderError( void ) const
 {
 	if(!m_pShader)
 		return "";
@@ -473,7 +473,7 @@ const Char* CBasicDraw::GetShaderError( void ) const
 //=============================================
 // @brief Tells if the shader has an error
 //
-// @return TRUE if shader has an error, FALSE otherwise
+// @return true if shader has an error, false otherwise
 //=============================================
 bool CBasicDraw::HasError( void ) const
 {
@@ -487,9 +487,9 @@ bool CBasicDraw::HasError( void ) const
 //=============================================
 // @brief Validates current shader setup
 //
-// @return TRUE if shader has an error, FALSE otherwise
+// @return true if shader has an error, false otherwise
 //=============================================
-void CBasicDraw::ValidateShaderSetup( void (*pfnConPrintfFnPtr)( const Char *fmt, ... ) )
+void CBasicDraw::ValidateShaderSetup( void (*pfnConPrintfFnPtr)( const char *fmt, ... ) )
 {
 	if(!pfnConPrintfFnPtr)
 		return;

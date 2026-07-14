@@ -15,7 +15,7 @@ All Rights Reserved.
 LINK_ENTITY_TO_CLASS(game_title, CGameTitle);
 
 // Game title message name
-const Char CGameTitle::TITLE_MESSAGE_NAME[] = "GAMETITLE";
+const char CGameTitle::TITLE_MESSAGE_NAME[] = "GAMETITLE";
 
 //=============================================
 // @brief
@@ -38,7 +38,7 @@ CGameTitle::~CGameTitle( void )
 // @brief
 //
 //=============================================
-void CGameTitle::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CGameTitle::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.showmessage, nullptr, nullptr);
 		gd_engfuncs.pfnMsgWriteString(TITLE_MESSAGE_NAME);

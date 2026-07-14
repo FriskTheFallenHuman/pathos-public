@@ -277,7 +277,7 @@ void CL_PlayerTrace( const Vector& start, const Vector& end, Int32 traceflags, h
 
 			if(Cache_GetModelType(*pentity->pmodel) == MOD_BRUSH && !pentity->curstate.angles.IsZero())
 			{
-				for(Uint32 j = 0; j < 3; j++)
+				for(UInt32 j = 0; j < 3; j++)
 				{
 					mins[j] = pentity->curstate.origin[j] - pentity->pmodel->radius;
 					maxs[j] = pentity->curstate.origin[j] + pentity->pmodel->radius;
@@ -344,7 +344,7 @@ void CL_PlayerTrace( const Vector& start, const Vector& end, Int32 traceflags, h
 
 			if(Cache_GetModelType(*pentity->pmodel) == MOD_BRUSH && !pentity->curstate.angles.IsZero())
 			{
-				for(Uint32 j = 0; j < 3; j++)
+				for(UInt32 j = 0; j < 3; j++)
 				{
 					mins[j] = pentity->curstate.origin[j] - pentity->pmodel->radius;
 					maxs[j] = pentity->curstate.origin[j] + pentity->pmodel->radius;
@@ -413,7 +413,7 @@ const hull_t* CL_HullForBSP( Int32 entity, hull_types_t hulltype, Vector* poffse
 //=============================================
 //
 //=============================================
-Float CL_TraceModel( Int32 entity, const Vector& start, const Vector& end, hull_types_t hulltype, Int32 flags, trace_t& trace )
+float CL_TraceModel( Int32 entity, const Vector& start, const Vector& end, hull_types_t hulltype, Int32 flags, trace_t& trace )
 {
 	if(hulltype >= MAX_MAP_HULLS || hulltype < 0 && hulltype != HULL_AUTO)
 	{
@@ -441,7 +441,7 @@ Float CL_TraceModel( Int32 entity, const Vector& start, const Vector& end, hull_
 //=============================================
 //
 //=============================================
-const Char* CL_TraceTexture( Int32 groundentity, const Vector& start, const Vector& end )
+const char* CL_TraceTexture( Int32 groundentity, const Vector& start, const Vector& end )
 {
 	if(groundentity < 0 || groundentity >= static_cast<Int32>(cls.entities.size()))
 	{

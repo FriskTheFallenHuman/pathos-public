@@ -60,10 +60,10 @@ struct aldlump_t
 	aldlump_t():
 		type(0)
 	{
-		for(Uint32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
+		for(UInt32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
 			lmaplayeroffsets[i] = 0;
 
-		for(Uint32 i = 0; i < NB_BAKED_VERTEXLIGHT_LAYERS; i++)
+		for(UInt32 i = 0; i < NB_BAKED_VERTEXLIGHT_LAYERS; i++)
 			vertexlightlayeroffsets[i] = 0;
 	}
 

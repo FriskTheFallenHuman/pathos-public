@@ -38,7 +38,7 @@ CSPNetworking::~CSPNetworking( void )
 // @brief
 //
 //=============================================
-bool CSPNetworking::Init( const Char* pstrhost )
+bool CSPNetworking::Init( const char* pstrhost )
 {
 	// Call base class to initialize
 	if(!CNetworking::Init(pstrhost))
@@ -69,7 +69,7 @@ void CSPNetworking::SVC_MessageEnd( void )
 // @brief
 //
 //=============================================
-net_msgcache_t* CSPNetworking::SVC_GetWriteCache( Uint32 clientidx )
+net_msgcache_t* CSPNetworking::SVC_GetWriteCache( UInt32 clientidx )
 {
 	return CNetworking::SVC_GetWriteCache_Local(clientidx);
 }

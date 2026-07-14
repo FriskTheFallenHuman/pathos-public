@@ -14,12 +14,12 @@ All Rights Reserved.
 // Current fog color
 color24_t CEnvFog::g_fogColor;
 // Current fog end distance
-Uint32 CEnvFog::g_fogEndDist = 0;
+UInt32 CEnvFog::g_fogEndDist = 0;
 // Fog ideal distance to set
-Uint32 CEnvFog::g_fogIdealEndDist = 0;
+UInt32 CEnvFog::g_fogIdealEndDist = 0;
 // Time until fog blending is done
-Double CEnvFog::g_fogBlendTime = 0;
-// TRUE if fog should affect skybox
+double CEnvFog::g_fogBlendTime = 0;
+// true if fog should affect skybox
 bool CEnvFog::g_fogAffectSky = true;
 
 // Link the entity to it's class
@@ -181,7 +181,7 @@ void CEnvFog::SendInitMessage( const CBaseEntity* pPlayer )
 // @brief
 //
 //=============================================
-void CEnvFog::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvFog::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool prevstate = m_isActive;
 	switch(useMode)
@@ -213,7 +213,7 @@ void CEnvFog::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t 
 // @brief
 //
 //=============================================
-void CEnvFog::SetFogCullParams( Float endDistance, Float blendTime, bool affectSky, const color24_t& color )
+void CEnvFog::SetFogCullParams( float endDistance, float blendTime, bool affectSky, const color24_t& color )
 {
 	if(affectSky != g_fogAffectSky)
 	{
@@ -240,7 +240,7 @@ void CEnvFog::SetFogCullParams( Float endDistance, Float blendTime, bool affectS
 // @brief
 //
 //=============================================
-void CEnvFog::SetFogCullParams( Float endDistance, Float blendTime, bool affectSky, const Vector& color )
+void CEnvFog::SetFogCullParams( float endDistance, float blendTime, bool affectSky, const Vector& color )
 {
 	SetFogCullParams(endDistance, blendTime, affectSky, color24_t(color.x, color.y, color.z));
 }
@@ -290,7 +290,7 @@ bool CEnvFog::FogCull( const edict_t& client, const edict_t& entity )
 	Vector playerViewOrigin = pEntity->GetVISEyePosition();
 
 	Vector fogmins, fogmaxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		fogmins[i] = playerViewOrigin[i]-g_fogEndDist;
 		fogmaxs[i] = playerViewOrigin[i]+g_fogEndDist;

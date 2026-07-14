@@ -19,7 +19,7 @@ class CEnvSpark : public CPointEntity
 {
 public:
 	// Default delay value
-	static const Float DEFAULT_DELAY_TIME;
+	static const float DEFAULT_DELAY_TIME;
 
 public:
 	enum
@@ -37,14 +37,14 @@ public:
 	virtual void Precache( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	
 public:
 	void EXPORTFN SparkThink( void );
 
 private:
 	bool m_isActive;
-	Float m_delay;
+	float m_delay;
 	string_t m_soundName;
 };
 #endif //ENVSPARK_H

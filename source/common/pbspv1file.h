@@ -18,30 +18,30 @@ All Rights Reserved.
 // BSP limits
 //
 
-static constexpr Uint32 PBSPV1_MAX_MAP_HULLS			= 4;
-static constexpr Uint32 PBSPV1_MAX_MAP_MODELS			= 4096;
-static constexpr Uint32 PBSPV1_MAX_MAP_BRUSHES			= 262144;
-static constexpr Uint32 PBSPV1_MAX_MAP_ENTITIES			= 65535;
-static constexpr Uint32 PBSPV1_MAX_MAP_ENTSTRING		= 2097152;
-static constexpr Uint32 PBSPV1_MAX_MAP_PLANES			= 262144;
-static constexpr Uint32 PBSPV1_MAX_MAP_NODES			= 262144;
-static constexpr Uint32 PBSPV1_MAX_MAP_CLIPNODES		= 262144;
-static constexpr Uint32 PBSPV1_MAX_MAP_LEAFS			= 262144;
-static constexpr Uint32 PBSPV1_MAX_MAP_VERTS			= 262144;
-static constexpr Uint32 PBSPV1_MAX_MAP_FACES			= 262144;
-static constexpr Uint32 PBSPV1_MAX_MAP_MARKSURFACES		= 262144;
-static constexpr Uint32 PBSPV1_MAX_MAP_TEXINFO			= 262144;
-static constexpr Uint32 PBSPV1_MAX_MAP_EDGES			= 524288;
-static constexpr Uint32 PBSPV1_MAX_MAP_SURFEDGES		= 1048576;
-static constexpr Uint32 PBSPV1_MAX_MAP_TEXTURES			= 16384;
-static constexpr Uint32 PBSPV1_MAX_MAP_LIGHTING			= 16777216;
-static constexpr Uint32 PBSPV1_MAX_MAP_VISIBILITY		= 16777216;
+static constexpr UInt32 PBSPV1_MAX_MAP_HULLS			= 4;
+static constexpr UInt32 PBSPV1_MAX_MAP_MODELS			= 4096;
+static constexpr UInt32 PBSPV1_MAX_MAP_BRUSHES			= 262144;
+static constexpr UInt32 PBSPV1_MAX_MAP_ENTITIES			= 65535;
+static constexpr UInt32 PBSPV1_MAX_MAP_ENTSTRING		= 2097152;
+static constexpr UInt32 PBSPV1_MAX_MAP_PLANES			= 262144;
+static constexpr UInt32 PBSPV1_MAX_MAP_NODES			= 262144;
+static constexpr UInt32 PBSPV1_MAX_MAP_CLIPNODES		= 262144;
+static constexpr UInt32 PBSPV1_MAX_MAP_LEAFS			= 262144;
+static constexpr UInt32 PBSPV1_MAX_MAP_VERTS			= 262144;
+static constexpr UInt32 PBSPV1_MAX_MAP_FACES			= 262144;
+static constexpr UInt32 PBSPV1_MAX_MAP_MARKSURFACES		= 262144;
+static constexpr UInt32 PBSPV1_MAX_MAP_TEXINFO			= 262144;
+static constexpr UInt32 PBSPV1_MAX_MAP_EDGES			= 524288;
+static constexpr UInt32 PBSPV1_MAX_MAP_SURFEDGES		= 1048576;
+static constexpr UInt32 PBSPV1_MAX_MAP_TEXTURES			= 16384;
+static constexpr UInt32 PBSPV1_MAX_MAP_LIGHTING			= 16777216;
+static constexpr UInt32 PBSPV1_MAX_MAP_VISIBILITY		= 16777216;
 
-static constexpr Uint32 PBSPV1_MAX_LIGHTMAPS			= 4;
-static constexpr Uint32 PBSPV1_LM_SAMPLE_SIZE			= 16;
-static constexpr Uint32 PBSPV1_NUM_AMBIENTS				= 4;
-static constexpr Uint32 PBSPV1_VERSION					= 1;
-static constexpr Uint32 PBSPV1_MAX_SURFACE_EXTENTS		= 1024;
+static constexpr UInt32 PBSPV1_MAX_LIGHTMAPS			= 4;
+static constexpr UInt32 PBSPV1_LM_SAMPLE_SIZE			= 16;
+static constexpr UInt32 PBSPV1_NUM_AMBIENTS				= 4;
+static constexpr UInt32 PBSPV1_VERSION					= 1;
+static constexpr UInt32 PBSPV1_MAX_SURFACE_EXTENTS		= 1024;
 
 //
 // BSP lumps
@@ -121,9 +121,9 @@ struct dpbspv1model_t
 		memset(headnode, 0, sizeof(headnode));
 	}
 
-	Float mins[3];
-	Float maxs[3];
-	Float origin[3];
+	float mins[3];
+	float maxs[3];
+	float origin[3];
 
 	Int32 headnode[PBSPV1_MAX_MAP_HULLS];
 	Int32 visleafs;
@@ -139,7 +139,7 @@ struct dpbspv1vertex_t
 		memset(origin, 0, sizeof(origin));
 	}
 
-	Float origin[3];
+	float origin[3];
 };
 
 struct dpbspv1plane_t
@@ -151,8 +151,8 @@ struct dpbspv1plane_t
 		memset(normal, 0, sizeof(normal));
 	}
 
-	Float normal[3];
-	Float dist;
+	float normal[3];
+	float dist;
 
 	Int32 type;
 };
@@ -174,8 +174,8 @@ struct dpbspv1node_t
 	Int16 mins[3];
 	Int16 maxs[3];
 
-	Uint32 firstface;
-	Uint32 numfaces;
+	UInt32 firstface;
+	UInt32 numfaces;
 };
 
 struct dpbspv1clipnode_t
@@ -199,14 +199,14 @@ struct dpbspv1texinfo_t
 		memset(vecs, 0, sizeof(vecs));
 	}
 
-	Float vecs[2][4];
+	float vecs[2][4];
 	Int32 miptex;
 	Int32 flags;
 };
 
 struct dpbspv1edge_t
 {
-	Uint32 vertexes[2];
+	UInt32 vertexes[2];
 };
 
 struct dpbspv1face_t
@@ -222,14 +222,14 @@ struct dpbspv1face_t
 		memset(lmstyles, 0, sizeof(lmstyles));
 	}
 
-	Uint32 planenum;
+	UInt32 planenum;
 	Int32 side;
 
 	Int32 firstedge;
 	Int32 numedges;
 	Int32 texinfo;
 
-	byte lmstyles[PBSPV1_MAX_LIGHTMAPS];
+	Byte lmstyles[PBSPV1_MAX_LIGHTMAPS];
 	Int32 lightoffset;
 };
 
@@ -252,9 +252,9 @@ struct dpbspv1leaf_t
 	Int16 mins[3];
 	Int16 maxs[3];
 
-	Uint32 firstmarksurface;
-	Uint32 nummarksurfaces;
+	UInt32 firstmarksurface;
+	UInt32 nummarksurfaces;
 
-	byte ambient_level[PBSPV1_NUM_AMBIENTS];
+	Byte ambient_level[PBSPV1_NUM_AMBIENTS];
 };
 #endif //PBSPV1FILE_H

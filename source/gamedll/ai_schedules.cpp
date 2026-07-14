@@ -26,12 +26,12 @@ All Rights Reserved.
 ai_task_t taskListScheduleFail[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT,						0.5f),
 	AITASK(AI_TASK_WAIT_PVS,					0)
 };
 
-Uint32 interruptBitsScheduleFail[] =
+UInt32 interruptBitsScheduleFail[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_CAN_RANGE_ATTACK1,
@@ -62,13 +62,13 @@ const CAISchedule scheduleFail(
 ai_task_t taskListScheduleCombatFail[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_FACE_ENEMY,					0),
 	AITASK(AI_TASK_WAIT,						0.5f),
 	AITASK(AI_TASK_WAIT_PVS,					0)
 };
 
-Uint32 interruptBitsScheduleCombatFail[] =
+UInt32 interruptBitsScheduleCombatFail[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_CAN_RANGE_ATTACK1,
@@ -99,11 +99,11 @@ const CAISchedule scheduleCombatFail(
 ai_task_t taskListScheduleIdleStand[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
-	AITASK(AI_TASK_WAIT,						(Float)5)
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
+	AITASK(AI_TASK_WAIT,						(float)5)
 };
 
-Uint32 interruptBitsScheduleIdleStand[] =
+UInt32 interruptBitsScheduleIdleStand[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_SEE_DISLIKE, 
@@ -142,7 +142,7 @@ ai_task_t taskListScheduleIdleWalk[] =
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0)
 };
 
-Uint32 interruptBitsScheduleIdleWalk[] =
+UInt32 interruptBitsScheduleIdleWalk[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_LIGHT_DAMAGE,
@@ -174,11 +174,11 @@ const CAISchedule scheduleIdleWalk(
 ai_task_t taskListScheduleAmbush[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT_INDEFINITE,				0)
 };
 
-Uint32 interruptBitsScheduleAmbush[] =
+UInt32 interruptBitsScheduleAmbush[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_SEE_ENEMY,
@@ -220,7 +220,7 @@ ai_task_t taskListScheduleActiveIdle[] =
 	AITASK(AI_TASK_CLEAR_HINT_NODE,				0)
 };
 
-Uint32 interruptBitsScheduleActiveIdle[] =
+UInt32 interruptBitsScheduleActiveIdle[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_LIGHT_DAMAGE,
@@ -253,7 +253,7 @@ const CAISchedule scheduleActiveIdle(
 ai_task_t taskListScheduleBecomeAlert[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_ALERT_SOUND,					0),
 	AITASK(AI_TASK_FACE_IDEAL,					0)
 };
@@ -278,11 +278,11 @@ const CAISchedule scheduleBecomeAlert(
 ai_task_t taskListScheduleAlertFace[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_FACE_IDEAL,					0)
 };
 
-Uint32 interruptBitsScheduleAlertFace[] =
+UInt32 interruptBitsScheduleAlertFace[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_SEE_FEAR,
@@ -312,9 +312,9 @@ const CAISchedule scheduleAlertFace(
 ai_task_t taskListScheduleAlertSmallFlinch[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_REMEMBER,					(Float)AI_MEMORY_FLINCHED),
+	AITASK(AI_TASK_REMEMBER,					(float)AI_MEMORY_FLINCHED),
 	AITASK(AI_TASK_FLINCH,						0),
-	AITASK(AI_TASK_SET_SCHEDULE,				(Float)AI_SCHED_ALERT_FACE)
+	AITASK(AI_TASK_SET_SCHEDULE,				(float)AI_SCHED_ALERT_FACE)
 };
 
 const CAISchedule scheduleAlertSmallFlinch(
@@ -337,12 +337,12 @@ const CAISchedule scheduleAlertSmallFlinch(
 ai_task_t taskListScheduleAlertStand[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
-	AITASK(AI_TASK_WAIT,						(Float)20),
-	AITASK(AI_TASK_SUGGEST_STATE,				(Float)NPC_STATE_IDLE)
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
+	AITASK(AI_TASK_WAIT,						(float)20),
+	AITASK(AI_TASK_SUGGEST_STATE,				(float)NPC_STATE_IDLE)
 };
 
-Uint32 interruptBitsScheduleAlertStand[] =
+UInt32 interruptBitsScheduleAlertStand[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_SEE_ENEMY,
@@ -385,10 +385,10 @@ ai_task_t taskListScheduleInvestigateSound[] =
 	AITASK(AI_TASK_FACE_IDEAL,					0),
 	AITASK(AI_TASK_RUN_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE)
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE)
 };
 
-Uint32 interruptBitsScheduleInvestigateSound[] =
+UInt32 interruptBitsScheduleInvestigateSound[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_SEE_FEAR,
@@ -418,11 +418,11 @@ const CAISchedule scheduleInvestigateSound(
 ai_task_t taskListScheduleCombatStand[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT_INDEFINITE,				0)
 };
 
-Uint32 interruptBitsScheduleCombatStand[] =
+UInt32 interruptBitsScheduleCombatStand[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_ENEMY_DEAD,
@@ -457,11 +457,11 @@ const CAISchedule scheduleCombatStand(
 ai_task_t taskListScheduleCombatFace[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_FACE_ENEMY,					0)
 };
 
-Uint32 interruptBitsScheduleCombatFace[] =
+UInt32 interruptBitsScheduleCombatFace[] =
 {
 	AI_COND_CAN_RANGE_ATTACK1,
 	AI_COND_CAN_RANGE_ATTACK2,
@@ -496,11 +496,11 @@ const CAISchedule scheduleCombatFace(
 ai_task_t taskListScheduleStandoff[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT_FACE_ENEMY,				2)
 };
 
-Uint32 interruptBitsScheduleStandoff[] =
+UInt32 interruptBitsScheduleStandoff[] =
 {
 	AI_COND_CAN_RANGE_ATTACK1,
 	AI_COND_CAN_RANGE_ATTACK2,
@@ -534,7 +534,7 @@ const CAISchedule scheduleStandoff(
 ai_task_t taskListScheduleArmWeapon[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_PLAY_SEQUENCE,				(Float)ACT_ARM)
+	AITASK(AI_TASK_PLAY_SEQUENCE,				(float)ACT_ARM)
 };
 
 const CAISchedule scheduleArmWeapon(
@@ -557,11 +557,11 @@ const CAISchedule scheduleArmWeapon(
 ai_task_t taskListScheduleReload[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_PLAY_SEQUENCE,				(Float)ACT_RELOAD),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE)
+	AITASK(AI_TASK_PLAY_SEQUENCE,				(float)ACT_RELOAD),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE)
 };
 
-Uint32 interruptBitsScheduleReload[] =
+UInt32 interruptBitsScheduleReload[] =
 {
 	AI_COND_HEAVY_DAMAGE
 };
@@ -586,17 +586,17 @@ const CAISchedule scheduleReload(
 ai_task_t taskListScheduleHideReload[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(Float)AI_SCHED_RELOAD),
+	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(float)AI_SCHED_RELOAD),
 	AITASK(AI_TASK_FIND_RELOAD_COVER_SPOT,		0),
 	AITASK(AI_TASK_RUN_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
-	AITASK(AI_TASK_REMEMBER,					(Float)AI_MEMORY_IN_COVER),
+	AITASK(AI_TASK_REMEMBER,					(float)AI_MEMORY_IN_COVER),
 	AITASK(AI_TASK_FACE_ENEMY,					0),
-	AITASK(AI_TASK_PLAY_SEQUENCE,				(Float)ACT_RELOAD),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE)
+	AITASK(AI_TASK_PLAY_SEQUENCE,				(float)ACT_RELOAD),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE)
 };
 
-Uint32 interruptBitsScheduleHideReload[] =
+UInt32 interruptBitsScheduleHideReload[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_HEAVY_DAMAGE,
@@ -628,7 +628,7 @@ ai_task_t taskListScheduleRangeAttack1[] =
 	AITASK(AI_TASK_RANGE_ATTACK1,				0)
 };
 
-Uint32 interruptBitsScheduleRangeAttack1[] =
+UInt32 interruptBitsScheduleRangeAttack1[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_ENEMY_DEAD,
@@ -664,7 +664,7 @@ ai_task_t taskListScheduleRangeAttack2[] =
 	AITASK(AI_TASK_RANGE_ATTACK2,				0)
 };
 
-Uint32 interruptBitsScheduleRangeAttack2[] =
+UInt32 interruptBitsScheduleRangeAttack2[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_ENEMY_DEAD,
@@ -700,7 +700,7 @@ ai_task_t taskListScheduleMeleeAttack1[] =
 	AITASK(AI_TASK_MELEE_ATTACK1,				0)
 };
 
-Uint32 interruptBitsScheduleMeleeAttack1[] =
+UInt32 interruptBitsScheduleMeleeAttack1[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_ENEMY_DEAD,
@@ -709,7 +709,7 @@ Uint32 interruptBitsScheduleMeleeAttack1[] =
 	AI_COND_ENEMY_OCCLUDED
 };
 
-Uint32 inverseInterruptBitsScheduleMeleeAttack1[] =
+UInt32 inverseInterruptBitsScheduleMeleeAttack1[] =
 {
 	AI_COND_CAN_MELEE_ATTACK1
 };
@@ -740,7 +740,7 @@ ai_task_t taskListScheduleMeleeAttack2[] =
 	AITASK(AI_TASK_MELEE_ATTACK2,				0)
 };
 
-Uint32 interruptBitsScheduleMeleeAttack2[] =
+UInt32 interruptBitsScheduleMeleeAttack2[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_ENEMY_DEAD,
@@ -749,7 +749,7 @@ Uint32 interruptBitsScheduleMeleeAttack2[] =
 	AI_COND_ENEMY_OCCLUDED
 };
 
-Uint32 inverseInterruptBitsScheduleMeleeAttack2[] =
+UInt32 inverseInterruptBitsScheduleMeleeAttack2[] =
 {
 	AI_COND_CAN_MELEE_ATTACK2
 };
@@ -780,7 +780,7 @@ ai_task_t taskListScheduleSpecialAttack1[] =
 	AITASK(AI_TASK_SPECIAL_ATTACK1,				0)
 };
 
-Uint32 interruptBitsScheduleSpecialAttack1[] =
+UInt32 interruptBitsScheduleSpecialAttack1[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_ENEMY_DEAD,
@@ -815,7 +815,7 @@ ai_task_t taskListScheduleSpecialAttack2[] =
 	AITASK(AI_TASK_SPECIAL_ATTACK2,				0)
 };
 
-Uint32 interruptBitsScheduleSpecialAttack2[] =
+UInt32 interruptBitsScheduleSpecialAttack2[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_ENEMY_DEAD,
@@ -845,14 +845,14 @@ const CAISchedule scheduleSpecialAttack2(
 //=============================================
 ai_task_t taskListScheduleChaseEnemy[] = 
 {
-	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(Float)AI_SCHED_CHASE_ENEMY_FAILED),
+	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(float)AI_SCHED_CHASE_ENEMY_FAILED),
 	AITASK(AI_TASK_GET_PATH_TO_ENEMY,			0),
 	AITASK(AI_TASK_RUN_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
 	AITASK(AI_TASK_FACE_ENEMY,					0)
 };
 
-Uint32 interruptBitsScheduleChaseEnemy[] =
+UInt32 interruptBitsScheduleChaseEnemy[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_CAN_RANGE_ATTACK1,
@@ -892,13 +892,13 @@ ai_task_t taskListScheduleChaseEnemyFailed[] =
 	AITASK(AI_TASK_FIND_COVER_FROM_ENEMY,		0),
 	AITASK(AI_TASK_RUN_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
-	AITASK(AI_TASK_REMEMBER,					(Float)AI_MEMORY_IN_COVER),
+	AITASK(AI_TASK_REMEMBER,					(float)AI_MEMORY_IN_COVER),
 	AITASK(AI_TASK_FACE_ENEMY,					0),
 	AITASK(AI_TASK_WAIT,						0.1)
 
 };
 
-Uint32 interruptBitsScheduleChaseEnemyFailed[] =
+UInt32 interruptBitsScheduleChaseEnemyFailed[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_CAN_RANGE_ATTACK1,
@@ -929,7 +929,7 @@ const CAISchedule scheduleChaseEnemyFailed(
 //=============================================
 ai_task_t taskListScheduleSmallFlinch[] = 
 {
-	AITASK(AI_TASK_REMEMBER,					(Float)AI_MEMORY_FLINCHED),
+	AITASK(AI_TASK_REMEMBER,					(float)AI_MEMORY_FLINCHED),
 	AITASK(AI_TASK_STOP_MOVING,					0),
 	AITASK(AI_TASK_FLINCH,						0),
 	AITASK(AI_TASK_FACE_IDEAL,					0)
@@ -1004,7 +1004,7 @@ const CAISchedule scheduleDieBlowback(
 ai_task_t taskListScheduleVictoryDance[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_PLAY_SEQUENCE,				(Float)ACT_VICTORY_DANCE)
+	AITASK(AI_TASK_PLAY_SEQUENCE,				(float)ACT_VICTORY_DANCE)
 };
 
 const CAISchedule scheduleVictoryDance(
@@ -1243,7 +1243,7 @@ const CAISchedule scheduleScriptedFacePlayer(
 ai_task_t taskListScheduleCower[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_PLAY_SEQUENCE,				(Float)ACT_COWER)
+	AITASK(AI_TASK_PLAY_SEQUENCE,				(float)ACT_COWER)
 };
 
 const CAISchedule scheduleCower(
@@ -1269,11 +1269,11 @@ ai_task_t taskListScheduleTakeCoverFromOrigin[] =
 	AITASK(AI_TASK_FIND_COVER_FROM_ORIGIN,		0),
 	AITASK(AI_TASK_RUN_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
-	AITASK(AI_TASK_REMEMBER,					(Float)AI_MEMORY_IN_COVER),
+	AITASK(AI_TASK_REMEMBER,					(float)AI_MEMORY_IN_COVER),
 	AITASK(AI_TASK_TURN_LEFT,					180)
 };
 
-Uint32 interruptBitsScheduleTakeCoverFromOrigin[] =
+UInt32 interruptBitsScheduleTakeCoverFromOrigin[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER
@@ -1302,11 +1302,11 @@ ai_task_t taskListScheduleTakeCoverFromBestSound[] =
 	AITASK(AI_TASK_FIND_COVER_FROM_BEST_SOUND,	0),
 	AITASK(AI_TASK_RUN_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
-	AITASK(AI_TASK_REMEMBER,					(Float)AI_MEMORY_IN_COVER),
+	AITASK(AI_TASK_REMEMBER,					(float)AI_MEMORY_IN_COVER),
 	AITASK(AI_TASK_TURN_LEFT,					180)
 };
 
-Uint32 interruptBitsScheduleTakeCoverFromBestSound[] =
+UInt32 interruptBitsScheduleTakeCoverFromBestSound[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER
@@ -1331,16 +1331,16 @@ const CAISchedule scheduleTakeCoverFromBestSound(
 //=============================================
 ai_task_t taskListScheduleTakeCoverFromBestSoundWithCower[] = 
 {
-	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(Float)AI_SCHED_COWER),
+	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(float)AI_SCHED_COWER),
 	AITASK(AI_TASK_STOP_MOVING,					0),
 	AITASK(AI_TASK_FIND_COVER_FROM_BEST_SOUND,	0),
 	AITASK(AI_TASK_RUN_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
-	AITASK(AI_TASK_REMEMBER,					(Float)AI_MEMORY_IN_COVER),
+	AITASK(AI_TASK_REMEMBER,					(float)AI_MEMORY_IN_COVER),
 	AITASK(AI_TASK_TURN_LEFT,					180)
 };
 
-Uint32 interruptBitsScheduleTakeCoverFromBestSoundWithCower[] =
+UInt32 interruptBitsScheduleTakeCoverFromBestSoundWithCower[] =
 {
 	AI_COND_IN_DANGER
 };
@@ -1368,12 +1368,12 @@ ai_task_t taskListScheduleTakeCoverFromEnemy[] =
 	AITASK(AI_TASK_FIND_COVER_FROM_ENEMY,		0),
 	AITASK(AI_TASK_RUN_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
-	AITASK(AI_TASK_REMEMBER,					(Float)AI_MEMORY_IN_COVER),
+	AITASK(AI_TASK_REMEMBER,					(float)AI_MEMORY_IN_COVER),
 	AITASK(AI_TASK_FACE_ENEMY,					0),
 	AITASK(AI_TASK_WAIT,						1)
 };
 
-Uint32 interruptBitsScheduleTakeCoverFromEnemy[] =
+UInt32 interruptBitsScheduleTakeCoverFromEnemy[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER
@@ -1406,7 +1406,7 @@ ai_task_t taskListScheduleMoveOutOfWay[] =
 	AITASK(AI_TASK_CLEAR_BLOCK_STATUS,			0)
 };
 
-Uint32 interruptBitsScheduleMoveOutOfWay[] =
+UInt32 interruptBitsScheduleMoveOutOfWay[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_CAN_RANGE_ATTACK1,
@@ -1445,11 +1445,11 @@ ai_task_t taskListScheduleFindEnemies[] =
 	AITASK(AI_TASK_RUN_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
 	AITASK(AI_TASK_TURN_LEFT,					180),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT,						1)
 };
 
-Uint32 interruptBitsScheduleFindEnemies[] =
+UInt32 interruptBitsScheduleFindEnemies[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_SEE_ENEMY,
@@ -1488,7 +1488,7 @@ ai_task_t taskListScheduleDodgeEnemy[] =
 	AITASK(AI_TASK_FACE_ENEMY,					0)
 };
 
-Uint32 interruptBitsScheduleDodgeEnemy[] =
+UInt32 interruptBitsScheduleDodgeEnemy[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER
@@ -1513,8 +1513,8 @@ const CAISchedule scheduleDodgeEnemy(
 //=============================================
 ai_task_t taskListScheduleInspectEnemyCorpse[] = 
 {
-	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(Float)AI_SCHED_FAIL),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_FAIL_SCHEDULE,			(float)AI_SCHED_FAIL),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_STOP_MOVING,					0),
 	AITASK(AI_TASK_FACE_ENEMY,					0),
 	AITASK(AI_TASK_WAIT,						1.5f),
@@ -1522,10 +1522,10 @@ ai_task_t taskListScheduleInspectEnemyCorpse[] =
 	AITASK(AI_TASK_WALK_PATH,					0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,			0),
 	AITASK(AI_TASK_FACE_ENEMY,					0),
-	AITASK(AI_TASK_PLAY_SEQUENCE,				(Float)ACT_VICTORY_DANCE)
+	AITASK(AI_TASK_PLAY_SEQUENCE,				(float)ACT_VICTORY_DANCE)
 };
 
-Uint32 interruptBitsScheduleInspectEnemyCorpse[] =
+UInt32 interruptBitsScheduleInspectEnemyCorpse[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -1552,14 +1552,14 @@ const CAISchedule scheduleInspectEnemyCorpse(
 //=============================================
 ai_task_t taskListScheduleEstablishLineOfFire[] = 
 {
-	AITASK(AI_TASK_SET_FAIL_SCHEDULE,						(Float)AI_SCHED_ELOF_FAIL),
+	AITASK(AI_TASK_SET_FAIL_SCHEDULE,						(float)AI_SCHED_ELOF_FAIL),
 	AITASK(AI_TASK_GET_PATH_TO_ENEMY,						0),
 	AITASK(AI_TASK_RUN_PATH,								0),
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,						0),
 	AITASK(AI_TASK_FACE_ENEMY,								0)
 };
 
-Uint32 interruptBitsScheduleEstablishLineOfFire[] =
+UInt32 interruptBitsScheduleEstablishLineOfFire[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -1578,12 +1578,12 @@ Uint32 interruptBitsScheduleEstablishLineOfFire[] =
 	AI_COND_HEAVY_DAMAGE
 };
 
-Uint32 specialInterruptBitsScheduleEstablishLineOfFire[] =
+UInt32 specialInterruptBitsScheduleEstablishLineOfFire[] =
 {
 	AI_COND_SHOOT_VECTOR_VALID
 };
 
-Uint32 specialInterruptExceptionBitsScheduleEstablishLineOfFire[] =
+UInt32 specialInterruptExceptionBitsScheduleEstablishLineOfFire[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -1593,7 +1593,7 @@ Uint32 specialInterruptExceptionBitsScheduleEstablishLineOfFire[] =
 	AI_COND_HEAR_SOUND
 };
 
-Uint32 specialInterruptRequirementBitsScheduleEstablishLineOfFire[] =
+UInt32 specialInterruptRequirementBitsScheduleEstablishLineOfFire[] =
 {
 	AI_COND_SHOOT_VECTOR_VALID
 };
@@ -1631,7 +1631,7 @@ ai_task_t taskListScheduleFaceEnemy[] =
 	AITASK(AI_TASK_FACE_ENEMY,					0)
 };
 
-Uint32 interruptBitsScheduleFaceEnemy[] =
+UInt32 interruptBitsScheduleFaceEnemy[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -1668,15 +1668,15 @@ const CAISchedule scheduleFaceEnemy(
 //=============================================
 ai_task_t taskListScheduleSweep[] = 
 {
-	AITASK(AI_TASK_TURN_LEFT,					(Float)180.0f),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_TURN_LEFT,					(float)180.0f),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT,						0.5f),
-	AITASK(AI_TASK_TURN_LEFT,					(Float)180.0f),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_TURN_LEFT,					(float)180.0f),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT,						0.5f)
 };
 
-Uint32 interruptBitsScheduleSweep[] =
+UInt32 interruptBitsScheduleSweep[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -1713,11 +1713,11 @@ const CAISchedule scheduleSweep(
 ai_task_t taskListScheduleWaitFaceEnemy[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT_FACE_ENEMY,				1.0f)
 };
 
-Uint32 interruptBitsScheduleWaitFaceEnemy[] =
+UInt32 interruptBitsScheduleWaitFaceEnemy[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -1758,7 +1758,7 @@ ai_task_t taskListScheduleRunFromNPCPuller[] =
 	AITASK(AI_TASK_WAIT_FOR_MOVEMENT,				0)
 };
 
-Uint32 interruptBitsScheduleRunFromNPCPuller[] =
+UInt32 interruptBitsScheduleRunFromNPCPuller[] =
 {
 	AI_COND_SCHEDULE_DONE,
 	AI_COND_HEAVY_DAMAGE,
@@ -1789,7 +1789,7 @@ ai_task_t taskListScheduleHoverByNPCPuller[] =
 	AITASK(AI_TASK_NPCPULLER_HOVER,					0)
 };
 
-Uint32 interruptBitsScheduleHoverByNPCPuller[] =
+UInt32 interruptBitsScheduleHoverByNPCPuller[] =
 {
 	AI_COND_SCHEDULE_DONE,
 	AI_COND_HEAVY_DAMAGE
@@ -1827,7 +1827,7 @@ ai_task_t taskListScheduleSuppressingFire[] =
 	AITASK(AI_TASK_RANGE_ATTACK1,				0)
 };
 
-Uint32 interruptBitsScheduleSuppressingFire[] =
+UInt32 interruptBitsScheduleSuppressingFire[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_ENEMY_DEAD,
@@ -1871,7 +1871,7 @@ ai_task_t taskListScheduleRangeAttack1Long[] =
 	AITASK(AI_TASK_RANGE_ATTACK1,							0)
 };
 
-Uint32 interruptBitsScheduleRangeAttack1Long[] =
+UInt32 interruptBitsScheduleRangeAttack1Long[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -1905,11 +1905,11 @@ ai_task_t taskListScheduleRangeAttack2Toss[] =
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
 	AITASK(AI_TASK_FACE_TOSS_DIR,				0),
-	AITASK(AI_TASK_PLAY_SEQUENCE,				(Float)ACT_RANGE_ATTACK2),
-	AITASK(AI_TASK_SET_SCHEDULE,				(Float)AI_SCHED_WAIT_FACE_ENEMY)
+	AITASK(AI_TASK_PLAY_SEQUENCE,				(float)ACT_RANGE_ATTACK2),
+	AITASK(AI_TASK_SET_SCHEDULE,				(float)AI_SCHED_WAIT_FACE_ENEMY)
 };
 
-Uint32 interruptBitsScheduleRangeAttack2Toss[] =
+UInt32 interruptBitsScheduleRangeAttack2Toss[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE
 };
@@ -1987,7 +1987,7 @@ void CBaseNPC::ChangeSchedule( const CAISchedule* pNewSchedule )
 	CBitSet saveConditions(AI_COND_BITSET_SIZE);
 	if(m_npcState == NPC_STATE_COMBAT)
 	{
-		static const Uint32 keptBitsArray[] = {AI_COND_ENEMY_NAVIGABLE, AI_COND_ENEMY_NOT_FOUND, AI_COND_FRIENDLY_FIRE,
+		static const UInt32 keptBitsArray[] = {AI_COND_ENEMY_NAVIGABLE, AI_COND_ENEMY_NOT_FOUND, AI_COND_FRIENDLY_FIRE,
 			AI_COND_CAN_RANGE_ATTACK1, AI_COND_CAN_RANGE_ATTACK2, AI_COND_CAN_MELEE_ATTACK1, AI_COND_CAN_MELEE_ATTACK2,
 			AI_COND_CAN_SPECIAL_ATTACK1, AI_COND_CAN_SPECIAL_ATTACK2, AI_COND_ENEMY_DEAD };
 		static CBitSet keptBitsSet(AI_COND_BITSET_SIZE, keptBitsArray, PT_ARRAYSIZE(keptBitsArray));
@@ -2008,7 +2008,7 @@ void CBaseNPC::ChangeSchedule( const CAISchedule* pNewSchedule )
 	if(m_npcState == NPC_STATE_SCRIPT && m_pScriptedSequence)
 		interruptMask &= ~(m_pScriptedSequence->GetIgnoreConditions());
 
-	Uint64 soundMask = m_pSchedule->GetSoundMask();
+	UInt64 soundMask = m_pSchedule->GetSoundMask();
 	if(m_npcState == NPC_STATE_SCRIPT && m_pScriptedSequence)
 		soundMask |= m_pScriptedSequence->GetInterruptSoundMask();
 
@@ -2996,12 +2996,12 @@ bool CBaseNPC::IsScheduleValid( void )
 void CBaseNPC::MaintainSchedule( void )
 {
 	// Number of tasks executed so far
-	Uint32 numTasksExecuted = 0;
+	UInt32 numTasksExecuted = 0;
 
 	// Tells whether we should keep trying new schedules.
 	// This is needed if we keep picking the same schedule
 	// over and over again, leading to an infinite loop.
-	Uint32 numScheduleChanges = 0;
+	UInt32 numScheduleChanges = 0;
 	while(numScheduleChanges < NPC_MAX_SCHEDULE_CHANGES)
 	{
 		const CAISchedule* pNewSchedule = nullptr;
@@ -3198,7 +3198,7 @@ const CAISchedule* CBaseNPC::GetSchedule( void )
 			}
 			else if(CheckCondition(AI_COND_LIGHT_DAMAGE) || CheckCondition(AI_COND_HEAVY_DAMAGE))
 			{
-				Float coverYaw = SDL_fabs(GetYawDifference());
+				float coverYaw = SDL_fabs(GetYawDifference());
 				if(CheckCondition(AI_COND_HEAVY_DAMAGE) && coverYaw < (1.0 - m_fieldOfView) * 60)
 					return GetScheduleByIndex(AI_SCHED_TAKE_COVER_FROM_ORIGIN);
 				else
@@ -3257,9 +3257,9 @@ const CAISchedule* CBaseNPC::GetSchedule( void )
 				}
 				else if(m_enemy->IsNPCDangerous())
 				{
-					Float fogEndDistance = CEnvFog::GetFogEndDistance();
-					Float minCoverDistance = fogEndDistance > 0 ? fogEndDistance : NPC_DANGEROUS_ENEMY_MIN_COVER_DISTANCE;
-					Float enemyDistance = (m_pState->origin - m_enemy->GetNavigablePosition()).Length();
+					float fogEndDistance = CEnvFog::GetFogEndDistance();
+					float minCoverDistance = fogEndDistance > 0 ? fogEndDistance : NPC_DANGEROUS_ENEMY_MIN_COVER_DISTANCE;
+					float enemyDistance = (m_pState->origin - m_enemy->GetNavigablePosition()).Length();
 					
 					if(enemyDistance < minCoverDistance)
 						return GetScheduleByIndex(AI_SCHED_TAKE_COVER_FROM_ENEMY);

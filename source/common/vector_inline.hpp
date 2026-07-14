@@ -14,7 +14,7 @@ All Rights Reserved.
 // @brief Constructor
 //
 //=============================================
-inline Vector::Vector( void ):
+DO_INLINE Vector::Vector( void ):
 	x(0),
 	y(0),
 	z(0)
@@ -28,7 +28,7 @@ inline Vector::Vector( void ):
 // @param srcY Value on Y coordinate
 // @param srcZ Value on Z coordinate
 //=============================================
-inline Vector::Vector( Float srcX, Float srcY, Float srcZ ):
+DO_INLINE Vector::Vector( float srcX, float srcY, float srcZ ):
 	x(srcX),
 	y(srcY),
 	z(srcZ)
@@ -40,7 +40,7 @@ inline Vector::Vector( Float srcX, Float srcY, Float srcZ ):
 //
 // @param src Vector object to copy
 //=============================================
-inline Vector::Vector( const Vector& src ):
+DO_INLINE Vector::Vector( const Vector& src ):
 	x(src.x),
 	y(src.y),
 	z(src.z)
@@ -52,7 +52,7 @@ inline Vector::Vector( const Vector& src ):
 //
 // @param coords Array of coordinates to copy
 //=============================================
-inline Vector::Vector( Float coords[3] ):
+DO_INLINE Vector::Vector( float coords[3] ):
 	x(coords[0]),
 	y(coords[1]),
 	z(coords[2])
@@ -64,7 +64,7 @@ inline Vector::Vector( Float coords[3] ):
 //
 // @param coords Array of coordinates to copy
 //=============================================
-inline Vector::Vector( Int32 coords[3] ):
+DO_INLINE Vector::Vector( Int32 coords[3] ):
 	x(coords[0]),
 	y(coords[1]),
 	z(coords[2])
@@ -76,7 +76,7 @@ inline Vector::Vector( Int32 coords[3] ):
 //
 // @param rhv Reference to right hand Vector object
 //=============================================
-inline Vector Vector::operator-( void ) const
+DO_INLINE Vector Vector::operator-( void ) const
 {
 	return Vector(-x, -y, -z);
 }
@@ -87,7 +87,7 @@ inline Vector Vector::operator-( void ) const
 // @param rhv Reference to right hand Vector object
 // @return Comparison result
 //=============================================
-inline bool Vector::operator==( const Vector& rhv ) const
+DO_INLINE bool Vector::operator==( const Vector& rhv ) const
 {
 	return (rhv.x == x && rhv.y == y && rhv.z == z);
 }
@@ -98,7 +98,7 @@ inline bool Vector::operator==( const Vector& rhv ) const
 // @param rhv Reference to right hand Vector object
 // @return Comparison result
 //=============================================
-inline bool Vector::operator!=( const Vector& rhv ) const
+DO_INLINE bool Vector::operator!=( const Vector& rhv ) const
 {
 	return (rhv.x != x || rhv.y != y || rhv.z != z);
 }
@@ -109,7 +109,7 @@ inline bool Vector::operator!=( const Vector& rhv ) const
 // @param rhv Reference to right hand Vector object
 // @return Vector object containing the result
 //=============================================
-inline Vector Vector::operator+( const Vector& rhv ) const
+DO_INLINE Vector Vector::operator+( const Vector& rhv ) const
 {
 	return Vector(x + rhv.x, y + rhv.y, z + rhv.z);
 }
@@ -120,7 +120,7 @@ inline Vector Vector::operator+( const Vector& rhv ) const
 // @param rhv Reference to right hand Vector object
 // @return Reference to this vector object
 //=============================================
-inline Vector& Vector::operator+=( const Vector& rhv )
+DO_INLINE Vector& Vector::operator+=( const Vector& rhv )
 {
 	x = x + rhv.x;
 	y = y + rhv.y;
@@ -135,7 +135,7 @@ inline Vector& Vector::operator+=( const Vector& rhv )
 // @param rhv Reference to right hand Vector object
 // @return Vector object containing the result
 //=============================================
-inline Vector Vector::operator-( const Vector& rhv ) const
+DO_INLINE Vector Vector::operator-( const Vector& rhv ) const
 {
 	return Vector(x - rhv.x, y - rhv.y, z - rhv.z);
 }
@@ -146,7 +146,7 @@ inline Vector Vector::operator-( const Vector& rhv ) const
 // @param rhv Reference to right hand Vector object
 // @return Reference to this vector object
 //=============================================
-inline Vector& Vector::operator-=( const Vector& rhv )
+DO_INLINE Vector& Vector::operator-=( const Vector& rhv )
 {
 	x = x - rhv.x;
 	y = y - rhv.y;
@@ -161,7 +161,7 @@ inline Vector& Vector::operator-=( const Vector& rhv )
 // @param rhv Reference to right hand Vector object
 // @return Vector object containing the result
 //=============================================
-inline Vector Vector::operator*( const Vector& rhv ) const
+DO_INLINE Vector Vector::operator*( const Vector& rhv ) const
 {
 	return Vector(x * rhv.x, y * rhv.y, z * rhv.z);
 }
@@ -172,7 +172,7 @@ inline Vector Vector::operator*( const Vector& rhv ) const
 // @param rhv Reference to right hand Vector object
 // @return Reference to this vector object
 //=============================================
-inline Vector& Vector::operator*=( const Vector& rhv )
+DO_INLINE Vector& Vector::operator*=( const Vector& rhv )
 {
 	x = x * rhv.x;
 	y = y * rhv.y;
@@ -187,7 +187,7 @@ inline Vector& Vector::operator*=( const Vector& rhv )
 // @param rhv Reference to right hand Vector object
 // @return Vector object containing the result
 //=============================================
-inline Vector Vector::operator/( const Vector& rhv ) const
+DO_INLINE Vector Vector::operator/( const Vector& rhv ) const
 {
 	return Vector(x / rhv.x, y / rhv.y, z / rhv.z);
 }
@@ -198,7 +198,7 @@ inline Vector Vector::operator/( const Vector& rhv ) const
 // @param rhv Reference to right hand Vector object
 // @return Reference to this vector object
 //=============================================
-inline Vector& Vector::operator/=( const Vector& rhv )
+DO_INLINE Vector& Vector::operator/=( const Vector& rhv )
 {
 	x = x / rhv.x;
 	y = y / rhv.y;
@@ -213,7 +213,7 @@ inline Vector& Vector::operator/=( const Vector& rhv )
 // @param str Reference to CString to copy
 // @return Vector object containing the result
 //=============================================
-inline Vector& Vector::operator=( const Vector& rhv )
+DO_INLINE Vector& Vector::operator=( const Vector& rhv )
 {
 	x = rhv.x;
 	y = rhv.y;
@@ -228,7 +228,7 @@ inline Vector& Vector::operator=( const Vector& rhv )
 // @param str Reference to CString to copy
 // @return Value at index
 //=============================================
-inline Float& Vector::operator[]( Uint32 n )
+DO_INLINE float& Vector::operator[]( UInt32 n )
 {
 	assert(n < 3);
 
@@ -246,7 +246,7 @@ inline Float& Vector::operator[]( Uint32 n )
 // @param str Reference to CString to copy
 // @return Value at index
 //=============================================
-inline Float Vector::operator[]( Uint32 n ) const
+DO_INLINE float Vector::operator[]( UInt32 n ) const
 {
 	assert(n < 3);
 
@@ -264,7 +264,7 @@ inline Float Vector::operator[]( Uint32 n ) const
 // @param str Reference to CString to copy
 // @return Reference to value at index
 //=============================================
-inline Float& Vector::operator[]( Int32 n )
+DO_INLINE float& Vector::operator[]( Int32 n )
 {
 	assert(n < 3);
 
@@ -282,7 +282,7 @@ inline Float& Vector::operator[]( Int32 n )
 // @param str Reference to CString to copy
 // @return Indexed value
 //=============================================
-inline Float Vector::operator[]( Int32 n ) const
+DO_INLINE float Vector::operator[]( Int32 n ) const
 {
 	assert(n < 3);
 
@@ -300,7 +300,7 @@ inline Float Vector::operator[]( Int32 n ) const
 // @param value Value to multiply the vector by
 // @return Result vector
 //=============================================
-inline Vector Vector::operator*(Float value) const
+DO_INLINE Vector Vector::operator*(float value) const
 {
 	return Vector(x*value, y*value, z*value);
 }
@@ -311,7 +311,7 @@ inline Vector Vector::operator*(Float value) const
 // @param value Value to divide the vector by
 // @return Result vector
 //=============================================
-inline Vector Vector::operator/(Float value) const
+DO_INLINE Vector Vector::operator/(float value) const
 {
 	return Vector(x/value, y/value, z/value);
 }
@@ -321,7 +321,7 @@ inline Vector Vector::operator/(Float value) const
 //
 // @return Pointer to first element
 //=============================================
-inline Vector::operator Float *( void )
+DO_INLINE Vector::operator float *( void )
 {
 	return &x;
 }
@@ -331,7 +331,7 @@ inline Vector::operator Float *( void )
 //
 // @return Const pointer to first element
 //=============================================
-inline Vector::operator const Float *( void ) const
+DO_INLINE Vector::operator const float *( void ) const
 {
 	return &x;
 }
@@ -341,7 +341,7 @@ inline Vector::operator const Float *( void ) const
 //
 // @return Length of the vector
 //=============================================
-inline Float Vector::Length( void ) const
+DO_INLINE float Vector::Length( void ) const
 {
 	return sqrt(x*x + y*y + z*z);
 }
@@ -351,7 +351,7 @@ inline Float Vector::Length( void ) const
 //
 // @return Length of the vector
 //=============================================
-inline Float Vector::Length2D( void ) const
+DO_INLINE float Vector::Length2D( void ) const
 {
 	return sqrt(x*x + y*y);
 }
@@ -361,13 +361,13 @@ inline Float Vector::Length2D( void ) const
 //
 // @return Normalized vector
 //=============================================
-inline Vector& Vector::Normalize( void )
+DO_INLINE Vector& Vector::Normalize( void )
 {
-	Float length = Length();
+	float length = Length();
 
 	if (length)
 	{
-		Float ilength = 1/length;
+		float ilength = 1/length;
 		x *= ilength;
 		y *= ilength;
 		z *= ilength;
@@ -381,7 +381,7 @@ inline Vector& Vector::Normalize( void )
 //
 // @return Normalized vector
 //=============================================
-inline void Vector::Clear( void )
+DO_INLINE void Vector::Clear( void )
 {
 	x = y = z = 0;
 }
@@ -389,9 +389,9 @@ inline void Vector::Clear( void )
 //=============================================
 // @brief Tells if the vector is zero
 //
-// @return TRUE if zero, FALSE otherwise
+// @return true if zero, false otherwise
 //=============================================
-inline bool Vector::IsZero( void ) const
+DO_INLINE bool Vector::IsZero( void ) const
 {
 	return (x == 0 && y == 0 && z == 0) ? true : false;
 }
@@ -400,13 +400,13 @@ inline bool Vector::IsZero( void ) const
 // @brief Tells if the element of the vector is NAN
 //
 // @param index Index of the element to check
-// @return TRUE if zero, FALSE otherwise
+// @return true if zero, false otherwise
 //=============================================
-inline bool Vector::IsNAN( Int32 index ) const
+DO_INLINE bool Vector::IsNAN( Int32 index ) const
 {
 	assert(index >= 0 && index < 3);
 	
-	Float fvar = this->operator[](index);
+	float fvar = this->operator[](index);
 	return (*reinterpret_cast<Int32*>(&(fvar)) & NANMASK) == NANMASK ? true : false;
 }
 
@@ -415,7 +415,7 @@ inline bool Vector::IsNAN( Int32 index ) const
 //
 // @return Resulting vector
 //=============================================
-inline Vector operator*( Float lhv, const Vector& rhv )
+DO_INLINE Vector operator*( float lhv, const Vector& rhv )
 {
 	return Vector(rhv.x*lhv, rhv.y*lhv, rhv.z*lhv);
 }

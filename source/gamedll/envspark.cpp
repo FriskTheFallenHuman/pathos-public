@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "envspark.h"
 
 // Default delay value
-const Float CEnvSpark::DEFAULT_DELAY_TIME = 1.5;
+const float CEnvSpark::DEFAULT_DELAY_TIME = 1.5;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(env_spark, CEnvSpark);
@@ -122,7 +122,7 @@ void CEnvSpark::SparkThink( void )
 	else
 		soundfile << "misc/spark" << (Int32)Common::RandomLong(1, 6) << ".wav";
 
-	Float volume = Common::RandomFloat(0.1, 0.6);
+	float volume = Common::RandomFloat(0.1, 0.6);
 	Util::EmitAmbientSound(m_pState->origin, soundfile.c_str(), volume);
 
 	m_pState->nextthink = g_pGameVars->time + Common::RandomFloat(0, m_delay);
@@ -132,7 +132,7 @@ void CEnvSpark::SparkThink( void )
 // @brief
 //
 //=============================================
-void CEnvSpark::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSpark::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool prevstate = m_isActive;
 	switch(useMode)

@@ -20,9 +20,9 @@ All Rights Reserved.
 #include "cl_main.h"
 
 // Amount of time without messages until we try to reconnect
-static constexpr Float MSG_TIMEOUT_DELAY = 5.0f;
+static constexpr float MSG_TIMEOUT_DELAY = 5.0f;
 // Reconnect attmept delay time
-static constexpr Float RECONNECT_ATTEMPT_DELAY_TIME = 5.0f;
+static constexpr float RECONNECT_ATTEMPT_DELAY_TIME = 5.0f;
 
 //=============================================
 // @brief Default constructor
@@ -62,7 +62,7 @@ CMPNetworking::~CMPNetworking( void )
 // @brief
 //
 //=============================================
-bool CMPNetworking::Init( const Char* pstrhost )
+bool CMPNetworking::Init( const char* pstrhost )
 {
 	// Call base class to initialize
 	if(!CNetworking::Init(pstrhost))
@@ -75,7 +75,7 @@ bool CMPNetworking::Init( const Char* pstrhost )
 	}
 	
 	// Get port number
-	Uint32 port = g_pCVarPort->GetValue();
+	UInt32 port = g_pCVarPort->GetValue();
 
 	// Create the write cache
 	m_pWriteCache = new net_msgcache_t(MSG_BUFFER_ALLOC_SIZE, MSG_DATA_BUFFER_ALLOC_SIZE);
@@ -103,7 +103,7 @@ bool CMPNetworking::Init( const Char* pstrhost )
 // @brief
 //
 //=============================================
-bool CMPNetworking::InitServerNetworking( Uint32 port )
+bool CMPNetworking::InitServerNetworking( UInt32 port )
 {
 	// Get local client
 	net_client_t& cl = m_clientsArray[0];
@@ -126,7 +126,7 @@ bool CMPNetworking::InitServerNetworking( Uint32 port )
 // @brief
 //
 //=============================================
-bool CMPNetworking::InitClientNetworking( Uint32 port, const Char* pstrhost )
+bool CMPNetworking::InitClientNetworking( UInt32 port, const char* pstrhost )
 {
 	// Set these
 	m_hostAddress = pstrhost;
@@ -232,7 +232,7 @@ void CMPNetworking::Poll( void )
 // @brief
 //
 //=============================================
-void CMPNetworking::Disconnect( Uint32 clindex )
+void CMPNetworking::Disconnect( UInt32 clindex )
 {
 	net_client_t& cl = m_clientsArray[clindex];
 	if(cl.ptrpeer)
@@ -251,7 +251,7 @@ void CMPNetworking::Disconnect( Uint32 clindex )
 // @brief
 //
 //=============================================
-void CMPNetworking::ConnectionLost( Uint32 clindex )
+void CMPNetworking::ConnectionLost( UInt32 clindex )
 {
 	assert(clindex < m_clientsArray.size());
 	net_client_t& cl = m_clientsArray[clindex];
@@ -279,7 +279,7 @@ void CMPNetworking::Poll_Host( void )
 
 		case ENET_EVENT_TYPE_RECEIVE:
 			{
-				Uint32 clientindex = *static_cast<Uint32*>(netEvent.peer->data);
+				UInt32 clientindex = *static_cast<UInt32*>(netEvent.peer->data);
 				assert(clientindex > 0);
 
 				net_client_t& cl = m_clientsArray[clientindex];
@@ -293,7 +293,7 @@ void CMPNetworking::Poll_Host( void )
 
 		case ENET_EVENT_TYPE_DISCONNECT:
 			{
-				Uint32 clientindex = *static_cast<Uint32*>(netEvent.peer->data);
+				UInt32 clientindex = *static_cast<UInt32*>(netEvent.peer->data);
 				assert(clientindex > 0);
 
 				ConnectionLost(clientindex);
@@ -307,7 +307,7 @@ void CMPNetworking::Poll_Host( void )
 	}
 
 	// Keep updating connected clients
-	for(Uint32 i = 1; i < m_clientsArray.size(); i++)
+	for(UInt32 i = 1; i < m_clientsArray.size(); i++)
 	{
 		net_client_t& client = m_clientsArray[i];
 		if(client.cl_state == NETCL_CONNECTED || client.cl_state == NETCL_DISCONNECTED || client.cl_state == NETCL_STATE_NONE)
@@ -330,7 +330,7 @@ void CMPNetworking::Poll_Host( void )
 		// Disconnect client if connection was lost for too long
 		if(client.cl_state == NETCL_LOST_CONNECTION)
 		{
-			Float timeouttime = ens.time - client.timeoutbegintime;
+			float timeouttime = ens.time - client.timeoutbegintime;
 			if(timeouttime >= CLIENT_TIMEOUT_LIMIT)
 			{
 				Con_Printf("Connection timed out for client.\n");
@@ -353,7 +353,7 @@ void CMPNetworking::Poll_Client( void )
 	// If connection was lost, try to re-establish it
 	if(client.cl_state == NETCL_LOST_CONNECTION)
 	{
-		Float timeouttime = ens.time - client.timeoutbegintime;
+		float timeouttime = ens.time - client.timeoutbegintime;
 		if(timeouttime >= CLIENT_TIMEOUT_LIMIT)
 		{
 			Con_Printf("Connection timed out.\n");
@@ -417,7 +417,7 @@ void CMPNetworking::Poll_Client( void )
 void CMPNetworking::ClientConnect( ENetEvent* pevent )
 {
 	// See if it's an already connected client that's timed out
-	for(Uint32 i = 0; i < m_clientsArray.size(); i++)
+	for(UInt32 i = 0; i < m_clientsArray.size(); i++)
 	{
 		net_client_t& cl = m_clientsArray[i];
 		if(cl.cl_state != NETCL_LOST_CONNECTION)
@@ -440,7 +440,7 @@ void CMPNetworking::ClientConnect( ENetEvent* pevent )
 	}
 
 	// If not, find an empty slot for him
-	Uint32 i = 1;
+	UInt32 i = 1;
 	for(; i < m_clientsArray.size(); i++)
 	{
 		const net_client_t& cl = m_clientsArray[i];
@@ -474,19 +474,19 @@ void CMPNetworking::ClientConnect( ENetEvent* pevent )
 // @brief
 //
 //=============================================
-void CMPNetworking::RejectClient( ENetPeer* ptrpeer, const Char* pstrreason )
+void CMPNetworking::RejectClient( ENetPeer* ptrpeer, const char* pstrreason )
 {
 	// Create a temporary buffer
-	Uint32 stringlength = qstrlen(pstrreason)+1;
-	Uint32 msgsize = sizeof(byte) + sizeof(byte) + stringlength;
-	byte* pmsg = new byte[msgsize];
-	memset(pmsg, 0, sizeof(byte)*msgsize);
+	UInt32 stringlength = qstrlen(pstrreason)+1;
+	UInt32 msgsize = sizeof(Byte) + sizeof(Byte) + stringlength;
+	Byte* pmsg = new Byte[msgsize];
+	memset(pmsg, 0, sizeof(Byte)*msgsize);
 	
-	Uint32 msgofs = 0;
+	UInt32 msgofs = 0;
 	(pmsg[msgofs++]) = svc_disconnect;
 	(pmsg[msgofs++]) = 1;
 
-	Char *pdest = reinterpret_cast<Char*>(pmsg+msgofs);
+	char *pdest = reinterpret_cast<char*>(pmsg+msgofs);
 	qstrcpy(pdest, pstrreason);
 
 	// Send it over to the client
@@ -502,9 +502,9 @@ void CMPNetworking::RejectClient( ENetPeer* ptrpeer, const Char* pstrreason )
 // @brief
 //
 //=============================================
-bool CMPNetworking::SendUDPMessage( msgdest_t dest, byte* pdata, Uint32 msgsize, ENetPeer* ptrpeer )
+bool CMPNetworking::SendUDPMessage( msgdest_t dest, Byte* pdata, UInt32 msgsize, ENetPeer* ptrpeer )
 {
-	Uint32 packetflags = 0;
+	UInt32 packetflags = 0;
 	if( dest == MSG_ONE_UNRELIABLE || dest == MSG_ALL_UNRELIABLE )
 		packetflags |= ENET_PACKET_FLAG_UNRELIABLE_FRAGMENT;
 	else
@@ -532,8 +532,8 @@ bool CMPNetworking::SendUDPMessage( msgdest_t dest, byte* pdata, Uint32 msgsize,
 //=============================================
 void CMPNetworking::ReadUDPMessage( net_msgcache_t* pcache, ENetEvent* pevent )
 {
-	byte* psrcdata = pevent->packet->data;
-	Uint32 msgsize = static_cast<Uint32>(pevent->packet->dataLength);
+	Byte* psrcdata = pevent->packet->data;
+	UInt32 msgsize = static_cast<UInt32>(pevent->packet->dataLength);
 
 	// Create new message object
 	m_pCurrentMessage = AllocMsg(pcache);
@@ -597,7 +597,7 @@ void CMPNetworking::SVC_MessageEnd( void )
 		msgheader_t* phdr = reinterpret_cast<msgheader_t*>((*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset);
 		phdr->msgsize = m_pCurrentMessage->msg_size;
 
-		byte* pdata = (*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset;
+		Byte* pdata = (*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset;
 		SendUDPMessage(m_pCurrentMessage->dest, pdata, m_pCurrentMessage->msg_size, cl.ptrpeer);
 
 		m_pCurrentMessage = nullptr;
@@ -607,10 +607,10 @@ void CMPNetworking::SVC_MessageEnd( void )
 		msgheader_t* phdr = reinterpret_cast<msgheader_t*>((*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset);
 		phdr->msgsize = m_pCurrentMessage->msg_size;
 
-		byte* pdata = (*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset;
+		Byte* pdata = (*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset;
 
 		// Send to other players
-		for(Uint32 i = 1; i < m_clientsArray.size(); i++)
+		for(UInt32 i = 1; i < m_clientsArray.size(); i++)
 		{
 			net_client_t& cl = m_clientsArray[i];
 			if(cl.cl_state != NETCL_CONNECTED)
@@ -631,7 +631,7 @@ void CMPNetworking::SVC_MessageEnd( void )
 // @brief
 //
 //=============================================
-net_msgcache_t* CMPNetworking::SVC_GetWriteCache( Uint32 clientidx )
+net_msgcache_t* CMPNetworking::SVC_GetWriteCache( UInt32 clientidx )
 {
 	if(clientidx == 0)
 		return CNetworking::SVC_GetWriteCache_Local(clientidx);
@@ -659,7 +659,7 @@ void CMPNetworking::CLS_MessageEnd( void )
 	msgheader_t* phdr = reinterpret_cast<msgheader_t*>((*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset);
 	phdr->msgsize = m_pCurrentMessage->msg_size;
 
-	byte* pdata = (*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset;
+	Byte* pdata = (*m_pCurrentMessage->pmsg_base) + m_pCurrentMessage->msg_offset;
 	SendUDPMessage(m_pCurrentMessage->dest, pdata, m_pCurrentMessage->msg_size, cl.ptrpeer);
 
 	m_pCurrentMessage = nullptr;

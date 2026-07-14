@@ -29,7 +29,7 @@ private:
 			rightclip(0)
 			{}
 
-		byte id;
+		Byte id;
 		Int16 ammo;
 		Int16 clip;
 		Int16 leftclip;
@@ -42,7 +42,7 @@ public:
 
 public:
 	virtual void DeclareSaveFields( void ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	
 private:
 	void SaveWeapons( void );

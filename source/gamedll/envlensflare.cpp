@@ -72,7 +72,7 @@ bool CEnvLensFlare::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvLensFlare::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvLensFlare::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{

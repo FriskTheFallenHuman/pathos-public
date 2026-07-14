@@ -15,7 +15,7 @@ All Rights Reserved.
 // @brief
 //
 //=============================================
-mspriteframe_t* Sprite_LoadFrame( const dspriteframe_t* pdframe, const byte* pdata )
+mspriteframe_t* Sprite_LoadFrame( const dspriteframe_t* pdframe, const Byte* pdata )
 {
 	mspriteframe_t* pframe = new mspriteframe_t();
 			
@@ -26,9 +26,9 @@ mspriteframe_t* Sprite_LoadFrame( const dspriteframe_t* pdframe, const byte* pda
 	pframe->down = pdframe->originy - pframe->height;
 	pframe->right = pframe->width + pdframe->originx;
 
-	byte* ptexturedata = new byte[pframe->width*pframe->height];
-	const byte* pdatasrc = pdata + sizeof(dspriteframe_t);
-	memcpy(ptexturedata, pdatasrc, sizeof(byte)*pframe->width*pframe->height);
+	Byte* ptexturedata = new Byte[pframe->width*pframe->height];
+	const Byte* pdatasrc = pdata + sizeof(dspriteframe_t);
+	memcpy(ptexturedata, pdatasrc, sizeof(Byte)*pframe->width*pframe->height);
 	pframe->pdata = ptexturedata;
 
 	return pframe;
@@ -38,7 +38,7 @@ mspriteframe_t* Sprite_LoadFrame( const dspriteframe_t* pdframe, const byte* pda
 // @brief
 //
 //=============================================
-msprite_t* Sprite_Load( const byte* pfile, Uint32 filesize )
+msprite_t* Sprite_Load( const Byte* pfile, UInt32 filesize )
 {
 	const dsprite_t* pheader = reinterpret_cast<const dsprite_t*>(pfile);
 	if(pheader->id != IDSPRITEHEADER)
@@ -62,25 +62,25 @@ msprite_t* Sprite_Load( const byte* pfile, Uint32 filesize )
 	psprite->radius = pheader->boundingradius;
 	psprite->beamlength = pheader->beamlength;
 	psprite->synctype = pheader->synctype;
-	const byte* pdata = pfile + sizeof(dsprite_t);
+	const Byte* pdata = pfile + sizeof(dsprite_t);
 
 	// Retreive palette size and allocate data
-	Uint32 palettesize = Common::ByteToUint16(pfile+sizeof(dsprite_t));
-	pdata += sizeof(Uint16);
+	UInt32 palettesize = Common::ByteToUint16(pfile+sizeof(dsprite_t));
+	pdata += sizeof(UInt16);
 
 	// Copy palette data
-	psprite->palette = new byte[palettesize*sizeof(color24_t)];
-	const byte* ppalettedata = pfile+sizeof(dsprite_t)+sizeof(Uint16);
+	psprite->palette = new Byte[palettesize*sizeof(color24_t)];
+	const Byte* ppalettedata = pfile+sizeof(dsprite_t)+sizeof(UInt16);
 	memcpy(psprite->palette, ppalettedata, sizeof(color24_t)*palettesize);
 	pdata += palettesize*sizeof(color24_t);
 
 	// Retreive list of frames
 	psprite->frames.resize(pheader->numframes);
-	for(Uint32 i = 0; i < pheader->numframes; i++)
+	for(UInt32 i = 0; i < pheader->numframes; i++)
 	{
 		mspriteframedesc_t* pframedesc = &psprite->frames[i];
 		pframedesc->type = static_cast<spr_frametype_t>(Common::ByteToUint32(pdata));
-		pdata += sizeof(Uint32);
+		pdata += sizeof(UInt32);
 
 		if(pframedesc->type == SPR_SINGLE)
 		{
@@ -88,23 +88,23 @@ msprite_t* Sprite_Load( const byte* pfile, Uint32 filesize )
 			mspriteframe_t* pframe = Sprite_LoadFrame(pframedata, pdata);
 			pframedesc->pframeptr = pframe;
 
-			Uint32 texturedatasize = pframe->width*pframe->height;
-			pdata += sizeof(dspriteframe_t)+sizeof(byte)*texturedatasize;
+			UInt32 texturedatasize = pframe->width*pframe->height;
+			pdata += sizeof(dspriteframe_t)+sizeof(Byte)*texturedatasize;
 		}
 		else if(pframedesc->type == SPR_GROUP)
 		{
-			Uint32 numgroupframes = Common::ByteToUint32(pdata);
-			pdata += sizeof(Uint32);
+			UInt32 numgroupframes = Common::ByteToUint32(pdata);
+			pdata += sizeof(UInt32);
 
 			mspritegroup_t* pgroup = new mspritegroup_t();
 			pframedesc->pgroupptr = pgroup;
 
 			pgroup->intervals.resize(numgroupframes);
 
-			const Float* pintervals = reinterpret_cast<const Float*>(pdata);
-			pdata += sizeof(Float)*numgroupframes;
+			const float* pintervals = reinterpret_cast<const float*>(pdata);
+			pdata += sizeof(float)*numgroupframes;
 
-			for(Uint32 j = 0; j < numgroupframes; j++)
+			for(UInt32 j = 0; j < numgroupframes; j++)
 			{
 				// Set interval value
 				pgroup->intervals[j] = pintervals[j];
@@ -115,8 +115,8 @@ msprite_t* Sprite_Load( const byte* pfile, Uint32 filesize )
 				mspriteframe_t* pframe = Sprite_LoadFrame(pframedata, pdata);
 				pgroup->frames.push_back(pframe);
 
-				Uint32 texturedatasize = pframe->width*pframe->height;
-				pdata += sizeof(dspriteframe_t)+sizeof(byte)*texturedatasize;
+				UInt32 texturedatasize = pframe->width*pframe->height;
+				pdata += sizeof(dspriteframe_t)+sizeof(Byte)*texturedatasize;
 			}
 		}
 		else
@@ -134,7 +134,7 @@ msprite_t* Sprite_Load( const byte* pfile, Uint32 filesize )
 //====================================
 //
 //====================================
-const mspriteframe_t* Sprite_GetFrame( const msprite_t* psprite, Uint32 frame, Float time )
+const mspriteframe_t* Sprite_GetFrame( const msprite_t* psprite, UInt32 frame, float time )
 {
 	if(frame >= psprite->frames.size())
 	{
@@ -150,14 +150,14 @@ const mspriteframe_t* Sprite_GetFrame( const msprite_t* psprite, Uint32 frame, F
 	else
 	{
 		mspritegroup_t* pspritegroup = psprite->frames[frame].pgroupptr;
-		Uint32 numframes = pspritegroup->frames.size();
-		Float fullinterval = pspritegroup->intervals[numframes-1];
+		UInt32 numframes = pspritegroup->frames.size();
+		float fullinterval = pspritegroup->intervals[numframes-1];
 
 		// when loading in Mod_LoadSpriteGroup, we guaranteed all interval values
 		// are positive, so we don't have to worry about division by 0
-		Float targettime = time - (static_cast<Int32>(time / fullinterval)) * fullinterval;
+		float targettime = time - (static_cast<Int32>(time / fullinterval)) * fullinterval;
 
-		Uint32 i = 0;
+		UInt32 i = 0;
 		for(; i < (numframes-1); i++)
 		{
 			if (pspritegroup->intervals[i] > targettime)

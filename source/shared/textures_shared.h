@@ -100,7 +100,7 @@ struct en_texture_t
 		compression(TX_COMPRESSION_NONE),
 		palloc(nullptr)
 	{
-		for(Uint32 i = 0; i < 4; i++)
+		for(UInt32 i = 0; i < 4; i++)
 			bordercolor[i] = 0;
 	}
 
@@ -108,9 +108,9 @@ struct en_texture_t
 
 	Int32 flags;
 
-	Uint32 bpp;
-	Uint32 width;
-	Uint32 height;
+	UInt32 bpp;
+	UInt32 width;
+	UInt32 height;
 
 	bool needsload;
 
@@ -141,32 +141,32 @@ struct en_material_t
 		flags(TX_FL_NONE),
 		index(0)
 	{
-		for(Uint32 i = 0; i < NB_MT_TX; i++)
+		for(UInt32 i = 0; i < NB_MT_TX; i++)
 			ptextures[i] = nullptr;
 	}
-	inline en_texture_t* getdiffuse( void ) { return ptextures[MT_TX_DIFFUSE]; }
-	inline en_texture_t* getnormalmap( void ) { return ptextures[MT_TX_NORMALMAP]; }
-	inline en_texture_t* getdetail( void ) { return ptextures[MT_TX_DETAIL]; }
-	inline en_texture_t* getspecular( void ) { return ptextures[MT_TX_SPECULAR]; }
-	inline en_texture_t* getluminance( void ) { return ptextures[MT_TX_LUMINANCE]; }
-	inline en_texture_t* getao( void ) { return ptextures[MT_TX_AO]; }
+	DO_INLINE en_texture_t* getdiffuse( void ) { return ptextures[MT_TX_DIFFUSE]; }
+	DO_INLINE en_texture_t* getnormalmap( void ) { return ptextures[MT_TX_NORMALMAP]; }
+	DO_INLINE en_texture_t* getdetail( void ) { return ptextures[MT_TX_DETAIL]; }
+	DO_INLINE en_texture_t* getspecular( void ) { return ptextures[MT_TX_SPECULAR]; }
+	DO_INLINE en_texture_t* getluminance( void ) { return ptextures[MT_TX_LUMINANCE]; }
+	DO_INLINE en_texture_t* getao( void ) { return ptextures[MT_TX_AO]; }
 
 	CString filepath;
 	rs_level_t level;
 
-	Float dt_scalex;
-	Float dt_scaley;
+	float dt_scalex;
+	float dt_scaley;
 
-	Uint32 int_width;
-	Uint32 int_height;
+	UInt32 int_width;
+	UInt32 int_height;
 
-	Float alpha;
-	Float phong_exp;
-	Float spec_factor;
-	Float scale;
-	Float cubemapstrength;
-	Float scrollu;
-	Float scrollv;
+	float alpha;
+	float phong_exp;
+	float spec_factor;
+	float scale;
+	float cubemapstrength;
+	float scrollu;
+	float scrollv;
 
 	Int32 flags;
 	Int32 index;
@@ -181,16 +181,16 @@ struct en_material_t
 };
 
 // Path to world textures
-static const Char PMF_FORMAT_EXTENSION[] = ".pmf";
+static const char PMF_FORMAT_EXTENSION[] = ".pmf";
 // Base texture path
-static const Char TEXTURE_BASE_DIRECTORY_PATH[] = "textures/";
+static const char TEXTURE_BASE_DIRECTORY_PATH[] = "textures/";
 // Materials scripts base path
-static const Char MODEL_MATERIALS_BASE_PATH[] = "models/";
+static const char MODEL_MATERIALS_BASE_PATH[] = "models/";
 // Path to world textures
-static const Char WORLD_TEXTURES_PATH_BASE[] = "world/";
+static const char WORLD_TEXTURES_PATH_BASE[] = "world/";
 
-extern inline CString GetMapTexturePath( const Char* pstrFolderName, const Char* pstrTextureName );
-extern inline CString GetModelTexturePath( const Char* pstrModelName, const Char* pstrTextureName );
+extern DO_INLINE CString GetMapTexturePath( const char* pstrFolderName, const char* pstrTextureName );
+extern DO_INLINE CString GetModelTexturePath( const char* pstrModelName, const char* pstrTextureName );
 
 #include "textures_shared_inline.hpp"
 #endif // TEXTURES_SHARED_H

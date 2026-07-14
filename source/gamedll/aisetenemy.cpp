@@ -54,9 +54,9 @@ bool CAISetEnemy::Spawn( void )
 // @brief
 //
 //=============================================
-void CAISetEnemy::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CAISetEnemy::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
-	const Char* pstrTargetEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrTargetEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
 
 	edict_t* pTargetEdict = Util::FindEntityByTargetName(nullptr, pstrTargetEntityName);
 	if(Util::IsNullEntity(pTargetEdict))
@@ -73,7 +73,7 @@ void CAISetEnemy::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemod
 	}
 
 	CBaseEntity* pEnemyEntity = nullptr;
-	const Char* pstrEnemyEntityName = gd_engfuncs.pfnGetString(m_pFields->netname);
+	const char* pstrEnemyEntityName = gd_engfuncs.pfnGetString(m_pFields->netname);
 
 	if(!qstrcmp(pstrEnemyEntityName, "player"))
 	{

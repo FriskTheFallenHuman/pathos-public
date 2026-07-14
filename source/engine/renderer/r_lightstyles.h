@@ -25,11 +25,11 @@ class CLightStyleManager
 {
 public:
 	// Custom lightstyle start index(for dynamic lights)
-	static const Uint32 CUSTOM_LIGHTSTYLE_START_INDEX;
+	static const UInt32 CUSTOM_LIGHTSTYLE_START_INDEX;
 	// Default lightstyle framerate
-	static const Char DEFAULT_LIGHTSTYLE_FRAMERATE;
+	static const char DEFAULT_LIGHTSTYLE_FRAMERATE;
 	// Maximum lightstyle string length
-	static const Uint32	MAX_STYLESTRING;
+	static const UInt32	MAX_STYLESTRING;
 
 public:
 	struct lightstyle_t
@@ -44,7 +44,7 @@ public:
 		Int32 index;
 		Int32 length;
 		Int32 framerate;
-		CArray<Char> map;
+		CArray<char> map;
 
 		bool interp;
 	};
@@ -66,16 +66,16 @@ public:
 	// Applies a lightstyle to a light value
 	void ApplyLightStyle( cl_dlight_t* dl, Vector& color );
 	// Returns the lightstyle value for a given style index
-	Float GetLightStyleValue( Uint32 styleIndex );
+	float GetLightStyleValue( UInt32 styleIndex );
 	// Adds a custom lightstyle
-	void AddCustomLightStyle( Uint32 index, Int32 framerate, bool interpolate, const Char* pstring );
+	void AddCustomLightStyle( UInt32 index, Int32 framerate, bool interpolate, const char* pstring );
 	// Sets a lightstyle
-	void SetLightStyle( Uint32 index, Int32 framerate, bool interpolate, const Char* pstring );
+	void SetLightStyle( UInt32 index, Int32 framerate, bool interpolate, const char* pstring );
 	// Animates lightstyles
 	void AnimateStyles( void );
 
 	// Returns a pointer to the lightstyles CArray object
-	CArray<Float>* GetLightStyleValuesArray( void );
+	CArray<float>* GetLightStyleValuesArray( void );
 
 private:
 	// Resets lightstyles
@@ -85,7 +85,7 @@ private:
 	// lightstyle related
 	CArray<lightstyle_t> m_lightStyles;
 	// Lightstyle values
-	CArray<Float> m_lightStyleValues;
+	CArray<float> m_lightStyleValues;
 };
 extern CLightStyleManager gLightStyles;
 #endif

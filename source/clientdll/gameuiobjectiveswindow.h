@@ -28,7 +28,7 @@ class CGameUIObjectivesWindow : public CGameUIWindow
 {
 public:
 	// Max number of objective buttons
-	static const Uint32 MAX_NB_OBJECTIVE_BUTTONS;
+	static const UInt32 MAX_NB_OBJECTIVE_BUTTONS;
 
 public:
 	struct button_t
@@ -50,38 +50,38 @@ public:
 
 public:
 	// Object x inset for objectives window
-	static const Uint32 OBJECTIVESWINDOW_TAB_X_INSET;
+	static const UInt32 OBJECTIVESWINDOW_TAB_X_INSET;
 	// Object y inset for objectives window
-	static const Uint32 OBJECTIVESWINDOW_TAB_Y_INSET;
+	static const UInt32 OBJECTIVESWINDOW_TAB_Y_INSET;
 	// Object y spacing for objectives window
-	static const Uint32 OBJECTIVESWINDOW_TAB_X_SPACING;
+	static const UInt32 OBJECTIVESWINDOW_TAB_X_SPACING;
 	// Object x spacing for objectives window
-	static const Uint32 OBJECTIVESWINDOW_TAB_Y_SPACING;
+	static const UInt32 OBJECTIVESWINDOW_TAB_Y_SPACING;
 	// Text inset for objectives window
-	static const Uint32 OBJECTIVESWINDOW_TAB_TEXT_INSET;
+	static const UInt32 OBJECTIVESWINDOW_TAB_TEXT_INSET;
 	// Default text color
 	static const color32_t OBJECTIVESWINDOW_TEXT_COLOR;
 	// Height of the title surface
-	static const Uint32 OBJECTIVESWINDOW_TITLE_SURFACE_HEIGHT;
+	static const UInt32 OBJECTIVESWINDOW_TITLE_SURFACE_HEIGHT;
 	// Height of the button surface
-	static const Uint32 OBJECTIVESWINDOW_BUTTON_SURFACE_HEIGHT;
+	static const UInt32 OBJECTIVESWINDOW_BUTTON_SURFACE_HEIGHT;
 	// Height of the info surface
-	static const Uint32 OBJECTIVESWINDOW_INFO_SURFACE_HEIGHT;
+	static const UInt32 OBJECTIVESWINDOW_INFO_SURFACE_HEIGHT;
 	// Height of the exit button surface
-	static const Uint32 OBJECTIVESWINDOW_EXIT_BUTTON_SURFACE_HEIGHT;
+	static const UInt32 OBJECTIVESWINDOW_EXIT_BUTTON_SURFACE_HEIGHT;
 	// Script subfolder name
-	static const Char OBJECTIVESWINDOW_SCRIPT_SUBFOLDER_NAME[];
+	static const char OBJECTIVESWINDOW_SCRIPT_SUBFOLDER_NAME[];
 	// Base script name
-	static const Char OBJECTIVESWINDOW_SCRIPT_NAME[];
+	static const char OBJECTIVESWINDOW_SCRIPT_NAME[];
 	// Color of highlighted buttons for this window
 	static const color32_t OBJECTIVESWINDOW_BUTTON_NEW_COLOR;
 	// Title text default schema set name
-	static const Char OBJECTIVESWINDOW_TITLE_TEXTSCHEMA_NAME[];
+	static const char OBJECTIVESWINDOW_TITLE_TEXTSCHEMA_NAME[];
 	// Text default font schema name
-	static const Char OBJECTIVESWINDOW_TEXTSCHEMA_NAME[];
+	static const char OBJECTIVESWINDOW_TEXTSCHEMA_NAME[];
 
 public:
-	CGameUIObjectivesWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
+	CGameUIObjectivesWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
 	~CGameUIObjectivesWindow();
 
 public:
@@ -91,7 +91,7 @@ public:
 	void think( void ) override;
 
 	// Initializes the data
-	bool initData( const CArray<CString>& objectivesArray, const Char* pstrActiveObjectiveName, Int32& newObjectivesBitflags );
+	bool initData( const CArray<CString>& objectivesArray, const char* pstrActiveObjectiveName, Int32& newObjectivesBitflags );
 	// Returns the current window information
 	void getInformation( CArray<CString>& objectivesArray, CString& activeObjectiveName, Int32& newObjectivesBitflags ) const;
 	// Returns the type of the window
@@ -116,25 +116,25 @@ private:
 	Int32 m_newObjectivesBitflags;
 
 	// Edge thickness used
-	Float m_usedEdgeThickness;
+	float m_usedEdgeThickness;
 	// Button base X position used
-	Uint32 m_buttonXPos;
+	UInt32 m_buttonXPos;
 	// Button base Y position used
-	Uint32 m_buttonYPos;
+	UInt32 m_buttonYPos;
 
 	// Button width used
-	Uint32 m_buttonWidth;
+	UInt32 m_buttonWidth;
 	// Button height used
-	Uint32 m_buttonHeight;
+	UInt32 m_buttonHeight;
 
 	// Info surface height used
-	Uint32 m_infoSurfaceHeight;
+	UInt32 m_infoSurfaceHeight;
 	// Text inset used
-	Uint32 m_textInset;
+	UInt32 m_textInset;
 	// Tab Y inset used
-	Uint32 m_tabYSpacing;
+	UInt32 m_tabYSpacing;
 	// Tab width
-	Uint32 m_tabWidth;
+	UInt32 m_tabWidth;
 
 	// Button tab
 	CGameUIScrollableSurface* m_pButtonsTab;
@@ -154,7 +154,7 @@ CGameUIObjectivesWindowExitCallbackEvent
 class CGameUIObjectivesWindowCallbackEvent : public CGameUICallbackEvent
 {
 public:
-	CGameUIObjectivesWindowCallbackEvent( CGameUIObjectivesWindow* pWindow, Uint32 type ):
+	CGameUIObjectivesWindowCallbackEvent( CGameUIObjectivesWindow* pWindow, UInt32 type ):
 		m_pWindow(pWindow),
 		m_eventType((objectivesbuttonevent_t)type)
 	{ 
@@ -163,7 +163,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) override;
+	virtual void PerformAction( float param ) override;
 	// Handles a special key event
 	virtual bool KeyEvent( Int32 button, Int16 mod, bool keyDown ) override { return false; }
 	// Handles a mouse button event

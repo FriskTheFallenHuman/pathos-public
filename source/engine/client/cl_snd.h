@@ -10,14 +10,10 @@ All Rights Reserved.
 #ifndef CL_SND_H
 #define CL_SND_H
 
-#include <string>
-#include <unordered_map>
-
 #include <al/al.h>
 #include <al/alc.h>
 #include <al/alext.h>
 #include <al/efx.h>
-#include <al/efx-creative.h>
 #include <al/efx-presets.h>
 
 #include "cvar.h"
@@ -46,9 +42,9 @@ struct stb_vorbis;
 #endif
 
 // Precache function for sentences file
-Int32 Sentences_PrecacheSound( const Char* pstrFilename );
+Int32 Sentences_PrecacheSound( const char* pstrFilename );
 // GetDuration function for sentences file
-Float Sentences_GetSoundDuration( const Char* pstrFilename, Uint32 pitch );
+float Sentences_GetSoundDuration( const char* pstrFilename, UInt32 pitch );
 
 struct snd_oggcache_t
 {
@@ -62,9 +58,9 @@ struct snd_oggcache_t
 
 	rs_level_t level;
 
-	byte* pfileptr;
+	Byte* pfileptr;
 
-	Uint32 filesize;
+	UInt32 filesize;
 };
 
 /*
@@ -99,25 +95,25 @@ public:
 		}
 
 		CString name;
-		Uint64 length;
+		UInt64 length;
 		Int32 svindex;
 		Int32 index;
 
 		Int32 samplerate;
 		Int32 dataoffset;
-		Uint16 bitspersample;
-		Uint16 channels;
+		UInt16 bitspersample;
+		UInt16 channels;
 		Int32 loopbegin;
 
 		ALuint *pbuffers;
-		Uint32 numbuffers;
+		UInt32 numbuffers;
 
 		rs_level_t level;
 
 		bool ondemand;
-		Uint32 refcounter;
+		UInt32 refcounter;
 
-		byte* pdata;
+		Byte* pdata;
 	};
 
 	struct snd_playing_t
@@ -166,8 +162,8 @@ public:
 		}
 
 		bool active;
-		Uint32 leafnum;
-		Double timeoffs;
+		UInt32 leafnum;
+		double timeoffs;
 
 		snd_cache_t* pcache;
 		struct cl_entity_t* pentity;
@@ -177,27 +173,27 @@ public:
 		CString cachename;
 
 		Int32 datapos;
-		Uint32 curbuffer;
+		UInt32 curbuffer;
 
-		byte channel;
-		byte pitch;
-		byte mainpitch;
+		Byte channel;
+		Byte pitch;
+		Byte mainpitch;
 		Int32 flags;
 
-		Float volume;
-		Float radius;
-		Double time;
-		Double delaytime;
+		float volume;
+		float radius;
+		double time;
+		double delaytime;
 
-		Float targetvolume;
-		Float prevvolume;
-		Double volchangetime;
-		Float volchangeduration;
+		float targetvolume;
+		float prevvolume;
+		double volchangetime;
+		float volchangeduration;
 
-		byte targetpitch;
-		byte prevpitch;
-		Double pitchchangetime;
-		Float pitchchangeduration;
+		Byte targetpitch;
+		Byte prevpitch;
+		double pitchchangetime;
+		float pitchchangeduration;
 
 		Vector origin;
 		snd_playing_t* pplaying;
@@ -235,7 +231,7 @@ public:
 			unpausefadetime(0),
 			unpausefadebegin(0)
 			{
-				for(Uint32 i = 0; i < 2; i++)
+				for(UInt32 i = 0; i < 2; i++)
 					buffers[i] = 0;
 			}
 
@@ -256,17 +252,17 @@ public:
 		ALenum format;
 
 		// Game time
-		Double starttime;
+		double starttime;
 		// Fade in duration
-		Float fadeinduration;
+		float fadeinduration;
 		// Fade out begin time
-		Double fadeouttime;
+		double fadeouttime;
 		// Fade out duration
-		Float fadeoutduration;
+		float fadeoutduration;
 		// Un-pause fade duration
-		Float unpausefadetime;
+		float unpausefadetime;
 		// Un-pause fade begin
-		Double unpausefadebegin;
+		double unpausefadebegin;
 	};
 
 	enum snd_cachetype_t
@@ -301,19 +297,19 @@ public:
 
 		Vector origin;
 
-		Double cachetime;
+		double cachetime;
 		Int32 svindex;
 		entindex_t entindex;
 		Int32 channel;
 		Int32 flags;
-		Float volume;
-		Float pitch;
-		Float atten;
-		Float timeoffs;
+		float volume;
+		float pitch;
+		float atten;
+		float timeoffs;
 		snd_effects_t effect;
-		Float effectduration;
-		Float targetvalue;
-		Float duration;
+		float effectduration;
+		float targetvalue;
+		float duration;
 		bool looping;
 	};
 
@@ -326,48 +322,48 @@ public:
 
 private:
 	// Max active sounds
-	static const Uint32 MAX_ACTIVE_SOUNDS = 512;
+	static const UInt32 MAX_ACTIVE_SOUNDS = 512;
 	// Max playing sounds
-	static const Uint32 MAX_PLAYING_SOUNDS = 256;
+	static const UInt32 MAX_PLAYING_SOUNDS = 256;
 	// Number of reverbs
-	static const Uint32 NUM_REVERBS = 29;
+	static const UInt32 NUM_REVERBS = 29;
 
 public:
 	// Max active tempent sounds
-	static const Uint32 MAX_ACTIVE_TEMP_SOUNDS;
+	static const UInt32 MAX_ACTIVE_TEMP_SOUNDS;
 
 	// Minimum sound distance
-	static const Float MIN_DISTANCE;
+	static const float MIN_DISTANCE;
 	// Maximum sound distance
-	static const Float MAX_DISTANCE;
+	static const float MAX_DISTANCE;
 
 	// Rever blend time
-	static const Float REVERB_BLEND_TIME;
+	static const float REVERB_BLEND_TIME;
 	// Sound rolloff factor
-	static const Float SE_ROLLOFF_FACTOR;
+	static const float SE_ROLLOFF_FACTOR;
 	// Buffer size
-	static const Uint32 BUFFER_SIZE;
+	static const UInt32 BUFFER_SIZE;
 	// Speed of sound ingame
-	static const Float SPEED_OF_SOUND;
+	static const float SPEED_OF_SOUND;
 
 	// Cached message max lifetime
-	static const Float CACHED_MSG_DELETE_TIME;
+	static const float CACHED_MSG_DELETE_TIME;
 
 	// Average nb of samples for 8-bit sounds
-	static const Uint32 AVERAGE_SAMPLES_8BIT;
+	static const UInt32 AVERAGE_SAMPLES_8BIT;
 	// Average nb of samples for 16-bit sounds
-	static const Uint32 AVERAGE_SAMPLES_16BIT;
+	static const UInt32 AVERAGE_SAMPLES_16BIT;
 
 	// Default change time for SND_CHANGE_PITCH/SND_CHANGE_VOL flags
-	static const Float DEFAULT_SND_CHANGE_TIME;
+	static const float DEFAULT_SND_CHANGE_TIME;
 
 	// On-demand sound file size limit
-	static const Uint32 ONDEMAND_SOUND_SIZE_LIMIT;
+	static const UInt32 ONDEMAND_SOUND_SIZE_LIMIT;
 
 	// Config group for sound engine
-	static const Char SOUNDENGINE_CONFIG_GRP_NAME[];
+	static const char SOUNDENGINE_CONFIG_GRP_NAME[];
 	// Config group for sound engine
-	static const Char SOUNDENGINE_HRTF_SETTING_NAME[];
+	static const char SOUNDENGINE_HRTF_SETTING_NAME[];
 
 public:
 	CSoundEngine( void );
@@ -395,19 +391,19 @@ public:
 
 public:
 	// Plays a sound file
-	void PlaySound( const Char *sample, const Vector* pOrigin = nullptr, Int32 flags = SND_FL_NONE, Int32 channel = SND_CHAN_AUTO, Float volume = VOL_NORM, Int32 pitch = PITCH_NORM, Float attenuation = ATTN_NORM, cl_entity_t *entity = nullptr, entindex_t entindex = 0, Int32 svindex = -1, Float timeoffs = 0 );
+	void PlaySound( const char *sample, const Vector* pOrigin = nullptr, Int32 flags = SND_FL_NONE, Int32 channel = SND_CHAN_AUTO, float volume = VOL_NORM, Int32 pitch = PITCH_NORM, float attenuation = ATTN_NORM, cl_entity_t *entity = nullptr, entindex_t entindex = 0, Int32 svindex = -1, float timeoffs = 0 );
 	// Updates a playing sound
-	void UpdateSound( const Char *sample, const Vector* pOrigin = nullptr, Int32 flags = SND_FL_NONE, Int32 channel = SND_CHAN_AUTO, Float volume = VOL_NORM, Int32 pitch = PITCH_NORM, Float attenuation = ATTN_NORM, cl_entity_t *entity = nullptr, entindex_t entindex = 0, Int32 svindex = -1, Float timeoffs = 0 );
+	void UpdateSound( const char *sample, const Vector* pOrigin = nullptr, Int32 flags = SND_FL_NONE, Int32 channel = SND_CHAN_AUTO, float volume = VOL_NORM, Int32 pitch = PITCH_NORM, float attenuation = ATTN_NORM, cl_entity_t *entity = nullptr, entindex_t entindex = 0, Int32 svindex = -1, float timeoffs = 0 );
 	// Stops a sound on an entity's given channel
 	void StopSound( entindex_t entindex, Int32 channel );
 	// Applies a sound effect
-	void ApplySoundEffect( entindex_t entindex, const Char *sample, Int32 channel, snd_effects_t effect, Float duration, Float targetvalue );
+	void ApplySoundEffect( entindex_t entindex, const char *sample, Int32 channel, snd_effects_t effect, float duration, float targetvalue );
 	// Applies a sound effect with a server index
-	void ApplySoundEffect( entindex_t entindex, Int32 svindex, Int32 channel, snd_effects_t effect, Float duration, Float targetvalue );
+	void ApplySoundEffect( entindex_t entindex, Int32 svindex, Int32 channel, snd_effects_t effect, float duration, float targetvalue );
 	// Tells if a sound is available on a given entity with the given parameters
 	bool IsSoundPlaying( entindex_t entindex, Int32 svindex, Int32 channel );
 	// Tells if a sound is available on a given entity with the given parameters
-	bool IsSoundPlaying( entindex_t entindex, const Char *sample, Int32 channel );
+	bool IsSoundPlaying( entindex_t entindex, const char *sample, Int32 channel );
 	// Removes all sounds for an entity
 	void FreeEntity( entindex_t entindex );
 	// Draws debug info
@@ -417,30 +413,30 @@ public:
 	void StopAllPlaying ( void );
 	
 	// Precaches a sound file
-	snd_cache_t* PrecacheSound( const Char *sample, Int32 serverindex, rs_level_t level, bool isforplayback = false );
+	snd_cache_t* PrecacheSound( const char *sample, Int32 serverindex, rs_level_t level, bool isforplayback = false );
 	// Loads data for a sound cache entry
-	bool LoadSoundData( const Char *sample, snd_cache_t* pcache, Int32 serverindex, bool keepdata );
+	bool LoadSoundData( const char *sample, snd_cache_t* pcache, Int32 serverindex, bool keepdata );
 
 	// Precaches a server sound
-	bool PrecacheServerSound( const Char* sample, Int32 serverindex );
+	bool PrecacheServerSound( const char* sample, Int32 serverindex );
 	// Caches a message
-	void CacheMessage( const Vector* pOrigin, Int32 svindex, Int32 channel, Int32 flags, entindex_t entindex, Int32 pitch, Float vol, Float attn, bool isambient, Float timeoffs );
+	void CacheMessage( const Vector* pOrigin, Int32 svindex, Int32 channel, Int32 flags, entindex_t entindex, Int32 pitch, float vol, float attn, bool isambient, float timeoffs );
 	// Caches an effect
-	void CacheEffect( entindex_t entindex, Int32 svindex, Int32 channel, snd_effects_t effect, Float duration, Float targetvalue );
+	void CacheEffect( entindex_t entindex, Int32 svindex, Int32 channel, snd_effects_t effect, float duration, float targetvalue );
 	// Returns a sound file name for a server sound index
-	const Char* GetSoundFileForServerIndex( Int32 serverindex );
+	const char* GetSoundFileForServerIndex( Int32 serverindex );
 
 	// Plays and OGG file
-	void PlayOgg( const Char *sample, Int32 channel, Float timeOffset, Int32 flags, Float fadeInTime );
+	void PlayOgg( const char *sample, Int32 channel, float timeOffset, Int32 flags, float fadeInTime );
 	// Stops and OGG file with fading
-	void StopOggFade( const Char *sample, Int32 channel, Float fadeTime );
+	void StopOggFade( const char *sample, Int32 channel, float fadeTime );
 	// Stops an OGG file
 	void StopOgg( Int32 channel = MUSIC_CHANNEL_ALL, bool menuAlso = false );
 
 	// Pauses a music channel
 	void PauseOggChannel( Int32 channel );
 	// Un-pause ogg channel
-	void UnPauseOggChannel( Int32 channel, Float fadetime );
+	void UnPauseOggChannel( Int32 channel, float fadetime );
 
 	// Sets the active reverb
 	void SetActiveReverb( Int32 reverb );
@@ -455,7 +451,7 @@ public:
 	const CSentencesFile::sentence_t* GetSentence( Int32 index ) const;
 
 	// Precaches an OGG file
-	snd_oggcache_t* PrecacheOgg( const Char *sample, rs_level_t level );
+	snd_oggcache_t* PrecacheOgg( const char *sample, rs_level_t level );
 
 	// Set HRTF command
 	void SetHRTFCommand( void );
@@ -466,11 +462,11 @@ private:
 	// Removes sound from the playing list
 	static void RemovePlaying( snd_active_t& sound );
 	// Tells if a sound should be playing
-	bool ShouldPlay( snd_active_t *psound, const Vector& vieworg, Double frametime, Int32 imsgnum, Float gameVolume ) const;
+	bool ShouldPlay( snd_active_t *psound, const Vector& vieworg, double frametime, Int32 imsgnum, float gameVolume ) const;
 	// Allocates a free sound slot
-	snd_active_t* AllocSound( const Char *sample, entindex_t entindex, Int32 flags, Int32 channel );
+	snd_active_t* AllocSound( const char *sample, entindex_t entindex, Int32 flags, Int32 channel );
 	// Retrieves sentence and/or cache data
-	bool GetSoundCache( const Char *sample, Int32 svindex, snd_cache_t*& psample, const CSentencesFile::sentence_t *& psentence, CString& filepath );
+	bool GetSoundCache( const char *sample, Int32 svindex, snd_cache_t*& psample, const CSentencesFile::sentence_t *& psentence, CString& filepath );
 
 	// Prints engine states
 	void PrintStats( void );
@@ -480,19 +476,19 @@ private:
 	// Calculates mouth movement from a 16-bit WAV
 	static void CalcMouth16( snd_active_t& sound );
 	// Calculates gain for a sound
-	Float CalcGain( const Vector& vieworg, snd_active_t *psound, Float multval, Float gameVolume ) const;
+	float CalcGain( const Vector& vieworg, snd_active_t *psound, float multval, float gameVolume ) const;
 
 	// Updates music playback
-	void UpdateMusicPlayback( const ref_params_t* pparams, Float flmultval );
+	void UpdateMusicPlayback( const ref_params_t* pparams, float flmultval );
 	// Updates music playback for a track
-	bool UpdateMusicTrackPlayback( snd_music_t& track, const ref_params_t* pparams, Float flmultval );
+	bool UpdateMusicTrackPlayback( snd_music_t& track, const ref_params_t* pparams, float flmultval );
 	// Updates reverb effects
 	void UpdateReverb( ref_params_t *pparams );
 	// Clears the sound cache
 	void ClearCache( void );
 
 	// Retreives the sync offset for a sound
-	Int32 GetSyncOffset( const snd_cache_t *pcache, Uint32 index );
+	Int32 GetSyncOffset( const snd_cache_t *pcache, UInt32 index );
 	// Streams an OGG file
 	stream_result_t Stream( ALuint buffer, snd_music_t& track );
 
@@ -542,11 +538,11 @@ private:
 	// Update message cache
 	CLinkedList<s_msg_cache_t*> m_updateMsgCacheList;
 
-	// TRUE if we the sound engine is muted
+	// true if we the sound engine is muted
 	bool			m_isMuted;
-	// TRUE if all sounds are paused
+	// true if all sounds are paused
 	bool			m_allSoundsPaused;
-	// TRUE if HRTF is enabled
+	// true if HRTF is enabled
 	bool			m_isHRTFEnabled;
 
 private:
@@ -566,9 +562,9 @@ private:
 	bool					m_bInitialized;
 
 	// PAS data
-	const byte*				m_pPAS;
+	const Byte*				m_pPAS;
 	// PAS buffer
-	byte*					m_pPASBuffer;
+	Byte*					m_pPASBuffer;
 
 	// Reverb effect id
 	ALuint					m_reverbEffect;
@@ -591,7 +587,7 @@ private:
 	// Reverb effects
 	static const EFXEAXREVERBPROPERTIES g_pEAXEffects[NUM_REVERBS];
 	// Multipliers for EAX effects
-	static const Float g_pEAXMultipliers[NUM_REVERBS];
+	static const float g_pEAXMultipliers[NUM_REVERBS];
 };
 extern CSoundEngine gSoundEngine;
 #endif

@@ -18,21 +18,21 @@ All Rights Reserved.
 #include "snd_shared.h"
 
 // Object x inset for login window
-const Uint32 CGameUILoginWindow::LOGINWINDOW_TAB_X_INSET = 30;
+const UInt32 CGameUILoginWindow::LOGINWINDOW_TAB_X_INSET = 30;
 // Object y inset for login window
-const Uint32 CGameUILoginWindow::LOGINWINDOW_TAB_Y_INSET = 60;
+const UInt32 CGameUILoginWindow::LOGINWINDOW_TAB_Y_INSET = 60;
 // Object y spacing for login window
-const Uint32 CGameUILoginWindow::LOGINWINDOW_TAB_Y_SPACING = 30;
+const UInt32 CGameUILoginWindow::LOGINWINDOW_TAB_Y_SPACING = 30;
 // Object x spacing for login window
-const Uint32 CGameUILoginWindow::LOGINWINDOW_TAB_X_SPACING = 80;
+const UInt32 CGameUILoginWindow::LOGINWINDOW_TAB_X_SPACING = 80;
 // Space before info tab on y axis for login window
-const Uint32 CGameUILoginWindow::LOGINWINDOW_INFO_TAB_Y_SPACING = 10;
+const UInt32 CGameUILoginWindow::LOGINWINDOW_INFO_TAB_Y_SPACING = 10;
 // Input tab width
-const Uint32 CGameUILoginWindow::LOGINWINDOW_INPUT_TAB_WIDTH = 300;
+const UInt32 CGameUILoginWindow::LOGINWINDOW_INPUT_TAB_WIDTH = 300;
 // Input tab height
-const Uint32 CGameUILoginWindow::LOGINWINDOW_INPUT_TAB_HEIGHT = 100;
+const UInt32 CGameUILoginWindow::LOGINWINDOW_INPUT_TAB_HEIGHT = 100;
 // Input tab text inset
-const Uint32 CGameUILoginWindow::LOGINWINDOW_INPUT_TAB_TEXT_INSET = 15;
+const UInt32 CGameUILoginWindow::LOGINWINDOW_INPUT_TAB_TEXT_INSET = 15;
 // Default text color
 const color32_t CGameUILoginWindow::LOGINWINDOW_TEXT_COLOR = color32_t(255, 255, 255, 255);
 // Default text color
@@ -42,18 +42,18 @@ const color32_t CGameUILoginWindow::LOGINWINDOW_PROMPT_FAIL_TEXT_COLOR = color32
 // Default text color
 const color32_t CGameUILoginWindow::LOGINWINDOW_PROMPT_SUCCESS_TEXT_COLOR = color32_t(30, 255, 30, 255);
 // Button y spacing for login window
-const Uint32 CGameUILoginWindow::LOGINWINDOW_BUTTON_X_SPACING = 20;
+const UInt32 CGameUILoginWindow::LOGINWINDOW_BUTTON_X_SPACING = 20;
 // Prompt text lifetime
-const Double CGameUILoginWindow::LOGINWINDOW_PROMPT_LIFETIME = 3;
+const double CGameUILoginWindow::LOGINWINDOW_PROMPT_LIFETIME = 3;
 // Title text default schema set name
-const Char CGameUILoginWindow::LOGINWINDOW_TITLE_TEXTSCHEMA_NAME[] = "logintitle";
+const char CGameUILoginWindow::LOGINWINDOW_TITLE_TEXTSCHEMA_NAME[] = "logintitle";
 // Text default font schema name
-const Char CGameUILoginWindow::LOGINWINDOW_TEXTSCHEMA_NAME[] = "logintext";
+const char CGameUILoginWindow::LOGINWINDOW_TEXTSCHEMA_NAME[] = "logintext";
 
 //====================================
 //
 //====================================
-CGameUILoginWindow::CGameUILoginWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUILoginWindow::CGameUILoginWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIWindow(flags, originX, originY, width, height),
 	m_pUsernameField(nullptr),
 	m_pPasswordField(nullptr),
@@ -83,35 +83,35 @@ CGameUILoginWindow::~CGameUILoginWindow( void )
 void CGameUILoginWindow::init( void )
 {
 	// Init basic window elements
-	Uint32 verticalbarheight, middlebarwidth, barThickness;
+	UInt32 verticalbarheight, middlebarwidth, barThickness;
 	CGameUIWindow::initBackground(verticalbarheight, middlebarwidth, barThickness);
 
-	Uint32 tabTopInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_TOP_INSET);
-	Uint32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
-	Uint32 tabSideInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_SIDE_INSET);
-	Uint32 mainTabMaxWidth = gHUDDraw.ScaleX(GAMEUIWINDOW_MAIN_TAB_MAX_WIDTH);
-	Uint32 mainTabMaxHeight = gHUDDraw.ScaleY(GAMEUIWINDOW_MAIN_TAB_MAX_HEIGHT);
-	Uint32 bottomInset = gHUDDraw.ScaleY(GAMEUIWINDOW_TAB_BOTTOM_INSET);
-	Uint32 edgeThickness = gHUDDraw.ScaleX(GAMEUIWINDOW_EDGE_THICKNESS);
-	Uint32 infoTabYSpacing = gHUDDraw.ScaleY(LOGINWINDOW_INFO_TAB_Y_SPACING);
-	Uint32 inputTabWidth = gHUDDraw.ScaleX(LOGINWINDOW_INPUT_TAB_WIDTH);
-	Uint32 tabYInset = gHUDDraw.ScaleY(LOGINWINDOW_TAB_Y_INSET);
-	Uint32 inputTabHeight = gHUDDraw.ScaleY(LOGINWINDOW_INPUT_TAB_HEIGHT);
-	Uint32 inputTabTextInset = gHUDDraw.ScaleY(LOGINWINDOW_INPUT_TAB_TEXT_INSET);
-	Uint32 defaultButtonWidth = gHUDDraw.ScaleX(DEFAULT_BUTTON_WIDTH);
-	Uint32 defaultButtonHeight = gHUDDraw.ScaleY(DEFAULT_BUTTON_HEIGHT);
+	UInt32 tabTopInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_TOP_INSET);
+	UInt32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
+	UInt32 tabSideInset = gHUDDraw.ScaleX(GAMEUIWINDOW_TAB_SIDE_INSET);
+	UInt32 mainTabMaxWidth = gHUDDraw.ScaleX(GAMEUIWINDOW_MAIN_TAB_MAX_WIDTH);
+	UInt32 mainTabMaxHeight = gHUDDraw.ScaleY(GAMEUIWINDOW_MAIN_TAB_MAX_HEIGHT);
+	UInt32 bottomInset = gHUDDraw.ScaleY(GAMEUIWINDOW_TAB_BOTTOM_INSET);
+	UInt32 edgeThickness = gHUDDraw.ScaleX(GAMEUIWINDOW_EDGE_THICKNESS);
+	UInt32 infoTabYSpacing = gHUDDraw.ScaleY(LOGINWINDOW_INFO_TAB_Y_SPACING);
+	UInt32 inputTabWidth = gHUDDraw.ScaleX(LOGINWINDOW_INPUT_TAB_WIDTH);
+	UInt32 tabYInset = gHUDDraw.ScaleY(LOGINWINDOW_TAB_Y_INSET);
+	UInt32 inputTabHeight = gHUDDraw.ScaleY(LOGINWINDOW_INPUT_TAB_HEIGHT);
+	UInt32 inputTabTextInset = gHUDDraw.ScaleY(LOGINWINDOW_INPUT_TAB_TEXT_INSET);
+	UInt32 defaultButtonWidth = gHUDDraw.ScaleX(DEFAULT_BUTTON_WIDTH);
+	UInt32 defaultButtonHeight = gHUDDraw.ScaleY(DEFAULT_BUTTON_HEIGHT);
 
 	//
 	// Create the title text object
 	//
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	const font_set_t* pTitleFont = cl_engfuncs.pfnGetResolutionSchemaFontSet(LOGINWINDOW_TITLE_TEXTSCHEMA_NAME, screenHeight);
 	if(!pTitleFont)
 		pTitleFont = gGameUIManager.GetDefaultFontSet();
 
-	Uint32 textYOrigin = hBarYOrigin + tabTopInset/2.0f;
+	UInt32 textYOrigin = hBarYOrigin + tabTopInset/2.0f;
 	CGameUIText *pTitleText = new CGameUIText(CGameUIObject::FL_ALIGN_CH, GAMEUIWINDOW_DEFAULT_TEXT_COLOR, pTitleFont, 0, textYOrigin);
 	pTitleText->setParent(this);
 
@@ -121,17 +121,17 @@ void CGameUILoginWindow::init( void )
 	//
 	// Create the tab objects
 	//
-	Uint32 tabWidth = middlebarwidth - barThickness*2 - tabSideInset*2;
+	UInt32 tabWidth = middlebarwidth - barThickness*2 - tabSideInset*2;
 	if(tabWidth > mainTabMaxWidth)
 		tabWidth = mainTabMaxWidth;
 
-	Uint32 tabOriginX = m_width / 2.0 - tabWidth / 2.0;
+	UInt32 tabOriginX = m_width / 2.0 - tabWidth / 2.0;
 
-	Uint32 tabTotalHeight = verticalbarheight - tabTopInset - bottomInset;
+	UInt32 tabTotalHeight = verticalbarheight - tabTopInset - bottomInset;
 	if(tabTotalHeight > mainTabMaxHeight)
 		tabTotalHeight = mainTabMaxHeight;
 
-	Uint32 upperTabHeight = tabTotalHeight * 0.75;
+	UInt32 upperTabHeight = tabTotalHeight * 0.75;
 
 	CGameUISurface* pMainTab = new CGameUISurface(CGameUIObject::FL_NONE,
 		edgeThickness, 
@@ -143,7 +143,7 @@ void CGameUILoginWindow::init( void )
 		upperTabHeight);
 	pMainTab->setParent(this);
 
-	Uint32 lowerTabHeight = tabTotalHeight - upperTabHeight;
+	UInt32 lowerTabHeight = tabTotalHeight - upperTabHeight;
 
 	CGameUISurface* pNotesTab = new CGameUISurface(CGameUIObject::FL_NONE,
 		edgeThickness, 
@@ -336,7 +336,7 @@ void CGameUILoginWindow::init( void )
 //====================================
 //
 //====================================
-bool CGameUILoginWindow::initData( const Char* pstrUsername, const Char* pstrPassword, const Char* pstrUsernameInput, const Char* pstrPasswordInput, bool stayTillNext )
+bool CGameUILoginWindow::initData( const char* pstrUsername, const char* pstrPassword, const char* pstrUsernameInput, const char* pstrPasswordInput, bool stayTillNext )
 {
 	// Set the info labels to be visible
 	if(pstrUsername && qstrlen(pstrUsername) > 0 && pstrPassword && qstrlen(pstrPassword) > 0)
@@ -393,9 +393,9 @@ void CGameUILoginWindow::ManageEvent( loginwindowevent_t event )
 		break;
 	case LOGINWINDOW_EVENT_LOGIN_BTN:
 		{
-			Double time = cl_engfuncs.pfnGetClientTime();
-			const Char* pstrInputUsername = m_pUsernameField->getText();
-			const Char* pstrInputPassword = m_pPasswordField->getText();
+			double time = cl_engfuncs.pfnGetClientTime();
+			const char* pstrInputUsername = m_pUsernameField->getText();
+			const char* pstrInputPassword = m_pPasswordField->getText();
 
 			if(!m_password.empty() && !qstrcmp(pstrInputUsername, m_username) && !qstrcmp(pstrInputPassword, m_password))
 			{
@@ -453,7 +453,7 @@ void CGameUILoginWindow::think( void )
 //====================================
 //
 //====================================
-void CGameUILoginWindow::setDelayedRemoval( Double delay )
+void CGameUILoginWindow::setDelayedRemoval( double delay )
 {
 	if(m_windowFlags & FL_WINDOW_WAIT_TILL_NEXT)
 		m_messageSendTime = cl_engfuncs.pfnGetClientTime() + delay;
@@ -470,7 +470,7 @@ void CGameUILoginWindow::onRemove( void )
 		return;
 
 	// Send message to server
-	Uint32 msgid = g_pGUIManager->GetServerUIMessageId();
+	UInt32 msgid = g_pGUIManager->GetServerUIMessageId();
 	if(!msgid)
 	{
 		cl_engfuncs.pfnCon_Printf("%s - Message 'GameUIMessage' not registered on client.\n", __FUNCTION__);
@@ -508,7 +508,7 @@ bool CGameUILoginWindow::keyEvent( Int32 button, Int16 mod, bool keyDown )
 //====================================
 //
 //====================================
-void CGameUILoginWindowCallbackEvent::PerformAction( Float param )
+void CGameUILoginWindowCallbackEvent::PerformAction( float param )
 {
 	if(!m_pLoginWindow)
 		return;

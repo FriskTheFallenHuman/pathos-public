@@ -31,18 +31,18 @@ All Rights Reserved.
 // popped into my mind while showering. I really like how this came out.
 
 // Optimized string array alloc size
-const Uint32 CSaveRestore::STRING_ARRAY_ALLOC_SIZE = 512;
+const UInt32 CSaveRestore::STRING_ARRAY_ALLOC_SIZE = 512;
 // Allocation size for buffers
-const Uint32 CSaveRestore::BUFFER_ALLOC_SIZE = 1024;
+const UInt32 CSaveRestore::BUFFER_ALLOC_SIZE = 1024;
 #ifdef _64BUILD
 // Save directory path
-const Char CSaveRestore::SAVE_DIR_PATH[] = "save_x64/";
+const char CSaveRestore::SAVE_DIR_PATH[] = "save_x64/";
 #else
 // Save directory path
-const Char CSaveRestore::SAVE_DIR_PATH[] = "save_x86/";
+const char CSaveRestore::SAVE_DIR_PATH[] = "save_x86/";
 #endif
 // Save file version
-const Uint32 CSaveRestore::SAVE_FILE_VERSION = 2;
+const UInt32 CSaveRestore::SAVE_FILE_VERSION = 2;
 
 // Object declaration
 CSaveRestore gSaveRestore;
@@ -83,21 +83,21 @@ CSaveRestore::~CSaveRestore( void )
 // @brief
 //
 //=============================================
-const byte *CSaveRestore::LoadSaveFile( const Char* savePath, Uint32* psize )
+const Byte *CSaveRestore::LoadSaveFile( const char* savePath, UInt32* psize )
 {
 	// Try loading the file
-	const byte* pfile = FL_LoadFile(savePath, psize);
+	const Byte* pfile = FL_LoadFile(savePath, psize);
 	if(!pfile)
 	{
 		Con_EPrintf("%s - File '%s' not found.\n", __FUNCTION__, savePath);
-		return false;
+		return nullptr;
 	}
 
 	// Make sure the header is correct
-	if(qstrncmp(reinterpret_cast<const Char*>(pfile), SAVEFILE_HEADER_ID, 4))
+	if(qstrncmp(reinterpret_cast<const char*>(pfile), SAVEFILE_HEADER_ID, 4))
 	{
 		Con_EPrintf("%s - File '%s' is not a valid save file.\n", __FUNCTION__, savePath);
-		return false;
+		return nullptr;
 	}
 
 	// Get header information and check version
@@ -105,7 +105,7 @@ const byte *CSaveRestore::LoadSaveFile( const Char* savePath, Uint32* psize )
 	if(pheader->version != SAVE_FILE_VERSION)
 	{
 		Con_EPrintf("%s - File '%s' has wrong version(%d, %d expected).\n", __FUNCTION__, savePath, pheader->version, SAVE_FILE_VERSION);
-		return false;
+		return nullptr;
 	}
 
 	return pfile;
@@ -115,7 +115,7 @@ const byte *CSaveRestore::LoadSaveFile( const Char* savePath, Uint32* psize )
 // @brief
 //
 //=============================================
-void CSaveRestore::FreeSaveFile( const byte* pfile )
+void CSaveRestore::FreeSaveFile( const Byte* pfile )
 {
 	// Only this for now
 	FL_FreeFile(pfile);
@@ -125,7 +125,7 @@ void CSaveRestore::FreeSaveFile( const byte* pfile )
 // @brief
 //
 //=============================================
-void CSaveRestore::CleanSaveFiles( const Char* pstrLastSave )
+void CSaveRestore::CleanSaveFiles( const char* pstrLastSave )
 {
 	// Load save files list
 	CString searchPath;
@@ -179,7 +179,7 @@ void CSaveRestore::CleanSaveFiles( const Char* pstrLastSave )
 			CString filePath;
 			filePath << CSaveRestore::SAVE_DIR_PATH << findData.cFileName;
 			
-			const byte* psavefile = LoadSaveFile(filePath.c_str());
+			const Byte* psavefile = LoadSaveFile(filePath.c_str());
 			if(psavefile)
 			{
 				const save_header_t* pheader = reinterpret_cast<const save_header_t*>(psavefile);
@@ -187,7 +187,7 @@ void CSaveRestore::CleanSaveFiles( const Char* pstrLastSave )
 				{
 					for(Int32 i = 0; i < pheader->numlevelinfos; i++)
 					{
-						const save_levelinfo_t* plevelinfo = reinterpret_cast<const save_levelinfo_t*>(reinterpret_cast<const byte*>(pheader) + pheader->levelinfosdataoffset)+i;
+						const save_levelinfo_t* plevelinfo = reinterpret_cast<const save_levelinfo_t*>(reinterpret_cast<const Byte*>(pheader) + pheader->levelinfosdataoffset)+i;
 						unreferencedSavesList.remove(plevelinfo->mapsavename);
 					}
 				}
@@ -285,7 +285,7 @@ void CSaveRestore::LoadGlobalsFromSaveFile( const save_header_t* pheader )
 
 	for(Int32 i = 0; i < pheader->numglobals; i++)
 	{
-		const save_global_t* pglobal = reinterpret_cast<const save_global_t*>(reinterpret_cast<const byte*>(pheader) + pheader->globaldataoffset)+i;
+		const save_global_t* pglobal = reinterpret_cast<const save_global_t*>(reinterpret_cast<const Byte*>(pheader) + pheader->globaldataoffset)+i;
 		svs.dllfuncs.pfnReadGlobalStateData(pglobal->name, pglobal->levelname, static_cast<globalstate_state_t>(pglobal->state));
 	}
 }
@@ -301,11 +301,11 @@ void CSaveRestore::LoadConnectionsFromSaveFile( const save_header_t* pheader )
 
 	for(Int32 i = 0; i < pheader->numlevelinfos; i++)
 	{
-		const save_levelinfo_t* plevelinfo = reinterpret_cast<const save_levelinfo_t*>(reinterpret_cast<const byte*>(pheader) + pheader->levelinfosdataoffset)+i;
+		const save_levelinfo_t* plevelinfo = reinterpret_cast<const save_levelinfo_t*>(reinterpret_cast<const Byte*>(pheader) + pheader->levelinfosdataoffset)+i;
 			
 		for(Int32 j = 0; j < plevelinfo->numconnections; j++)
 		{
-			const save_level_connection_t* pconnection = reinterpret_cast<const save_level_connection_t*>(reinterpret_cast<const byte*>(pheader) + plevelinfo->connectioninfoindex)+j;
+			const save_level_connection_t* pconnection = reinterpret_cast<const save_level_connection_t*>(reinterpret_cast<const Byte*>(pheader) + plevelinfo->connectioninfoindex)+j;
 			SV_AddLevelConnection(plevelinfo->mapname, pconnection->othermapname, pconnection->landmarkname, plevelinfo->mapsavename);
 		}
 	}
@@ -315,9 +315,9 @@ void CSaveRestore::LoadConnectionsFromSaveFile( const save_header_t* pheader )
 // @brief
 //
 //=============================================
-savefile_type_t CSaveRestore::GetSaveFileType( const Char* pstrSaveFile )
+savefile_type_t CSaveRestore::GetSaveFileType( const char* pstrSaveFile )
 {
-	const byte* pfile = LoadSaveFile(pstrSaveFile);
+	const Byte* pfile = LoadSaveFile(pstrSaveFile);
 	if(!pfile)
 		return SAVE_UNDEFINED;
 
@@ -350,15 +350,15 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 	// Set any cvars we saved
 	if(pheader->numcvars > 0)
 	{
-		const save_cvar_t* pcvars = reinterpret_cast<const save_cvar_t*>(reinterpret_cast<const byte*>(pheader) + pheader->cvarsoffset);
-		for(Uint32 i = 0; i < pheader->numcvars; i++)
+		const save_cvar_t* pcvars = reinterpret_cast<const save_cvar_t*>(reinterpret_cast<const Byte*>(pheader) + pheader->cvarsoffset);
+		for(UInt32 i = 0; i < pheader->numcvars; i++)
 		{
 			switch(pcvars[i].type)
 			{
 			default:
 			case CVAR_FLOAT:
 				{
-					Float value = SDL_atof(pcvars[i].value);
+					float value = SDL_atof(pcvars[i].value);
 					gConsole.CVarSetFloatValue(pcvars[i].name, value);
 				}
 				break;
@@ -379,19 +379,19 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 		saveEntityIndexMapArray[i] = NO_ENTITY_INDEX;
 
 	// Get pointers to data
-	const save_field_t* pfields = reinterpret_cast<const save_field_t*>(reinterpret_cast<const byte*>(pheader) + pheader->entityfieldsoffset);
-	const save_block_t* pdatablocks = reinterpret_cast<const save_block_t*>(reinterpret_cast<const byte*>(pheader) + pheader->entitydatablocksoffset);
-	const save_block_t* pstringblocks = reinterpret_cast<const save_block_t*>(reinterpret_cast<const byte*>(pheader) + pheader->stringblocksoffset);
+	const save_field_t* pfields = reinterpret_cast<const save_field_t*>(reinterpret_cast<const Byte*>(pheader) + pheader->entityfieldsoffset);
+	const save_block_t* pdatablocks = reinterpret_cast<const save_block_t*>(reinterpret_cast<const Byte*>(pheader) + pheader->entitydatablocksoffset);
+	const save_block_t* pstringblocks = reinterpret_cast<const save_block_t*>(reinterpret_cast<const Byte*>(pheader) + pheader->stringblocksoffset);
 	 
 	// Get pointers to buffers
-	const byte* pdatabuffer = (reinterpret_cast<const byte*>(pheader) + pheader->entitydataoffset);
-	const byte* pstringbuffer = (reinterpret_cast<const byte*>(pheader) + pheader->stringdataoffset);
+	const Byte* pdatabuffer = (reinterpret_cast<const Byte*>(pheader) + pheader->entitydataoffset);
+	const Byte* pstringbuffer = (reinterpret_cast<const Byte*>(pheader) + pheader->stringdataoffset);
 
 	// Load the entities in
 	for(Int32 i = 0; i < pheader->numentities; i++)
 	{
 		// Get entity information
-		const save_edict_info_t* pentity = reinterpret_cast<const save_edict_info_t*>(reinterpret_cast<const byte*>(pheader) + pheader->entitydescoffset) + i;
+		const save_edict_info_t* pentity = reinterpret_cast<const save_edict_info_t*>(reinterpret_cast<const Byte*>(pheader) + pheader->entitydescoffset) + i;
 
 		// World and player are handled specially
 		edict_t* pedict = nullptr;
@@ -425,12 +425,12 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 		{
 			const save_field_t* pfield = &pfields[pentity->fieldsdata_startindex + j];
 			const save_block_t* pfieldnameblock = &pstringblocks[pfield->fieldnameindex];
-			CString fieldname(reinterpret_cast<const Char*>(&pstringbuffer[pfieldnameblock->dataoffset]), pfieldnameblock->datasize);
+			CString fieldname(reinterpret_cast<const char*>(&pstringbuffer[pfieldnameblock->dataoffset]), pfieldnameblock->datasize);
 
 			if(!qstrcmp(fieldname, "classname"))
 			{
 				const save_block_t* pclassnameblock = &pstringblocks[pfield->blockindex];
-				CString classnamevalue(reinterpret_cast<const Char*>(&pstringbuffer[pclassnameblock->dataoffset]), pclassnameblock->datasize);
+				CString classnamevalue(reinterpret_cast<const char*>(&pstringbuffer[pclassnameblock->dataoffset]), pclassnameblock->datasize);
 
 				if(pentity->isplayer)
 				{
@@ -486,8 +486,8 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 			continue;
 		
 		// Get entity information
-		const save_edict_info_t* pentity = reinterpret_cast<const save_edict_info_t*>(reinterpret_cast<const byte*>(pheader) + pheader->entitydescoffset) + i;
-		// TRUE if this is a global entity transfer restore
+		const save_edict_info_t* pentity = reinterpret_cast<const save_edict_info_t*>(reinterpret_cast<const Byte*>(pheader) + pheader->entitydescoffset) + i;
+		// true if this is a global entity transfer restore
 		bool istransferglobal = (pentity->isglobalentity && pheader->type == SAVE_TRANSITION) ? true : false;
 
 		// World and player are handled specially
@@ -504,7 +504,7 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 			const save_field_t* pfield = &pfields[pentity->statedata_startindex + j];
 			const save_block_t* pfieldnameblock = &pstringblocks[pfield->fieldnameindex];
 
-			CString fieldname(reinterpret_cast<const Char*>(&pstringbuffer[pfieldnameblock->dataoffset]), pfieldnameblock->datasize);
+			CString fieldname(reinterpret_cast<const char*>(&pstringbuffer[pfieldnameblock->dataoffset]), pfieldnameblock->datasize);
 
 			switch(pfield->datatype)
 			{
@@ -513,7 +513,7 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 				{
 					// These types are read all at once
 					const save_block_t* pdatablock = &pdatablocks[pfield->blockindex];
-					const byte* pblockdata = &pdatabuffer[pdatablock->dataoffset];
+					const Byte* pblockdata = &pdatabuffer[pdatablock->dataoffset];
 
 					if(!svs.dllfuncs.pfnReadEntityStateData(pedict, fieldname.c_str(), pblockdata, pdatablock->datasize, 0, istransferglobal))
 					{
@@ -544,7 +544,7 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 					for(Int32 k = 0; k < pfield->numblocks; k++)
 					{
 						const save_block_t* pdatablock = &pdatablocks[pfield->blockindex + k];
-						const byte* pblockdata = &pdatabuffer[pdatablock->dataoffset];
+						const Byte* pblockdata = &pdatabuffer[pdatablock->dataoffset];
 
 						// Extract the name of the field
 						if(!svs.dllfuncs.pfnReadEntityStateData(pedict, fieldname.c_str(), pblockdata, pdatablock->datasize, k, istransferglobal))
@@ -570,7 +570,7 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 			const save_field_t* pfield = &pfields[pentity->fieldsdata_startindex + j];
 			const save_block_t* pfieldnameblock = &pstringblocks[pfield->fieldnameindex];
 
-			CString fieldname(reinterpret_cast<const Char*>(&pstringbuffer[pfieldnameblock->dataoffset]), pfieldnameblock->datasize);
+			CString fieldname(reinterpret_cast<const char*>(&pstringbuffer[pfieldnameblock->dataoffset]), pfieldnameblock->datasize);
 
 			if(pfield->datatype != EFIELD_STRING
 				&& pfield->datatype != EFIELD_MODELNAME
@@ -586,7 +586,7 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 				if(pdatablock->dataoffset == -1 || !pdatablock->datasize)
 					continue;
 
-				const byte* pblockdata = &pstringbuffer[pdatablock->dataoffset];
+				const Byte* pblockdata = &pstringbuffer[pdatablock->dataoffset];
 
 				// Extract the name of the field
 				if(!svs.dllfuncs.pfnReadEntityFieldData(pedict, fieldname.c_str(), pblockdata, pdatablock->datasize, k, istransferglobal))
@@ -606,7 +606,7 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 			const save_block_t* pfieldnameblock = &pstringblocks[pfield->fieldnameindex];
 
 			// Extract the name of the field
-			CString fieldname(reinterpret_cast<const Char*>(&pstringbuffer[pfieldnameblock->dataoffset]), pfieldnameblock->datasize);
+			CString fieldname(reinterpret_cast<const char*>(&pstringbuffer[pfieldnameblock->dataoffset]), pfieldnameblock->datasize);
 
 			switch(pfield->datatype)
 			{
@@ -621,7 +621,7 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 
 					// In case of CBitSet, the numblocks variable tells the number of bits specified
 					const save_block_t* pdatablock = &pdatablocks[pfield->blockindex];
-					const byte* pblockdata = &pdatabuffer[pdatablock->dataoffset];
+					const Byte* pblockdata = &pdatabuffer[pdatablock->dataoffset];
 
 					if(!svs.dllfuncs.pfnReadEntityClassData(pedict, fieldname.c_str(), pblockdata, pfield->numblocks, 0, istransferglobal))
 					{
@@ -635,7 +635,7 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 				{
 					// These types are read all at once
 					const save_block_t* pdatablock = &pdatablocks[pfield->blockindex];
-					const byte* pblockdata = &pdatabuffer[pdatablock->dataoffset];
+					const Byte* pblockdata = &pdatabuffer[pdatablock->dataoffset];
 
 					if(!svs.dllfuncs.pfnReadEntityClassData(pedict, fieldname.c_str(), pblockdata, pdatablock->datasize, 0, istransferglobal))
 					{
@@ -656,7 +656,7 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 					for(Int32 k = 0; k < pfield->numblocks; k++)
 					{
 						const save_block_t* pdatablock = nullptr; 
-						const byte* pblockdata = nullptr;
+						const Byte* pblockdata = nullptr;
 						if(pfield->datatype == EFIELD_MODELNAME || pfield->datatype == EFIELD_SOUNDNAME || pfield->datatype == EFIELD_STRING 
 							|| pfield->datatype == EFIELD_CARRAY_STRING || pfield->datatype == EFIELD_FUNCPTR)
 						{
@@ -727,7 +727,7 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 	{
 		for(Int32 i = 0; i < pheader->numdecals; i++)
 		{
-			const save_decalinfo_t* pdecalinfo = reinterpret_cast<const save_decalinfo_t*>(reinterpret_cast<const byte*>(pheader) + pheader->decaldataoffset) + i;
+			const save_decalinfo_t* pdecalinfo = reinterpret_cast<const save_decalinfo_t*>(reinterpret_cast<const Byte*>(pheader) + pheader->decaldataoffset) + i;
 
 			edict_t* pedict = nullptr;
 			if(pdecalinfo->entityindex != NO_ENTITY_INDEX)
@@ -764,7 +764,7 @@ bool CSaveRestore::LoadSaveData( const save_header_t* pheader, const Vector* pla
 // @brief
 //
 //=============================================
-bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, const Vector* plandmarkorigin, CString* poutname, bool keepOld )
+bool CSaveRestore::CreateSaveFile( const char* baseName, savefile_type_t type, const Vector* plandmarkorigin, CString* poutname, bool keepOld )
 {
 	// Allow game dll to override this
 	if(!svs.dllfuncs.pfnCanSaveGame(type))
@@ -802,7 +802,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	else if(type != SAVE_AUTO && type != SAVE_QUICK)
 	{
 		// Keep increasing the number till we have a spot available
-		Uint32 i = 0;
+		UInt32 i = 0;
 		while(true)
 		{
 			// Add a number to the filename
@@ -898,11 +898,11 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	// Set this to default
 	m_saveBufferSize = sizeof(save_header_t);
 
-	Uint32 nbEdicts = gEdicts.GetNbEdicts();
+	UInt32 nbEdicts = gEdicts.GetNbEdicts();
 	m_saveEdictsBuffer.resize(nbEdicts);
 
 	// Go through each edict and save it
-	for(Uint32 i = 0; i < nbEdicts; i++)
+	for(UInt32 i = 0; i < nbEdicts; i++)
 	{
 		edict_t* pedict = gEdicts.GetEdict(i);
 		if(pedict->free)
@@ -944,7 +944,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	// Add in our connections
 	if(type != SAVE_MAPSAVE && !svs.levelinfos.empty())
 	{
-		Uint32 numconnections = 0;
+		UInt32 numconnections = 0;
 		svs.levelinfos.begin();
 		while(!svs.levelinfos.end())
 		{
@@ -961,11 +961,11 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 		m_saveBufferSize += sizeof(save_cvar_t)*m_savedCVarsArray.size();
 
 	// Allocate save buffers
-	m_pEntityDataBuffer = new byte[BUFFER_ALLOC_SIZE];
+	m_pEntityDataBuffer = new Byte[BUFFER_ALLOC_SIZE];
 	m_entityDataBufferSize = BUFFER_ALLOC_SIZE;
 	m_entityDataBufferUsage = 0;
 
-	m_pStringBuffer = new byte[BUFFER_ALLOC_SIZE];
+	m_pStringBuffer = new Byte[BUFFER_ALLOC_SIZE];
 	m_stringBufferSize = BUFFER_ALLOC_SIZE;
 	m_stringBufferUsage = 0;
 
@@ -985,7 +985,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	m_numSavedStrings = 0;
 
 	// Now loop through all entities and get their data
-	for(Uint32 i = 0; i < m_numSaveEdicts; i++)
+	for(UInt32 i = 0; i < m_numSaveEdicts; i++)
 	{
 		// Retrieve entity from table
 		save_edict_info_t& saveinfo = m_saveEdictsBuffer[i];
@@ -996,7 +996,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	}
 
 	// Write global states if quick, auto or regular save
-	Uint32 ngblobalstates = 0;
+	UInt32 ngblobalstates = 0;
 	if(type != SAVE_MAPSAVE)
 	{
 		ngblobalstates = svs.dllfuncs.pfnGetNbGlobalStates();
@@ -1004,8 +1004,8 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	}
 
 	// Grab the screen contents
-	Uint32 width = 0, height = 0, bpp = 0;
-	byte* pscreentexture = nullptr;
+	UInt32 width = 0, height = 0, bpp = 0;
+	Byte* pscreentexture = nullptr;
 
 	// Save screenshot for regular, quick and auto saves
 	if(type == SAVE_REGULAR || type == SAVE_QUICK || type == SAVE_AUTO)
@@ -1017,7 +1017,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 		Common::ResizeTextureToPOT(width, height, pscreentexture);
 		Common::FlipTexture(width, height, bpp, false, true, pscreentexture);
 
-		Uint32 texsize = (sizeof(byte)*width*height*bpp)/8;
+		UInt32 texsize = (sizeof(Byte)*width*height*bpp)/8;
 		m_saveBufferSize += texsize;
 	}
 
@@ -1051,7 +1051,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 
 				// Find entity in table of saved entities
 				entindex_t entindex = NO_ENTITY_INDEX;
-				for(Uint32 i = 0; i < m_numSaveEdicts; i++)
+				for(UInt32 i = 0; i < m_numSaveEdicts; i++)
 				{
 					if(m_saveEdictsBuffer[i].entityindex == decal.pedict->entindex)
 					{
@@ -1088,8 +1088,8 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	}
 
 	// Setup save file buffer
-	byte* pbuffer = new byte[m_saveBufferSize];
-	memset(pbuffer, 0, sizeof(byte)*m_saveBufferSize);
+	Byte* pbuffer = new Byte[m_saveBufferSize];
+	memset(pbuffer, 0, sizeof(Byte)*m_saveBufferSize);
 
 	// Set header info
 	save_header_t* pheader = reinterpret_cast<save_header_t*>(pbuffer);
@@ -1125,17 +1125,17 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	}
 
 	// Current position in written data
-	Uint32 currentdatapos = sizeof(save_header_t);
+	UInt32 currentdatapos = sizeof(save_header_t);
 
 	// Save the edicts to the file
 	pheader->entitydescoffset = currentdatapos;
 	pheader->numentities = m_numSaveEdicts;
 
-	byte* pdest = pbuffer + pheader->entitydescoffset;
+	Byte* pdest = pbuffer + pheader->entitydescoffset;
 	currentdatapos += sizeof(save_edict_info_t)*pheader->numentities;
 
 	// Save entities to file
-	for(Uint32 i = 0; i < m_numSaveEdicts; i++)
+	for(UInt32 i = 0; i < m_numSaveEdicts; i++)
 	{
 		// Retrieve entity from table
 		save_edict_info_t& saveinfo = m_saveEdictsBuffer[i];
@@ -1154,7 +1154,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	currentdatapos += pheader->numentityfields*sizeof(save_field_t);
 
 	// Save fields to the output
-	for(Uint32 i = 0; i < m_numEdictFields; i++)
+	for(UInt32 i = 0; i < m_numEdictFields; i++)
 	{
 		save_field_t& savefield = m_edictFieldsBuffer[i];
 		memcpy(pdest, &savefield, sizeof(save_field_t));
@@ -1172,7 +1172,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	currentdatapos += sizeof(save_block_t)*pheader->numentitydatablocks;
 
 	// Save entity blocks to output
-	for(Uint32 i = 0; i < m_numSaveDataBlocks; i++)
+	for(UInt32 i = 0; i < m_numSaveDataBlocks; i++)
 	{
 		save_block_t& saveblock = m_saveDataBlocksBuffer[i];
 		memcpy(pdest, &saveblock, sizeof(save_block_t));
@@ -1190,7 +1190,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	currentdatapos += sizeof(save_block_t)*pheader->numstringblocks;
 
 	// Save string blocks to output
-	for(Uint32 i = 0; i < m_numSaveStringBlocks; i++)
+	for(UInt32 i = 0; i < m_numSaveStringBlocks; i++)
 	{
 		save_block_t& saveblock = m_saveStringBlocksBuffer[i];
 		memcpy(pdest, &saveblock, sizeof(save_block_t));
@@ -1207,11 +1207,11 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	{
 		// Save string buffer to output
 		pheader->stringdataoffset = currentdatapos;
-		pheader->stringdatasize = sizeof(byte)*m_stringBufferUsage;
+		pheader->stringdatasize = sizeof(Byte)*m_stringBufferUsage;
 		currentdatapos += pheader->stringdatasize;
 
 		pdest = pbuffer + pheader->stringdataoffset;
-		memcpy(pdest, m_pStringBuffer, sizeof(byte)*pheader->stringdatasize);
+		memcpy(pdest, m_pStringBuffer, sizeof(Byte)*pheader->stringdatasize);
 
 		delete[] m_pStringBuffer;
 		m_pStringBuffer = nullptr;
@@ -1230,11 +1230,11 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 	{
 		// Save entity data buffer to file
 		pheader->entitydataoffset = currentdatapos;
-		pheader->entitydatasize = sizeof(byte)*m_entityDataBufferUsage;
+		pheader->entitydatasize = sizeof(Byte)*m_entityDataBufferUsage;
 		currentdatapos += pheader->entitydatasize;
 
 		pdest = pbuffer + pheader->entitydataoffset;
-		memcpy(pdest, m_pEntityDataBuffer, sizeof(byte)*pheader->entitydatasize);
+		memcpy(pdest, m_pEntityDataBuffer, sizeof(Byte)*pheader->entitydatasize);
 
 		// Clear up everything
 		delete[] m_pEntityDataBuffer;
@@ -1251,7 +1251,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 		pheader->numlevelinfos = svs.levelinfos.size();
 		currentdatapos += sizeof(save_levelinfo_t)*pheader->numlevelinfos;
 
-		Uint32 levelindex = 0;
+		UInt32 levelindex = 0;
 		svs.levelinfos.begin();
 		while(!svs.levelinfos.end())
 		{
@@ -1265,7 +1265,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 			pdstlevelinfo->numconnections = psrclevelinfo.connectionslist.size();
 			currentdatapos += sizeof(save_level_connection_t)*pdstlevelinfo->numconnections;
 
-			Uint32 connindex = 0;
+			UInt32 connindex = 0;
 			psrclevelinfo.connectionslist.begin();
 			while(!psrclevelinfo.connectionslist.end())
 			{
@@ -1292,8 +1292,8 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 
 		currentdatapos += sizeof(save_cvar_t)*pheader->numcvars;
 
-		save_cvar_t* pcvars = reinterpret_cast<save_cvar_t*>(reinterpret_cast<byte*>(pheader) + pheader->cvarsoffset);
-		for(Uint32 i = 0; i < m_savedCVarsArray.size(); i++)
+		save_cvar_t* pcvars = reinterpret_cast<save_cvar_t*>(reinterpret_cast<Byte*>(pheader) + pheader->cvarsoffset);
+		for(UInt32 i = 0; i < m_savedCVarsArray.size(); i++)
 		{
 			saved_cvar_t& srccvar = m_savedCVarsArray[i];
 			save_cvar_t& destcvar = pcvars[i];
@@ -1314,7 +1314,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 		currentdatapos += sizeof(save_global_t)*pheader->numglobals;
 
 		// Set buffer ptr
-		m_pGlobalStatesBuffer = reinterpret_cast<save_global_t*>(reinterpret_cast<byte*>(pheader) + pheader->globaldataoffset);
+		m_pGlobalStatesBuffer = reinterpret_cast<save_global_t*>(reinterpret_cast<Byte*>(pheader) + pheader->globaldataoffset);
 		m_nbGlobalStates = ngblobalstates;
 
 		// Tell game dll to save global states
@@ -1331,11 +1331,11 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 		pheader->numdecals = decallist.size();
 		currentdatapos += sizeof(save_decalinfo_t)*pheader->numdecals;
 
-		Uint32 decalindex = 0;
+		UInt32 decalindex = 0;
 		decallist.begin();
 		while(!decallist.end())
 		{
-			save_decalinfo_t* pdestdecal = reinterpret_cast<save_decalinfo_t*>(reinterpret_cast<byte*>(pheader) + pheader->decaldataoffset) + decalindex;
+			save_decalinfo_t* pdestdecal = reinterpret_cast<save_decalinfo_t*>(reinterpret_cast<Byte*>(pheader) + pheader->decaldataoffset) + decalindex;
 			save_decalinfo_t& decalinfo = decallist.get();
 
 			pdestdecal->entityindex = decalinfo.entityindex;
@@ -1361,7 +1361,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 		pheader->screenshotbpp = bpp;
 		
 		// Save screenshot
-		Uint32 datasize = sizeof(byte)*width*height*bpp;
+		UInt32 datasize = sizeof(Byte)*width*height*bpp;
 		pheader->screenshotoffset = currentdatapos;
 		pheader->screenshotdatasize = datasize/8;
 		currentdatapos += pheader->screenshotdatasize;
@@ -1396,7 +1396,7 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 		CString finaloutputname;
 		if(incremental)
 		{
-			Uint32 i = 0;
+			UInt32 i = 0;
 			while(true)
 			{
 				finaloutputname = filename;
@@ -1450,8 +1450,8 @@ bool CSaveRestore::CreateSaveFile( const Char* baseName, savefile_type_t type, c
 //=============================================
 bool CSaveRestore::AddSavedCVar( CCVar* pcvar )
 {
-	const Char* pstrName = pcvar->GetName();
-	for(Uint32 i = 0; i < m_savedCVarsArray.size(); i++)
+	const char* pstrName = pcvar->GetName();
+	for(UInt32 i = 0; i < m_savedCVarsArray.size(); i++)
 	{
 		const saved_cvar_t& check = m_savedCVarsArray[i];
 		if(!qstrcmp(check.name, pstrName))
@@ -1461,7 +1461,7 @@ bool CSaveRestore::AddSavedCVar( CCVar* pcvar )
 		}
 	}
 
-	Uint32 length = qstrlen(pstrName);
+	UInt32 length = qstrlen(pstrName);
 	if(length >= SAVE_FILE_STRING_MAX_LENGTH)
 	{
 		Con_EPrintf("Cvar '%s' has a name longer(%d characters) than the max length(%d characters).\n", pcvar->GetName(), length, (SAVE_FILE_STRING_MAX_LENGTH-1));
@@ -1508,13 +1508,13 @@ void CSaveRestore::SaveEntity( edict_t* pedict, save_edict_info_t& saveinfo )
 	saveinfo.isglobalentity = svs.dllfuncs.pfnIsGlobalTransitioningEntity(pedict);
 
 	// Save classname
-	const Char* pstrClassName = SV_GetString(pedict->fields.classname);
+	const char* pstrClassName = SV_GetString(pedict->fields.classname);
 	qstrcpy(saveinfo.classname, pstrClassName);
 
 	// Save globalname if needed
 	if(pedict->fields.globalname != NO_STRING_VALUE)
 	{
-		const Char* pstrGlobalName = SV_GetString(pedict->fields.globalname);
+		const char* pstrGlobalName = SV_GetString(pedict->fields.globalname);
 		qstrcpy(saveinfo.globalname, pstrGlobalName);
 
 		// This is a global entity
@@ -1555,10 +1555,10 @@ void CSaveRestore::SaveEntity( edict_t* pedict, save_edict_info_t& saveinfo )
 // @brief
 //
 //=============================================
-save_block_t& CSaveRestore::SaveToStringBuffer( const Char* pstrstring )
+save_block_t& CSaveRestore::SaveToStringBuffer( const char* pstrstring )
 {
 	// Get length
-	Uint32 length = qstrlen(pstrstring);
+	UInt32 length = qstrlen(pstrstring);
 
 	// Only save string if it has an actual length
 	Int32 stringBufferOffset = NO_POSITION;
@@ -1575,14 +1575,14 @@ save_block_t& CSaveRestore::SaveToStringBuffer( const Char* pstrstring )
 			// Expand buffer if required
 			if((m_stringBufferUsage + length) >= m_stringBufferSize)
 			{
-				void* pnewbuffer = Common::ResizeArray(m_pStringBuffer, sizeof(byte), m_stringBufferSize, BUFFER_ALLOC_SIZE);
-				m_pStringBuffer = static_cast<byte*>(pnewbuffer);
+				void* pnewbuffer = Common::ResizeArray(m_pStringBuffer, sizeof(Byte), m_stringBufferSize, BUFFER_ALLOC_SIZE);
+				m_pStringBuffer = static_cast<Byte*>(pnewbuffer);
 				m_stringBufferSize += BUFFER_ALLOC_SIZE;
 			}
 
 			// Set offset
 			stringBufferOffset = m_stringBufferUsage;
-			m_stringBufferUsage += sizeof(byte)*length;
+			m_stringBufferUsage += sizeof(Byte)*length;
 
 			// Save into optimized lookup array
 			if(m_numSavedStrings == m_savedStringsArray.size())
@@ -1597,9 +1597,9 @@ save_block_t& CSaveRestore::SaveToStringBuffer( const Char* pstrstring )
 			savedString.length = length;
 
 			// Copy to buffer
-			byte* pdest = m_pStringBuffer + stringBufferOffset;
-			memcpy(pdest, pstrstring, sizeof(byte)*length);
-			m_saveBufferSize += sizeof(byte)*length;
+			Byte* pdest = m_pStringBuffer + stringBufferOffset;
+			memcpy(pdest, pstrstring, sizeof(Byte)*length);
+			m_saveBufferSize += sizeof(Byte)*length;
 
 			// Add it to the map
 			m_savedStringPositionMap.insert(std::pair<CString,Int32>(pstrstring, insertPosition));
@@ -1627,13 +1627,13 @@ save_block_t& CSaveRestore::SaveToStringBuffer( const Char* pstrstring )
 // @brief
 //
 //=============================================
-save_block_t& CSaveRestore::SaveToDataBuffer( const byte* pdata, Int32 size )
+save_block_t& CSaveRestore::SaveToDataBuffer( const Byte* pdata, Int32 size )
 {
 	// Expand buffer if required
 	if((m_entityDataBufferUsage + size) >= m_entityDataBufferSize)
 	{
-		void* pnewbuffer = Common::ResizeArray(m_pEntityDataBuffer, sizeof(byte), m_entityDataBufferSize, BUFFER_ALLOC_SIZE);
-		m_pEntityDataBuffer = static_cast<byte*>(pnewbuffer);
+		void* pnewbuffer = Common::ResizeArray(m_pEntityDataBuffer, sizeof(Byte), m_entityDataBufferSize, BUFFER_ALLOC_SIZE);
+		m_pEntityDataBuffer = static_cast<Byte*>(pnewbuffer);
 		m_entityDataBufferSize += BUFFER_ALLOC_SIZE;
 	}
 
@@ -1648,10 +1648,10 @@ save_block_t& CSaveRestore::SaveToDataBuffer( const byte* pdata, Int32 size )
 
 	newblock.index = index;
 	newblock.dataoffset = m_entityDataBufferUsage;
-	newblock.datasize = sizeof(byte)*size;
+	newblock.datasize = sizeof(Byte)*size;
 
 	// Copy to buffer
-	byte* pdest = m_pEntityDataBuffer + newblock.dataoffset;
+	Byte* pdest = m_pEntityDataBuffer + newblock.dataoffset;
 	memcpy(pdest, pdata, newblock.datasize);
 	m_entityDataBufferUsage += newblock.datasize;
 
@@ -1670,7 +1670,7 @@ save_block_t& CSaveRestore::SaveToDataBuffer( const byte* pdata, Int32 size )
 // correct on the string we save.
 //
 //=============================================
-save_field_t* CSaveRestore::SaveField( const Char* fieldname, entfieldtype_t fieldtype, const Uint32& blocksize )
+save_field_t* CSaveRestore::SaveField( const char* fieldname, entfieldtype_t fieldtype, const UInt32& blocksize )
 {
 	// Save the field's name to the string buffer
 	const save_block_t& nameblock = SaveToStringBuffer(fieldname);
@@ -1696,19 +1696,19 @@ save_field_t* CSaveRestore::SaveField( const Char* fieldname, entfieldtype_t fie
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteBool( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteBool( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
 		bool value = (*(pdata + offset)) == 1 ? true : false;
 		offset += sizeof(bool);
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(bool));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(bool));
 		pfield->numblocks++;
 	}
 }
@@ -1717,14 +1717,14 @@ void CSaveRestore::WriteBool( const Char* fieldname, const byte* pdata, Uint32 f
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteByte( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteByte( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
 	// With byte arrays, just write it out in one big chunk
-	SaveToDataBuffer(pdata, sizeof(byte)*fieldsize);
+	SaveToDataBuffer(pdata, sizeof(Byte)*fieldsize);
 	pfield->numblocks = 1;
 }
 
@@ -1732,15 +1732,15 @@ void CSaveRestore::WriteByte( const Char* fieldname, const byte* pdata, Uint32 f
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteBitset( const Char* fieldname, const byte* pdata, Uint32 numberofbits, entfieldtype_t fieldtype )
+void CSaveRestore::WriteBitset( const char* fieldname, const Byte* pdata, UInt32 numberofbits, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
 	// With byte arrays, just write it out in one big chunk
-	Uint32 bitsetByteCount = static_cast<Uint32>(SDL_ceil(static_cast<Float>(numberofbits) / static_cast<Float>(CBitSet::NB_BITS_IN_BYTE)));
-	SaveToDataBuffer(pdata, sizeof(byte)*bitsetByteCount);
+	UInt32 bitsetByteCount = static_cast<UInt32>(SDL_ceil(static_cast<float>(numberofbits) / static_cast<float>(CBitSet::NB_BITS_IN_BYTE)));
+	SaveToDataBuffer(pdata, sizeof(Byte)*bitsetByteCount);
 	pfield->numblocks = numberofbits;
 }
 
@@ -1748,14 +1748,14 @@ void CSaveRestore::WriteBitset( const Char* fieldname, const byte* pdata, Uint32
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteChar( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteChar( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
 	// With byte arrays, just write it out in one big chunk
-	SaveToDataBuffer(pdata, sizeof(Char)*fieldsize);
+	SaveToDataBuffer(pdata, sizeof(char)*fieldsize);
 	pfield->numblocks = 1;
 }
 
@@ -1763,19 +1763,19 @@ void CSaveRestore::WriteChar( const Char* fieldname, const byte* pdata, Uint32 f
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteInt16( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteInt16( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
 		Int16 value = Common::ByteToInt16(pdata + offset);
 		offset += sizeof(Int16);
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(Int16));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(Int16));
 		pfield->numblocks++;
 	}
 }
@@ -1784,19 +1784,19 @@ void CSaveRestore::WriteInt16( const Char* fieldname, const byte* pdata, Uint32 
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteUint16( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteUint16( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
-		Uint16 value = Common::ByteToUint32(pdata + offset);
-		offset += sizeof(Uint16);
+		UInt16 value = Common::ByteToUint32(pdata + offset);
+		offset += sizeof(UInt16);
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(Uint16));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(UInt16));
 		pfield->numblocks++;
 	}
 }
@@ -1805,19 +1805,19 @@ void CSaveRestore::WriteUint16( const Char* fieldname, const byte* pdata, Uint32
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteInt32( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteInt32( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
 		Int32 value = Common::ByteToInt32(pdata + offset);
 		offset += sizeof(Int32);
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(Int32));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(Int32));
 		pfield->numblocks++;
 	}
 }
@@ -1826,19 +1826,19 @@ void CSaveRestore::WriteInt32( const Char* fieldname, const byte* pdata, Uint32 
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteUint32( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteUint32( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
-		Uint32 value = Common::ByteToUint32(pdata + offset);
-		offset += sizeof(Uint32);
+		UInt32 value = Common::ByteToUint32(pdata + offset);
+		offset += sizeof(UInt32);
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(Uint32));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(UInt32));
 		pfield->numblocks++;
 	}
 }
@@ -1847,19 +1847,19 @@ void CSaveRestore::WriteUint32( const Char* fieldname, const byte* pdata, Uint32
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteInt64( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteInt64( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
 		Int64 value = Common::ByteToInt64(pdata + offset);
 		offset += sizeof(Int64);
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(Int64));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(Int64));
 		pfield->numblocks++;
 	}
 }
@@ -1868,19 +1868,19 @@ void CSaveRestore::WriteInt64( const Char* fieldname, const byte* pdata, Uint32 
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteUint64( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteUint64( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
-		Uint64 value = Common::ByteToUint64(pdata + offset);
-		offset += sizeof(Uint64);
+		UInt64 value = Common::ByteToUint64(pdata + offset);
+		offset += sizeof(UInt64);
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(Uint64));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(UInt64));
 		pfield->numblocks++;
 	}
 }
@@ -1889,19 +1889,19 @@ void CSaveRestore::WriteUint64( const Char* fieldname, const byte* pdata, Uint32
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteFloat( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteFloat( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
-		Float value = Common::ByteToFloat(pdata + offset);
-		offset += sizeof(Float);
+		float value = Common::ByteToFloat(pdata + offset);
+		offset += sizeof(float);
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(Float));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(float));
 		pfield->numblocks++;
 	}
 }
@@ -1910,19 +1910,19 @@ void CSaveRestore::WriteFloat( const Char* fieldname, const byte* pdata, Uint32 
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteDouble( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteDouble( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
-		Double value = Common::ByteToDouble(pdata + offset);
-		offset += sizeof(Double);
+		double value = Common::ByteToDouble(pdata + offset);
+		offset += sizeof(double);
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(Double));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(double));
 		pfield->numblocks++;
 	}
 }
@@ -1931,23 +1931,23 @@ void CSaveRestore::WriteDouble( const Char* fieldname, const byte* pdata, Uint32
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteTime( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteTime( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
-		Double value = Common::ByteToDouble(pdata + offset);
-		offset += sizeof(Double);
+		double value = Common::ByteToDouble(pdata + offset);
+		offset += sizeof(double);
 
 		// Subtract save time
 		if(m_isTransitionSave && value)
 			value -= m_timeBase;
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(Double));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(double));
 		pfield->numblocks++;
 	}
 }
@@ -1956,17 +1956,17 @@ void CSaveRestore::WriteTime( const Char* fieldname, const byte* pdata, Uint32 f
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteString( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteString( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveStringBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
 		string_t stringindex = Common::ByteToUint32(pdata + offset);
-		const Char* pstr = SV_GetString(stringindex);
+		const char* pstr = SV_GetString(stringindex);
 		if(!pstr)
 			pstr = "";
 
@@ -1981,13 +1981,13 @@ void CSaveRestore::WriteString( const Char* fieldname, const byte* pdata, Uint32
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteRawString( const Char* fieldname, const byte* pdata, entfieldtype_t fieldtype )
+void CSaveRestore::WriteRawString( const char* fieldname, const Byte* pdata, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveStringBlocks);
 	if(!pfield)
 		return;
 
-	const Char* pstr = reinterpret_cast<const Char*>(pdata);
+	const char* pstr = reinterpret_cast<const char*>(pdata);
 	if(!pstr || !qstrlen(pstr))
 		SaveToStringBuffer("");
 	else
@@ -2000,19 +2000,19 @@ void CSaveRestore::WriteRawString( const Char* fieldname, const byte* pdata, ent
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteVector( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteVector( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
 		Vector value = *(reinterpret_cast<const Vector*>(pdata + offset));
 		offset += sizeof(Vector);
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(Vector));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(Vector));
 		pfield->numblocks++;
 	}
 }
@@ -2021,14 +2021,14 @@ void CSaveRestore::WriteVector( const Char* fieldname, const byte* pdata, Uint32
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteCoord( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteCoord( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
 		Vector value = *(reinterpret_cast<const Vector*>(pdata + offset));
 		offset += sizeof(Vector);
@@ -2037,7 +2037,7 @@ void CSaveRestore::WriteCoord( const Char* fieldname, const byte* pdata, Uint32 
 		if(m_isTransitionSave)
 			Math::VectorSubtract(value, m_landmarkOrigin, value);
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&value), sizeof(Vector));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&value), sizeof(Vector));
 		pfield->numblocks++;
 	}
 }
@@ -2046,21 +2046,21 @@ void CSaveRestore::WriteCoord( const Char* fieldname, const byte* pdata, Uint32 
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteEntindex( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void CSaveRestore::WriteEntindex( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	save_field_t* pfield = SaveField(fieldname, fieldtype, m_numSaveDataBlocks);
 	if(!pfield)
 		return;
 
-	Uint32 offset = 0;
-	for(Uint32 i = 0; i < fieldsize; i++)
+	UInt32 offset = 0;
+	for(UInt32 i = 0; i < fieldsize; i++)
 	{
 		entindex_t entindex = Common::ByteToInt32(pdata + offset);
 		offset += sizeof(Int32);
 
 		if(entindex != NO_ENTITY_INDEX)
 		{
-			Uint32 j = 0;
+			UInt32 j = 0;
 			for(; j < m_numSaveEdicts; j++)
 			{
 				const save_edict_info_t& edict = m_saveEdictsBuffer[j];
@@ -2078,7 +2078,7 @@ void CSaveRestore::WriteEntindex( const Char* fieldname, const byte* pdata, Uint
 			}
 		}
 
-		SaveToDataBuffer(reinterpret_cast<byte*>(&entindex), sizeof(Int32));
+		SaveToDataBuffer(reinterpret_cast<Byte*>(&entindex), sizeof(Int32));
 		pfield->numblocks++;
 	}
 }
@@ -2087,7 +2087,7 @@ void CSaveRestore::WriteEntindex( const Char* fieldname, const byte* pdata, Uint
 // @brief
 //
 //=============================================
-void CSaveRestore::WriteGlobalState( Uint32 index, const Char* pstrglobalname, const Char* pstrlevelname, globalstate_state_t state )
+void CSaveRestore::WriteGlobalState( UInt32 index, const char* pstrglobalname, const char* pstrlevelname, globalstate_state_t state )
 {
 	if(index >= m_nbGlobalStates)
 	{
@@ -2105,7 +2105,7 @@ void CSaveRestore::WriteGlobalState( Uint32 index, const Char* pstrglobalname, c
 // @brief
 //
 //=============================================
-void Save_WriteBool( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteBool( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteBool(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2114,7 +2114,7 @@ void Save_WriteBool( const Char* fieldname, const byte* pdata, Uint32 fieldsize,
 // @brief
 //
 //=============================================
-void Save_WriteByte( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteByte( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteByte(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2123,7 +2123,7 @@ void Save_WriteByte( const Char* fieldname, const byte* pdata, Uint32 fieldsize,
 // @brief
 //
 //=============================================
-void Save_WriteBitset( const Char* fieldname, const byte* pdata, Uint32 numberofbits, entfieldtype_t fieldtype )
+void Save_WriteBitset( const char* fieldname, const Byte* pdata, UInt32 numberofbits, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteBitset(fieldname, pdata, numberofbits, fieldtype);
 }
@@ -2132,7 +2132,7 @@ void Save_WriteBitset( const Char* fieldname, const byte* pdata, Uint32 numberof
 // @brief
 //
 //=============================================
-void Save_WriteChar( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteChar( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteChar(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2141,7 +2141,7 @@ void Save_WriteChar( const Char* fieldname, const byte* pdata, Uint32 fieldsize,
 // @brief
 //
 //=============================================
-void Save_WriteUint16( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteUint16( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteUint16(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2150,7 +2150,7 @@ void Save_WriteUint16( const Char* fieldname, const byte* pdata, Uint32 fieldsiz
 // @brief
 //
 //=============================================
-void Save_WriteInt16( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteInt16( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteInt16(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2159,7 +2159,7 @@ void Save_WriteInt16( const Char* fieldname, const byte* pdata, Uint32 fieldsize
 // @brief
 //
 //=============================================
-void Save_WriteUint32( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteUint32( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteUint32(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2168,7 +2168,7 @@ void Save_WriteUint32( const Char* fieldname, const byte* pdata, Uint32 fieldsiz
 // @brief
 //
 //=============================================
-void Save_WriteInt32( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteInt32( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteInt32(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2177,7 +2177,7 @@ void Save_WriteInt32( const Char* fieldname, const byte* pdata, Uint32 fieldsize
 // @brief
 //
 //=============================================
-void Save_WriteUint64( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteUint64( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteUint64(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2186,7 +2186,7 @@ void Save_WriteUint64( const Char* fieldname, const byte* pdata, Uint32 fieldsiz
 // @brief
 //
 //=============================================
-void Save_WriteInt64( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteInt64( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteInt64(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2195,7 +2195,7 @@ void Save_WriteInt64( const Char* fieldname, const byte* pdata, Uint32 fieldsize
 // @brief
 //
 //=============================================
-void Save_WriteFloat( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteFloat( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteFloat(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2204,7 +2204,7 @@ void Save_WriteFloat( const Char* fieldname, const byte* pdata, Uint32 fieldsize
 // @brief
 //
 //=============================================
-void Save_WriteDouble( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteDouble( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteDouble(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2213,7 +2213,7 @@ void Save_WriteDouble( const Char* fieldname, const byte* pdata, Uint32 fieldsiz
 // @brief
 //
 //=============================================
-void Save_WriteTime( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteTime( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteTime(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2222,7 +2222,7 @@ void Save_WriteTime( const Char* fieldname, const byte* pdata, Uint32 fieldsize,
 // @brief
 //
 //=============================================
-void Save_WriteString( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteString( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteString(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2231,7 +2231,7 @@ void Save_WriteString( const Char* fieldname, const byte* pdata, Uint32 fieldsiz
 // @brief
 //
 //=============================================
-void Save_WriteRawString( const Char* fieldname, const byte* pdata, entfieldtype_t fieldtype )
+void Save_WriteRawString( const char* fieldname, const Byte* pdata, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteRawString(fieldname, pdata, fieldtype);
 }
@@ -2240,7 +2240,7 @@ void Save_WriteRawString( const Char* fieldname, const byte* pdata, entfieldtype
 // @brief
 //
 //=============================================
-void Save_WriteVector( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteVector( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteVector(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2249,7 +2249,7 @@ void Save_WriteVector( const Char* fieldname, const byte* pdata, Uint32 fieldsiz
 // @brief
 //
 //=============================================
-void Save_WriteCoord( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteCoord( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteCoord(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2258,7 +2258,7 @@ void Save_WriteCoord( const Char* fieldname, const byte* pdata, Uint32 fieldsize
 // @brief
 //
 //=============================================
-void Save_WriteEntindex( const Char* fieldname, const byte* pdata, Uint32 fieldsize, entfieldtype_t fieldtype )
+void Save_WriteEntindex( const char* fieldname, const Byte* pdata, UInt32 fieldsize, entfieldtype_t fieldtype )
 {
 	gSaveRestore.WriteEntindex(fieldname, pdata, fieldsize, fieldtype);
 }
@@ -2267,7 +2267,7 @@ void Save_WriteEntindex( const Char* fieldname, const byte* pdata, Uint32 fields
 // @brief
 //
 //=============================================
-void Save_WriteGlobalState( Uint32 index, const Char* pstrglobalname, const Char* pstrlevelname, globalstate_state_t state )
+void Save_WriteGlobalState( UInt32 index, const char* pstrglobalname, const char* pstrlevelname, globalstate_state_t state )
 {
 	gSaveRestore.WriteGlobalState(index, pstrglobalname, pstrlevelname, state);
 }

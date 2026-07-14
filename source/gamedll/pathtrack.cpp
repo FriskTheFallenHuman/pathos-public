@@ -100,7 +100,7 @@ bool CPathTrack::Spawn( void )
 // @brief
 //
 //=============================================
-void CPathTrack::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CPathTrack::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool isOn;
 	if(m_pAlternatePath)
@@ -204,7 +204,7 @@ CPathTrack* CPathTrack::GetValidPath( CPathTrack* pPath, bool testflag )
 // @brief
 //
 //=============================================
-void CPathTrack::Project( CPathTrack* pStart, CPathTrack* pEnd, Vector& origin, Float dist )
+void CPathTrack::Project( CPathTrack* pStart, CPathTrack* pEnd, Vector& origin, float dist )
 {
 	if(!pStart || !pEnd)
 		return;
@@ -219,20 +219,20 @@ void CPathTrack::Project( CPathTrack* pStart, CPathTrack* pEnd, Vector& origin, 
 // @brief
 //
 //=============================================
-CPathTrack* CPathTrack::GetLookAhead( Vector& origin, Float dist, bool test )
+CPathTrack* CPathTrack::GetLookAhead( Vector& origin, float dist, bool test )
 {
 	CPathTrack* pcurrent = this;
-	Float originaldist = dist;
+	float originaldist = dist;
 	Vector currentpos = origin;
 
-	Float _dist = dist;
+	float _dist = dist;
 	if(_dist < 0)
 	{
 		_dist = -_dist;
 		while(_dist > 0)
 		{
 			Vector direction = pcurrent->GetOrigin() - currentpos;
-			Float length = direction.Length();
+			float length = direction.Length();
 			if(!length)
 			{
 				if(!GetValidPath(pcurrent->GetPrevious(), test))
@@ -277,7 +277,7 @@ CPathTrack* CPathTrack::GetLookAhead( Vector& origin, Float dist, bool test )
 			}
 
 			Vector direction = pcurrent->GetNext()->GetOrigin() - currentpos;
-			Float length = direction.Length();
+			float length = direction.Length();
 
 			if(!length && !GetValidPath(pcurrent->GetNext()->GetNext(), test))
 			{
@@ -315,11 +315,11 @@ CPathTrack* CPathTrack::GetNearest( const Vector& origin )
 	Vector delta = origin - m_pState->origin;
 	delta.z = 0;
 
-	Float mindist = delta.Length();
+	float mindist = delta.Length();
 	CPathTrack* pnearest = this;
 	CPathTrack* ppath = GetNext();
 
-	Uint32 deadcount = 0;
+	UInt32 deadcount = 0;
 	while(ppath && ppath != this)
 	{
 		// Avoid infinite loop
@@ -333,7 +333,7 @@ CPathTrack* CPathTrack::GetNearest( const Vector& origin )
 		delta = origin - ppath->GetOrigin();
 		delta.z = 0;
 
-		Float dist = delta.Length();
+		float dist = delta.Length();
 		if(dist < mindist)
 		{
 			mindist = dist;

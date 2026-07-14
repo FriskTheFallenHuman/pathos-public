@@ -44,7 +44,7 @@ public:
 	// Manages keyvalues
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	// Calls use function
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 public:
 	// Repeat think function
@@ -58,24 +58,24 @@ private:
 	// Sprite model name
 	string_t m_spriteModelName;
 	// Radius of beam
-	Float m_beamRadius;
+	float m_beamRadius;
 	// Start frame
-	Uint32 m_startFrame;
+	UInt32 m_startFrame;
 	// Lifetime of beam
-	Float m_life;
+	float m_life;
 	// Beam width
-	Float m_width;
+	float m_width;
 	// Beam noise
-	Float m_beamNoise;
+	float m_beamNoise;
 	// Beam noise speed
-	Float m_noiseSpeed;
+	float m_noiseSpeed;
 	// Beam speed
-	Float m_beamSpeed;
+	float m_beamSpeed;
 	// Min repeat delay
-	Float m_repeatMinDelay;
+	float m_repeatMinDelay;
 	// Max repeat delay
-	Float m_repeatMaxDelay;
-	// TRUE if active
+	float m_repeatMaxDelay;
+	// true if active
 	bool m_isActive;
 };
 #endif //ENVBEAMFX_H

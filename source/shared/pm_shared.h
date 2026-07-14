@@ -24,7 +24,7 @@ struct pm_info_t
 	// Player state
 	entity_state_t playerstate;
 	// Client index
-	Uint32 clientindex;
+	UInt32 clientindex;
 
 	// Movevars
 	movevars_t movevars;
@@ -32,7 +32,7 @@ struct pm_info_t
 	Vector oldangles;
 
 	// Waterjump time
-	Float waterjumptime;
+	float waterjumptime;
 
 	// Player mins/maxs for each hull
 	Vector player_mins[MAX_MAP_HULLS];

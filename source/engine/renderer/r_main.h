@@ -38,15 +38,15 @@ struct glowquery_t;
 struct fbobind_t;
 
 // Near clipping distance
-static constexpr Float NEAR_CLIP_DISTANCE = 4.0f;
+static constexpr float NEAR_CLIP_DISTANCE = 4.0f;
 // Max number of model lights
-static constexpr Uint32 MAX_MODEL_LIGHTS = 2048;
+static constexpr UInt32 MAX_MODEL_LIGHTS = 2048;
 // Render pass id for main frame's render pass
-static constexpr Uint32 MAINFRAME_RENDERPASS_ID = 0;
+static constexpr UInt32 MAINFRAME_RENDERPASS_ID = 0;
 // Max lights in a single batch
-static constexpr Uint32 MAX_BATCH_LIGHTS = 4;
+static constexpr UInt32 MAX_BATCH_LIGHTS = 4;
 // Max active-load shaders per frame
-static constexpr Uint32 MAX_LIGHTMAP_PADDING = 8;
+static constexpr UInt32 MAX_LIGHTMAP_PADDING = 8;
 
 extern CGLExtF gGLExtF;
 
@@ -73,9 +73,9 @@ struct texbind_states_t
 		memset(texturebinds_rect, 0, sizeof(texturebinds_rect));
 	}
 
-	Uint32 texturebinds_2d[MAX_BOUND_TEXTURES];
-	Uint32 texturebinds_cube[MAX_BOUND_TEXTURES];
-	Uint32 texturebinds_rect[MAX_BOUND_TEXTURES];
+	UInt32 texturebinds_2d[MAX_BOUND_TEXTURES];
+	UInt32 texturebinds_cube[MAX_BOUND_TEXTURES];
+	UInt32 texturebinds_rect[MAX_BOUND_TEXTURES];
 };
 
 struct fog_settings_t
@@ -91,9 +91,9 @@ struct fog_settings_t
 	}
 
 	Vector color;
-	Float start;
-	Float end;
-	Float blend;
+	float start;
+	float end;
+	float blend;
 
 	bool affectsky;
 	bool active;
@@ -114,7 +114,7 @@ struct fog_states_t
 
 	fog_settings_t settings;
 
-	Double blendtime;
+	double blendtime;
 	bool specialfog;
 	bool prevspecialfog;
 };
@@ -149,8 +149,8 @@ struct view_info_t
 	Vector v_visorigin;
 
 	// clipping plane distances
-	Float znear;
-	Float zfar;
+	float znear;
+	float zfar;
 
 	// leaf the view is on
 	const mleaf_t* pviewleaf;
@@ -158,13 +158,13 @@ struct view_info_t
 	CFrustum frustum;
 
 	// viewport width
-	Float viewsize_x;
+	float viewsize_x;
 	// viewport height
-	Float viewsize_y;
+	float viewsize_y;
 	// Field of view
-	Float fov;
+	float fov;
 	// Near clip distance
-	Float nearclip;
+	float nearclip;
 
 	// Visframe of leaf we're on
 	Int32 leafvisframe;
@@ -176,7 +176,7 @@ struct render_objects_t
 		numvisents(0),
 		nummodellights(0)
 	{
-		for(Uint32 i = 0; i < MAX_RENDER_ENTITIES; i++)
+		for(UInt32 i = 0; i < MAX_RENDER_ENTITIES; i++)
 		{
 			pvisents_unsorted[i] = nullptr;
 			pvisents[i] = nullptr;
@@ -188,7 +188,7 @@ struct render_objects_t
 	// Array of visents
 	cl_entity_t* pvisents[MAX_RENDER_ENTITIES];
 	// Number of visible entities
-	Uint32 numvisents;
+	UInt32 numvisents;
 
 	// Array of projective textures
 	CArray<en_texture_t*> projective_textures;
@@ -198,7 +198,7 @@ struct render_objects_t
 	// model lights array
 	mlight_t modellights[MAX_MODEL_LIGHTS];
 	// number of model lights
-	Uint32 nummodellights;
+	UInt32 nummodellights;
 
 	// Glow query array
 	CArray<glowquery_t> glowqueryarray;
@@ -214,13 +214,13 @@ struct counters_t
 		{}
 
 	// brush polycount
-	Uint64 brushpolies;
+	UInt64 brushpolies;
 	// model polies
-	Uint64 modelpolies;
+	UInt64 modelpolies;
 	// particles
-	Uint64 particles;
+	UInt64 particles;
 	// draw batches
-	Uint64 batches;
+	UInt64 batches;
 };
 
 struct sky_settings_t
@@ -234,7 +234,7 @@ struct sky_settings_t
 
 	bool drawsky;
 	bool skybox;
-	Float skysize;
+	float skysize;
 
 	Vector world_origin;
 	Vector local_origin;
@@ -308,20 +308,20 @@ struct renderer_state_t
 	Int32 renderflags;
 
 	// Current framecount
-	Uint64 framecount;
+	UInt64 framecount;
 	// Framecount without renderpasses
-	Uint64 framecount_main;
+	UInt64 framecount_main;
 	// Visframe
 	Int32 visframe;
 	// Time since last draw
-	Double frametime;
+	double frametime;
 	// Current time
-	Double time;
+	double time;
 
 	// screen width
-	Uint32 screenwidth;
+	UInt32 screenwidth;
 	// screen height
-	Uint32 screenheight;
+	UInt32 screenheight;
 
 	// Array of GL extensions
 	CArray<CString> glextensions;
@@ -371,9 +371,9 @@ struct renderer_state_t
 	daystage_t daystage;
 
 	// VIS buffer
-	byte* pvisbuffer;
+	Byte* pvisbuffer;
 	// Secondary VIS buffer
-	byte* psecondaryvisbuffer;
+	Byte* psecondaryvisbuffer;
 
 	// loading background texture
 	en_texalloc_t* ploadbackground;
@@ -381,9 +381,9 @@ struct renderer_state_t
 	rtt_texture_t* pbgrtttexture;
 
 	// Next free render pass id
-	Uint32 nextfreerenderpassidx;
+	UInt32 nextfreerenderpassidx;
 	// Current render pass id
-	Uint32 renderpassidx;
+	UInt32 renderpassidx;
 
 	// Currently bound FBO
 	fbobind_t* pboundfbo;
@@ -391,9 +391,9 @@ struct renderer_state_t
 	fbobind_t mainfbo;
 
 	// Used for culling entities
-	CArray<Uint32> tmpleafnums;
+	CArray<UInt32> tmpleafnums;
 	// Number of leaves
-	Uint32 numtmpleafs;
+	UInt32 numtmpleafs;
 };
 
 enum querytype_t
@@ -418,7 +418,7 @@ struct glowquery_t
 	querytype_t type;
 	bool queried;
 
-	Uint32 renderpassidx;
+	UInt32 renderpassidx;
 };
 
 struct active_load_shader_t
@@ -488,15 +488,15 @@ extern CCVar* g_pCvarBicubicLightmaps;
 
 extern void R_InitRenderInterface( r_interface_t &renderFuncs );
 
-extern void R_Bind2DTexture( Int32 texture, Uint32 id, bool force = false );
-extern void R_BindRectangleTexture( Int32 texture, Uint32 id, bool force = false );
-extern void R_BindCubemapTexture( Int32 texture, Uint32 id, bool force = false );
-extern void R_ClearBinds( Uint32 firstUnit = 0 );
+extern void R_Bind2DTexture( Int32 texture, UInt32 id, bool force = false );
+extern void R_BindRectangleTexture( Int32 texture, UInt32 id, bool force = false );
+extern void R_BindCubemapTexture( Int32 texture, UInt32 id, bool force = false );
+extern void R_ClearBinds( UInt32 firstUnit = 0 );
 
 extern bool R_DrawScene( void );
 extern bool R_DrawInterface( void );
 extern bool R_Draw( const ref_params_t& params );
-extern bool R_DrawLoadingScreen( const Char* pstrText = nullptr );
+extern bool R_DrawLoadingScreen( const char* pstrText = nullptr );
 extern bool R_DrawPausedLogo( void );
 extern bool R_DrawHUD( bool hudOnly = false, bool noFilmGrain = false );
 extern bool R_DrawImGui( void );
@@ -514,38 +514,38 @@ extern bool R_InitGame( void );
 extern bool R_LoadResources( void );
 extern void R_ResetGame( void );
 extern void R_MarkLeaves( const Vector& origin );
-extern void R_ForceMarkLeaves( const mleaf_t* pleaf, Int32 visframe, byte *pvsdata = nullptr );
+extern void R_ForceMarkLeaves( const mleaf_t* pleaf, Int32 visframe, Byte *pvsdata = nullptr );
 extern void R_SetupView( const ref_params_t& params );
 
 extern void R_AddEntity( cl_entity_t* pentity );
 extern bool R_AddTempEntity( cl_entity_t *entity );
-extern void R_SetFrustum( CFrustum& frustum, const Vector& origin, const Vector& angles, Float fov, Float viewsize_x, Float viewsize_y, bool fogCull );
+extern void R_SetFrustum( CFrustum& frustum, const Vector& origin, const Vector& angles, float fov, float viewsize_x, float viewsize_y, bool fogCull );
 extern void R_SetModelViewMatrix( const Vector& origin, const Vector& angles );
-extern void R_SetProjectionMatrix( Float znear, Float fovY );
+extern void R_SetProjectionMatrix( float znear, float fovY );
 extern void R_BindFBO( struct fbobind_t *pfbo );
 
-extern inline void R_ValidateShader( CGLSLShader* pShader );
-extern inline void R_ValidateShader( CBasicDraw* pDraw );
+extern void R_ValidateShader( CGLSLShader* pShader );
+extern void R_ValidateShader( CBasicDraw* pDraw );
 
-extern bool R_LoadTextureListFile( const Char* pstrTextureListFile, CArray<en_texture_t*>& texArray, rs_level_t level, const GLint* pborder, bool clamp );
+extern bool R_LoadTextureListFile( const char* pstrTextureListFile, CArray<en_texture_t*>& texArray, rs_level_t level, const GLint* pborder, bool clamp );
 extern void R_ResetFrameStates( void );
 
-extern bool R_DrawString( color32_t color, Int32 x, Int32 y, const Char* pstrString, const font_set_t* pfont );
-extern bool R_DrawStringBox( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int16 insetx, Int16 insety, bool reverse, color32_t color, Int32 x, Int32 y, const Char* pstrString, const font_set_t* pfont, Uint32 lineoffset, Uint32 minlineheight, Uint32 xoffset );
+extern bool R_DrawString( color32_t color, Int32 x, Int32 y, const char* pstrString, const font_set_t* pfont );
+extern bool R_DrawStringBox( Int16 minx, Int16 miny, Int16 maxx, Int16 maxy, Int16 insetx, Int16 insety, bool reverse, color32_t color, Int32 x, Int32 y, const char* pstrString, const font_set_t* pfont, UInt32 lineoffset, UInt32 minlineheight, UInt32 xoffset );
 extern void R_DrawStats( void );
 extern void R_DrawTimeGraph( void );
 extern void R_DrawFPSGraph( void );
 
 extern bool R_BeginTextRendering( const font_set_t* pfontset );
 extern void R_FinishTextRendering( void );
-extern bool R_DrawCharacter( Int32 x, Int32 y, Char character, Uint32 r, Uint32 g, Uint32 b, Uint32 a );
+extern bool R_DrawCharacter( Int32 x, Int32 y, char character, UInt32 r, UInt32 g, UInt32 b, UInt32 a );
 
 extern void R_PopulateExtensionsArray( void );
-extern bool R_IsExtensionSupported( const Char *pstrextension );
+extern bool R_IsExtensionSupported( const char *pstrextension );
 
 extern bool R_DrawOrigins( void );
 extern bool R_DrawViewModelParticles( void );
-extern Float R_GetRenderFOV( Float viewsize );
+extern float R_GetRenderFOV( float viewsize );
 extern void R_AnisotropyCvarCallBack( CCVar* pCVar );
 extern void R_ActiveLoadMaxShadersCvarCallBack( CCVar* pCVar );
 extern void R_LightmapPaddingCvarCallBack( CCVar* pCVar );
@@ -553,7 +553,7 @@ extern void R_LightmapPaddingCvarCallBack( CCVar* pCVar );
 extern bool R_IsSpecialRenderEntity( const cl_entity_t& entity );
 extern void R_LoadSprite( cache_model_t* pmodel );
 
-extern Float R_RenderFxBlend( cl_entity_t* pentity );
+extern float R_RenderFxBlend( cl_entity_t* pentity );
 
 extern Int32 R_SortEntities( const void* p1, const void* p2 );
 
@@ -561,7 +561,7 @@ extern void R_AddShaderForLoading( CGLSLShader* pShader );
 extern bool R_PerformPendingShaderLoads( void );
 extern Vector R_GetLightingForPosition( const Vector& position, const Vector& defaultcolor );
 
-extern void R_SetLightmapTexture( Uint32 glindex, Uint32 width, Uint32 height, bool isvectormap, color32_t* pdata, Uint32& resultsize );
+extern void R_SetLightmapTexture( UInt32 glindex, UInt32 width, UInt32 height, bool isvectormap, color32_t* pdata, UInt32& resultsize );
 
 extern void Cmd_PasteDecal( void );
 extern void Cmd_CreateSprite( void );

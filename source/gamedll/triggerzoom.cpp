@@ -109,7 +109,7 @@ bool CTriggerZoom::Spawn( void )
 // @brief
 //
 //=============================================
-void CTriggerZoom::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerZoom::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pEntity;
@@ -182,10 +182,10 @@ void CTriggerZoom::SendInitMessage( const CBaseEntity* pPlayer )
 	else if(m_state == STATE_BLENDING)
 	{
 		// Calculate expected FOV and the delta
-		Float timedelta = (m_beginTime+m_duration) - g_pGameVars->time;
-		Float timefrac = timedelta/m_duration;
+		float timedelta = (m_beginTime+m_duration) - g_pGameVars->time;
+		float timefrac = timedelta/m_duration;
 
-		Uint32 currentFOV = m_startFOV*(timefrac) + m_targetFOV*(1.0 - timefrac);
+		UInt32 currentFOV = m_startFOV*(timefrac) + m_targetFOV*(1.0 - timefrac);
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ONE, g_usermsgs.triggerzoom, nullptr, m_pPlayer->GetEdict());
 			gd_engfuncs.pfnMsgWriteByte(currentFOV);

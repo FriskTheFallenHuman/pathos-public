@@ -24,9 +24,9 @@ All Rights Reserved.
 #include "snd_shared.h"
 
 // Trace distance for stuck checking in either axis or direction
-static const Uint32 MAX_STUCK_CHECKDISTANCE = 8;
+static const UInt32 MAX_STUCK_CHECKDISTANCE = 8;
 // Air accelerate max speed
-static const Float AIR_ACCELERATE_MAX_SPEED = 30;
+static const float AIR_ACCELERATE_MAX_SPEED = 30;
 
 //=============================================
 // @brief Default constructor
@@ -97,21 +97,21 @@ void CPlayerMovement::DropPunchAngle( void )
 		return;
 
 	Math::VectorMA(m_pPlayerState->punchangles, m_frameTime, m_pPlayerState->punchamount, m_pPlayerState->punchangles);
-	Float damping = 1.0 - (VIEW_PUNCH_DAMPING * m_frameTime);
+	float damping = 1.0 - (VIEW_PUNCH_DAMPING * m_frameTime);
 	if(damping < 0)
 		damping = 0;
 
 	Math::VectorScale(m_pPlayerState->punchamount, damping, m_pPlayerState->punchamount);
 
 	// Toroidal spring
-	Float springmagnitude = VIEW_PUNCH_SPRING_CONSTANT * m_frameTime;
-	springmagnitude = clamp(springmagnitude, 0, 2);
+	float springmagnitude = VIEW_PUNCH_SPRING_CONSTANT * m_frameTime;
+	springmagnitude = Clamp(springmagnitude, 0, 2);
 
 	Math::VectorMA(m_pPlayerState->punchamount, -springmagnitude, m_pPlayerState->punchangles, m_pPlayerState->punchamount);
 
-	m_pPlayerState->punchangles[0] = clamp(m_pPlayerState->punchangles[0], -89, 89);
-	m_pPlayerState->punchangles[1] = clamp(m_pPlayerState->punchangles[1], -179, 179);
-	m_pPlayerState->punchangles[2] = clamp(m_pPlayerState->punchangles[2], -89, 89);
+	m_pPlayerState->punchangles[0] = Clamp(m_pPlayerState->punchangles[0], -89, 89);
+	m_pPlayerState->punchangles[1] = Clamp(m_pPlayerState->punchangles[1], -179, 179);
+	m_pPlayerState->punchangles[2] = Clamp(m_pPlayerState->punchangles[2], -89, 89);
 }
 
 //=============================================
@@ -131,7 +131,7 @@ void CPlayerMovement::CheckParameters( void )
 	speed = SDL_sqrt(speed);
 	if(speed != 0 && speed > m_maxSpeed)
 	{
-		Float ratio = m_maxSpeed / speed;
+		float ratio = m_maxSpeed / speed;
 
 		// Cap forward velocity to main velocity limit when walking backwards
 		// No sprinting backwards basically
@@ -146,12 +146,12 @@ void CPlayerMovement::CheckParameters( void )
 	// with sprint states
 	if(m_userCmd.forwardmove > 0)
 	{
-		Float fwishspeed = m_userCmd.forwardmove * m_userCmd.forwardmove;
+		float fwishspeed = m_userCmd.forwardmove * m_userCmd.forwardmove;
 		fwishspeed = SDL_sqrt(fwishspeed);
 
 		if(fwishspeed != 0 && fwishspeed > m_maxForwardSpeed)
 		{
-			Float ratio = m_maxForwardSpeed / fwishspeed;
+			float ratio = m_maxForwardSpeed / fwishspeed;
 			m_userCmd.forwardmove *= ratio;
 		}
 	}
@@ -332,8 +332,8 @@ void CPlayerMovement::Move_Ladder( void )
 	m_traceInterface.pfnTraceModel(m_pLadder->entindex, m_pPlayerState->origin, center, HULL_POINT, FL_TRACE_NORMAL, trace);
 	if(trace.fraction != 1.0)
 	{
-		Float forward = 0;
-		Float right = 0;
+		float forward = 0;
+		float right = 0;
 
 		if(m_userCmd.buttons & IN_BACK)
 			forward -= PLAYER_CLIMB_SPEED;
@@ -367,7 +367,7 @@ void CPlayerMovement::Move_Ladder( void )
 				Math::VectorNormalize(perpendicular);
 
 				Vector cross;
-				Float dp = Math::DotProduct(velocity, trace.plane.normal);
+				float dp = Math::DotProduct(velocity, trace.plane.normal);
 				Math::VectorScale(trace.plane.normal, dp, cross);
 
 				Vector lateral;
@@ -437,7 +437,7 @@ void CPlayerMovement::Move_Toss_Bounce( void )
 		return;
 	}
 
-	Float backoff;
+	float backoff;
 	if(m_pPlayerState->movetype == MOVETYPE_BOUNCE)
 		backoff = 2.0 - m_pPlayerState->friction;
 	else
@@ -455,7 +455,7 @@ void CPlayerMovement::Move_Toss_Bounce( void )
 			m_pPlayerState->velocity[2] = 0;
 		}
 
-		Float velocity = Math::DotProduct(m_pPlayerState->velocity, m_pPlayerState->velocity);
+		float velocity = Math::DotProduct(m_pPlayerState->velocity, m_pPlayerState->velocity);
 		if(velocity < 900 || m_pPlayerState->movetype != MOVETYPE_BOUNCE)
 		{
 			m_pPlayerState->groundent = trace.hitentity;
@@ -485,11 +485,11 @@ Int32 CPlayerMovement::Move_Fly( void )
 	Vector orig_velocity, primal_velocity;
 	orig_velocity = primal_velocity = m_pPlayerState->velocity;
 
-	Float allfraction = 1.0;
-	Float timeleft = m_frameTime;
+	float allfraction = 1.0;
+	float timeleft = m_frameTime;
 
 	// Perform movement
-	for(Uint32 i = 0; i < NUM_FLYMOVE_BUMPS; i++)
+	for(UInt32 i = 0; i < NUM_FLYMOVE_BUMPS; i++)
 	{
 		if(m_pPlayerState->velocity.IsZero())
 			break;
@@ -591,7 +591,7 @@ Int32 CPlayerMovement::Move_Fly( void )
 
 				Vector dir;
 				Math::CrossProduct(planenormals[0], planenormals[1], dir);
-				Float dp = Math::DotProduct(dir, m_pPlayerState->velocity);
+				float dp = Math::DotProduct(dir, m_pPlayerState->velocity);
 				Math::VectorScale(dir, dp, m_pPlayerState->velocity);
 			}
 
@@ -615,9 +615,9 @@ Int32 CPlayerMovement::Move_Fly( void )
 // @brief
 //
 //=============================================
-Int32 CPlayerMovement::ClipVelocity( const Vector& in, const Vector& normal, Vector& out, Float overbounce )
+Int32 CPlayerMovement::ClipVelocity( const Vector& in, const Vector& normal, Vector& out, float overbounce )
 {
-	Float angle = normal[2];
+	float angle = normal[2];
 
 	Int32 blocked = BLOCKED_NOT;
 	if(angle > 0)
@@ -625,11 +625,11 @@ Int32 CPlayerMovement::ClipVelocity( const Vector& in, const Vector& normal, Vec
 	else if(!angle)
 		blocked |= BLOCKED_WALL;
 
-	Float backoff = Math::DotProduct(in, normal)*overbounce;
+	float backoff = Math::DotProduct(in, normal)*overbounce;
 
 	for(Int32 i = 0; i < 3; i++)
 	{
-		Float change = normal[i]*backoff;
+		float change = normal[i]*backoff;
 		out[i] = in[i] - change;
 
 		if(out[i] > -STOP_EPSILON && out[i] < STOP_EPSILON)
@@ -646,17 +646,17 @@ Int32 CPlayerMovement::ClipVelocity( const Vector& in, const Vector& normal, Vec
 void CPlayerMovement::PreventMegaBunnyJumping( void )
 {
 	// Restore HL behavior
-	const Float bunnyJumpMaxSpeedFactor = 1.7;
-	Float maxScaledSpeed = bunnyJumpMaxSpeedFactor * m_maxSpeed;
+	const float bunnyJumpMaxSpeedFactor = 1.7;
+	float maxScaledSpeed = bunnyJumpMaxSpeedFactor * m_maxSpeed;
 
 	if(maxScaledSpeed <= 0)
 		return;
 
-	Float speed = m_pPlayerState->velocity.Length();
+	float speed = m_pPlayerState->velocity.Length();
 	if(speed <= maxScaledSpeed)
 		return;
 
-	Float frac = (maxScaledSpeed/speed) * 0.65;
+	float frac = (maxScaledSpeed/speed) * 0.65;
 	Math::VectorScale(m_pPlayerState->velocity, frac, m_pPlayerState->velocity);
 }
 
@@ -684,11 +684,11 @@ void CPlayerMovement::Move_Walk( void )
 	wishvel[2] = 0;
 
 	Vector wishdir = wishvel;
-	Float wishspeed = Math::VectorNormalize(wishdir);
+	float wishspeed = Math::VectorNormalize(wishdir);
 
 	// Speed-capping depends on direction
-	Float otherDot;
-	Float forwardMaxDot = Math::DotProduct(wishdir, vforward);
+	float otherDot;
+	float forwardMaxDot = Math::DotProduct(wishdir, vforward);
 
 	if(forwardMaxDot <= 0)
 	{
@@ -703,7 +703,7 @@ void CPlayerMovement::Move_Walk( void )
 	}
 
 	// Normalize values at 1.0
-	Float dotRatio = (forwardMaxDot + otherDot);
+	float dotRatio = (forwardMaxDot + otherDot);
 	if(dotRatio > 1.0)
 	{
 		dotRatio = 1.0f/dotRatio;
@@ -711,7 +711,7 @@ void CPlayerMovement::Move_Walk( void )
 		otherDot *= dotRatio;
 	}
 
-	Float maxSpeedCheck = forwardMaxDot * m_maxForwardSpeed
+	float maxSpeedCheck = forwardMaxDot * m_maxForwardSpeed
 		+ otherDot * m_maxSpeed;
 
 	// Clamp to maxspeed
@@ -730,7 +730,7 @@ void CPlayerMovement::Move_Walk( void )
 	Math::VectorAdd(m_pPlayerState->velocity, m_pPlayerState->basevelocity, m_pPlayerState->velocity);
 	
 	// If speed is too low, don't bother
-	Float speed = m_pPlayerState->velocity.Length();
+	float speed = m_pPlayerState->velocity.Length();
 	if(speed < 1.0f)
 	{
 		m_pPlayerState->velocity.Clear();
@@ -830,14 +830,14 @@ void CPlayerMovement::Move_Walk( void )
 	Vector up = m_pPlayerState->origin;
 
 	// Ugly as sin even in this form
-	Float dd0 = down[0]-orig_pos[0];
-	Float dd1 = down[1]-orig_pos[1];
-	Float downdist = dd0*dd0 + dd1*dd1;
+	float dd0 = down[0]-orig_pos[0];
+	float dd1 = down[1]-orig_pos[1];
+	float downdist = dd0*dd0 + dd1*dd1;
 
 	// Good lord
-	Float ud0 = up[0]-orig_pos[0];
-	Float ud1 = up[1]-orig_pos[1];
-	Float updist = ud0*ud0 + ud1*ud1;
+	float ud0 = up[0]-orig_pos[0];
+	float ud1 = up[1]-orig_pos[1];
+	float updist = ud0*ud0 + ud1*ud1;
 
 	if(downdist > updist)
 	{
@@ -871,12 +871,12 @@ void CPlayerMovement::PushEntity( const Vector& push, trace_t& trace )
 // @brief
 //
 //=============================================
-void CPlayerMovement::AddGravity( Float multiplier )
+void CPlayerMovement::AddGravity( float multiplier )
 {
 	if(m_pPlayerState->flags & FL_FROZEN)
 		return;
 
-	Float entityGravity;
+	float entityGravity;
 	if(m_pPlayerState->gravity)
 		entityGravity = m_pPlayerState->gravity;
 	else
@@ -911,8 +911,8 @@ bool CPlayerMovement::CheckWater( void )
 		m_pPlayerState->waterlevel = WATERLEVEL_LOW;
 
 		// Check for half submersion
-		Float height = (m_pPMInfo->player_mins[m_hullIndex][2] + m_pPMInfo->player_maxs[m_hullIndex][2]);
-		Float heighthalf = height* 0.5f;
+		float height = (m_pPMInfo->player_mins[m_hullIndex][2] + m_pPMInfo->player_maxs[m_hullIndex][2]);
+		float heighthalf = height* 0.5f;
 
 		checkpos[2] = m_pPlayerState->origin[2] + heighthalf;
 		contents = m_traceInterface.pfnPointContents(checkpos, nullptr, false);
@@ -1023,7 +1023,7 @@ bool CPlayerMovement::CheckWaterJump( bool dojump )
 	flatvelocity[2] = 0;
 
 	// Get speed of flat movement
-	Float speed = flatvelocity.Length();
+	float speed = flatvelocity.Length();
 
 	Vector flatforward;
 	Math::VectorCopy(m_vForward, flatforward);
@@ -1042,7 +1042,7 @@ bool CPlayerMovement::CheckWaterJump( bool dojump )
 
 	// Trace in front of us
 	m_traceInterface.pfnPlayerTrace(start, end, FL_TRACE_NORMAL, HULL_SMALL, NO_ENTITY_INDEX, tr);
-	Double firstTraceFraction = tr.fraction;
+	double firstTraceFraction = tr.fraction;
 	if(tr.fraction < 1.0 && SDL_fabs(tr.plane.normal[2] < 0.5f))
 	{
 		start[2] += m_pPMInfo->player_maxs[m_hullIndex][2] + WATERJUMP_HEIGHT;
@@ -1078,7 +1078,7 @@ void CPlayerMovement::FixupGravityVelocity( void )
 	if(m_pPlayerState->waterjumptime)
 		return;
 
-	Float entGravity = (m_pPlayerState->gravity) ? m_pPlayerState->gravity : 1.0;
+	float entGravity = (m_pPlayerState->gravity) ? m_pPlayerState->gravity : 1.0;
 	m_pPlayerState->velocity[2] -= (entGravity * m_frameTime * 0.5);
 
 	CheckVelocity();
@@ -1207,7 +1207,7 @@ void CPlayerMovement::Jump( void )
 		wishvel[i] = vforward[i]*m_userCmd.forwardmove + vright[i]*m_userCmd.sidemove;
 
 	Vector wishdir = wishvel;
-	Float wishspeed = Math::VectorNormalize(wishdir);
+	float wishspeed = Math::VectorNormalize(wishdir);
 
 	// Clamp to maxspeed
 	if(wishspeed > m_maxSpeed)
@@ -1323,7 +1323,7 @@ void CPlayerMovement::Move_Water( void )
 
 	// Determine speed
 	Vector wishdir = wishvel;
-	Float wishspeed = Math::VectorNormalize(wishdir);
+	float wishspeed = Math::VectorNormalize(wishdir);
 	if(wishspeed > m_maxSpeed)
 	{
 		Math::VectorScale(wishvel, m_maxSpeed/wishspeed, wishvel);
@@ -1335,9 +1335,9 @@ void CPlayerMovement::Move_Water( void )
 	Math::VectorAdd(m_pPlayerState->velocity, m_pPlayerState->basevelocity, m_pPlayerState->velocity);
 
 	Vector temp = m_pPlayerState->velocity;
-	Float speed = Math::VectorNormalize(temp);
+	float speed = Math::VectorNormalize(temp);
 
-	Float newspeed = 0;
+	float newspeed = 0;
 	if(speed)
 	{
 		newspeed = speed - m_frameTime * speed * m_pMovevars->waterfriction * m_pPlayerState->waterlevel;
@@ -1350,11 +1350,11 @@ void CPlayerMovement::Move_Water( void )
 	if(wishspeed < 0.1f)
 		return;
 
-	Float addspeed = wishspeed - newspeed;
+	float addspeed = wishspeed - newspeed;
 	if(addspeed > 0)
 	{
 		Math::VectorNormalize(wishvel);
-		Float accelspeed = m_pMovevars->accelerate * wishspeed * m_frameTime * m_pPlayerState->friction;
+		float accelspeed = m_pMovevars->accelerate * wishspeed * m_frameTime * m_pPlayerState->friction;
 		if(accelspeed > addspeed)
 			accelspeed = addspeed;
 
@@ -1378,7 +1378,7 @@ void CPlayerMovement::Move_Water( void )
 // @brief
 //
 //=============================================
-void CPlayerMovement::AirAccelerate( const Vector& wishdir, Float wishspeed, Float acceleration )
+void CPlayerMovement::AirAccelerate( const Vector& wishdir, float wishspeed, float acceleration )
 {
 	if(m_pPlayerState->flags & FL_DEAD || m_pPlayerState->waterjumptime)
 		return;
@@ -1386,13 +1386,13 @@ void CPlayerMovement::AirAccelerate( const Vector& wishdir, Float wishspeed, Flo
 	if(wishspeed > AIR_ACCELERATE_MAX_SPEED)
 		wishspeed = AIR_ACCELERATE_MAX_SPEED;
 
-	Float currspeed = Math::DotProduct(m_pPlayerState->velocity, wishdir);
-	Float addspeed = wishspeed - currspeed;
+	float currspeed = Math::DotProduct(m_pPlayerState->velocity, wishdir);
+	float addspeed = wishspeed - currspeed;
 	if(addspeed <= 0)
 		return;
 
 	// Determine acceleration with veering
-	Float accelspeed = acceleration * wishspeed * m_frameTime * m_pPlayerState->friction;
+	float accelspeed = acceleration * wishspeed * m_frameTime * m_pPlayerState->friction;
 	if(accelspeed > addspeed)
 		accelspeed = addspeed;
 
@@ -1404,21 +1404,21 @@ void CPlayerMovement::AirAccelerate( const Vector& wishdir, Float wishspeed, Flo
 // @brief
 //
 //=============================================
-void CPlayerMovement::Accelerate( const Vector& wishdir, Float wishspeed, Float acceleration )
+void CPlayerMovement::Accelerate( const Vector& wishdir, float wishspeed, float acceleration )
 {
 	if(m_pPlayerState->flags & FL_DEAD || m_pPlayerState->waterjumptime > 0)
 		return;
 
 	// See if we're changing direction
-	Float curspeed = Math::DotProduct(m_pPlayerState->velocity, wishdir);
-	Float addspeed = wishspeed - curspeed;
+	float curspeed = Math::DotProduct(m_pPlayerState->velocity, wishdir);
+	float addspeed = wishspeed - curspeed;
 	
 	// Only do anything if we're adding speed;
 	if(addspeed <= 0)
 		return;
 
 	// Determine acceleration
-	Float accelspeed = acceleration * m_frameTime * wishspeed * m_pPlayerState->friction;
+	float accelspeed = acceleration * m_frameTime * wishspeed * m_pPlayerState->friction;
 	if(accelspeed > addspeed)
 		accelspeed = addspeed;
 
@@ -1442,7 +1442,7 @@ void CPlayerMovement::Move_Air( void )
 	wishvel[2] = 0;
 
 	Vector wishdir = wishvel;
-	Float wishspeed = Math::VectorNormalize(wishdir);
+	float wishspeed = Math::VectorNormalize(wishdir);
 
 	if(wishspeed > m_maxSpeed)
 	{
@@ -1509,7 +1509,7 @@ void CPlayerMovement::DetermineTextureType( void )
 	Math::VectorAdd(start, tr.plane.normal, start);
 	Math::VectorSubtract(end, tr.plane.normal, end);
 
-	const Char* pstrTextureName = m_traceInterface.pfnTraceTexture(tr.hitentity, start, end);
+	const char* pstrTextureName = m_traceInterface.pfnTraceTexture(tr.hitentity, start, end);
 	if(!pstrTextureName)
 		return;
 
@@ -1541,7 +1541,7 @@ void CPlayerMovement::UpdateStepSound( void )
 	if(m_pTextureMaterial->flags & TX_FL_NO_STEPSOUND)
 		return;
 
-	Float speed = m_pPlayerState->velocity.Length() + 10;
+	float speed = m_pPlayerState->velocity.Length() + 10;
 	bool onladder = (m_pPlayerState->movetype == MOVETYPE_FLY);
 
 	// Don't play step sounds when not onground
@@ -1553,7 +1553,7 @@ void CPlayerMovement::UpdateStepSound( void )
 		return;
 
 	// Determine individual positions
-	Float height = m_pPMInfo->player_maxs[m_hullIndex][2] - m_pPMInfo->player_mins[m_hullIndex][2];
+	float height = m_pPMInfo->player_maxs[m_hullIndex][2] - m_pPMInfo->player_mins[m_hullIndex][2];
 
 	Vector center, knee, feet;
 	Math::VectorCopy(m_pPlayerState->origin, center);
@@ -1561,8 +1561,8 @@ void CPlayerMovement::UpdateStepSound( void )
 	Math::VectorSubtract(m_pPlayerState->origin, Vector(0, 0, 0.5 * height), feet);
 
 	CString material;
-	Float volume = 0;
-	Float nextStepTime = 0;
+	float volume = 0;
+	float nextStepTime = 0;
 
 	if(onladder)
 	{
@@ -1768,9 +1768,9 @@ void CPlayerMovement::Duck( void )
 	// Manage duck finish/start
 	if(m_pPlayerState->induck)
 	{
-		Float time = (float)m_pPlayerState->ducktime / PLAYER_DUCK_WAIT_TIME;
-		Float timeto = clamp((1.0 - (float)m_pPlayerState->ducktime / PLAYER_DUCK_WAIT_TIME), 0.0, 1.0);
-		Float ducktime = PLAYER_DUCK_TIME*MILLISECONDS_TO_SECONDS;
+		float time = (float)m_pPlayerState->ducktime / PLAYER_DUCK_WAIT_TIME;
+		float timeto = Clamp((1.0 - (float)m_pPlayerState->ducktime / PLAYER_DUCK_WAIT_TIME), 0.0, 1.0);
+		float ducktime = PLAYER_DUCK_TIME*MILLISECONDS_TO_SECONDS;
 
 		if(!(m_pPlayerState->flags & FL_DUCKING))
 		{
@@ -1800,10 +1800,10 @@ void CPlayerMovement::Duck( void )
 			else
 			{
 				// Calculate offset
-				Float add = (VEC_DUCK_HULL_MIN[2] - VEC_HULL_MIN[2]);
+				float add = (VEC_DUCK_HULL_MIN[2] - VEC_HULL_MIN[2]);
 
 				// Calculate fraction
-				Float duckfrac = Common::SplineFraction(timeto, (1.0/ducktime));
+				float duckfrac = Common::SplineFraction(timeto, (1.0/ducktime));
 				m_pPlayerState->view_offset[2] = ((VEC_DUCK_VIEW[2] - add)*duckfrac) + (VEC_VIEW[2]*(1.0 - duckfrac));
 			}
 		}
@@ -1817,10 +1817,10 @@ void CPlayerMovement::Duck( void )
 			else
 			{
 				// Calculate difference
-				Float add = (VEC_HULL_MAX[2] - VEC_DUCK_HULL_MAX[2]);
+				float add = (VEC_HULL_MAX[2] - VEC_DUCK_HULL_MAX[2]);
 
 				// Calculate fraction
-				Float duckfrac = Common::SplineFraction(timeto, (1.0/ducktime));
+				float duckfrac = Common::SplineFraction(timeto, (1.0/ducktime));
 				m_pPlayerState->view_offset[2] = (VEC_DUCK_VIEW[2] * (1.0 - duckfrac)) + ((VEC_VIEW[2]+add) * duckfrac);
 			}
 
@@ -1864,12 +1864,12 @@ void CPlayerMovement::Friction( void )
 		return;
 
 	Vector velocity = m_pPlayerState->velocity;
-	Float speed = velocity.Length();
+	float speed = velocity.Length();
 
 	if(speed < 0.1)
 		return;
 
-	Float drop = 0;
+	float drop = 0;
 	if(m_pPlayerState->groundent != NO_ENTITY_INDEX)
 	{
 		Vector start, stop;
@@ -1882,7 +1882,7 @@ void CPlayerMovement::Friction( void )
 		trace_t trace;
 		m_traceInterface.pfnPlayerTrace(start, stop, FL_TRACE_NORMAL, m_hullIndex, NO_ENTITY_INDEX, trace);
 
-		Float friction = 0;
+		float friction = 0;
 		if(trace.fraction == 1.0)
 			friction = m_pMovevars->friction*m_pMovevars->edgefriction;
 		else
@@ -1890,11 +1890,11 @@ void CPlayerMovement::Friction( void )
 
 		// Add player friction
 		friction *= m_pPlayerState->friction;
-		Float control = (speed < m_pMovevars->stopspeed) ? m_pMovevars->stopspeed : speed;
+		float control = (speed < m_pMovevars->stopspeed) ? m_pMovevars->stopspeed : speed;
 		drop += control*friction*m_frameTime;
 	}
 
-	Float newspeed = speed - drop;
+	float newspeed = speed - drop;
 	if(newspeed < 0)
 		newspeed = 0;
 
@@ -1923,7 +1923,7 @@ void CPlayerMovement::CheckFalling( void )
 		// Play the sound always
 		if(m_playSounds && m_pTextureMaterial)
 		{
-			Float volume = 0.5;
+			float volume = 0.5;
 			if(m_pPlayerState->waterlevel == WATERLEVEL_NONE)
 			{
 				if(m_pPlayerState->fallvelocity > PLAYER_SAFE_FALL_SPEED)
@@ -1937,7 +1937,7 @@ void CPlayerMovement::CheckFalling( void )
 		}
 
 		// Punch the view
-		Float punchforce = ((m_pPlayerState->fallvelocity > PLAYER_SAFE_FALL_SPEED) ? PLAYER_SAFE_FALL_SPEED : m_pPlayerState->fallvelocity) * 0.25;
+		float punchforce = ((m_pPlayerState->fallvelocity > PLAYER_SAFE_FALL_SPEED) ? PLAYER_SAFE_FALL_SPEED : m_pPlayerState->fallvelocity) * 0.25;
 
 		m_pPlayerState->punchamount[0] += punchforce;
 		m_pPlayerState->punchamount[1] += Common::RandomFloat(punchforce/-10, punchforce/10);
@@ -2284,11 +2284,11 @@ bool CPlayerMovement::CheckStuck( void )
 	Math::VectorCopy(m_pPMInfo->playerstate.origin, origin);
 
 	// Do a round trace for possible unsticking
-	for(Uint32 i = 0; i < MAX_STUCK_CHECKDISTANCE; i++)
+	for(UInt32 i = 0; i < MAX_STUCK_CHECKDISTANCE; i++)
 	{
-		for(Uint32 j = 0; j < MAX_STUCK_CHECKDISTANCE; j++)
+		for(UInt32 j = 0; j < MAX_STUCK_CHECKDISTANCE; j++)
 		{
-			for(Uint32 k = 0; k < MAX_STUCK_CHECKDISTANCE; k++)
+			for(UInt32 k = 0; k < MAX_STUCK_CHECKDISTANCE; k++)
 			{
 				testorigin[0] = origin[0]+i;
 				testorigin[1] = origin[1]+j;

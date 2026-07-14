@@ -58,11 +58,11 @@ CCVar* g_pCvarName;
 CCVar* g_pCvarPredictiton;
 
 // Time before we try reconnecting again
-static constexpr Float RECONNECT_DELAY_TIME = 5.0f;
+static constexpr float RECONNECT_DELAY_TIME = 5.0f;
 // Max attempts at reconnecting
-static constexpr Uint32 MAX_CONNECTION_RETRIES = 4;
+static constexpr UInt32 MAX_CONNECTION_RETRIES = 4;
 // Amount of time we wait without getting messages, before sending a heartbeat to the server
-static constexpr Float HEARTBEAT_DELAY_TIME = 2.5f;
+static constexpr float HEARTBEAT_DELAY_TIME = 2.5f;
 
 //
 // Client dll engine functions
@@ -191,7 +191,7 @@ bool CL_Init( void )
 	}
 
 	// Init the gamedll interface
-	pfnClientDLLInit_t pfnCLDLLInit = static_cast<pfnClientDLLInit_t>(SDL_LoadFunction(cls.pdllhandle, "ClientDLL_Init"));
+	pfnClientDLLInit_t pfnCLDLLInit = reinterpret_cast<pfnClientDLLInit_t>(SDL_LoadFunction(cls.pdllhandle, "ClientDLL_Init"));
 	if(!pfnCLDLLInit)
 	{
 		Sys_ErrorPopup("Failed to hook 'ClientDLL_Init' in client dll.\n");
@@ -225,7 +225,7 @@ bool CL_Init( void )
 	}
 
 	// Initiate entities array
-	Uint32 maxEntities;
+	UInt32 maxEntities;
 	if(ens.arg_max_edicts != 0)
 		maxEntities = ens.arg_max_edicts;
 	else
@@ -345,7 +345,7 @@ void CL_ResetGame( void )
 	}
 
 	// Clear model lights
-	for(Uint32 i = 0; i < MAX_ENTITY_LIGHTS; i++)
+	for(UInt32 i = 0; i < MAX_ENTITY_LIGHTS; i++)
 		cls.entitylights[i] = entitylight_t();
 
 	// Make sure this is reset
@@ -367,9 +367,9 @@ void CL_ResetGame( void )
 //=============================================
 //
 //=============================================
-void CL_CleanUserCmdHistory( Uint64 lastsvusercmdindex )
+void CL_CleanUserCmdHistory( UInt64 lastsvusercmdindex )
 {
-	Uint64 i = 0;
+	UInt64 i = 0;
 	for(; i < cls.usercmdhistorynum; i++)
 	{
 		if(cls.usercmdhistory[i].cmdidx >= lastsvusercmdindex)
@@ -380,8 +380,8 @@ void CL_CleanUserCmdHistory( Uint64 lastsvusercmdindex )
 		return;
 
 	// Remove any outdated usercmds
-	Uint64 numremove = i + 1;
-	for(Uint64 j = 0; j < numremove; j++)
+	UInt64 numremove = i + 1;
+	for(UInt64 j = 0; j < numremove; j++)
 		memcpy(&cls.usercmdhistory[j], &cls.usercmdhistory[i+j+1], sizeof(usercmd_t));
 
 	cls.usercmdhistorynum -= numremove;
@@ -466,7 +466,7 @@ void CL_SendCmd( void )
 		cls.netinfo.pnet->WriteUint32(cls.cmd.lerp_msec);
 		cls.netinfo.pnet->WriteByte(cls.cmd.msec);
 	
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			cls.netinfo.pnet->WriteFloat(cls.cmd.viewangles[i]);
 
 		cls.netinfo.pnet->WriteFloat(cls.cmd.forwardmove);
@@ -731,7 +731,7 @@ bool CL_InitGame( void )
 //=============================================
 //
 //=============================================
-bool CL_EstablishConnection( const Char* pstrhost, bool reconnect )
+bool CL_EstablishConnection( const char* pstrhost, bool reconnect )
 {
 	// Watch out for null ptr
 	if(!reconnect && (!pstrhost || !qstrlen(pstrhost)))
@@ -869,7 +869,7 @@ void CL_Disconnect( bool clearserver, bool clearloadingplaque )
 		}
 
 		// Print the info string locally
-		const Char* pstrInfo = cls.netinfo.pnet->GetInfoString(0);
+		const char* pstrInfo = cls.netinfo.pnet->GetInfoString(0);
 		if(pstrInfo[0] != '\0')
 			Con_Printf("Disconnected from server - %s.\n", pstrInfo);
 		else
@@ -1075,7 +1075,7 @@ entity_extrainfo_t* CL_GetEntityExtraData( cl_entity_t* pentity )
 	
 	// First try to find an entry with this entindex
 	entity_extrainfo_t* pnewinfo = nullptr;
-	for(Uint32 i = 0; i < cls.numextrainfos; i++)
+	for(UInt32 i = 0; i < cls.numextrainfos; i++)
 	{
 		if(cls.entityextrainfos[i]->entindex == pentity->entindex)
 		{
@@ -1089,10 +1089,10 @@ entity_extrainfo_t* CL_GetEntityExtraData( cl_entity_t* pentity )
 		// Expand array if needed
 		if(cls.numextrainfos == cls.entityextrainfos.size())
 		{
-			Uint32 origsize = cls.entityextrainfos.size();
+			UInt32 origsize = cls.entityextrainfos.size();
 			cls.entityextrainfos.resize(cls.entityextrainfos.size()+EXTRAINFO_ALLOC_SIZE);
 
-			for(Uint32 i = 0; i < EXTRAINFO_ALLOC_SIZE; i++)
+			for(UInt32 i = 0; i < EXTRAINFO_ALLOC_SIZE; i++)
 				cls.entityextrainfos[origsize+i] = new entity_extrainfo_t;
 		}
 
@@ -1119,7 +1119,7 @@ void CL_InitExtraInfos( void )
 {
 	cls.entityextrainfos.resize(EXTRAINFO_ALLOC_SIZE);
 
-	for(Uint32 i = 0; i < EXTRAINFO_ALLOC_SIZE; i++)
+	for(UInt32 i = 0; i < EXTRAINFO_ALLOC_SIZE; i++)
 		cls.entityextrainfos[i] = new entity_extrainfo_t;
 }
 
@@ -1131,7 +1131,7 @@ void CL_ClearExtraInfos( void )
 	if(cls.entityextrainfos.empty())
 		return;
 
-	for(Uint32 i = 0; i < cls.entityextrainfos.size(); i++)
+	for(UInt32 i = 0; i < cls.entityextrainfos.size(); i++)
 		delete cls.entityextrainfos[i];
 
 	cls.entityextrainfos.clear();
@@ -1165,7 +1165,7 @@ void CL_ClearEntities( void )
 //=============================================
 void CL_ResetLighting( void )
 {
-	for(Uint32 i = 0; i < cls.numextrainfos; i++)
+	for(UInt32 i = 0; i < cls.numextrainfos; i++)
 	{
 		if(!cls.entityextrainfos[i]->plightinfo)
 			continue;
@@ -1177,7 +1177,7 @@ void CL_ResetLighting( void )
 //=============================================
 //
 //=============================================
-void CL_PrecacheFlexScript( enum flextypes_t npctype, const Char* pstrscript )
+void CL_PrecacheFlexScript( enum flextypes_t npctype, const char* pstrscript )
 {
 	CFlexManager* pFlexManager = gVBMRenderer.GetFlexManager();
 	if(!pFlexManager)
@@ -1193,7 +1193,7 @@ void CL_PrecacheFlexScript( enum flextypes_t npctype, const Char* pstrscript )
 //=============================================
 //
 //=============================================
-void CL_SetFlexScript( entindex_t entindex, const Char* pstrscript )
+void CL_SetFlexScript( entindex_t entindex, const char* pstrscript )
 {
 	CFlexManager* pFlexManager = gVBMRenderer.GetFlexManager();
 	if(!pFlexManager)
@@ -1202,7 +1202,7 @@ void CL_SetFlexScript( entindex_t entindex, const Char* pstrscript )
 		return;
 	}
 
-	cl_entity_t* pentity = CL_GetEntityByIndex(static_cast<Uint32>(entindex));
+	cl_entity_t* pentity = CL_GetEntityByIndex(static_cast<UInt32>(entindex));
 	if(!pentity || !pentity->pmodel || pentity->pmodel->type != MOD_VBM)
 	{
 		Con_DPrintf("%s - Could not get entity for script '%s'.\n", __FUNCTION__, pstrscript);
@@ -1224,7 +1224,7 @@ void CL_SetFlexScript( entindex_t entindex, const Char* pstrscript )
 //=============================================
 //
 //=============================================
-void CL_ClientCommand( const Char* pstrCommand )
+void CL_ClientCommand( const char* pstrCommand )
 {
 	if(!CL_IsGameActive())
 	{
@@ -1239,7 +1239,7 @@ void CL_ClientCommand( const Char* pstrCommand )
 //=============================================
 //
 //=============================================
-void CL_ServerCommand( const Char* pstrCommand )
+void CL_ServerCommand( const char* pstrCommand )
 {
 	if(!CL_IsGameActive())
 	{
@@ -1265,7 +1265,7 @@ void CL_LinkMapTextureMaterials( CArray<CString>& wadList )
 	if(!cls.mapmaterialfilesnamemap.empty())
 		cls.mapmaterialfilesnamemap.clear();
 
-	for(Uint32 i = 0; i < ens.pworld->numtextures; i++)
+	for(UInt32 i = 0; i < ens.pworld->numtextures; i++)
 	{
 		// First look in the BSP folder
 		CString filepath;
@@ -1280,7 +1280,7 @@ void CL_LinkMapTextureMaterials( CArray<CString>& wadList )
 		{
 			filepath.clear();
 
-			for(Uint32 j = 0; j < wadList.size(); j++)
+			for(UInt32 j = 0; j < wadList.size(); j++)
 			{
 				filepath = GetMapTexturePath(wadList[j].c_str(), ens.pworld->ptextures[i].name.c_str());
 				fullpath.clear();
@@ -1300,11 +1300,11 @@ void CL_LinkMapTextureMaterials( CArray<CString>& wadList )
 			newmat.maptexturename = ens.pworld->ptextures[i].name;
 			newmat.materialfilepath = filepath;
 
-			Uint32 insertindex = cls.mapmaterialfiles.size();
+			UInt32 insertindex = cls.mapmaterialfiles.size();
 			cls.mapmaterialfiles.push_back(newmat);
 
 			// Add to the map
-			cls.mapmaterialfilesnamemap.insert(std::pair<CString, Uint32>(newmat.maptexturename.c_str(), insertindex));
+			cls.mapmaterialfilesnamemap.insert(std::pair<CString, UInt32>(newmat.maptexturename.c_str(), insertindex));
 		}
 		else
 			Con_WPrintf("Couldn't find material file for world texture '%s'.\n", ens.pworld->ptextures[i].name.c_str());
@@ -1322,11 +1322,11 @@ void CL_LinkModelTextureMaterials( void )
 	if(!cls.modelmaterialfilesnamemaparray.empty())
 		cls.modelmaterialfilesnamemaparray.clear();
 
-	Uint32 nbCachedModels = gModelCache.GetNbCachedModels();
+	UInt32 nbCachedModels = gModelCache.GetNbCachedModels();
 	cls.modelmaterialfilesarray.resize(nbCachedModels);
 	cls.modelmaterialfilesnamemaparray.resize(nbCachedModels);
 
-	for(Uint32 i = 0; i < nbCachedModels; i++)
+	for(UInt32 i = 0; i < nbCachedModels; i++)
 	{
 		const cache_model_t* pmodel = gModelCache.GetModelByIndex(i+1);
 		if(pmodel->type != MOD_VBM)
@@ -1338,7 +1338,7 @@ void CL_LinkModelTextureMaterials( void )
 		
 		// Get textures from VBM
 		const vbmheader_t* pvbmheader = pvbmcache->pvbmhdr;
-		for(Uint32 j = 0; j < pvbmheader->numtextures; j++)
+		for(UInt32 j = 0; j < pvbmheader->numtextures; j++)
 		{
 			const vbmtexture_t* ptexture = pvbmheader->getTexture(j);
 
@@ -1352,10 +1352,10 @@ void CL_LinkModelTextureMaterials( void )
 				newmat.maptexturename = texbasename;
 				newmat.materialfilepath = materialscriptpath;
 
-				Uint32 insertindex = cls.modelmaterialfilesarray[i].size();
+				UInt32 insertindex = cls.modelmaterialfilesarray[i].size();
 				cls.modelmaterialfilesarray[i].push_back(newmat);
 
-				cls.modelmaterialfilesnamemaparray[i].insert(std::pair<CString, Uint32>(texbasename.c_str(), insertindex));
+				cls.modelmaterialfilesnamemaparray[i].insert(std::pair<CString, UInt32>(texbasename.c_str(), insertindex));
 			}
 			else
 			{
@@ -1376,7 +1376,7 @@ void CL_UpdateAttachments( cl_entity_t* pentity )
 //=============================================
 //
 //=============================================
-Uint32 CL_GetMaxClients( void )
+UInt32 CL_GetMaxClients( void )
 {
 	return cls.maxclients;
 }
@@ -1430,7 +1430,7 @@ void CL_UpdateParentedEntities( void )
 //=============================================
 void CL_UpdateEntityLights( void )
 {
-	for(Uint32 i = 0; i < MAX_ENTITY_LIGHTS; i++)
+	for(UInt32 i = 0; i < MAX_ENTITY_LIGHTS; i++)
 	{
 		entitylight_t& light = cls.entitylights[i];
 		if(light.die <= cls.cl_time)

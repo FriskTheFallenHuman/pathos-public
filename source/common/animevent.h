@@ -61,4 +61,4 @@ enum animevent_t
 	EVENT_CLIENTDLL_VAPORTRAIL_GLOW				= 10002,
 };
 
-#endif ANIMEVENT_H
+#endif // ANIMEVENT_H

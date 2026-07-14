@@ -15,9 +15,9 @@ All Rights Reserved.
 //
 // @param pdata Pointer to byte buffer
 // @param size Size of byte buffer
-// @return FALSE if hash was already present, FALSE otherwise
+// @return false if hash was already present, false otherwise
 //=============================================
-inline bool CHashList::addhash( const byte* pdata, Uint32 size ) 
+DO_INLINE bool CHashList::addhash( const Byte* pdata, Uint32 size ) 
 {
 	// Get the MD5 hash of the data
 	CString hash = CMD5(pdata, size).HexDigest();
@@ -37,7 +37,7 @@ inline bool CHashList::addhash( const byte* pdata, Uint32 size )
 // @brief Clear thehash list of any entries.
 //
 //=============================================
-inline void CHashList::clear( void ) 
+DO_INLINE void CHashList::clear( void ) 
 {
 	if(!m_hashArray.empty())
 		return;

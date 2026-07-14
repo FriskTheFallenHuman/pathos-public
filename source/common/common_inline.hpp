@@ -20,7 +20,7 @@ All Rights Reserved.
 // @param pstr Pointer to string
 // @return Length of the string
 //=============================================
-inline Uint32 qstrlen( const Char* pstr )
+DO_INLINE Uint32 qstrlen( const char* pstr )
 {
 	if(!pstr || pstr[0] == '\0')
 		return 0;
@@ -42,13 +42,13 @@ inline Uint32 qstrlen( const Char* pstr )
 // @param psrc Pointer to source string
 // @return Pointer to destination string
 //=============================================
-inline Char* qstrcpy( Char* pdest, const Char* psrc )
+DO_INLINE char* qstrcpy( char* pdest, const char* psrc )
 {
 	assert(psrc != nullptr);
 	assert(pdest != nullptr);
 
-	const Char* ppsrc = psrc;
-	Char* ppdest = pdest;
+	const char* ppsrc = psrc;
+	char* ppdest = pdest;
 	while(*ppsrc)
 	{
 		*ppdest = *ppsrc;
@@ -69,13 +69,13 @@ inline Char* qstrcpy( Char* pdest, const Char* psrc )
 // @param size Length/size to copy
 // @return Pointer to destination string
 //=============================================
-inline Char* qstrncpy( Char* pdest, const Char* psrc, Uint32 size )
+DO_INLINE char* qstrncpy( char* pdest, const char* psrc, Uint32 size )
 {
 	assert(psrc != nullptr);
 	assert(pdest != nullptr);
 
-	const Char* ppsrc = psrc;
-	Char* ppdest = pdest;
+	const char* ppsrc = psrc;
+	char* ppdest = pdest;
 	while(*ppsrc && (ppsrc-psrc) < size)
 	{
 		*ppdest = *ppsrc;
@@ -98,7 +98,7 @@ inline Char* qstrncpy( Char* pdest, const Char* psrc, Uint32 size )
 // @param m Max characters
 // @return Pointer to destination string
 //=============================================
-inline Char* qstrcpy_s( Char* pdest, const Char *psrc, Uint32 m )
+DO_INLINE char* qstrcpy_s( char* pdest, const char *psrc, Uint32 m )
 {
 	Uint32 length = qstrlen(psrc);
 	if(length > (m-1))
@@ -109,19 +109,19 @@ inline Char* qstrcpy_s( Char* pdest, const Char *psrc, Uint32 m )
 }
 
 //=============================================
-// @brief Compares two strings, both of const Char pointer type
+// @brief Compares two strings, both of const char pointer type
 //
 // @param pstr1 Pointer to first string to compare
 // @param pstr2 Pointer to second string to compare
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrcmp( const Char* pstr1, const Char* pstr2 )
+DO_INLINE Int32 qstrcmp( const char* pstr1, const char* pstr2 )
 {
 	assert(pstr1 != nullptr);
 	assert(pstr2 != nullptr);
 
-	const Char* ppstr1 = pstr1;
-	const Char* ppstr2 = pstr2;
+	const char* ppstr1 = pstr1;
+	const char* ppstr2 = pstr2;
 	while(true)
 	{
 		if(*ppstr1 != *ppstr2)
@@ -144,10 +144,10 @@ inline Int32 qstrcmp( const Char* pstr1, const Char* pstr2 )
 // @param pstr2 Reference to CString object
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrcmp( const CString& str1, const CString& str2 )
+DO_INLINE Int32 qstrcmp( const CString& str1, const CString& str2 )
 {
-	const Char* ppstr1 = str1.c_str();
-	const Char* ppstr2 = str2.c_str();
+	const char* ppstr1 = str1.c_str();
+	const char* ppstr2 = str2.c_str();
 
 	if(!ppstr1 || !ppstr2)
 		return true;
@@ -156,19 +156,19 @@ inline Int32 qstrcmp( const CString& str1, const CString& str2 )
 }
 
 //=============================================
-// @brief Compares two strings, first type of const Char ptr,
+// @brief Compares two strings, first type of const char ptr,
 // second of CString type
 //
 // @param pstr1 Reference to CString object
 // @param pstr2 Reference to CString object
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrcmp( const Char* pstr1, const CString& str2 )
+DO_INLINE Int32 qstrcmp( const char* pstr1, const CString& str2 )
 {
 	assert(pstr1 != nullptr);
 
-	const Char* ppstr1 = pstr1;
-	const Char* ppstr2 = str2.c_str();
+	const char* ppstr1 = pstr1;
+	const char* ppstr2 = str2.c_str();
 
 	if(!ppstr1 || !ppstr2)
 		return true;
@@ -178,18 +178,18 @@ inline Int32 qstrcmp( const Char* pstr1, const CString& str2 )
 
 //=============================================
 // @brief Compares two strings, first of CString type,
-// second of const Char ptr
+// second of const char ptr
 //
 // @param pstr1 Reference to CString object
 // @param pstr2 Reference to CString object
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrcmp( const CString& str1, const Char* pstr2 )
+DO_INLINE Int32 qstrcmp( const CString& str1, const char* pstr2 )
 {
 	assert(pstr2 != nullptr);
 
-	const Char* ppstr1 = str1.c_str();
-	const Char* ppstr2 = pstr2;
+	const char* ppstr1 = str1.c_str();
+	const char* ppstr2 = pstr2;
 
 	if(!ppstr1 || !ppstr2)
 		return true;
@@ -204,17 +204,17 @@ inline Int32 qstrcmp( const CString& str1, const Char* pstr2 )
 // @param pstr2 Pointer to second string to compare
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrcicmp( const Char* pstr1, const Char* pstr2 )
+DO_INLINE Int32 qstrcicmp( const char* pstr1, const char* pstr2 )
 {
 	assert(pstr1 != nullptr);
 	assert(pstr2 != nullptr);
 
-	const Char* ppstr1 = pstr1;
-	const Char* ppstr2 = pstr2;
+	const char* ppstr1 = pstr1;
+	const char* ppstr2 = pstr2;
 	while(true)
 	{
-		const Char c1 = SDL_tolower(*ppstr1);
-		const Char c2 = SDL_tolower(*ppstr2);
+		const char c1 = SDL_tolower(*ppstr1);
+		const char c2 = SDL_tolower(*ppstr2);
 
 		if(c1 != c2)
 			return (c1 - c2);
@@ -236,10 +236,10 @@ inline Int32 qstrcicmp( const Char* pstr1, const Char* pstr2 )
 // @param pstr2 Reference to CString object
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrcicmp( const CString& str1, const CString& str2 )
+DO_INLINE Int32 qstrcicmp( const CString& str1, const CString& str2 )
 {
-	const Char* ppstr1 = str1.c_str();
-	const Char* ppstr2 = str2.c_str();
+	const char* ppstr1 = str1.c_str();
+	const char* ppstr2 = str2.c_str();
 
 	if(!ppstr1 || !ppstr2)
 		return true;
@@ -254,12 +254,12 @@ inline Int32 qstrcicmp( const CString& str1, const CString& str2 )
 // @param pstr2 Reference to CString object
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrcicmp( const Char* pstr1, const CString& str2 )
+DO_INLINE Int32 qstrcicmp( const char* pstr1, const CString& str2 )
 {
 	assert(pstr1 != nullptr);
 
-	const Char* ppstr1 = pstr1;
-	const Char* ppstr2 = str2.c_str();
+	const char* ppstr1 = pstr1;
+	const char* ppstr2 = str2.c_str();
 
 	if(!ppstr1 || !ppstr2)
 		return true;
@@ -274,12 +274,12 @@ inline Int32 qstrcicmp( const Char* pstr1, const CString& str2 )
 // @param pstr2 Reference to CString object
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrcicmp( const CString& str1, const Char* pstr2 )
+DO_INLINE Int32 qstrcicmp( const CString& str1, const char* pstr2 )
 {
 	assert(pstr2 != nullptr);
 
-	const Char* ppstr1 = str1.c_str();
-	const Char* ppstr2 = pstr2;
+	const char* ppstr1 = str1.c_str();
+	const char* ppstr2 = pstr2;
 
 	if(!ppstr1 || !ppstr2)
 		return true;
@@ -296,13 +296,13 @@ inline Int32 qstrcicmp( const CString& str1, const Char* pstr2 )
 // @param n Number of characters to compare
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrncmp( const Char* pstr1, const Char* pstr2, Uint32 n )
+DO_INLINE Int32 qstrncmp( const char* pstr1, const char* pstr2, Uint32 n )
 {
 	assert(pstr1 != nullptr);
 	assert(pstr2 != nullptr);
 
-	const Char* ppstr1 = pstr1;
-	const Char* ppstr2 = pstr2;
+	const char* ppstr1 = pstr1;
+	const char* ppstr2 = pstr2;
 	while(ppstr1 - pstr1 < n)
 	{
 		if(*ppstr1 != *ppstr2)
@@ -326,10 +326,10 @@ inline Int32 qstrncmp( const Char* pstr1, const Char* pstr2, Uint32 n )
 // @param n Number of characters to compare
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrncmp( const CString& str1, const CString& str2, Uint32 n )
+DO_INLINE Int32 qstrncmp( const CString& str1, const CString& str2, Uint32 n )
 {
-	const Char* ppstr1 = str1.c_str();
-	const Char* ppstr2 = str2.c_str();
+	const char* ppstr1 = str1.c_str();
+	const char* ppstr2 = str2.c_str();
 
 	if(!ppstr1 || !ppstr2)
 		return true;
@@ -345,12 +345,12 @@ inline Int32 qstrncmp( const CString& str1, const CString& str2, Uint32 n )
 // @param n Number of characters to compare
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrncmp( const Char* pstr1, const CString& str2, Uint32 n )
+DO_INLINE Int32 qstrncmp( const char* pstr1, const CString& str2, Uint32 n )
 {
 	assert(pstr1 != nullptr);
 
-	const Char* ppstr1 = pstr1;
-	const Char* ppstr2 = str2.c_str();
+	const char* ppstr1 = pstr1;
+	const char* ppstr2 = str2.c_str();
 
 	if(!ppstr1 || !ppstr2)
 		return true;
@@ -366,12 +366,12 @@ inline Int32 qstrncmp( const Char* pstr1, const CString& str2, Uint32 n )
 // @param n Number of characters to compare
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrncmp( const CString& str1, const Char* pstr2, Uint32 n )
+DO_INLINE Int32 qstrncmp( const CString& str1, const char* pstr2, Uint32 n )
 {
 	assert(pstr2 != nullptr);
 
-	const Char* ppstr1 = str1.c_str();
-	const Char* ppstr2 = pstr2;
+	const char* ppstr1 = str1.c_str();
+	const char* ppstr2 = pstr2;
 
 	if(!ppstr1 || !ppstr2)
 		return true;
@@ -387,17 +387,17 @@ inline Int32 qstrncmp( const CString& str1, const Char* pstr2, Uint32 n )
 // @param n Number of characters to compare
 // @return Difference between point of divergence
 //=============================================
-inline Int32 qstrncimp( const Char* pstr1, const Char* pstr2, Uint32 n )
+DO_INLINE Int32 qstrncimp( const char* pstr1, const char* pstr2, Uint32 n )
 {
 	assert(pstr1 != nullptr);
 	assert(pstr2 != nullptr);
 
-	const Char* ppstr1 = pstr1;
-	const Char* ppstr2 = pstr2;
+	const char* ppstr1 = pstr1;
+	const char* ppstr2 = pstr2;
 	while(ppstr1 - pstr1 < n)
 	{
-		const Char c1 = SDL_tolower(*ppstr1);
-		const Char c2 = SDL_tolower(*ppstr2);
+		const char c1 = SDL_tolower(*ppstr1);
+		const char c2 = SDL_tolower(*ppstr2);
 
 		if(c1 != c2)
 			return (c1 - c2);
@@ -419,7 +419,7 @@ inline Int32 qstrncimp( const Char* pstr1, const Char* pstr2, Uint32 n )
 // @param pdest Destination to insert source into
 // @param offset Offset into the destination string
 //=============================================
-inline void qstrins( const Char* psrc, Char *pdest, int offset )
+DO_INLINE void qstrins( const char* psrc, char *pdest, int offset )
 {
 	assert(psrc != nullptr);
 	assert(pdest != nullptr);
@@ -427,8 +427,8 @@ inline void qstrins( const Char* psrc, Char *pdest, int offset )
 	Uint32 inslength = qstrlen(psrc);
 	Uint32 destlength = qstrlen(pdest);
 
-	Char* pchsrc = pdest + destlength + offset;
-	Char* pchdst = pchsrc + inslength;
+	char* pchsrc = pdest + destlength + offset;
+	char* pchdst = pchsrc + inslength;
 	while(pchsrc >= pdest)
 	{
 		*pchdst = *pchsrc;
@@ -446,18 +446,18 @@ inline void qstrins( const Char* psrc, Char *pdest, int offset )
 // @param psubstr Substring to seek
 // @return Pointer to where the substring was found
 //=============================================
-inline const Char* qstrstr( const Char* pstr, const Char *psubstr )
+DO_INLINE const char* qstrstr( const char* pstr, const char *psubstr )
 {
 	assert(pstr != nullptr);
 	assert(psubstr != nullptr);
 
-	const Char* ppstr = pstr;
+	const char* ppstr = pstr;
 	while(*ppstr)
 	{
 		if(*ppstr == psubstr[0])
 		{
-			const Char* pcpstr = ppstr;
-			const Char* ppsubstr = psubstr;
+			const char* pcpstr = ppstr;
+			const char* ppsubstr = psubstr;
 			while(*pcpstr && *ppsubstr 
 				&& *pcpstr == *ppsubstr)
 			{
@@ -488,7 +488,7 @@ inline const Char* qstrstr( const Char* pstr, const Char *psubstr )
 // @param a Input float value
 // @return Sign value
 //====================================
-inline Float sgn( Float a )
+DO_INLINE float sgn( float a )
 {
     if (a > 0.0F) 
 		return (1.0F);
@@ -506,7 +506,7 @@ namespace Common
 	// @param pdata Pointer to data in bytes
 	// @return Signed short int value
 	//=============================================
-	inline Int16 ByteToInt16( const byte *pdata )
+	DO_INLINE Int16 ByteToInt16( const Byte *pdata )
 	{
 		Int16 value;
 		memcpy(&value, pdata, sizeof(Int16));
@@ -519,7 +519,7 @@ namespace Common
 	// @param pdata Pointer to data in bytes
 	// @return Unsigned short int value
 	//=============================================
-	inline Uint16 ByteToUint16( const byte *pdata )
+	DO_INLINE Uint16 ByteToUint16( const Byte *pdata )
 	{
 		Uint16 value;
 		memcpy(&value, pdata, sizeof(Uint16));
@@ -532,7 +532,7 @@ namespace Common
 	// @param pdata Pointer to data in bytes
 	// @return Signed Int32 value
 	//=============================================
-	inline Int32 ByteToInt32( const byte *pdata )
+	DO_INLINE Int32 ByteToInt32( const Byte *pdata )
 	{
 		Int32 value;
 		memcpy(&value, pdata, sizeof(Int32));
@@ -545,7 +545,7 @@ namespace Common
 	// @param pdata Pointer to data in bytes
 	// @return Unsigned Int32 value
 	//=============================================
-	inline Uint32 ByteToUint32( const byte *pdata )
+	DO_INLINE Uint32 ByteToUint32( const Byte *pdata )
 	{
 		Uint32 value;
 		memcpy(&value, pdata, sizeof(Uint32));
@@ -558,7 +558,7 @@ namespace Common
 	// @param pdata Pointer to data in bytes
 	// @return Signed Int64 value
 	//=============================================
-	inline Int64 ByteToInt64( const byte *pdata )
+	DO_INLINE Int64 ByteToInt64( const Byte *pdata )
 	{
 		Int64 value;
 		memcpy(&value, pdata, sizeof(Int64));
@@ -571,7 +571,7 @@ namespace Common
 	// @param pdata Pointer to data in bytes
 	// @return Unsigned Int64 value
 	//=============================================
-	inline Uint64 ByteToUint64( const byte *pdata )
+	DO_INLINE Uint64 ByteToUint64( const Byte *pdata )
 	{
 		Uint64 value;
 		memcpy(&value, pdata, sizeof(Uint64));
@@ -579,15 +579,15 @@ namespace Common
 	}
 
 	//=============================================
-	// @brief Converts bytes to Float
+	// @brief Converts bytes to float
 	//
 	// @param pdata Pointer to data in bytes
-	// @return Float value
+	// @return float value
 	//=============================================
-	inline Float ByteToFloat( const byte *pdata )
+	DO_INLINE float ByteToFloat( const Byte *pdata )
 	{
-		Float value;
-		memcpy(&value, pdata, sizeof(Float));
+		float value;
+		memcpy(&value, pdata, sizeof(float));
 		return value;
 	}
 
@@ -595,12 +595,12 @@ namespace Common
 	// @brief Converts bytes to int
 	//
 	// @param pdata Pointer to data in bytes
-	// @return Double float value
+	// @return double float value
 	//=============================================
-	inline Double ByteToDouble( const byte *pdata )
+	DO_INLINE double ByteToDouble( const Byte *pdata )
 	{
-		Double value;
-		memcpy(&value, pdata, sizeof(Double));
+		double value;
+		memcpy(&value, pdata, sizeof(double));
 		return value;
 	}
 
@@ -609,17 +609,17 @@ namespace Common
 	//
 	// @param value Value
 	//=============================================
-	inline Float qrsqrt( Float value )
+	DO_INLINE float qrsqrt( float value )
 	{
 		// Thanks to Id Software and Carmack
 		// for this solution
-		Float x = value * 0.5f;
-		Float y = value;
+		float x = value * 0.5f;
+		float y = value;
 
 		long i = *reinterpret_cast<long*>(&y);
 		i = 0x5f3759df - (i>>1);
 	
-		y = *reinterpret_cast<Float*>(&i);
+		y = *reinterpret_cast<float*>(&i);
 		y = y*(1.5f-(x * y * y));
 
 		return y;
@@ -629,9 +629,9 @@ namespace Common
 	// @brief Tells if a value is NAN
 	//
 	// @param value Value to check
-	// @return TRUE if NAN, FALSE otherwise
+	// @return true if NAN, false otherwise
 	//=============================================
-	inline bool IsNAN( Float value )
+	DO_INLINE bool IsNAN( float value )
 	{
 		return (*reinterpret_cast<Int32*>(&(value)) & NANMASK) == NANMASK ? true : false;
 	}
@@ -643,24 +643,24 @@ namespace Common
 	// @param scale Maximum value
 	// @return Smooth curve value
 	//=============================================
-	inline Float SplineFraction( Float value, Float scale )
+	DO_INLINE float SplineFraction( float value, float scale )
 	{
 		// This mathematical solution comes from the HLSDK,
 		// so credit goes to Valve for the code I referenced
-		Float _value = scale * value;
-		Float valueSquared = _value * _value;
+		float _value = scale * value;
+		float valueSquared = _value * _value;
 
 		// Nice little ease-in, ease-out spline-like curve
 		return 3 * valueSquared - 2 * valueSquared * _value;
 	}
 
 	//====================================
-	// @brief Takes an input DWORD pointer and modifies it's value to
+	// @brief Takes an input Dword pointer and modifies it's value to
 	// ensure that it's is divisible by 2. Used for parsing WAVs
 	//
 	// @param nInput Pointer to the input value
 	//====================================
-	inline void ScaleByte( DWORD *nInput )
+	DO_INLINE void ScaleByte( Dword *nInput )
 	{
 		if(*nInput % 2 != 0)
 		{
@@ -675,11 +675,11 @@ namespace Common
 	// @param pout Pointer to output float[3] array.
 	// @param plightmap Pointer to RGB24 values.
 	//====================================
-	inline void ParseColor (Float* pout, const color24_t *plightmap)
+	DO_INLINE void ParseColor (float* pout, const color24_t *plightmap)
 	{
-		pout[0] = static_cast<Float>(plightmap->r / 255.0f);
-		pout[1] = static_cast<Float>(plightmap->g / 255.0f);
-		pout[2] = static_cast<Float>(plightmap->b / 255.0f);
+		pout[0] = static_cast<float>(plightmap->r / 255.0f);
+		pout[1] = static_cast<float>(plightmap->g / 255.0f);
+		pout[2] = static_cast<float>(plightmap->b / 255.0f);
 	}
 
 	//====================================
@@ -690,7 +690,7 @@ namespace Common
 	// @param pout Pointer to output float[3] array.
 	// @param plightmap Pointer to RGB24 values.
 	//====================================
-	inline void ParseVectorColor (Float* pout, const color24_t *plightmap)
+	DO_INLINE void ParseVectorColor (float* pout, const color24_t *plightmap)
 	{
 		color24_t lightcolor;
 		lightcolor.r = plightmap->r;
@@ -700,9 +700,9 @@ namespace Common
 		greenColor = (greenColor-128);
 		lightcolor.g = (-1.0 * greenColor)+128;
 
-		pout[0] = static_cast<Float>(lightcolor.r / 255.0f);
-		pout[1] = static_cast<Float>(lightcolor.g / 255.0f);
-		pout[2] = static_cast<Float>(lightcolor.b / 255.0f);
+		pout[0] = static_cast<float>(lightcolor.r / 255.0f);
+		pout[1] = static_cast<float>(lightcolor.g / 255.0f);
+		pout[2] = static_cast<float>(lightcolor.b / 255.0f);
 	}
 
 	//====================================
@@ -715,7 +715,7 @@ namespace Common
 	// @param d New maximum range.
 	// @return Resulting remapped value.
 	//====================================
-	inline Float RemapValue( Float value, Float a, Float b, Float c, Float d )
+	DO_INLINE float RemapValue( float value, float a, float b, float c, float d )
 	{
 		return c + (d-c)*(value-a)/(b-a);
 	}
@@ -727,12 +727,12 @@ namespace Common
 	// @param rangeMin Minimum of value range.
 	// @param rangeMax Maximum value of range.
 	// @param rangeShift Value to shift the range by.
-	// @return TRUE if the value fits within the range, FALSE if not.
+	// @return true if the value fits within the range, false if not.
 	//====================================
-	inline bool ValueInRange( Float comparisonValue, Float rangeMin, Float rangeMax, Float rangeShift )
+	DO_INLINE bool ValueInRange( float comparisonValue, float rangeMin, float rangeMax, float rangeShift )
 	{
-		Float valueMin = rangeMin + rangeShift;
-		Float valueMax = rangeMax + rangeShift;
+		float valueMin = rangeMin + rangeShift;
+		float valueMax = rangeMax + rangeShift;
 
 		return (comparisonValue >= valueMin && comparisonValue <= valueMax) ? true : false;
 	}

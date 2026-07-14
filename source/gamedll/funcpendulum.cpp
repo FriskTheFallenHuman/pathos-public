@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "funcpendulum.h"
 
 // Default speed for pendulum
-const Float CFuncPendulum::DEFAULT_SPEED = 100;
+const float CFuncPendulum::DEFAULT_SPEED = 100;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(func_pendulum, CFuncPendulum);
@@ -131,7 +131,7 @@ void CFuncPendulum::DeclareSaveFields( void )
 // @brief
 //
 //=============================================
-void CFuncPendulum::CallUse( CBaseEntity* pacticator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncPendulum::CallUse( CBaseEntity* pacticator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!m_pState->speed)
 	{
@@ -146,7 +146,7 @@ void CFuncPendulum::CallUse( CBaseEntity* pacticator, CBaseEntity* pCaller, usem
 	else if(HasSpawnFlag(FL_AUTO_RETURN))
 	{
 		// Get axis delta
-		Float delta = Util::GetAxisDelta(m_pState->spawnflags, m_pState->angles, m_start, FL_ROTATE_Z, FL_ROTATE_X);
+		float delta = Util::GetAxisDelta(m_pState->spawnflags, m_pState->angles, m_start, FL_ROTATE_Z, FL_ROTATE_X);
 		Math::VectorScale(m_pState->movedir, -m_maxSpeed, m_pState->avelocity);
 
 		SetThink(&CFuncPendulum::StopThink);
@@ -182,8 +182,8 @@ void CFuncPendulum::StopThink( void )
 //=============================================
 void CFuncPendulum::SwingThink( void )
 {
-	Float axisdelta = Util::GetAxisDelta(m_pState->spawnflags, m_pState->angles, m_center, FL_ROTATE_Z, FL_ROTATE_X);
-	Float timedelta = g_pGameVars->time - m_time;
+	float axisdelta = Util::GetAxisDelta(m_pState->spawnflags, m_pState->angles, m_center, FL_ROTATE_Z, FL_ROTATE_X);
+	float timedelta = g_pGameVars->time - m_time;
 	m_time = g_pGameVars->time;
 
 	if(axisdelta > 0 && m_acceleration > 0)
@@ -192,7 +192,7 @@ void CFuncPendulum::SwingThink( void )
 		m_pState->speed += m_acceleration * timedelta;
 
 	// Clamp velocity
-	m_pState->speed = clamp(m_pState->speed, -m_maxSpeed, m_maxSpeed);
+	m_pState->speed = Clamp(m_pState->speed, -m_maxSpeed, m_maxSpeed);
 	Math::VectorScale(m_pState->movedir, m_pState->speed, m_pState->avelocity);
 
 	m_pState->nextthink = m_pState->ltime + 0.1;
@@ -212,7 +212,7 @@ void CFuncPendulum::SwingThink( void )
 		else
 		{
 			// Clamp speed
-			m_pState->speed = clamp(m_pState->speed, -m_dampSpeed, m_dampSpeed);
+			m_pState->speed = Clamp(m_pState->speed, -m_dampSpeed, m_dampSpeed);
 		}
 	}
 }
@@ -238,7 +238,7 @@ void CFuncPendulum::CallTouch( CBaseEntity* pOther )
 	if(pOther->GetTakeDamage() == TAKEDAMAGE_NO)
 		return;
 
-	Float damage = m_damage * m_pState->speed * 0.01;
+	float damage = m_damage * m_pState->speed * 0.01;
 	damage = SDL_fabs(damage);
 
 	// Apply damage to other

@@ -33,12 +33,12 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
 	virtual void DeclareSaveFields( void ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void SendInitMessage( const CBaseEntity* pPlayer ) override;
 
 private:
 	bool m_isActive;
-	Float m_pitch;
-	Float m_roll;
+	float m_pitch;
+	float m_roll;
 };
 #endif //ENVSUN_H

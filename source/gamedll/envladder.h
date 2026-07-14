@@ -34,13 +34,13 @@ public:
 public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual Int32 GetEntityFlags( void ) override { return (CAnimatingEntity::GetEntityFlags() | FL_ENTITY_PLAYER_USABLE | FL_ENTITY_TRANSITION); }
 	virtual void InitEntity( void ) override;
 	virtual bool ShouldSetBoundsOnRestore( void ) override { return false; }
 	virtual usableobject_type_t GetUsableObjectType( void ) override;
 	virtual void GetUseReticleMinsMaxs( Vector& outMins, Vector& outMaxs, CBaseEntity* pPlayer ) override;
-	virtual void TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
+	virtual void TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags ) override;
 
 public:
 	void EnterLadder( CBaseEntity* pPlayer );
@@ -48,8 +48,8 @@ public:
 	bool IsTopAccessible( CBaseEntity* pPlayer );
 
 	void RepositionPlayer( CBaseEntity* pPlayer, Vector* porigin = nullptr, Vector* pangles = nullptr );
-	bool GetExitVectors( ladder_exitpoints_t exit, Vector* porigin = nullptr, Vector* pangles = nullptr,  Float* pfldiff = nullptr );
-	ladder_exitpoints_t CanUseExit( Vector* pangles, Vector* porigin, Float* pfltime, Float* pfldiff );
+	bool GetExitVectors( ladder_exitpoints_t exit, Vector* porigin = nullptr, Vector* pangles = nullptr,  float* pfldiff = nullptr );
+	ladder_exitpoints_t CanUseExit( Vector* pangles, Vector* porigin, float* pfltime, float* pfldiff );
 
 	ladder_verify_codes_t VerifyMove( const Vector& origin, CBaseEntity* pPlayer, Int32 direction );
 	ladder_entrypoints_t GetEntryAnimation( void );

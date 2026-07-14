@@ -77,7 +77,7 @@ bool CEnvDecal::Spawn( void )
 		if(m_pFields->targetname == NO_STRING_VALUE)
 			m_isActive = true;
 
-		const Char* pstrGroupName = gd_engfuncs.pfnGetString(m_pFields->message);
+		const char* pstrGroupName = gd_engfuncs.pfnGetString(m_pFields->message);
 		decalgroupentry_t* pentry = gDecalList.GetRandom(pstrGroupName);
 		if(!pentry)
 		{
@@ -141,7 +141,7 @@ bool CEnvDecal::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CEnvDecal::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvDecal::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_isActive)
 		return;
@@ -161,8 +161,8 @@ void CEnvDecal::SendInitMessage( const CBaseEntity* pPlayer )
 	if(!m_isActive)
 		return;
 
-	Float growthTime = 0;
-	Uint16 flags = FL_DECAL_PERSISTENT|FL_DECAL_SERVER;
+	float growthTime = 0;
+	UInt16 flags = FL_DECAL_PERSISTENT|FL_DECAL_SERVER;
 	if(m_spawnTime + m_growthTime > g_pGameVars->time)
 	{
 		flags |= FL_DECAL_GROW;
@@ -170,9 +170,9 @@ void CEnvDecal::SendInitMessage( const CBaseEntity* pPlayer )
 	}
 
 	trace_t tr;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
-		Uint32 j = 0;
+		UInt32 j = 0;
 		for(; j < 2; j++)
 		{
 			Vector traceStartOffset;
@@ -216,14 +216,14 @@ void CEnvDecal::SendInitMessage( const CBaseEntity* pPlayer )
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.creategenericdecal, nullptr, nullptr);
 
 	gd_engfuncs.pfnMsgWriteUint16(flags);
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		gd_engfuncs.pfnMsgWriteFloat(m_pState->origin[i]);
 
 	gd_engfuncs.pfnMsgWriteString(gd_engfuncs.pfnGetString(m_pFields->message));
 
 	if(flags & FL_DECAL_HAS_NORMAL)
 	{
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteSmallFloat(tr.plane.normal[i]*360.0f);
 	}
 			
@@ -240,7 +240,7 @@ void CEnvDecal::SendInitMessage( const CBaseEntity* pPlayer )
 // @brief
 //
 //=============================================
-void CEnvDecal::SpawnDecal( const Vector& origin, const Char* pstrdecalname )
+void CEnvDecal::SpawnDecal( const Vector& origin, const char* pstrdecalname )
 {
 	edict_t* pedict = gd_engfuncs.pfnCreateEntity("env_decal");
 	if(!pedict)

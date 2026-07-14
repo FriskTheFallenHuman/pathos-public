@@ -34,20 +34,20 @@ public:
 	virtual void Precache( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void SendInitMessage( const CBaseEntity* pPlayer ) override;
 
 public:
 	void EXPORTFN DialogueThink( void );
 
 public:
-	static CGameDialogue* CreateDialogue( const Char* pstrPath, const Vector& origin, Float radius, bool visibleOnly );
+	static CGameDialogue* CreateDialogue( const char* pstrPath, const Vector& origin, float radius, bool visibleOnly );
 
 private:
-	Float m_radius;
+	float m_radius;
 	bool m_isActive;
-	Double m_beginTime;
-	Float m_duration;
+	double m_beginTime;
+	float m_duration;
 };
 
 #endif //GAMEDIALOGUE_H

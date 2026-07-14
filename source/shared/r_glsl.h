@@ -10,9 +10,6 @@ All Rights Reserved.
 #ifndef R_GLSL_H
 #define R_GLSL_H
 
-#include <map>
-#include <vector>
-
 #define USE_SHADER_VALUES_MAP
 
 #include "file_interface.h"
@@ -40,7 +37,7 @@ class CGLSLShader
 {
 public:
 	// Typedef for progress update function
-	typedef void (*pfnProgressUpdateFunction_t)( const Char* pstrShaderName, Uint32 totalCount, Uint32 completedCount, bool buildingCache );
+	typedef void (*pfnProgressUpdateFunction_t)( const char* pstrShaderName, UInt32 totalCount, UInt32 completedCount, bool buildingCache );
 #ifdef USE_SHADER_VALUES_MAP
 	// Shader values vector type
 	typedef std::string ShaderValuesStringType_t;
@@ -154,13 +151,13 @@ public:
 		CString name;
 		uniform_e type;
 
-		CArray<Float> currentvalues;
-		CArray<Float> shadervalues;
+		CArray<float> currentvalues;
+		CArray<float> shadervalues;
 
 		CArray<Int16> indexes;
-		Uint32 stride;
+		UInt32 stride;
 
-		Uint32 elementcount;
+		UInt32 elementcount;
 
 		bool sync;
 		bool used;
@@ -206,8 +203,8 @@ public:
 		CString name;
 		CArray<Int16> indexes;
 
-		Uint32 size;
-		Uint32 stride;
+		UInt32 size;
+		UInt32 stride;
 		Int32 type;
 		Int32 vboindex;
 
@@ -227,14 +224,14 @@ public:
 			numconditionals(0)
 		{}
 
-		Char *pdata;
-		Uint32 isize;
+		char *pdata;
+		UInt32 isize;
 
 		shader_chunk_t* pchunks;
-		Uint32 numchunks;
+		UInt32 numchunks;
 
 		glsl_branchcondition_t *pconditionals;
-		Uint32 numconditionals;
+		UInt32 numconditionals;
 	};
 
 	// <shader_script_t>
@@ -247,9 +244,9 @@ public:
 		{}
 
 		shader_chunk_t* pchunks;
-		Uint32 numchunks;
+		UInt32 numchunks;
 
-		Uint32 type;
+		UInt32 type;
 	};
 
 	// <invalid_state_t>
@@ -263,11 +260,11 @@ public:
 			memset(dt_maxrange, 0, sizeof(dt_maxrange));
 		}
 
-		Uint16 dt_indexes[MAX_DETERMINATORS];
+		UInt16 dt_indexes[MAX_DETERMINATORS];
 		Int16 dt_minrange[MAX_DETERMINATORS];
 		Int16 dt_maxrange[MAX_DETERMINATORS];
 
-		Uint16 numdts;
+		UInt16 numdts;
 	};
 
 	// <disabled_state_t>
@@ -295,7 +292,7 @@ public:
 			memset(name, 0, sizeof(name));
 		}
 
-		Char name[32];
+		char name[32];
 		determinator_e type;
 
 		Int32 valuesoffset;
@@ -330,7 +327,7 @@ public:
 			memset(determinator, 0, sizeof(determinator));
 		}
 
-		Char determinator[64];
+		char determinator[64];
 		Int32 value;
 	};
 
@@ -353,15 +350,15 @@ public:
 		Int32 version;
 
 		// md5 hash
-		Char hash[33];
+		char hash[33];
 
-		Uint32 determinatoroffset;
-		Uint32 numdeterminators;
+		UInt32 determinatoroffset;
+		UInt32 numdeterminators;
 
-		Uint32 shaderdataoffset;
-		Uint32 numshaders;
+		UInt32 shaderdataoffset;
+		UInt32 numshaders;
 
-		Uint32 size;
+		UInt32 size;
 	};
 
 	struct shader_binary_t
@@ -374,7 +371,7 @@ public:
 		}
 
 		Int32 dataoffset;
-		Uint32 datasize;
+		UInt32 datasize;
 		GLenum binaryformat;
 	};
 
@@ -394,17 +391,17 @@ public:
 		Int32 version;
 
 		// md5 hash
-		Char hash[33];
+		char hash[33];
 
 		Int32 shaderoffset;
-		Uint32 numshaders;
+		UInt32 numshaders;
 
-		Uint32 size;
+		UInt32 size;
 	};
 
 public:
 	// Uniform typename strings
-	const Char* UNIFORM_TYPENAMES[NB_UNIFORM_TYPES] =
+	const char* UNIFORM_TYPENAMES[NB_UNIFORM_TYPES] =
 	{
 		"UNIFORM_NOSYNC",
 		"UNIFORM_INT1",
@@ -419,54 +416,54 @@ public:
 	};
 
 public:
-	CGLSLShader( const file_interface_t& fileFuncs, const CGLExtF& glExtF, const Char *szfile, Int32 flags = FL_GLSL_SHADER_NONE, pfnProgressUpdateFunction_t pfnCallback = nullptr );
+	CGLSLShader( const file_interface_t& fileFuncs, const CGLExtF& glExtF, const char *szfile, Int32 flags = FL_GLSL_SHADER_NONE, pfnProgressUpdateFunction_t pfnCallback = nullptr );
 	CGLSLShader( const file_interface_t& fileFuncs, const CGLExtF& glExtF, Int32 flags = FL_GLSL_SHADER_NONE, pfnProgressUpdateFunction_t pfnCallback = nullptr );
 	~CGLSLShader( void );
 
 	// Clears all data for the class
 	void Clear( void );
 	// Compiles the GLSL script
-	bool Compile( const Char* szfile );
+	bool Compile( const char* szfile );
 
 public:
 	// Uniform float assignment variations
-	inline void SetUniform4f( Int32 index, Float x, Float y, Float z, Float w );
-	inline void SetUniform4fv( Int32 index, const Float *v, Uint32 num );
-	inline void SetUniform3f( Int32 index, Float x, Float y, Float z );
-	inline void SetUniform2f( Int32 index, Float x, Float y );
-	inline void SetUniform1f( Int32 index, Float x );
+	DO_INLINE void SetUniform4f( Int32 index, float x, float y, float z, float w );
+	DO_INLINE void SetUniform4fv( Int32 index, const float *v, UInt32 num );
+	DO_INLINE void SetUniform3f( Int32 index, float x, float y, float z );
+	DO_INLINE void SetUniform2f( Int32 index, float x, float y );
+	DO_INLINE void SetUniform1f( Int32 index, float x );
 	// Uniform int assignment variations
-	inline void SetUniform1i( Int32 index, Int32 x );
+	DO_INLINE void SetUniform1i( Int32 index, Int32 x );
 	// Uniform matrix assignment variations
-	inline void SetUniformMatrix4fv( Int32 index, const Float *matrix, bool transpose = false );
+	DO_INLINE void SetUniformMatrix4fv( Int32 index, const float *matrix, bool transpose = false );
 	// Reset sampler unit count
-	inline void ResetSamplerIndex( Int32 minIndex = 0 );
+	DO_INLINE void ResetSamplerIndex( Int32 minIndex = 0 );
 	// Auto-set sampler index
-	inline Int32 AutoSetSamplerUniform( Int32 index );
+	DO_INLINE Int32 AutoSetSamplerUniform( Int32 index );
 
 	// Enables syncing on a uniform
-	inline void EnableSync( Int32 uniform );
+	DO_INLINE void EnableSync( Int32 uniform );
 	// Disables syncing on a uniform
-	inline void DisableSync( Int32 uniform );
+	DO_INLINE void DisableSync( Int32 uniform );
 
 	// Validates a program, and if it's not ok, it'll write to the console
-	bool ValidateProgram( void (*pfnConPrintfFnPtr)( const Char *fmt, ... ) );
+	bool ValidateProgram( void (*pfnConPrintfFnPtr)( const char *fmt, ... ) );
 
 	// Sets the data for the UBO
-	inline void SetUniformBufferObjectData( Int32 index, void* pBufferData, Uint32 dataSize );
+	DO_INLINE void SetUniformBufferObjectData( Int32 index, void* pBufferData, UInt32 dataSize );
 
 	// Draws GL elements
-	void DrawArrays( GLenum primitiveType, Int32 first, Uint32 count );
+	void DrawArrays( GLenum primitiveType, Int32 first, UInt32 count );
 	// Draws GL elements
-	void DrawElements( GLenum primitiveType, Uint32 count, GLenum type, void* pindices );
+	void DrawElements( GLenum primitiveType, UInt32 count, GLenum type, void* pindices );
 
 public:
 	// Initializes a uniform
-	Int32 InitUniform( const Char *szname, uniform_e type, Uint32 elementcount = 1 );
+	Int32 InitUniform( const char *szname, uniform_e type, UInt32 elementcount = 1 );
 	// Creates a uniform buffer object
-	Int32 InitUniformBufferObject( const Char* pstrName, Uint32 bufferSize );
+	Int32 InitUniformBufferObject( const char* pstrName, UInt32 bufferSize );
 	// Initializes a vertex attribute
-	Int32 InitAttribute( const Char *szname, Uint32 size, Int32 type, Uint32 stride, const void *pointer );
+	Int32 InitAttribute( const char *szname, UInt32 size, Int32 type, UInt32 stride, const void *pointer );
 	// Sets a vertex attribute's data pointer
 	void SetAttributePointer( Int32 index, const void *pointer, Int32 vboindex = 0 );
 	// Enables a vertex attribute
@@ -474,25 +471,25 @@ public:
 	// Disables a vertex attribute
 	void DisableAttribute( Int32 index );
 	// Get the number of registered attributes
-	Uint32 GetNbAttributes( void ) const { return m_vertexAttribsArray.size(); }
+	UInt32 GetNbAttributes( void ) const { return m_vertexAttribsArray.size(); }
 
 	// Creates a new GLSL vertex attribute, and returns it's pointer
-	glsl_determinator_t *AddDeterminator( const Char *szname );
+	glsl_determinator_t *AddDeterminator( const char *szname );
 	// Sets a determinator's value
 	bool SetDeterminator( Int32 index, Int32 value, bool update = true );
 	// Returns a determinator's index for a name
-	Int32 GetDeterminatorIndex( const Char *szname );
+	Int32 GetDeterminatorIndex( const char *szname );
 	// Checks all determinators and binds the appropriate shader
 	bool VerifyDeterminators( void );
 	// Performs pre-render checks
 	bool PerformPreRenderChecks( void );
 
 	// Compiles a single shader object
-	bool CompileShader( Uint32 index, glsl_shader_t* pshader, csdshaderdata_t* pshaderdata );
+	bool CompileShader( UInt32 index, glsl_shader_t* pshader, csdshaderdata_t* pshaderdata );
 	// Reads in a determinator's script data
-	bool ReadDeterminator( const Char** ppstr );
+	bool ReadDeterminator( const char** ppstr );
 	// Reads in the script entry for invalid states
-	bool ReadInvalidState( const Char** ppstr );
+	bool ReadInvalidState( const char** ppstr );
 
 	// Binds the shader in OpenGL
 	bool EnableShader( void );
@@ -505,39 +502,39 @@ public:
 	void SetVBO( class CVBO *pVBO, Int32 index = 0 );
 	
 	// Returns the shader script's name
-	const Char* GetShaderScriptName( void ) const { return m_shaderFile.c_str(); }
+	const char* GetShaderScriptName( void ) const { return m_shaderFile.c_str(); }
 	// Retrieves the error string if any
-	const Char* GetError( void ) const { return m_errorString.c_str(); }
+	const char* GetError( void ) const { return m_errorString.c_str(); }
 	// Tells if there was an error
 	bool HasError( void ) const { return m_bFailed; }
 
 	// Disables a determinator from being compiled
-	void DisableDeterminatorState( const Char *pstrName, Int32 state );
+	void DisableDeterminatorState( const char *pstrName, Int32 state );
 
 	// Tells the total number of shader variations
-	Uint32 GetNbTotalShaderVariations( void ) const;
+	UInt32 GetNbTotalShaderVariations( void ) const;
 	// Tells if a specific shader variation has been compiled
-	bool IsShaderVariationCompiled( Uint32 index );
+	bool IsShaderVariationCompiled( UInt32 index );
 	// Compiles a specific shader variation
-	bool CompileShaderVariation( Uint32 index );
+	bool CompileShaderVariation( UInt32 index );
 
 public:
 	// Clears time counters
 	static void ClearTimeCounters( void );
 	// Returns the cumulative compile time for vertex shaders
-	static Double GetTotalVertexShaderCompileTime( void );
+	static double GetTotalVertexShaderCompileTime( void );
 	// Returns the cumulative status get call time for vertex shaders
-	static Double GetTotalVertexShaderGetStatusCallTime( void );
+	static double GetTotalVertexShaderGetStatusCallTime( void );
 	// Returns the cumulative compile time for fragment shaders
-	static Double GetTotalFragmentShaderCompileTime( void );
+	static double GetTotalFragmentShaderCompileTime( void );
 	// Returns the cumulative status get call time for fragment shaders
-	static Double GetTotalFragmentShaderGetStatusCallTime( void );
+	static double GetTotalFragmentShaderGetStatusCallTime( void );
 	// Returns the cumulative link time for shaders
-	static Double GetTotalShaderLinkTime( void );
+	static double GetTotalShaderLinkTime( void );
 	// Returns the cumulative get call time time for shaders
-	static Double GetTotalShaderLinkGetStatusCallTime( void );
+	static double GetTotalShaderLinkGetStatusCallTime( void );
 	// Returns the number of shader programs linked total
-	static Uint32 GetNbTotalShaderProgramsLinked( void );
+	static UInt32 GetNbTotalShaderProgramsLinked( void );
 
 private:
 	// Free all data used by the shader class
@@ -560,28 +557,28 @@ private:
 	void ShiftOverlappingSamplers( void );
 
 	// Constructs all the possible variations
-	bool ConstructBranches( const Char* pSrc, Uint32 fileSize );
+	bool ConstructBranches( const char* pSrc, UInt32 fileSize );
 	// Recursively fill all the possible determinator variations
-	void RecursiveFillValues( Uint32 index, Uint32& numShaders );
+	void RecursiveFillValues( UInt32 index, UInt32& numShaders );
 
 	// Parses a single token from the shader file
-	Char *ParseToken( Char *pfile, Char *token );
+	char *ParseToken( char *pfile, char *token );
 	// Reads a chunk from the shader script
-	bool ReadChunks( const Char **ppscan, shader_chunk_t** pchunkptr, Uint32* numchunkptr, glsl_branchcondition_t* pconditionals, Uint32 numconditionals );
+	bool ReadChunks( const char **ppscan, shader_chunk_t** pchunkptr, UInt32* numchunkptr, glsl_branchcondition_t* pconditionals, UInt32 numconditionals );
 
 	// Splices the vertex and fragment scripts for a shader
-	bool SpliceScripts( Uint32 id, Char **vsptr, Char **fsptr );
+	bool SpliceScripts( UInt32 id, char **vsptr, char **fsptr );
 	// Tells if a chunk should be included in this variation
-	bool ShouldIncludeChunk( Uint32 id, shader_chunk_t *pchunk );
+	bool ShouldIncludeChunk( UInt32 id, shader_chunk_t *pchunk );
 	// Recursively adds all usable shader chunks to a shader
-	bool RecursiveAddChunks( Uint32 id, shader_chunk_t* pchunk, CBuffer& buffer );
+	bool RecursiveAddChunks( UInt32 id, shader_chunk_t* pchunk, CBuffer& buffer );
 	// Recursively frees all GLSL chunks
 	void RecursiveFreeChunks( shader_chunk_t* pchunk );
 
 	// Prints error information to a log file
-	bool Shader_PrintLog( GLuint shader_id, const Char *script, Uint32 length, const Char *szoutpath, bool dumpShaderCode );
+	bool Shader_PrintLog( GLuint shader_id, const char *script, UInt32 length, const char *szoutpath, bool dumpShaderCode );
 	// Prints error information for the entire program to a log file
-	bool Program_PrintLog( GLuint program_id, const Char *szoutpath );
+	bool Program_PrintLog( GLuint program_id, const char *szoutpath );
 
 	// Re-syncs a uniform
 	void SyncUniform( glsl_uniform_t& uniform );
@@ -590,17 +587,17 @@ private:
 	void AlignVertexAttribs( void );
 
 private:
-	// TRUE if the shader is active
+	// true if the shader is active
 	bool m_isActive;
-	// TRUE if we need to re-check shader binds
+	// true if we need to re-check shader binds
 	bool m_reCheck;
-	// TRUE if on-demand load is used
+	// true if on-demand load is used
 	bool m_onDemandLoad;
-	// TRUE if binary shader funcs are supported
+	// true if binary shader funcs are supported
 	bool m_useBinaryShaders;
-	// TRUE if the UBOs got bound
+	// true if the UBOs got bound
 	bool m_areUBOsBound;
-	// TRUE if we should recheck sampler uniforms
+	// true if we should recheck sampler uniforms
 	bool m_recheckSamplerUniforms;
 	// Shader flags
 	Int32 m_shaderFlags;
@@ -649,7 +646,7 @@ private:
 	csdheader_t* m_pCSDHeader;
 
 	// Matrix uniform for non-sync matrices
-	Float m_uniformMatrix[4][4];
+	float m_uniformMatrix[4][4];
 
 private:
 	// Compile status
@@ -674,19 +671,19 @@ private:
 
 private:
 	// Total duration of vertex shader compile calls
-	static Double g_vertexShaderCompileTotalDuration;
+	static double g_vertexShaderCompileTotalDuration;
 	// Total duration of vertex shader verification calls
-	static Double g_vertexShaderGetStatusCallTotalDuration;
+	static double g_vertexShaderGetStatusCallTotalDuration;
 	// Total duration of fragment shader compile calls
-	static Double g_fragmentShaderCompileTotalDuration;
+	static double g_fragmentShaderCompileTotalDuration;
 	// Total duration of fragment shader compile calls
-	static Double g_fragmentShaderGetStatusCallTotalDuration;
+	static double g_fragmentShaderGetStatusCallTotalDuration;
 	// Total duration of shader linking calls
-	static Double g_shaderLinkTotalDuration;
+	static double g_shaderLinkTotalDuration;
 	// Total duration of shader linking calls
-	static Double g_shaderLinkGetStatusCallDuration;
+	static double g_shaderLinkGetStatusCallDuration;
 	// Number of shader programs linked total
-	static Uint32 g_numShaderProgramsLinked;
+	static UInt32 g_numShaderProgramsLinked;
 };
 #include "r_glsl_inline.hpp"
 #endif // R_GLSL_H

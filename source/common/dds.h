@@ -20,24 +20,28 @@ All Rights Reserved.
 
 #define DDS_DATA_OFFSET				128
 
-#define D3DFMT_DXT1					'1TXD'    //  DXT1 compression texture format 
-#define D3DFMT_DXT5					'5TXD'    //  DXT5 compression texture format 
+#define MAKEFOURCC(ch0, ch1, ch2, ch3) \
+    ((UInt32)(unsigned char)(ch0) | ((UInt32)(unsigned char)(ch1) << 8) | \
+    ((UInt32)(unsigned char)(ch2) << 16) | ((UInt32)(unsigned char)(ch3) << 24))
+
+#define D3DFMT_DXT1 MAKEFOURCC('D','X','T','1')    //  DXT1 compression texture format 
+#define D3DFMT_DXT5 MAKEFOURCC('D','X','T','5')    //  DXT5 compression texture format 
 
 struct dds_header_t 
 {
-	byte bMagic[4];
-	byte bSize[4];
-	byte bFlags[4];
-	byte bHeight[4];
-	byte bWidth[4];
-	byte bPitchOrLinearSize[4];
+	Byte bMagic[4];
+	Byte bSize[4];
+	Byte bFlags[4];
+	Byte bHeight[4];
+	Byte bWidth[4];
+	Byte bPitchOrLinearSize[4];
 
-	byte bPad1[52];
+	Byte bPad1[52];
 
-	byte bPFSize[4];
-	byte bPFFlags[4];
-	byte bPFFourCC[4];
+	Byte bPFSize[4];
+	Byte bPFFlags[4];
+	Byte bPFFourCC[4];
 };
 
-bool DDS_Load( const Char* pstrFilename, const byte* pfile, byte*& pdata, Uint32& width, Uint32& height, Uint32& bpp, Uint32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn );
+bool DDS_Load( const char* pstrFilename, const Byte* pfile, Byte*& pdata, UInt32& width, UInt32& height, UInt32& bpp, UInt32& size, texture_compression_t& compression, pfnPrintf_t pfnPrintFn );
 #endif // DDS_H

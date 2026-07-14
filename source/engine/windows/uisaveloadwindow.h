@@ -41,10 +41,10 @@ public:
 			memset(savetitle, 0, sizeof(savetitle));
 		}
 
-		Char filepath[MAX_PARSE_LENGTH];
-		Char savetitle[SAVE_FILE_HEADER_MAX_LENGTH];
+		char filepath[MAX_PARSE_LENGTH];
+		char savetitle[SAVE_FILE_HEADER_MAX_LENGTH];
 		
-		Float gametime;
+		float gametime;
 		CString datestring;
 		savefile_type_t type;
 
@@ -53,22 +53,22 @@ public:
 
 public:
 	// Window description file
-	static const Char WINDOW_DESC_FILE[];
+	static const char WINDOW_DESC_FILE[];
 	// Window object name
-	static const Char WINDOW_OBJ_NAME[];
+	static const char WINDOW_OBJ_NAME[];
 	// Save list object name
-	static const Char SAVELIST_OBJ_NAME[];
+	static const char SAVELIST_OBJ_NAME[];
 	// Cancel button object name
-	static const Char CANCEL_BUTTON_OBJ_NAME[];
+	static const char CANCEL_BUTTON_OBJ_NAME[];
 	// Load game button object name
-	static const Char LOAD_GAME_BUTTON_OBJ_NAME[];
+	static const char LOAD_GAME_BUTTON_OBJ_NAME[];
 	// Save game button object name
-	static const Char SAVE_GAME_BUTTON_OBJ_NAME[];
+	static const char SAVE_GAME_BUTTON_OBJ_NAME[];
 	// Delete save button object name
-	static const Char DELETE_SAVE_BUTTON_OBJ_NAME[];
+	static const char DELETE_SAVE_BUTTON_OBJ_NAME[];
 
 private:
-	CUISaveLoadWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUISaveLoadWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 public:
 	~CUISaveLoadWindow( void );
 
@@ -93,12 +93,12 @@ public:
 	// Set focus on a specific row
 	void RowDoubleClickEvent( Int32 rowIndex );
 	// Called to delete a save file
-	void DeleteSave( const Char* pstrSavePath );
+	void DeleteSave( const char* pstrSavePath );
 
 	// Reacts to a button being pressed
 	void ButtonEvent( slwindow_btn_id btn );
 	// Loads a game file
-	void LoadSave( const Char* pstrSavePath );
+	void LoadSave( const char* pstrSavePath );
 	// Loads save files from the save folder
 	void LoadSaves( bool isIngame );
 	// Marks for a save re-check
@@ -106,11 +106,11 @@ public:
 
 private:
 	// Retrieves save file info
-	void AddSaveFileInfo( const CString& filePath, FILETIME& fileTime );
+	void AddSaveFileInfo( const CString& filePath, const file_dateinfo_t& fileDate );
 	// Sets background texture
 	void SetBackgroundTexture( save_file_t* psave );
 	// Creates a save file row
-	void CreateSaveFileRow( save_file_t& saveFile, Uint32 fileindex );
+	void CreateSaveFileRow( save_file_t& saveFile, UInt32 fileindex );
 
 	// Updates buttons
 	void UpdateButtons( bool selectFirst );
@@ -129,13 +129,13 @@ private:
 	// Last selected save file
 	Int32 m_lastSelectedSave;
 
-	// TRUE if we need to re-check the save dir
+	// true if we need to re-check the save dir
 	bool m_bRecheckSaves;
 	// Text inset for rows
-	Uint32 m_rowTextInset;
+	UInt32 m_rowTextInset;
 	// List info object
 	const ui_objectinfo_t* m_pListObjectInfo;
-	// TRUE if we're in an active game
+	// true if we're in an active game
 	bool m_bIsIngame;
 
 	// Save button
@@ -169,13 +169,13 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) { }
+	virtual void PerformAction( float param ) { }
 	// Handles a mouse button event
 	virtual bool MouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool keyDown );
 
 protected:
 	// Last click time
-	Double m_lastClickTime;
+	double m_lastClickTime;
 	// Row index
 	Int32 m_rowIndex;
 	// File index
@@ -201,7 +201,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param );
+	virtual void PerformAction( float param );
 
 protected:
 	// Row index

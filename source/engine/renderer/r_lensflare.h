@@ -35,14 +35,14 @@ public:
 			{}
 
 		// Sun flare pitch
-		Float pitch;
+		float pitch;
 		// Sun flare roll
-		Float roll;
+		float roll;
 		// Sun flare scale
-		Float scale;
+		float scale;
 		// Sun flare color
 		Vector color;
-		// TRUE if sun flare is part of a portal skybox
+		// true if sun flare is part of a portal skybox
 		bool portal;
 		// Entity index of sunflare
 		entindex_t entindex;
@@ -53,27 +53,27 @@ public:
 
 public:
 	// Number of halos drawn
-	static const Uint32 NB_FLARE_HALOS = 6;
+	static const UInt32 NB_FLARE_HALOS = 6;
 	// Number of glow tracelines
-	static const Uint32 GLOW_NUM_TRACES;
+	static const UInt32 GLOW_NUM_TRACES;
 	// Glow interpolation speed
-	static const Float GLOW_INTERP_SPEED;
+	static const float GLOW_INTERP_SPEED;
 	// Sun glow default scale
-	static const Float SUN_GLOW_DEFAULT_SCALE;
+	static const float SUN_GLOW_DEFAULT_SCALE;
 
 public:
 	// Lens flare texture base path
-	static const Char FLARE_TEXTURE_PATH[];
+	static const char FLARE_TEXTURE_PATH[];
 	// Sun glare texture base path
-	static const Char SUNGLARE_TEXTURE_PATH[];
+	static const char SUNGLARE_TEXTURE_PATH[];
 	// Textures used by each halo
 	static const Int32 FLARE_HALO_TEXTURES[NB_FLARE_HALOS];
 	// Scales for each individual halo
-	static const Float FLARE_HALO_SCALES[NB_FLARE_HALOS];
+	static const float FLARE_HALO_SCALES[NB_FLARE_HALOS];
 	// Alpha values used by halos
-	static const Float FLARE_HALO_ALPHAS[NB_FLARE_HALOS];
+	static const float FLARE_HALO_ALPHAS[NB_FLARE_HALOS];
 	// Distance scales used by halos
-	static const Float FLARE_HALO_DIST_SCALES[NB_FLARE_HALOS];
+	static const float FLARE_HALO_DIST_SCALES[NB_FLARE_HALOS];
 
 public:
 	enum lensflare_textures_t
@@ -106,7 +106,7 @@ public:
 
 public:
 	// Sets sun flare properties
-	void SetSunFlare( entindex_t entindex, bool active, Float pitch, Float roll, Float scale, const Vector& color, bool portalSunFlare );
+	void SetSunFlare( entindex_t entindex, bool active, float pitch, float roll, float scale, const Vector& color, bool portalSunFlare );
 
 	// Pre-draw function for rendering glow dots
 	void PreDrawFunction( void );
@@ -115,9 +115,9 @@ public:
 
 private:
 	// Draws a single lens flare effect
-	bool DrawLensFlare( Int32 key, const Vector& origin, const Vector& rendercolor, Float renderamt, Float scale, glowstate_t& glowstate, Int32 renderfx, bool isSun, bool portalSun );
+	bool DrawLensFlare( Int32 key, const Vector& origin, const Vector& rendercolor, float renderamt, float scale, glowstate_t& glowstate, Int32 renderfx, bool isSun, bool portalSun );
 	// Draws a single quad on the screen
-	void DrawQuad( const Vector& position, const Vector& color, en_texture_t* ptexture, Float scale, Float alpha );
+	void DrawQuad( const Vector& position, const Vector& color, en_texture_t* ptexture, float scale, float alpha );
 	// Draws the sun flare
 	void DrawSunFlare( sunflare_t& sunflare );
 
@@ -134,7 +134,7 @@ private:
 	CBasicDraw* m_pBasicDraw;
 
 	// View matrix
-	Float m_viewMatrix[3][4];
+	float m_viewMatrix[3][4];
 
 	// Toggles expensive glow tracelining
 	CCVar*	m_pCvarSunDebugPitch;

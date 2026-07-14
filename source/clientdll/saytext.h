@@ -22,11 +22,11 @@ class CSayText
 {
 private:
 	// Maximum text lifetime
-	static const Float SAYTEXT_LIFETIME;
+	static const float SAYTEXT_LIFETIME;
 	// Fade duration for each line
-	static const Float SAYTEXT_FADETIME;
+	static const float SAYTEXT_FADETIME;
 	// Screen text text schema name
-	static const Char TEXTSCHEME_FILENAME[];
+	static const char TEXTSCHEME_FILENAME[];
 
 private:
 	struct saytextinfo_t
@@ -35,7 +35,7 @@ private:
 			die(0)
 			{}
 
-		Float die;
+		float die;
 		CString playername;
 		CString message;
 	};
@@ -73,16 +73,16 @@ public:
 
 public:
 	// Adds a text to the list
-	void AddText( const Char* pstrPlayerName, const Char* pstrText );
+	void AddText( const char* pstrPlayerName, const char* pstrText );
 
 public:
 	// Linked list of texts to render
 	CLinkedList<saytextinfo_t> m_sayTextList;
 	// Font set used
 	const font_set_t* m_pFont;
-	// TRUE if in input mode
+	// true if in input mode
 	bool m_isInInputMode;
-	// TRUE if team only
+	// true if team only
 	bool m_isTeamOnly;
 
 	// Text being written

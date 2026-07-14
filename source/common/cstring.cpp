@@ -10,12 +10,12 @@ All Rights Reserved.
 #include "includes.h"
 
 // Empty string character
-Char CString::EMPTY_STRING[] = "\0";
+char CString::EMPTY_STRING[] = "\0";
 
 // Work buffer
-Char* CString::g_pWorkBuffer = nullptr;
+char* CString::g_pWorkBuffer = nullptr;
 // Work buffer size
-Uint32 CString::g_workBufferSize = 0;
+UInt32 CString::g_workBufferSize = 0;
 // Work buffer mutex
 std::mutex CString::g_workBufferMutex;
 
@@ -41,7 +41,7 @@ CString::CString():
 //
 // @param pstr Pointer to string
 //=============================================
-CString::CString( const Char* pstr ):
+CString::CString( const char* pstr ):
 	m_pString(nullptr),
 	m_stringLength(0),
 	m_pPoolCacheEntry(nullptr),
@@ -75,7 +75,7 @@ CString::CString( const CString& str ):
 //
 // @param pstr Pointer to string
 //=============================================
-CString::CString( const Char* pstr, Uint32 length ):
+CString::CString( const char* pstr, UInt32 length ):
 	m_pString(nullptr),
 	m_stringLength(length),
 	m_pPoolCacheEntry(nullptr),
@@ -101,7 +101,7 @@ CString::CString( const Char* pstr, Uint32 length ):
 // @brief Constructor with flags
 //
 //=============================================
-CString::CString( byte flags ):
+CString::CString( Byte flags ):
 	m_pString(nullptr),
 	m_stringLength(0),
 	m_pPoolCacheEntry(nullptr),
@@ -130,19 +130,19 @@ CString::~CString()
 //
 // @param psrc Pointer to string
 //=============================================
-void CString::Append(const Char* psrc)
+void CString::Append(const char* psrc)
 {
 	if(psrc)
 	{
-		const Uint32 srclength = qstrlen(psrc);
-		const Uint32 newlength = srclength + m_stringLength;
+		const UInt32 srclength = qstrlen(psrc);
+		const UInt32 newlength = srclength + m_stringLength;
 
 		g_workBufferMutex.lock();
 		CheckBuffer(newlength);
 		g_pWorkBuffer[0] = '\0';
 
 		if(m_pString && m_pString != EMPTY_STRING)
-			sprintf_s(g_pWorkBuffer, g_workBufferSize, "%s%s", m_pString, psrc);
+			ENGINE_SPRINTF_S(g_pWorkBuffer, g_workBufferSize, "%s%s", m_pString, psrc);
 		else
 			qstrcpy_s(g_pWorkBuffer, psrc, g_workBufferSize);
 
@@ -160,18 +160,18 @@ void CString::Append(const Char* psrc)
 //
 // @param c Character to append
 //=============================================
-void CString::Append(Char c)
+void CString::Append(char c)
 {
-	const Uint32 newlength = m_stringLength+1;
+	const UInt32 newlength = m_stringLength+1;
 
 	g_workBufferMutex.lock();
 	CheckBuffer(newlength);
 	g_pWorkBuffer[0] = '\0';
 
 	if(m_pString && m_pString != EMPTY_STRING)
-		sprintf_s(g_pWorkBuffer, g_workBufferSize, "%s%c", m_pString, c);
+		ENGINE_SPRINTF_S(g_pWorkBuffer, g_workBufferSize, "%s%c", m_pString, c);
 	else
-		sprintf_s(g_pWorkBuffer, g_workBufferSize, "%c", c);
+		ENGINE_SPRINTF_S(g_pWorkBuffer, g_workBufferSize, "%c", c);
 
 #ifdef _DEBUG
 	assert(qstrlen(g_pWorkBuffer) == newlength);
@@ -188,21 +188,21 @@ void CString::Append(Char c)
 //=============================================
 void CString::Append(Int32 i)
 {
-	Uint32 absValue = SDL_abs(i);
-	Uint32 logVal = SDL_log10(absValue);
-	Uint32 digitCount = SDL_floor(logVal) + 1;
+	UInt32 absValue = SDL_abs(i);
+	UInt32 logVal = SDL_log10(absValue);
+	UInt32 digitCount = SDL_floor(logVal) + 1;
 	if(i < 0)
 		digitCount++;
 
-	Uint32 newlength = m_stringLength + digitCount;
+	UInt32 newlength = m_stringLength + digitCount;
 
 	g_workBufferMutex.lock();
 	CheckBuffer(newlength);
 
 	if(m_pString && m_pString != EMPTY_STRING)
-		sprintf_s(g_pWorkBuffer, g_workBufferSize, "%s%d", m_pString, i);
+		ENGINE_SPRINTF_S(g_pWorkBuffer, g_workBufferSize, "%s%d", m_pString, i);
 	else
-		sprintf_s(g_pWorkBuffer, g_workBufferSize, "%d", i);
+		ENGINE_SPRINTF_S(g_pWorkBuffer, g_workBufferSize, "%d", i);
 
 #ifdef _DEBUG
 	assert(qstrlen(g_pWorkBuffer) == newlength);
@@ -217,20 +217,20 @@ void CString::Append(Int32 i)
 //
 // @param i Unsigned integer value to append
 //=============================================
-void CString::Append(Uint32 i)
+void CString::Append(UInt32 i)
 {
-	Uint32 logValue = SDL_log10(i);
-	Uint32 digitCount = SDL_floor(logValue) + 1;
-	Uint32 newlength = m_stringLength + digitCount;
+	UInt32 logValue = SDL_log10(i);
+	UInt32 digitCount = SDL_floor(logValue) + 1;
+	UInt32 newlength = m_stringLength + digitCount;
 
 	g_workBufferMutex.lock();
 	CheckBuffer(newlength);
 	g_pWorkBuffer[0] = '\0';
 
 	if(m_pString && m_pString != EMPTY_STRING)
-		sprintf_s(g_pWorkBuffer, g_workBufferSize, "%s%u", m_pString, i);
+		ENGINE_SPRINTF_S(g_pWorkBuffer, g_workBufferSize, "%s%u", m_pString, i);
 	else
-		sprintf_s(g_pWorkBuffer, g_workBufferSize, "%u", i);
+		ENGINE_SPRINTF_S(g_pWorkBuffer, g_workBufferSize, "%u", i);
 
 #ifdef _DEBUG
 	assert(qstrlen(g_pWorkBuffer) == newlength);
@@ -245,25 +245,25 @@ void CString::Append(Uint32 i)
 //
 // @param f Floating point value to append
 //=============================================
-void CString::Append(Float f)
+void CString::Append(float f)
 {
 	// Accounts for negative zero
-	Float baseValue = (f == 0) ? 0 : f; 
+	float baseValue = (f == 0) ? 0 : f; 
 	// Turn to abs so it works with log
-	Float absValue = SDL_fabs(baseValue);
+	float absValue = SDL_fabs(baseValue);
 	// Turn into integer value by flooring it, removing fraction part
-	Float floorValue = SDL_floor(absValue);
+	float floorValue = SDL_floor(absValue);
 	// Get 10 logarythmic value(nb of digits past first digit)
-	Uint32 logarithmicValue = SDL_log10(floorValue);
+	UInt32 logarithmicValue = SDL_log10(floorValue);
 	// Get nb of digits past 1 in integer portion + 1
-	Uint32 integerDigits = logarithmicValue + 1; 
+	UInt32 integerDigits = logarithmicValue + 1; 
 	// Digit count is (int digits) + dot + (six fractional digits)
-	Uint32 digitCount = integerDigits + 1 + 6; 
+	UInt32 digitCount = integerDigits + 1 + 6; 
 	// Account for negative signage
 	if(baseValue < 0) 
 		digitCount++; 
 
-	Uint32 newlength = m_stringLength + digitCount;
+	UInt32 newlength = m_stringLength + digitCount;
 
 	g_workBufferMutex.lock();
 	CheckBuffer(newlength);
@@ -287,27 +287,27 @@ void CString::Append(Float f)
 //=============================================
 // @brief Appends a double float value to the current string
 //
-// @param d Double value to append
+// @param d double value to append
 //=============================================
-void CString::Append(Double d)
+void CString::Append(double d)
 {
 	// Accounts for negative zero
-	Double baseValue = (d == 0) ? 0 : d; 
+	double baseValue = (d == 0) ? 0 : d; 
 	// Turn to abs so it works with log
-	Double absValue = SDL_fabs(baseValue);
+	double absValue = SDL_fabs(baseValue);
 	// Turn into integer value by flooring it, removing fraction part
-	Double floorValue = SDL_floor(absValue);
+	double floorValue = SDL_floor(absValue);
 	// Get 10 logarythmic value(nb of digits past first digit)
-	Uint32 logarithmicValue = SDL_log10(floorValue);
+	UInt32 logarithmicValue = SDL_log10(floorValue);
 	// Get nb of digits past 1 in integer portion + 1
-	Uint32 integerDigits = logarithmicValue + 1; 
+	UInt32 integerDigits = logarithmicValue + 1; 
 	// Digit count is (int digits) + dot + (six fractional digits)
-	Uint32 digitCount = integerDigits + 1 + 6; 
+	UInt32 digitCount = integerDigits + 1 + 6; 
 	// Account for negative signage
 	if(baseValue < 0) 
 		digitCount++; 
 
-	Uint32 newlength = m_stringLength + digitCount;
+	UInt32 newlength = m_stringLength + digitCount;
 
 	g_workBufferMutex.lock();
 	CheckBuffer(newlength);
@@ -332,7 +332,7 @@ void CString::Append(Double d)
 // @brief Sets data for the string
 //
 //=============================================
-void CString::setdata( const Char* pString )
+void CString::setdata( const char* pString )
 {
 	m_stringLength = qstrlen(pString);
 	if(!(m_flags & fl_str_nopooling))
@@ -359,7 +359,7 @@ void CString::setdata( const Char* pString )
 		// Set new one
 		if(pString && m_stringLength > 0)
 		{
-			Char* pstrNew = new Char[m_stringLength+1];
+			char* pstrNew = new char[m_stringLength+1];
 			qstrcpy(pstrNew, pString);
 			m_pString = pstrNew;
 		}
@@ -374,13 +374,13 @@ void CString::setdata( const Char* pString )
 // @brief Ensures work buffer is of adequate size
 //
 //=============================================
-void CString::CheckBuffer( Uint32 length )
+void CString::CheckBuffer( UInt32 length )
 {
-	Uint32 fullLength = length+1;
+	UInt32 fullLength = length+1;
 	if(g_workBufferSize >= fullLength)
 		return;
 
-	g_pWorkBuffer = new Char[fullLength];
-	memset(g_pWorkBuffer, 0, sizeof(Char)*fullLength);
+	g_pWorkBuffer = new char[fullLength];
+	memset(g_pWorkBuffer, 0, sizeof(char)*fullLength);
 	g_workBufferSize = fullLength;
 }

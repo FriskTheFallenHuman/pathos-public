@@ -29,9 +29,9 @@ All Rights Reserved.
 //
 
 // Mirror FBO resolution
-const Uint32 CMirrorManager::MIRROR_FBO_SIZE = 1024;
+const UInt32 CMirrorManager::MIRROR_FBO_SIZE = 1024;
 // Mirror render-to-texture resolution
-const Uint32 CMirrorManager::MIRROR_RTT_SIZE = 512;
+const UInt32 CMirrorManager::MIRROR_RTT_SIZE = 512;
 
 // Class definition
 CMirrorManager gMirrorManager;
@@ -113,7 +113,7 @@ bool CMirrorManager::InitGL( void )
 
 	if(!m_mirrorsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_mirrorsArray.size(); i++)
+		for(UInt32 i = 0; i < m_mirrorsArray.size(); i++)
 		{
 			if(!AllocTextures(m_mirrorsArray[i]))
 			{
@@ -133,7 +133,7 @@ void CMirrorManager::ClearGL( void )
 {
 	if(!m_mirrorsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_mirrorsArray.size(); i++)
+		for(UInt32 i = 0; i < m_mirrorsArray.size(); i++)
 		{
 			if(m_mirrorsArray[i]->pfbo)
 			{
@@ -172,7 +172,7 @@ void CMirrorManager::ClearGame( void )
 {
 	if(!m_mirrorsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_mirrorsArray.size(); i++)
+		for(UInt32 i = 0; i < m_mirrorsArray.size(); i++)
 		{
 			if(m_mirrorsArray[i]->pfbo)
 			{
@@ -301,7 +301,7 @@ void CMirrorManager::AllocNewMirror( cl_entity_t* pentity )
 	pmirror->mins = NULL_MINS;
 	pmirror->maxs = NULL_MAXS;
 
-	for(Uint32 i = 0; i < psurf->numedges; i++)
+	for(UInt32 i = 0; i < psurf->numedges; i++)
 	{
 		Vector vertexpos;
 		Int32 e_index = ens.pworld->psurfedges[psurf->firstedge+i];
@@ -310,7 +310,7 @@ void CMirrorManager::AllocNewMirror( cl_entity_t* pentity )
 		else
 			Math::VectorCopy(ens.pworld->pvertexes[ens.pworld->pedges[-e_index].vertexes[1]].origin, vertexpos);
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			if(pmirror->mins[j] > vertexpos[j])
 				pmirror->mins[j] = vertexpos[j];
@@ -334,13 +334,13 @@ void CMirrorManager::AllocNewMirror( cl_entity_t* pentity )
 	pmirror->psurface = psurf;
 
 	// Set up VBO data
-	Uint32 numverts = 3+(psurf->numedges-3)*3;
+	UInt32 numverts = 3+(psurf->numedges-3)*3;
 	mirror_vertex_t *pvertexes = new mirror_vertex_t[numverts];
 
 	Vector vertexes[3];
-	Uint32 dstvertindex = 0;
-	Uint32 srcvertindex = 0;
-	for(Uint32 i = 0; i < 3; i++)
+	UInt32 dstvertindex = 0;
+	UInt32 srcvertindex = 0;
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		Vector vertexpos;
 		Int32 e_index = ens.pworld->psurfedges[psurf->firstedge+srcvertindex];
@@ -351,7 +351,7 @@ void CMirrorManager::AllocNewMirror( cl_entity_t* pentity )
 
 		Math::VectorCopy(vertexpos, vertexes[i]);
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			pvertexes[dstvertindex].origin[j] = vertexes[i][j];
 
 		pvertexes[dstvertindex].origin[3] = 1.0;
@@ -360,7 +360,7 @@ void CMirrorManager::AllocNewMirror( cl_entity_t* pentity )
 		srcvertindex++;
 	}
 
-	for(Uint32 i = 0; i < (psurf->numedges-3); i++)
+	for(UInt32 i = 0; i < (psurf->numedges-3); i++)
 	{
 		Vector vertexpos;
 		Int32 e_index = ens.pworld->psurfedges[psurf->firstedge+srcvertindex];
@@ -372,9 +372,9 @@ void CMirrorManager::AllocNewMirror( cl_entity_t* pentity )
 		Math::VectorCopy(vertexes[2], vertexes[1]);
 		Math::VectorCopy(vertexpos, vertexes[2]);
 
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 				pvertexes[dstvertindex].origin[k] = vertexes[j][k];
 
 			pvertexes[dstvertindex].origin[3] = 1.0;
@@ -424,7 +424,7 @@ bool CMirrorManager::DrawMirrorPasses( void )
 	// error tracking
 	bool result = true;
 
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t *pentity = rns.objects.pvisents_unsorted[i];
 
@@ -469,10 +469,10 @@ bool CMirrorManager::DrawMirrorPasses( void )
 //=============================================
 void CMirrorManager::SetupClipping( void )
 {
-	Float	dot;
-	Float	eq1[4];
-	Float	eq2[4];
-	Float	projection[16];
+	float	dot;
+	float	eq1[4];
+	float	eq2[4];
+	float	projection[16];
 
 	Vector	vDist;
 	Vector	vForward;
@@ -504,7 +504,7 @@ void CMirrorManager::SetupClipping( void )
 	R_SetProjectionMatrix(rns.view.nearclip, rns.view.fov);
 
 	// Change current projection matrix into an oblique projection matrix
-	memcpy(projection, rns.view.projection.Transpose(), sizeof(Float)*16);
+	memcpy(projection, rns.view.projection.Transpose(), sizeof(float)*16);
 
 	eq2[0] = (sgn(eq1[0]) + projection[8]) / projection[0];
 	eq2[1] = (sgn(eq1[1]) + projection[9]) / projection[5];
@@ -530,7 +530,7 @@ void CMirrorManager::SetupMirrorPass( void )
 	Vector forward;
 	Math::AngleVectors(rns.view.params.v_angles, &forward, nullptr, nullptr);
 
-	Float flDist = Math::DotProduct(rns.view.params.v_origin, m_pCurrentMirror->psurface->pplane->normal) -  m_pCurrentMirror->psurface->pplane->dist;
+	float flDist = Math::DotProduct(rns.view.params.v_origin, m_pCurrentMirror->psurface->pplane->normal) -  m_pCurrentMirror->psurface->pplane->dist;
 	Math::VectorMA(rns.view.params.v_origin, -2*flDist, m_pCurrentMirror->psurface->pplane->normal, m_mirrorParams.v_origin);
 
 	if (m_pCurrentMirror->psurface->flags & SURF_PLANEBACK)
@@ -613,7 +613,7 @@ bool CMirrorManager::DrawMirrors( void )
 	{
 		result = m_pShader->SetDeterminator(m_attribs.d_fog, 1);
 		m_pShader->SetUniform3f(m_attribs.u_fogcolor, rns.fog.settings.color[0], rns.fog.settings.color[1], rns.fog.settings.color[2]);
-		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<Float>(rns.fog.settings.end)- static_cast<Float>(rns.fog.settings.start)));
+		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<float>(rns.fog.settings.end)- static_cast<float>(rns.fog.settings.start)));
 	}
 	else
 	{
@@ -633,7 +633,7 @@ bool CMirrorManager::DrawMirrors( void )
 	m_pShader->SetUniformMatrix4fv(m_attribs.u_projection, rns.view.projection.GetMatrix());
 	m_pShader->SetUniformMatrix4fv(m_attribs.u_mirrormatrix, rns.view.modelview.GetMatrix());
 
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t *pentity = rns.objects.pvisents_unsorted[i];
 		if(pentity->curstate.rendertype != RT_MIRROR)

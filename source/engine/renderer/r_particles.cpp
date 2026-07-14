@@ -49,7 +49,7 @@ All Rights Reserved.
 CParticleEngine gParticleEngine;
 
 // Particle texture base path
-static const Char PARTICLE_TEXTURES_PATH[] = "particles/";
+static const char PARTICLE_TEXTURES_PATH[] = "particles/";
 
 //====================================
 //
@@ -340,7 +340,7 @@ particle_system_t *CParticleEngine::AllocSystem( void )
 //====================================
 //
 //====================================
-__forceinline cl_particle_t *CParticleEngine::AllocParticle( particle_system_t *psystem )
+FORCE_INLINE cl_particle_t *CParticleEngine::AllocParticle( particle_system_t *psystem )
 {
 	if(!m_pFreeParticles)
 		AllocParticles();
@@ -364,7 +364,7 @@ __forceinline cl_particle_t *CParticleEngine::AllocParticle( particle_system_t *
 //====================================
 //
 //====================================
-void CParticleEngine::CreateCluster( const Char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, cl_entity_t *pentity, entindex_t entindex, Uint32 attachment, Int32 boneindex, Int32 attachflags )
+void CParticleEngine::CreateCluster( const char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, cl_entity_t *pentity, entindex_t entindex, Uint32 attachment, Int32 boneindex, Int32 attachflags )
 {
 	const script_cache_t* pFile = PrecacheScript(PART_SCRIPT_CLUSTER, szPath, nullptr);
 	if(!pFile)
@@ -380,7 +380,7 @@ void CParticleEngine::CreateCluster( const Char *szPath, const Vector& origin, c
 //====================================
 //
 //====================================
-particle_system_t *CParticleEngine::CreateSystem( const Char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, particle_system_t *parent, cl_entity_t *entity, entindex_t entindex, Uint32 attachment, Int32 boneindex, Int32 attachflags )
+particle_system_t *CParticleEngine::CreateSystem( const char *szPath, const Vector& origin, const Vector& dir, Uint32 iId, particle_system_t *parent, cl_entity_t *entity, entindex_t entindex, Uint32 attachment, Int32 boneindex, Int32 attachflags )
 {
 	if(!qstrlen(szPath))
 		return nullptr;
@@ -505,7 +505,7 @@ particle_system_t *CParticleEngine::CreateSystem( const Char *szPath, const Vect
 //====================================
 //
 //====================================
-bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstrData )
+bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const char* pstrData )
 {
 	// Parse JSON
 	parse_options opts;
@@ -538,14 +538,14 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 		return CString();
 	};
 
-	auto readFloat = [&](const char* key, Float& out) -> bool
+	auto readFloat = [&](const char* key, float& out) -> bool
 	{
 		if(obj->has_key(key))
 		{
 			const TJValue* val = obj->try_get_value(key);
 			if(val && val->is_number())
 			{
-				out = static_cast<Float>(val->get_float());
+				out = static_cast<float>(val->get_float());
 				return true;
 			}
 		}
@@ -598,9 +598,9 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 				const TJValueArray* arr = static_cast<const TJValueArray*>(val);
 				if(arr->get_number_of_items() >= 3)
 				{
-					out.x = static_cast<Float>(arr->at(0)->get_number()) / 255.0f;
-					out.y = static_cast<Float>(arr->at(1)->get_number()) / 255.0f;
-					out.z = static_cast<Float>(arr->at(2)->get_number()) / 255.0f;
+					out.x = static_cast<float>(arr->at(0)->get_number()) / 255.0f;
+					out.y = static_cast<float>(arr->at(1)->get_number()) / 255.0f;
+					out.z = static_cast<float>(arr->at(2)->get_number()) / 255.0f;
 					return true;
 				}
 			}
@@ -948,7 +948,7 @@ bool CParticleEngine::LoadSystemScript( script_cache_t* pCache, const Char* pstr
 //====================================
 //
 //====================================
-bool CParticleEngine::LoadClusterScript( script_cache_t* pCache, const Char* pstrData )
+bool CParticleEngine::LoadClusterScript( script_cache_t* pCache, const char* pstrData )
 {
 	parse_options opts;
 	opts.throw_exception = false;
@@ -1025,7 +1025,7 @@ bool CParticleEngine::LoadClusterScript( script_cache_t* pCache, const Char* pst
 //====================================
 //
 //====================================
-const script_cache_t *CParticleEngine::PrecacheScript( Int32 type, const Char *name, CArray<CString>* pLoadList )
+const script_cache_t *CParticleEngine::PrecacheScript( Int32 type, const char *name, CArray<CString>* pLoadList )
 {
 	if(type != PART_SCRIPT_SYSTEM && type != PART_SCRIPT_CLUSTER)
 	{
@@ -1058,7 +1058,7 @@ const script_cache_t *CParticleEngine::PrecacheScript( Int32 type, const Char *n
 	if(rns.isgameready)
 		Con_WPrintf("Late precache of '%s'.\n", filepath.c_str());
 
-	const Char *pFile = reinterpret_cast<const Char *>(FL_LoadFile(filepath.c_str()));
+	const char *pFile = reinterpret_cast<const char *>(FL_LoadFile(filepath.c_str()));
 	if(!pFile)
 	{
 		Con_WPrintf("Could not load script '%s'.\n", filepath.c_str());
@@ -1172,7 +1172,7 @@ void CParticleEngine::EnvironmentCreateFirst( particle_system_t *psystem )
 //====================================
 //
 //====================================
-cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Float *pflorigin, Float *pflnormal )
+cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, float *pflorigin, float *pflnormal )
 {
 	static trace_t tr;
 	Vector vbaseorigin, realorigin;
@@ -1215,8 +1215,8 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 
 			// Turn it into a parabole, where at max distance we spawn at
 			// the height of the player's origin(aka center)
-			Float fraction = (offset.Length2D()/pdefinition->systemsize);
-			fraction = clamp(fraction, 0.0, 1.0);
+			float fraction = (offset.Length2D()/pdefinition->systemsize);
+			fraction = Clamp(fraction, 0.0, 1.0);
 
 			// The degree of parabolic shift depends on distance from center(player)
 			offset[2] = (1.0 - fraction) * (offset[2] - pplayer->curstate.origin[2]);
@@ -1458,8 +1458,8 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 			Int32 row = (iframe/numframesx)%numframesy;
 
 			// Calculate these only once
-			Float fracwidth = static_cast<Float>(pdefinition->framesizex)/static_cast<Float>(pTexture->width);
-			Float fracheight = static_cast<Float>(pdefinition->framesizey)/static_cast<Float>(pTexture->height);
+			float fracwidth = static_cast<float>(pdefinition->framesizex)/static_cast<float>(pTexture->width);
+			float fracheight = static_cast<float>(pdefinition->framesizey)/static_cast<float>(pTexture->height);
 
 			// Calculate top left coordinate
 			pparticle->texcoords[0][0] = (column+1)*fracwidth;
@@ -1499,7 +1499,7 @@ cl_particle_t *CParticleEngine::CreateParticle( particle_system_t *psystem, Floa
 
 			if(pdefinition->maxlight || pdefinition->minlight)
 			{
-				Float illum = (pparticle->lightcol[0] + pparticle->lightcol[1] + pparticle->lightcol[2])/3;
+				float illum = (pparticle->lightcol[0] + pparticle->lightcol[1] + pparticle->lightcol[2])/3;
 
 				if(pdefinition->minlight)
 				{
@@ -1610,12 +1610,12 @@ void CParticleEngine::Update( void )
 
 		if(!psystem->parententity && !psystem->parentsystem && psystem->pdefinition->shapetype != shape_playerplane)
 		{
-			Float maxdiff = 0;
+			float maxdiff = 0;
 			if(psystem->numleaves > 0)
 			{
 				for(Uint32 i = 0; i < 3; i++)
 				{
-					Float diff = SDL_fabs(psystem->mins[i] - psystem->lastmins[i]);
+					float diff = SDL_fabs(psystem->mins[i] - psystem->lastmins[i]);
 					if(diff > maxdiff)
 						maxdiff = diff;
 
@@ -1740,7 +1740,7 @@ void CParticleEngine::UpdateSystems( void )
 		}
 
 		// Get base frequency for potential modification
-		Float particlefreq = psystem->particlefreq;
+		float particlefreq = psystem->particlefreq;
 
 		// Manage soft turnoff
 		if(psystem->softoffbegintime)
@@ -1752,15 +1752,15 @@ void CParticleEngine::UpdateSystems( void )
 				continue;
 			}
 
-			Float fraction = 1.0 - ((rns.time - psystem->softoffbegintime) / pdefinition->softofftime);
-			fraction = clamp(fraction, 0.0, 1.0);
+			float fraction = 1.0 - ((rns.time - psystem->softoffbegintime) / pdefinition->softofftime);
+			fraction = Clamp(fraction, 0.0, 1.0);
 
 			particlefreq *= fraction;
 		}
 
 		// Determine how many we've spawned
-		Float life = rns.time - psystem->spawntime;
-		Float freq = 1/ static_cast<Float>(particlefreq);
+		float life = rns.time - psystem->spawntime;
+		float freq = 1/ static_cast<float>(particlefreq);
 		Uint64 itimesspawn = life/freq;
 
 		if(itimesspawn <= psystem->numspawns)
@@ -1954,7 +1954,7 @@ Vector CParticleEngine::LightForParticle( cl_particle_t *pparticle )
 		TransformRelativeVector(vorigin, pparticle->psystem, vorigin, true, false);
 	}
 
-	Float fldist = (pparticle->origin - pparticle->last_light).Length2D();
+	float fldist = (pparticle->origin - pparticle->last_light).Length2D();
 	if(fldist > LIGHTCHECK_DISTANCE)
 	{
 		color = R_GetLightingForPosition(vorigin, ZERO_VECTOR);
@@ -1966,7 +1966,7 @@ Vector CParticleEngine::LightForParticle( cl_particle_t *pparticle )
 
 	if(pdefinition->maxlight || pdefinition->minlight)
 	{
-		Float illum = (color[0] + color[1] + color[2])/3;
+		float illum = (color[0] + color[1] + color[2])/3;
 
 		if(pdefinition->minlight)
 		{
@@ -1993,7 +1993,7 @@ Vector CParticleEngine::LightForParticle( cl_particle_t *pparticle )
 //====================================
 //
 //====================================
-__forceinline Int32 CParticleEngine::CheckWater( const Vector& origin )
+FORCE_INLINE Int32 CParticleEngine::CheckWater( const Vector& origin )
 {
 	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
 	{
@@ -2096,9 +2096,9 @@ bool CParticleEngine::CheckCollision( Vector& vecOrigin, Vector& vecVelocity, pa
 		cl_entity_t *pEntity = rns.objects.pvisents[waterEntity];
 
 		// Determine impact z coord
-		Float impactZCoordinate = pEntity->curstate.origin.z + pEntity->pmodel->maxs.z + 0.1;
+		float impactZCoordinate = pEntity->curstate.origin.z + pEntity->pmodel->maxs.z + 0.1;
 		// Calculate fraction based on this
-		Float distanceFraction = (SDL_fabs(impactZCoordinate - vecOrigin.z)) / (SDL_fabs(testPosition.z - vecOrigin.z));
+		float distanceFraction = (SDL_fabs(impactZCoordinate - vecOrigin.z)) / (SDL_fabs(testPosition.z - vecOrigin.z));
 
 		Math::VectorScale(vecOrigin, (1.0 - distanceFraction), tr.endpos);
 		Math::VectorMA(tr.endpos, distanceFraction, testPosition, tr.endpos);
@@ -2147,7 +2147,7 @@ bool CParticleEngine::CheckCollision( Vector& vecOrigin, Vector& vecVelocity, pa
 	}
 	else if(pdefinition->collision == collide_bounce)
 	{
-		Float fProj = Math::DotProduct(vecVelocity, tr.plane.normal);
+		float fProj = Math::DotProduct(vecVelocity, tr.plane.normal);
 		Math::VectorMA(vecVelocity, -fProj*2, tr.plane.normal, pparticle->velocity);
 		Math::VectorScale(pparticle->velocity, pdefinition->impactdamp, pparticle->velocity);
 		Math::VectorScale(vecVelocity, tr.fraction, vecVelocity);
@@ -2427,8 +2427,8 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 	{
 		if((pparticle->spawntime + pparticle->fadein) > rns.time)
 		{
-			Double fadetime = pparticle->spawntime + pparticle->fadein;
-			Double timetofade = fadetime - rns.time;
+			double fadetime = pparticle->spawntime + pparticle->fadein;
+			double timetofade = fadetime - rns.time;
 
 			pparticle->alpha = 1.0 - (timetofade/pparticle->fadein);
 		}
@@ -2441,9 +2441,9 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 	{
 		if((pparticle->fadeoutdelay + pparticle->spawntime) < rns.time)
 		{
-			Float deathtime = pparticle->life - rns.time;
-			Float fadetime = pparticle->fadeoutdelay + pparticle->spawntime;
-			Float fadedelta = pparticle->life - fadetime;
+			float deathtime = pparticle->life - rns.time;
+			float fadetime = pparticle->fadeoutdelay + pparticle->spawntime;
+			float fadedelta = pparticle->life - fadetime;
 
 			pparticle->alpha = deathtime/fadedelta;
 		}
@@ -2454,8 +2454,8 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 	//
 	if(pdefinition->fadedistfar && pdefinition->fadedistnear)
 	{
-		Float dist = (vbaseorigin - Vector(rns.view.params.v_origin)).Length();
-		Float alpha = 1.0-((pdefinition->fadedistfar - dist)/(pdefinition->fadedistfar-pdefinition->fadedistnear));
+		float dist = (vbaseorigin - Vector(rns.view.params.v_origin)).Length();
+		float alpha = 1.0-((pdefinition->fadedistfar - dist)/(pdefinition->fadedistfar-pdefinition->fadedistnear));
 
 		if( alpha < 0 ) alpha = 0;
 		if( alpha > 1 ) alpha = 1;
@@ -2479,8 +2479,8 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 	{
 		if ((pparticle->secondarydelay < rns.time) && (rns.time < (pparticle->secondarydelay + pparticle->secondarytime)))
 		{
-			Float fulltime = (pparticle->secondarydelay + pparticle->secondarytime) - rns.time;
-			Float coldelta = fulltime / pparticle->secondarytime;
+			float fulltime = (pparticle->secondarydelay + pparticle->secondarytime) - rns.time;
+			float coldelta = fulltime / pparticle->secondarytime;
 
 			pparticle->color[0] = pparticle->scolor[0] * (1.0 - coldelta) + pdefinition->primarycolor[0] * coldelta;
 			pparticle->color[1] = pparticle->scolor[1] * (1.0 - coldelta) + pdefinition->primarycolor[1] * coldelta;
@@ -2503,7 +2503,7 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 
 			for(Uint32 i = 0; i < inumtraces; i++)
 			{
-				Float fraction = (i+1)/ static_cast<Float>(inumtraces);
+				float fraction = (i+1)/ static_cast<float>(inumtraces);
 				Math::VectorMA(pparticle->lastspawn, fraction, vdirection, vorigin);
 
 				Vector direction = pparticle->velocity;
@@ -2537,8 +2537,8 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 			Int32 row = (iframe/numframesx)%numframesy;
 
 			// Calculate these only once
-			Float fracwidth = static_cast<Float>(pdefinition->framesizex)/ static_cast<Float>(pTexture->width);
-			Float fracheight = static_cast<Float>(pdefinition->framesizey)/ static_cast<Float>(pTexture->height);
+			float fracwidth = static_cast<float>(pdefinition->framesizex)/ static_cast<float>(pTexture->width);
+			float fracheight = static_cast<float>(pdefinition->framesizey)/ static_cast<float>(pTexture->height);
 
 			// Calculate top left coordinate
 			pparticle->texcoords[0][0] = (column+1)*fracwidth;
@@ -2562,10 +2562,10 @@ bool CParticleEngine::UpdateParticle( cl_particle_t *pparticle )
 	}
 
 	// Update mins/maxs of the parent system
-	Float size = pparticle->scale * 0.5;
+	float size = pparticle->scale * 0.5;
 	for(Uint32 i = 0; i < 3; i++)
 	{
-		Float coord = pparticle->origin[i] + size;
+		float coord = pparticle->origin[i] + size;
 		if(coord > psystem->maxs[i])
 			psystem->maxs[i] = coord;
 
@@ -2613,7 +2613,7 @@ void CParticleEngine::GetLights( particle_system_t *psystem, cl_dlight_t **pligh
 	for(Uint32 i = 0; i < max; i++)
 	{
 		cl_dlight_t *lastnearest = nullptr;
-		Float lastnearestdist = 0;
+		float lastnearestdist = 0;
 
 		CLinkedList<cl_dlight_t*>& dlList = gDynamicLights.GetLightList();
 
@@ -2653,7 +2653,7 @@ void CParticleEngine::GetLights( particle_system_t *psystem, cl_dlight_t **pligh
 				continue;
 			}
 
-			Float fldistance = (pdl->origin - vsysorigin).Length();
+			float fldistance = (pdl->origin - vsysorigin).Length();
 			if(!lastnearest || lastnearestdist > fldistance)
 			{
 				if((*numlights) > 0)
@@ -2693,7 +2693,7 @@ void CParticleEngine::GetLights( particle_system_t *psystem, cl_dlight_t **pligh
 //====================================
 //
 //====================================
-__forceinline void CParticleEngine::BatchVertex( cl_particle_t *pparticle, const Vector& vertex, Float alpha,  Int32 tc )
+FORCE_INLINE void CParticleEngine::BatchVertex( cl_particle_t *pparticle, const Vector& vertex, float alpha,  Int32 tc )
 {
 	particle_vertex_t *pvert = &m_pVertexes[m_numVertexes];
 	m_numVertexes++;
@@ -2711,10 +2711,10 @@ __forceinline void CParticleEngine::BatchVertex( cl_particle_t *pparticle, const
 //====================================
 //
 //====================================
-__forceinline bool CParticleEngine::ClipTracer( const Vector &start, const Vector &delta, Vector &clippedStart, Vector &clippedDelta )
+FORCE_INLINE bool CParticleEngine::ClipTracer( const Vector &start, const Vector &delta, Vector &clippedStart, Vector &clippedDelta )
 {
-	Float dist1 = -start[2];
-	Float dist2 = dist1 - delta[2];
+	float dist1 = -start[2];
+	float dist2 = dist1 - delta[2];
 
 	// Clipped, skip this tracer
 	if ( dist1 <= 0 && dist2 <= 0 )
@@ -2726,7 +2726,7 @@ __forceinline bool CParticleEngine::ClipTracer( const Vector &start, const Vecto
 	// Needs to be clipped
 	if ( dist1 <= 0 || dist2 <= 0 )
 	{
-		Float fraction = dist2 - dist1;
+		float fraction = dist2 - dist1;
 
 		// Too close to clipping plane
 		if ( fraction < 1e-3 && fraction > -1e-3 )
@@ -2746,7 +2746,7 @@ __forceinline bool CParticleEngine::ClipTracer( const Vector &start, const Vecto
 //====================================
 //
 //====================================
-void CParticleEngine::BatchParticle( cl_particle_t *pparticle, Float flup, Float flright, const Float *pfltranspose )
+void CParticleEngine::BatchParticle( cl_particle_t *pparticle, float flup, float flright, const float *pfltranspose )
 {
 	// make these static, might save on performance
 	Vector start, delta, clippedStart, clippedDelta;
@@ -2755,7 +2755,7 @@ void CParticleEngine::BatchParticle( cl_particle_t *pparticle, Float flup, Float
 	Vector vorigin, vangles, normal, vpoint;
 	Vector vmins, vmaxs;
 
-	Float sqLength;
+	float sqLength;
 
 	Math::VectorCopy(pparticle->origin, vorigin);
 
@@ -2799,7 +2799,7 @@ void CParticleEngine::BatchParticle( cl_particle_t *pparticle, Float flup, Float
 		else if (pdefinition->lighting_flags & PARTICLE_LIGHTCHECK_INTENSITY)
 		{
 			Vector color = LightForParticle(pparticle);
-			Float avg = (color[0] + color[1] + color[2]) / 3;
+			float avg = (color[0] + color[1] + color[2]) / 3;
 			pparticle->color.x = pdefinition->primarycolor.x * avg;
 			pparticle->color.y = pdefinition->primarycolor.y * avg;
 			pparticle->color.z = pdefinition->primarycolor.z * avg;
@@ -2839,7 +2839,7 @@ void CParticleEngine::BatchParticle( cl_particle_t *pparticle, Float flup, Float
 		Math::AngleVectors(vangles, nullptr, &m_vRRight, &m_vRUp);
 	}
 
-	Float alpha = pparticle->alpha*pdefinition->mainalpha;
+	float alpha = pparticle->alpha*pdefinition->mainalpha;
 	if(pdefinition->alignment == align_parallel)
 	{
 		vpoint = vorigin + m_vRUp * flup * pparticle->scale * 2;
@@ -2926,7 +2926,7 @@ bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 
 	CMatrix matrix;
 	CMatrix modelview(rns.view.modelview.GetMatrix());
-	const Float *fltranspose = modelview.GetMatrix();
+	const float *fltranspose = modelview.GetMatrix();
 
 	m_numParticles = m_numVertexes = m_numIndexes = 0;
 
@@ -3016,17 +3016,17 @@ bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 		}
 
 		// Calculate up and right scalers
-		Float up, right;
+		float up, right;
 		if(pdefinition->numframes)
 		{
 			if(pdefinition->framesizex > pdefinition->framesizey)
 			{
-				up = static_cast<Float>(pdefinition->framesizey)/static_cast<Float>(pdefinition->framesizex);
+				up = static_cast<float>(pdefinition->framesizey)/static_cast<float>(pdefinition->framesizex);
 				right = 1.0;
 			}
 			else
 			{
-				right = static_cast<Float>(pdefinition->framesizex)/static_cast<Float>(pdefinition->framesizey);
+				right = static_cast<float>(pdefinition->framesizex)/static_cast<float>(pdefinition->framesizey);
 				up = 1.0;
 			}
 		}
@@ -3034,12 +3034,12 @@ bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 		{
 			if(psystem->ptexture->width > psystem->ptexture->height)
 			{
-				up = static_cast<Float>(psystem->ptexture->height)/static_cast<Float>(psystem->ptexture->width);
+				up = static_cast<float>(psystem->ptexture->height)/static_cast<float>(psystem->ptexture->width);
 				right = 1.0;
 			}
 			else
 			{
-				right = static_cast<Float>(psystem->ptexture->width)/static_cast<Float>(psystem->ptexture->height);
+				right = static_cast<float>(psystem->ptexture->width)/static_cast<float>(psystem->ptexture->height);
 				up = 1.0;
 			}
 		}
@@ -3097,7 +3097,7 @@ bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 	{
 		result = m_pShader->SetDeterminator(m_attribs.d_fog, 1, false);
 		m_pShader->SetUniform3f(m_attribs.u_fogcolor, rns.fog.settings.color[0], rns.fog.settings.color[1], rns.fog.settings.color[2]);
-		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<Float>(rns.fog.settings.end)-static_cast<Float>(rns.fog.settings.start)));
+		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<float>(rns.fog.settings.end)-static_cast<float>(rns.fog.settings.start)));
 	}
 	else
 	{
@@ -3179,7 +3179,7 @@ bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 				}
 				else if(pdefinition->lighting_flags & PARTICLE_LIGHTCHECK_INTENSITY)
 				{
-					Float avg = (psystem->pdlights[i]->color[0]+psystem->pdlights[i]->color[1]+psystem->pdlights[i]->color[2])/3;
+					float avg = (psystem->pdlights[i]->color[0]+psystem->pdlights[i]->color[1]+psystem->pdlights[i]->color[2])/3;
 					vcolor.x = psystem->pdlights[i]->color.x*avg;
 					vcolor.y = psystem->pdlights[i]->color.y*avg;
 					vcolor.z = psystem->pdlights[i]->color.z*avg;
@@ -3214,7 +3214,7 @@ bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 				}
 				else if(pdefinition->lighting_flags & PARTICLE_LIGHTCHECK_INTENSITY)
 				{
-					Float avg = (psystem->pspotlights[i]->color[0]+psystem->pspotlights[i]->color[1]+psystem->pspotlights[i]->color[2])/3;
+					float avg = (psystem->pspotlights[i]->color[0]+psystem->pspotlights[i]->color[1]+psystem->pspotlights[i]->color[2])/3;
 					vcolor.x = psystem->pspotlights[i]->color.x*avg;
 					vcolor.y = psystem->pspotlights[i]->color.y*avg;
 					vcolor.z = psystem->pspotlights[i]->color.z*avg;
@@ -3250,7 +3250,7 @@ bool CParticleEngine::DrawParticles( prt_render_pass_e pass )
 				matrix.Translate(0.5, 0.5, 0.5);
 				matrix.Scale(0.5, 0.5, 0.5);
 
-				Float flsize = tan((M_PI/360) * psystem->pspotlights[i]->cone_size);
+				float flsize = tan((M_PI/360) * psystem->pspotlights[i]->cone_size);
 				matrix.SetFrustum(-flsize, flsize, -flsize, flsize, 1, psystem->pspotlights[i]->radius);
 
 				Vector vforward, vtarget;
@@ -3588,7 +3588,7 @@ void CParticleEngine::RemoveSystem( entindex_t entindex, Int32 iId, bool keepcac
 //====================================
 //
 //====================================
-__forceinline void CParticleEngine::RemoveParticle( cl_particle_t *particle )
+FORCE_INLINE void CParticleEngine::RemoveParticle( cl_particle_t *particle )
 {
 	if(particle->prev) particle->prev->next = particle->next;
 	else particle->psystem->pparticleheader = particle->next;
@@ -3601,7 +3601,7 @@ __forceinline void CParticleEngine::RemoveParticle( cl_particle_t *particle )
 //====================================
 //
 //====================================
-void CParticleEngine::CacheCreateSystem( const Vector& origin, const Vector& direction, part_script_type_t scripttype, const Char* pstrFilepath, Uint32 id, entindex_t entindex, Int32 attachment, Int32 boneindex, Int32 attachflags )
+void CParticleEngine::CacheCreateSystem( const Vector& origin, const Vector& direction, part_script_type_t scripttype, const char* pstrFilepath, Uint32 id, entindex_t entindex, Int32 attachment, Int32 boneindex, Int32 attachflags )
 {
 	part_msg_cache_t newcache;
 

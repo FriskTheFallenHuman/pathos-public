@@ -70,7 +70,7 @@ void Cmd_LoadMap( void )
 	}
 
 	// Verify that the file exists before resetting
-	const Char* pstrFilename = gCommands.Cmd_Argv(1);
+	const char* pstrFilename = gCommands.Cmd_Argv(1);
 	CString filepath;
 	filepath << "maps/" << pstrFilename;
 	if(!qstrstr(pstrFilename, ".bsp"))
@@ -121,7 +121,7 @@ void Cmd_ListMaps()
 	}
 
 	Con_Printf("List of maps found under search path '%s':\n", searchPath.c_str());
-	for (Uint32 i = 0; i < mapNames.size(); ++i)
+	for (UInt32 i = 0; i < mapNames.size(); ++i)
 		Con_Printf("%d - %s.\n", (i+1), mapNames[i].c_str());
 
 	Con_Printf("%d files found total.\n", mapNames.size());
@@ -267,13 +267,13 @@ void Cmd_AutoSave( void )
 
 	// Check for arguments
 	bool persistentSave = false;
-	Uint32 argCount = gCommands.Cmd_Argc();
+	UInt32 argCount = gCommands.Cmd_Argc();
 	if(argCount >= 2)
 	{
-		Uint32 i = 1;
+		UInt32 i = 1;
 		while(i < argCount)
 		{
-			const Char* pstrArg = gCommands.Cmd_Argv(i);
+			const char* pstrArg = gCommands.Cmd_Argv(i);
 			if(!qstrcmp(pstrArg, "persistent"))
 				persistentSave = true;
 			else
@@ -526,11 +526,11 @@ void Cmd_Snapshot( void )
 		return;
 	}
 
-	Uint32 width = gWindow.GetWidth();
-	Uint32 height = gWindow.GetHeight();
+	UInt32 width = gWindow.GetWidth();
+	UInt32 height = gWindow.GetHeight();
 
-	Uint32 size = width*height*3;
-	byte* ppixeldata = new byte[size];
+	UInt32 size = width*height*3;
+	Byte* ppixeldata = new Byte[size];
 
 	glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, ppixeldata);
 
@@ -549,20 +549,20 @@ void Cmd_Snapshot( void )
 	}
 
 	// Buffer containing TGA file data
-	Uint32 bufferAllocSize = width*height*3 + sizeof(tga_header_t);
+	UInt32 bufferAllocSize = width*height*3 + sizeof(tga_header_t);
 	CBuffer tgaDataBuffer(bufferAllocSize);
 
 	// Build file path
 	CString outputname;
 	outputname << "screenshots" << PATH_SLASH_CHAR << filenamebase << "-" << "%number%" << ".tga";
 
-	Uint32 compressionPercentage = 0;
+	UInt32 compressionPercentage = 0;
 	TGA_BuildFile(ppixeldata, 3, width, height, tgaDataBuffer, &compressionPercentage, false);
 	Con_DPrintf("Created snapshot with %d percent compression.\n", compressionPercentage);
 	delete[] ppixeldata;
 
-	Uint32 finalSize = tgaDataBuffer.getdatasize();
-	byte* pfinaldata = new byte[finalSize];
+	UInt32 finalSize = tgaDataBuffer.getdatasize();
+	Byte* pfinaldata = new Byte[finalSize];
 	memcpy(pfinaldata, tgaDataBuffer.getbufferdata(), finalSize);
 
 	if(!FWT_AddFile(outputname.c_str(), pfinaldata, finalSize, true, true))
@@ -640,8 +640,8 @@ void Cmd_ChangeLevel( void )
 		return;
 	}
 
-	const Char* pstrLevelName = gCommands.Cmd_Argv(1);
-	const Char* pstrLandmarkName = gCommands.Cmd_Argv(2);
+	const char* pstrLevelName = gCommands.Cmd_Argv(1);
+	const char* pstrLandmarkName = gCommands.Cmd_Argv(2);
 
 	SV_PerformLevelChange(pstrLevelName, pstrLandmarkName);
 }

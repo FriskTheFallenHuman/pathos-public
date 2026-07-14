@@ -19,15 +19,15 @@ class CGib : public CBaseEntity
 {
 public:
 	// Gib default lifetime
-	static const Float GIB_DEFAULT_LIFETIME;
+	static const float GIB_DEFAULT_LIFETIME;
 	// Maximum gibs present ingame
-	static const Uint32 MAX_ACTIVE_GIBS;
+	static const UInt32 MAX_ACTIVE_GIBS;
 	// Max gib velocity
-	static const Float MAX_GIB_VELOCITY;
+	static const float MAX_GIB_VELOCITY;
 	// Maximum decals a gib can spawn
-	static const Uint32 MAX_NB_DECALS;
+	static const UInt32 MAX_NB_DECALS;
 	// Full Z velocity at full volume
-	static const Float FULL_VOLUME_VELOCITY;
+	static const float FULL_VOLUME_VELOCITY;
 
 public:
 	enum gibbodyparts_t
@@ -72,24 +72,24 @@ public:
 	void LimitVelocity( void );
 
 	void SetBloodColor( bloodcolor_t color );
-	void SetLifeTime( Float lifetime );
+	void SetLifeTime( float lifetime );
 	void SetMaterial( Int32 material );
 
 public:
-	bool InitGib( const Char* pstrModelname );
+	bool InitGib( const char* pstrModelname );
 
 public:
-	static void SpawnHeadGib( CBaseEntity* pVictim, const Vector* pflCenter, Float minvel, Float maxvel );
-	static void SpawnChestGib( CBaseEntity* pVictim, const Vector* pflCenter, Float minvel, Float maxvel );
-	static void SpawnRandomGibs( CBaseEntity* pVictim, Uint32 nbGibs, const Vector* pflCenter, Float minvel, Float maxvel );
+	static void SpawnHeadGib( CBaseEntity* pVictim, const Vector* pflCenter, float minvel, float maxvel );
+	static void SpawnChestGib( CBaseEntity* pVictim, const Vector* pflCenter, float minvel, float maxvel );
+	static void SpawnRandomGibs( CBaseEntity* pVictim, UInt32 nbGibs, const Vector* pflCenter, float minvel, float maxvel );
 
 private:
 	Int32 m_bloodColor;
 	Int32 m_numBloodDecals;
 	Int32 m_material;
-	Float m_lifetime;
+	float m_lifetime;
 
 private:
-	static Uint32 m_numGibs;
+	static UInt32 m_numGibs;
 };
 #endif //GIB_H

@@ -76,7 +76,7 @@ private:
 	void Entity_InfoLightOrigin( const entitydata_t& entity, entindex_t& entityindex );
 
 	// Retreives an entity by it's targetname
-	const entitydata_t* FindEntityByTargetName( const Char* pstrClassName, const Char* pstrTargetName );
+	const entitydata_t* FindEntityByTargetName( const char* pstrClassName, const char* pstrTargetName );
 
 private:
 	// Entity list extracted from BSP.
@@ -89,7 +89,7 @@ private:
 	CCVar *m_pCvarDrawClientEntities;
 	
 	// Last entity identifier used
-	Uint32 m_lastIdentifierUsed;
+	UInt32 m_lastIdentifierUsed;
 };
 
 extern CEntityManager gEntityManager;

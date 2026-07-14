@@ -14,15 +14,15 @@ All Rights Reserved.
 #include "plattrigger.h"
 
 // Default T length
-const Float CFuncPlat::DEFAULT_T_LENGTH = 80;
+const float CFuncPlat::DEFAULT_T_LENGTH = 80;
 // Default T width
-const Float CFuncPlat::DEFAULT_T_WIDTH = 10;
+const float CFuncPlat::DEFAULT_T_WIDTH = 10;
 // Default speed
-const Float CFuncPlat::DEFAULT_SPEED = 150;
+const float CFuncPlat::DEFAULT_SPEED = 150;
 // Default volume
-const Float CFuncPlat::DEFAULT_VOLUME = 0.85;
+const float CFuncPlat::DEFAULT_VOLUME = 0.85;
 // Return delay time
-const Float CFuncPlat::RETURN_DELAY_TIME = 3.0f;
+const float CFuncPlat::RETURN_DELAY_TIME = 3.0f;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(func_plat, CFuncPlat);
@@ -114,7 +114,7 @@ bool CFuncPlat::Setup( void )
 // @brief
 //
 //=============================================
-void CFuncPlat::PlatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncPlat::PlatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(IsTogglePlat())
 	{

@@ -30,9 +30,9 @@ const Int32 CAINodeGraph::NODE_FILE_ID = (('1'<<24)+('D'<<16)+('O'<<8)+'N');
 // Node file version
 const Int32 CAINodeGraph::NODE_FILE_VERSION = 3;
 // Node file extension
-const Char CAINodeGraph::NODE_FILE_EXTENSION[] = ".nod";
+const char CAINodeGraph::NODE_FILE_EXTENSION[] = ".nod";
 // Report file extension
-const Char CAINodeGraph::REPORT_FILE_EXTENSION[] = ".log";
+const char CAINodeGraph::REPORT_FILE_EXTENSION[] = ".log";
 
 // Small test hull min size
 const Vector CAINodeGraph::HULL_SMALL_MIN = Vector(-16, -16, 0);
@@ -47,15 +47,15 @@ const Vector CAINodeGraph::HULL_LARGE_MAX = Vector(12, 12, 24);
 // Empty hash link value
 const Int16 CAINodeGraph::EMPTY_HASH_LINK_VALUE = -1;
 // Link search radius
-const Float CAINodeGraph::LINK_SEARCH_RADIUS = 128;
+const float CAINodeGraph::LINK_SEARCH_RADIUS = 128;
 
 // Node peek offset
 const Vector CAINodeGraph::NODE_PEEK_OFFSET = Vector(0, 0, 8);
 // Unstick max distance
-const Float CAINodeGraph::MAX_UNSTICK_DISTANCE = 16.0f;
+const float CAINodeGraph::MAX_UNSTICK_DISTANCE = 16.0f;
 
 // Node files folder path
-const Char CAINodeGraph::NODE_FILES_FOLDER_PATH[] = "maps/graphs";
+const char CAINodeGraph::NODE_FILES_FOLDER_PATH[] = "maps/graphs";
 
 // Array of prime values
 const Int32 CAINodeGraph::PRIME_VALUES[NUM_PRIME_VALUES] = {
@@ -120,7 +120,7 @@ void CAINodeGraph::ClearNodeGraph( void )
 	if(!m_pNodeHeader)
 		return;
 
-	delete[] reinterpret_cast<byte*>(m_pNodeHeader);
+	delete[] reinterpret_cast<Byte*>(m_pNodeHeader);
 	m_pNodeHeader = nullptr;
 }
 
@@ -132,7 +132,7 @@ void CAINodeGraph::ClearTempArrays( bool clearNodes )
 {
 	if(clearNodes && !m_nodesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+		for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 			delete m_nodesArray[i];
 
 		m_nodesArray.clear();
@@ -140,9 +140,9 @@ void CAINodeGraph::ClearTempArrays( bool clearNodes )
 
 	if(!m_nodeLinksArrayOfArrays.empty())
 	{
-		for(Uint32 i = 0; i < m_nodeLinksArrayOfArrays.size(); i++)
+		for(UInt32 i = 0; i < m_nodeLinksArrayOfArrays.size(); i++)
 		{
-			for(Uint32 j = 0; j < m_nodeLinksArrayOfArrays[i].size(); j++)
+			for(UInt32 j = 0; j < m_nodeLinksArrayOfArrays[i].size(); j++)
 				delete m_nodeLinksArrayOfArrays[i][j];
 
 			m_nodeLinksArrayOfArrays[i].clear();
@@ -153,7 +153,7 @@ void CAINodeGraph::ClearTempArrays( bool clearNodes )
 
 	if(!m_finalNodeLinksArray.empty())
 	{
-		for(Uint32 i = 0; i < m_finalNodeLinksArray.size(); i++)
+		for(UInt32 i = 0; i < m_finalNodeLinksArray.size(); i++)
 			delete m_finalNodeLinksArray[i];
 
 		m_finalNodeLinksArray.clear();
@@ -161,9 +161,9 @@ void CAINodeGraph::ClearTempArrays( bool clearNodes )
 
 	if(!m_linkEntityArrayOfArrays.empty())
 	{
-		for(Uint32 i = 0; i < m_linkEntityArrayOfArrays.size(); i++)
+		for(UInt32 i = 0; i < m_linkEntityArrayOfArrays.size(); i++)
 		{
-			for(Uint32 j = 0; j < m_linkEntityArrayOfArrays[i].size(); i++)
+			for(UInt32 j = 0; j < m_linkEntityArrayOfArrays[i].size(); i++)
 				delete m_linkEntityArrayOfArrays[i][j];
 
 			m_linkEntityArrayOfArrays[i].clear();
@@ -174,7 +174,7 @@ void CAINodeGraph::ClearTempArrays( bool clearNodes )
 
 	if(!m_finalLinkEntitiesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_finalLinkEntitiesArray.size(); i++)
+		for(UInt32 i = 0; i < m_finalLinkEntitiesArray.size(); i++)
 			delete m_finalLinkEntitiesArray[i];
 
 		m_finalLinkEntitiesArray.clear();
@@ -209,8 +209,8 @@ bool CAINodeGraph::LoadNodeGraph( void )
 	if(gd_filefuncs.pfnCompareFileDates(bspFileDate, nodFileDate) < 0)
 		return false;
 
-	Uint32 fileSize = 0;
-	const byte* pfile = gd_filefuncs.pfnLoadFile(filePath.c_str(), &fileSize);
+	UInt32 fileSize = 0;
+	const Byte* pfile = gd_filefuncs.pfnLoadFile(filePath.c_str(), &fileSize);
 	if(!pfile)
 		return false;
 
@@ -229,8 +229,8 @@ bool CAINodeGraph::LoadNodeGraph( void )
 		return false;
 	}
 
-	byte* pbuffer = new byte[fileSize];
-	memcpy(pbuffer, pfile, sizeof(byte)*fileSize);
+	Byte* pbuffer = new Byte[fileSize];
+	memcpy(pbuffer, pfile, sizeof(Byte)*fileSize);
 	gd_filefuncs.pfnFreeFile(pfile);
 
 	m_pNodeHeader = reinterpret_cast<nodefilehdr_t*>(pbuffer);
@@ -241,7 +241,7 @@ bool CAINodeGraph::LoadNodeGraph( void )
 	// Clear temp nodes
 	if(!m_nodesArray.empty())
 	{
-		for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+		for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 			delete m_nodesArray[i];
 
 		m_nodesArray.clear();
@@ -256,7 +256,7 @@ bool CAINodeGraph::LoadNodeGraph( void )
 //=============================================
 void CAINodeGraph::SetGraphPointers( void )
 {
-	for(Uint32 i = 0; i < m_pNodeHeader->numlinkentities; i++)
+	for(UInt32 i = 0; i < m_pNodeHeader->numlinkentities; i++)
 	{
 		link_entity_t* pLinkEntity = m_pNodeHeader->getLinkEntity(i);
 		if(!qstrlen(pLinkEntity->modelname))
@@ -312,7 +312,7 @@ void CAINodeGraph::InitNodeGraph( void )
 		return;
 
 	// Mark begin time
-	Double beginTime = gd_engfuncs.pfnFloatTime();
+	double beginTime = gd_engfuncs.pfnFloatTime();
 
 	// Try and create the node file folder
 	if(!gd_filefuncs.pfnCreateDirectory(NODE_FILES_FOLDER_PATH))
@@ -356,7 +356,7 @@ void CAINodeGraph::InitNodeGraph( void )
 	WriteToReportFile(filestr.c_str());
 	filestr.clear();
 
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		node_t* pNode = m_nodesArray[i];
 
@@ -407,7 +407,7 @@ void CAINodeGraph::InitNodeGraph( void )
 	}
 
 	// Identify which nodes are water, land, etc
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		node_t* pNode = m_nodesArray[i];
 
@@ -434,7 +434,7 @@ void CAINodeGraph::InitNodeGraph( void )
 			{
 				bool wasUnstuck = false;
 
-				for(Float distance = 0.1; distance < MAX_UNSTICK_DISTANCE; distance += 0.1f)
+				for(float distance = 0.1; distance < MAX_UNSTICK_DISTANCE; distance += 0.1f)
 				{
 					Vector testPosition = initialPosition + Vector(0, 0, distance);
 					Util::TraceHull(testPosition, testPosition, true, false, HULL_SMALL, nullptr, tr);
@@ -506,7 +506,7 @@ void CAINodeGraph::InitNodeGraph( void )
 				pTestNPCEntity->SetOrigin(pNode->origin);
 				pTestNPCEntity->DropToFloor();
 
-				Uint32 j = 0;
+				UInt32 j = 0;
 				for(; j < NUM_NODE_HULLS; j++)
 				{
 					CString hullName;
@@ -600,7 +600,7 @@ void CAINodeGraph::InitNodeGraph( void )
 	SetNodeMinsMaxs(pTestNPCEntity);
 
 	filestr << "Final node array contents:" << NEWLINE;
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		node_t* pNode = m_nodesArray[i];
 
@@ -624,17 +624,17 @@ void CAINodeGraph::InitNodeGraph( void )
 	pTestNPCEntity = nullptr;
 
 	// Calculate number of hash links
-	Uint32 numHashLinks = (3*m_finalNodeLinksArray.size()/2)+3;
+	UInt32 numHashLinks = (3*m_finalNodeLinksArray.size()/2)+3;
 
 	// Estimate the final size of the output file
-	Uint32 outputFileSize = sizeof(nodefilehdr_t) 
+	UInt32 outputFileSize = sizeof(nodefilehdr_t) 
 		+ m_nodesArray.size()*sizeof(node_t)
 		+ m_finalNodeLinksArray.size()*sizeof(node_link_t)
 		+ m_finalLinkEntitiesArray.size()*sizeof(link_entity_t)
 		+ sizeof(short)*numHashLinks;
 
 	// Allocate output file data
-	byte *pbuffer = new byte[outputFileSize];
+	Byte *pbuffer = new Byte[outputFileSize];
 	if(!pbuffer)
 	{
 		filestr << "Failed to allocate " << (Int32)outputFileSize << " bytes" << NEWLINE;
@@ -644,7 +644,7 @@ void CAINodeGraph::InitNodeGraph( void )
 	}
 
 	// Clear the data
-	memset(pbuffer, 0, sizeof(byte)*outputFileSize);
+	memset(pbuffer, 0, sizeof(Byte)*outputFileSize);
 
 	// Fill the header
 	nodefilehdr_t* phdr = reinterpret_cast<nodefilehdr_t*>(pbuffer);
@@ -653,7 +653,7 @@ void CAINodeGraph::InitNodeGraph( void )
 	phdr->filesize = outputFileSize;
 
 	// Copy in the nodes
-	Uint32 fileoffset = sizeof(nodefilehdr_t);
+	UInt32 fileoffset = sizeof(nodefilehdr_t);
 
 	if(!m_nodesArray.empty())
 	{
@@ -662,7 +662,7 @@ void CAINodeGraph::InitNodeGraph( void )
 		fileoffset += phdr->numnodes*sizeof(node_t);
 
 		node_t* pdestnodes = reinterpret_cast<node_t*>(pbuffer + phdr->nodeindex);
-		for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+		for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 			memcpy(&pdestnodes[i], m_nodesArray[i], sizeof(node_t));
 	}
 
@@ -674,7 +674,7 @@ void CAINodeGraph::InitNodeGraph( void )
 		fileoffset += phdr->numlinks*sizeof(node_link_t);
 
 		node_link_t* pdestlinks = reinterpret_cast<node_link_t*>(pbuffer + phdr->linkoffset);
-		for(Uint32 i = 0; i < m_finalNodeLinksArray.size(); i++)
+		for(UInt32 i = 0; i < m_finalNodeLinksArray.size(); i++)
 			memcpy(&pdestlinks[i], m_finalNodeLinksArray[i], sizeof(node_link_t));
 	}
 
@@ -686,7 +686,7 @@ void CAINodeGraph::InitNodeGraph( void )
 		fileoffset += phdr->numlinkentities*sizeof(link_entity_t);
 
 		link_entity_t* pdestlinkents = reinterpret_cast<link_entity_t*>(pbuffer + phdr->linkentityoffset);
-		for(Uint32 i = 0; i < m_finalLinkEntitiesArray.size(); i++)
+		for(UInt32 i = 0; i < m_finalLinkEntitiesArray.size(); i++)
 			memcpy(&pdestlinkents[i], m_finalLinkEntitiesArray[i], sizeof(link_entity_t));
 	}
 
@@ -705,14 +705,14 @@ void CAINodeGraph::InitNodeGraph( void )
 	}
 
 	// Create the static routing tables
-	Uint32 routeInfoSize = 0;
+	UInt32 routeInfoSize = 0;
 	Int16* pRouteInfo = nullptr;
 	BuildStaticRoutingTables(pRouteInfo, routeInfoSize);
 
 	// Expand the buffer to house the routing data
-	Uint32 routeInfoSizeBytes = routeInfoSize * sizeof(Int16);
-	byte* ptempbuffer = new byte[outputFileSize + routeInfoSizeBytes];
-	memcpy(ptempbuffer, pbuffer, sizeof(byte)*outputFileSize);
+	UInt32 routeInfoSizeBytes = routeInfoSize * sizeof(Int16);
+	Byte* ptempbuffer = new Byte[outputFileSize + routeInfoSizeBytes];
+	memcpy(ptempbuffer, pbuffer, sizeof(Byte)*outputFileSize);
 	outputFileSize += routeInfoSizeBytes;
 	
 	delete[] pbuffer;
@@ -724,9 +724,9 @@ void CAINodeGraph::InitNodeGraph( void )
 	phdr->routeinfoindex = fileoffset;
 	phdr->routeinfosize = routeInfoSizeBytes;
 
-	byte* pdestrouteinfo = pbuffer + phdr->routeinfoindex;
-	memcpy(pdestrouteinfo, pRouteInfo, sizeof(byte)*phdr->routeinfosize);
-	fileoffset += sizeof(byte)*phdr->routeinfosize;
+	Byte* pdestrouteinfo = pbuffer + phdr->routeinfoindex;
+	memcpy(pdestrouteinfo, pRouteInfo, sizeof(Byte)*phdr->routeinfosize);
+	fileoffset += sizeof(Byte)*phdr->routeinfosize;
 
 	// Clear temp arrays
 	ClearTempArrays();
@@ -747,8 +747,8 @@ void CAINodeGraph::InitNodeGraph( void )
 	}
 
 	// Mark end time
-	Double endTime = gd_engfuncs.pfnFloatTime();
-	Double duration = endTime - beginTime;
+	double endTime = gd_engfuncs.pfnFloatTime();
+	double duration = endTime - beginTime;
 	Int32 minutes = SDL_floor(duration) / 60;
 	Int32 seconds = duration - minutes * 60;
 
@@ -774,11 +774,11 @@ void CAINodeGraph::InitNodeGraph( void )
 //=============================================
 void CAINodeGraph::SetNodeMinsMaxs( CBaseEntity* pTestNPC )
 {
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		node_t* pNode = m_nodesArray[i];
 
-		for(Uint32 j = 0; j < NUM_NODE_HULLS; j++)
+		for(UInt32 j = 0; j < NUM_NODE_HULLS; j++)
 		{
 			pNode->mins[j] = NULL_MINS;
 			pNode->maxs[j] = NULL_MAXS;
@@ -809,7 +809,7 @@ void CAINodeGraph::SetNodeMinsMaxs( CBaseEntity* pTestNPC )
 
 			pTestNPC->SetMinsMaxs(mins, maxs);
 
-			Uint64 addedFlags = 0;
+			UInt64 addedFlags = 0;
 			if(pNode->nodeinfobits & AI_NODE_WATER)
 				addedFlags |= FL_SWIM;
 			else if(pNode->nodeinfobits & AI_NODE_AIR)
@@ -817,7 +817,7 @@ void CAINodeGraph::SetNodeMinsMaxs( CBaseEntity* pTestNPC )
 
 			pTestNPC->SetFlags(addedFlags);
 
-			for(Float yaw = 0; yaw <= 360.0f; yaw += 15)
+			for(float yaw = 0; yaw <= 360.0f; yaw += 15)
 			{
 				// Place entity at node origin
 				pTestNPC->SetOrigin(pNode->origin);
@@ -826,14 +826,14 @@ void CAINodeGraph::SetNodeMinsMaxs( CBaseEntity* pTestNPC )
 				if(!(addedFlags & (FL_SWIM|FL_FLY)))
 					pTestNPC->GroundEntityNudge();
 
-				Float distance = 0;
+				float distance = 0;
 				while(pTestNPC->WalkMove(yaw, CBaseNPC::NPC_STEP_SIZE, WALKMOVE_CHECKONLY) 
 					&& distance < CBaseNPC::NPC_MAX_NAVIGATION_DISTANCE)
 					distance += CBaseNPC::NPC_STEP_SIZE;
 
 				Vector entityOrigin = pTestNPC->GetOrigin();
 
-				for(Uint32 k = 0; k < 3; k++)
+				for(UInt32 k = 0; k < 3; k++)
 				{
 					if((entityOrigin[k] + mins[k]) < pNode->mins[j][k])
 						pNode->mins[j][k] = entityOrigin[k] + mins[k];
@@ -859,7 +859,7 @@ void CAINodeGraph::SetNodeMinsMaxs( CBaseEntity* pTestNPC )
 			// Remove the flags we've changed
 			pTestNPC->RemoveFlags(addedFlags);
 
-			for(Uint32 k = 0; k < pNode->numlinks; k++)
+			for(UInt32 k = 0; k < pNode->numlinks; k++)
 			{
 				node_link_t* pLink = m_finalNodeLinksArray[pNode->firstlinkindex + k];
 				node_t* pLinkNode = m_nodesArray[pLink->sourcenode];
@@ -870,7 +870,7 @@ void CAINodeGraph::SetNodeMinsMaxs( CBaseEntity* pTestNPC )
 				// TODO: is this even needed?
 				if(Math::PointInMinsMaxs(pLinkNode->origin, pNode->mins[j], pNode->maxs[j]))
 				{
-					for(Uint32 l = 0; l < 3; l++)
+					for(UInt32 l = 0; l < 3; l++)
 					{
 						if(pNode->mins[j][l] < pLinkNode->origin[l])
 							pNode->mins[j][l] = pLinkNode->origin[l];
@@ -888,7 +888,7 @@ void CAINodeGraph::SetNodeMinsMaxs( CBaseEntity* pTestNPC )
 // @brief
 //
 //=============================================
-void CAINodeGraph::ChooseHashPrimes( Uint32 tableSize )
+void CAINodeGraph::ChooseHashPrimes( UInt32 tableSize )
 {
 	Int32 largestPrimeNb = (Int32)(tableSize/2);
 	if(largestPrimeNb > PRIME_VALUES[NUM_PRIME_VALUES-2])
@@ -907,8 +907,8 @@ void CAINodeGraph::ChooseHashPrimes( Uint32 tableSize )
 			Int32 upperPrime = PRIME_VALUES[jprime];
 			if(lowerPrime <= zone && zone <= upperPrime)
 			{
-				Uint32 lowerDist = zone - lowerPrime;
-				Uint32 upperDist = upperPrime - zone;
+				UInt32 lowerDist = zone - lowerPrime;
+				UInt32 upperDist = upperPrime - zone;
 				
 				if(lowerDist <= upperDist)
 					m_pNodeHeader->hashprimes[iprime] = lowerPrime;
@@ -923,7 +923,7 @@ void CAINodeGraph::ChooseHashPrimes( Uint32 tableSize )
 		}
 	}
 
-	for(Uint32 i = 0; i < NUM_HASH_PRIMES; i+=2)
+	for(UInt32 i = 0; i < NUM_HASH_PRIMES; i+=2)
 		m_pNodeHeader->hashprimes[i] = tableSize - m_pNodeHeader->hashprimes[i];
 
 	// Shuffle the primes
@@ -946,13 +946,13 @@ void CAINodeGraph::InsertLinkHash( Int16 srcNode, Int16 dstNode, Int32 key ) con
 {
 	// Generate the hash
 	nodepair_t pair(srcNode, dstNode);
-	CCRC32Hash crc32((const byte*)&pair, sizeof(pair));
-	Uint32 hash = crc32.GetHashResult();
+	CCRC32Hash crc32((const Byte*)&pair, sizeof(pair));
+	UInt32 hash = crc32.GetHashResult();
 
 	Int32 di = m_pNodeHeader->hashprimes[hash & (NUM_HASH_PRIMES-1)];
 	Int32 i = (hash >> 4) % m_pNodeHeader->numhashlinks;
 
-	Int16* pHashLinks = reinterpret_cast<Int16*>(reinterpret_cast<byte*>(m_pNodeHeader) + m_pNodeHeader->hashlinkoffset);
+	Int16* pHashLinks = reinterpret_cast<Int16*>(reinterpret_cast<Byte*>(m_pNodeHeader) + m_pNodeHeader->hashlinkoffset);
 	while(pHashLinks[i] != EMPTY_HASH_LINK_VALUE)
 	{
 		i += di;
@@ -972,14 +972,14 @@ Int32 CAINodeGraph::SearchHash( Int16 srcNode, Int16 dstNode )
 {
 	// Generate the hash
 	nodepair_t pair(srcNode, dstNode);
-	CCRC32Hash crc32((const byte*)&pair, sizeof(pair));
-	Uint32 hash = crc32.GetHashResult();
+	CCRC32Hash crc32((const Byte*)&pair, sizeof(pair));
+	UInt32 hash = crc32.GetHashResult();
 
 	Int32 di = m_pNodeHeader->hashprimes[hash & (NUM_HASH_PRIMES-1)];
 	Int32 i = (hash >> 4) % m_pNodeHeader->numhashlinks;
 
-	node_link_t* pNodeLinks = reinterpret_cast<node_link_t*>(reinterpret_cast<byte*>(m_pNodeHeader) + m_pNodeHeader->linkoffset);
-	Int16* pHashLinks = reinterpret_cast<Int16*>(reinterpret_cast<byte*>(m_pNodeHeader) + m_pNodeHeader->hashlinkoffset);
+	node_link_t* pNodeLinks = reinterpret_cast<node_link_t*>(reinterpret_cast<Byte*>(m_pNodeHeader) + m_pNodeHeader->linkoffset);
+	Int16* pHashLinks = reinterpret_cast<Int16*>(reinterpret_cast<Byte*>(m_pNodeHeader) + m_pNodeHeader->hashlinkoffset);
 	while(pHashLinks[i] != EMPTY_HASH_LINK_VALUE)
 	{
 		node_link_t* pLink = &pNodeLinks[pHashLinks[i]];
@@ -1004,11 +1004,11 @@ void CAINodeGraph::BuildLinkLookups( void )
 {
 	ChooseHashPrimes(m_pNodeHeader->numhashlinks);
 
-	Int16* pHashLinks = reinterpret_cast<Int16*>(reinterpret_cast<byte*>(m_pNodeHeader) + m_pNodeHeader->hashlinkoffset);
-	for(Uint32 i = 0; i < m_pNodeHeader->numhashlinks; i++)
+	Int16* pHashLinks = reinterpret_cast<Int16*>(reinterpret_cast<Byte*>(m_pNodeHeader) + m_pNodeHeader->hashlinkoffset);
+	for(UInt32 i = 0; i < m_pNodeHeader->numhashlinks; i++)
 		pHashLinks[i] = EMPTY_HASH_LINK_VALUE;
 
-	for(Uint32 i = 0; i < m_finalNodeLinksArray.size(); i++)
+	for(UInt32 i = 0; i < m_finalNodeLinksArray.size(); i++)
 	{
 		node_link_t* pLink = m_finalNodeLinksArray[i];
 		InsertLinkHash(pLink->sourcenode, pLink->destnode, i);
@@ -1024,14 +1024,14 @@ void CAINodeGraph::SortNodes( void )
 	if(m_nodesArray.empty())
 		return;
 
-	Uint32 nodecount = 0;
+	UInt32 nodecount = 0;
 	m_nodesArray[0]->previousnode = nodecount;
 	nodecount++;
 
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		node_t* pNode = m_nodesArray[i];
-		for(Uint32 j = 0; j < pNode->numlinks; j++)
+		for(UInt32 j = 0; j < pNode->numlinks; j++)
 		{
 			node_link_t* pNodeLink = m_finalNodeLinksArray[pNode->firstlinkindex + j];
 			node_t* pDestNode = m_nodesArray[pNodeLink->destnode];
@@ -1044,7 +1044,7 @@ void CAINodeGraph::SortNodes( void )
 		}
 	}
 
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		node_t* pNode = m_nodesArray[i];
 		if(pNode->previousnode == NO_POSITION)
@@ -1055,7 +1055,7 @@ void CAINodeGraph::SortNodes( void )
 	}
 
 	// Reassign link node indexes
-	for(Uint32 i = 0; i < m_finalNodeLinksArray.size(); i++)
+	for(UInt32 i = 0; i < m_finalNodeLinksArray.size(); i++)
 	{
 		node_link_t* pNodeLink = m_finalNodeLinksArray[i];
 
@@ -1064,7 +1064,7 @@ void CAINodeGraph::SortNodes( void )
 	}
 
 	// Reposition the nodes impacted
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		while(m_nodesArray[i]->previousnode != (Int32)i)
 		{
@@ -1076,7 +1076,7 @@ void CAINodeGraph::SortNodes( void )
 	}
 
 	// Set indexes for nodes
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 		m_nodesArray[i]->index = i;
 }
 
@@ -1096,14 +1096,14 @@ bool CAINodeGraph::LinkNodes( CBaseEntity* pTestNPC )
 	filestr.clear();
 
 	// Count usable and unusable nodes
-	Uint32 nbNodeLinks = 0;
-	Uint32 nbLinkEntities = 0;
+	UInt32 nbNodeLinks = 0;
+	UInt32 nbLinkEntities = 0;
 
 	// Set small node hull for the hulltest npc, as we do initial
 	// linking with the smallest hull NPCs use
 	pTestNPC->SetMinsMaxs(HULL_SMALL_MIN, HULL_SMALL_MAX);
 
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		node_t* pNodeFrom = m_nodesArray[i];
 
@@ -1111,7 +1111,7 @@ bool CAINodeGraph::LinkNodes( CBaseEntity* pTestNPC )
 		m_nodesArray[i]->firstlinkindex = m_nodeLinksArrayOfArrays.size();
 		m_nodeLinksArrayOfArrays.resize(m_nodeLinksArrayOfArrays.size()+1);
 
-		for(Uint32 j = 0; j < m_nodesArray.size(); j++)
+		for(UInt32 j = 0; j < m_nodesArray.size(); j++)
 		{
 			// Do not try for self
 			if(i == j)
@@ -1122,7 +1122,7 @@ bool CAINodeGraph::LinkNodes( CBaseEntity* pTestNPC )
 			// Check ranges
 			if(pNodeFrom->linkrange > 0 || pNodeTo->linkrange > 0)
 			{
-				Float nodeDistance = (pNodeFrom->origin - pNodeTo->origin).Length();
+				float nodeDistance = (pNodeFrom->origin - pNodeTo->origin).Length();
 				if(pNodeFrom->linkrange && nodeDistance > pNodeFrom->linkrange
 					|| pNodeTo->linkrange && nodeDistance > pNodeTo->linkrange)
 					continue;
@@ -1132,7 +1132,7 @@ bool CAINodeGraph::LinkNodes( CBaseEntity* pTestNPC )
 				continue;
 
 			// Remember which flags we changed
-			Uint64 npcFlagsAdded = 0;
+			UInt64 npcFlagsAdded = 0;
 			if(pNodeFrom->nodeinfobits & AI_NODE_WATER)
 				npcFlagsAdded = FL_SWIM;
 			else if(pNodeFrom->nodeinfobits & AI_NODE_AIR)
@@ -1141,12 +1141,12 @@ bool CAINodeGraph::LinkNodes( CBaseEntity* pTestNPC )
 			// Set on the entity
 			pTestNPC->SetFlags(npcFlagsAdded);
 
-			const Float SHIFT_MAX = 0.5;
+			const float SHIFT_MAX = 0.5;
 			shift_direction_t shiftdirection = SHIFT_NONE;
 			shift_node_t shiftnode = SHIFT_FROM;
 			
 			Int32 shiftBits = 0;
-			Float shiftAmount = 0;
+			float shiftAmount = 0;
 			Vector baseFrom = pNodeFrom->origin;
 			Vector baseTo = pNodeTo->origin;
 
@@ -1169,7 +1169,7 @@ bool CAINodeGraph::LinkNodes( CBaseEntity* pTestNPC )
 					Vector up, right;
 					Math::GetUpRight(forward, up, right);
 
-					Float sign = (shiftdirection == SHIFT_NEG) ? -1.0 : 1.0;
+					float sign = (shiftdirection == SHIFT_NEG) ? -1.0 : 1.0;
 					shiftVector = right*shiftAmount*sign;
 
 					testFrom = baseFrom;
@@ -1329,7 +1329,7 @@ bool CAINodeGraph::LinkNodes( CBaseEntity* pTestNPC )
 				WriteToReportFile(filestr.c_str());
 				filestr.clear();
 
-				for(Uint32 k = 0; k < linkEntityArray.size(); k++)
+				for(UInt32 k = 0; k < linkEntityArray.size(); k++)
 				{
 					CBaseEntity* pEntity = linkEntityArray[k];
 
@@ -1386,11 +1386,11 @@ bool CAINodeGraph::LinkNodes( CBaseEntity* pTestNPC )
 	}
 
 	// Check shifted nodes for connections still being OK
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		node_t* pNodeFrom = m_nodesArray[i];
 
-		for(Uint32 j = 0; j < pNodeFrom->numlinks; j++)
+		for(UInt32 j = 0; j < pNodeFrom->numlinks; j++)
 		{
 			// Get pointer to the link
 			node_link_t* plink = m_nodeLinksArrayOfArrays[pNodeFrom->firstlinkindex][j];
@@ -1402,7 +1402,7 @@ bool CAINodeGraph::LinkNodes( CBaseEntity* pTestNPC )
 				continue;
 
 			// Remember which flags we changed
-			Uint64 npcFlagsAdded = 0;
+			UInt64 npcFlagsAdded = 0;
 			if(pNodeFrom->nodeinfobits & AI_NODE_WATER)
 				npcFlagsAdded = FL_SWIM;
 			else if(pNodeFrom->nodeinfobits & AI_NODE_AIR)
@@ -1425,7 +1425,7 @@ bool CAINodeGraph::LinkNodes( CBaseEntity* pTestNPC )
 				if(plink->numlinkentities > 0 && plink->linkentityindex != NO_POSITION)
 				{
 					CArray<link_entity_t*>& _linkEntityArray = m_linkEntityArrayOfArrays[plink->linkentityindex];
-					for(Uint32 l = 0; l < _linkEntityArray.size(); l++)
+					for(UInt32 l = 0; l < _linkEntityArray.size(); l++)
 						delete _linkEntityArray[l];
 
 					nbLinkEntities -= _linkEntityArray.size();
@@ -1470,7 +1470,7 @@ bool CAINodeGraph::WalkLinksAllHulls( CBaseEntity* pTestNPC )
 	WriteToReportFile(filestr.c_str());
 	filestr.clear();
 
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		node_t* pNodeFrom = m_nodesArray[i];
 
@@ -1479,7 +1479,7 @@ bool CAINodeGraph::WalkLinksAllHulls( CBaseEntity* pTestNPC )
 		WriteToReportFile(filestr.c_str());
 		filestr.clear();
 
-		for(Uint32 j = 0; j < pNodeFrom->numlinks; j++)
+		for(UInt32 j = 0; j < pNodeFrom->numlinks; j++)
 		{
 			// Get pointer to the link
 			node_link_t* plink = m_nodeLinksArrayOfArrays[pNodeFrom->firstlinkindex][j];
@@ -1493,7 +1493,7 @@ bool CAINodeGraph::WalkLinksAllHulls( CBaseEntity* pTestNPC )
 
 			// Skip small hull, as it's already been tested
 			// at the initial linking
-			for(Uint32 k = NODE_HUMAN_HULL; k < NUM_NODE_HULLS; k++)
+			for(UInt32 k = NODE_HUMAN_HULL; k < NUM_NODE_HULLS; k++)
 			{
 				// Do not skip the fly hull
 				if(skipLargerHulls && k < NODE_FLY_HULL)
@@ -1531,7 +1531,7 @@ bool CAINodeGraph::WalkLinksAllHulls( CBaseEntity* pTestNPC )
 				CEntityStateStack stack;
 				if(plink->numlinkentities > 0)
 				{
-					for(Uint32 l = 0; l < plink->numlinkentities; l++)
+					for(UInt32 l = 0; l < plink->numlinkentities; l++)
 					{
 						link_entity_t* plinkentity = m_linkEntityArrayOfArrays[plink->linkentityindex][l];
 						CBaseEntity* pEntity = Util::GetEntityByIndex(plinkentity->entityindex);
@@ -1546,7 +1546,7 @@ bool CAINodeGraph::WalkLinksAllHulls( CBaseEntity* pTestNPC )
 				}
 
 				// Remember which flags we changed
-				Uint64 npcFlagsAdded = 0;
+				UInt64 npcFlagsAdded = 0;
 				if(pNodeFrom->nodeinfobits & AI_NODE_WATER)
 					npcFlagsAdded = FL_SWIM;
 				else if(pNodeFrom->nodeinfobits & AI_NODE_AIR)
@@ -1588,7 +1588,7 @@ bool CAINodeGraph::WalkLinksAllHulls( CBaseEntity* pTestNPC )
 
 				// Check if this entity is already present. if not, then add it
 				// to the array of linkents with the appropriate hull
-				for(Uint32 l = 0; l < linkEntitiesArray.size(); l++)
+				for(UInt32 l = 0; l < linkEntitiesArray.size(); l++)
 				{
 					CBaseEntity* pEntity = linkEntitiesArray[l];
 
@@ -1658,18 +1658,18 @@ void CAINodeGraph::OptimizeGraph( void )
 	bool restartLoop = false;
 
 	// Number of rejected links
-	Uint32 numDeletedLinks = 0;
-	Uint32 numDeletedNodes = 0;
-	Uint32 numDeletedLinkEntities = 0;
+	UInt32 numDeletedLinks = 0;
+	UInt32 numDeletedNodes = 0;
+	UInt32 numDeletedLinkEntities = 0;
 
 	// Remove any inline links
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		node_t* pNodeFrom = m_nodesArray[i];
 		if(pNodeFrom->nodeflags & NODE_FL_NO_OPTIMIZE)
 			continue;
 
-		for(Uint32 j = 0; j < pNodeFrom->numlinks; j++)
+		for(UInt32 j = 0; j < pNodeFrom->numlinks; j++)
 		{
 			node_link_t* pNodeLink = m_nodeLinksArrayOfArrays[pNodeFrom->firstlinkindex][j];
 			node_t* pNodeTo = m_nodesArray[pNodeLink->destnode];
@@ -1679,7 +1679,7 @@ void CAINodeGraph::OptimizeGraph( void )
 			Vector dirToCheckNode = (pNodeTo->origin - pNodeFrom->origin);
 			dirToCheckNode[2] = 0;
 
-			Float distToCheckNode = dirToCheckNode.Length2D();
+			float distToCheckNode = dirToCheckNode.Length2D();
 			if(distToCheckNode > 0)
 				Math::VectorScale(dirToCheckNode, (1.0f/distToCheckNode), dirToCheckNode);
 
@@ -1688,7 +1688,7 @@ void CAINodeGraph::OptimizeGraph( void )
 			// Reset this
 			restartLoop = false;
 
-			for(Uint32 k = 0; k < pNodeFrom->numlinks && !restartLoop; k++)
+			for(UInt32 k = 0; k < pNodeFrom->numlinks && !restartLoop; k++)
 			{
 				if(j == k)
 					continue;
@@ -1699,11 +1699,11 @@ void CAINodeGraph::OptimizeGraph( void )
 				Vector dirToTestNode = (pTestNode->origin - pNodeFrom->origin);
 				dirToTestNode[2] = 0;
 
-				Float distToTestNode = dirToTestNode.Length2D();
+				float distToTestNode = dirToTestNode.Length2D();
 				if(distToTestNode > 0)
 					Math::VectorScale(dirToTestNode, (1.0f/distToTestNode), dirToTestNode);
 
-				Float dp = Math::DotProduct(dirToCheckNode, dirToTestNode);
+				float dp = Math::DotProduct(dirToCheckNode, dirToTestNode);
 				if(dp > 0.998 && distToTestNode < distToCheckNode)
 				{
 					// Log this rejection
@@ -1715,7 +1715,7 @@ void CAINodeGraph::OptimizeGraph( void )
 					if(pNodeLink->numlinkentities > 0 && pNodeLink->linkentityindex != NO_POSITION)
 					{
 						CArray<link_entity_t*>& linkEntityArray = m_linkEntityArrayOfArrays[pNodeLink->linkentityindex];
-						for(Uint32 l = 0; l < linkEntityArray.size(); l++)
+						for(UInt32 l = 0; l < linkEntityArray.size(); l++)
 							delete linkEntityArray[l];
 
 						// Now clear the array of linkents
@@ -1738,19 +1738,19 @@ void CAINodeGraph::OptimizeGraph( void )
 	}
 
 	// Create final link array
-	Uint32 finalNbLinks = 0;
-	for(Uint32 i = 0; i < m_nodeLinksArrayOfArrays.size(); i++)
+	UInt32 finalNbLinks = 0;
+	for(UInt32 i = 0; i < m_nodeLinksArrayOfArrays.size(); i++)
 		finalNbLinks += m_nodeLinksArrayOfArrays[i].size();
 
 	// Create indexes map, as well as insert links to final array
 	CArray<Int32> nodeLinkIndexMap(m_nodeLinksArrayOfArrays.size());
 	// Current offset into node links array
-	Uint32 linkArrayOffset = 0;
+	UInt32 linkArrayOffset = 0;
 
 	// Allocate final array
 	m_finalNodeLinksArray.resize(finalNbLinks);
 
-	for(Uint32 i = 0; i < m_nodeLinksArrayOfArrays.size(); i++)
+	for(UInt32 i = 0; i < m_nodeLinksArrayOfArrays.size(); i++)
 	{
 		if(m_nodeLinksArrayOfArrays[i].empty())
 		{
@@ -1758,7 +1758,7 @@ void CAINodeGraph::OptimizeGraph( void )
 			continue;
 		}
 
-		for(Uint32 j = 0; j < m_nodeLinksArrayOfArrays[i].size(); j++)
+		for(UInt32 j = 0; j < m_nodeLinksArrayOfArrays[i].size(); j++)
 			m_finalNodeLinksArray[linkArrayOffset + j] = m_nodeLinksArrayOfArrays[i][j];
 
 		// Set the map position
@@ -1771,7 +1771,7 @@ void CAINodeGraph::OptimizeGraph( void )
 
 	// Print link array contents
 	filestr << "Link array contents:" << NEWLINE;
-	for(Uint32 i = 0; i < m_finalNodeLinksArray.size(); i++)
+	for(UInt32 i = 0; i < m_finalNodeLinksArray.size(); i++)
 		filestr << " - Link from node " << m_finalNodeLinksArray[i]->sourcenode << " to node " << m_finalNodeLinksArray[i]->destnode << "." << NEWLINE;
 
 	WriteToReportFile(filestr.c_str());
@@ -1781,11 +1781,11 @@ void CAINodeGraph::OptimizeGraph( void )
 	CArray<Int32> nodeIndexesMap(m_nodesArray.size());
 	CArray<node_t*> finalNodesArray;
 
-	for(Uint32 i = 0; i < m_nodesArray.size(); i++)
+	for(UInt32 i = 0; i < m_nodesArray.size(); i++)
 	{
 		if(!m_nodesArray[i]->numlinks)
 		{
-			Uint32 j = 0;
+			UInt32 j = 0;
 			for(; j < m_finalNodeLinksArray.size(); j++)
 			{
 				if(m_finalNodeLinksArray[j]->destnode == (Int32)i)
@@ -1812,7 +1812,7 @@ void CAINodeGraph::OptimizeGraph( void )
 	m_nodesArray = finalNodesArray;
 
 	// Realign link indexes
-	for(Uint32 i = 0; i < m_finalNodeLinksArray.size(); i++)
+	for(UInt32 i = 0; i < m_finalNodeLinksArray.size(); i++)
 	{
 		node_link_t* plink = m_finalNodeLinksArray[i];
 
@@ -1825,8 +1825,8 @@ void CAINodeGraph::OptimizeGraph( void )
 	}
 
 	// Count total link entities
-	Uint32 finalLinkEntityCount = 0;
-	for(Uint32 i = 0; i < m_linkEntityArrayOfArrays.size(); i++)
+	UInt32 finalLinkEntityCount = 0;
+	for(UInt32 i = 0; i < m_linkEntityArrayOfArrays.size(); i++)
 		finalLinkEntityCount += m_linkEntityArrayOfArrays[i].size();
 
 	if(finalLinkEntityCount > 0)
@@ -1838,8 +1838,8 @@ void CAINodeGraph::OptimizeGraph( void )
 		m_finalLinkEntitiesArray.resize(finalLinkEntityCount);
 		
 		// Go through the link entities sequentially
-		Uint32 finalLinkEntityOffset = 0;
-		for(Uint32 i = 0; i < m_linkEntityArrayOfArrays.size(); i++)
+		UInt32 finalLinkEntityOffset = 0;
+		for(UInt32 i = 0; i < m_linkEntityArrayOfArrays.size(); i++)
 		{
 			if(m_linkEntityArrayOfArrays[i].empty())
 			{
@@ -1847,7 +1847,7 @@ void CAINodeGraph::OptimizeGraph( void )
 				continue;
 			}
 
-			for(Uint32 j = 0; j < m_linkEntityArrayOfArrays[i].size(); j++)
+			for(UInt32 j = 0; j < m_linkEntityArrayOfArrays[i].size(); j++)
 				m_finalLinkEntitiesArray[finalLinkEntityOffset + j] = m_linkEntityArrayOfArrays[i][j];
 
 			linkLinkEntityIndexesMap[i] = finalLinkEntityOffset;
@@ -1855,7 +1855,7 @@ void CAINodeGraph::OptimizeGraph( void )
 		}
 
 		// Realign the indexes
-		for(Uint32 i = 0; i < m_finalNodeLinksArray.size(); i++)
+		for(UInt32 i = 0; i < m_finalNodeLinksArray.size(); i++)
 		{
 			node_link_t* plink = m_finalNodeLinksArray[i];
 			if(plink->linkentityindex == NO_POSITION)
@@ -1926,14 +1926,14 @@ bool CAINodeGraph::WalkPath( const Vector& startPosition, const Vector& endPosit
 		}
 
 		// Open func_door entities
-		for(Uint32 i = 0; i < doorEntitiesArray.size(); i++)
+		for(UInt32 i = 0; i < doorEntitiesArray.size(); i++)
 		{
 			CBaseEntity* pEntity = doorEntitiesArray[i];
 			pEntity->SetToggleState(TSTATE_AT_TOP, false);
 		}
 
 		// Open func_door_rotating entities
-		for(Uint32 i = 0; i < rotatingDoorEntitiesArray.size(); i++)
+		for(UInt32 i = 0; i < rotatingDoorEntitiesArray.size(); i++)
 		{
 			CBaseEntity* pEntity = rotatingDoorEntitiesArray[i];
 			pEntity->SetToggleState(TSTATE_AT_TOP, checkingReverse);
@@ -1943,15 +1943,15 @@ bool CAINodeGraph::WalkPath( const Vector& startPosition, const Vector& endPosit
 		{
 			// Get yaw and set angles on npc
 			Vector forward = (endPosition - pTestNPC->GetOrigin()).Normalize();
-			Float yaw = Util::VectorToYaw(forward);
+			float yaw = Util::VectorToYaw(forward);
 			Vector testAngles = Math::VectorToAngles(forward);
 			pTestNPC->SetAngles(testAngles);
 
-			Float distance = (endPosition - pTestNPC->GetOrigin()).Length2D();
-			for(Float step = 0; step < distance && !walkFailed; step += CBaseNPC::NPC_STEP_SIZE)
+			float distance = (endPosition - pTestNPC->GetOrigin()).Length2D();
+			for(float step = 0; step < distance && !walkFailed; step += CBaseNPC::NPC_STEP_SIZE)
 			{
 				// Cap step size to remaining distance
-				Float stepSize = CBaseNPC::NPC_STEP_SIZE;
+				float stepSize = CBaseNPC::NPC_STEP_SIZE;
 				if((step + stepSize) >= (distance+1))
 					stepSize = (distance-step) - 1;
 
@@ -2002,7 +2002,7 @@ bool CAINodeGraph::WalkPath( const Vector& startPosition, const Vector& endPosit
 		{
 			if(pBlockingEntity->IsFuncDoorRotatingEntity())
 			{
-				Uint32 i = 0;
+				UInt32 i = 0;
 				for(; i < rotatingDoorEntitiesArray.size(); i++)
 				{
 					if(rotatingDoorEntitiesArray[i] == pBlockingEntity)
@@ -2027,7 +2027,7 @@ bool CAINodeGraph::WalkPath( const Vector& startPosition, const Vector& endPosit
 			}
 			else
 			{
-				Uint32 i = 0;
+				UInt32 i = 0;
 				for(; i < doorEntitiesArray.size(); i++)
 				{
 					if(doorEntitiesArray[i] == pBlockingEntity)
@@ -2054,13 +2054,13 @@ bool CAINodeGraph::WalkPath( const Vector& startPosition, const Vector& endPosit
 			// If we have something, hide those entities
 			if(!secondaryLinkEntitesArray.empty())
 			{
-				for(Uint32 i = 0; i < secondaryLinkEntitesArray.size(); i++)
+				for(UInt32 i = 0; i < secondaryLinkEntitesArray.size(); i++)
 					stack.SaveEntity(secondaryLinkEntitesArray[i]);
 			}
 		}
 
 		// Add the blocker to the list, if not already present
-		Uint32 i = 0;
+		UInt32 i = 0;
 		for(; i < linkEntityArray.size(); i++)
 		{
 			if(linkEntityArray[i] == pBlockingEntity)
@@ -2169,26 +2169,26 @@ const CAINodeGraph::node_t* CAINodeGraph::GetNode( Int32 nodeIndex )
 // @brief
 //
 //=============================================
-void CAINodeGraph::BuildStaticRoutingTables( Int16*& pRouteInfo, Uint32& routeInfoSize )
+void CAINodeGraph::BuildStaticRoutingTables( Int16*& pRouteInfo, UInt32& routeInfoSize )
 {
-	Uint32 nbNodes = m_nodesArray.size();
+	UInt32 nbNodes = m_nodesArray.size();
 	Int32 numRoutes = nbNodes*nbNodes;
 	Int16* pRoutes = new Int16[numRoutes];
 
 	Int32* pMyPath = new Int32[nbNodes];
-	Uint16* pBestNextNodes = new Uint16[nbNodes];
+	UInt16* pBestNextNodes = new UInt16[nbNodes];
 	Int16* pRoute = new Int16[numRoutes];
 
 	// Avoid spam about unhandled link entities
 	m_disableDebugMessages = true;
 
 	// Get pointer to nodes
-	node_t* pNodes = reinterpret_cast<node_t*>(reinterpret_cast<byte*>(m_pNodeHeader) + m_pNodeHeader->nodeindex);
+	node_t* pNodes = reinterpret_cast<node_t*>(reinterpret_cast<Byte*>(m_pNodeHeader) + m_pNodeHeader->nodeindex);
 
-	Uint32 totalCompressedSize = 0;
-	for(Uint32 hullType = 0; hullType < NUM_NODE_HULLS; hullType++)
+	UInt32 totalCompressedSize = 0;
+	for(UInt32 hullType = 0; hullType < NUM_NODE_HULLS; hullType++)
 	{
-		for(Uint32 capability = NODE_CAP_NONE; capability < NB_CAP_INDEXES; capability++)
+		for(UInt32 capability = NODE_CAP_NONE; capability < NB_CAP_INDEXES; capability++)
 		{
 			CBitSet capabilitySet(CBaseNPC::AI_CAP_BITS_COUNT);
 			if(capability == NODE_CAP_DOORS_AND_USE)
@@ -2207,10 +2207,10 @@ void CAINodeGraph::BuildStaticRoutingTables( Int16*& pRouteInfo, Uint32& routeIn
 					if(pRoutes[NODE_FROM_TO(fromNode, toNode, nbNodes)] != NO_POSITION)
 						continue;
 
-					Uint32 nodeCount = GetShortestPath(fromNode, toNode, (node_hull_types_t)hullType, capabilitySet, pMyPath);
+					UInt32 nodeCount = GetShortestPath(fromNode, toNode, (node_hull_types_t)hullType, capabilitySet, pMyPath);
 					if(nodeCount > 1)
 					{
-						for(Uint32 node = 0; node < nodeCount-1; node++)
+						for(UInt32 node = 0; node < nodeCount-1; node++)
 						{
 							Int32 startNode = pMyPath[node];
 							Int32 nextNode = pMyPath[node+1];
@@ -2238,7 +2238,7 @@ void CAINodeGraph::BuildStaticRoutingTables( Int16*& pRouteInfo, Uint32& routeIn
 				Int32 lastNode = 99999999;
 				Int32 sequenceNb = 0;
 				Int32 nbRepeats = 0;
-				Uint32 compressedSize = 0;
+				UInt32 compressedSize = 0;
 				Int16* pData = pRoute;
 
 				for(Int32 i = 0; i < (Int32)nbNodes; i++)
@@ -2373,7 +2373,7 @@ void CAINodeGraph::BuildStaticRoutingTables( Int16*& pRouteInfo, Uint32& routeIn
 					}
 					else
 					{
-						Uint32 allocSize = routeInfoSize + nbRoute;
+						UInt32 allocSize = routeInfoSize + nbRoute;
 						Int16* pTemp = new Int16[allocSize];
 						memcpy(pTemp, pRouteInfo, sizeof(Int16)*routeInfoSize);
 						delete[] pRouteInfo;
@@ -2445,7 +2445,7 @@ bool CAINodeGraph::IsLinkEntityManaged( CBaseEntity* pEntity )
 // @brief
 //
 //=============================================
-Uint32 CAINodeGraph::GenHash( const byte* pData, Uint32 length )
+UInt32 CAINodeGraph::GenHash( const Byte* pData, UInt32 length )
 {
 	return CCRC32Hash(pData, length).GetHashResult();
 }
@@ -2540,7 +2540,7 @@ const CAINodeGraph::node_link_t* CAINodeGraph::GetNodeLink( const CAINodeGraph::
 // @brief
 //
 //=============================================
-bool CAINodeGraph::GetNodeLinkEntities( Int32 srcNode, Int32 linkNodeIndex, link_entity_t*& pLinkPtr, Uint32& numLinks )
+bool CAINodeGraph::GetNodeLinkEntities( Int32 srcNode, Int32 linkNodeIndex, link_entity_t*& pLinkPtr, UInt32& numLinks )
 {
 	if(!IsNodeGraphValid())
 	{
@@ -2581,7 +2581,7 @@ bool CAINodeGraph::GetNodeLinkEntities( Int32 srcNode, Int32 linkNodeIndex, link
 		return true;
 	}
 
-	pLinkPtr = reinterpret_cast<link_entity_t*>(reinterpret_cast<byte*>(m_pNodeHeader) + m_pNodeHeader->linkentityoffset) + plink->linkentityindex;
+	pLinkPtr = reinterpret_cast<link_entity_t*>(reinterpret_cast<Byte*>(m_pNodeHeader) + m_pNodeHeader->linkentityoffset) + plink->linkentityindex;
 	if(!pLinkPtr)
 	{
 		gd_engfuncs.pfnCon_Printf("%s - Couldn't get link entities for link node %d on node index %d.\n", __FUNCTION__, linkNodeIndex, srcNode);
@@ -2596,9 +2596,9 @@ bool CAINodeGraph::GetNodeLinkEntities( Int32 srcNode, Int32 linkNodeIndex, link
 // @brief
 //
 //=============================================
-Int32 CAINodeGraph::GetNearestNode( const Vector& position, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity, Float minDistance, const CNodeIgnoreList* pIgnoreList )
+Int32 CAINodeGraph::GetNearestNode( const Vector& position, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity, float minDistance, const CNodeIgnoreList* pIgnoreList )
 {
-	Uint64 nodeTypes = pEntity ? Util::GetNodeTypeForNPC(pEntity) : AI_NODE_LAND;
+	UInt64 nodeTypes = pEntity ? Util::GetNodeTypeForNPC(pEntity) : AI_NODE_LAND;
 	return GetNearestNode(position, nodeTypes, pEntity, pTargetEntity, minDistance, pIgnoreList);
 }
 
@@ -2614,16 +2614,16 @@ Int32 CAINodeGraph::GetNearestNode( const Vector& position )
 		return NO_POSITION;
 	}
 
-	Float lastClosestDistance = -1;
+	float lastClosestDistance = -1;
 	Int32 lastClosestNodeIndex = NO_POSITION;
 
-	for(Uint32 i = 0; i < m_pNodeHeader->numnodes; i++)
+	for(UInt32 i = 0; i < m_pNodeHeader->numnodes; i++)
 	{
 		const node_t* pNode = GetNode(i);
 		if(!pNode)
 			return NO_POSITION;
 
-		Float distance = (position - pNode->origin).Length();
+		float distance = (position - pNode->origin).Length();
 		if(lastClosestNodeIndex == -1 || distance < lastClosestDistance)
 		{
 			lastClosestDistance = distance;
@@ -2638,7 +2638,7 @@ Int32 CAINodeGraph::GetNearestNode( const Vector& position )
 // @brief
 //
 //=============================================
-Int32 CAINodeGraph::GetNearestNode( const Vector& position, Uint64 nodeTypes, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity, Float minDistance, const CNodeIgnoreList* pIgnoreList )
+Int32 CAINodeGraph::GetNearestNode( const Vector& position, UInt64 nodeTypes, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity, float minDistance, const CNodeIgnoreList* pIgnoreList )
 {
 	if(!pEntity)
 	{
@@ -2652,7 +2652,7 @@ Int32 CAINodeGraph::GetNearestNode( const Vector& position, Uint64 nodeTypes, CB
 		return NO_POSITION;
 	}
 
-	Uint32 hash = (CACHE_SIZE-1) & GenHash((const byte*)&position, sizeof(Vector));
+	UInt32 hash = (CACHE_SIZE-1) & GenHash((const Byte*)&position, sizeof(Vector));
 
 	cache_entry_t& cache = m_cache[hash];
 	if(cache.position == position && cache.node != NO_POSITION && (!pIgnoreList || !pIgnoreList->IsNodeInList(cache.node)))
@@ -2700,9 +2700,9 @@ void CAINodeGraph::ShowNearestNodeBBox( const Vector& position, node_hull_types_
 	}
 
 	Int32 closestNodeIndex = NO_POSITION;
-	Float closestNodeDistance = 0;
+	float closestNodeDistance = 0;
 
-	for(Uint32 i = 0; i < m_pNodeHeader->numnodes; i++)
+	for(UInt32 i = 0; i < m_pNodeHeader->numnodes; i++)
 	{
 		node_t* pNode = m_pNodeHeader->getNode(i);
 		
@@ -2711,7 +2711,7 @@ void CAINodeGraph::ShowNearestNodeBBox( const Vector& position, node_hull_types_
 		if(!tr.noHit())
 			continue;
 
-		Float nodeDistance = (pNode->origin - position).Length();
+		float nodeDistance = (pNode->origin - position).Length();
 		if(closestNodeIndex == NO_POSITION || nodeDistance < closestNodeDistance)
 		{
 			closestNodeDistance = nodeDistance;
@@ -2729,11 +2729,11 @@ void CAINodeGraph::ShowNearestNodeBBox( const Vector& position, node_hull_types_
 
 	gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.nodedebug, nullptr, nullptr);
 		gd_engfuncs.pfnMsgWriteByte(NODE_DEBUG_BBOX);
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			gd_engfuncs.pfnMsgWriteFloat(pnode->origin[j]);
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			gd_engfuncs.pfnMsgWriteFloat(pnode->mins[hullType][j]);
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			gd_engfuncs.pfnMsgWriteFloat(pnode->maxs[hullType][j]);
 	gd_engfuncs.pfnUserMessageEnd();
 }
@@ -2759,11 +2759,11 @@ void CAINodeGraph::ShowNodeBBoxes( node_hull_types_t hullType )
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.nodedebug, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(NODE_DEBUG_BBOX);
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				gd_engfuncs.pfnMsgWriteFloat(pnode->origin[j]);
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				gd_engfuncs.pfnMsgWriteFloat(pnode->mins[hullType][j]);
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				gd_engfuncs.pfnMsgWriteFloat(pnode->maxs[hullType][j]);
 		gd_engfuncs.pfnUserMessageEnd();
 	}
@@ -2810,11 +2810,11 @@ void CAINodeGraph::ShowNodeConnections( Int32 nodeIndex )
 			gd_engfuncs.pfnMsgWriteByte(NODE_DEBUG_PATHS);
 			
 			Vector pathStart = pnode->origin + NODE_PEEK_OFFSET;
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				gd_engfuncs.pfnMsgWriteFloat(pathStart[j]);
 
 			Vector pathEnd = plinknode->origin + NODE_PEEK_OFFSET;
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				gd_engfuncs.pfnMsgWriteFloat(pathEnd[j]);
 
 			gd_engfuncs.pfnMsgWriteByte(255);
@@ -2854,11 +2854,11 @@ void CAINodeGraph::ShowAllNodeConnections( void )
 			gd_engfuncs.pfnMsgWriteByte(NODE_DEBUG_PATHS);
 			
 			Vector pathStart = pstartnode->origin + NODE_PEEK_OFFSET;
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				gd_engfuncs.pfnMsgWriteFloat(pathStart[j]);
 
 			Vector pathEnd = pendnode->origin + NODE_PEEK_OFFSET;
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				gd_engfuncs.pfnMsgWriteFloat(pathEnd[j]);
 
 			gd_engfuncs.pfnMsgWriteByte(255);
@@ -2914,11 +2914,11 @@ Int32 CAINodeGraph::GetShortestPath( Int32 startNode, Int32 endNode, node_hull_t
 	queue.Insert(startNode, 0.0f);
 
 	// Get hull mask for npc
-	Uint64 hullMask = GetMaskForHull(hullType);
+	UInt64 hullMask = GetMaskForHull(hullType);
 
 	while(!queue.IsEmpty())
 	{
-		Float currentDistance;
+		float currentDistance;
 		Int32 currentNode = queue.Remove(currentDistance);
 
 		if(currentNode == endNode)
@@ -2991,7 +2991,7 @@ Int32 CAINodeGraph::GetShortestPath( Int32 startNode, Int32 endNode, node_hull_t
 			{
 				Vector vectorToNode = pvisitnode->origin - pcurrentnode->origin;
 
-				Float fr = 0.0;
+				float fr = 0.0;
 				for(; fr <= 1.0f; fr += 0.1)
 				{
 					Vector testPosition = pcurrentnode->origin + vectorToNode * fr;
@@ -3004,7 +3004,7 @@ Int32 CAINodeGraph::GetShortestPath( Int32 startNode, Int32 endNode, node_hull_t
 					continue;
 			}
 
-			Float ourDistance = currentDistance + plink->weight;
+			float ourDistance = currentDistance + plink->weight;
 			if(pvisitnode->closestsofar < -0.5f || ourDistance < pvisitnode->closestsofar - 0.001)
 			{
 				pvisitnode->closestsofar = ourDistance;
@@ -3059,7 +3059,7 @@ Int32 CAINodeGraph::GetShortestPath( Int32 startNode, Int32 endNode, node_hull_t
 // @brief
 //
 //=============================================
-Float CAINodeGraph::GetPathLength( Int32 startNode, Int32 endNode, node_hull_types_t hullType, const CBitSet& capabilityBitSet )
+float CAINodeGraph::GetPathLength( Int32 startNode, Int32 endNode, node_hull_types_t hullType, const CBitSet& capabilityBitSet )
 {
 	if(!IsNodeGraphValid())
 	{
@@ -3079,7 +3079,7 @@ Float CAINodeGraph::GetPathLength( Int32 startNode, Int32 endNode, node_hull_typ
 		return 0;
 	}
 
-	Float length = 0;
+	float length = 0;
 	Int32 maxLoop = m_pNodeHeader->numnodes;
 
 	Int32 currentNode = startNode;
@@ -3123,7 +3123,7 @@ Float CAINodeGraph::GetPathLength( Int32 startNode, Int32 endNode, node_hull_typ
 // @brief
 //
 //=============================================
-void CAINodeGraph::CheckNode( const Vector& origin, Int32 nodeIndex, Uint64 nodeTypes, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity, Float minDistance )
+void CAINodeGraph::CheckNode( const Vector& origin, Int32 nodeIndex, UInt64 nodeTypes, CBaseEntity* pEntity, const CBaseEntity* pTargetEntity, float minDistance )
 {
 	node_t* pnode = m_pNodeHeader->getNode(nodeIndex);
 	if(!pnode)
@@ -3149,7 +3149,7 @@ void CAINodeGraph::CheckNode( const Vector& origin, Int32 nodeIndex, Uint64 node
 
 	// Check min/max distance if set
 	bool result = false;
-	Float distance = (origin-pnode->origin).Length();
+	float distance = (origin-pnode->origin).Length();
 	if(distance > m_nearestNodeDistance && m_nearestNodeDistance != -1)
 		return;
 
@@ -3247,7 +3247,7 @@ bool CAINodeGraph::IsValidCoverPath( Int32 startNode, Int32 endNode, node_hull_t
 // @brief
 //
 //=============================================
-void CAINodeGraph::AddNode( const Vector& origin, Float hintYaw, Int32 hintType, Int32 hintActivity, Float range, const Char* pstrRegionName, bool isAirNode, bool disableOptimization )
+void CAINodeGraph::AddNode( const Vector& origin, float hintYaw, Int32 hintType, Int32 hintActivity, float range, const char* pstrRegionName, bool isAirNode, bool disableOptimization )
 {
 	node_t* pnode = new node_t;
 	pnode->origin = origin;
@@ -3296,7 +3296,7 @@ Int32 CAINodeGraph::GetNextNodeInRoute( Int32 currentNode, Int32 destNode, node_
 		return currentNode;
 
 	Int32 nextNode = currentNode;
-	Int16* pRoute = reinterpret_cast<Int16*>(reinterpret_cast<byte*>(m_pNodeHeader) + m_pNodeHeader->routeinfoindex);
+	Int16* pRoute = reinterpret_cast<Int16*>(reinterpret_cast<Byte*>(m_pNodeHeader) + m_pNodeHeader->routeinfoindex);
 	pRoute += pnode->nextbestnode[hullType][capabilityIndex];
 
 	Int32 nodeCount = destNode+1;
@@ -3342,7 +3342,7 @@ Int32 CAINodeGraph::GetNextNodeInRoute( Int32 currentNode, Int32 destNode, node_
 // @brief
 //
 //=============================================
-void CAINodeGraph::WriteToReportFile( const Char* pstrString )
+void CAINodeGraph::WriteToReportFile( const char* pstrString )
 {
 	if(!m_pLogFile->Write(pstrString))
 		gd_engfuncs.pfnCon_EPrintf("%s - Error writing to log file.\n", __FUNCTION__);
@@ -3352,9 +3352,9 @@ void CAINodeGraph::WriteToReportFile( const Char* pstrString )
 // @brief
 //
 //=============================================
-Uint64 CAINodeGraph::GetMaskForHull( node_hull_types_t type )
+UInt64 CAINodeGraph::GetMaskForHull( node_hull_types_t type )
 {
-	Uint64 hullMask;
+	UInt64 hullMask;
 	switch(type)
 	{
 	case NODE_SMALL_HULL:

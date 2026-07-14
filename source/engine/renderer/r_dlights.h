@@ -16,7 +16,7 @@ All Rights Reserved.
 #include "dlight.h"
 
 // Max number of dynlight visents
-static constexpr Uint32 DLIGHT_VISENTS_ALLOCSIZE = 256;
+static constexpr UInt32 DLIGHT_VISENTS_ALLOCSIZE = 256;
 
 enum vsmshadertype_t
 {
@@ -38,7 +38,7 @@ struct shadowmap_t
 	bool reset;
 	bool projective;
 	bool used;
-	Double freetime;
+	double freetime;
 	struct fbobind_t* pfbo;
 
 	CArray<struct fbobind_t*> pblitfboarray;
@@ -53,7 +53,7 @@ struct dlight_sceneinfo_t
 		}
 
 	CArray<cl_entity_t*> pvisents;
-	Uint32 numvisents;
+	UInt32 numvisents;
 
 	Int32 drawframe;
 };
@@ -61,8 +61,8 @@ struct dlight_sceneinfo_t
 struct dl_vertex_t
 {
 	vec4_t origin;
-	Float texcoord[2];
-	byte padding[8];
+	float texcoord[2];
+	Byte padding[8];
 };
 
 // Flaslight sprite global
@@ -78,9 +78,9 @@ class CDynamicLightManager
 {
 public:
 	// Minimum shadowmap size
-	static const Uint32 SHADOWMAP_MIN_SIZE;
+	static const UInt32 SHADOWMAP_MIN_SIZE;
 	// Time until an unused shadowmap is freed
-	static const Float SHADOWMAP_RELEASE_DELAY;
+	static const float SHADOWMAP_RELEASE_DELAY;
 
 public:
 	struct vsm_shader_attribs
@@ -178,7 +178,7 @@ private:
 	bool CreateCubemapFBO( shadowmap_t& shadowmap );
 
 	// Creates blit FBOs for shadowmap
-	bool CreateShadowmapBlitFBOs( shadowmap_t& shadowmap, Uint32 shadowmapSize, Uint32 numFBO );
+	bool CreateShadowmapBlitFBOs( shadowmap_t& shadowmap, UInt32 shadowmapSize, UInt32 numFBO );
 	// Creates blit FBOs for shadowmap
 	void ReleaseShadowmapBlitFBOs( shadowmap_t& shadowmap );
 

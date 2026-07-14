@@ -43,7 +43,7 @@ class CGameUISubwayWindow : public CGameUIWindow
 {
 public:
 	// Number of destination buttons
-	static const Uint32 NB_DESTINATION_BUTTONS;
+	static const UInt32 NB_DESTINATION_BUTTONS;
 
 public:
 	struct subwaybuttonschema_t
@@ -70,32 +70,32 @@ public:
 
 public:
 	// Object x inset for login window
-	static const Uint32 SUBWAYWINDOW_TAB_X_INSET;
+	static const UInt32 SUBWAYWINDOW_TAB_X_INSET;
 	// Object y inset for login window
-	static const Uint32 SUBWAYWINDOW_TAB_Y_INSET;
+	static const UInt32 SUBWAYWINDOW_TAB_Y_INSET;
 	// Object y spacing for login window
-	static const Uint32 SUBWAYWINDOW_TAB_X_SPACING;
+	static const UInt32 SUBWAYWINDOW_TAB_X_SPACING;
 	// Object x spacing for login window
-	static const Uint32 SUBWAYWINDOW_TAB_Y_SPACING;
+	static const UInt32 SUBWAYWINDOW_TAB_Y_SPACING;
 	// Text inset for subway window
-	static const Uint32 SUBWAYWINDOW_TAB_TEXT_INSET;
+	static const UInt32 SUBWAYWINDOW_TAB_TEXT_INSET;
 	// Default text color
 	static const color32_t SUBWAYWINDOW_TEXT_COLOR;
 	// Height of the title surface
-	static const Uint32 SUBWAYWINDOW_TITLE_SURFACE_HEIGHT;
+	static const UInt32 SUBWAYWINDOW_TITLE_SURFACE_HEIGHT;
 	// Height of the button surface
-	static const Uint32 SUBWAYWINDOW_BUTTON_SURFACE_HEIGHT;
+	static const UInt32 SUBWAYWINDOW_BUTTON_SURFACE_HEIGHT;
 	// Height of the info surface
-	static const Uint32 SUBWAYWINDOW_INFO_SURFACE_HEIGHT;
+	static const UInt32 SUBWAYWINDOW_INFO_SURFACE_HEIGHT;
 	// Height of the exit button surface
-	static const Uint32 SUBWAYWINDOW_EXIT_BUTTON_SURFACE_HEIGHT;
+	static const UInt32 SUBWAYWINDOW_EXIT_BUTTON_SURFACE_HEIGHT;
 	// Title text default schema set name
-	static const Char SUBWAYWINDOW_TITLE_TEXTSCHEMA_NAME[];
+	static const char SUBWAYWINDOW_TITLE_TEXTSCHEMA_NAME[];
 	// Text default font schema name
-	static const Char SUBWAYWINDOW_TEXTSCHEMA_NAME[];
+	static const char SUBWAYWINDOW_TEXTSCHEMA_NAME[];
 
 public:
-	CGameUISubwayWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height );
+	CGameUISubwayWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height );
 	~CGameUISubwayWindow();
 
 public:
@@ -105,7 +105,7 @@ public:
 	void think( void ) override;
 
 	// Initializes the data
-	bool initData( const Char* pstrScriptFile, Int32 flags, Int32 subwayLineIndex );
+	bool initData( const char* pstrScriptFile, Int32 flags, Int32 subwayLineIndex );
 	// Returns the current window information
 	void getInformation( CString& scriptfile, Int32& flags, Int32& subwayLineIndex ) const;
 	// Returns the type of the window
@@ -142,7 +142,7 @@ CGameUISubwayWindowExitCallbackEvent
 class CGameUISubwayWindowCallbackEvent : public CGameUICallbackEvent
 {
 public:
-	CGameUISubwayWindowCallbackEvent( CGameUISubwayWindow* pLoginWindow, Uint32 type ):
+	CGameUISubwayWindowCallbackEvent( CGameUISubwayWindow* pLoginWindow, UInt32 type ):
 		m_pSubwayWindow(pLoginWindow),
 		m_eventType((subwaybuttonevent_t)type)
 	{ 
@@ -151,7 +151,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) override;
+	virtual void PerformAction( float param ) override;
 	// Handles a special key event
 	virtual bool KeyEvent( Int32 button, Int16 mod, bool keyDown ) override { return false; }
 	// Handles a mouse button event

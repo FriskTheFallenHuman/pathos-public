@@ -20,20 +20,20 @@ All Rights Reserved.
 ui_engine_interface_t CUIObject::g_engineFuncs;
 
 // Width of a tab label
-const Uint32 CUITabLabel::TAB_LABEL_WIDTH = 96;
+const UInt32 CUITabLabel::TAB_LABEL_WIDTH = 96;
 // Height of a tab label
-const Uint32 CUITabLabel::TAB_LABEL_HEIGHT = 32;
+const UInt32 CUITabLabel::TAB_LABEL_HEIGHT = 32;
 
 // Default height for the dropdown list
-const Uint32 CUIDropDownList::DROPDOWN_LIST_WIDTH = 256;
+const UInt32 CUIDropDownList::DROPDOWN_LIST_WIDTH = 256;
 // Default height for the dropdown list
-const Uint32 CUIDropDownList::DROPDOWN_LIST_HEIGHT = 32;
+const UInt32 CUIDropDownList::DROPDOWN_LIST_HEIGHT = 32;
 
 //=============================================
 // @brief Constructor
 //
 //=============================================
-CUIObject::CUIObject( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIObject::CUIObject( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	m_flags(flags),
 	m_pParent(nullptr),
 	m_width(width),
@@ -57,7 +57,7 @@ CUIObject::~CUIObject( void )
 {
 	if(!m_childrenArray.empty())
 	{
-		for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+		for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 			delete m_childrenArray[i];
 
 		m_childrenArray.clear();
@@ -70,7 +70,7 @@ CUIObject::~CUIObject( void )
 // @param idx Index of the child to return
 // @return Pointer to child element
 //=============================================
-CUIObject* CUIObject::getChildByIndex( Uint32 idx )
+CUIObject* CUIObject::getChildByIndex( UInt32 idx )
 {
 	assert(idx < m_childrenArray.size());
 	return m_childrenArray[idx];
@@ -84,10 +84,10 @@ CUIObject* CUIObject::getChildByIndex( Uint32 idx )
 void CUIObject::addChild( CUIObject* pChild )
 { 
 	// Make sure it's not present twice
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		if(m_childrenArray[i] == pChild)
-			assert(FALSE); // Shit the bed
+			assert(false); // Shit the bed
 	}
 
 	m_childrenArray.push_back(pChild);
@@ -156,14 +156,14 @@ void CUIObject::setWindowInputFocusObject( CUIObject* pFocusObject )
 void CUIObject::adjustPosition( void )
 {
 	// Adjust children too
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 		m_childrenArray[i]->adjustPosition();
 
 	if(!m_pParent)
 		return;
 
 	// Get width/height info from parent
-	Uint32 parentWidth, parentHeight;
+	UInt32 parentWidth, parentHeight;
 	m_pParent->getSize(parentWidth, parentHeight);
 
 	if(m_flags & UIEL_FL_ALIGN_R)
@@ -199,7 +199,7 @@ void CUIObject::setSize( Int32 width, Int32 height )
 // @param width Target variable for width of the element
 // @param height Target variable for height of the element
 //=============================================
-void CUIObject::getSize( Uint32& width, Uint32& height )
+void CUIObject::getSize( UInt32& width, UInt32& height )
 {
 	width = m_width;
 	height = m_height;
@@ -211,12 +211,12 @@ void CUIObject::getSize( Uint32& width, Uint32& height )
 //=============================================
 void CUIObject::setAlpha( Int32 alpha, bool recursive )
 {
-	m_color.a = clamp(alpha, 0, 255);
+	m_color.a = Clamp(alpha, 0, 255);
 
 	if(recursive)
 	{
 		// Set also the children
-		for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+		for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 			m_childrenArray[i]->setAlpha(alpha, true);
 	}
 }
@@ -225,7 +225,7 @@ void CUIObject::setAlpha( Int32 alpha, bool recursive )
 // @brief Draw function for elements
 //
 //=============================================
-void CUIObject::setColor( Uint32 r, Uint32 g, Uint32 b, Int32 a, bool recursive )
+void CUIObject::setColor( UInt32 r, UInt32 g, UInt32 b, Int32 a, bool recursive )
 {
 	m_color.r = _max(255, r);
 	m_color.g = _max(255, g);
@@ -237,7 +237,7 @@ void CUIObject::setColor( Uint32 r, Uint32 g, Uint32 b, Int32 a, bool recursive 
 	if(recursive)
 	{
 		// Set also the children
-		for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+		for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 			m_childrenArray[i]->setColor(r, g, b, a, true);
 	}
 }
@@ -247,7 +247,7 @@ void CUIObject::setColor( Uint32 r, Uint32 g, Uint32 b, Int32 a, bool recursive 
 //
 // @param xpos Target position of the element
 // @param ypos Target position of the element
-// @return TRUE if position was successfuly changed, FALSE otherwise
+// @return true if position was successfuly changed, false otherwise
 //=============================================
 void CUIObject::setPosition( Int32 xpos, Int32 ypos, bool setBase )
 {
@@ -298,7 +298,7 @@ void CUIObject::getAbsPosition( Int32& xpos, Int32& ypos )
 void CUIObject::think( void )
 {
 	// Let the children think too
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 		m_childrenArray[i]->think();
 }
 
@@ -309,7 +309,7 @@ void CUIObject::think( void )
 void CUIObject::postThink( void )
 {
 	// Let the children think too
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 		m_childrenArray[i]->postThink();
 }
 
@@ -326,7 +326,7 @@ bool CUIObject::mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool
 		return false;
 
 	// Prioritize interactive elements first
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		CUIObject* pObject = m_childrenArray[i];
 
@@ -336,7 +336,7 @@ bool CUIObject::mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool
 	}
 
 	// Now check non-interactive elements first
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		CUIObject* pObject = m_childrenArray[i];
 		if(!pObject->isInteractive() 
@@ -360,7 +360,7 @@ bool CUIObject::mouseWheelEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool 
 		return false;
 
 	// Prioritize interactive elements first
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		CUIObject* pObject = m_childrenArray[i];
 
@@ -370,7 +370,7 @@ bool CUIObject::mouseWheelEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool 
 	}
 
 	// Now check non-interactive elements first
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		CUIObject* pObject = m_childrenArray[i];
 		if(!pObject->isInteractive() 
@@ -411,7 +411,7 @@ bool CUIObject::draw( void )
 	assert(g_engineFuncs.pfnBasicDrawIsActive);
 
 	// Let the children draw too
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		if(!(m_childrenArray[i]->getFlags() & UIEL_FL_ONTOP))
 		{
@@ -421,7 +421,7 @@ bool CUIObject::draw( void )
 	}
 
 	// Draw ontop elements last
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		if(m_childrenArray[i]->getFlags() & UIEL_FL_ONTOP)
 		{
@@ -457,12 +457,12 @@ bool CUIObject::adjustSize( Int32 x, Int32 y )
 		return false;
 
 	// Test if proposed size is valid
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		// Helps filter out border and such fixed-size elements
 		if(considerElementOnResize(m_childrenArray[i]))
 		{
-			if(!m_childrenArray[i]->isParentSizeValid(static_cast<Uint32>(testWidth), static_cast<Uint32>(testHeight), x, y))
+			if(!m_childrenArray[i]->isParentSizeValid(static_cast<UInt32>(testWidth), static_cast<UInt32>(testHeight), x, y))
 			{
 				// Try adjusting on only one axis
 				if((x && y) && (!adjustSize(x, 0) || adjustSize(0, y)))
@@ -474,11 +474,11 @@ bool CUIObject::adjustSize( Int32 x, Int32 y )
 	}
 
 	// Assign final width/height
-	m_width = static_cast<Uint32>(testWidth);
-	m_height = static_cast<Uint32>(testHeight);
+	m_width = static_cast<UInt32>(testWidth);
+	m_height = static_cast<UInt32>(testHeight);
 
 	// Adjust size on all children
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		if(!considerElementOnResize(m_childrenArray[i]))
 			continue;
@@ -496,7 +496,7 @@ bool CUIObject::adjustSize( Int32 x, Int32 y )
 // @brief Adjusts the size by x and y amount
 //
 //=============================================
-bool CUIObject::isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 adjX, Int32 adjY )
+bool CUIObject::isParentSizeValid( UInt32 testWidth, UInt32 testHeight, Int32 adjX, Int32 adjY )
 {
 	assert(!isResizable());
 
@@ -531,7 +531,7 @@ bool CUIObject::isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 ad
 //=============================================
 void CUIObject::releaseClickStates( void )
 {
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 		m_childrenArray[i]->releaseClickStates();
 }
 
@@ -559,7 +559,7 @@ CUIObject* CUIObject::getParentWindow( void )
 //=============================================
 void CUIObject::closeOtherTabs( CUIObject* pCaller )
 {
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		if(pCaller == m_childrenArray[i])
 			continue;
@@ -581,7 +581,7 @@ void CUIObject::SetRenderInterface( const struct ui_engine_interface_t& renderfu
 // @brief Constructor
 //
 //=============================================
-CUIInteractiveObject::CUIInteractiveObject( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIInteractiveObject::CUIInteractiveObject( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIObject(flags, width, height, originx, originy)
 {
 }
@@ -601,7 +601,7 @@ CUIInteractiveObject::~CUIInteractiveObject( void )
 bool CUIInteractiveObject::isMouseOver( Int32 xPos, Int32 yPos )
 {
 	// Check the children first
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		if(m_childrenArray[i]->isMouseOver(xPos, yPos))
 			return true;
@@ -626,7 +626,7 @@ bool CUIInteractiveObject::isMouseOver( Int32 xPos, Int32 yPos )
 // @brief Constructor
 //
 //=============================================
-CUITexturedObject::CUITexturedObject( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUITexturedObject::CUITexturedObject( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIObject( flags, width, height, originx, originy ),
 	m_pDefaultTexture(nullptr),
 	m_pFocusTexture(nullptr),
@@ -700,35 +700,35 @@ bool CUITexturedObject::draw( void )
 
 		g_engineFuncs.pfnBind2DTexture(GL_TEXTURE0_ARB, ptexture->palloc->gl_index, false);
 
-		g_engineFuncs.pfnBasicDrawColor4f(static_cast<Float>(m_color.r)/255.0f,
-			static_cast<Float>(m_color.g)/255.0f, 
-			static_cast<Float>(m_color.b)/255.0f, 
-			static_cast<Float>(m_color.a)/255.0f);
+		g_engineFuncs.pfnBasicDrawColor4f(static_cast<float>(m_color.r)/255.0f,
+			static_cast<float>(m_color.g)/255.0f, 
+			static_cast<float>(m_color.b)/255.0f, 
+			static_cast<float>(m_color.a)/255.0f);
 
 		// Textures are tiled based on size, for now
-		Float tcmax_x = static_cast<Float>(m_width) / static_cast<Float>(ptexture->width);
-		Float tcmax_y = static_cast<Float>(m_height) / static_cast<Float>(ptexture->height);
+		float tcmax_x = static_cast<float>(m_width) / static_cast<float>(ptexture->width);
+		float tcmax_y = static_cast<float>(m_height) / static_cast<float>(ptexture->height);
 
 		g_engineFuncs.pfnValidateBasicDraw();
 
 		g_engineFuncs.pfnBasicDrawBegin(CBasicDraw::DRAW_TRIANGLES);
 		g_engineFuncs.pfnBasicDrawTexCoord2f(0, tcmax_y);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos), static_cast<Float>(ypos) + static_cast<Float>(m_height), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos), static_cast<float>(ypos) + static_cast<float>(m_height), -1);
 
 		g_engineFuncs.pfnBasicDrawTexCoord2f(0, 0);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos), static_cast<Float>(ypos), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos), static_cast<float>(ypos), -1);
 
 		g_engineFuncs.pfnBasicDrawTexCoord2f(tcmax_x, 0);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos)+static_cast<Float>(m_width), static_cast<Float>(ypos), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos)+static_cast<float>(m_width), static_cast<float>(ypos), -1);
 
 		g_engineFuncs.pfnBasicDrawTexCoord2f(0, tcmax_y);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos), static_cast<Float>(ypos)+static_cast<Float>(m_height), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos), static_cast<float>(ypos)+static_cast<float>(m_height), -1);
 
 		g_engineFuncs.pfnBasicDrawTexCoord2f(tcmax_x, 0);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos)+static_cast<Float>(m_width), static_cast<Float>(ypos), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos)+static_cast<float>(m_width), static_cast<float>(ypos), -1);
 
 		g_engineFuncs.pfnBasicDrawTexCoord2f(tcmax_x, tcmax_y);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos)+static_cast<Float>(m_width), static_cast<Float>(ypos)+static_cast<Float>(m_height), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos)+static_cast<float>(m_width), static_cast<float>(ypos)+static_cast<float>(m_height), -1);
 		g_engineFuncs.pfnBasicDrawEnd();
 	}
 
@@ -740,7 +740,7 @@ bool CUITexturedObject::draw( void )
 // @brief Constructor
 //
 //=============================================
-CUISurface::CUISurface( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUISurface::CUISurface( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIObject( flags, width, height, originx, originy ),
 	m_pBackground(nullptr),
 	m_pBtmLeftCorner(nullptr),
@@ -767,7 +767,7 @@ CUISurface::~CUISurface( void )
 // @brief Tells if the parent size is valid for us
 //
 //=============================================
-bool CUISurface::isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 adjX, Int32 adjY )
+bool CUISurface::isParentSizeValid( UInt32 testWidth, UInt32 testHeight, Int32 adjX, Int32 adjY )
 {
 	// Determine my adjusted size
 	Int32 myTestWidth = static_cast<Int32>(m_width);
@@ -806,11 +806,11 @@ bool CUISurface::isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 a
 		return false;
 
 	// Test for children too
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		if(considerElementOnResize(m_childrenArray[i]))
 		{
-			if(!m_childrenArray[i]->isParentSizeValid(static_cast<Uint32>(myTestWidth), static_cast<Uint32>(myTestHeight), adjX, adjY))
+			if(!m_childrenArray[i]->isParentSizeValid(static_cast<UInt32>(myTestWidth), static_cast<UInt32>(myTestHeight), adjX, adjY))
 				return false;
 		}
 	}
@@ -822,7 +822,7 @@ bool CUISurface::isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 a
 // @brief Creates a UI element from a schema object
 //
 //=============================================
-CUITexturedObject* CUISurface::createObject( const ui_schemeinfo_t* pscheme, const Char* objectName )
+CUITexturedObject* CUISurface::createObject( const ui_schemeinfo_t* pscheme, const char* objectName )
 {
 	// Get it from the schema
 	const ui_schemeobject_t* pobj = pscheme->getObject(objectName);
@@ -849,7 +849,7 @@ CUITexturedObject* CUISurface::createObject( const ui_schemeinfo_t* pscheme, con
 // @brief Initializes the tab element with a schema
 //
 //=============================================
-bool CUISurface::init( const Char* pstrSchemaName )
+bool CUISurface::init( const char* pstrSchemaName )
 {
 	m_pScheme = g_engineFuncs.pfnUILoadSchemaFile(pstrSchemaName);
 	if(!m_pScheme)
@@ -1092,7 +1092,7 @@ void CUISurface::adjustBgElements( void )
 		m_pBtmLeftCorner->setPosition(originX, originY);
 	}
 
-	Uint32 width = 0;
+	UInt32 width = 0;
 	if(m_pBottomBorder && m_pBtmLeftCorner && m_pBtmRightCorner)
 	{
 		// Set the bottom border
@@ -1166,7 +1166,7 @@ bool CUISurface::draw( void )
 // @brief Constructor
 //
 //=============================================
-CUIWindow::CUIWindow( Int32 winFlags, Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIWindow::CUIWindow( Int32 winFlags, Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUISurface( flags, width, height, originx, originy ),
 	m_winFlags(winFlags),
 	m_pTitle(nullptr),
@@ -1188,7 +1188,7 @@ CUIWindow::~CUIWindow( void )
 // @brief Initializes the tab element with a schema
 //
 //=============================================
-bool CUIWindow::init( const Char* pstrSchemaName )
+bool CUIWindow::init( const char* pstrSchemaName )
 {
 	// Call base class to set the schema
 	if(!CUISurface::init(pstrSchemaName))
@@ -1219,7 +1219,7 @@ bool CUIWindow::init( const Char* pstrSchemaName )
 // @brief Sets the title for the surface
 //
 //=============================================
-void CUIWindow::setTitle( const Char* pstrTitle, const font_set_t* pTitleFont, Uint32 insetX, Uint32 insetY )
+void CUIWindow::setTitle( const char* pstrTitle, const font_set_t* pTitleFont, UInt32 insetX, UInt32 insetY )
 {
 	if(!m_pTitle)
 	{
@@ -1289,7 +1289,7 @@ bool CUIWindow::mouseWheelEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool 
 // @brief Performs the close action for the window
 //
 //=============================================
-void CUIWindow::CUIWindowCloseAction::PerformAction( Float param )
+void CUIWindow::CUIWindowCloseAction::PerformAction( float param )
 {
 	if(m_pWindow)
 		m_pWindow->setWindowFlags(UIW_FL_KILLME);
@@ -1299,7 +1299,7 @@ void CUIWindow::CUIWindowCloseAction::PerformAction( Float param )
 // @brief Constructor
 //
 //=============================================
-CUIText::CUIText( Int32 flags, const font_set_t* pFont, const Char* pstrText, Int32 originx, Int32 originy, Uint32 maxWidth ):
+CUIText::CUIText( Int32 flags, const font_set_t* pFont, const char* pstrText, Int32 originx, Int32 originy, UInt32 maxWidth ):
 	CUIObject( (flags|UIEL_FL_FIXED_W|UIEL_FL_FIXED_H), 0, 0, originx, originy ),
 	m_pFont(pFont),
 	m_maxTextWidth(maxWidth)
@@ -1319,7 +1319,7 @@ CUIText::~CUIText( void )
 // @brief Sets the string to display
 //
 //=============================================
-void CUIText::setText( const Char* pstrText )
+void CUIText::setText( const char* pstrText )
 {
 	m_string = pstrText;
 
@@ -1344,7 +1344,7 @@ void CUIText::setText( const Char* pstrText )
 // @brief Sets the string to display
 //
 //=============================================
-void CUIText::setDisplayText( const Char* pstrText )
+void CUIText::setDisplayText( const char* pstrText )
 {
 	m_displayText.clear();
 	
@@ -1355,12 +1355,12 @@ void CUIText::setDisplayText( const Char* pstrText )
 		dotsWidth *= 3;
 
 		// Determine string length
-		Uint32 strWidth = 0;
-		Uint32 lastDotWidthChar = 0;
-		const Char* pstr = pstrText;
+		UInt32 strWidth = 0;
+		UInt32 lastDotWidthChar = 0;
+		const char* pstr = pstrText;
 		while(*pstr)
 		{
-			Int32 charIdx = static_cast<byte>(*pstr);
+			Int32 charIdx = static_cast<Byte>(*pstr);
 			Int32 charWidth = m_pFont->glyphs[charIdx].advancex;
 
 			if((strWidth+charWidth) > m_maxTextWidth)
@@ -1395,7 +1395,7 @@ bool CUIText::draw( void )
 
 	// Determine position to draw in
 	Int32 ymin;
-	Uint32 width, height;
+	UInt32 width, height;
 	g_engineFuncs.pfnGetStringSize(m_pFont, m_string.c_str(), &width, &height, &ymin);
 
 	Int32 absOrgX, absOrgY;
@@ -1439,7 +1439,7 @@ void CUIText::adjustPosition( void )
 // @brief Constructor
 //
 //=============================================
-CUIDragger::CUIDragger( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIDragger::CUIDragger( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIObject( (flags|UIEL_FL_FIXED_H), width, height, originx, originy ),
 	m_lastMouseX(0),
 	m_lastMouseY(0),
@@ -1494,7 +1494,7 @@ bool CUIDragger::mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 button, boo
 // @brief Tells if the parent size is valid for us
 //
 //=============================================
-bool CUIDragger::isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 adjX, Int32 adjY )
+bool CUIDragger::isParentSizeValid( UInt32 testWidth, UInt32 testHeight, Int32 adjX, Int32 adjY )
 {
 	// Determine my adjusted size
 	Int32 myTestWidth = static_cast<Int32>(m_width);
@@ -1577,7 +1577,7 @@ bool CUIDragger::performAdj( Int32 x, Int32 y )
 // @brief Constructor
 //
 //=============================================
-CUIResizer::CUIResizer( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIResizer::CUIResizer( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIDragger( (flags|UIEL_FL_FIXED_H|UIEL_FL_FIXED_W), width, height, originx, originy )
 {
 }
@@ -1603,7 +1603,7 @@ bool CUIResizer::performAdj( Int32 x, Int32 y )
 // @brief Constructor
 //
 //=============================================
-CUIButton::CUIButton( Int32 flags, const Char* pstrText, const font_set_t* pFont, CUICallbackEvent* pAction, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIButton::CUIButton( Int32 flags, const char* pstrText, const font_set_t* pFont, CUICallbackEvent* pAction, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUISurface( (flags|UIEL_FL_FIXED_H|UIEL_FL_FIXED_W), width, height, originx, originy ),
 	m_pDisplay(nullptr),
 	m_isClickedOn(false),
@@ -1621,7 +1621,7 @@ CUIButton::CUIButton( Int32 flags, const Char* pstrText, const font_set_t* pFont
 // @brief Constructor
 //
 //=============================================
-CUIButton::CUIButton( Int32 flags, const ui_schemeobject_t* pScheme, CUICallbackEvent* pAction, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIButton::CUIButton( Int32 flags, const ui_schemeobject_t* pScheme, CUICallbackEvent* pAction, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUISurface( (flags|UIEL_FL_FIXED_H|UIEL_FL_FIXED_W), width, height, originx, originy ),
 	m_pDisplay(nullptr),
 	m_isClickedOn(false),
@@ -1646,7 +1646,7 @@ CUIButton::CUIButton( Int32 flags, const ui_schemeobject_t* pScheme, CUICallback
 // @brief Constructor
 //
 //=============================================
-CUIButton::CUIButton( Int32 flags, CUICallbackEvent* pAction, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIButton::CUIButton( Int32 flags, CUICallbackEvent* pAction, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUISurface( (flags), width, height, originx, originy ),
 	m_pDisplay(nullptr),
 	m_isClickedOn(false),
@@ -1725,7 +1725,7 @@ void CUIButton::think( void )
 // @brief Constructor
 //
 //=============================================
-CUITextTab::CUITextTab( Int32 flags, const font_set_t* pFont, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUITextTab::CUITextTab( Int32 flags, const font_set_t* pFont, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUISurface( flags, width, height, originx, originy ),
 	m_pText(nullptr),
 	m_pFont(pFont),
@@ -1747,7 +1747,7 @@ CUITextTab::~CUITextTab( void )
 // @brief Sets the source text array to render text from
 //
 //=============================================
-void CUITextTab::setText( const Char* pstrText )
+void CUITextTab::setText( const char* pstrText )
 {
 	m_pText = pstrText;
 	updateRangeSize();
@@ -1793,7 +1793,7 @@ bool CUITextTab::mouseWheelEvent( Int32 mouseX, Int32 mouseY, Int32 button, bool
 // @brief Sets the source text array to render text from
 //
 //=============================================
-bool CUITextTab::init( const Char* pstrSchemaName )
+bool CUITextTab::init( const char* pstrSchemaName )
 {
 	// Call base class to initialize basics
 	if(!CUISurface::init(pstrSchemaName))
@@ -1864,13 +1864,13 @@ bool CUITextTab::draw( void )
 // @brief Sets the offset value for the element
 //
 //=============================================
-void CUITextTab::setOffsetValue( Float offset )
+void CUITextTab::setOffsetValue( float offset )
 {
 	if(!m_pText)
 		return;
 
 	g_engineFuncs.pfnSetStringRectangle(0, 0, m_width - m_pScroller->getWidth(), m_height, m_inset, m_inset);
-	Float textHeight = g_engineFuncs.pfnEstimateStringHeight(m_pFont, m_pText, m_pFont->fontsize);
+	float textHeight = g_engineFuncs.pfnEstimateStringHeight(m_pFont, m_pText, m_pFont->fontsize);
 	g_engineFuncs.pfnSetStringRectangle(0, 0, 0, 0, 0, 0);
 
 	if(textHeight < m_height)
@@ -1879,8 +1879,8 @@ void CUITextTab::setOffsetValue( Float offset )
 		return;
 	}
 
-	Uint32 totalHeight = textHeight-(m_height-m_pFont->fontsize-m_inset*2);
-	Uint32 nbElements = totalHeight/m_pFont->fontsize;
+	UInt32 totalHeight = textHeight-(m_height-m_pFont->fontsize-m_inset*2);
+	UInt32 nbElements = totalHeight/m_pFont->fontsize;
 	m_textOffset = nbElements*offset;
 }
 
@@ -1888,7 +1888,7 @@ void CUITextTab::setOffsetValue( Float offset )
 // @brief Constructor
 //
 //=============================================
-CUITextInputTab::CUITextInputTab( Int32 flags, CUICallbackEvent* pAction, const font_set_t* pFont, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUITextInputTab::CUITextInputTab( Int32 flags, CUICallbackEvent* pAction, const font_set_t* pFont, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUISurface( flags, width, height, originx, originy ),
 	m_pFont(pFont),
 	m_nextBlinkTime(0),
@@ -1997,7 +1997,7 @@ bool CUITextInputTab::keyEvent( Int32 button, Int16 mod, bool keyDown )
 			return true;
 
 		// Shift if needed
-		Char inputChar = static_cast<Char>(sdlKeycode);
+		char inputChar = static_cast<char>(sdlKeycode);
 		if(mod & (KMOD_SHIFT|KMOD_CAPS))
 			inputChar = Common::GetShiftedChar(inputChar);
 
@@ -2005,13 +2005,13 @@ bool CUITextInputTab::keyEvent( Int32 button, Int16 mod, bool keyDown )
 		if(m_szBuffer[m_inputPosition] != '\0')
 		{
 			// Insert it inbetween
-			Uint32 bufLength = qstrlen(m_szBuffer);
-			Char *psrc = m_szBuffer + bufLength;
-			Char *pdst = m_szBuffer + m_inputPosition - 1;
+			UInt32 bufLength = qstrlen(m_szBuffer);
+			char *psrc = m_szBuffer + bufLength;
+			char *pdst = m_szBuffer + m_inputPosition - 1;
 
 			while(psrc != pdst)
 			{
-				Char *pcdst = psrc+1;
+				char *pcdst = psrc+1;
 				*pcdst = *psrc;
 
 				psrc--;
@@ -2061,13 +2061,13 @@ bool CUITextInputTab::keyEvent( Int32 button, Int16 mod, bool keyDown )
 			if(m_szBuffer[m_inputPosition] != '\0')
 			{
 				// Remove inbetween
-				Uint32 bufLength = qstrlen(m_szBuffer);
-				Char *psrc = m_szBuffer + m_inputPosition - 1;
-				Char *pdst = m_szBuffer + bufLength;
+				UInt32 bufLength = qstrlen(m_szBuffer);
+				char *psrc = m_szBuffer + m_inputPosition - 1;
+				char *pdst = m_szBuffer + bufLength;
 
 				while(psrc != pdst)
 				{
-					Char *pcsrc = psrc+1;
+					char *pcsrc = psrc+1;
 					*psrc = *pcsrc;
 
 					psrc++;
@@ -2075,7 +2075,7 @@ bool CUITextInputTab::keyEvent( Int32 button, Int16 mod, bool keyDown )
 			}
 			else
 			{
-				Char* pstr = m_szBuffer+m_inputPosition;
+				char* pstr = m_szBuffer+m_inputPosition;
 				*(pstr-1) = *pstr;
 			}
 
@@ -2104,7 +2104,7 @@ void CUITextInputTab::clearText( void )
 // @brief Sets the contents of the text buffer
 //
 //=============================================
-void CUITextInputTab::setText( const Char* pstrText )
+void CUITextInputTab::setText( const char* pstrText )
 {
 	if(!pstrText)
 	{
@@ -2148,8 +2148,8 @@ bool CUITextInputTab::draw( void )
 	Int32 markerWidth = 2;
 
 	// For the marker
-	Char* pstr = nullptr;
-	Uint32 numChars = 0;
+	char* pstr = nullptr;
+	UInt32 numChars = 0;
 
 	if(m_szBuffer[0] != '\0')
 	{
@@ -2157,21 +2157,21 @@ bool CUITextInputTab::draw( void )
 		g_engineFuncs.pfnDisableBasicDraw();
 
 		// Determine position to draw in
-		Uint32 textHeight = g_engineFuncs.pfnEstimateStringHeight(m_pFont, m_szBuffer, 0);
+		UInt32 textHeight = g_engineFuncs.pfnEstimateStringHeight(m_pFont, m_szBuffer, 0);
 
 		Int32 absOrgX, absOrgY;
 		getAbsPosition(absOrgX, absOrgY);
 
 		// Draw in the vertical center
-		Uint32 yOrg = absOrgY + m_height/2 + textHeight/2;
+		UInt32 yOrg = absOrgY + m_height/2 + textHeight/2;
 
 		// Draw only the parts that fit in
-		Uint32 stringWidth = 0;
+		UInt32 stringWidth = 0;
 		numChars = qstrlen(m_szBuffer)-1;
 		pstr = m_szBuffer+numChars;
 		while(numChars > 0)
 		{
-			Uint32 charWidth = m_pFont->glyphs[*pstr].advancex;
+			UInt32 charWidth = m_pFont->glyphs[*pstr].advancex;
 			if(m_inset+charWidth+stringWidth+markerWidth >= (m_width-m_inset))
 			{
 				pstr++;
@@ -2221,8 +2221,8 @@ bool CUITextInputTab::draw( void )
 			if(m_inputPosition < numChars)
 				return true;
 
-			Uint32 nbChars = m_inputPosition - numChars;
-			for(Uint32 i = 0; i < nbChars; i++)
+			UInt32 nbChars = m_inputPosition - numChars;
+			for(UInt32 i = 0; i < nbChars; i++)
 				xOrg += m_pFont->glyphs[pstr[i]].advancex;
 		}
 
@@ -2234,12 +2234,12 @@ bool CUITextInputTab::draw( void )
 		g_engineFuncs.pfnValidateBasicDraw();
 
 		g_engineFuncs.pfnBasicDrawBegin(CBasicDraw::DRAW_TRIANGLES);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xOrg),				static_cast<Float>(yOrg+markerHeight), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xOrg),				static_cast<Float>(yOrg), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xOrg+markerWidth),	static_cast<Float>(yOrg), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xOrg),				static_cast<Float>(yOrg+markerHeight), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xOrg+markerWidth),	static_cast<Float>(yOrg), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xOrg+markerWidth),	static_cast<Float>(yOrg+markerHeight), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xOrg),				static_cast<float>(yOrg+markerHeight), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xOrg),				static_cast<float>(yOrg), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xOrg+markerWidth),	static_cast<float>(yOrg), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xOrg),				static_cast<float>(yOrg+markerHeight), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xOrg+markerWidth),	static_cast<float>(yOrg), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xOrg+markerWidth),	static_cast<float>(yOrg+markerHeight), -1);
 		g_engineFuncs.pfnBasicDrawEnd();
 
 		if(!g_engineFuncs.pfnBasicDrawEnableTextures())
@@ -2253,7 +2253,7 @@ bool CUITextInputTab::draw( void )
 // @brief Constructor
 //
 //=============================================
-CUIDragButton::CUIDragButton( Int32 flags, ui_scroller_align_t alignment, CUICallbackEvent* pAction, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIDragButton::CUIDragButton( Int32 flags, ui_scroller_align_t alignment, CUICallbackEvent* pAction, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIButton( flags, pAction, width, height, originx, originy ),
 	m_alignment(alignment),
 	m_lastMouseX(0),
@@ -2383,14 +2383,14 @@ void CUIDragButton::think( void )
 // @brief Sets the length of the drag button
 //
 //=============================================
-void CUIDragButton::setLength( Uint32 length )
+void CUIDragButton::setLength( UInt32 length )
 {
 	if(m_alignment == UIEL_SCROLL_V)
 	{
 		Int32 finalHeight = length - m_startInset - m_endInset;
 		m_height = _min(0, finalHeight);
 
-		Uint32 minHeight = m_pTopBorder->getHeight() + m_pBottomBorder->getHeight();
+		UInt32 minHeight = m_pTopBorder->getHeight() + m_pBottomBorder->getHeight();
 		if(m_height < minHeight)
 			m_height = minHeight;
 	}
@@ -2399,7 +2399,7 @@ void CUIDragButton::setLength( Uint32 length )
 		Int32 finalWidth = length - m_startInset - m_endInset;
 		m_width = _min(0, finalWidth);
 
-		Uint32 minWidth = m_pLeftBorder->getWidth() + m_pRightBorder->getWidth();
+		UInt32 minWidth = m_pLeftBorder->getWidth() + m_pRightBorder->getWidth();
 		if(m_width < minWidth)
 			m_width = minWidth;
 	}
@@ -2411,16 +2411,16 @@ void CUIDragButton::setLength( Uint32 length )
 // @brief Sets the position of the drag button
 //
 //=============================================
-void CUIDragButton::setPosition( Float position )
+void CUIDragButton::setPosition( float position )
 {
-	m_position = clamp(position, 0.0, 1.0);
+	m_position = Clamp(position, 0.0, 1.0);
 }
 
 //=============================================
 // @brief Gets the position of the drag button
 //
 //=============================================
-Double CUIDragButton::getPosition( void )
+double CUIDragButton::getPosition( void )
 {
 	return m_position;
 }
@@ -2437,7 +2437,7 @@ bool CUIDragButton::adjPosition( Int32 adjAmt, bool isMouseDrag, bool callEvent 
 		return false;
 
 	// Get parent length
-	Uint32 parentLength;
+	UInt32 parentLength;
 	if(m_alignment == UIEL_SCROLL_V)
 		parentLength = m_pParent->getHeight();
 	else
@@ -2458,17 +2458,17 @@ bool CUIDragButton::adjPosition( Int32 adjAmt, bool isMouseDrag, bool callEvent 
 		return true;
 	}
 
-	Uint32 referenceRange;
+	UInt32 referenceRange;
 	if(isMouseDrag)
 		referenceRange = myRange;
 	else
 		referenceRange = m_pParent->getFullRange();
 
 	// Make adjustments
-	Double adjFrac = static_cast<Double>(adjAmt)/ static_cast<Double>(referenceRange);
+	double adjFrac = static_cast<double>(adjAmt)/ static_cast<double>(referenceRange);
 
 	m_position += adjFrac;
-	m_position = clamp(m_position, 0.0, 1.0);
+	m_position = Clamp(m_position, 0.0, 1.0);
 
 	// Set appropriate position
 	if(m_alignment == UIEL_SCROLL_V)
@@ -2489,7 +2489,7 @@ bool CUIDragButton::adjPosition( Int32 adjAmt, bool isMouseDrag, bool callEvent 
 // @brief Gets the length of the drag button
 //
 //=============================================
-Uint32 CUIDragButton::getLength( void )
+UInt32 CUIDragButton::getLength( void )
 {
 	if(m_alignment == UIEL_SCROLL_V)
 		return m_height;
@@ -2509,25 +2509,25 @@ void CUIDragButton::adjustPosition( void )
 	if(m_lastParentLength)
 	{
 		// Reset the position
-		Uint32 parentLength;
+		UInt32 parentLength;
 		if(m_alignment == UIEL_SCROLL_V)
 			parentLength = m_pParent->getHeight();
 		else
 			parentLength = m_pParent->getWidth();
 
 		// Determine previous full position
-		Double prevRelativePosition = m_position*m_lastParentLength;
+		double prevRelativePosition = m_position*m_lastParentLength;
 		m_lastParentLength = parentLength;
 
 		// Determine current position based on this
-		Double currentPosition = static_cast<Double>(prevRelativePosition)/static_cast<Double>(parentLength);
-		m_position = clamp(currentPosition, 0.0, 1.0);
+		double currentPosition = static_cast<double>(prevRelativePosition)/static_cast<double>(parentLength);
+		m_position = Clamp(currentPosition, 0.0, 1.0);
 
 		// Determine my own range
 		Int32 myRange = parentLength-getLength()-m_startInset-m_endInset;
 
 		// Set appropriate position
-		Double offAdj = m_position*myRange;
+		double offAdj = m_position*myRange;
 		if(!offAdj)
 			m_position = 0;
 
@@ -2546,7 +2546,7 @@ void CUIDragButton::adjustPosition( void )
 // @brief Performs the close action for the window
 //
 //=============================================
-void CUIScroller::CUIScrollerArrowBtnAction::PerformAction( Float param )
+void CUIScroller::CUIScrollerArrowBtnAction::PerformAction( float param )
 {
 	assert(m_pScroller != nullptr);
 
@@ -2561,13 +2561,13 @@ void CUIScroller::CUIScrollerArrowBtnAction::PerformAction( Float param )
 // @brief Performs the close action for the window
 //
 //=============================================
-void CUIScroller::CUIScrollerDragBtnAction::PerformAction( Float param )
+void CUIScroller::CUIScrollerDragBtnAction::PerformAction( float param )
 {
 	assert(m_pScroller != nullptr);
 
 	// Get the dragger button
 	CUIDragButton* pButton = m_pScroller->getDragButton();
-	Float position = pButton->getPosition();
+	float position = pButton->getPosition();
 
 	// Get parent of the scroller button
 	CUIObject* pParent = m_pScroller->getParent();
@@ -2579,7 +2579,7 @@ void CUIScroller::CUIScrollerDragBtnAction::PerformAction( Float param )
 // @brief Constructor
 //
 //=============================================
-CUIScroller::CUIScroller( Int32 flags, ui_scroller_align_t alignment, Uint32 unitSize, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIScroller::CUIScroller( Int32 flags, ui_scroller_align_t alignment, UInt32 unitSize, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUITexturedObject( flags, width, height, originx, originy ),
 	m_pButtonStart(nullptr),
 	m_pButtonEnd(nullptr),
@@ -2608,7 +2608,7 @@ CUIScroller::~CUIScroller( void )
 // @brief Sets the source text array to render text from
 //
 //=============================================
-bool CUIScroller::init( const Char* pstrSchemaName )
+bool CUIScroller::init( const char* pstrSchemaName )
 {
 	m_pScheme = g_engineFuncs.pfnUILoadSchemaFile(pstrSchemaName);
 	if(!m_pScheme)
@@ -2712,8 +2712,8 @@ bool CUIScroller::init( const Char* pstrSchemaName )
 
 	// Middle button is a bit more complicated
 	flags = UIEL_FL_NONE;
-	Uint32 dragBtnWidth = 0;
-	Uint32 dragBtnHeight = 0;
+	UInt32 dragBtnWidth = 0;
+	UInt32 dragBtnHeight = 0;
 	Int32 dragBtnOriginX = 0;
 	Int32 dragBtnOriginY = 0;
 
@@ -2759,7 +2759,7 @@ bool CUIScroller::init( const Char* pstrSchemaName )
 // @brief Tells if the parent size is valid for us
 //
 //=============================================
-void CUIScroller::setFullRange( Uint32 fullRangeSize )
+void CUIScroller::setFullRange( UInt32 fullRangeSize )
 { 
 	if(!m_prevFullRangeSize)
 		m_prevFullRangeSize = fullRangeSize;
@@ -2778,7 +2778,7 @@ void CUIScroller::readjustDragButton( void )
 	m_pDragButton->getBounds(insetStart, insetEnd);
 
 	// Determine coverage
-	Uint32 viewSize = 0;
+	UInt32 viewSize = 0;
 	if(m_alignment == UIEL_SCROLL_V)
 		viewSize = m_height;
 	else
@@ -2792,8 +2792,8 @@ void CUIScroller::readjustDragButton( void )
 	}
 
 	// Determine coverage
-	Float coverage = viewSize/(Float)m_fullRangeSize;
-	Uint32 draggerLength = coverage*viewSize;
+	float coverage = viewSize/(float)m_fullRangeSize;
+	UInt32 draggerLength = coverage*viewSize;
 	if(draggerLength > viewSize)
 		draggerLength = viewSize;
 
@@ -2806,11 +2806,11 @@ void CUIScroller::readjustDragButton( void )
 	}
 	else
 	{
-		Double prevPos = m_pDragButton->getPosition();
-		Uint32 prevRealPos = m_prevFullRangeSize*prevPos;
+		double prevPos = m_pDragButton->getPosition();
+		UInt32 prevRealPos = m_prevFullRangeSize*prevPos;
 
-		Double newPos = static_cast<Double>(prevRealPos)/static_cast<Double>(m_fullRangeSize);
-		m_pDragButton->setPosition(static_cast<Float>(newPos));
+		double newPos = static_cast<double>(prevRealPos)/static_cast<double>(m_fullRangeSize);
+		m_pDragButton->setPosition(static_cast<float>(newPos));
 	}
 
 	// Force a reset
@@ -2839,7 +2839,7 @@ bool CUIScroller::adjustSize( Int32 x, Int32 y )
 // @brief Tells if the parent size is valid for us
 //
 //=============================================
-bool CUIScroller::isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 adjX, Int32 adjY )
+bool CUIScroller::isParentSizeValid( UInt32 testWidth, UInt32 testHeight, Int32 adjX, Int32 adjY )
 {
 	// Determine my adjusted size
 	Int32 myTestWidth = static_cast<Int32>(m_width);
@@ -2873,11 +2873,11 @@ bool CUIScroller::isParentSizeValid( Uint32 testWidth, Uint32 testHeight, Int32 
 		return false;
 
 	// Test for children too
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		if(considerElementOnResize(m_childrenArray[i]))
 		{
-			if(!m_childrenArray[i]->isParentSizeValid(static_cast<Uint32>(myTestWidth), static_cast<Uint32>(myTestHeight), adjX, adjY))
+			if(!m_childrenArray[i]->isParentSizeValid(static_cast<UInt32>(myTestWidth), static_cast<UInt32>(myTestHeight), adjX, adjY))
 				return false;
 		}
 	}
@@ -2925,7 +2925,7 @@ bool CUIScroller::moveScroller( Int32 button, Int32 scrollAmount )
 // @brief Constructor
 //
 //=============================================
-CUITabLabel::CUITabLabel( Int32 flags, const Char* pstrLabelTitle, const font_set_t* pFont, CUICallbackEvent* pAction, Int32 originx, Int32 originy ):
+CUITabLabel::CUITabLabel( Int32 flags, const char* pstrLabelTitle, const font_set_t* pFont, CUICallbackEvent* pAction, Int32 originx, Int32 originy ):
 	CUIButton( flags, pstrLabelTitle, pFont, pAction, TAB_LABEL_WIDTH, TAB_LABEL_HEIGHT, originx, originy ),
 	m_pTabBody(nullptr)
 {
@@ -2943,7 +2943,7 @@ CUITabLabel::~CUITabLabel( void )
 // @brief Constructor
 //
 //=============================================
-CUITabBody::CUITabBody( Int32 flags, CUITabLabel* pTabLabel, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUITabBody::CUITabBody( Int32 flags, CUITabLabel* pTabLabel, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUISurface( flags, width, height, originx, originy ),
 	m_pTabLabel(pTabLabel),
 	m_pTopLeftInnerCorner(nullptr),
@@ -3041,7 +3041,7 @@ void CUITabBody::adjustTopBorder( void )
 	// Set the inner left(if present)
 	if(m_pTopLeftBorderBit)
 	{
-		Uint32 width = labelOriginX - m_originX - originX;
+		UInt32 width = labelOriginX - m_originX - originX;
 		m_pTopLeftBorderBit->setPosition(originX, originY);
 		m_pTopLeftBorderBit->setWidth(width);
 	}
@@ -3057,7 +3057,7 @@ void CUITabBody::adjustTopBorder( void )
 		originX = m_pLeftBorder->getWidth();
 	
 	// Set the middle bit
-	Uint32 width = m_pTabLabel->getWidth();
+	UInt32 width = m_pTabLabel->getWidth();
 	if(m_pTopLeftInnerCorner)
 		width -= m_pTopLeftInnerCorner->getWidth();
 
@@ -3127,7 +3127,7 @@ void CUITabBody::setAlpha( Int32 alpha, bool recursive )
 // @brief Constructor
 //
 //=============================================
-CUITabList::CUITabList( Int32 flags, CUICallbackEvent* pSelectEvent, const font_set_t* pFont, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUITabList::CUITabList( Int32 flags, CUICallbackEvent* pSelectEvent, const font_set_t* pFont, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIObject( flags, width, height, originx, originy ),
 	m_pTabSelectEvent(pSelectEvent),
 	m_pFont(pFont)
@@ -3149,7 +3149,7 @@ CUITabList::~CUITabList( void )
 // pointer to the body
 //
 //=============================================
-CUITabBody* CUITabList::createTab( const Char* pstrName )
+CUITabBody* CUITabList::createTab( const char* pstrName )
 {
 	Int32 originX = 0;
 	Int32 originY = 0;
@@ -3164,7 +3164,7 @@ CUITabBody* CUITabList::createTab( const Char* pstrName )
 	}
 
 	// Callback event for the label button
-	Uint32 tabIndex = m_pTabsArray.size();
+	UInt32 tabIndex = m_pTabsArray.size();
 	CUITabSelectCallback* pCallbackEvent = new CUITabSelectCallback(this, tabIndex);
 
 	// Create the label
@@ -3181,8 +3181,8 @@ CUITabBody* CUITabList::createTab( const Char* pstrName )
 
 	// Determine the tab's position
 	originY += pTabLabel->getHeight();
-	Uint32 bodyWidth = m_width;
-	Uint32 bodyHeight = m_height - originY;
+	UInt32 bodyWidth = m_width;
+	UInt32 bodyHeight = m_height - originY;
 
 	// Create the tab body
 	CUITabBody* pTabBody = new CUITabBody(UIEL_FL_NONE, pTabLabel, bodyWidth, bodyHeight, originX, originY);
@@ -3215,12 +3215,12 @@ CUITabBody* CUITabList::createTab( const Char* pstrName )
 // @brief Enables a single tab and hides the rest
 //
 //=============================================
-void CUITabList::showTab( Uint32 tabIndex )
+void CUITabList::showTab( UInt32 tabIndex )
 {
 	assert(tabIndex < m_pTabsArray.size());
 
 	// Hide all the tabs except this one
-	for(Uint32 i = 0; i < m_pTabsArray.size(); i++)
+	for(UInt32 i = 0; i < m_pTabsArray.size(); i++)
 	{
 		if(i == tabIndex)
 			continue;
@@ -3240,7 +3240,7 @@ void CUITabList::showTab( Uint32 tabIndex )
 // @brief Constructor
 //
 //=============================================
-CUIScrollableSurface::CUIScrollableSurface( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIScrollableSurface::CUIScrollableSurface( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIObject( (flags|UIEL_FL_EXPAND_H), width, height, originx, originy ),
 	m_pSurface(nullptr),
 	m_pScroller(nullptr),
@@ -3262,7 +3262,7 @@ CUIScrollableSurface::~CUIScrollableSurface( void )
 // @brief Sets the source text array to render text from
 //
 //=============================================
-bool CUIScrollableSurface::init( const Char* pstrSchemaName )
+bool CUIScrollableSurface::init( const char* pstrSchemaName )
 {
 	// The surface is a seperate object so it isn't affected by the scroller
 	m_pSurface = new CUISurface(m_flags, m_width, m_height, 0, 0);
@@ -3297,7 +3297,7 @@ bool CUIScrollableSurface::init( const Char* pstrSchemaName )
 // @brief Sets the source text array to render text from
 //
 //=============================================
-void CUIScrollableSurface::setOffsetValue( Float offset )
+void CUIScrollableSurface::setOffsetValue( float offset )
 {
 	m_scrollOffset = offset;
 }
@@ -3327,7 +3327,7 @@ bool CUIScrollableSurface::draw( void )
 		return true;
 
 	// Draw non-scrolling elements first
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		CUIObject* pObject = m_childrenArray[i];
 		if(shouldShiftChild(pObject))
@@ -3341,10 +3341,10 @@ bool CUIScrollableSurface::draw( void )
 	Int32 absX, absY;
 	m_pSurface->getAbsPosition(absX, absY);
 
-	Uint32 width, height;
+	UInt32 width, height;
 	m_pSurface->getSize(width, height);
 
-	Uint32 scrwidth, scrheight;
+	UInt32 scrwidth, scrheight;
 	g_engineFuncs.pfnGetWindowSize(scrwidth, scrheight);
 
 	Int32 originY = static_cast<Int32>(scrheight) - absY - height;
@@ -3360,7 +3360,7 @@ bool CUIScrollableSurface::draw( void )
 	Int32 offsetAmount = minusCoverage * m_scrollOffset;
 
 	// Draw the scrolled elements
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		CUIObject* pObject = m_childrenArray[i];
 		if(!isChildVisible(pObject, offsetAmount))
@@ -3386,7 +3386,7 @@ bool CUIScrollableSurface::draw( void )
 	}
 
 	// Draw ontop elements last
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		CUIObject* pObject = m_childrenArray[i];
 		if(!isChildVisible(pObject, offsetAmount))
@@ -3436,7 +3436,7 @@ bool CUIScrollableSurface::mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 b
 	Int32 offsetAmount = minusCoverage * m_scrollOffset;
 
 	// Prioritize interactive elements first
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		CUIObject* pObject = m_childrenArray[i];
 		if(!pObject->isInteractive())
@@ -3466,7 +3466,7 @@ bool CUIScrollableSurface::mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 b
 	}
 
 	// Now check non-interactive elements
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		CUIObject* pObject = m_childrenArray[i];
 		if(pObject->isInteractive())
@@ -3525,7 +3525,7 @@ void CUIScrollableSurface::think( void )
 	Int32 offsetAmount = minusCoverage * m_scrollOffset;
 
 	// Let the children think too
-	for(Uint32 i = 0; i < m_childrenArray.size(); i++)
+	for(UInt32 i = 0; i < m_childrenArray.size(); i++)
 	{
 		CUIObject* pObject = m_childrenArray[i];
 
@@ -3554,7 +3554,7 @@ void CUIScrollableSurface::think( void )
 //=============================================
 bool CUIScrollableSurface::isMouseOver( Int32 xPos, Int32 yPos )
 {
-	Uint32 surfWidth, surfHeight;
+	UInt32 surfWidth, surfHeight;
 	m_pSurface->getSize(surfWidth, surfHeight);
 
 	Int32 absX, absY;
@@ -3583,14 +3583,14 @@ bool CUIScrollableSurface::isChildVisible( CUIObject* pChild, Int32 offset )
 	yPos -= offset;
 	yPos += m_baseYOffset;
 
-	Uint32 width, height;
+	UInt32 width, height;
 	pChild->getSize(width, height);
 
 	// Get the size and location of the background
 	Int32 surfX, surfY;
 	m_pSurface->getPosition(surfX, surfY);
 
-	Uint32 surfWidth, surfHeight;
+	UInt32 surfWidth, surfHeight;
 	m_pSurface->getSize(surfWidth, surfHeight);
 
 	if(xPos >= surfX+static_cast<Int32>(surfWidth))
@@ -3622,7 +3622,7 @@ bool CUIScrollableSurface::shouldShiftChild( CUIObject* pChild )
 // @brief Constructor
 //
 //=============================================
-CUIList::CUIList( Int32 flags, const font_set_t* pFont, Uint32 rowHeight, Uint32 nbColumns, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIList::CUIList( Int32 flags, const font_set_t* pFont, UInt32 rowHeight, UInt32 nbColumns, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIScrollableSurface( flags, width, height, originx, originy ),
 	m_nbColumns(nbColumns),
 	m_rowHeight(rowHeight),
@@ -3650,7 +3650,7 @@ CUIList::~CUIList( void )
 // @brief Sets the source text array to render text from
 //
 //=============================================
-bool CUIList::init( const Char* pstrSchemaName )
+bool CUIList::init( const char* pstrSchemaName )
 {
 	if(!CUIScrollableSurface::init(pstrSchemaName))
 		return false;
@@ -3658,7 +3658,7 @@ bool CUIList::init( const Char* pstrSchemaName )
 	if(!(m_flags & UIEL_FL_NO_HEADER))
 	{
 		// Create the header object
-		Uint32 headerWidth = m_width - m_pScroller->getWidth();
+		UInt32 headerWidth = m_width - m_pScroller->getWidth();
 		m_pHeader = new CUIListHeader(UIEL_FL_NONE, m_pListFont, m_nbColumns, headerWidth, m_rowHeight);
 		m_pHeader->setParent(this);
 
@@ -3698,7 +3698,7 @@ bool CUIList::shouldShiftChild( CUIObject* pChild )
 // @brief Sets the header column text
 //
 //=============================================
-void CUIList::setHeaderColumnName( Uint32 index, const Char* pstrName )
+void CUIList::setHeaderColumnName( UInt32 index, const char* pstrName )
 {
 	assert(m_pHeader != nullptr);
 	m_pHeader->setColumnName(index, pstrName);
@@ -3708,10 +3708,10 @@ void CUIList::setHeaderColumnName( Uint32 index, const Char* pstrName )
 // @brief Creates a new row and returns it's pointer
 //
 //=============================================
-CUIListRow* CUIList::createNewRow( CUICallbackEvent* pEvent, Uint32 textInset )
+CUIListRow* CUIList::createNewRow( CUICallbackEvent* pEvent, UInt32 textInset )
 {
-	Uint32 rowIndex = m_rowsArray.size();
-	Uint32 rowWidth = m_width - m_pScroller->getWidth();
+	UInt32 rowIndex = m_rowsArray.size();
+	UInt32 rowWidth = m_width - m_pScroller->getWidth();
 
 	Int32 flags = UIEL_FL_NONE;
 	if(m_flags & UIEL_FL_HOVER_HIGHLIGHT)
@@ -3729,9 +3729,9 @@ CUIListRow* CUIList::createNewRow( CUICallbackEvent* pEvent, Uint32 textInset )
 // @brief Creates a new row and returns it's pointer
 //
 //=============================================
-void CUIList::createSeparator( Uint32 textInset, const Char* pstrName, Uint32 height )
+void CUIList::createSeparator( UInt32 textInset, const char* pstrName, UInt32 height )
 {
-	Uint32 rowWidth = m_width - m_pScroller->getWidth();
+	UInt32 rowWidth = m_width - m_pScroller->getWidth();
 
 	CUIListSeparator* pSeparator = new CUIListSeparator(UIEL_FL_NONE, textInset, m_listHeight, rowWidth, height);
 	pSeparator->setParent(this);
@@ -3763,7 +3763,7 @@ void CUIList::clearHighlight( void )
 // @brief Sets the header column text
 //
 //=============================================
-void CUIList::setHighlightOnRow( Uint32 index, bool isHighlighted )
+void CUIList::setHighlightOnRow( UInt32 index, bool isHighlighted )
 {
 	clearHighlight();
 
@@ -3790,7 +3790,7 @@ void CUIList::setHighlightOnRowColumn( Int32 columnIndex )
 // @brief Gets the text from the column of a row
 //
 //=============================================
-CUIObject* CUIList::getRowColumnObject( Uint32 rowIndex, Uint32 columnIndex )
+CUIObject* CUIList::getRowColumnObject( UInt32 rowIndex, UInt32 columnIndex )
 {
 	assert(rowIndex < m_rowsArray.size());
 
@@ -3806,7 +3806,7 @@ void CUIList::clearList( void )
 {
 	if(!m_rowsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_rowsArray.size(); i++)
+		for(UInt32 i = 0; i < m_rowsArray.size(); i++)
 		{
 			removeChild(m_rowsArray[i]);
 			delete m_rowsArray[i];
@@ -3817,7 +3817,7 @@ void CUIList::clearList( void )
 
 	if(!m_separatorsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_separatorsArray.size(); i++)
+		for(UInt32 i = 0; i < m_separatorsArray.size(); i++)
 		{
 			removeChild(m_separatorsArray[i]);
 			delete m_separatorsArray[i];
@@ -3836,7 +3836,7 @@ void CUIList::clearList( void )
 // @brief Constructor
 //
 //=============================================
-CUIListHeader::CUIListHeader( Int32 flags, const font_set_t* pFont, Uint32 numColumns, Uint32 width, Uint32 height ):
+CUIListHeader::CUIListHeader( Int32 flags, const font_set_t* pFont, UInt32 numColumns, UInt32 width, UInt32 height ):
 	CUIObject( flags, width, height, 0, 0 ),
 	m_pFont(pFont)
 {
@@ -3855,7 +3855,7 @@ CUIListHeader::~CUIListHeader( void )
 // @brief Initializes the class
 //
 //=============================================
-bool CUIListHeader::init( const Char* pstrSchemaName )
+bool CUIListHeader::init( const char* pstrSchemaName )
 {
 	// Make sure we're valid
 	if(m_columns.empty())
@@ -3864,11 +3864,11 @@ bool CUIListHeader::init( const Char* pstrSchemaName )
 		return false;
 	}
 
-	Uint32 nbColumns = m_columns.size();
-	Uint32 colWidth = m_width/nbColumns;
+	UInt32 nbColumns = m_columns.size();
+	UInt32 colWidth = m_width/nbColumns;
 
 	// Create each column
-	for(Uint32 i = 0; i < nbColumns; i++)
+	for(UInt32 i = 0; i < nbColumns; i++)
 	{
 		hdr_column_t& column = m_columns[i];
 
@@ -3900,7 +3900,7 @@ bool CUIListHeader::init( const Char* pstrSchemaName )
 // @brief Sets the string for a column
 //
 //=============================================
-void CUIListHeader::setColumnName( Uint32 index, const Char* pstrName )
+void CUIListHeader::setColumnName( UInt32 index, const char* pstrName )
 {
 	assert(index < m_columns.size());
 
@@ -3916,7 +3916,7 @@ void CUIListHeader::setColumnName( Uint32 index, const Char* pstrName )
 // @brief Constructor
 //
 //=============================================
-CUIListRow::CUIListRow( Int32 flags, Uint32 rowIndex, Uint32 textInset, CUIListHeader* pHeader, CUICallbackEvent* pEvent, Uint32 numColumns, Uint32 rowOffs, Uint32 width, Uint32 height ):
+CUIListRow::CUIListRow( Int32 flags, UInt32 rowIndex, UInt32 textInset, CUIListHeader* pHeader, CUICallbackEvent* pEvent, UInt32 numColumns, UInt32 rowOffs, UInt32 width, UInt32 height ):
 	CUIObject( flags, width, height, 0, rowOffs ),
 	m_rowIndex(rowIndex),
 	m_pHeader(pHeader),
@@ -3926,8 +3926,8 @@ CUIListRow::CUIListRow( Int32 flags, Uint32 rowIndex, Uint32 textInset, CUIListH
 {
 	m_columns.resize(numColumns);
 	m_columnContents.resize(numColumns);
-	Uint32 columnWidth = (width/numColumns);
-	for(Uint32 i = 0; i < numColumns; i++)
+	UInt32 columnWidth = (width/numColumns);
+	for(UInt32 i = 0; i < numColumns; i++)
 	{
 		Int32 xPos = columnWidth*i;
 		CUIObject* pColumnObject = new CUIObject(UIEL_FL_NONE, columnWidth, m_height, xPos, 0);
@@ -3951,7 +3951,7 @@ CUIListRow::~CUIListRow( void )
 // @brief Sets the text for a column
 //
 //=============================================
-void CUIListRow::setColumnContents( Uint32 index, CUIObject* pObject )
+void CUIListRow::setColumnContents( UInt32 index, CUIObject* pObject )
 {
 	assert(index < m_columns.size());
 	pObject->setParent(m_columns[index]);
@@ -3962,7 +3962,7 @@ void CUIListRow::setColumnContents( Uint32 index, CUIObject* pObject )
 // @brief Gets the text for a column
 //
 //=============================================
-CUIObject* CUIListRow::getColumnContents( Uint32 index )
+CUIObject* CUIListRow::getColumnContents( UInt32 index )
 {
 	assert(index < m_columns.size());
 	return m_columnContents[index];
@@ -3972,9 +3972,9 @@ CUIObject* CUIListRow::getColumnContents( Uint32 index )
 // @brief Sets the color for a column
 //
 //=============================================
-void CUIListRow::setColumnColor( byte r, byte g, byte b )
+void CUIListRow::setColumnColor( Byte r, Byte g, Byte b )
 {
-	for(Uint32 i = 0; i < m_columns.size(); i++)
+	for(UInt32 i = 0; i < m_columns.size(); i++)
 		m_columns[i]->setColor(r, g, b);
 }
 
@@ -4035,12 +4035,12 @@ bool CUIListRow::draw( void )
 		g_engineFuncs.pfnValidateBasicDraw();
 
 		g_engineFuncs.pfnBasicDrawBegin(CBasicDraw::DRAW_TRIANGLES);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos),			static_cast<Float>(ypos+m_height), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos),			static_cast<Float>(ypos), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos+m_width),	static_cast<Float>(ypos), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos),			static_cast<Float>(ypos+m_height), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos+m_width),	static_cast<Float>(ypos), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos+m_width),	static_cast<Float>(ypos+m_height), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos),			static_cast<float>(ypos+m_height), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos),			static_cast<float>(ypos), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos+m_width),	static_cast<float>(ypos), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos),			static_cast<float>(ypos+m_height), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos+m_width),	static_cast<float>(ypos), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos+m_width),	static_cast<float>(ypos+m_height), -1);
 		g_engineFuncs.pfnBasicDrawEnd();
 
 		if(!g_engineFuncs.pfnBasicDrawEnableTextures())
@@ -4067,12 +4067,12 @@ bool CUIListRow::draw( void )
 		g_engineFuncs.pfnValidateBasicDraw();
 
 		g_engineFuncs.pfnBasicDrawBegin(CBasicDraw::DRAW_TRIANGLES);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos),			static_cast<Float>(ypos+m_height), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos),			static_cast<Float>(ypos), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos+colWidth),	static_cast<Float>(ypos), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos),			static_cast<Float>(ypos+m_height), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos+colWidth),	static_cast<Float>(ypos), -1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos+colWidth),	static_cast<Float>(ypos+m_height), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos),			static_cast<float>(ypos+m_height), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos),			static_cast<float>(ypos), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos+colWidth),	static_cast<float>(ypos), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos),			static_cast<float>(ypos+m_height), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos+colWidth),	static_cast<float>(ypos), -1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos+colWidth),	static_cast<float>(ypos+m_height), -1);
 		g_engineFuncs.pfnBasicDrawEnd();
 
 		if(!g_engineFuncs.pfnBasicDrawEnableTextures())
@@ -4087,7 +4087,7 @@ bool CUIListRow::draw( void )
 // @brief Constructor
 //
 //=============================================
-CUIListSeparator::CUIListSeparator( Int32 flags, Uint32 textInset, Uint32 rowOffs, Uint32 width, Uint32 height ):
+CUIListSeparator::CUIListSeparator( Int32 flags, UInt32 textInset, UInt32 rowOffs, UInt32 width, UInt32 height ):
 	CUIListRow( flags, 0, textInset, nullptr, nullptr, 1, rowOffs, width, height )
 {
 }
@@ -4128,12 +4128,12 @@ bool CUIListSeparator::draw( void )
 	g_engineFuncs.pfnValidateBasicDraw();
 
 	g_engineFuncs.pfnBasicDrawBegin(CBasicDraw::DRAW_TRIANGLES);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos),			static_cast<Float>(ypos+sepHeight), -1);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos),			static_cast<Float>(ypos), -1);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos+sepWidth),	static_cast<Float>(ypos), -1);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos),			static_cast<Float>(ypos+sepHeight), -1);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos+sepWidth),	static_cast<Float>(ypos), -1);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xpos+sepWidth),	static_cast<Float>(ypos+sepHeight), -1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos),			static_cast<float>(ypos+sepHeight), -1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos),			static_cast<float>(ypos), -1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos+sepWidth),	static_cast<float>(ypos), -1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos),			static_cast<float>(ypos+sepHeight), -1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos+sepWidth),	static_cast<float>(ypos), -1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xpos+sepWidth),	static_cast<float>(ypos+sepHeight), -1);
 	g_engineFuncs.pfnBasicDrawEnd();
 
 	if(!g_engineFuncs.pfnBasicDrawEnableTextures())
@@ -4146,7 +4146,7 @@ bool CUIListSeparator::draw( void )
 // @brief Constructor
 //
 //=============================================
-CUIDropDownList::CUIDropDownList( Int32 flags, CUICallbackEvent* pEvent, CUICallbackEvent* pListToggleEvent, const font_set_t* pFont, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIDropDownList::CUIDropDownList( Int32 flags, CUICallbackEvent* pEvent, CUICallbackEvent* pListToggleEvent, const font_set_t* pFont, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUISurface( flags, width, height, originx, originy ),
 	m_pCurrentValue(nullptr),
 	m_pDropdownButton(nullptr),
@@ -4156,7 +4156,7 @@ CUIDropDownList::CUIDropDownList( Int32 flags, CUICallbackEvent* pEvent, CUICall
 	m_pFont(pFont),
 	m_pListToggleEvent(pListToggleEvent)
 {
-	Uint32 textInset = 6;
+	UInt32 textInset = 6;
 	Int32 maxWidth = width - 24 - textInset*2;
 	maxWidth = _min(0, maxWidth);
 
@@ -4182,7 +4182,7 @@ CUIDropDownList::~CUIDropDownList( void )
 // @brief Initializes the class
 //
 //=============================================
-bool CUIDropDownList::init( const Char* pstrSchemaName )
+bool CUIDropDownList::init( const char* pstrSchemaName )
 {
 	// Init base class
 	if(!CUISurface::init(pstrSchemaName))
@@ -4285,7 +4285,7 @@ void CUIDropDownList::setSelection( Int32 rowIndex )
 		return;
 
 	CUIText* pText = reinterpret_cast<CUIText*>(pObject);
-	const Char* pstrValue = pText->getText();
+	const char* pstrValue = pText->getText();
 
 	m_pCurrentValue->setText(pstrValue);
 	m_selectionIdx = rowIndex;
@@ -4295,7 +4295,7 @@ void CUIDropDownList::setSelection( Int32 rowIndex )
 // @brief Sets the current selection
 //
 //=============================================
-void CUIDropDownList::manageSelectionEvent( Uint32 rowIndex )
+void CUIDropDownList::manageSelectionEvent( UInt32 rowIndex )
 {
 	setSelection(rowIndex);
 	toggleList();
@@ -4309,7 +4309,7 @@ void CUIDropDownList::manageSelectionEvent( Uint32 rowIndex )
 // @brief Adds a choice to the dropdown list
 //
 //=============================================
-void CUIDropDownList::addChoice( const Char* pstrText )
+void CUIDropDownList::addChoice( const char* pstrText )
 {
 	Int32 rowIdx = m_pDropdownList->getNbRows();
 
@@ -4341,7 +4341,7 @@ void CUIDropDownList::closeOtherTabs( CUIObject* pCaller )
 // @brief Performs the close action for the window
 //
 //=============================================
-void CUIDropDownList::CUIDropDownButtonEvent::PerformAction( Float param )
+void CUIDropDownList::CUIDropDownButtonEvent::PerformAction( float param )
 {
 	if(m_pList)
 		m_pList->toggleList();
@@ -4383,7 +4383,7 @@ bool CUIDropDownList::isMouseOver( Int32 xPos, Int32 yPos )
 	Int32 absX, absY;
 	getAbsPosition(absX, absY);
 
-	Uint32 height = m_height;
+	UInt32 height = m_height;
 	if(m_pDropdownList->isVisible())
 		height += m_pDropdownList->getHeight();
 
@@ -4403,7 +4403,7 @@ bool CUIDropDownList::isMouseOver( Int32 xPos, Int32 yPos )
 // @brief Constructor
 //
 //=============================================
-CUITickBox::CUITickBox( Int32 flags, CUICallbackEvent* pAction, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUITickBox::CUITickBox( Int32 flags, CUICallbackEvent* pAction, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUIButton( (flags|UIEL_FL_FIXED_H|UIEL_FL_FIXED_W), pAction, width, height, originx, originy ),
 	m_pTickFlagObject(nullptr),
 	m_isEnabled(false)
@@ -4422,7 +4422,7 @@ CUITickBox::~CUITickBox( void )
 // @brief Destructor
 //
 //=============================================
-bool CUITickBox::init( const Char* pstrSchemaName )
+bool CUITickBox::init( const char* pstrSchemaName )
 {
 	m_pScheme = g_engineFuncs.pfnUILoadSchemaFile(pstrSchemaName);
 	if(!m_pScheme)
@@ -4472,7 +4472,7 @@ bool CUITickBox::init( const Char* pstrSchemaName )
 // @brief Sets the string to display
 //
 //=============================================
-void CUITickBox::setText( const Char* pstrText, const font_set_t* pFont, Uint32 textOffset )
+void CUITickBox::setText( const char* pstrText, const font_set_t* pFont, UInt32 textOffset )
 {
 	// Create the description text
 	CUIText* pText = new CUIText(UIEL_FL_ALIGN_CV, pFont, pstrText, m_width + textOffset, 0, 0);
@@ -4539,7 +4539,7 @@ bool CUITickBox::mouseButtonEvent( Int32 mouseX, Int32 mouseY, Int32 button, boo
 // @brief Constructor
 //
 //=============================================
-CUISlider::CUISlider( Int32 flags, CUICallbackEvent* pEvent, Uint32 width, Uint32 height, Int32 originx, Int32 originy, Float minValue, Float maxValue, Float markerdistance ):
+CUISlider::CUISlider( Int32 flags, CUICallbackEvent* pEvent, UInt32 width, UInt32 height, Int32 originx, Int32 originy, float minValue, float maxValue, float markerdistance ):
 	CUIObject( (flags|UIEL_FL_FIXED_H|UIEL_FL_FIXED_W), width, height, originx, originy ),
 	m_minValue(minValue),
 	m_maxValue(maxValue),
@@ -4570,20 +4570,20 @@ CUISlider::~CUISlider( void )
 bool CUISlider::draw( void )
 {
 	// Determine marker height
-	Float markerHeight = static_cast<Float>(m_height)/2.0f - static_cast<Float>(m_pBodyObject->getHeight())/2.0f - 4;
-	Float markerWidth = 1.0f; // 2 pixels
+	float markerHeight = static_cast<float>(m_height)/2.0f - static_cast<float>(m_pBodyObject->getHeight())/2.0f - 4;
+	float markerWidth = 1.0f; // 2 pixels
 
-	Float distJump = (m_maxValue - m_minValue) / (1.0/m_markerDistance);
+	float distJump = (m_maxValue - m_minValue) / (1.0/m_markerDistance);
 
 	// Draw the markers
-	for(Float dist = 0; dist <= m_width; dist += distJump)
+	for(float dist = 0; dist <= m_width; dist += distJump)
 	{
 		Int32 absX, absY;
 		getAbsPosition(absX, absY);
 
 		// Draw the marker
-		Float xPos = absX + dist;
-		Float yPos = absY + m_height - markerHeight + static_cast<Float>(m_pBodyObject->getHeight())/2.0f;
+		float xPos = absX + dist;
+		float yPos = absY + m_height - markerHeight + static_cast<float>(m_pBodyObject->getHeight())/2.0f;
 
 		if(!g_engineFuncs.pfnBasicDrawDisableTextures())
 			return false;
@@ -4594,12 +4594,12 @@ bool CUISlider::draw( void )
 
 		// Draw it
 		g_engineFuncs.pfnBasicDrawBegin(CBasicDraw::DRAW_TRIANGLES);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos),				static_cast<Float>(yPos+markerHeight),		-1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos),				static_cast<Float>(yPos),					-1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos+markerWidth),	static_cast<Float>(yPos),					-1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos),				static_cast<Float>(yPos+markerHeight),		-1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos+markerWidth),	static_cast<Float>(yPos),					-1);
-		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos+markerWidth),	static_cast<Float>(yPos+markerHeight),		-1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos),				static_cast<float>(yPos+markerHeight),		-1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos),				static_cast<float>(yPos),					-1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos+markerWidth),	static_cast<float>(yPos),					-1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos),				static_cast<float>(yPos+markerHeight),		-1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos+markerWidth),	static_cast<float>(yPos),					-1);
+		g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos+markerWidth),	static_cast<float>(yPos+markerHeight),		-1);
 		g_engineFuncs.pfnBasicDrawEnd();
 	}
 
@@ -4611,7 +4611,7 @@ bool CUISlider::draw( void )
 // @brief Destructor
 //
 //=============================================
-bool CUISlider::init( const Char* pstrSchemaName )
+bool CUISlider::init( const char* pstrSchemaName )
 {
 	// Get the height and width of the elements
 	ui_schemeinfo_t* pschemeinfo = g_engineFuncs.pfnUILoadSchemaFile(pstrSchemaName);
@@ -4650,7 +4650,7 @@ bool CUISlider::init( const Char* pstrSchemaName )
 	m_pLeftObject->setDefaultTexture(pLeftTexture);
 
 	// Create the body object
-	Uint32 bodyWidth = m_width - pLeftObject->width - pRightObject->width;
+	UInt32 bodyWidth = m_width - pLeftObject->width - pRightObject->width;
 	m_pBodyObject = new CUITexturedObject(UIEL_FL_ALIGN_CV, bodyWidth, pBodyObject->height, pBodyObject->width, 0);
 	m_pBodyObject->setParent(this);
 
@@ -4658,7 +4658,7 @@ bool CUISlider::init( const Char* pstrSchemaName )
 	m_pBodyObject->setDefaultTexture(pBodyTexture);
 
 	// Create the left object
-	Uint32 originx = pLeftObject->width + m_pBodyObject->getWidth();
+	UInt32 originx = pLeftObject->width + m_pBodyObject->getWidth();
 	m_pRightObject = new CUITexturedObject(UIEL_FL_ALIGN_CV, pRightObject->width, pRightObject->height, originx, 0);
 	m_pRightObject->setParent(this);
 
@@ -4668,12 +4668,12 @@ bool CUISlider::init( const Char* pstrSchemaName )
 	if(m_minValue != 0.0 || m_maxValue != 1.0)
 	{
 		// Determine marker height
-		Float markerHeight = static_cast<Float>(m_height)/2.0f - static_cast<Float>(m_pBodyObject->getHeight())/2.0f - 4;
+		float markerHeight = static_cast<float>(m_height)/2.0f - static_cast<float>(m_pBodyObject->getHeight())/2.0f - 4;
 
-		Char valueStr[32];
+		char valueStr[32];
 		sprintf(valueStr, "%0.1f", m_minValue);
 
-		Uint32 width, height;
+		UInt32 width, height;
 		g_engineFuncs.pfnGetStringSize(gUIManager.GetDefaultFontSet(), valueStr, &width, &height, nullptr);
 
 		// Create the "minimum value" string object
@@ -4693,8 +4693,8 @@ bool CUISlider::init( const Char* pstrSchemaName )
 	}
 
 	// Create the button
-	Uint32 buttonHeight = m_height;
-	Uint32 buttonWidth = ((m_maxValue - m_minValue) / (1.0/m_markerDistance)) / 2.0f;
+	UInt32 buttonHeight = m_height;
+	UInt32 buttonWidth = ((m_maxValue - m_minValue) / (1.0/m_markerDistance)) / 2.0f;
 	
 	CUISliderDragBtnAction *pAction = new CUISliderDragBtnAction(this);
 	m_pSliderButton = new CUIDragButton(UIEL_FL_ALIGN_CV, UIEL_SCROLL_H, pAction, buttonWidth, buttonHeight, 0, 0);
@@ -4713,7 +4713,7 @@ bool CUISlider::init( const Char* pstrSchemaName )
 // @brief Destructor
 //
 //=============================================
-void CUISlider::setValueFromPosition( Double position )
+void CUISlider::setValueFromPosition( double position )
 {
 	m_value = (m_maxValue-m_minValue)*position + m_minValue;
 
@@ -4726,7 +4726,7 @@ void CUISlider::setValueFromPosition( Double position )
 // @brief Destructor
 //
 //=============================================
-void CUISlider::setValue( Float value )
+void CUISlider::setValue( float value )
 {
 	if(value < m_minValue)
 	{
@@ -4742,7 +4742,7 @@ void CUISlider::setValue( Float value )
 	m_value = value;
 
 	// Set the slider pos
-	Float position = (m_value-m_minValue) / (m_maxValue-m_minValue);
+	float position = (m_value-m_minValue) / (m_maxValue-m_minValue);
 	if(position < 0)
 		position = 0;
 	if(position > 1.0)
@@ -4756,13 +4756,13 @@ void CUISlider::setValue( Float value )
 // @brief Performs the close action for the window
 //
 //=============================================
-void CUISlider::CUISliderDragBtnAction::PerformAction( Float param )
+void CUISlider::CUISliderDragBtnAction::PerformAction( float param )
 {
 	assert(m_pSlider != nullptr);
 
 	// Get the dragger button
 	CUIDragButton* pButton = m_pSlider->getSliderButton();
-	Double position = pButton->getPosition();
+	double position = pButton->getPosition();
 
 	// Get parent of the scroller button
 	m_pSlider->setValueFromPosition(position);
@@ -4772,7 +4772,7 @@ void CUISlider::CUISliderDragBtnAction::PerformAction( Float param )
 // @brief Constructor
 //
 //=============================================
-CUIProgressBar::CUIProgressBar( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy ):
+CUIProgressBar::CUIProgressBar( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy ):
 	CUISurface( (flags), width, height, originx, originy ),
 	m_meterValue(0)
 {
@@ -4800,16 +4800,16 @@ bool CUIProgressBar::draw( void )
 		return true;
 
 	// Get the sizes of the borders
-	Uint32 bottomHeight = m_pBottomBorder->getHeight();
-	Uint32 topHeight = m_pTopBorder->getHeight();
+	UInt32 bottomHeight = m_pBottomBorder->getHeight();
+	UInt32 topHeight = m_pTopBorder->getHeight();
 
-	Uint32 leftWidth = m_pLeftBorder->getWidth();
-	Uint32 rightWidth = m_pRightBorder->getWidth();
+	UInt32 leftWidth = m_pLeftBorder->getWidth();
+	UInt32 rightWidth = m_pRightBorder->getWidth();
 
 	// Determine dimensions
-	Float meterHeight = m_height - bottomHeight - topHeight;
-	Float meterFullWidth = m_width - leftWidth - rightWidth;
-	Float meterWidth = meterFullWidth * m_meterValue;
+	float meterHeight = m_height - bottomHeight - topHeight;
+	float meterFullWidth = m_width - leftWidth - rightWidth;
+	float meterWidth = meterFullWidth * m_meterValue;
 
 	// Draw the meter itself
 	Int32 absX, absY;
@@ -4827,12 +4827,12 @@ bool CUIProgressBar::draw( void )
 
 	// Draw it
 	g_engineFuncs.pfnBasicDrawBegin(CBasicDraw::DRAW_TRIANGLES);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos),				static_cast<Float>(yPos+meterHeight),		-1);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos),				static_cast<Float>(yPos),					-1);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos+meterWidth),		static_cast<Float>(yPos),					-1);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos),				static_cast<Float>(yPos+meterHeight),		-1);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos+meterWidth),		static_cast<Float>(yPos),					-1);
-	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<Float>(xPos+meterWidth),		static_cast<Float>(yPos+meterHeight),		-1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos),				static_cast<float>(yPos+meterHeight),		-1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos),				static_cast<float>(yPos),					-1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos+meterWidth),		static_cast<float>(yPos),					-1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos),				static_cast<float>(yPos+meterHeight),		-1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos+meterWidth),		static_cast<float>(yPos),					-1);
+	g_engineFuncs.pfnBasicDrawVertex3f(static_cast<float>(xPos+meterWidth),		static_cast<float>(yPos+meterHeight),		-1);
 	g_engineFuncs.pfnBasicDrawEnd();
 
 	return true;
@@ -4842,8 +4842,8 @@ bool CUIProgressBar::draw( void )
 // @brief Draws the progress bar
 //
 //=============================================
-void CUIProgressBar::setValue( Float value )
+void CUIProgressBar::setValue( float value )
 {
 	// Do not allow values outside bounds
-	m_meterValue = clamp(value, 0, 1);
+	m_meterValue = Clamp(value, 0, 1);
 }

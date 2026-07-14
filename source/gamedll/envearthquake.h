@@ -25,28 +25,28 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 public:
 	EXPORTFN void QuakeThink( void );
 
 protected:
 	// Minimum delay
-	Float m_minDelay;
+	float m_minDelay;
 	// Maximum delay
-	Float m_maxDelay;
+	float m_maxDelay;
 
 	// Minimum force
-	Float m_minForce;
+	float m_minForce;
 	// Maximum force
-	Float m_maxForce;
+	float m_maxForce;
 
 	// Duration
-	Float m_duration;
+	float m_duration;
 	// Fade out time
-	Float m_fadeTime;
+	float m_fadeTime;
 
 	// Shake end time
-	Double m_shakeBeginTime;
+	double m_shakeBeginTime;
 };
 #endif //ENVBLUR

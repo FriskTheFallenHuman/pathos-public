@@ -14,30 +14,30 @@ All Rights Reserved.
 #include "sentencesfile.h"
 
 // Wait time until we can talk again
-Double CTalkNPC::g_talkWaitTime = 0;
+double CTalkNPC::g_talkWaitTime = 0;
 
 // Ideal yaw task yaw speed
-const Float CTalkNPC::IDEALYAW_TASK_YAWSPEED = 60;
+const float CTalkNPC::IDEALYAW_TASK_YAWSPEED = 60;
 // Maximum distance for staring
-const Float CTalkNPC::STARE_MAX_DIST = 128;
+const float CTalkNPC::STARE_MAX_DIST = 128;
 // Minimum treshold for idealyaw difference
-const Float CTalkNPC::IDEALYAW_DIFF_TRESHOLD = 10;
+const float CTalkNPC::IDEALYAW_DIFF_TRESHOLD = 10;
 // Minimum talk range
-const Float CTalkNPC::MAXIMUM_TALK_RANGE = 512;
+const float CTalkNPC::MAXIMUM_TALK_RANGE = 512;
 // Minimum push speed
-const Float CTalkNPC::MINIMUM_PUSH_SPEED = 50;
+const float CTalkNPC::MINIMUM_PUSH_SPEED = 50;
 // Mortal health treshold on player
-const Float CTalkNPC::PLAYER_MORTAL_HEALTH_TRESHOLD = 0.125;
+const float CTalkNPC::PLAYER_MORTAL_HEALTH_TRESHOLD = 0.125;
 // Medium health treshold on player
-const Float CTalkNPC::PLAYER_MEDIUM_HEALTH_TRESHOLD = 0.25;
+const float CTalkNPC::PLAYER_MEDIUM_HEALTH_TRESHOLD = 0.25;
 // Light health treshold on player
-const Float CTalkNPC::PLAYER_LIGHT_HEALTH_TRESHOLD = 0.5;
+const float CTalkNPC::PLAYER_LIGHT_HEALTH_TRESHOLD = 0.5;
 // Maximum follower distance before FOLLO_TARGET_TOOFAR is set
-const Float CTalkNPC::MAX_FOLLOW_DISTANCE = 128;
+const float CTalkNPC::MAX_FOLLOW_DISTANCE = 128;
 // Default follow range
-const Float CTalkNPC::DEFAULT_FOLLOW_RANGE = 128;
+const float CTalkNPC::DEFAULT_FOLLOW_RANGE = 128;
 // Sentence group name postifxes
-const Char* CTalkNPC::SENTENCE_GROUP_POSTFIXES[CTalkNPC::NB_TALKNPC_GROUPS] = {
+const char* CTalkNPC::SENTENCE_GROUP_POSTFIXES[CTalkNPC::NB_TALKNPC_GROUPS] = {
 	"_ANSWER",
 	"_QUESTION",
 	"_IDLE",
@@ -72,17 +72,17 @@ const Char* CTalkNPC::SENTENCE_GROUP_POSTFIXES[CTalkNPC::NB_TALKNPC_GROUPS] = {
 //=============================================
 ai_task_t taskListScheduleIdleResponse[] = 
 {
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT,						0.5),
 	AITASK(AI_TALKNPC_TASK_EYECONTACT,			0),
 	AITASK(AI_TALKNPC_TASK_RESPOND,				0),
 	AITASK(AI_TALKNPC_TASK_IDEALYAW,			0),
 	AITASK(AI_TASK_FACE_IDEAL,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TALKNPC_TASK_EYECONTACT,			0)
 };
 
-Uint32 interruptBitsScheduleIdleResponse[] =
+UInt32 interruptBitsScheduleIdleResponse[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER,
@@ -114,12 +114,12 @@ ai_task_t taskListScheduleIdleSpeak[] =
 	AITASK(AI_TALKNPC_TASK_SPEAK,				0),
 	AITASK(AI_TALKNPC_TASK_IDEALYAW,			0),
 	AITASK(AI_TASK_FACE_IDEAL,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TALKNPC_TASK_EYECONTACT,			0),
 	AITASK(AI_TASK_WAIT_RANDOM,					0.5)
 };
 
-Uint32 interruptBitsScheduleIdleSpeak[] =
+UInt32 interruptBitsScheduleIdleSpeak[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER,
@@ -153,7 +153,7 @@ ai_task_t taskListScheduleIdleSpeakWait[] =
 	AITASK(AI_TASK_WAIT,						2)
 };
 
-Uint32 interruptBitsScheduleIdleSpeakWait[] =
+UInt32 interruptBitsScheduleIdleSpeakWait[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER,
@@ -183,28 +183,28 @@ const CAISchedule scheduleIdleSpeakWait(
 ai_task_t taskListScheduleIdleHello[] = 
 {
 	AITASK(AI_TASK_FACE_IDEAL,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TALKNPC_TASK_SAY_HELLO,			0),
 	AITASK(AI_TALKNPC_TASK_EYECONTACT,			0),
 	AITASK(AI_TASK_WAIT,						0.5),
 	AITASK(AI_TASK_FACE_IDEAL,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TALKNPC_TASK_SAY_HELLO,			0),
 	AITASK(AI_TALKNPC_TASK_EYECONTACT,			0),
 	AITASK(AI_TASK_WAIT,						0.5),
 	AITASK(AI_TASK_FACE_IDEAL,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TALKNPC_TASK_SAY_HELLO,			0),
 	AITASK(AI_TALKNPC_TASK_EYECONTACT,			0),
 	AITASK(AI_TASK_WAIT,						0.5),
 	AITASK(AI_TASK_FACE_IDEAL,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TALKNPC_TASK_SAY_HELLO,			0),
 	AITASK(AI_TALKNPC_TASK_EYECONTACT,			0),
 	AITASK(AI_TASK_WAIT,						0.5)
 };
 
-Uint32 interruptBitsScheduleIdleHello[] =
+UInt32 interruptBitsScheduleIdleHello[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER,
@@ -239,7 +239,7 @@ ai_task_t taskListScheduleSayStopShooting[] =
 	AITASK(AI_TALKNPC_TASK_SAY_STOPSHOOTING,	0)
 };
 
-Uint32 interruptBitsScheduleSayStopShooting[] =
+UInt32 interruptBitsScheduleSayStopShooting[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER,
@@ -267,11 +267,11 @@ const CAISchedule scheduleSayStopShooting(
 ai_task_t taskListScheduleIdleWatchPlayer[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TALKNPC_TASK_LOOK_AT_PLAYER,		6)
 };
 
-Uint32 interruptBitsScheduleIdleWatchPlayer[] =
+UInt32 interruptBitsScheduleIdleWatchPlayer[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER,
@@ -305,7 +305,7 @@ const CAISchedule scheduleIdleWatchPlayer(
 ai_task_t taskListScheduleIdleWatchPlayerStare[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TALKNPC_TASK_PLAYER_STARE,		6),
 	AITASK(AI_TALKNPC_TASK_STARE,				0),
 	AITASK(AI_TALKNPC_TASK_IDEALYAW,			0),
@@ -313,7 +313,7 @@ ai_task_t taskListScheduleIdleWatchPlayerStare[] =
 	AITASK(AI_TALKNPC_TASK_EYECONTACT,			0)
 };
 
-Uint32 interruptBitsScheduleIdleWatchPlayerStare[] =
+UInt32 interruptBitsScheduleIdleWatchPlayerStare[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER,
@@ -348,11 +348,11 @@ ai_task_t taskListScheduleIdleEyeContact[] =
 {
 	AITASK(AI_TALKNPC_TASK_IDEALYAW,			0),
 	AITASK(AI_TASK_FACE_IDEAL,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TALKNPC_TASK_EYECONTACT,			0)
 };
 
-Uint32 interruptBitsScheduleIdleEyeContact[] =
+UInt32 interruptBitsScheduleIdleEyeContact[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER,
@@ -383,12 +383,12 @@ const CAISchedule scheduleIdleEyeContact(
 ai_task_t taskListScheduleTalkNPCIdleStand[] = 
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_WAIT,						2),
 	AITASK(AI_TALKNPC_TASK_HEADRESET,			0),
 };
 
-Uint32 interruptBitsScheduleTalkNPCIdleStand[] =
+UInt32 interruptBitsScheduleTalkNPCIdleStand[] =
 {
 	AI_COND_NEW_ENEMY,
 	AI_COND_IN_DANGER,
@@ -420,10 +420,10 @@ ai_task_t taskListScheduleFollow[] =
 {
 	AITASK(AI_TASK_STOP_MOVING,					0),
 	AITASK(AI_TASK_MOVE_TO_TARGET_RANGE,		CTalkNPC::DEFAULT_FOLLOW_RANGE),
-	AITASK(AI_TASK_SET_SCHEDULE,				(Float)AI_TALKNPC_SCHED_TARGET_FACE),
+	AITASK(AI_TASK_SET_SCHEDULE,				(float)AI_TALKNPC_SCHED_TARGET_FACE),
 };
 
-Uint32 interruptBitsScheduleFollow[] =
+UInt32 interruptBitsScheduleFollow[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -453,13 +453,13 @@ const CAISchedule scheduleFollow(
 //=============================================
 ai_task_t taskListScheduleFaceTarget[] = 
 {
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
 	AITASK(AI_TASK_FACE_TARGET,					0),
-	AITASK(AI_TASK_SET_ACTIVITY,				(Float)ACT_IDLE),
-	AITASK(AI_TASK_SET_SCHEDULE,				(Float)AI_TALKNPC_SCHED_TARGET_CHASE),
+	AITASK(AI_TASK_SET_ACTIVITY,				(float)ACT_IDLE),
+	AITASK(AI_TASK_SET_SCHEDULE,				(float)AI_TALKNPC_SCHED_TARGET_CHASE),
 };
 
-Uint32 interruptBitsScheduleFaceTarget[] =
+UInt32 interruptBitsScheduleFaceTarget[] =
 {
 	AI_COND_DANGEROUS_ENEMY_CLOSE,
 	AI_COND_NEW_ENEMY,
@@ -581,7 +581,7 @@ bool CTalkNPC::KeyValue( const keyvalue_t& kv )
 // @brief Manages taking damage
 //
 //=============================================
-bool CTalkNPC::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags )
+bool CTalkNPC::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags )
 {
 	if(pAttacker && (GetRelationship(pAttacker) == R_ALLY || GetRelationship(pAttacker) == R_NONE) && pAttacker != this)
 		return false;
@@ -604,7 +604,7 @@ bool CTalkNPC::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Floa
 // @brief Handles damage calculation for a hitscan
 //
 //=============================================
-void CTalkNPC::TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
+void CTalkNPC::TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
 {
 	if(pAttacker && (GetRelationship(pAttacker) == R_ALLY || GetRelationship(pAttacker) == R_NONE) && pAttacker != this)
 		return;
@@ -629,7 +629,7 @@ void CTalkNPC::CallTouch( CBaseEntity* pOther )
 		return;
 
 	Vector playerVelocity = pOther->GetVelocity();
-	Float speed = SDL_fabs(playerVelocity.x) + SDL_fabs(playerVelocity.y);
+	float speed = SDL_fabs(playerVelocity.x) + SDL_fabs(playerVelocity.y);
 	if(speed > MINIMUM_PUSH_SPEED)
 	{
 		Vector forward;
@@ -696,29 +696,29 @@ bool CTalkNPC::CanPlaySentence( bool disregardState )
 // @brief Plays a sentence
 //
 //=============================================
-void CTalkNPC::PlaySentence( const Char* pstrSentenceName, Float duration, Float volume, Float attenuation, Float timeOffset, bool subtitleOnlyInRadius, CBaseEntity* pPlayer )
+void CTalkNPC::PlaySentence( const char* pstrSentenceName, float duration, float volume, float attenuation, float timeOffset, bool subtitleOnlyInRadius, CBaseEntity* pPlayer )
 {
 	if(!IsAlive() || !g_pSentencesFile)
 		return;
 
-	Float sentduration = 0;
+	float sentduration = 0;
 	if(pstrSentenceName && qstrlen(pstrSentenceName))
 	{
-		Uint64 sndFlags = SND_FL_NONE;
+		UInt64 sndFlags = SND_FL_NONE;
 		if(subtitleOnlyInRadius)
 			sndFlags |= SND_FL_SUB_ONLY_RADIUS;
 		
 		if(pstrSentenceName[0] == '!')
 		{
 			// Just play the sentence specified
-			const Char* pstrName = g_pSentencesFile->GetSentence(pstrSentenceName, &sentduration);
+			const char* pstrName = g_pSentencesFile->GetSentence(pstrSentenceName, &sentduration);
 			if(pstrName)
 				Util::EmitEntitySound(this, pstrName, SND_CHAN_VOICE, volume, attenuation, GetVoicePitch(), sndFlags, pPlayer, timeOffset);
 		}
 		else
 		{
 			// Get sentence from group
-			const Char* pstrRandomSentence = g_pSentencesFile->GetRandomSentence(pstrSentenceName, &sentduration);
+			const char* pstrRandomSentence = g_pSentencesFile->GetRandomSentence(pstrSentenceName, &sentduration);
 			if(pstrRandomSentence)
 				Util::EmitEntitySound(this, pstrRandomSentence, SND_CHAN_VOICE, volume, attenuation, GetVoicePitch(), sndFlags, pPlayer, timeOffset);
 		}
@@ -727,7 +727,7 @@ void CTalkNPC::PlaySentence( const Char* pstrSentenceName, Float duration, Float
 	}
 
 	// Make sure the duration is set before checking if pstrSentenceName is valid
-	Float _duration = (duration < sentduration) ? sentduration : duration;
+	float _duration = (duration < sentduration) ? sentduration : duration;
 	if(_duration > 0)
 		m_talkTime = g_pGameVars->time + _duration;
 	else
@@ -738,7 +738,7 @@ void CTalkNPC::PlaySentence( const Char* pstrSentenceName, Float duration, Float
 // @brief Plays a scripted_sentence
 //
 //=============================================
-void CTalkNPC::PlayScriptedSentence( const Char* pstrSentenceName, Float duration, Float volume, Float attenuation, Float timeOffset, bool subtitleOnlyInRadius, bool isConcurrent, CBaseEntity* pListener, CBaseEntity* pPlayer )
+void CTalkNPC::PlayScriptedSentence( const char* pstrSentenceName, float duration, float volume, float attenuation, float timeOffset, bool subtitleOnlyInRadius, bool isConcurrent, CBaseEntity* pListener, CBaseEntity* pPlayer )
 {
 	// Make sure this is cleared
 	ClearCondition(AI_COND_BLOCKING_PATH);
@@ -814,7 +814,7 @@ const CAISchedule* CTalkNPC::GetScheduleByIndex( Int32 scheduleIndex )
 				if(pPlayer)
 				{
 					Vector playerOrigin = pPlayer->GetOrigin();
-					Float distance = (playerOrigin - m_pState->origin).Length2D();
+					float distance = (playerOrigin - m_pState->origin).Length2D();
 					if(distance < STARE_MAX_DIST)
 					{
 						Vector forward;
@@ -899,7 +899,7 @@ void CTalkNPC::StartTask( const ai_task_t* pTask )
 				Vector vectorToTarget = (m_talkTargetEntity->GetOrigin() - m_pState->origin);
 				vectorToTarget.Normalize();
 
-				Float yaw = Util::VectorToYaw(vectorToTarget) - m_pState->angles[YAW];
+				float yaw = Util::VectorToYaw(vectorToTarget) - m_pState->angles[YAW];
 				if(yaw > 180.0f)
 					yaw -= 360.0f;
 				else if(yaw < -180.0f)
@@ -1158,7 +1158,7 @@ Vector CTalkNPC::GetEyePosition( bool addlean, bool usebone ) const
 //=============================================
 void CTalkNPC::InitTalkingNPC( void )
 {
-	for(Uint32 i = 0; i < NB_TALKNPC_GROUPS; i++)
+	for(UInt32 i = 0; i < NB_TALKNPC_GROUPS; i++)
 	{
 		if(m_sentenceGroupNames[i].empty())
 			continue;
@@ -1176,7 +1176,7 @@ CBaseEntity* CTalkNPC::FindNearestFriend( void )
 {
 	trace_t tr;
 
-	Float lastClosestDistance = -1;
+	float lastClosestDistance = -1;
 	CBaseEntity* pLastNearestFriend = nullptr;
 	CBaseEntity* pFriend = nullptr;
 
@@ -1195,7 +1195,7 @@ CBaseEntity* CTalkNPC::FindNearestFriend( void )
 		Vector checkPosition = pFriend->GetOrigin();
 		checkPosition.z = pFriend->GetAbsMaxs().z;
 
-		Float distance = (checkPosition-startPosition).Length();
+		float distance = (checkPosition-startPosition).Length();
 		if(distance < MAXIMUM_TALK_RANGE && (lastClosestDistance == -1 || lastClosestDistance < distance))
 		{
 			Util::TraceLine(startPosition, checkPosition, true, false, m_pEdict, tr);
@@ -1223,7 +1223,7 @@ CBaseEntity* CTalkNPC::FindPlayer( void )
 	Vector myOrigin = GetCenter();
 	Vector playerOrigin = pPlayer->GetCenter();
 
-	Float distance = (myOrigin-playerOrigin).Length();
+	float distance = (myOrigin-playerOrigin).Length();
 	if(distance > MAXIMUM_TALK_RANGE)
 		return nullptr;
 
@@ -1239,7 +1239,7 @@ CBaseEntity* CTalkNPC::FindPlayer( void )
 // @brief Returns distance to target
 //
 //=============================================
-Float CTalkNPC::GetTargetDistance( void )
+float CTalkNPC::GetTargetDistance( void )
 {
 	if(!m_targetEntity || !m_targetEntity->IsAlive())
 		return MAX_FLOAT_VALUE;
@@ -1260,7 +1260,7 @@ void CTalkNPC::StopTalking( void )
 // @brief Returns the voice pitch
 //
 //=============================================
-Uint32 CTalkNPC::GetVoicePitch( void )
+UInt32 CTalkNPC::GetVoicePitch( void )
 {
 	return m_voicePitch + Common::RandomFloat(0, 3);
 }
@@ -1319,7 +1319,7 @@ void CTalkNPC::IdleSpeak( void )
 		PlaySentence(m_sentenceGroupNames[groupIndex].c_str(), 0, VOL_NORM, ATTN_NORM, 0, true);
 
 		// Set friend to respond back
-		Float delay = Common::RandomFloat(0.5, 1.5);
+		float delay = Common::RandomFloat(0.5, 1.5);
 		pFriend->SetAnswerQuestion(this, m_talkTime + delay);
 		m_talkTargetEntity = pFriend;
 
@@ -1411,13 +1411,13 @@ void CTalkNPC::IdleHeadTurn( const Vector* pTarget )
 	}
 
 	Vector bonePosition = GetEyePosition(false, true);
-	Float yaw = Util::VectorToYaw((*pTarget) - bonePosition) - m_pState->angles[YAW];
+	float yaw = Util::VectorToYaw((*pTarget) - bonePosition) - m_pState->angles[YAW];
 	if(yaw > 180.0f)
 		yaw -= 360.0f;
 	else if(yaw < -180.0f)
 		yaw += 360.0f;
 
-	Float pitch = Util::VectorToPitch((*pTarget) - bonePosition) - m_pState->angles[PITCH];
+	float pitch = Util::VectorToPitch((*pTarget) - bonePosition) - m_pState->angles[PITCH];
 	if(yaw > 180.0f)
 		yaw -= 360.0f;
 	else if(yaw < -180.0f)
@@ -1513,7 +1513,7 @@ bool CTalkNPC::IsTalking( void ) const
 // @brief Sets talking duration
 //
 //=============================================
-void CTalkNPC::SetTalkTime( Float duration )
+void CTalkNPC::SetTalkTime( float duration )
 {
 	m_talkTime = g_pGameVars->time + duration;
 }
@@ -1589,9 +1589,9 @@ void CTalkNPC::StartFollowing( CBaseEntity* pTarget )
 // @brief Limits followers to a number
 //
 //=============================================
-void CTalkNPC::LimitFollowers( const CBaseEntity* pPlayer, Uint32 maxFollowers )
+void CTalkNPC::LimitFollowers( const CBaseEntity* pPlayer, UInt32 maxFollowers )
 {
-	Uint32 followerCount = 0;
+	UInt32 followerCount = 0;
 	CBaseEntity* pFriend = nullptr;
 
 	while(true)
@@ -1615,7 +1615,7 @@ void CTalkNPC::LimitFollowers( const CBaseEntity* pPlayer, Uint32 maxFollowers )
 // @brief Use function for following
 //
 //=============================================
-void CTalkNPC::FollowerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTalkNPC::FollowerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_npcState == NPC_STATE_SCRIPT || m_nextUseTime > g_pGameVars->time 
 		|| !pCaller || !pCaller->IsPlayer())
@@ -1704,7 +1704,7 @@ void CTalkNPC::PreScheduleThink( void )
 
 	if(m_targetEntity && !CheckCondition(AI_COND_FOLLOW_TARGET_TOO_FAR) && m_npcState != NPC_STATE_SCRIPT)
 	{
-		Float distance = (m_targetEntity->GetOrigin() - m_pState->origin).Length2D();
+		float distance = (m_targetEntity->GetOrigin() - m_pState->origin).Length2D();
 		if(distance > MAX_FOLLOW_DISTANCE)
 			SetCondition(AI_COND_FOLLOW_TARGET_TOO_FAR);
 	}
@@ -1728,7 +1728,7 @@ void CTalkNPC::DeclineFollowing( void )
 // @brief Sets to answer a question
 //
 //=============================================
-void CTalkNPC::SetAnswerQuestion( CBaseEntity* pSpeaker, Double talkTime )
+void CTalkNPC::SetAnswerQuestion( CBaseEntity* pSpeaker, double talkTime )
 {
 	if(!m_pScriptedSequence)
 		ChangeSchedule(&scheduleIdleResponse);
@@ -1741,7 +1741,7 @@ void CTalkNPC::SetAnswerQuestion( CBaseEntity* pSpeaker, Double talkTime )
 // @brief Sets the time until someone else can talk
 //
 //=============================================
-void CTalkNPC::SetTalkWaitTime( Double talkWaitTime )
+void CTalkNPC::SetTalkWaitTime( double talkWaitTime )
 {
 	g_talkWaitTime = talkWaitTime;
 }
@@ -1750,7 +1750,7 @@ void CTalkNPC::SetTalkWaitTime( Double talkWaitTime )
 // @brief Sets the time until someone else can talk
 //
 //=============================================
-void CTalkNPC::SetSentenceGroups( const Char* pstrPrefix )
+void CTalkNPC::SetSentenceGroups( const char* pstrPrefix )
 {
 	if(!pstrPrefix)
 	{
@@ -1758,7 +1758,7 @@ void CTalkNPC::SetSentenceGroups( const Char* pstrPrefix )
 		return;
 	}
 
-	for(Uint32 i = 0; i < NB_TALKNPC_GROUPS; i++)
+	for(UInt32 i = 0; i < NB_TALKNPC_GROUPS; i++)
 	{
 		CString grpName;
 		grpName << pstrPrefix << SENTENCE_GROUP_POSTFIXES[i];

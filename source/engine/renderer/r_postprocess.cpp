@@ -32,13 +32,13 @@ All Rights Reserved.
 #include "r_common.h"
 
 // Blur fade amount
-static constexpr Float BLUR_FADE = 0.1;
+static constexpr float BLUR_FADE = 0.1;
 // Water effects fade duration
-static constexpr Float WATER_FADE_TIME = 2.0;
+static constexpr float WATER_FADE_TIME = 2.0;
 // Default grain amount
-static constexpr Float DEFAULT_GRAIN_AMOUNT = 0.05f;
+static constexpr float DEFAULT_GRAIN_AMOUNT = 0.05f;
 // Overlay folder name
-const Char CPostProcess::OVERLAY_FOLDER_PATH[] = "overlay";
+const char CPostProcess::OVERLAY_FOLDER_PATH[] = "overlay";
 
 //====================================
 //
@@ -300,7 +300,7 @@ void CPostProcess :: ClearGame( void )
 	m_gaussianBlurAlpha = 1.0;
 
 	// reset fade
-	for(Uint32 i = 0; i < MAX_FADE_LAYERS; i++)
+	for(UInt32 i = 0; i < MAX_FADE_LAYERS; i++)
 	{
 		if(!(m_fadeLayersArray[i].flags & FL_FADE_PERMANENT))
 			m_fadeLayersArray[i] = screenfade_t();
@@ -358,7 +358,7 @@ bool CPostProcess :: DrawDistortion( void )
 	FetchScreen(&m_pScreenRTT);
 	R_BindRectangleTexture(GL_TEXTURE0_ARB, m_pScreenRTT->palloc->gl_index);
 
-	Float flOffset = rns.time*8;
+	float flOffset = rns.time*8;
 	m_pShader->SetUniform1f(m_attribs.u_offset, flOffset);
 
 	if(!m_pShader->SetDeterminator(m_attribs.d_type, SHADER_DISTORT))
@@ -448,14 +448,14 @@ bool CPostProcess :: DrawFade( screenfade_t& fade )
 	if(fade.flags & FL_FADE_OUT)
 	{
 		if(rns.time <= fade.end)
-			fade.curfade = clamp(fade.curfade+fade.speed*cls.frametime, 0.0, 1.0);
+			fade.curfade = Clamp(fade.curfade+fade.speed*cls.frametime, 0.0, 1.0);
 		else
 			fade.curfade = 1.0;
 	}
 	else
 	{
 		if(rns.time >= fade.end)
-			fade.curfade = clamp(fade.curfade+fade.speed*cls.frametime, 0.0, 1.0);
+			fade.curfade = Clamp(fade.curfade+fade.speed*cls.frametime, 0.0, 1.0);
 		else
 			fade.curfade = 1.0;
 	}
@@ -496,8 +496,8 @@ bool CPostProcess :: DrawFilmGrain( void )
 	R_BindRectangleTexture(GL_TEXTURE0_ARB, m_pScreenRTT->palloc->gl_index);
 
 	// If set from an entity, film grain strength is overridden by that
-	Float filmGrainStrength = m_filmGrainActive ? m_filmGrainStrength : m_pCvarFilmGrain->GetValue();
-	Float grainAmount = DEFAULT_GRAIN_AMOUNT * filmGrainStrength;
+	float filmGrainStrength = m_filmGrainActive ? m_filmGrainStrength : m_pCvarFilmGrain->GetValue();
+	float grainAmount = DEFAULT_GRAIN_AMOUNT * filmGrainStrength;
 
 	m_pShader->SetUniform1f(m_attribs.u_timer, rns.time*0.1);
 	m_pShader->SetUniform1f(m_attribs.u_grainammount, grainAmount);
@@ -578,12 +578,12 @@ bool CPostProcess::DrawOverlays( void )
 
 	m_pShader->SetUniform2f(m_attribs.u_tcscale, 1.0, 1.0);
 
-	for(Uint32 i = 0; i < m_screenOverlays.size(); i++)
+	for(UInt32 i = 0; i < m_screenOverlays.size(); i++)
 	{
 		overlay_t& overlay = m_screenOverlays[i];
 
-		Float alphamultiplier = 1.0;
-		if(overlay.rendermode != RENDER_NORMAL && overlay.rendermode != OVERLAY_RENDER_ALPHATEST)
+		float alphamultiplier = 1.0;
+		if(overlay.rendermode != OVERLAY_RENDER_NORMAL && overlay.rendermode != OVERLAY_RENDER_ALPHATEST)
 		{
 			if(overlay.fadebegintime)
 			{
@@ -626,7 +626,7 @@ bool CPostProcess::DrawOverlays( void )
 				{
 				case OVERLAY_EFFECT_PULSATE:
 					{
-						Float value = SDL_fabs(SDL_sin((rns.time - overlay.effectbegintime) * overlay.effectspeed));
+						float value = SDL_fabs(SDL_sin((rns.time - overlay.effectbegintime) * overlay.effectspeed));
 						alphamultiplier *= (overlay.effectminalpha + (value * (1.0 - overlay.effectminalpha)));
 					}
 					break;
@@ -634,11 +634,11 @@ bool CPostProcess::DrawOverlays( void )
 			}
 
 			// Make sure this value is clamped
-			alphamultiplier = clamp(alphamultiplier, 0, 1);
+			alphamultiplier = Clamp(alphamultiplier, 0, 1);
 		}
 
 		Vector renderColor;
-		Float renderAlpha;
+		float renderAlpha;
 		switch(overlay.rendermode)
 		{
 		case OVERLAY_RENDER_ADDITIVE:
@@ -700,7 +700,7 @@ bool CPostProcess::DrawOverlays( void )
 //=============================================
 bool CPostProcess :: DrawBloom( void )
 {
-	Float bloomCvarValue = m_pCvarBloom->GetValue();
+	float bloomCvarValue = m_pCvarBloom->GetValue();
 	if (bloomCvarValue < 1)
 		return true;
 
@@ -716,16 +716,16 @@ bool CPostProcess :: DrawBloom( void )
 		return false;
 	}
 
-	Float darkenBrightness = m_pCvarBloomDarkenMultiplier->GetValue();
-	darkenBrightness = clamp(darkenBrightness, 0, 1);
+	float darkenBrightness = m_pCvarBloomDarkenMultiplier->GetValue();
+	darkenBrightness = Clamp(darkenBrightness, 0, 1);
 	m_pShader->SetUniform1f(m_attribs.u_brighten_multiplier, darkenBrightness);
 
-	Float darkenStepsCvarValue = m_pCvarBloomDarkenSteps->GetValue();
-	Uint32 darkenSteps = clamp(darkenStepsCvarValue, 1, 128);
+	float darkenStepsCvarValue = m_pCvarBloomDarkenSteps->GetValue();
+	UInt32 darkenSteps = Clamp(darkenStepsCvarValue, 1, 128);
 	m_pShader->SetUniform1f(m_attribs.u_darken_steps, darkenSteps);
 
-	Float brightnessTreshold = m_pCvarBloomBrightnessTreshold->GetValue();
-	brightnessTreshold = clamp(brightnessTreshold, 0, 4);
+	float brightnessTreshold = m_pCvarBloomBrightnessTreshold->GetValue();
+	brightnessTreshold = Clamp(brightnessTreshold, 0, 4);
 	m_pShader->SetUniform1f(m_attribs.u_brightness_treshold, brightnessTreshold);
 
 	R_ValidateShader(m_pShader);
@@ -738,8 +738,8 @@ bool CPostProcess :: DrawBloom( void )
 	// Now blur horizontally
 	rtt_texture_t* pDarkenRTT = nullptr;
 
-	Float blurStepCvarValue = m_pCvarBloomBlurSteps->GetValue();
-	Uint32 numBlurSteps = clamp(blurStepCvarValue, 1, 64);
+	float blurStepCvarValue = m_pCvarBloomBlurSteps->GetValue();
+	UInt32 numBlurSteps = Clamp(blurStepCvarValue, 1, 64);
 
 	m_pShader->SetUniform1f(m_attribs.u_brighten_multiplier, 1.0);
 	m_pShader->SetUniform1f(m_attribs.u_blur_brightness, 1.0);
@@ -800,8 +800,8 @@ bool CPostProcess :: DrawBloom( void )
 		glBlendFunc(GL_ONE, GL_ONE);
 	}
 
-	Float brightenCvarValue = m_pCvarBloomBrightenMultiplier->GetValue();
-	brightenCvarValue = clamp(brightenCvarValue, 0, 16);
+	float brightenCvarValue = m_pCvarBloomBrightenMultiplier->GetValue();
+	brightenCvarValue = Clamp(brightenCvarValue, 0, 16);
 	m_pShader->SetUniform1f(m_attribs.u_brighten_multiplier, brightenCvarValue);
 
 	R_ValidateShader(m_pShader);
@@ -870,7 +870,7 @@ bool CPostProcess :: Draw( bool noFilmGrain )
 		&& !m_filmGrainActive && !m_chromaticActive)
 	{
 		// See if we have any active fades
-		Uint32 i = 0;
+		UInt32 i = 0;
 		for(; i < MAX_FADE_LAYERS; i++)
 		{
 			if(m_fadeLayersArray[i].end)
@@ -958,12 +958,12 @@ bool CPostProcess :: Draw( bool noFilmGrain )
 	{
 		if(m_pCvarPostProcess->GetValue() > 0)
 		{
-			Float alpha = 1.0;
+			float alpha = 1.0;
 
 			if(bInWater && !m_gaussianBlurActive)
 			{
 				alpha = 1.0 - ((rns.time - m_lastWaterTime)/WATER_FADE_TIME);
-				alpha = clamp(alpha, 0.0, 1.0);
+				alpha = Clamp(alpha, 0.0, 1.0);
 			}
 			else if(m_gaussianBlurActive && m_gaussianBlurAlpha != 1.0)
 			{
@@ -1020,7 +1020,7 @@ bool CPostProcess :: Draw( bool noFilmGrain )
 	}
 
 	// Draw fade before film grain is applied
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(m_fadeLayersArray[i].end)
 			DrawFade(m_fadeLayersArray[i]);
@@ -1096,7 +1096,7 @@ bool CPostProcess :: Draw( bool noFilmGrain )
 // @brief
 //
 //=============================================
-void CPostProcess :: SetGaussianBlur( bool active, Float alpha )
+void CPostProcess :: SetGaussianBlur( bool active, float alpha )
 {
 	m_gaussianBlurActive = active;
 
@@ -1110,7 +1110,7 @@ void CPostProcess :: SetGaussianBlur( bool active, Float alpha )
 // @brief
 //
 //=============================================
-void CPostProcess :: SetMotionBlur( bool active, Float blurfade, bool override )
+void CPostProcess :: SetMotionBlur( bool active, float blurfade, bool override )
 {
 	if(!active)
 	{
@@ -1140,7 +1140,7 @@ void CPostProcess :: SetMotionBlur( bool active, Float blurfade, bool override )
 // @brief
 //
 //=============================================
-void CPostProcess::SetVignette(bool active, Float strength, Float radius)
+void CPostProcess::SetVignette(bool active, float strength, float radius)
 {
 	if (!active)
 	{
@@ -1156,7 +1156,7 @@ void CPostProcess::SetVignette(bool active, Float strength, Float radius)
 // @brief
 //
 //=============================================
-void CPostProcess::SetFilmGrain(bool active, Float strength)
+void CPostProcess::SetFilmGrain(bool active, float strength)
 {
 	if (!active)
 	{
@@ -1170,7 +1170,7 @@ void CPostProcess::SetFilmGrain(bool active, Float strength)
 // @brief
 //
 //=============================================
-void CPostProcess::SetBlackAndWhite(bool active, Float strength)
+void CPostProcess::SetBlackAndWhite(bool active, float strength)
 {
 	if (!active)
 	{
@@ -1184,7 +1184,7 @@ void CPostProcess::SetBlackAndWhite(bool active, Float strength)
 // @brief
 //
 //=============================================
-void CPostProcess::SetChromatic(bool active, Float strength)
+void CPostProcess::SetChromatic(bool active, float strength)
 {
 	if (!active)
 	{
@@ -1199,7 +1199,7 @@ void CPostProcess::SetChromatic(bool active, Float strength)
 // @brief
 //
 //=============================================
-void CPostProcess :: SetFade( Uint32 layerindex, Float duration, Float holdtime, Int32 flags, const color24_t& color, byte alpha, Float timeoffset )
+void CPostProcess :: SetFade( UInt32 layerindex, float duration, float holdtime, Int32 flags, const color24_t& color, Byte alpha, float timeoffset )
 {
 	// Don't apply if we're over the full duration
 	if(timeoffset > duration+holdtime)
@@ -1257,12 +1257,12 @@ void CPostProcess :: SetFade( Uint32 layerindex, Float duration, Float holdtime,
 // @brief
 //
 //=============================================
-void CPostProcess :: SetOverlay( Int32 layerindex, const Char* pstrtexturename, overlay_rendermode_t rendermode, const Vector& rendercolor, Float renderamt, 
-	overlay_effect_t effect, Float effectspeed, Float effectminalpha, Float fadetime )
+void CPostProcess :: SetOverlay( Int32 layerindex, const char* pstrtexturename, overlay_rendermode_t rendermode, const Vector& rendercolor, float renderamt, 
+	overlay_effect_t effect, float effectspeed, float effectminalpha, float fadetime )
 {
 	if(!pstrtexturename || !qstrlen(pstrtexturename))
 	{
-		for(Uint32 i = 0; i < m_screenOverlays.size(); i++)
+		for(UInt32 i = 0; i < m_screenOverlays.size(); i++)
 		{
 			if(m_screenOverlays[i].layerindex == layerindex)
 			{
@@ -1276,7 +1276,7 @@ void CPostProcess :: SetOverlay( Int32 layerindex, const Char* pstrtexturename, 
 	CString formattag;
 	CString texturename(pstrtexturename);
 
-	for(Uint32 i = 0; i < NB_SCREENRATIO_STRINGS; i++)
+	for(UInt32 i = 0; i < NB_SCREENRATIO_STRINGS; i++)
 	{
 		Int32 tagpos = texturename.find(0, SCREEN_RATIO_STRINGS[i]);
 		if(tagpos != CString::CSTRING_NO_POSITION)
@@ -1296,7 +1296,7 @@ void CPostProcess :: SetOverlay( Int32 layerindex, const Char* pstrtexturename, 
 	else
 	{
 		// Put it into the format tag string
-		Uint32 formatlen = texturename.length() - (dotpos + 1);
+		UInt32 formatlen = texturename.length() - (dotpos + 1);
 		formattag.assign(texturename.c_str() + dotpos + 1, formatlen);
 
 		// Erase from name
@@ -1328,9 +1328,9 @@ void CPostProcess :: SetOverlay( Int32 layerindex, const Char* pstrtexturename, 
 		}
 	}
 
-	Uint32 prevsize = m_screenOverlays.size();
+	UInt32 prevsize = m_screenOverlays.size();
 	overlay_t* poverlay = nullptr;
-	for(Uint32 i = 0; i < m_screenOverlays.size(); i++)
+	for(UInt32 i = 0; i < m_screenOverlays.size(); i++)
 	{
 		if(m_screenOverlays[i].layerindex == layerindex)
 		{
@@ -1377,12 +1377,12 @@ void CPostProcess :: SetOverlay( Int32 layerindex, const Char* pstrtexturename, 
 // @brief
 //
 //=============================================
-void CPostProcess :: ClearOverlay( Int32 layerindex, Float fadetime )
+void CPostProcess :: ClearOverlay( Int32 layerindex, float fadetime )
 {
 	if(m_screenOverlays.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_screenOverlays.size(); i++)
+	for(UInt32 i = 0; i < m_screenOverlays.size(); i++)
 	{
 		if(m_screenOverlays[i].layerindex == layerindex)
 		{

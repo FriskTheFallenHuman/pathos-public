@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "envparticleeffect.h"
 
 // Max colors that can be addressed
-const Uint32 CEnvParticleEffect::MAX_COLORS = 255;
+const UInt32 CEnvParticleEffect::MAX_COLORS = 255;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(env_particleeffect, CEnvParticleEffect);
@@ -192,7 +192,7 @@ bool CEnvParticleEffect::KeyValue( const keyvalue_t& kv )
 // @brief Calls use function
 //
 //=============================================
-void CEnvParticleEffect::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvParticleEffect::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_maxRepeatDelay > 0)
 	{
@@ -264,7 +264,7 @@ void CEnvParticleEffect::CreateEffect( void )
 		break;
 	case EFFECT_PARTICLEEXPLOSION2:
 		{
-			Util::CreateParticleExplosion2(m_pState->origin, clamp(m_startColor, 0, 255), clamp(m_endColor, 0, 255));
+			Util::CreateParticleExplosion2(m_pState->origin, Clamp(m_startColor, 0, 255), Clamp(m_endColor, 0, 255));
 		}
 		break;
 	case EFFECT_BLOBEXPLOSION:
@@ -274,7 +274,7 @@ void CEnvParticleEffect::CreateEffect( void )
 		break;
 	case EFFECT_ROCKETEXPLOSION:
 		{
-			Util::CreateRocketExplosion(m_pState->origin, clamp(m_startColor, 0, 255));
+			Util::CreateRocketExplosion(m_pState->origin, Clamp(m_startColor, 0, 255));
 		}
 		break;
 	case EFFECT_PARTICLEEFFECT:
@@ -282,7 +282,7 @@ void CEnvParticleEffect::CreateEffect( void )
 			Vector forward;
 			Math::AngleVectors(m_pState->angles, &forward);
 
-			Util::CreateParticleEffect(m_pState->origin, forward*m_pState->speed, clamp(m_startColor, 0, 255), m_particleCount);
+			Util::CreateParticleEffect(m_pState->origin, forward*m_pState->speed, Clamp(m_startColor, 0, 255), m_particleCount);
 		}
 		break;
 	case EFFECT_LAVASPLASH:
@@ -303,7 +303,7 @@ void CEnvParticleEffect::CreateEffect( void )
 				return;
 			}
 
-			const Char* pstrTargetName = gd_engfuncs.pfnGetString(m_pFields->target);
+			const char* pstrTargetName = gd_engfuncs.pfnGetString(m_pFields->target);
 			edict_t* pEdict = Util::FindEntityByTargetName(nullptr, pstrTargetName);
 			if(!pEdict)
 			{
@@ -324,7 +324,7 @@ void CEnvParticleEffect::CreateEffect( void )
 			Vector forward;
 			Math::AngleVectors(m_pState->angles, &forward);
 
-			Util::CreateBloodStream(m_pState->origin, forward, clamp(m_startColor, 0, 255), m_pState->speed);
+			Util::CreateBloodStream(m_pState->origin, forward, Clamp(m_startColor, 0, 255), m_pState->speed);
 		}
 		break;
 	case EFFECT_BLOODPARTICLES:
@@ -332,7 +332,7 @@ void CEnvParticleEffect::CreateEffect( void )
 			Vector forward;
 			Math::AngleVectors(m_pState->angles, &forward);
 
-			Util::CreateBloodParticles(m_pState->origin, forward, clamp(m_startColor, 0, 255), m_pState->speed);
+			Util::CreateBloodParticles(m_pState->origin, forward, Clamp(m_startColor, 0, 255), m_pState->speed);
 		}
 		break;
 	}

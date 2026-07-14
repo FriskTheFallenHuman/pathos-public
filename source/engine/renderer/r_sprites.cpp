@@ -30,17 +30,17 @@ All Rights Reserved.
 #include "r_glqueries.h"
 
 // Draw buffer allocation size
-const Uint32 CSpriteRenderer::DRAWBUFFER_ALLOC_SIZE = 128; // I really don't expect 666 sprites to render even on the busiest map
+const UInt32 CSpriteRenderer::DRAWBUFFER_ALLOC_SIZE = 128; // I really don't expect 666 sprites to render even on the busiest map
 
 // Glow interpolation speed
-const Float CSpriteRenderer::GLOW_INTERP_SPEED = 2;
+const float CSpriteRenderer::GLOW_INTERP_SPEED = 2;
 
 // Glow minimum distance
-const Float CSpriteRenderer::GLOW_MINDIST = 128;
+const float CSpriteRenderer::GLOW_MINDIST = 128;
 // Glow maximum distance
-const Float CSpriteRenderer::GLOW_MAXDIST = 1024;
+const float CSpriteRenderer::GLOW_MAXDIST = 1024;
 // Glow halo distance
-const Float CSpriteRenderer::GLOW_HALODIST = 2048;
+const float CSpriteRenderer::GLOW_HALODIST = 2048;
 
 
 // Class definition
@@ -147,7 +147,7 @@ bool CSpriteRenderer::InitGL( void )
 	if(CL_IsGameActive())
 	{
 		// Reload any sprite textures
-		for(Uint32 i = 0; i < gModelCache.GetNbCachedModels(); i++)
+		for(UInt32 i = 0; i < gModelCache.GetNbCachedModels(); i++)
 		{
 			cache_model_t* pmodel = gModelCache.GetModelByIndex(i+1);
 			if(pmodel->type != MOD_SPRITE)
@@ -190,7 +190,7 @@ void CSpriteRenderer::ClearGL( void )
 bool CSpriteRenderer::InitGame( void ) 
 {
 	// Go through the model cache
-	for(Uint32 i = 0; i < gModelCache.GetNbCachedModels(); i++)
+	for(UInt32 i = 0; i < gModelCache.GetNbCachedModels(); i++)
 	{
 		cache_model_t* pmodel = gModelCache.GetModelByIndex(i+1);
 		if(pmodel->type != MOD_SPRITE)
@@ -216,7 +216,7 @@ void CSpriteRenderer::ClearGame( void )
 	if(!m_staticSpritesArray.empty())
 		m_staticSpritesArray.clear();
 
-	for(Uint32 i = 0; i < MAX_TEMP_SPRITES; i++)
+	for(UInt32 i = 0; i < MAX_TEMP_SPRITES; i++)
 		m_tempSpritesArray[i] = temp_sprite_t();
 
 	// Release the draw buffer
@@ -248,10 +248,10 @@ cl_entity_t* CSpriteRenderer::AllocStaticSprite( void )
 //====================================
 //
 //====================================
-cl_entity_t* CSpriteRenderer::AllocTempSprite( Int32 key, Float life )
+cl_entity_t* CSpriteRenderer::AllocTempSprite( Int32 key, float life )
 {
 	// Find one with this key
-	for(Uint32 i = 0; i < MAX_TEMP_SPRITES; i++)
+	for(UInt32 i = 0; i < MAX_TEMP_SPRITES; i++)
 	{
 		temp_sprite_t& spr = m_tempSpritesArray[i];
 		if(spr.key == key)
@@ -266,7 +266,7 @@ cl_entity_t* CSpriteRenderer::AllocTempSprite( Int32 key, Float life )
 	}
 
 	// Try to find an exhausted one
-	for(Uint32 i = 0; i < MAX_TEMP_SPRITES; i++)
+	for(UInt32 i = 0; i < MAX_TEMP_SPRITES; i++)
 	{
 		temp_sprite_t& spr = m_tempSpritesArray[i];
 		if( spr.life >= rns.time )
@@ -298,12 +298,12 @@ cl_entity_t* CSpriteRenderer::AllocTempSprite( Int32 key, Float life )
 //====================================
 //
 //====================================
-void CSpriteRenderer::BatchSprites( cl_entity_t* entitiesArray, Uint32 numEntities )
+void CSpriteRenderer::BatchSprites( cl_entity_t* entitiesArray, UInt32 numEntities )
 {
 	cl_entity_t* pplayer = CL_GetLocalPlayer();
 
 	// Then engine sprites
-	for(Uint32 i = 0; i < numEntities; i++)
+	for(UInt32 i = 0; i < numEntities; i++)
 	{
 		cl_entity_t *pEntity = &entitiesArray[i];
 
@@ -410,13 +410,13 @@ void CSpriteRenderer::BatchSprites( cl_entity_t* entitiesArray, Uint32 numEntiti
 //====================================
 //
 //====================================
-bool CSpriteRenderer::DrawSpriteArrays( cl_entity_t* entitiesArray, Uint32 numEntities )
+bool CSpriteRenderer::DrawSpriteArrays( cl_entity_t* entitiesArray, UInt32 numEntities )
 {
 	cl_entity_t* pplayer = CL_GetLocalPlayer();
 	if(!pplayer)
 		return true;
 
-	for(Uint32 i = 0; i < numEntities; i++)
+	for(UInt32 i = 0; i < numEntities; i++)
 	{
 		cl_entity_t *pEntity = &entitiesArray[i];
 
@@ -499,7 +499,7 @@ bool CSpriteRenderer::DrawSprites( void )
 	m_pShader->SetUniformMatrix4fv(m_attribs.u_modelview, rns.view.modelview.GetMatrix());
 	m_pShader->SetUniformMatrix4fv(m_attribs.u_projection, rns.view.projection.GetMatrix());
 
-	if(!m_pShader->SetDeterminator(m_attribs.d_solid, TRUE))
+	if(!m_pShader->SetDeterminator(m_attribs.d_solid, true))
 	{
 		Sys_ErrorPopup("Shader error: %s.", __FUNCTION__);
 		m_pShader->DisableShader();
@@ -517,11 +517,11 @@ bool CSpriteRenderer::DrawSprites( void )
 		BatchSprites(&m_staticSpritesArray[0], m_staticSpritesArray.size());
 
 	// Now batch engine sprites
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 		BatchSprites(rns.objects.pvisents[i], 1);
 
 	// Add tempent sprites
-	for(Uint32 i = 0; i < MAX_TEMP_SPRITES; i++)
+	for(UInt32 i = 0; i < MAX_TEMP_SPRITES; i++)
 	{
 		if(m_tempSpritesArray[i].life < rns.time)
 			continue;
@@ -551,7 +551,7 @@ bool CSpriteRenderer::DrawSprites( void )
 		return true;
 	}
 
-	if(!m_pShader->SetDeterminator(m_attribs.d_solid, FALSE))
+	if(!m_pShader->SetDeterminator(m_attribs.d_solid, false))
 	{
 		Sys_ErrorPopup("Shader error: %s.", __FUNCTION__);
 		m_pShader->DisableShader();
@@ -567,7 +567,7 @@ bool CSpriteRenderer::DrawSprites( void )
 	{
 		result = m_pShader->SetDeterminator(m_attribs.d_fog, 1);
 		m_pShader->SetUniform3f(m_attribs.u_fogcolor, rns.fog.settings.color[0], rns.fog.settings.color[1], rns.fog.settings.color[2]);
-		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<Float>(rns.fog.settings.end)- static_cast<Float>(rns.fog.settings.start)));
+		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f/(static_cast<float>(rns.fog.settings.end)- static_cast<float>(rns.fog.settings.start)));
 	}
 	else
 	{
@@ -591,7 +591,7 @@ bool CSpriteRenderer::DrawSprites( void )
 	// Now draw engine sprites
 	if(result)
 	{
-		for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+		for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 		{
 			result = DrawSpriteArrays( rns.objects.pvisents[i], 1 );
 			if(!result)
@@ -602,7 +602,7 @@ bool CSpriteRenderer::DrawSprites( void )
 	// Draw temp sprites
 	if(result)
 	{
-		for(Uint32 i = 0; i < MAX_TEMP_SPRITES; i++)
+		for(UInt32 i = 0; i < MAX_TEMP_SPRITES; i++)
 		{
 			if(m_tempSpritesArray[i].life < rns.time)
 				continue;
@@ -653,11 +653,11 @@ bool CSpriteRenderer::BatchSprite( cl_entity_t *pEntity )
 	const msprite_t* psprite = pcache->getSprite();
 	const mspriteframe_t *pframe = Sprite_GetFrame(psprite, pEntity->curstate.frame, rns.time);
 
-	Float spriteSize = (pframe->width > pframe->height) ? pframe->width : pframe->height;
+	float spriteSize = (pframe->width > pframe->height) ? pframe->width : pframe->height;
 
 	Vector mins;
 	Vector maxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		mins[i] = pEntity->curstate.origin[i] - spriteSize * pEntity->curstate.scale;
 		maxs[i] = pEntity->curstate.origin[i] + spriteSize * pEntity->curstate.scale;
@@ -670,19 +670,19 @@ bool CSpriteRenderer::BatchSprite( cl_entity_t *pEntity )
 		return false;
 	}
 
-	Float flScale = pEntity->curstate.scale;
-	Float flAlpha = R_RenderFxBlend(pEntity)/255.0f;
+	float flScale = pEntity->curstate.scale;
+	float flAlpha = R_RenderFxBlend(pEntity)/255.0f;
 	
 	if(flAlpha <= 0) 
 		flAlpha = 1.0f;
 
 	if(pEntity->curstate.rendermode == RENDER_TRANSGLOW && pEntity->curstate.renderfx != RenderFx_NoDissipation)
 	{
-		Float flDist = (pEntity->curstate.origin - rns.view.v_origin).Length();
+		float flDist = (pEntity->curstate.origin - rns.view.v_origin).Length();
 		if(flDist > GLOW_MAXDIST)
 			flDist = GLOW_MAXDIST;
 
-		Float flBrightness = ((GLOW_MAXDIST - flDist)/(GLOW_MAXDIST-GLOW_MINDIST));
+		float flBrightness = ((GLOW_MAXDIST - flDist)/(GLOW_MAXDIST-GLOW_MINDIST));
 		if(flBrightness < 0.25) flBrightness = 0.25;
 		if(flBrightness > 1) flBrightness = 1;
 		flAlpha *= flBrightness;
@@ -692,7 +692,7 @@ bool CSpriteRenderer::BatchSprite( cl_entity_t *pEntity )
 	{
 		if(pEntity->curstate.renderfx != RenderFx_NoDissipation)
 		{
-			Float flDist = (pEntity->curstate.origin - rns.view.v_origin).Length();
+			float flDist = (pEntity->curstate.origin - rns.view.v_origin).Length();
 		
 			if(flDist > GLOW_MAXDIST)
 				flDist = GLOW_MAXDIST;
@@ -702,7 +702,7 @@ bool CSpriteRenderer::BatchSprite( cl_entity_t *pEntity )
 		
 		bool useQueries = (g_pCvarOcclusionQueries->GetValue() >= 1) ? true : false;
 		bool traceAll = (g_pCvarTraceGlow->GetValue() >= 1 || pEntity->curstate.renderfx == RenderFx_TraceGlow) ? true : false;
-		Float occlusionFactor = R_CalcOcclusionFactor(pEntity->curstate.origin,
+		float occlusionFactor = R_CalcOcclusionFactor(pEntity->curstate.origin,
 			pEntity->entindex, pframe->width,
 			flScale, GLOW_INTERP_SPEED,
 			GLOW_NUM_TRACES, GL_QUERY_SPRITES, pEntity->glowstate,
@@ -710,8 +710,8 @@ bool CSpriteRenderer::BatchSprite( cl_entity_t *pEntity )
 			m_viewMatrix, this,
 			nullptr, SPR_DrawFunction);
 
-		Float dst = Math::DotProduct(rns.view.v_forward, pEntity->curstate.origin - rns.view.v_origin);
-		dst = clamp(dst, 0, 64);
+		float dst = Math::DotProduct(rns.view.v_forward, pEntity->curstate.origin - rns.view.v_origin);
+		dst = Clamp(dst, 0, 64);
 		dst = dst / 64;
 
 		flAlpha = flAlpha * occlusionFactor * dst;
@@ -719,11 +719,11 @@ bool CSpriteRenderer::BatchSprite( cl_entity_t *pEntity )
 		// Add in fog fade
 		if(rns.fog.settings.active)
 		{
-			Float f = 1.0f/(static_cast<Float>(rns.fog.settings.end)- static_cast<Float>(rns.fog.settings.start));
+			float f = 1.0f/(static_cast<float>(rns.fog.settings.end)- static_cast<float>(rns.fog.settings.start));
 
-			Float length = (rns.view.v_origin - pEntity->curstate.origin).Length();
-			Float fogfactor = (rns.fog.settings.end - length)*f;
-			flAlpha *= clamp(fogfactor, 0, 1);
+			float length = (rns.view.v_origin - pEntity->curstate.origin).Length();
+			float fogfactor = (rns.fog.settings.end - length)*f;
+			flAlpha *= Clamp(fogfactor, 0, 1);
 		}
 
 		// Save last time this was visible
@@ -744,9 +744,9 @@ bool CSpriteRenderer::BatchSprite( cl_entity_t *pEntity )
 		Vector vDirLight = pEntity->curstate.origin - rns.view.v_origin;
 		Math::VectorNormalize(vDirLight);
 
-		Float spotcos = cos((pEntity->curstate.fuser1)*(M_PI/360));
-		Float atten = 1.0 - Math::DotProduct( forward, vDirLight );
-		Float multiplier = (atten - spotcos)/(1 - spotcos);
+		float spotcos = cos((pEntity->curstate.fuser1)*(M_PI/360));
+		float atten = 1.0 - Math::DotProduct( forward, vDirLight );
+		float multiplier = (atten - spotcos)/(1 - spotcos);
 		if(multiplier > 1)
 			multiplier = 1;
 		else if(multiplier < 0)
@@ -788,9 +788,9 @@ bool CSpriteRenderer::BatchSprite( cl_entity_t *pEntity )
 
 	if (pEntity->curstate.rendercolor.x || pEntity->curstate.rendercolor.y || pEntity->curstate.rendercolor.z)
 	{
-		vColor[0] = static_cast<Float>(pEntity->curstate.rendercolor.x)/255.0f;
-		vColor[1] = static_cast<Float>(pEntity->curstate.rendercolor.y)/255.0f;
-		vColor[2] = static_cast<Float>(pEntity->curstate.rendercolor.z)/255.0f;
+		vColor[0] = static_cast<float>(pEntity->curstate.rendercolor.x)/255.0f;
+		vColor[1] = static_cast<float>(pEntity->curstate.rendercolor.y)/255.0f;
+		vColor[2] = static_cast<float>(pEntity->curstate.rendercolor.z)/255.0f;
 		vColor[3] = flAlpha;
 	}
 	else
@@ -825,12 +825,12 @@ bool CSpriteRenderer::BatchSprite( cl_entity_t *pEntity )
 //====================================
 //
 //====================================
-void CSpriteRenderer::BatchVertex( const Vector& vertex, const vec4_t& color, Float texcoords, Float texcoordt ) 
+void CSpriteRenderer::BatchVertex( const Vector& vertex, const vec4_t& color, float texcoords, float texcoordt ) 
 {
 	sprite_vertex_t *pVertex = &m_pVertexes[m_numVertexes];
 	m_numVertexes++;
 
-	for(Uint32 j = 0; j < 3; j++)
+	for(UInt32 j = 0; j < 3; j++)
 		pVertex->origin[j] = vertex[j];
 	pVertex->origin[3] = 1.0;
 
@@ -846,7 +846,7 @@ void CSpriteRenderer::BatchVertex( const Vector& vertex, const vec4_t& color, Fl
 //====================================
 //
 //====================================
-void CSpriteRenderer::BatchVertex( Uint32 position, const Vector& vertex, Float r, Float g, Float b, Float a, Float texcoords, Float texcoordt )
+void CSpriteRenderer::BatchVertex( UInt32 position, const Vector& vertex, float r, float g, float b, float a, float texcoords, float texcoordt )
 {
 	sprite_vertex_t& bufferVertex = m_pVertexes[position];
 
@@ -867,7 +867,7 @@ void CSpriteRenderer::BatchVertex( Uint32 position, const Vector& vertex, Float 
 //====================================
 void CSpriteRenderer::Animate( void ) 
 {
-	for(Uint32 i = 0; i < m_staticSpritesArray.size(); i++)
+	for(UInt32 i = 0; i < m_staticSpritesArray.size(); i++)
 	{
 		cl_entity_t *pEntity = &m_staticSpritesArray[i];
 		if(!pEntity->pmodel)
@@ -893,11 +893,11 @@ void CSpriteRenderer::Animate( void )
 			continue;
 		}
 		
-		Float flDelta = rns.time-pEntity->curstate.animtime;
+		float flDelta = rns.time-pEntity->curstate.animtime;
 		pEntity->curstate.frame = static_cast<Int32>((pEntity->curstate.framerate*15)*flDelta) % (pSprite->frames.size()-1);
 	}
 	
-	for(Uint32 i = 0; i < MAX_TEMP_SPRITES; i++)
+	for(UInt32 i = 0; i < MAX_TEMP_SPRITES; i++)
 	{
 		if(m_tempSpritesArray[i].life < rns.time)
 		{
@@ -932,7 +932,7 @@ void CSpriteRenderer::Animate( void )
 			continue;
 		}
 		
-		Float flDelta = rns.time-pEntity->curstate.animtime;
+		float flDelta = rns.time-pEntity->curstate.animtime;
 		pEntity->curstate.frame = static_cast<Int32>((pEntity->curstate.framerate*15)*flDelta) % (pSprite->frames.size()-1);
 	}
 }
@@ -955,11 +955,11 @@ void CSpriteRenderer::DrawFunction( const Vector& origin )
 //====================================
 void CSpriteRenderer::AllocDrawBuffer( void )
 {
-	Uint32 prevDrawBufferSize = m_drawBufferAllocSize;
+	UInt32 prevDrawBufferSize = m_drawBufferAllocSize;
 	m_drawBufferAllocSize += DRAWBUFFER_ALLOC_SIZE * 4;
 
 	// Allocate vertex array
-	Uint32 vertexBufferSize = m_drawBufferAllocSize;
+	UInt32 vertexBufferSize = m_drawBufferAllocSize;
 	m_occlusionQueryVBOBufferOffset = vertexBufferSize;
 	vertexBufferSize += GLOW_NUM_TRACES;
 
@@ -1003,16 +1003,16 @@ void CSpriteRenderer::CreateVBO( void )
 		delete m_pVBO;
 	}
 
-	Uint32 *pindexes = new Uint32[m_drawBufferAllocSize*6];
-	for(Uint32 i = 0, j = 0; i < m_drawBufferAllocSize; i++, j += 6)
+	UInt32 *pindexes = new UInt32[m_drawBufferAllocSize*6];
+	for(UInt32 i = 0, j = 0; i < m_drawBufferAllocSize; i++, j += 6)
 	{
-		Uint32 baseval = (i*4);
+		UInt32 baseval = (i*4);
 		pindexes[j] = baseval; pindexes[j+1] = baseval+1; pindexes[j+2] = baseval+2;
 		pindexes[j+3] = baseval; pindexes[j+4] = baseval+2; pindexes[j+5] = baseval+3;
 	}
 
-	Uint32 vertexBufferSize = m_drawBufferAllocSize + GLOW_NUM_TRACES;
-	m_pVBO = new CVBO(gGLExtF, m_pVertexes, sizeof(sprite_vertex_t)*vertexBufferSize, pindexes, sizeof(Uint32)*m_drawBufferAllocSize*6);
+	UInt32 vertexBufferSize = m_drawBufferAllocSize + GLOW_NUM_TRACES;
+	m_pVBO = new CVBO(gGLExtF, m_pVertexes, sizeof(sprite_vertex_t)*vertexBufferSize, pindexes, sizeof(UInt32)*m_drawBufferAllocSize*6);
 
 	m_pShader->SetVBO(m_pVBO);
 

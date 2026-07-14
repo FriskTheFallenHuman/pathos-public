@@ -37,7 +37,7 @@ public:
 	virtual void HitTop( void ) override;
 	virtual void HitBottom( void ) override;
 
-	void RotateMove( const Vector& destAngle, Double time );
+	void RotateMove( const Vector& destAngle, double time );
 	void SetupRotation( void );
 
 public:

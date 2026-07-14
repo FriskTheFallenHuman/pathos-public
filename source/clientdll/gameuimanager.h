@@ -27,9 +27,9 @@ class CGameUIManager
 {
 public:
 	// Blur time for background
-	static const Float BACKGROUND_BLUR_TIME;
+	static const float BACKGROUND_BLUR_TIME;
 	// Default font schema of the game UI
-	static const Char DEFAULT_TEXT_SCHEMA[];
+	static const char DEFAULT_TEXT_SCHEMA[];
 
 public:
 	CGameUIManager( void );
@@ -57,7 +57,7 @@ public:
 	// Performs rendering functions
 	bool Draw( void );
 
-	// TRUE if a window is active
+	// true if a window is active
 	bool HasActiveWindows( void ) const;
 	// Spawns a window based on type
 	CGameUIWindow* SpawnWindow( gameui_windows_t windowtype );
@@ -67,7 +67,7 @@ public:
 	void RespawnWindow( void );
 
 	// Returns the server UI message id
-	Uint32 GetServerUIMessageId( void ) const { return m_uiServerUserMsgId; }
+	UInt32 GetServerUIMessageId( void ) const { return m_uiServerUserMsgId; }
 	// Returns the default font set
 	const font_set_t* GetDefaultFontSet( void ) const { return m_pFontSet; }
 
@@ -75,7 +75,7 @@ public:
 	const CGameUIWindow* GetActiveWindow( void );
 
 	// Loads in a schema file
-	ui_schemeinfo_t* LoadSchemaFile( const Char* pstrFilename );
+	ui_schemeinfo_t* LoadSchemaFile( const char* pstrFilename );
 
 public:
 	// Manages a mouse wheel event
@@ -94,12 +94,12 @@ public:
 	CUISchemaManager* m_pSchemaManager;
 	
 	// Blur fade time
-	Double m_blurFadeTime;
+	double m_blurFadeTime;
 	// Blur active state
 	bool m_isBlurActive;
 
 	// UI server usermsg id
-	Uint32 m_uiServerUserMsgId;
+	UInt32 m_uiServerUserMsgId;
 
 	// CVar to toggle borders
 	CCVar* m_pCvarBorders;

@@ -41,7 +41,7 @@ CMD5::CMD5()
 // @brief
 //
 //=============================================
-CMD5::CMD5( const byte* pbuffer, Uint32 bufsize )
+CMD5::CMD5( const Byte* pbuffer, UInt32 bufsize )
 {
 	Init();
 	Update(pbuffer, bufsize);
@@ -73,22 +73,22 @@ void CMD5::Init( void )
 // @brief
 //
 //=============================================
-void CMD5::Decode( Uint32 *poutput, const byte *pinput, Uint32 length )
+void CMD5::Decode( UInt32 *poutput, const Byte *pinput, UInt32 length )
 {
-	for(Uint32 i = 0, j = 0; j < length; i++, j += 4)
-		poutput[i] = (static_cast<Uint32>(pinput[j])) 
-		| (static_cast<Uint32>(pinput[j+1]) << 8)
-		| (static_cast<Uint32>(pinput[j+2]) << 16)
-		| (static_cast<Uint32>(pinput[j+3]) << 24);
+	for(UInt32 i = 0, j = 0; j < length; i++, j += 4)
+		poutput[i] = (static_cast<UInt32>(pinput[j])) 
+		| (static_cast<UInt32>(pinput[j+1]) << 8)
+		| (static_cast<UInt32>(pinput[j+2]) << 16)
+		| (static_cast<UInt32>(pinput[j+3]) << 24);
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-void CMD5::Encode( byte *poutput, const Uint32* pinput, Uint32 length )
+void CMD5::Encode( Byte *poutput, const UInt32* pinput, UInt32 length )
 {
-	for(Uint32 i = 0, j = 0; j < length; i++, j += 4) 
+	for(UInt32 i = 0, j = 0; j < length; i++, j += 4) 
 	{
 		poutput[j] = pinput[i] & 0xff;
 		poutput[j+1] = (pinput[i] >> 8) & 0xff;
@@ -101,14 +101,14 @@ void CMD5::Encode( byte *poutput, const Uint32* pinput, Uint32 length )
 // @brief
 //
 //=============================================
-void CMD5::Transform( const byte* pblock )
+void CMD5::Transform( const Byte* pblock )
 {
-	Uint32 a = m_state[0];
-	Uint32 b = m_state[1];
-	Uint32 c = m_state[2];
-	Uint32 d = m_state[3];
+	UInt32 a = m_state[0];
+	UInt32 b = m_state[1];
+	UInt32 c = m_state[2];
+	UInt32 d = m_state[3];
 
-	Uint32 x[16];
+	UInt32 x[16];
 	Decode (x, pblock, MD5_BLOCKSIZE);
  
 	// Round 1
@@ -196,10 +196,10 @@ void CMD5::Transform( const byte* pblock )
 // @brief
 //
 //=============================================
-void CMD5::Update( const byte *pinput, Uint32 length )
+void CMD5::Update( const Byte *pinput, UInt32 length )
 {
 	// compute number of bytes mod 64
-	Uint32 index = m_count[0] / 8 % MD5_BLOCKSIZE;
+	UInt32 index = m_count[0] / 8 % MD5_BLOCKSIZE;
  
 	// Update number of bits
 	if ((m_count[0] += (length << 3)) < (length << 3))
@@ -208,8 +208,8 @@ void CMD5::Update( const byte *pinput, Uint32 length )
 	m_count[1] += (length >> 29);
  
 	// number of bytes we need to fill in m_buffer
-	const Uint32 firstpart = 64 - index;
-	Uint32 i;
+	const UInt32 firstpart = 64 - index;
+	UInt32 i;
  
 	// transform as many times as possible.
 	if (length >= firstpart)
@@ -246,12 +246,12 @@ CMD5& CMD5::Finalize()
 	if (!m_isFinalized) 
 	{
 		// Save number of bits
-		byte bits[8];
+		Byte bits[8];
 		Encode(bits, m_count, 8);
  
 		// pad out to 56 mod 64.
-		const Uint32 index = m_count[0] / 8 % 64;
-		const Uint32 padLen = (index < 56) ? (56 - index) : (120 - index);
+		const UInt32 index = m_count[0] / 8 % 64;
+		const UInt32 padLen = (index < 56) ? (56 - index) : (120 - index);
 		Update(padding, padLen);
  
 		// Append length (before padding)
@@ -279,8 +279,8 @@ CString CMD5::HexDigest( void ) const
 	if(!m_isFinalized)
 		return "";
  
-	Char buffer[MD5_HASH_SIZE] = {'\0'};
-	for(Uint32 i = 0; i < 16; i++)
+	char buffer[MD5_HASH_SIZE] = {'\0'};
+	for(UInt32 i = 0; i < 16; i++)
 		sprintf(&buffer[i*2], "%02x", m_digest[i]);
 
 	// Terminate

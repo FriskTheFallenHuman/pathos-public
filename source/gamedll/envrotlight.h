@@ -19,7 +19,7 @@ class CEnvRotLight : public CAnimatingEntity
 {
 public:
 	// Rotating light model
-	static const Char ENV_ROTLIGHT_MODEL_FILENAME[];
+	static const char ENV_ROTLIGHT_MODEL_FILENAME[];
 	// Non-textured flashlight texture index
 	static const Int32 NON_TEXTURED_PROJ_TEXTURE_INDEX;
 
@@ -38,7 +38,7 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void Precache( void ) override;
 	virtual void DeclareSaveFields( void ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual Int32 GetEntityFlags( void ) override { return CAnimatingEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION; }
 
 private:

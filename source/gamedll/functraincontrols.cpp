@@ -66,7 +66,7 @@ void CFuncTrainControls::InitEntity( void )
 	CFuncTrackTrain* pTrackTrain = nullptr;
 
 	// Get func_tracktrain entity
-	const Char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
+	const char* pstrEntityName = gd_engfuncs.pfnGetString(m_pFields->target);
 	edict_t* pedict = nullptr;
 	while(true)
 	{

@@ -17,7 +17,7 @@ All Rights Reserved.
 // @param pstrString String to find
 // @return Cache entry if present, or nullptr
 //=============================================
-inline CStringPool::cachestring_t* CStringPool::GetExistingString( const Char* pstrString )
+DO_INLINE CStringPool::cachestring_t* CStringPool::GetExistingString( const char* pstrString )
 {
 	// Seek it out in the map first
 	CacheStringMapIteratorType_t it = m_stringMap.find(pstrString);
@@ -42,7 +42,7 @@ inline CStringPool::cachestring_t* CStringPool::GetExistingString( const Char* p
 // @param pstrString String to find
 // @return Cache entry if present, or nullptr
 //=============================================
-inline CStringPool::cachestring_t* CStringPool::AddString( const Char* pstrString )
+DO_INLINE CStringPool::cachestring_t* CStringPool::AddString( const char* pstrString )
 {
 	cachestring_t* pnew = new cachestring_t;
 	pnew->increment();
@@ -59,7 +59,7 @@ inline CStringPool::cachestring_t* CStringPool::AddString( const Char* pstrStrin
 //
 // @param pCacheEntry String entry to remove
 //=============================================
-inline void CStringPool::RemoveString( cachestring_t* pCacheEntry )
+DO_INLINE void CStringPool::RemoveString( cachestring_t* pCacheEntry )
 {
 	m_mutex.lock();
 
@@ -81,7 +81,7 @@ inline void CStringPool::RemoveString( cachestring_t* pCacheEntry )
 //
 // @retrun Current instance of the string pool
 //=============================================
-inline CStringPool* CStringPool::Instance( void )
+DO_INLINE CStringPool* CStringPool::Instance( void )
 {
 	return &g_poolInstance;
 }

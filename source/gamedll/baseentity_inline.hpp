@@ -17,7 +17,7 @@ All Rights Reserved.
 // @brief
 //
 //=============================================
-inline entindex_t CBaseEntity::GetEntityIndex( void ) const
+DO_INLINE entindex_t CBaseEntity::GetEntityIndex( void ) const
 {
 	return m_pState->entindex;
 }
@@ -26,7 +26,7 @@ inline entindex_t CBaseEntity::GetEntityIndex( void ) const
 // @brief
 //
 //=============================================
-inline const edict_t* CBaseEntity::GetEdict( void ) const
+DO_INLINE const edict_t* CBaseEntity::GetEdict( void ) const
 {
 	return m_pEdict;
 }
@@ -35,7 +35,7 @@ inline const edict_t* CBaseEntity::GetEdict( void ) const
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetOrigin( void ) const
+DO_INLINE const Vector& CBaseEntity::GetOrigin( void ) const
 {
 	return m_pEdict->state.origin;
 }
@@ -44,7 +44,7 @@ inline const Vector& CBaseEntity::GetOrigin( void ) const
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetAngles( void ) const
+DO_INLINE const Vector& CBaseEntity::GetAngles( void ) const
 {
 	return m_pEdict->state.angles;
 }
@@ -53,7 +53,7 @@ inline const Vector& CBaseEntity::GetAngles( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetOrigin( const Vector& origin )
+DO_INLINE void CBaseEntity::SetOrigin( const Vector& origin )
 {
 	m_pState->origin = origin;
 	gd_engfuncs.pfnSetOrigin(m_pEdict, m_pState->origin);
@@ -63,7 +63,7 @@ inline void CBaseEntity::SetOrigin( const Vector& origin )
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetAngles( const Vector& angles )
+DO_INLINE void CBaseEntity::SetAngles( const Vector& angles )
 {
 	m_pState->angles = angles;
 }
@@ -72,7 +72,7 @@ inline void CBaseEntity::SetAngles( const Vector& angles )
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetVelocity( void ) const
+DO_INLINE const Vector& CBaseEntity::GetVelocity( void ) const
 {
 	return m_pState->velocity;
 }
@@ -81,7 +81,7 @@ inline const Vector& CBaseEntity::GetVelocity( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetVelocity( const Vector& velocity )
+DO_INLINE void CBaseEntity::SetVelocity( const Vector& velocity )
 {
 	m_pState->velocity = velocity;
 }
@@ -90,7 +90,7 @@ inline void CBaseEntity::SetVelocity( const Vector& velocity )
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetAngularVelocity( void ) const
+DO_INLINE const Vector& CBaseEntity::GetAngularVelocity( void ) const
 {
 	return m_pState->avelocity;
 }
@@ -99,7 +99,7 @@ inline const Vector& CBaseEntity::GetAngularVelocity( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetAngularVelocity( const Vector& velocity )
+DO_INLINE void CBaseEntity::SetAngularVelocity( const Vector& velocity )
 {
 	m_pState->avelocity = velocity;
 }
@@ -108,7 +108,7 @@ inline void CBaseEntity::SetAngularVelocity( const Vector& velocity )
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetBaseVelocity( void ) const
+DO_INLINE const Vector& CBaseEntity::GetBaseVelocity( void ) const
 {
 	return m_pState->basevelocity;
 }
@@ -117,7 +117,7 @@ inline const Vector& CBaseEntity::GetBaseVelocity( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetBaseVelocity( const Vector& basevelocity )
+DO_INLINE void CBaseEntity::SetBaseVelocity( const Vector& basevelocity )
 {
 	m_pState->basevelocity = basevelocity;
 }
@@ -126,7 +126,7 @@ inline void CBaseEntity::SetBaseVelocity( const Vector& basevelocity )
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetFlags( Uint64 flagbits )
+DO_INLINE void CBaseEntity::SetFlags( UInt64 flagbits )
 {
 	m_pState->flags |= flagbits;
 }
@@ -135,7 +135,7 @@ inline void CBaseEntity::SetFlags( Uint64 flagbits )
 // @brief
 //
 //=============================================
-inline void CBaseEntity::RemoveFlags( Uint64 flagbits )
+DO_INLINE void CBaseEntity::RemoveFlags( UInt64 flagbits )
 {
 	m_pState->flags &= ~flagbits;
 }
@@ -144,7 +144,7 @@ inline void CBaseEntity::RemoveFlags( Uint64 flagbits )
 // @brief
 //
 //=============================================
-inline Int64 CBaseEntity::GetFlags( void ) const
+DO_INLINE Int64 CBaseEntity::GetFlags( void ) const
 {
 	return m_pState->flags;
 }
@@ -153,7 +153,7 @@ inline Int64 CBaseEntity::GetFlags( void ) const
 // @brief
 //
 //=============================================
-inline bool CBaseEntity::HasTargetName( void ) const
+DO_INLINE bool CBaseEntity::HasTargetName( void ) const
 {
 	return (m_pFields->targetname == NO_STRING_VALUE) ? false : true;
 }
@@ -162,7 +162,7 @@ inline bool CBaseEntity::HasTargetName( void ) const
 // @brief
 //
 //=============================================
-inline const Char* CBaseEntity::GetTargetName( void ) const
+DO_INLINE const char* CBaseEntity::GetTargetName( void ) const
 {
 	if(m_pFields->targetname == NO_STRING_VALUE)
 		return "";
@@ -174,7 +174,7 @@ inline const Char* CBaseEntity::GetTargetName( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetTargetName( const Char* pstrtargetname )
+DO_INLINE void CBaseEntity::SetTargetName( const char* pstrtargetname )
 {
 	if(!pstrtargetname || !qstrlen(pstrtargetname))
 		m_pFields->targetname = NO_STRING_VALUE;
@@ -186,7 +186,7 @@ inline void CBaseEntity::SetTargetName( const Char* pstrtargetname )
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetTargetName( const string_t targetname )
+DO_INLINE void CBaseEntity::SetTargetName( const string_t targetname )
 {
 	m_pFields->targetname = targetname;
 }
@@ -195,7 +195,7 @@ inline void CBaseEntity::SetTargetName( const string_t targetname )
 // @brief
 //
 //=============================================
-inline bool CBaseEntity::HasModelName( void ) const
+DO_INLINE bool CBaseEntity::HasModelName( void ) const
 {
 	return (m_pFields->modelname == NO_STRING_VALUE) ? false : true;
 }
@@ -204,7 +204,7 @@ inline bool CBaseEntity::HasModelName( void ) const
 // @brief
 //
 //=============================================
-inline const Char* CBaseEntity::GetModelName( void ) const
+DO_INLINE const char* CBaseEntity::GetModelName( void ) const
 {
 	if(m_pFields->modelname == NO_STRING_VALUE)
 		return "";
@@ -216,7 +216,7 @@ inline const Char* CBaseEntity::GetModelName( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetModelName( const Char* pstrmodelname )
+DO_INLINE void CBaseEntity::SetModelName( const char* pstrmodelname )
 {
 	if(!pstrmodelname || !qstrlen(pstrmodelname))
 		m_pFields->modelname = NO_STRING_VALUE;
@@ -228,7 +228,7 @@ inline void CBaseEntity::SetModelName( const Char* pstrmodelname )
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetModelName( const string_t modelname )
+DO_INLINE void CBaseEntity::SetModelName( const string_t modelname )
 {
 	m_pFields->modelname = modelname;
 }
@@ -237,7 +237,7 @@ inline void CBaseEntity::SetModelName( const string_t modelname )
 // @brief
 //
 //=============================================
-inline Int32 CBaseEntity::GetModelIndex( void ) const
+DO_INLINE Int32 CBaseEntity::GetModelIndex( void ) const
 {
 	return m_pState->modelindex;
 }
@@ -246,7 +246,7 @@ inline Int32 CBaseEntity::GetModelIndex( void ) const
 // @brief
 //
 //=============================================
-inline bool CBaseEntity::HasTarget( void ) const
+DO_INLINE bool CBaseEntity::HasTarget( void ) const
 {
 	return (m_pFields->target == NO_STRING_VALUE) ? false : true;
 }
@@ -255,7 +255,7 @@ inline bool CBaseEntity::HasTarget( void ) const
 // @brief
 //
 //=============================================
-inline const Char* CBaseEntity::GetTarget( void ) const
+DO_INLINE const char* CBaseEntity::GetTarget( void ) const
 {
 	if(m_pFields->target == NO_STRING_VALUE)
 		return "";
@@ -267,7 +267,7 @@ inline const Char* CBaseEntity::GetTarget( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetTarget( const Char* pstrtarget )
+DO_INLINE void CBaseEntity::SetTarget( const char* pstrtarget )
 {
 	if(!pstrtarget || !qstrlen(pstrtarget))
 		m_pFields->target = NO_STRING_VALUE;
@@ -279,7 +279,7 @@ inline void CBaseEntity::SetTarget( const Char* pstrtarget )
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetTarget( const string_t target )
+DO_INLINE void CBaseEntity::SetTarget( const string_t target )
 {
 	m_pFields->target = target;
 }
@@ -288,7 +288,7 @@ inline void CBaseEntity::SetTarget( const string_t target )
 // @brief
 //
 //=============================================
-inline const Char* CBaseEntity::GetClassName( void ) const
+DO_INLINE const char* CBaseEntity::GetClassName( void ) const
 {
 	if(m_pFields->classname == NO_STRING_VALUE)
 		return "";
@@ -300,7 +300,7 @@ inline const Char* CBaseEntity::GetClassName( void ) const
 // @brief
 //
 //=============================================
-inline takedamage_t CBaseEntity::GetTakeDamage( void ) const
+DO_INLINE takedamage_t CBaseEntity::GetTakeDamage( void ) const
 {
 	return (takedamage_t)m_pState->takedamage;
 }
@@ -309,7 +309,7 @@ inline takedamage_t CBaseEntity::GetTakeDamage( void ) const
 // @brief
 //
 //=============================================
-inline solid_t CBaseEntity::GetSolidity( void ) const
+DO_INLINE solid_t CBaseEntity::GetSolidity( void ) const
 {
 	return (solid_t)m_pState->solid;
 }
@@ -318,7 +318,7 @@ inline solid_t CBaseEntity::GetSolidity( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetSolidity( solid_t solid )
+DO_INLINE void CBaseEntity::SetSolidity( solid_t solid )
 {
 	m_pState->solid = solid;
 }
@@ -327,7 +327,7 @@ inline void CBaseEntity::SetSolidity( solid_t solid )
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetAbsMins( void ) const
+DO_INLINE const Vector& CBaseEntity::GetAbsMins( void ) const
 {
 	return m_pState->absmin;
 }
@@ -336,7 +336,7 @@ inline const Vector& CBaseEntity::GetAbsMins( void ) const
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetAbsMaxs( void ) const
+DO_INLINE const Vector& CBaseEntity::GetAbsMaxs( void ) const
 {
 	return m_pState->absmax;
 }
@@ -345,7 +345,7 @@ inline const Vector& CBaseEntity::GetAbsMaxs( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetMinsMaxs( const Vector& mins, const Vector& maxs )
+DO_INLINE void CBaseEntity::SetMinsMaxs( const Vector& mins, const Vector& maxs )
 {
 	gd_engfuncs.pfnSetMinsMaxs(m_pEdict, mins, maxs);
 }
@@ -354,7 +354,7 @@ inline void CBaseEntity::SetMinsMaxs( const Vector& mins, const Vector& maxs )
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetMins( void ) const
+DO_INLINE const Vector& CBaseEntity::GetMins( void ) const
 {
 	return m_pState->mins;
 }
@@ -363,7 +363,7 @@ inline const Vector& CBaseEntity::GetMins( void ) const
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetMaxs( void ) const
+DO_INLINE const Vector& CBaseEntity::GetMaxs( void ) const
 {
 	return m_pState->maxs;
 }
@@ -373,7 +373,7 @@ inline const Vector& CBaseEntity::GetMaxs( void ) const
 // @brief
 //
 //=============================================
-inline Int32 CBaseEntity::GetButtonBits( void ) const
+DO_INLINE Int32 CBaseEntity::GetButtonBits( void ) const
 {
 	return m_pState->buttons;
 }
@@ -382,7 +382,7 @@ inline Int32 CBaseEntity::GetButtonBits( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetButtonBits( Int32 bitflags )
+DO_INLINE void CBaseEntity::SetButtonBits( Int32 bitflags )
 {
 	m_pState->buttons |= bitflags;
 }
@@ -391,7 +391,7 @@ inline void CBaseEntity::SetButtonBits( Int32 bitflags )
 // @brief
 //
 //=============================================
-inline void CBaseEntity::ClearButtonBits( Int32 bitflags )
+DO_INLINE void CBaseEntity::ClearButtonBits( Int32 bitflags )
 {
 	m_pState->buttons &= ~bitflags;
 }
@@ -400,7 +400,7 @@ inline void CBaseEntity::ClearButtonBits( Int32 bitflags )
 // @brief
 //
 //=============================================
-inline Vector CBaseEntity::GetViewOffset( bool fromNavigable ) const
+DO_INLINE Vector CBaseEntity::GetViewOffset( bool fromNavigable ) const
 {
 	if(!fromNavigable)
 	{
@@ -418,7 +418,7 @@ inline Vector CBaseEntity::GetViewOffset( bool fromNavigable ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetViewOffset( const Vector& offset )
+DO_INLINE void CBaseEntity::SetViewOffset( const Vector& offset )
 {
 	m_pState->view_offset = offset;
 }
@@ -427,7 +427,7 @@ inline void CBaseEntity::SetViewOffset( const Vector& offset )
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetViewAngles( void ) const
+DO_INLINE const Vector& CBaseEntity::GetViewAngles( void ) const
 {
 	return m_pState->viewangles;
 }
@@ -436,7 +436,7 @@ inline const Vector& CBaseEntity::GetViewAngles( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetViewAngles( const Vector& angles )
+DO_INLINE void CBaseEntity::SetViewAngles( const Vector& angles )
 {
 	m_pState->viewangles = angles;
 	if(IsPlayer())
@@ -447,7 +447,7 @@ inline void CBaseEntity::SetViewAngles( const Vector& angles )
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetAiment( CBaseEntity* pEntity )
+DO_INLINE void CBaseEntity::SetAiment( CBaseEntity* pEntity )
 {
 	if(!pEntity)
 		m_pState->aiment = NO_ENTITY_INDEX;
@@ -459,7 +459,7 @@ inline void CBaseEntity::SetAiment( CBaseEntity* pEntity )
 // @brief
 //
 //=============================================
-inline CBaseEntity* CBaseEntity::GetAiment( void ) const
+DO_INLINE CBaseEntity* CBaseEntity::GetAiment( void ) const
 {
 	if(m_pState->aiment == NO_ENTITY_INDEX)
 		return nullptr;
@@ -479,7 +479,7 @@ inline CBaseEntity* CBaseEntity::GetAiment( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetOwner( CBaseEntity* pEntity )
+DO_INLINE void CBaseEntity::SetOwner( CBaseEntity* pEntity )
 {
 	if(!pEntity)
 		m_pState->owner = NO_ENTITY_INDEX;
@@ -491,7 +491,7 @@ inline void CBaseEntity::SetOwner( CBaseEntity* pEntity )
 // @brief
 //
 //=============================================
-inline CBaseEntity* CBaseEntity::GetOwner( void ) const
+DO_INLINE CBaseEntity* CBaseEntity::GetOwner( void ) const
 {
 	if(m_pState->owner == NO_ENTITY_INDEX)
 		return nullptr;
@@ -511,7 +511,7 @@ inline CBaseEntity* CBaseEntity::GetOwner( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetGroundEntity( CBaseEntity* pEntity )
+DO_INLINE void CBaseEntity::SetGroundEntity( CBaseEntity* pEntity )
 {
 	if(!pEntity)
 		m_pState->groundent = NO_ENTITY_INDEX;
@@ -523,7 +523,7 @@ inline void CBaseEntity::SetGroundEntity( CBaseEntity* pEntity )
 // @brief
 //
 //=============================================
-inline CBaseEntity* CBaseEntity::GetGroundEntity( void ) const
+DO_INLINE CBaseEntity* CBaseEntity::GetGroundEntity( void ) const
 {
 	if(m_pState->groundent == NO_ENTITY_INDEX)
 		return nullptr;
@@ -543,7 +543,7 @@ inline CBaseEntity* CBaseEntity::GetGroundEntity( void ) const
 // @brief
 //
 //=============================================
-inline waterlevel_t CBaseEntity::GetWaterLevel( void ) const
+DO_INLINE waterlevel_t CBaseEntity::GetWaterLevel( void ) const
 {
 	return (waterlevel_t)m_pState->waterlevel;
 }
@@ -552,7 +552,7 @@ inline waterlevel_t CBaseEntity::GetWaterLevel( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetWaterLevel( waterlevel_t level )
+DO_INLINE void CBaseEntity::SetWaterLevel( waterlevel_t level )
 {
 	m_pState->waterlevel = level;
 }
@@ -561,7 +561,7 @@ inline void CBaseEntity::SetWaterLevel( waterlevel_t level )
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetSize( void ) const
+DO_INLINE const Vector& CBaseEntity::GetSize( void ) const
 {
 	return m_pState->size;
 }
@@ -570,7 +570,7 @@ inline const Vector& CBaseEntity::GetSize( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetSize( const Vector& size )
+DO_INLINE void CBaseEntity::SetSize( const Vector& size )
 {
 	gd_engfuncs.pfnSetSize(m_pEdict, size);
 }
@@ -579,7 +579,7 @@ inline void CBaseEntity::SetSize( const Vector& size )
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetPunchAngle( void ) const
+DO_INLINE const Vector& CBaseEntity::GetPunchAngle( void ) const
 {
 	return m_pState->punchangles;
 }
@@ -588,7 +588,7 @@ inline const Vector& CBaseEntity::GetPunchAngle( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetPunchAngle( const Vector& value )
+DO_INLINE void CBaseEntity::SetPunchAngle( const Vector& value )
 {
 	m_pState->punchangles = value;
 }
@@ -597,7 +597,7 @@ inline void CBaseEntity::SetPunchAngle( const Vector& value )
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetPunchAmount( void ) const
+DO_INLINE const Vector& CBaseEntity::GetPunchAmount( void ) const
 {
 	return m_pState->punchamount;
 }
@@ -606,7 +606,7 @@ inline const Vector& CBaseEntity::GetPunchAmount( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetPunchAmount( const Vector& value )
+DO_INLINE void CBaseEntity::SetPunchAmount( const Vector& value )
 {
 	m_pState->punchamount = value;
 }
@@ -615,7 +615,7 @@ inline void CBaseEntity::SetPunchAmount( const Vector& value )
 // @brief
 //
 //=============================================
-inline Int64 CBaseEntity::GetSpawnFlags( void ) const
+DO_INLINE Int64 CBaseEntity::GetSpawnFlags( void ) const
 {
 	return m_pState->spawnflags;
 }
@@ -633,7 +633,7 @@ bool CBaseEntity::HasSpawnFlag( Int64 bit ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetSpawnFlag( Int64 flag )
+DO_INLINE void CBaseEntity::SetSpawnFlag( Int64 flag )
 {
 	m_pState->spawnflags |= flag;
 }
@@ -642,7 +642,7 @@ inline void CBaseEntity::SetSpawnFlag( Int64 flag )
 // @brief
 //
 //=============================================
-inline void CBaseEntity::RemoveSpawnFlag( Int64 flag )
+DO_INLINE void CBaseEntity::RemoveSpawnFlag( Int64 flag )
 {
 	m_pState->spawnflags &= ~flag;
 }
@@ -651,7 +651,7 @@ inline void CBaseEntity::RemoveSpawnFlag( Int64 flag )
 // @brief
 //
 //=============================================
-inline const Vector& CBaseEntity::GetRenderColor( void ) const
+DO_INLINE const Vector& CBaseEntity::GetRenderColor( void ) const
 {
 	return m_pState->rendercolor;
 }
@@ -660,29 +660,29 @@ inline const Vector& CBaseEntity::GetRenderColor( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetRenderColor( const Vector& color )
+DO_INLINE void CBaseEntity::SetRenderColor( const Vector& color )
 {
-	m_pState->rendercolor.x = clamp(color.x, 0, 255);
-	m_pState->rendercolor.y = clamp(color.y, 0, 255);
-	m_pState->rendercolor.z = clamp(color.z, 0, 255);
+	m_pState->rendercolor.x = Clamp(color.x, 0, 255);
+	m_pState->rendercolor.y = Clamp(color.y, 0, 255);
+	m_pState->rendercolor.z = Clamp(color.z, 0, 255);
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetRenderColor( Int32 r, Int32 g, Int32 b )
+DO_INLINE void CBaseEntity::SetRenderColor( Int32 r, Int32 g, Int32 b )
 {
-	m_pState->rendercolor.x = clamp(r, 0, 255);
-	m_pState->rendercolor.y = clamp(g, 0, 255);
-	m_pState->rendercolor.z = clamp(b, 0, 255);
+	m_pState->rendercolor.x = Clamp(r, 0, 255);
+	m_pState->rendercolor.y = Clamp(g, 0, 255);
+	m_pState->rendercolor.z = Clamp(b, 0, 255);
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-inline rendermode_t CBaseEntity::GetRenderMode( void ) const
+DO_INLINE rendermode_t CBaseEntity::GetRenderMode( void ) const
 {
 	return (rendermode_t)m_pState->rendermode;
 }
@@ -691,7 +691,7 @@ inline rendermode_t CBaseEntity::GetRenderMode( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetRenderMode( rendermode_t rendermode )
+DO_INLINE void CBaseEntity::SetRenderMode( rendermode_t rendermode )
 {
 	m_pState->rendermode = rendermode;
 }
@@ -700,7 +700,7 @@ inline void CBaseEntity::SetRenderMode( rendermode_t rendermode )
 // @brief
 //
 //=============================================
-inline const Float CBaseEntity::GetRenderAmount( void ) const
+DO_INLINE const float CBaseEntity::GetRenderAmount( void ) const
 {
 	return m_pState->renderamt;
 }
@@ -709,16 +709,16 @@ inline const Float CBaseEntity::GetRenderAmount( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetRenderAmount( Float amount )
+DO_INLINE void CBaseEntity::SetRenderAmount( float amount )
 {
-	m_pState->renderamt = clamp(amount, 0, 255);
+	m_pState->renderamt = Clamp(amount, 0, 255);
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-inline const Int32 CBaseEntity::GetRenderFx( void ) const
+DO_INLINE const Int32 CBaseEntity::GetRenderFx( void ) const
 {
 	return m_pState->renderfx;
 }
@@ -727,7 +727,7 @@ inline const Int32 CBaseEntity::GetRenderFx( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetRenderFx( Int32 renderfx )
+DO_INLINE void CBaseEntity::SetRenderFx( Int32 renderfx )
 {
 	m_pState->renderfx = renderfx;
 }
@@ -736,7 +736,7 @@ inline void CBaseEntity::SetRenderFx( Int32 renderfx )
 // @brief Gets the render type
 //
 //=============================================
-inline const rendertype_t CBaseEntity::GetRenderType( void ) const
+DO_INLINE const rendertype_t CBaseEntity::GetRenderType( void ) const
 {
 	return (rendertype_t)m_pState->rendertype;
 }
@@ -745,7 +745,7 @@ inline const rendertype_t CBaseEntity::GetRenderType( void ) const
 // @brief
 //
 //=============================================
-inline Int64 CBaseEntity::GetEffectFlags( void ) const
+DO_INLINE Int64 CBaseEntity::GetEffectFlags( void ) const
 {
 	return m_pState->effects;
 }
@@ -763,7 +763,7 @@ bool CBaseEntity::HasEffectFlag( Int64 bit ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetEffectFlag( Int64 flag )
+DO_INLINE void CBaseEntity::SetEffectFlag( Int64 flag )
 {
 	m_pState->effects |= flag;
 }
@@ -772,7 +772,7 @@ inline void CBaseEntity::SetEffectFlag( Int64 flag )
 // @brief
 //
 //=============================================
-inline void CBaseEntity::RemoveEffectFlag( Int64 flag )
+DO_INLINE void CBaseEntity::RemoveEffectFlag( Int64 flag )
 {
 	m_pState->effects &= ~flag;
 }
@@ -781,7 +781,7 @@ inline void CBaseEntity::RemoveEffectFlag( Int64 flag )
 // @brief
 //
 //=============================================
-inline Float CBaseEntity::GetSpeed( void ) const
+DO_INLINE float CBaseEntity::GetSpeed( void ) const
 {
 	return m_pState->speed;
 }
@@ -790,7 +790,7 @@ inline Float CBaseEntity::GetSpeed( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetSpeed( Float speed )
+DO_INLINE void CBaseEntity::SetSpeed( float speed )
 {
 	m_pState->speed = speed;
 }
@@ -799,7 +799,7 @@ inline void CBaseEntity::SetSpeed( Float speed )
 // @brief
 //
 //=============================================
-Float CBaseEntity::GetFallingVelocity( void ) const
+float CBaseEntity::GetFallingVelocity( void ) const
 {
 	return m_pState->fallvelocity;
 }
@@ -808,7 +808,7 @@ Float CBaseEntity::GetFallingVelocity( void ) const
 // @brief
 //
 //=============================================
-inline bool CBaseEntity::DropToFloor( void )
+DO_INLINE bool CBaseEntity::DropToFloor( void )
 {
 	return gd_engfuncs.pfnDropToFloor(m_pEdict);
 }
@@ -817,7 +817,7 @@ inline bool CBaseEntity::DropToFloor( void )
 // @brief
 //
 //=============================================
-inline CBaseEntity* CBaseEntity::GetParent( void ) const
+DO_INLINE CBaseEntity* CBaseEntity::GetParent( void ) const
 {
 	if(m_pState->parent == NO_ENTITY_INDEX)
 		return nullptr;
@@ -837,7 +837,7 @@ inline CBaseEntity* CBaseEntity::GetParent( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetParent( CBaseEntity* pEntity )
+DO_INLINE void CBaseEntity::SetParent( CBaseEntity* pEntity )
 {
 	if(pEntity == nullptr)
 	{
@@ -855,7 +855,7 @@ inline void CBaseEntity::SetParent( CBaseEntity* pEntity )
 // @brief
 //
 //=============================================
-inline bool CBaseEntity::IsParented( void ) const
+DO_INLINE bool CBaseEntity::IsParented( void ) const
 {
 	return (m_pState->parent == NO_ENTITY_INDEX) ? false : true;
 }
@@ -864,7 +864,7 @@ inline bool CBaseEntity::IsParented( void ) const
 // @brief
 //
 //=============================================
-inline Int32 CBaseEntity::GetSkin( void ) const
+DO_INLINE Int32 CBaseEntity::GetSkin( void ) const
 {
 	return m_pState->skin;
 }
@@ -873,7 +873,7 @@ inline Int32 CBaseEntity::GetSkin( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetSkin( Int32 value )
+DO_INLINE void CBaseEntity::SetSkin( Int32 value )
 {
 	m_pState->skin = value;
 }
@@ -882,7 +882,7 @@ inline void CBaseEntity::SetSkin( Int32 value )
 // @brief
 //
 //=============================================
-inline Int64 CBaseEntity::GetBody( void ) const
+DO_INLINE Int64 CBaseEntity::GetBody( void ) const
 {
 	return m_pState->body;
 }
@@ -891,7 +891,7 @@ inline Int64 CBaseEntity::GetBody( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetBody( Int64 value )
+DO_INLINE void CBaseEntity::SetBody( Int64 value )
 {
 	m_pState->body = value;
 }
@@ -900,7 +900,7 @@ inline void CBaseEntity::SetBody( Int64 value )
 // @brief
 //
 //=============================================
-inline Float CBaseEntity::GetHealth( void ) const
+DO_INLINE float CBaseEntity::GetHealth( void ) const
 {
 	return m_pState->health;
 }
@@ -909,7 +909,7 @@ inline Float CBaseEntity::GetHealth( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetHealth( Float value )
+DO_INLINE void CBaseEntity::SetHealth( float value )
 {
 	m_pState->health = value;
 }
@@ -918,7 +918,7 @@ inline void CBaseEntity::SetHealth( Float value )
 // @brief Returns the max health value
 //
 //=============================================
-inline Float CBaseEntity::GetMaxHealth( void ) const
+DO_INLINE float CBaseEntity::GetMaxHealth( void ) const
 {
 	return m_pState->maxhealth;
 }
@@ -927,7 +927,7 @@ inline Float CBaseEntity::GetMaxHealth( void ) const
 // @brief Sets the max health value
 //
 //=============================================
-inline void CBaseEntity::SetMaxHealth( Float value )
+DO_INLINE void CBaseEntity::SetMaxHealth( float value )
 {
 	m_pState->maxhealth = value;
 }
@@ -936,7 +936,7 @@ inline void CBaseEntity::SetMaxHealth( Float value )
 // @brief
 //
 //=============================================
-inline Float CBaseEntity::GetArmorValue( void ) const
+DO_INLINE float CBaseEntity::GetArmorValue( void ) const
 {
 	return m_pState->armorvalue;
 }
@@ -945,7 +945,7 @@ inline Float CBaseEntity::GetArmorValue( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetArmorValue( Float value )
+DO_INLINE void CBaseEntity::SetArmorValue( float value )
 {
 	m_pState->armorvalue = value;
 }
@@ -954,7 +954,7 @@ inline void CBaseEntity::SetArmorValue( Float value )
 // @brief
 //
 //=============================================
-inline bool CBaseEntity::HasNetname( void ) const
+DO_INLINE bool CBaseEntity::HasNetname( void ) const
 {
 	return (m_pFields->netname == NO_STRING_VALUE) ? false : true;
 }
@@ -963,7 +963,7 @@ inline bool CBaseEntity::HasNetname( void ) const
 // @brief
 //
 //=============================================
-inline const Char* CBaseEntity::GetNetname( void ) const
+DO_INLINE const char* CBaseEntity::GetNetname( void ) const
 {
 	if(m_pFields->netname == NO_STRING_VALUE)
 		return "";
@@ -975,7 +975,7 @@ inline const Char* CBaseEntity::GetNetname( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetNetname( const Char* pstrValue )
+DO_INLINE void CBaseEntity::SetNetname( const char* pstrValue )
 {
 	m_pFields->netname = gd_engfuncs.pfnAllocString(pstrValue);
 }
@@ -984,7 +984,7 @@ inline void CBaseEntity::SetNetname( const Char* pstrValue )
 // @brief
 //
 //=============================================
-inline bool CBaseEntity::HasMessage( void ) const
+DO_INLINE bool CBaseEntity::HasMessage( void ) const
 {
 	return (m_pFields->message == NO_STRING_VALUE) ? false : true;
 }
@@ -993,7 +993,7 @@ inline bool CBaseEntity::HasMessage( void ) const
 // @brief
 //
 //=============================================
-inline const Char* CBaseEntity::GetMessage( void ) const
+DO_INLINE const char* CBaseEntity::GetMessage( void ) const
 {
 	if(m_pFields->message == NO_STRING_VALUE)
 		return "";
@@ -1005,7 +1005,7 @@ inline const Char* CBaseEntity::GetMessage( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetMessage( const Char* pstrValue )
+DO_INLINE void CBaseEntity::SetMessage( const char* pstrValue )
 {
 	m_pFields->message = gd_engfuncs.pfnAllocString(pstrValue);
 }
@@ -1014,7 +1014,7 @@ inline void CBaseEntity::SetMessage( const Char* pstrValue )
 // @brief
 //
 //=============================================
-inline bool CBaseEntity::HasGlobalName( void ) const
+DO_INLINE bool CBaseEntity::HasGlobalName( void ) const
 {
 	return (m_pFields->globalname == NO_STRING_VALUE) ? false : true;
 }
@@ -1023,7 +1023,7 @@ inline bool CBaseEntity::HasGlobalName( void ) const
 // @brief
 //
 //=============================================
-inline const Char* CBaseEntity::GetGlobalName( void ) const
+DO_INLINE const char* CBaseEntity::GetGlobalName( void ) const
 {
 	if(m_pFields->globalname == NO_STRING_VALUE)
 		return "";
@@ -1035,7 +1035,7 @@ inline const Char* CBaseEntity::GetGlobalName( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetGlobalName( const Char* pstrValue )
+DO_INLINE void CBaseEntity::SetGlobalName( const char* pstrValue )
 {
 	m_pFields->globalname = gd_engfuncs.pfnAllocString(pstrValue);
 }
@@ -1044,7 +1044,7 @@ inline void CBaseEntity::SetGlobalName( const Char* pstrValue )
 // @brief
 //
 //=============================================
-inline const Float CBaseEntity::GetScale( void ) const
+DO_INLINE const float CBaseEntity::GetScale( void ) const
 {
 	return m_pState->scale;
 }
@@ -1053,7 +1053,7 @@ inline const Float CBaseEntity::GetScale( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetScale( Float scale )
+DO_INLINE void CBaseEntity::SetScale( float scale )
 {
 	m_pState->scale = scale;
 }
@@ -1062,7 +1062,7 @@ inline void CBaseEntity::SetScale( Float scale )
 // @brief
 //
 //=============================================
-inline movetype_t CBaseEntity::GetMoveType( void ) const
+DO_INLINE movetype_t CBaseEntity::GetMoveType( void ) const
 {
 	return (movetype_t)m_pState->movetype;
 }
@@ -1071,7 +1071,7 @@ inline movetype_t CBaseEntity::GetMoveType( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetMoveType( movetype_t movetype )
+DO_INLINE void CBaseEntity::SetMoveType( movetype_t movetype )
 {
 	m_pState->movetype = movetype;
 }
@@ -1080,7 +1080,7 @@ inline void CBaseEntity::SetMoveType( movetype_t movetype )
 // @brief
 //
 //=============================================
-inline Double CBaseEntity::GetNextThinkTime( void ) const
+DO_INLINE double CBaseEntity::GetNextThinkTime( void ) const
 {
 	return m_pState->nextthink;
 }
@@ -1089,7 +1089,7 @@ inline Double CBaseEntity::GetNextThinkTime( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetNextThinkTime( Double thinktime )
+DO_INLINE void CBaseEntity::SetNextThinkTime( double thinktime )
 {
 	m_pState->nextthink = thinktime;
 }
@@ -1098,7 +1098,7 @@ inline void CBaseEntity::SetNextThinkTime( Double thinktime )
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetNextThink( Double delay )
+DO_INLINE void CBaseEntity::SetNextThink( double delay )
 {
 	if(!delay)
 		m_pState->nextthink = 0;
@@ -1110,7 +1110,7 @@ inline void CBaseEntity::SetNextThink( Double delay )
 // @brief
 //
 //=============================================
-inline Double CBaseEntity::GetLocalTime( void ) const
+DO_INLINE double CBaseEntity::GetLocalTime( void ) const
 {
 	return m_pState->ltime;
 }
@@ -1119,7 +1119,7 @@ inline Double CBaseEntity::GetLocalTime( void ) const
 // @brief
 //
 //=============================================
-inline Float CBaseEntity::GetGravity( void ) const
+DO_INLINE float CBaseEntity::GetGravity( void ) const
 {
 	return m_pState->gravity;
 }
@@ -1128,7 +1128,7 @@ inline Float CBaseEntity::GetGravity( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetGravity( Float gravity )
+DO_INLINE void CBaseEntity::SetGravity( float gravity )
 {
 	m_pState->gravity = gravity;
 }
@@ -1137,7 +1137,7 @@ inline void CBaseEntity::SetGravity( Float gravity )
 // @brief
 //
 //=============================================
-inline Float CBaseEntity::GetFriction( void ) const
+DO_INLINE float CBaseEntity::GetFriction( void ) const
 {
 	return m_pState->friction;
 }
@@ -1146,7 +1146,7 @@ inline Float CBaseEntity::GetFriction( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetFriction( Float friction )
+DO_INLINE void CBaseEntity::SetFriction( float friction )
 {
 	m_pState->friction = friction;
 }
@@ -1155,7 +1155,7 @@ inline void CBaseEntity::SetFriction( Float friction )
 // @brief
 //
 //=============================================
-inline Float CBaseEntity::GetPlaneZCap( void ) const
+DO_INLINE float CBaseEntity::GetPlaneZCap( void ) const
 {
 	return m_pState->planezcap;
 }
@@ -1164,7 +1164,7 @@ inline Float CBaseEntity::GetPlaneZCap( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetPlaneZCap( Float planeZCap )
+DO_INLINE void CBaseEntity::SetPlaneZCap( float planeZCap )
 {
 	m_pState->planezcap = planeZCap;
 }
@@ -1173,7 +1173,7 @@ inline void CBaseEntity::SetPlaneZCap( Float planeZCap )
 // @brief
 //
 //=============================================
-inline deathstate_t CBaseEntity::GetDeadState( void ) const
+DO_INLINE deathstate_t CBaseEntity::GetDeadState( void ) const
 {
 	return (deathstate_t)m_pState->deadstate;
 }
@@ -1182,7 +1182,7 @@ inline deathstate_t CBaseEntity::GetDeadState( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetDeadState( deathstate_t state )
+DO_INLINE void CBaseEntity::SetDeadState( deathstate_t state )
 {
 	m_pState->deadstate = state;
 }
@@ -1191,7 +1191,7 @@ inline void CBaseEntity::SetDeadState( deathstate_t state )
 // @brief Returns the weapons value
 //
 //=============================================
-inline Int64 CBaseEntity::GetWeapons( void ) const
+DO_INLINE Int64 CBaseEntity::GetWeapons( void ) const
 {
 	return m_pState->weapons;
 }
@@ -1200,7 +1200,7 @@ inline Int64 CBaseEntity::GetWeapons( void ) const
 // @brief Sets the weapons value
 //
 //=============================================
-inline void CBaseEntity::SetWeapons( Int64 weapons )
+DO_INLINE void CBaseEntity::SetWeapons( Int64 weapons )
 {
 	m_pState->weapons = weapons;
 }
@@ -1209,7 +1209,7 @@ inline void CBaseEntity::SetWeapons( Int64 weapons )
 // @brief
 //
 //=============================================
-inline bool CBaseEntity::SetModel( const Char* pstrModelName, bool setbounds )
+DO_INLINE bool CBaseEntity::SetModel( const char* pstrModelName, bool setbounds )
 {
 	if(gd_engfuncs.pfnSetModel(m_pEdict, pstrModelName, setbounds))
 	{
@@ -1224,7 +1224,7 @@ inline bool CBaseEntity::SetModel( const Char* pstrModelName, bool setbounds )
 // @brief
 //
 //=============================================
-inline bool CBaseEntity::SetModel( string_t modelNameString, bool setbounds )
+DO_INLINE bool CBaseEntity::SetModel( string_t modelNameString, bool setbounds )
 {
 	if(modelNameString == NO_STRING_VALUE)
 		return false;
@@ -1242,7 +1242,7 @@ inline bool CBaseEntity::SetModel( string_t modelNameString, bool setbounds )
 // @brief
 //
 //=============================================
-inline const Float CBaseEntity::GetIdealYaw( void ) const
+DO_INLINE const float CBaseEntity::GetIdealYaw( void ) const
 {
 	return m_pState->idealyaw;
 }
@@ -1251,7 +1251,7 @@ inline const Float CBaseEntity::GetIdealYaw( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetIdealYaw( Float idealyaw )
+DO_INLINE void CBaseEntity::SetIdealYaw( float idealyaw )
 {
 	m_pState->idealyaw = idealyaw;
 }
@@ -1260,7 +1260,7 @@ inline void CBaseEntity::SetIdealYaw( Float idealyaw )
 // @brief
 //
 //=============================================
-inline const Float CBaseEntity::GetFramerate( void ) const
+DO_INLINE const float CBaseEntity::GetFramerate( void ) const
 {
 	return m_pState->framerate;
 }
@@ -1269,7 +1269,7 @@ inline const Float CBaseEntity::GetFramerate( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetFramerate( Float framerate )
+DO_INLINE void CBaseEntity::SetFramerate( float framerate )
 {
 	m_pState->framerate = framerate;
 }
@@ -1278,7 +1278,7 @@ inline void CBaseEntity::SetFramerate( Float framerate )
 // @brief
 //
 //=============================================
-inline const Float CBaseEntity::GetFrame( void ) const
+DO_INLINE const float CBaseEntity::GetFrame( void ) const
 {
 	return m_pState->frame;
 }
@@ -1287,7 +1287,7 @@ inline const Float CBaseEntity::GetFrame( void ) const
 // @brief
 //
 //=============================================
-inline void CBaseEntity::SetFrame( Float frame )
+DO_INLINE void CBaseEntity::SetFrame( float frame )
 {
 	m_pState->frame = frame;
 }
@@ -1297,7 +1297,7 @@ inline void CBaseEntity::SetFrame( Float frame )
 // @brief Gets the animation time
 //
 //=============================================
-inline const Double CBaseEntity::GetAnimationTime( void ) const
+DO_INLINE const double CBaseEntity::GetAnimationTime( void ) const
 {
 	return m_pState->animtime;
 }
@@ -1306,7 +1306,7 @@ inline const Double CBaseEntity::GetAnimationTime( void ) const
 // @brief Sets the animation time
 //
 //=============================================
-inline void CBaseEntity::SetAnimationTime( Double animtime )
+DO_INLINE void CBaseEntity::SetAnimationTime( double animtime )
 {
 	m_pState->animtime = animtime;
 }
@@ -1315,7 +1315,7 @@ inline void CBaseEntity::SetAnimationTime( Double animtime )
 // @brief Tells if the entity is a visible entity
 //
 //=============================================
-inline bool CBaseEntity::IsVisible( void ) const
+DO_INLINE bool CBaseEntity::IsVisible( void ) const
 {
 	return (!m_pState->modelindex  || (m_pState->effects & EF_NODRAW)) ? false : true;
 }

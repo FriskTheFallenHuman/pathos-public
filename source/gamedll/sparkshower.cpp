@@ -58,7 +58,7 @@ bool CSparkShower::Spawn( void )
 
 	m_pState->velocity = Common::RandomFloat(200, 300)*forward;
 
-	for(Uint32 i = 0; i < 2; i++)
+	for(UInt32 i = 0; i < 2; i++)
 		m_pState->velocity[i] += Common::RandomFloat(-100, 100);
 
 	if(m_pState->velocity[2] >= 0)
@@ -87,7 +87,7 @@ bool CSparkShower::Spawn( void )
 //=============================================
 void CSparkShower::CallTouch( CBaseEntity* pOther )
 {
-	Float velscale = (m_pState->flags & FL_ONGROUND) ? 0.1 : 0.6;
+	float velscale = (m_pState->flags & FL_ONGROUND) ? 0.1 : 0.6;
 	Math::VectorScale(m_pState->velocity, velscale, m_pState->velocity);
 
 	if((m_pState->velocity[0]*m_pState->velocity[0]+m_pState->velocity[1]*m_pState->velocity[1]) < 10)

@@ -17,14 +17,14 @@ struct ai_task_t
 		param(0)
 		{
 		}
-	ai_task_t(Int32 _task, Double _param):
+	ai_task_t(Int32 _task, double _param):
 		task(_task),
 		param(_param)
 		{
 		}
 
 	Int32 task;
-	Double param;
+	double param;
 };
 
 #define AITASK(task, param) ai_task_t(task, param)

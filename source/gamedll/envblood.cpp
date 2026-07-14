@@ -93,7 +93,7 @@ bool CEnvBlood::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvBlood::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvBlood::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Spawn blood particles
 	Util::SpawnBloodParticles(GetBloodPosition(pActivator), GetBloodDirection(), GetBloodColor(), false);
@@ -125,7 +125,7 @@ bloodcolor_t CEnvBlood::GetBloodColor( void )
 // @brief
 //
 //=============================================
-Float CEnvBlood::GetBloodAmount( void ) const
+float CEnvBlood::GetBloodAmount( void ) const
 {
 	return m_bloodAmount;
 }
@@ -143,7 +143,7 @@ void CEnvBlood::SetBloodColor( bloodcolor_t color )
 // @brief
 //
 //=============================================
-void CEnvBlood::SetBloodAmount( Float amount )
+void CEnvBlood::SetBloodAmount( float amount )
 {
 	m_bloodAmount = amount;
 }
@@ -178,7 +178,7 @@ Vector CEnvBlood::GetBloodPosition( CBaseEntity* pActivator ) const
 		if(pPlayer)
 		{
 			Vector randomoffs;
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				randomoffs[i] = Common::RandomFloat(-10, 10);
 
 			result = pPlayer->GetEyePosition() + randomoffs;

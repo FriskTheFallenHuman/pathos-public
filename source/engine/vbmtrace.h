@@ -23,9 +23,9 @@ struct studiohdr_t;
 struct mstudioseqdesc_t;
 
 // Number of planes for a hull
-static constexpr Uint32 NUM_STUDIO_HULL_PLANES = 6;
+static constexpr UInt32 NUM_STUDIO_HULL_PLANES = 6;
 // Number of planes for a hull
-static constexpr Uint32 NUM_STUDIO_HULL_CLIPNODES = 6;
+static constexpr UInt32 NUM_STUDIO_HULL_CLIPNODES = 6;
 
 struct vbmhitboxhull_t
 {
@@ -43,11 +43,11 @@ struct vbmhitboxhull_t
 	plane_t planes[NUM_STUDIO_HULL_PLANES];
 
 	// Hitgroup id
-	Uint32 hitgroup;
+	UInt32 hitgroup;
 	// Index into studiomodel hitboxes
-	Uint32 hitboxindex;
+	UInt32 hitboxindex;
 	// Index into studiomodel bones
-	Uint32 boneindex;
+	UInt32 boneindex;
 
 	// bbox mins
 	Vector mins;
@@ -63,7 +63,7 @@ struct vbmhull_t
 
 	// Array of hulls for hitboxes
 	CArray<vbmhitboxhull_t> hullsarray;
-	// TRUE if this hull was set
+	// true if this hull was set
 	bool hullset;
 	// Size used to construct the hull
 	Vector size;
@@ -85,7 +85,7 @@ struct entity_vbmhulldata_t
 	entindex_t entindex;
 
 	// Animation information
-	Float frame;
+	float frame;
 	Int32 sequence;
 
 	// Orientation info
@@ -93,8 +93,8 @@ struct entity_vbmhulldata_t
 	Vector origin;
 
 	// Last controller states
-	Float controller[MAX_CONTROLLERS];
-	Float blending[MAX_BLENDING];
+	float controller[MAX_CONTROLLERS];
+	float blending[MAX_BLENDING];
 
 	// Pointer to cached model
 	const cache_model_t* pcachemodel;
@@ -109,10 +109,10 @@ struct entity_vbmhulldata_t
 };
 
 extern void TR_VBMInit( void );
-extern void TR_VBMSetHullInfo( entity_vbmhulldata_t*& pdataptr, const cache_model_t* pmodel, const Vector& hullmins, const Vector& hullmaxs, const entity_state_t& state, Float time, hull_types_t hulltype );
-extern void TR_VBMSetupBones( entity_vbmhulldata_t* phulldata, const studiohdr_t* pstudiohdr, Float time, Float frame, const mstudioseqdesc_t* pseqdesc, const cache_model_t* pmodel, const entity_state_t& state );
-extern bool TR_VBMCheckHullInfo( entity_vbmhulldata_t* pdata, const cache_model_t* pmodel, Float frame, const entity_state_t& state );
+extern void TR_VBMSetHullInfo( entity_vbmhulldata_t*& pdataptr, const cache_model_t* pmodel, const Vector& hullmins, const Vector& hullmaxs, const entity_state_t& state, float time, hull_types_t hulltype );
+extern void TR_VBMSetupBones( entity_vbmhulldata_t* phulldata, const studiohdr_t* pstudiohdr, float time, float frame, const mstudioseqdesc_t* pseqdesc, const cache_model_t* pmodel, const entity_state_t& state );
+extern bool TR_VBMCheckHullInfo( entity_vbmhulldata_t* pdata, const cache_model_t* pmodel, float frame, const entity_state_t& state );
 extern const CArray<vbmhitboxhull_t>* TR_VBMGetHulls( entity_vbmhulldata_t* pvbmhulldata, const Vector& hullmins, const Vector& hullmaxs, hull_types_t hulltype, Int32 flags, Vector* poffset );
 extern void TR_VBMHullCheck( const CArray<vbmhitboxhull_t>* phulls, const Vector& start, const Vector& end, trace_t& tr );
-extern void TR_VBMSetStateInfo( entity_vbmhulldata_t* pvbmhulldata, const cache_model_t* pmodel, Float frame, const entity_state_t& state );
+extern void TR_VBMSetStateInfo( entity_vbmhulldata_t* pvbmhulldata, const cache_model_t* pmodel, float frame, const entity_state_t& state );
 #endif //STUDIOTRACE_H

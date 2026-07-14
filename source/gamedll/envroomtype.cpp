@@ -36,7 +36,7 @@ CEnvRoomType::~CEnvRoomType( void )
 // @brief
 //
 //=============================================
-void CEnvRoomType::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvRoomType::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pEntity;

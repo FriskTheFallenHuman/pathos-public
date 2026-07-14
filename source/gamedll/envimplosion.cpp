@@ -141,7 +141,7 @@ bool CEnvImplosion::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvImplosion::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvImplosion::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_duration > 0)
 	{
@@ -165,14 +165,14 @@ void CEnvImplosion::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usem
 //=============================================
 VOID CEnvImplosion::SpawnThink( void )
 {
-	Uint32 spawnRate = m_tracerCount / m_duration;
-	Double intervalTime = g_pGameVars->time - m_lastSpawnTime;
-	Uint32 nbSpawn = intervalTime * spawnRate;
+	UInt32 spawnRate = m_tracerCount / m_duration;
+	double intervalTime = g_pGameVars->time - m_lastSpawnTime;
+	UInt32 nbSpawn = intervalTime * spawnRate;
 
 	if(nbSpawn > 0)
 	{
-		Float durFraction = (g_pGameVars->time - m_spawnBeginTime) / m_duration;
-		Float life;
+		float durFraction = (g_pGameVars->time - m_spawnBeginTime) / m_duration;
+		float life;
 		if(!HasSpawnFlag(FL_REVERSE_INTENSITY))
 			life = m_life * (1.0 - durFraction);
 		else

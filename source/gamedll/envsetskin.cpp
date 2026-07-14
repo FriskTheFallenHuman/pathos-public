@@ -53,7 +53,7 @@ bool CEnvSetSkin::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvSetSkin::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSetSkin::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	Int32 count = 0;
 

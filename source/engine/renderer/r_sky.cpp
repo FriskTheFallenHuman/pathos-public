@@ -29,11 +29,11 @@ All Rights Reserved.
 #include "r_particles.h"
 
 // Skybox surface distance
-const Float CSkyRenderer::SKYBOX_SURFACE_DISTANCE = 128;
+const float CSkyRenderer::SKYBOX_SURFACE_DISTANCE = 128;
 // Skybox texture base directory
-const Char CSkyRenderer::SKYBOX_TEXTURE_DIR[] = "sky/";
+const char CSkyRenderer::SKYBOX_TEXTURE_DIR[] = "sky/";
 // Skybox texture postfixes
-const Char* CSkyRenderer::SKY_TEXTURE_POSTFIXES[NB_SKYBOX_TEXTURES] = {"lf", "bk", "rt", "ft", "dn", "up"};
+const char* CSkyRenderer::SKY_TEXTURE_POSTFIXES[NB_SKYBOX_TEXTURES] = {"lf", "bk", "rt", "ft", "dn", "up"};
 
 // Object definition
 CSkyRenderer gSkyRenderer;
@@ -51,7 +51,7 @@ CSkyRenderer::CSkyRenderer( void ):
 	m_pShader(nullptr),
 	m_pVBO(nullptr)
 {
-	for(Uint32 i = 0; i < NB_SKYBOX_TEXTURES; i++)
+	for(UInt32 i = 0; i < NB_SKYBOX_TEXTURES; i++)
 		m_pSkyboxTextures[i] = nullptr;
 }
 
@@ -155,7 +155,7 @@ void CSkyRenderer::ClearGL( void )
 bool CSkyRenderer::InitGame( void )
 {
 	// See if we have any sky brushes at all
-	for(Uint32 i = 0; i < ens.pworld->numsurfaces; i++)
+	for(UInt32 i = 0; i < ens.pworld->numsurfaces; i++)
 	{
 		const msurface_t* psurface = &ens.pworld->psurfaces[i];
 		if(psurface->flags & SURF_DRAWSKY)
@@ -203,7 +203,7 @@ void CSkyRenderer::ClearGame( void )
 	m_screenQuadBase = 0;
 	m_skyIndexBase = 0;
 
-	for(Uint32 i = 0; i < NB_SKYBOX_TEXTURES; i++)
+	for(UInt32 i = 0; i < NB_SKYBOX_TEXTURES; i++)
 		m_pSkyboxTextures[i] = nullptr;
 
 	// Clear sky sets
@@ -221,11 +221,11 @@ void CSkyRenderer::ClearGame( void )
 void CSkyRenderer::CreateVBO( void )
 {
 	// add in the screen quad and sky cube
-	Uint32 numVertexes = 4 + 24;
-	Uint32 numIndexes = 6 + 36;
+	UInt32 numVertexes = 4 + 24;
+	UInt32 numIndexes = 6 + 36;
 
-	Uint32 curVertexIndex = 0;
-	Uint32 curIndex = 0;
+	UInt32 curVertexIndex = 0;
+	UInt32 curIndex = 0;
 
 	// Set base
 	m_skyIndexBase = curIndex;
@@ -233,8 +233,8 @@ void CSkyRenderer::CreateVBO( void )
 	basic_vertex_t* pvertexes = new basic_vertex_t[numVertexes];
 	memset(pvertexes, 0, sizeof(basic_vertex_t)*numVertexes);
 
-	Uint32* pindexes = new Uint32[numIndexes];
-	memset(pindexes, 0, sizeof(Uint32)*numIndexes);
+	UInt32* pindexes = new UInt32[numIndexes];
+	memset(pindexes, 0, sizeof(UInt32)*numIndexes);
 
 	//
 	// Thanks to BUzer for the code from Paranoia, which this is using as reference
@@ -253,36 +253,36 @@ void CSkyRenderer::CreateVBO( void )
 	};
 
 	// Set indexes
-	Uint32 skyboxIndexes[6][4] = { {1, 2, 6, 5},{2, 3, 7, 6},{3, 0, 4, 7}, {0, 1, 5, 4},{2, 1, 0, 3},{7, 4, 5, 6}};
-	for (Uint32 i = 0; i < 6; i++)
+	UInt32 skyboxIndexes[6][4] = { {1, 2, 6, 5},{2, 3, 7, 6},{3, 0, 4, 7}, {0, 1, 5, 4},{2, 1, 0, 3},{7, 4, 5, 6}};
+	for (UInt32 i = 0; i < 6; i++)
 	{
 		pindexes[curIndex] = curVertexIndex; pindexes[curIndex+1] = curVertexIndex+1; pindexes[curIndex+2] = curVertexIndex+2;
 		pindexes[curIndex+3] = curVertexIndex; pindexes[curIndex+4] = curVertexIndex+2; pindexes[curIndex+5] = curVertexIndex+3;
 		curIndex += 6;
 
 		pvertexes[curVertexIndex].texcoords[0] = 0; pvertexes[curVertexIndex].texcoords[1] = 1;
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			pvertexes[curVertexIndex].origin[j] = skyboxVerts[skyboxIndexes[i][0]][j];
 
 		pvertexes[curVertexIndex].origin[3] = 1.0; 
 		curVertexIndex++;
 
 		pvertexes[curVertexIndex].texcoords[0] = 1; pvertexes[curVertexIndex].texcoords[1] = 1;
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			pvertexes[curVertexIndex].origin[j] = skyboxVerts[skyboxIndexes[i][1]][j];
 
 		pvertexes[curVertexIndex].origin[3] = 1.0; 
 		curVertexIndex++;
 
 		pvertexes[curVertexIndex].texcoords[0] = 1; pvertexes[curVertexIndex].texcoords[1] = 0;
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			pvertexes[curVertexIndex].origin[j] = skyboxVerts[skyboxIndexes[i][2]][j];
 
 		pvertexes[curVertexIndex].origin[3] = 1.0; 
 		curVertexIndex++;
 
 		pvertexes[curVertexIndex].texcoords[0] = 0; pvertexes[curVertexIndex].texcoords[1] = 0;
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 			pvertexes[curVertexIndex].origin[j] = skyboxVerts[skyboxIndexes[i][3]][j];
 
 		pvertexes[curVertexIndex].origin[3] = 1.0; 
@@ -311,7 +311,7 @@ void CSkyRenderer::CreateVBO( void )
 	pquadverts[3].origin[0] = 1; pquadverts[3].origin[1] = 1; 
 	pquadverts[3].origin[2] = -1; pquadverts[3].origin[3] = 1;
 
-	m_pVBO->Append(pvertexes, sizeof(basic_vertex_t)*numVertexes, pindexes, sizeof(Uint32)*numIndexes);
+	m_pVBO->Append(pvertexes, sizeof(basic_vertex_t)*numVertexes, pindexes, sizeof(UInt32)*numIndexes);
 
 	delete[] pvertexes;
 	delete[] pindexes;
@@ -449,7 +449,7 @@ bool CSkyRenderer::DrawSky( void )
 			pTexturesArray = m_pSkyboxTextures;
 
 		glDepthMask(GL_FALSE);
-		for (Uint32 i = 0; i < 6; i++)
+		for (UInt32 i = 0; i < 6; i++)
 		{
 			R_Bind2DTexture(GL_TEXTURE0, pTexturesArray[i]->palloc->gl_index);
 			m_pShader->DrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, BUFFER_OFFSET(m_skyIndexBase+i*6));
@@ -536,7 +536,7 @@ bool CSkyRenderer::DrawSky( void )
 		if(rns.fog.blend1.affectsky && rns.fog.blend2.affectsky)
 			return true;
 
-		Float flFrac = rns.fog.blendtime-rns.time;
+		float flFrac = rns.fog.blendtime-rns.time;
 		flFrac = Common::SplineFraction(flFrac, 1.0f/rns.fog.blend2.blend);
 
 		if(!rns.fog.blend1.affectsky && rns.fog.blend2.affectsky)
@@ -602,7 +602,7 @@ bool CSkyRenderer::DrawSky( void )
 //====================================
 //
 //====================================
-void CSkyRenderer::LoadSkyTextures( const Char* pstrName, en_texture_t** pArray )
+void CSkyRenderer::LoadSkyTextures( const char* pstrName, en_texture_t** pArray )
 {
 	// check if texture is present
 	Int32 j = 0;
@@ -624,14 +624,14 @@ void CSkyRenderer::LoadSkyTextures( const Char* pstrName, en_texture_t** pArray 
 	// Re-set skyname to default if missing
 	if(j != NB_SKYBOX_TEXTURES)
 	{
-		for(Uint32 i = 0; i < NB_SKYBOX_TEXTURES; i++)
+		for(UInt32 i = 0; i < NB_SKYBOX_TEXTURES; i++)
 			pArray[i] = pTextureManager->GetDummyTexture();
 
 		Con_EPrintf("%s - Skybox texture set incomplete or missing for '%s'\n", __FUNCTION__, pstrName);
 		return;
 	}
 
-	for(Uint32 i = 0; i < NB_SKYBOX_TEXTURES; i++)
+	for(UInt32 i = 0; i < NB_SKYBOX_TEXTURES; i++)
 	{
 		CString path;
 		path << SKYBOX_TEXTURE_DIR << pstrName << SKY_TEXTURE_POSTFIXES[i] << ".dds";
@@ -652,7 +652,7 @@ void CSkyRenderer::LoadSkyTextures( const Char* pstrName, en_texture_t** pArray 
 //====================================
 Int32 CSkyRenderer::FindSkySet( Int32 skysetindex )
 {
-	Uint32 i = 0;
+	UInt32 i = 0;
 	for(; i < m_skySetsArray.size(); i++)
 	{
 		if(m_skySetsArray[i].serverindex == skysetindex)
@@ -668,9 +668,9 @@ Int32 CSkyRenderer::FindSkySet( Int32 skysetindex )
 //====================================
 //
 //====================================
-void CSkyRenderer::AddSkyTextureSet( const Char* pstrSkyTextureName, Int32 skysetindex )
+void CSkyRenderer::AddSkyTextureSet( const char* pstrSkyTextureName, Int32 skysetindex )
 {
-	for(Uint32 i = 0; i < m_skySetsArray.size(); i++)
+	for(UInt32 i = 0; i < m_skySetsArray.size(); i++)
 	{
 		if(m_skySetsArray[i].serverindex == skysetindex)
 		{
@@ -679,7 +679,7 @@ void CSkyRenderer::AddSkyTextureSet( const Char* pstrSkyTextureName, Int32 skyse
 		}
 	}
 
-	for(Uint32 i = 0; i < m_skySetsArray.size(); i++)
+	for(UInt32 i = 0; i < m_skySetsArray.size(); i++)
 	{
 		if(!qstrcmp(pstrSkyTextureName, m_skySetsArray[i].texturename))
 		{

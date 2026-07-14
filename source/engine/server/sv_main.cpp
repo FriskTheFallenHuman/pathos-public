@@ -53,10 +53,10 @@ All Rights Reserved.
 #include "stb_vorbis.h"
 
 // Datatype for GameDLLInit function in the game dll
-typedef bool (*pfnGameDLLInit_t)( Uint32 version, gdll_funcs_t& dllFuncs, const gdll_engfuncs_t& engFuncs, const trace_interface_t& traceFuncs, const file_interface_t& fileFuncs, gamevars_t& gamevars );
+typedef bool (*pfnGameDLLInit_t)( UInt32 version, gdll_funcs_t& dllFuncs, const gdll_engfuncs_t& engFuncs, const trace_interface_t& traceFuncs, const file_interface_t& fileFuncs, gamevars_t& gamevars );
 
 // String buffer allocation size
-static constexpr Uint32 STRINGBUFFER_ALLOC_SIZE = 512;
+static constexpr UInt32 STRINGBUFFER_ALLOC_SIZE = 512;
 
 // Server state object
 serverstate_t svs;
@@ -250,7 +250,7 @@ bool SV_Init( void )
 	}
 
 	// Init the gamedll interface
-	pfnGameDLLInit_t pfnGDLLInit = static_cast<pfnGameDLLInit_t>(SDL_LoadFunction(svs.pdllhandle, "GameDLL_Init"));
+	pfnGameDLLInit_t pfnGDLLInit = reinterpret_cast<pfnGameDLLInit_t>(SDL_LoadFunction(svs.pdllhandle, "GameDLL_Init"));
 	if(!pfnGDLLInit)
 	{
 		Sys_ErrorPopup("Failed to hook 'GameDLL_Init' in game dll.\n");
@@ -303,22 +303,22 @@ bool SV_Init( void )
 	// Create vis buffer
 	if(!svs.pvisbuffer)
 	{
-		svs.pvisbuffer = new byte[ens.visbuffersize];
-		memset(svs.pvisbuffer, 0, sizeof(byte)*ens.visbuffersize);
+		svs.pvisbuffer = new Byte[ens.visbuffersize];
+		memset(svs.pvisbuffer, 0, sizeof(Byte)*ens.visbuffersize);
 	}
 
 	// Create PAS buffer
 	if(!svs.ppasbuffer)
 	{
-		svs.ppasbuffer = new byte[ens.visbuffersize];
-		memset(svs.ppasbuffer, 0, sizeof(byte)*ens.visbuffersize);
+		svs.ppasbuffer = new Byte[ens.visbuffersize];
+		memset(svs.ppasbuffer, 0, sizeof(Byte)*ens.visbuffersize);
 	}
 
 	// Create buffer for vis checks
 	if(!svs.pvischeckbuffer)
 	{
-		svs.pvischeckbuffer = new byte[ens.visbuffersize];
-		memset(svs.pvischeckbuffer, 0, sizeof(byte)*ens.visbuffersize);
+		svs.pvischeckbuffer = new Byte[ens.visbuffersize];
+		memset(svs.pvischeckbuffer, 0, sizeof(Byte)*ens.visbuffersize);
 	}
 
 	// Init VBM trace stuff
@@ -414,7 +414,7 @@ void SV_LinkMapTextureMaterials( CArray<CString>& wadList )
 	if(!svs.mapmaterialfilesnamemap.empty())
 		svs.mapmaterialfilesnamemap.clear();
 
-	for(Uint32 i = 0; i < ens.pworld->numtextures; i++)
+	for(UInt32 i = 0; i < ens.pworld->numtextures; i++)
 	{
 		// First look in the BSP folder
 		CString filepath;
@@ -432,7 +432,7 @@ void SV_LinkMapTextureMaterials( CArray<CString>& wadList )
 		{
 			filepath.clear();
 
-			for(Uint32 j = 0; j < wadList.size(); j++)
+			for(UInt32 j = 0; j < wadList.size(); j++)
 			{
 				Common::Basename(wadList[j].c_str(), basename);
 
@@ -454,11 +454,11 @@ void SV_LinkMapTextureMaterials( CArray<CString>& wadList )
 			newmat.maptexturename = ens.pworld->ptextures[i].name;
 			newmat.materialfilepath = filepath;
 
-			Uint32 insertindex = svs.mapmaterialfiles.size();
+			UInt32 insertindex = svs.mapmaterialfiles.size();
 			svs.mapmaterialfiles.push_back(newmat);
 
 			// Add to the map
-			svs.mapmaterialfilesnamemap.insert(std::pair<CString, Uint32>(newmat.maptexturename.c_str(), insertindex));
+			svs.mapmaterialfilesnamemap.insert(std::pair<CString, UInt32>(newmat.maptexturename.c_str(), insertindex));
 		}
 		else
 			Con_Printf("%s - Failed to find material file for world texture '%s'.\n", __FUNCTION__, ens.pworld->ptextures[i].name.c_str());
@@ -476,11 +476,11 @@ void SV_LinkModelTextureMaterials( void )
 	if(!svs.modelmaterialfilesnamemaparray.empty())
 		svs.modelmaterialfilesnamemaparray.clear();
 
-	Uint32 nbCachedModels = gModelCache.GetNbCachedModels();
+	UInt32 nbCachedModels = gModelCache.GetNbCachedModels();
 	svs.modelmaterialfilesarray.resize(nbCachedModels);
 	svs.modelmaterialfilesnamemaparray.resize(nbCachedModels);
 
-	for(Uint32 i = 0; i < nbCachedModels; i++)
+	for(UInt32 i = 0; i < nbCachedModels; i++)
 	{
 		const cache_model_t* pmodel = gModelCache.GetModelByIndex(i+1);
 		if(pmodel->type != MOD_VBM)
@@ -492,7 +492,7 @@ void SV_LinkModelTextureMaterials( void )
 		
 		// Get textures from VBM
 		const vbmheader_t* pvbmheader = pvbmcache->pvbmhdr;
-		for(Uint32 j = 0; j < pvbmheader->numtextures; j++)
+		for(UInt32 j = 0; j < pvbmheader->numtextures; j++)
 		{
 			const vbmtexture_t* ptexture = pvbmheader->getTexture(j);
 
@@ -509,9 +509,9 @@ void SV_LinkModelTextureMaterials( void )
 				newmat.maptexturename = texbasename;
 				newmat.materialfilepath = materialscriptpath;
 
-				Uint32 insertindex = svs.modelmaterialfilesarray[i].size();
+				UInt32 insertindex = svs.modelmaterialfilesarray[i].size();
 				svs.modelmaterialfilesarray[i].push_back(newmat);
-				svs.modelmaterialfilesnamemaparray[i].insert(std::pair<CString, Uint32>(texbasename.c_str(), insertindex));
+				svs.modelmaterialfilesnamemaparray[i].insert(std::pair<CString, UInt32>(texbasename.c_str(), insertindex));
 			}
 			else
 			{
@@ -523,7 +523,7 @@ void SV_LinkModelTextureMaterials( void )
 		if(pvbmcache->pmcdheader)
 		{
 			const mcdheader_t* pmcdheader = pvbmcache->pmcdheader;
-			for(Uint32 j = 0; j < pmcdheader->numtextures; j++)
+			for(UInt32 j = 0; j < pmcdheader->numtextures; j++)
 			{
 				const mcdtexture_t* ptexture = pmcdheader->getTexture(j);
 
@@ -544,9 +544,9 @@ void SV_LinkModelTextureMaterials( void )
 					newmat.maptexturename = texbasename;
 					newmat.materialfilepath = materialscriptpath;
 
-					Uint32 insertindex = svs.modelmaterialfilesarray[i].size();
+					UInt32 insertindex = svs.modelmaterialfilesarray[i].size();
 					svs.modelmaterialfilesarray[i].push_back(newmat);
-					svs.modelmaterialfilesnamemaparray[i].insert(std::pair<CString, Uint32>(texbasename.c_str(), insertindex));
+					svs.modelmaterialfilesnamemaparray[i].insert(std::pair<CString, UInt32>(texbasename.c_str(), insertindex));
 				}
 				else
 				{
@@ -654,7 +654,7 @@ bool SV_RestoreTransitionSave( const save_header_t* psaveheader )
 		return false;
 	}
 
-	gSaveRestore.FreeSaveFile(reinterpret_cast<const byte*>(psaveheader));
+	gSaveRestore.FreeSaveFile(reinterpret_cast<const Byte*>(psaveheader));
 	return true;
 }
 
@@ -679,7 +679,7 @@ void SV_MaxPlayersCvarCallBack( CCVar* pCVar )
 //=============================================
 //
 //=============================================
-bool SV_SpawnGame( const Char* pstrLevelName, const Char* pstrSaveFile, const Char* pstrTransitionSave, bool clearLoadingScreen )
+bool SV_SpawnGame( const char* pstrLevelName, const char* pstrSaveFile, const char* pstrTransitionSave, bool clearLoadingScreen )
 {
 	if(!ens.isinitialized)
 	{
@@ -795,7 +795,7 @@ bool SV_SpawnGame( const Char* pstrLevelName, const Char* pstrSaveFile, const Ch
 	ens.pworld = pworldmodel->getBrushmodel();
 
 	// Add all brush models to the server cache
-	for(Uint32 i = 0; i < gModelCache.GetNbCachedModels(); i++)
+	for(UInt32 i = 0; i < gModelCache.GetNbCachedModels(); i++)
 	{
 		cache_model_t* pcache = gModelCache.GetModelByIndex(i+1);
 
@@ -803,10 +803,10 @@ bool SV_SpawnGame( const Char* pstrLevelName, const Char* pstrSaveFile, const Ch
 		newmodel.modelname = pcache->name;
 		newmodel.cache_index = i+1;
 
-		Uint32 insertindex = svs.modelcache.size();
+		UInt32 insertindex = svs.modelcache.size();
 		svs.modelcache.push_back(newmodel);
 
-		svs.modelcachemap.insert(std::pair<CString, Uint32>(newmodel.modelname.c_str(), insertindex));
+		svs.modelcachemap.insert(std::pair<CString, UInt32>(newmodel.modelname.c_str(), insertindex));
 	}
 	
 	// Precache error model and sprite
@@ -822,7 +822,7 @@ bool SV_SpawnGame( const Char* pstrLevelName, const Char* pstrSaveFile, const Ch
 	svs.areanodes.resize(MAX_AREA_NODES);
 	svs.numareanodes = 0;
 
-	for(Uint32 i = 0; i < MAX_AREA_NODES; i++)
+	for(UInt32 i = 0; i < MAX_AREA_NODES; i++)
 		svs.areanodes[i].index = i;
 
 	// Create the area nodes
@@ -831,7 +831,7 @@ bool SV_SpawnGame( const Char* pstrLevelName, const Char* pstrSaveFile, const Ch
 	TR_InitBoxHull();
 
 	// Set the pointers of all the clients
-	for(Uint32 i = 0; i < svs.maxclients; i++)
+	for(UInt32 i = 0; i < svs.maxclients; i++)
 	{
 		sv_client_t& cl = svs.clients[i];
 
@@ -907,7 +907,7 @@ bool SV_SpawnGame( const Char* pstrLevelName, const Char* pstrSaveFile, const Ch
 			return false;
 		}
 
-		gSaveRestore.FreeSaveFile(reinterpret_cast<const byte*>(psaveheader));
+		gSaveRestore.FreeSaveFile(reinterpret_cast<const Byte*>(psaveheader));
 	}
 
 	// Set host client's join time now
@@ -1047,7 +1047,7 @@ bool SV_InitGame( void )
 	SV_UpdateClientData();
 
 	// Print load time
-	Double loadtime = Sys_FloatTime() - svs.loadbegintime;
+	double loadtime = Sys_FloatTime() - svs.loadbegintime;
 	Con_DPrintf("Load time: %.2f seconds.\n", loadtime);
 	return true;
 }
@@ -1075,7 +1075,7 @@ void SV_ClearClient( sv_client_t& client )
 	if(!client.packet.cl_wasinpacket.empty())
 		client.packet.cl_wasinpacket.clear();
 
-	for(Uint32 i = 0; i < MAX_VISIBLE_ENTITIES; i++)
+	for(UInt32 i = 0; i < MAX_VISIBLE_ENTITIES; i++)
 		client.packet.entities[i] = entity_state_t();
 
 	// Release entity data
@@ -1114,7 +1114,7 @@ void SV_ClearGame(  bool clearloadingscreen, bool clearconnections )
 	// Drop any connected clients
 	if(CL_IsHostClient())
 	{
-		for(Uint32 i = 1; i < svs.maxclients; i++)
+		for(UInt32 i = 1; i < svs.maxclients; i++)
 			SV_DropClient(svs.clients[i], "Server shutting down");
 	}
 
@@ -1274,7 +1274,7 @@ void SV_ClearGame(  bool clearloadingscreen, bool clearconnections )
 //=============================================
 //
 //=============================================
-void SV_DropClient( sv_client_t& cl, const Char *pstrReason )
+void SV_DropClient( sv_client_t& cl, const char *pstrReason )
 {
 	if(!cl.connected)
 		return;
@@ -1292,7 +1292,7 @@ void SV_DropClient( sv_client_t& cl, const Char *pstrReason )
 		{
 			svs.netinfo.pnet->SVC_MessageBegin(MSG_ONE, svc_disconnect, cl.pedict);
 				svs.netinfo.pnet->WriteByte(false); // rejected/banned flag
-				svs.netinfo.pnet->WriteBuffer(reinterpret_cast<const byte*>(pstrReason), qstrlen(pstrReason)+1);
+				svs.netinfo.pnet->WriteBuffer(reinterpret_cast<const Byte*>(pstrReason), qstrlen(pstrReason)+1);
 			svs.netinfo.pnet->SVC_MessageEnd();
 		}
 	}
@@ -1307,11 +1307,11 @@ void SV_DropClient( sv_client_t& cl, const Char *pstrReason )
 //=============================================
 //
 //=============================================
-void SV_PlayerThink( edict_t* pedict, Double clienttimebase )
+void SV_PlayerThink( edict_t* pedict, double clienttimebase )
 {
 	if(!(pedict->state.flags & FL_KILLME))
 	{
-		Float thinktime = pedict->state.nextthink;
+		float thinktime = pedict->state.nextthink;
 		if(thinktime <= 0.0 || clienttimebase + svs.frametime < thinktime)
 			return;
 
@@ -1387,7 +1387,7 @@ void SV_CheckMoveVars( sv_client_t& cl )
 //=============================================
 //
 //=============================================
-void SV_CheckMovingGround( edict_t *pclient, Double frametime )
+void SV_CheckMovingGround( edict_t *pclient, double frametime )
 {
 	if(pclient->state.flags & FL_ONGROUND)
 	{
@@ -1490,7 +1490,7 @@ void SV_RunCmd( usercmd_t& cmd, sv_client_t& cl )
 		SV_LinkEdict(cl.pedict, true);
 
 		Vector savedvelocity = cl.pedict->state.velocity;
-		for(Uint32 i = 0; i < svs.numpmovetraces; i++)
+		for(UInt32 i = 0; i < svs.numpmovetraces; i++)
 		{
 			trace_t& tr = svs.pmovetraces[i];
 			edict_t* ptouchent = gEdicts.GetEdict(tr.hitentity);
@@ -1516,7 +1516,7 @@ void SV_RunCmd( usercmd_t& cmd, sv_client_t& cl )
 //=============================================
 void SV_UpdateClients( void )
 {
-	for(Uint32 i = 0; i < svs.maxclients; i++)
+	for(UInt32 i = 0; i < svs.maxclients; i++)
 	{
 		sv_client_t& cl = svs.clients[i];
 		if(!cl.connected)
@@ -1584,7 +1584,7 @@ void SV_UpdateClients( void )
 		// Run command if client has spawned
 		if(cl.spawned)
 		{
-			for(Uint32 j = 0; j < cl.numusercmd; j++)
+			for(UInt32 j = 0; j < cl.numusercmd; j++)
 				SV_RunCmd(cl.usercmdarray[j], cl);
 
 			// Restore origin
@@ -1658,7 +1658,7 @@ void SV_Frame( void )
 	svs.gamevars.numentities = gEdicts.GetNbEdicts();
 
 	// Update movevars on clients if needed
-	for(Uint32 i = 0; i < svs.maxclients; i++)
+	for(UInt32 i = 0; i < svs.maxclients; i++)
 		SV_CheckMoveVars(svs.clients[i]);
 
 	// Run frame on gamedll too
@@ -1674,7 +1674,7 @@ void SV_Frame( void )
 //=============================================
 //
 //=============================================
-Int32 SV_PrecacheModel( const Char* pstrFilepath )
+Int32 SV_PrecacheModel( const char* pstrFilepath )
 {
 	CacheNameIndexMap_t::iterator it = svs.modelcachemap.find(pstrFilepath);
 	if(it != svs.modelcachemap.end())
@@ -1702,11 +1702,11 @@ Int32 SV_PrecacheModel( const Char* pstrFilepath )
 	newmodel.modelname = pstrFilepath;
 	newmodel.cache_index = pmodel->cacheindex;
 
-	Uint32 insertindex = svs.modelcache.size();
+	UInt32 insertindex = svs.modelcache.size();
 	svs.modelcache.push_back(newmodel);
 
 	// Add to map
-	svs.modelcachemap.insert(std::pair<CString, Uint32>(pstrFilepath, insertindex));
+	svs.modelcachemap.insert(std::pair<CString, UInt32>(pstrFilepath, insertindex));
 
 	return newmodel.cache_index;
 }
@@ -1714,7 +1714,7 @@ Int32 SV_PrecacheModel( const Char* pstrFilepath )
 //=============================================
 //
 //=============================================
-byte* SV_SetPAS( const Vector& origin )
+Byte* SV_SetPAS( const Vector& origin )
 {
 	// Get the leaf we're on
 	const mleaf_t* pleaf = Mod_PointInLeaf(origin, (*ens.pworld));
@@ -1726,7 +1726,7 @@ byte* SV_SetPAS( const Vector& origin )
 //=============================================
 //
 //=============================================
-byte* SV_SetPVS( const Vector& origin )
+Byte* SV_SetPVS( const Vector& origin )
 {
 	// Get the leaf we're on
 	const mleaf_t* pleaf = Mod_PointInLeaf(origin, (*ens.pworld));
@@ -1738,7 +1738,7 @@ byte* SV_SetPVS( const Vector& origin )
 //=============================================
 //
 //=============================================
-void SV_EstablishedClientConnection( Uint32 client_index )
+void SV_EstablishedClientConnection( UInt32 client_index )
 {
 	// Establish new client entity
 	sv_client_t* pclient = &svs.clients[client_index];
@@ -1752,7 +1752,7 @@ void SV_EstablishedClientConnection( Uint32 client_index )
 //=============================================
 //
 //=============================================
-void SV_PrepareClient( Uint32 client_index )
+void SV_PrepareClient( UInt32 client_index )
 {
 	// Establish new client entity
 	sv_client_t* pclient = &svs.clients[client_index];
@@ -1774,7 +1774,7 @@ void SV_ClientDisconnected( sv_client_t& cl )
 {
 	assert(svs.netinfo.pnet != nullptr);
 
-	const Char* pstrInfo = svs.netinfo.pnet->GetInfoString(cl.index);
+	const char* pstrInfo = svs.netinfo.pnet->GetInfoString(cl.index);
 	if(qstrlen(pstrInfo))
 		SV_ClientPrintf(nullptr, "%s has left the game - %s.\n", SV_GetString(cl.pedict->fields.netname), pstrInfo);
 	else
@@ -1787,7 +1787,7 @@ void SV_ClientDisconnected( sv_client_t& cl )
 //=============================================
 //
 //=============================================
-bool SV_VerifyClient( sv_client_t& cl, const Char* pstrPlayerName )
+bool SV_VerifyClient( sv_client_t& cl, const char* pstrPlayerName )
 {
 	// Retrieve IP of the client that wants to connect
 	CString clientIp = svs.netinfo.pnet->GetIPAddress(cl.index);
@@ -1882,7 +1882,7 @@ bool SV_SpawnClient( sv_client_t& cl )
 		CString message;
 		message << SV_GetString(pedict->fields.netname) << " has joined the game.\n";
 
-		Uint32 sayMsgId = SV_FindUserMessageByName("SayText");
+		UInt32 sayMsgId = SV_FindUserMessageByName("SayText");
 		if(sayMsgId != 0)
 		{
 			CString netname;
@@ -1913,7 +1913,7 @@ bool SV_SpawnClient( sv_client_t& cl )
 //=============================================
 //
 //=============================================
-const Char* SV_TraceTexture( Int32 groundentity, const Vector& start, const Vector& end )
+const char* SV_TraceTexture( Int32 groundentity, const Vector& start, const Vector& end )
 {
 	if(groundentity < 0 || groundentity >= static_cast<Int32>(gEdicts.GetNbEdicts()))
 	{
@@ -1959,9 +1959,9 @@ bool SV_IsWorldSpawn( entindex_t entindex )
 //=============================================
 //
 //=============================================
-const Char* SV_NameForFunction( const void* functionPtr )
+const char* SV_NameForFunction( const void* functionPtr )
 {
-	for(Uint32 i = 0; i < svs.exports.size(); i++)
+	for(UInt32 i = 0; i < svs.exports.size(); i++)
 	{
 		if(svs.exports[i].functionptr == functionPtr)
 			return svs.exports[i].functionname.c_str();
@@ -1973,9 +1973,9 @@ const Char* SV_NameForFunction( const void* functionPtr )
 //=============================================
 //
 //=============================================
-void* SV_FunctionFromName( const Char* pstrName )
+void* SV_FunctionFromName( const char* pstrName )
 {
-	for(Uint32 i = 0; i < svs.exports.size(); i++)
+	for(UInt32 i = 0; i < svs.exports.size(); i++)
 	{
 		if(!qstrcmp(svs.exports[i].functionname, pstrName))
 			return svs.exports[i].functionptr;
@@ -1995,7 +1995,7 @@ sv_client_t* SV_GetHostClient( void )
 //=============================================
 //
 //=============================================
-const en_material_t* SV_GetMaterialScript( const Char* pstrTextureName )
+const en_material_t* SV_GetMaterialScript( const char* pstrTextureName )
 {
 	return CTextureManager::GetInstance()->FindMaterialScript(pstrTextureName, RS_GAME_LEVEL);
 }
@@ -2003,9 +2003,9 @@ const en_material_t* SV_GetMaterialScript( const Char* pstrTextureName )
 //=============================================
 //
 //=============================================
-void SV_AddEnforcedConsistencyFile( const Char* pstrFilename )
+void SV_AddEnforcedConsistencyFile( const char* pstrFilename )
 {
-	for(Uint32 i = 0; i < svs.netinfo.enforcedfiles.size(); i++)
+	for(UInt32 i = 0; i < svs.netinfo.enforcedfiles.size(); i++)
 	{
 		if(!qstrcmp(svs.netinfo.enforcedfiles[i], pstrFilename))
 			return;
@@ -2017,13 +2017,13 @@ void SV_AddEnforcedConsistencyFile( const Char* pstrFilename )
 //=============================================
 //
 //=============================================
-Uint32 SV_AllocString( const Char* pString )
+UInt32 SV_AllocString( const char* pString )
 {
 	if(!pString || qstrlen(pString) == 0)
 		return NO_STRING_VALUE;
 
 	// See if it's already present
-	std::unordered_map<CString, Uint32>::iterator it = svs.strbuffer.stringposmap.find(pString);
+	std::unordered_map<CString, UInt32>::iterator it = svs.strbuffer.stringposmap.find(pString);
 	if(it != svs.strbuffer.stringposmap.end())
 		return it->second + 1;
 
@@ -2032,8 +2032,8 @@ Uint32 SV_AllocString( const Char* pString )
 		svs.strbuffer.buffer.resize(svs.strbuffer.buffer.size() + STRINGBUFFER_ALLOC_SIZE);
 	
 	// Add it to the list
-	Uint32 returnindex = svs.strbuffer.numstrings;
-	std::pair<std::unordered_map<CString, Uint32>::iterator, bool> result = svs.strbuffer.stringposmap.insert(std::pair<CString, Uint32>(pString, returnindex));
+	UInt32 returnindex = svs.strbuffer.numstrings;
+	std::pair<std::unordered_map<CString, UInt32>::iterator, bool> result = svs.strbuffer.stringposmap.insert(std::pair<CString, UInt32>(pString, returnindex));
 	
 	svs.strbuffer.buffer[svs.strbuffer.numstrings] = &result.first->first;
 	svs.strbuffer.numstrings++;
@@ -2044,13 +2044,13 @@ Uint32 SV_AllocString( const Char* pString )
 //=============================================
 //
 //=============================================
-const Char* SV_GetString( string_t stringindex )
+const char* SV_GetString( string_t stringindex )
 {
 	if(stringindex <= NO_STRING_VALUE)
 		return "";
 
 	// Do not allow overindexing
-	Uint32 realindex = stringindex-1;
+	UInt32 realindex = stringindex-1;
 	if(realindex >= svs.strbuffer.numstrings)
 	{
 		Con_Printf("%s - Index %d out of bounds.\n", __FUNCTION__, stringindex);
@@ -2063,9 +2063,9 @@ const Char* SV_GetString( string_t stringindex )
 //=============================================
 //
 //=============================================
-bool SV_IsValidCommand( const Char* pstrCmd )
+bool SV_IsValidCommand( const char* pstrCmd )
 {
-	Uint32 length = qstrlen(pstrCmd);
+	UInt32 length = qstrlen(pstrCmd);
 	if(length > 0 && (pstrCmd[length-1] == '\n' || pstrCmd[length-1] == ';'))
 		return true;
 	else
@@ -2075,7 +2075,7 @@ bool SV_IsValidCommand( const Char* pstrCmd )
 //=============================================
 //
 //=============================================
-void SV_ServerCommand( const Char* pstrCmd )
+void SV_ServerCommand( const char* pstrCmd )
 {
 	if(!SV_IsValidCommand(pstrCmd))
 	{
@@ -2089,7 +2089,7 @@ void SV_ServerCommand( const Char* pstrCmd )
 //=============================================
 //
 //=============================================
-void SV_ClientCommand( edict_t* pclient, const Char* pstrCmd )
+void SV_ClientCommand( edict_t* pclient, const char* pstrCmd )
 {
 	if(!pclient)
 	{
@@ -2124,7 +2124,7 @@ void SV_ClientCommand( edict_t* pclient, const Char* pstrCmd )
 //=============================================
 //
 //=============================================
-bool SV_GetBonePositionByName( edict_t* pedict, const Char* pstrbonename, Vector& position )
+bool SV_GetBonePositionByName( edict_t* pedict, const char* pstrbonename, Vector& position )
 {
 	if(!pedict)
 	{
@@ -2158,7 +2158,7 @@ bool SV_GetBonePositionByName( edict_t* pedict, const Char* pstrbonename, Vector
 	if(!pseqdesc)
 		return false;
 
-	Float frame = VBM_EstimateFrame(pseqdesc, svs.time, pedict->state.frame, pedict->state.animtime, pedict->state.framerate, pedict->state.effects);
+	float frame = VBM_EstimateFrame(pseqdesc, svs.time, pedict->state.frame, pedict->state.animtime, pedict->state.framerate, pedict->state.effects);
 
 	if(!pedict->pvbmhulldata)
 		pedict->pvbmhulldata = new entity_vbmhulldata_t;
@@ -2169,7 +2169,7 @@ bool SV_GetBonePositionByName( edict_t* pedict, const Char* pstrbonename, Vector
 		// Set animation state
 		TR_VBMSetStateInfo(pedict->pvbmhulldata, pmodel, frame, pedict->state);
 
-		for(Uint32 i = 0; i < MAX_MAP_HULLS; i++)
+		for(UInt32 i = 0; i < MAX_MAP_HULLS; i++)
 			pedict->pvbmhulldata->hulls[i].hullset = false;
 
 		// Update bones
@@ -2177,12 +2177,12 @@ bool SV_GetBonePositionByName( edict_t* pedict, const Char* pstrbonename, Vector
 	}
 
 	// Find the bone
-	const mstudiobone_t* pbones = reinterpret_cast<const mstudiobone_t*>(reinterpret_cast<const byte*>(pstudiohdr) + pstudiohdr->boneindex);
+	const mstudiobone_t* pbones = reinterpret_cast<const mstudiobone_t*>(reinterpret_cast<const Byte*>(pstudiohdr) + pstudiohdr->boneindex);
 	for(Int32 i = 0; i < pstudiohdr->numbones; i++)
 	{
 		if(!qstrcmp(pbones[i].name, pstrbonename))
 		{
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				position[j] = pedict->pvbmhulldata->bonetransform[i].matrix[j][3];
 
 			return true;
@@ -2195,7 +2195,7 @@ bool SV_GetBonePositionByName( edict_t* pedict, const Char* pstrbonename, Vector
 //=============================================
 //
 //=============================================
-bool SV_GetBonePositionByIndex( edict_t* pedict, Uint32 boneindex, Vector& position )
+bool SV_GetBonePositionByIndex( edict_t* pedict, UInt32 boneindex, Vector& position )
 {
 	if(!pedict)
 	{
@@ -2229,7 +2229,7 @@ bool SV_GetBonePositionByIndex( edict_t* pedict, Uint32 boneindex, Vector& posit
 	if(!pseqdesc)
 		return false;
 
-	Float frame = VBM_EstimateFrame(pseqdesc, svs.time, pedict->state.frame, pedict->state.animtime, pedict->state.framerate, pedict->state.effects);
+	float frame = VBM_EstimateFrame(pseqdesc, svs.time, pedict->state.frame, pedict->state.animtime, pedict->state.framerate, pedict->state.effects);
 
 	if(!pedict->pvbmhulldata)
 		pedict->pvbmhulldata = new entity_vbmhulldata_t;
@@ -2240,7 +2240,7 @@ bool SV_GetBonePositionByIndex( edict_t* pedict, Uint32 boneindex, Vector& posit
 		// Set animation state
 		TR_VBMSetStateInfo(pedict->pvbmhulldata, pmodel, frame, pedict->state);
 
-		for(Uint32 i = 0; i < MAX_MAP_HULLS; i++)
+		for(UInt32 i = 0; i < MAX_MAP_HULLS; i++)
 			pedict->pvbmhulldata->hulls[i].hullset = false;
 
 		// Update bones
@@ -2248,14 +2248,14 @@ bool SV_GetBonePositionByIndex( edict_t* pedict, Uint32 boneindex, Vector& posit
 	}
 
 	// Find the bone
-	if(boneindex >= static_cast<Uint32>(pstudiohdr->numbones))
+	if(boneindex >= static_cast<UInt32>(pstudiohdr->numbones))
 	{
 		Con_Printf("%s - Bone index %d is out of range.\n", __FUNCTION__, boneindex);
 		return false;
 	}
 
 	// Set the values
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		position[i] = pedict->pvbmhulldata->bonetransform[boneindex].matrix[i][3];
 	
 	return true;
@@ -2264,7 +2264,7 @@ bool SV_GetBonePositionByIndex( edict_t* pedict, Uint32 boneindex, Vector& posit
 //=============================================
 //
 //=============================================
-bool SV_GetAttachment( edict_t* pedict, Uint32 index, Vector& position )
+bool SV_GetAttachment( edict_t* pedict, UInt32 index, Vector& position )
 {
 	if(index >= MAX_ATTACHMENTS)
 	{
@@ -2310,7 +2310,7 @@ bool SV_GetAttachment( edict_t* pedict, Uint32 index, Vector& position )
 	if(!pseqdesc)
 		return false;
 
-	Float frame = VBM_EstimateFrame(pseqdesc, svs.time, pedict->state.frame, pedict->state.animtime, pedict->state.framerate, pedict->state.effects);
+	float frame = VBM_EstimateFrame(pseqdesc, svs.time, pedict->state.frame, pedict->state.animtime, pedict->state.framerate, pedict->state.effects);
 
 	if(!pedict->pvbmhulldata)
 		pedict->pvbmhulldata = new entity_vbmhulldata_t;
@@ -2321,7 +2321,7 @@ bool SV_GetAttachment( edict_t* pedict, Uint32 index, Vector& position )
 		// Set animation state
 		TR_VBMSetStateInfo(pedict->pvbmhulldata, pmodel, frame, pedict->state);
 
-		for(Uint32 i = 0; i < MAX_MAP_HULLS; i++)
+		for(UInt32 i = 0; i < MAX_MAP_HULLS; i++)
 			pedict->pvbmhulldata->hulls[i].hullset = false;
 
 		// Update bones
@@ -2329,7 +2329,7 @@ bool SV_GetAttachment( edict_t* pedict, Uint32 index, Vector& position )
 	}
 	
 	// Transform the attachment
-	const mstudioattachment_t* pattachments = reinterpret_cast<const mstudioattachment_t*>(reinterpret_cast<const byte*>(pstudiohdr) + pstudiohdr->attachmentindex);
+	const mstudioattachment_t* pattachments = reinterpret_cast<const mstudioattachment_t*>(reinterpret_cast<const Byte*>(pstudiohdr) + pstudiohdr->attachmentindex);
 	Math::VectorTransform(pattachments[index].org, pedict->pvbmhulldata->bonetransform[pattachments[index].bone].matrix, position);
 
 	return true;
@@ -2338,9 +2338,9 @@ bool SV_GetAttachment( edict_t* pedict, Uint32 index, Vector& position )
 //=============================================
 //
 //=============================================
-const en_material_t* SV_GetMapTextureMaterial( const Char* pstrtexturename )
+const en_material_t* SV_GetMapTextureMaterial( const char* pstrtexturename )
 {
-	unordered_map<CString, Uint32>::const_iterator it = svs.mapmaterialfilesnamemap.find(pstrtexturename);
+	unordered_map<CString, UInt32>::const_iterator it = svs.mapmaterialfilesnamemap.find(pstrtexturename);
 	if(it != svs.mapmaterialfilesnamemap.end())
 	{
 		CTextureManager* pTextureManager = CTextureManager::GetInstance();
@@ -2353,14 +2353,14 @@ const en_material_t* SV_GetMapTextureMaterial( const Char* pstrtexturename )
 //=============================================
 //
 //=============================================
-const en_material_t* SV_GetModelTextureMaterial( Int32 modelindex, const Char* pstrtexturename )
+const en_material_t* SV_GetModelTextureMaterial( Int32 modelindex, const char* pstrtexturename )
 {
 	Int32 realindex = (modelindex - 1);
 	if(realindex < 0 || svs.modelmaterialfilesnamemaparray.size() <= realindex)
 		return nullptr;
 
 	const CacheNameIndexMap_t& modelTextureMap = svs.modelmaterialfilesnamemaparray[realindex];
-	unordered_map<CString, Uint32>::const_iterator it = modelTextureMap.find(pstrtexturename);
+	unordered_map<CString, UInt32>::const_iterator it = modelTextureMap.find(pstrtexturename);
 	if(it != modelTextureMap.end())
 	{
 		CTextureManager* pTextureManager = CTextureManager::GetInstance();
@@ -2373,7 +2373,7 @@ const en_material_t* SV_GetModelTextureMaterial( Int32 modelindex, const Char* p
 //=============================================
 //
 //=============================================
-void SV_PrecacheGeneric( const Char* pstrresourcename )
+void SV_PrecacheGeneric( const char* pstrresourcename )
 {
 	CacheNameIndexMap_t::iterator it = svs.genericcachemap.find(pstrresourcename);
 	if(it != svs.genericcachemap.end())
@@ -2385,17 +2385,17 @@ void SV_PrecacheGeneric( const Char* pstrresourcename )
 		return;
 	}
 
-	Uint32 insertindex = svs.genericsourcesarray.size();
-	svs.genericcachemap.insert(std::pair<CString, Uint32>(pstrresourcename, insertindex));
+	UInt32 insertindex = svs.genericsourcesarray.size();
+	svs.genericcachemap.insert(std::pair<CString, UInt32>(pstrresourcename, insertindex));
 }
 
 //=============================================
 //
 //=============================================
-Float SV_GetSoundDuration( const Char* pstrfilename, Uint32 pitch ) 
+float SV_GetSoundDuration( const char* pstrfilename, UInt32 pitch ) 
 {
 	// Calculate pitch adjustment
-	Float pitchmod = static_cast<Float>(pitch)/static_cast<Float>(PITCH_NORM);
+	float pitchmod = static_cast<float>(pitch)/static_cast<float>(PITCH_NORM);
 
 	// Look it up in precache list
 	CacheNameIndexMap_t::iterator it = svs.sndcachemap.find(pstrfilename);
@@ -2420,21 +2420,21 @@ Float SV_GetSoundDuration( const Char* pstrfilename, Uint32 pitch )
 //=============================================
 //
 //=============================================
-Float SV_GetOGGFileDuration( const Char* pstrfilename ) 
+float SV_GetOGGFileDuration( const char* pstrfilename ) 
 {
 	CString filepath;
 	filepath << SOUND_FOLDER_BASE_PATH << pstrfilename;
 
-	Uint32 fileSize = 0;
-	const byte *pfile = FL_LoadFile(filepath.c_str(), &fileSize);
+	UInt32 fileSize = 0;
+	const Byte *pfile = FL_LoadFile(filepath.c_str(), &fileSize);
 	if(!pfile)
 	{
 		Con_EPrintf("[flags=onlyonce_game]%s - Could not load %s\n", __FUNCTION__, pstrfilename);
 		return 0;
 	}
 
-	byte* pdata = new byte[fileSize];
-	memcpy(pdata, pfile, sizeof(byte)*fileSize);
+	Byte* pdata = new Byte[fileSize];
+	memcpy(pdata, pfile, sizeof(Byte)*fileSize);
 	FL_FreeFile(pfile);
 
 	Int32 openError = VORBIS__no_error;
@@ -2447,8 +2447,8 @@ Float SV_GetOGGFileDuration( const Char* pstrfilename )
 	}
 
 	stb_vorbis_info vorbisinfo = stb_vorbis_get_info(stream);
-	Uint32 totalsamples = stb_vorbis_stream_length_in_samples(stream);
-	Double result = (vorbisinfo.sample_rate > 0) ? (Double)totalsamples / (Double)vorbisinfo.sample_rate : 0;
+	UInt32 totalsamples = stb_vorbis_stream_length_in_samples(stream);
+	double result = (vorbisinfo.sample_rate > 0) ? (double)totalsamples / (double)vorbisinfo.sample_rate : 0;
 
 	// Release data
 	stb_vorbis_close(stream);
@@ -2468,40 +2468,40 @@ Float SV_GetOGGFileDuration( const Char* pstrfilename )
 //=============================================
 //
 //=============================================
-Float SV_GetWAVFileDuration( const Char* pstrfilename ) 
+float SV_GetWAVFileDuration( const char* pstrfilename ) 
 {
 	CString filepath;
 	filepath << SOUND_FOLDER_BASE_PATH << pstrfilename;
 
-	Uint32 filesize = 0;
-	const byte* pfile = FL_LoadFile(filepath.c_str(), &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = FL_LoadFile(filepath.c_str(), &filesize);
 	if(!pfile)
 	{
 		Con_WPrintf("[flags=onlyonce_game]Couldn't open wav file '%s'.\n", pstrfilename);
 		return 0;
 	}
 
-	if(qstrncmp(reinterpret_cast<const Char*>(pfile), "RIFF", 4))
+	if(qstrncmp(reinterpret_cast<const char*>(pfile), "RIFF", 4))
 	{
 		Con_WPrintf("[flags=onlyonce_game]'%s' is not a valid WAV file.\n", pstrfilename);
 		FL_FreeFile(pfile);
 		return 0;
 	}
 
-	const byte *pbegin = pfile + 12;
-	const byte *pend = pfile + filesize;
+	const Byte *pbegin = pfile + 12;
+	const Byte *pend = pfile + filesize;
 
-	Uint32 numchannels = 0;
-	Uint32 samplerate = 0;
-	Uint32 bitspersample = 0;
-	Uint32 datasize = 0;
+	UInt32 numchannels = 0;
+	UInt32 samplerate = 0;
+	UInt32 bitspersample = 0;
+	UInt32 datasize = 0;
 
 	while(1)
 	{
 		if(pbegin >= pend)
 			break;
 
-		DWORD ilength = Common::ByteToInt32(pbegin+4);
+		Dword ilength = Common::ByteToInt32(pbegin+4);
 		Common::ScaleByte(&ilength);
 
 		if(!strncmp(reinterpret_cast<const char*>(pbegin), "fmt ", 4))
@@ -2522,14 +2522,14 @@ Float SV_GetWAVFileDuration( const Char* pstrfilename )
 	FL_FreeFile(pfile);
 
 	// calculate basic duration
-	Uint32 bytepersec = numchannels * samplerate * (bitspersample>>3);
-	return (Float)datasize / (Float)bytepersec;
+	UInt32 bytepersec = numchannels * samplerate * (bitspersample>>3);
+	return (float)datasize / (float)bytepersec;
 }
 
 //=============================================
 //
 //=============================================
-Uint64 SV_GetModelFrameCount( Int32 modelindex )
+UInt64 SV_GetModelFrameCount( Int32 modelindex )
 {
 	cache_model_t* pmodel = gModelCache.GetModelByIndex(modelindex);
 	if(!pmodel)
@@ -2541,7 +2541,7 @@ Uint64 SV_GetModelFrameCount( Int32 modelindex )
 //=============================================
 //
 //=============================================
-void SV_SetLevelSavefile( const Char* pstrLevelName, const Char* pstrSaveFileName )
+void SV_SetLevelSavefile( const char* pstrLevelName, const char* pstrSaveFileName )
 {
 	svs.levelinfos.begin();
 	while(!svs.levelinfos.end())
@@ -2562,7 +2562,7 @@ void SV_SetLevelSavefile( const Char* pstrLevelName, const Char* pstrSaveFileNam
 //=============================================
 //
 //=============================================
-void SV_AddLevelConnection( const Char* pstrLevelName, const Char* pstrOtherLevelName, const Char* pstrLandmarkName, const Char* pstrMapSaveFileName )
+void SV_AddLevelConnection( const char* pstrLevelName, const char* pstrOtherLevelName, const char* pstrLandmarkName, const char* pstrMapSaveFileName )
 {
 	sv_levelinfo_t* plevelinfo = nullptr;
 
@@ -2617,7 +2617,7 @@ void SV_AddLevelConnection( const Char* pstrLevelName, const Char* pstrOtherLeve
 //=============================================
 //
 //=============================================
-void SV_BeginLevelChange( const Char* pstrOtherLevelName, const Char* pstrLandmarkName, const Vector& landmarkPosition )
+void SV_BeginLevelChange( const char* pstrOtherLevelName, const char* pstrLandmarkName, const Vector& landmarkPosition )
 {
 	// Set the changelevel info
 	svs.levelchangeinfo.nextlevelname = pstrOtherLevelName;
@@ -2638,14 +2638,14 @@ void SV_BeginLevelChange( const Char* pstrOtherLevelName, const Char* pstrLandma
 	svs.netinfo.pnet->SVC_MessageBegin(MSG_ALL, svc_sndengine, nullptr);
 		svs.netinfo.pnet->WriteByte(MSG_SNDENGINE_STOP_MUSIC);
 		svs.netinfo.pnet->WriteInt16(MUSIC_CHANNEL_ALL);
-		svs.netinfo.pnet->WriteByte(FALSE);
+		svs.netinfo.pnet->WriteByte(false);
 	svs.netinfo.pnet->SVC_MessageEnd();
 }
 
 //=============================================
 //
 //=============================================
-void SV_PerformLevelChange( const Char* pstrlevelname, const Char* pstrlandmarkname )
+void SV_PerformLevelChange( const char* pstrlevelname, const char* pstrlandmarkname )
 {
 	if(svs.levelchangeinfo.nextlevelname.empty() 
 		|| svs.levelchangeinfo.landmarkname.empty()
@@ -2776,13 +2776,13 @@ void SV_PerformLevelChange( const Char* pstrlevelname, const Char* pstrlandmarkn
 	}
 
 	// Get PVS for landmark edict
-	byte* ppvsbuffer = new byte[ens.visbuffersize];
+	Byte* ppvsbuffer = new Byte[ens.visbuffersize];
 	memset(ppvsbuffer, 0, sizeof(ens.visbuffersize));
 
 	const mleaf_t* pleaf = nullptr;
-	for(Uint32 i = 0; i < 4; i++)
+	for(UInt32 i = 0; i < 4; i++)
 	{
-		Vector testPosition = svs.levelchangeinfo.landmarkposition + Vector(0, 0, static_cast<Float>(i));
+		Vector testPosition = svs.levelchangeinfo.landmarkposition + Vector(0, 0, static_cast<float>(i));
 		pleaf = Mod_PointInLeaf(testPosition, (*ens.pworld));
 		if(!pleaf || pleaf->contents != CONTENTS_SOLID)
 			break;
@@ -2798,7 +2798,7 @@ void SV_PerformLevelChange( const Char* pstrlevelname, const Char* pstrlandmarkn
 	}
 
 	// Retrieve VIS ptr and copy it to temp buffer
-	const byte* ppvs = Mod_LeafPVS(ppvsbuffer, ens.visbuffersize, (*pleaf), (*ens.pworld));
+	const Byte* ppvs = Mod_LeafPVS(ppvsbuffer, ens.visbuffersize, (*pleaf), (*ens.pworld));
 
 	// Allow game DLL to modify PVS used for transition
 	svs.dllfuncs.pfnAdjustLandmarkPVSData(plandmarkedict, ppvsbuffer, ens.visbuffersize);
@@ -2851,9 +2851,9 @@ void SV_PerformLevelChange( const Char* pstrlevelname, const Char* pstrlandmarkn
 
 			// Now check leaf
 			const mleaf_t* pdecalleaf = nullptr;
-			for(Uint32 i = 0; i < 4; i++)
+			for(UInt32 i = 0; i < 4; i++)
 			{
-				Vector testPosition = decal.origin + Vector(0, 0, static_cast<Float>(i));
+				Vector testPosition = decal.origin + Vector(0, 0, static_cast<float>(i));
 				pdecalleaf = Mod_PointInLeaf(testPosition, (*ens.pworld));
 				if(!pdecalleaf || pdecalleaf->contents != CONTENTS_SOLID)
 					break;
@@ -2930,7 +2930,7 @@ void SV_PerformLevelChange( const Char* pstrlevelname, const Char* pstrlandmarkn
 //=============================================
 //
 //=============================================
-void SV_GetTransitionList( const Int32** pEntityList, Uint32& numEntities )
+void SV_GetTransitionList( const Int32** pEntityList, UInt32& numEntities )
 {
 	(*pEntityList) = svs.levelchangeinfo.transitionentitylist;
 	numEntities = svs.levelchangeinfo.numtransitionentities;
@@ -2950,7 +2950,7 @@ void SV_ClearLevelChange( void )
 	if(!svs.levelchangeinfo.transitiondecallist.empty())
 		svs.levelchangeinfo.transitiondecallist.clear();
 
-	for(Uint32 i = 0; i < svs.levelchangeinfo.numtransitionentities; i++)
+	for(UInt32 i = 0; i < svs.levelchangeinfo.numtransitionentities; i++)
 		svs.levelchangeinfo.transitionentitylist[i] = -1;
 
 	svs.levelchangeinfo.numtransitionentities = 0;
@@ -2970,7 +2970,7 @@ void SV_ClearConnections( void )
 //=============================================
 //
 //=============================================
-void SV_EndGame( const Char* pstrEndGameCode )
+void SV_EndGame( const char* pstrEndGameCode )
 {
 	gCommands.AddCommand("disconnect");
 }
@@ -2989,9 +2989,9 @@ bool SV_IsTransitionDecalValid( saveddecal_t& decal )
 
 	// Check leaf
 	const mleaf_t* pdecalleaf = nullptr;
-	for(Uint32 i = 0; i < 4; i++)
+	for(UInt32 i = 0; i < 4; i++)
 	{
-		Vector testPosition = decal.origin + Vector(0, 0, static_cast<Float>(i));
+		Vector testPosition = decal.origin + Vector(0, 0, static_cast<float>(i));
 		pdecalleaf = Mod_PointInLeaf(testPosition, (*ens.pworld));
 		if(!pdecalleaf || pdecalleaf->contents != CONTENTS_SOLID)
 			break;
@@ -3052,7 +3052,7 @@ void SV_RestoreSavedDecals( void )
 //=============================================
 //
 //=============================================
-void SV_AddSavedDecal( const Vector& origin, const Vector& normal, entindex_t entityindex, const Char* pstrDecalTexture, Int32 decalflags )
+void SV_AddSavedDecal( const Vector& origin, const Vector& normal, entindex_t entityindex, const char* pstrDecalTexture, Int32 decalflags )
 {
 	edict_t* pedict = nullptr;
 	Vector decalorg = origin;
@@ -3111,7 +3111,7 @@ void SV_AddSavedDecal( const Vector& origin, const Vector& normal, entindex_t en
 //=============================================
 Int32 SV_NewCheckClient( Int32 check )
 {
-	Int32 _check = clamp(check, 1, (Int32)svs.maxclients);
+	Int32 _check = Clamp(check, 1, (Int32)svs.maxclients);
 
 	Int32 i = 1;
 	if(_check != static_cast<Int32>(svs.maxclients))

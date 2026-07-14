@@ -23,7 +23,7 @@ CInfoMonitorCamera::CInfoMonitorCamera( edict_t* pedict ):
 	m_pPVSData(nullptr),
 	m_numCameraMonitors(0)
 {
-	for(Uint32 i = 0; i < MAX_MONITOR_ENTITIES; i++)
+	for(UInt32 i = 0; i < MAX_MONITOR_ENTITIES; i++)
 		m_pCameraMonitors[i] = nullptr;
 }
 
@@ -101,7 +101,7 @@ void CInfoMonitorCamera::FreeEntity( edict_removed_t freeMode )
 
 	m_numCameraMonitors = 0;
 
-	for(Uint32 i = 0; i < MAX_MONITOR_ENTITIES; i++)
+	for(UInt32 i = 0; i < MAX_MONITOR_ENTITIES; i++)
 		m_pCameraMonitors[i] = nullptr;
 }
 
@@ -126,11 +126,11 @@ void CInfoMonitorCamera::SetPVSData( void )
 		return;
 	}
 
-	Uint32 bufsize = gd_engfuncs.pfnGetVISBufferSize();
+	UInt32 bufsize = gd_engfuncs.pfnGetVISBufferSize();
 	if(!m_pPVSData)
 	{
 		// Allocate buffer
-		m_pPVSData = new byte[gd_engfuncs.pfnGetVISBufferSize()];
+		m_pPVSData = new Byte[gd_engfuncs.pfnGetVISBufferSize()];
 	}
 
 	gd_engfuncs.pfnLeafPVS(m_pPVSData, bufsize, (*pleaf), (*pbrushmodel));
@@ -140,7 +140,7 @@ void CInfoMonitorCamera::SetPVSData( void )
 // @brief
 //
 //=============================================
-const byte* CInfoMonitorCamera::GetPVSData( void ) const
+const Byte* CInfoMonitorCamera::GetPVSData( void ) const
 {
 	return m_pPVSData;
 }
@@ -155,7 +155,7 @@ bool CInfoMonitorCamera::CheckCameraBBox( const edict_t* pedict ) const
 		return true;
 
 	Vector bboxmins, bboxmaxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		bboxmins[i] = m_pState->origin[i] - m_pState->renderamt;
 		bboxmaxs[i] = m_pState->origin[i] + m_pState->renderamt;
@@ -203,7 +203,7 @@ void CInfoMonitorCamera::AddCameraMonitorEntity( const edict_t* pedict )
 // @brief
 //
 //=============================================
-Uint32 CInfoMonitorCamera::GetNbCameraMonitors( void ) const
+UInt32 CInfoMonitorCamera::GetNbCameraMonitors( void ) const
 {
 	return m_numCameraMonitors;
 }
@@ -212,8 +212,8 @@ Uint32 CInfoMonitorCamera::GetNbCameraMonitors( void ) const
 // @brief
 //
 //=============================================
-const edict_t* CInfoMonitorCamera::GetMonitorByIndex( Uint32 index ) const
+const edict_t* CInfoMonitorCamera::GetMonitorByIndex( UInt32 index ) const
 {
-	assert(index < (Uint32)m_numCameraMonitors);
+	assert(index < (UInt32)m_numCameraMonitors);
 	return m_pCameraMonitors[index];
 }

@@ -19,8 +19,8 @@ struct en_texture_t;
 
 struct cl_water_style_batch_t
 {
-	Uint32 start_index;
-	Uint32 num_indexes;
+	UInt32 start_index;
+	UInt32 num_indexes;
 };
 
 struct cl_water_style_batches_t
@@ -48,7 +48,7 @@ struct cl_water_t
 		renderpassidx(0),
 		settingsindex(0)
 	{
-		for(Uint32 j = 0; j < MAX_SURFACE_STYLES; j++)
+		for(UInt32 j = 0; j < MAX_SURFACE_STYLES; j++)
 		{
 			plightmap_textures[j] = nullptr;
 			plightmap_diffuse_textures[j] = nullptr;
@@ -59,7 +59,7 @@ struct cl_water_t
 		}
 	}
 
-	Uint32 index;
+	UInt32 index;
 	cl_entity_t *pentity;
 
 	Vector mins;
@@ -72,12 +72,12 @@ struct cl_water_t
 	fbobind_t* preflectfbo;
 	en_texalloc_t* preflect_texture;
 
-	Uint32 framecount;
+	UInt32 framecount;
 
-	Uint32 start_index;
-	Uint32 num_indexes;
+	UInt32 start_index;
+	UInt32 num_indexes;
 
-	Uint32 renderpassidx;
+	UInt32 renderpassidx;
 
 	CArray<cl_water_style_batches_t> stylebatches;
 
@@ -85,8 +85,8 @@ struct cl_water_t
 	en_texalloc_t* plightmap_diffuse_textures[MAX_SURFACE_STYLES];
 	en_texalloc_t* plightmap_lightvecs_textures[MAX_SURFACE_STYLES];
 
-	Uint32 lightmaptexturewidths[MAX_SURFACE_STYLES];
-	Uint32 lightmaptextureheights[MAX_SURFACE_STYLES];
+	UInt32 lightmaptexturewidths[MAX_SURFACE_STYLES];
+	UInt32 lightmaptextureheights[MAX_SURFACE_STYLES];
 
 	Int32 settingsindex;
 };
@@ -115,20 +115,20 @@ struct water_settings_t
 		{}
 
 	fog_settings_t fogparams;
-	Float causticscale;
-	Float causticstrength;
-	Float causticstimescale;
-	Float fresnel;
-	Float scrollu;
-	Float scrollv;
-	Float strength;
-	Float timescale;
-	Float texscale;
-	Float lightstrength;
-	Float specularstrength;
-	Float wavefresnelstrength;
-	Float flowmapspeed;
-	Float phongexponent;
+	float causticscale;
+	float causticstrength;
+	float causticstimescale;
+	float fresnel;
+	float scrollu;
+	float scrollv;
+	float strength;
+	float timescale;
+	float texscale;
+	float lightstrength;
+	float specularstrength;
+	float wavefresnelstrength;
+	float flowmapspeed;
+	float phongexponent;
 	bool refractonly;
 	bool cheaprefraction;
 	
@@ -151,10 +151,10 @@ struct water_vertex_t
 	Vector tangent; // 40
 	Vector binormal; // 52
 
-	Float texcoords[2]; // 60
-	Float lightcoords[MAX_SURFACE_STYLES][2]; // 92
+	float texcoords[2]; // 60
+	float lightcoords[MAX_SURFACE_STYLES][2]; // 92
 
-	byte pad[4];
+	Byte pad[4];
 };
 
 struct water_attribs
@@ -274,25 +274,25 @@ public:
 
 public:
 	// Default phong exponent value
-	static const Float DEFAULT_PHONG_EXPONENT;
+	static const float DEFAULT_PHONG_EXPONENT;
 	// Default phong exponent value
-	static const Float DEFAULT_SPECULAR_FACTOR;
+	static const float DEFAULT_SPECULAR_FACTOR;
 	// Water shader default normalmap texture path
-	static const Char WATER_DEFAULT_NORMALMAP_PATH[];
+	static const char WATER_DEFAULT_NORMALMAP_PATH[];
 	// Script base path
-	static const Char WATER_SCRIPT_BASEPATH[];
+	static const char WATER_SCRIPT_BASEPATH[];
 	// Default water script name
-	static const Char DEFAULT_WATER_SCRIPT_FILENAME[];
+	static const char DEFAULT_WATER_SCRIPT_FILENAME[];
 
 	// Lightmap X resolution
-	static const Uint32 WATER_LIGHTMAP_DEFAULT_WIDTH;
+	static const UInt32 WATER_LIGHTMAP_DEFAULT_WIDTH;
 	// Lightmap Y resolution
-	static const Uint32 WATER_LIGHTMAP_DEFAULT_HEIGHT;
+	static const UInt32 WATER_LIGHTMAP_DEFAULT_HEIGHT;
 
 	// FBO resolution for water
-	static const Uint32 WATER_FBO_SIZE;
+	static const UInt32 WATER_FBO_SIZE;
 	// RTT resolution for water
-	static const Uint32 WATER_RTT_SIZE;
+	static const UInt32 WATER_RTT_SIZE;
 
 public:
 	CWaterShader( void );
@@ -318,7 +318,7 @@ public:
 	// Adds a water entity to the list
 	void AddEntity( cl_entity_t *pentity );
 	// Parses a script file
-	void ParseScript( const Char* pstrFilename, water_settings_t *psettings, const Char* pfile );
+	void ParseScript( const char* pstrFilename, water_settings_t *psettings, const char* pfile );
 
 public:
 	// Renders water entities
@@ -367,7 +367,7 @@ private:
 	// Tells if the view is within a water object
 	bool ViewInWater( void );
 	// Tells if a water entity should do a reflection pass
-	bool ShouldReflect( Uint32 index, const water_settings_t* psettings ) const;
+	bool ShouldReflect( UInt32 index, const water_settings_t* psettings ) const;
 
 	// Gets the water entity's surface origin
 	Vector GetWaterOrigin( cl_water_t *pwater = nullptr ) const;
@@ -394,10 +394,10 @@ private:
 	// Cvar for water reflection performance level
 	CCVar *m_pCvarWaterReflectionSetting;
 	// Number of renderpasses drawn
-	Uint32	m_numPasses;
+	UInt32	m_numPasses;
 
 	// Renderpass counter
-	Uint32 m_drawCounter;
+	UInt32 m_drawCounter;
 
 	// Water quality level
 	water_quality_t m_waterQuality;

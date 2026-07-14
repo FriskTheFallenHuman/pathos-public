@@ -22,20 +22,20 @@ class CLegacyParticles
 {
 public:
 	// alloc count for legacy particles
-	static const Uint32 LEGACY_PARTICLE_ALLOC_COUNT = 256;
+	static const UInt32 LEGACY_PARTICLE_ALLOC_COUNT = 256;
 	// Path to particle texture
-	static const Char PARTICLE_TEXTURE_FILEPATH[];
+	static const char PARTICLE_TEXTURE_FILEPATH[];
 	// Path to palette file
-	static const Char PALETTE_FILEPATH[];
+	static const char PALETTE_FILEPATH[];
 
 	// Ramp 1 values
-	static const Uint32 PARTICLE_RAMP1[8];
+	static const UInt32 PARTICLE_RAMP1[8];
 	// Ramp 2 values
-	static const Uint32 PARTICLE_RAMP2[8];
+	static const UInt32 PARTICLE_RAMP2[8];
 	// Ramp 3 values
-	static const Uint32 PARTICLE_RAMP3[8];
+	static const UInt32 PARTICLE_RAMP3[8];
 	// Particle fade out time
-	static const Float PARTICLE_FADEOUT_TIME;
+	static const float PARTICLE_FADEOUT_TIME;
 
 	enum particle_type_t
 	{
@@ -65,12 +65,12 @@ public:
 			{}
 
 		Vector origin;
-		Uint32 color;
+		UInt32 color;
 
 		Vector velocity;
-		Float ramp;
-		Double die;
-		Double spawntime;
+		float ramp;
+		double die;
+		double spawntime;
 		particle_type_t type;
 
 		particle_t* pprev;
@@ -105,25 +105,25 @@ public:
 	// Creates a particle explosion of type 1
 	void CreateParticleExplosion1( const Vector& origin );
 	// Creates a particle explosion of type 2
-	void CreateParticleExplosion2( const Vector& origin, Uint32 colorstart, Uint32 colorlength );
+	void CreateParticleExplosion2( const Vector& origin, UInt32 colorstart, UInt32 colorlength );
 	// Creates a blob explosion of type 1
 	void CreateBlobExplosion( const Vector& origin );
 	// Creates a particle effect based on the inputs
-	void CreateRocketExplosion( const Vector& origin, Uint32 color );
+	void CreateRocketExplosion( const Vector& origin, UInt32 color );
 	// Creates a particle effect based on the inputs
-	void CreateParticleEffect( const Vector& origin, const Vector& velocity, Uint32 color, Uint32 count );
+	void CreateParticleEffect( const Vector& origin, const Vector& velocity, UInt32 color, UInt32 count );
 	// Creates a lavasplash effect
 	void CreateLavaSplash( const Vector& origin );
 	// Creates a teleport splash effect
 	void CreateTeleportSplash( const Vector& origin );
 	// Creates a rocket trail effect
-	void CreateRocketTrail( const Vector& start, const Vector& end, Uint32 type );
+	void CreateRocketTrail( const Vector& start, const Vector& end, UInt32 type );
 	// Creates a funnel effect
 	void CreateLargeFunnel( const Vector& origin, bool reverse );
 	// Creates a blood stream effect
-	void CreateBloodStream( const Vector& origin, const Vector& direction, Uint32 color, Float speed );
+	void CreateBloodStream( const Vector& origin, const Vector& direction, UInt32 color, float speed );
 	// Creates blood particles
-	void CreateBloodParticles( const Vector& origin, const Vector& direction, Uint32 color, Float speed );
+	void CreateBloodParticles( const Vector& origin, const Vector& direction, UInt32 color, float speed );
 
 private:
 	// Allocates some particles
@@ -152,7 +152,7 @@ private:
 	// Array of rendered particles
 	CArray<particle_t*> m_pSortedParticles;
 	// Number of sorted particles
-	Uint32 m_nbSortedParticles;
+	UInt32 m_nbSortedParticles;
 
 	// Gravity cvar ptr
 	CCVar* m_pCvarGravity;

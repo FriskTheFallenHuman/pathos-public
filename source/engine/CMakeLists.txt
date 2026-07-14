@@ -4,11 +4,11 @@ add_executable(${PROJECT_NAME})
 
 file(GLOB ENGINE_COMMON_SOURCES ${CMAKE_SOURCE_DIR}/common/*.cpp)
 target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_COMMON_SOURCES})
-source_group("Engine\\Common" FILES ${ENGINE_COMMON_SOURCES})
+source_group("Common" FILES ${ENGINE_COMMON_SOURCES})
 
-file(GLOB ENGINE_COMMON_HEADERS ${CMAKE_SOURCE_DIR}/common/*.h)
+file(GLOB ENGINE_COMMON_HEADERS ${CMAKE_SOURCE_DIR}/common/*.h ${CMAKE_SOURCE_DIR}/common/*.hpp)
 target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_COMMON_HEADERS})
-source_group("Engine\\Common" FILES ${ENGINE_COMMON_HEADERS})
+source_group("Common" FILES ${ENGINE_COMMON_HEADERS})
 
 if(WIN32)
 file(GLOB RES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resource/*.rc ${CMAKE_CURRENT_SOURCE_DIR}/resource/*.ico ${CMAKE_CURRENT_SOURCE_DIR}/resource/*.h)
@@ -73,6 +73,9 @@ target_sources(${PROJECT_NAME} PRIVATE ${CLIENT_HEADERS})
 source_group("Engine\\Client" FILES ${CLIENT_HEADERS})
 
 file(GLOB ENGINE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+if(NOT MSVC)
+list(REMOVE_ITEM ENGINE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/win32_delay_load.cpp)
+endif()
 target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_SOURCES})
 source_group("Engine" FILES ${ENGINE_SOURCES})
 
@@ -82,13 +85,13 @@ source_group("Engine" FILES ${ENGINE_HEADERS})
 
 file(GLOB ENGINE_SHARED_SOURCES ${CMAKE_SOURCE_DIR}/shared/*.cpp)
 target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_SHARED_SOURCES})
-source_group("Engine\\Shared" FILES ${ENGINE_SHARED_SOURCES})
+source_group("Shared" FILES ${ENGINE_SHARED_SOURCES})
 
-file(GLOB ENGINE_SHARED_HEADERS ${CMAKE_SOURCE_DIR}/shared/*.h)
+file(GLOB ENGINE_SHARED_HEADERS ${CMAKE_SOURCE_DIR}/shared/*.h ${CMAKE_SOURCE_DIR}/shared/*.hpp)
 target_sources(${PROJECT_NAME} PRIVATE ${ENGINE_SHARED_HEADERS})
-source_group("Engine\\Shared" FILES ${ENGINE_SHARED_HEADERS})
+source_group("Shared" FILES ${ENGINE_SHARED_HEADERS})
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE ${PLATFORM_DEFINES} $<$<CONFIG:Debug>:_CONSOLE;NETWORKING;DONT_USE_VAO>)
+target_compile_definitions(${PROJECT_NAME} PRIVATE ${PLATFORM_DEFINES} $<$<CONFIG:Debug>:_CONSOLE>)
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/common
     ${CMAKE_SOURCE_DIR}/shared

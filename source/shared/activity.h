@@ -11,8 +11,8 @@ All Rights Reserved.
 #define ACTIVITY_H
 
 #ifndef pfnCon_Printf_t
-typedef void (*pfnCon_Printf_t)(const Char* fmt, ...);
-#endif pfnCon_Printf_t
+typedef void (*pfnCon_Printf_t)(const char* fmt, ...);
+#endif //pfnCon_Printf_t
 
 enum activity_t
 {
@@ -131,7 +131,7 @@ enum activity_t
 struct activity_mapping_t
 {
 	Int32 type;
-	Char* name;
+	const char* name;
 };
 extern activity_mapping_t ACTIVITYMAP[];
 

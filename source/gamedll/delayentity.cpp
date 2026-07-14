@@ -73,7 +73,7 @@ bool CDelayEntity::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CDelayEntity::UseTargets( CBaseEntity* pActivator, usemode_t useMode, Float value, string_t target )
+void CDelayEntity::UseTargets( CBaseEntity* pActivator, usemode_t useMode, float value, string_t target )
 {
 	string_t targetentityname;
 	if(target != NO_STRING_VALUE)
@@ -113,7 +113,7 @@ void CDelayEntity::UseTargets( CBaseEntity* pActivator, usemode_t useMode, Float
 	{
 		if(m_killTarget != NO_STRING_VALUE)
 		{
-			const Char* pstrkilltargetname = gd_engfuncs.pfnGetString(m_killTarget);
+			const char* pstrkilltargetname = gd_engfuncs.pfnGetString(m_killTarget);
 			if(pstrkilltargetname)
 			{
 				if(g_pCvarTriggerDebug->GetValue() >= 1)

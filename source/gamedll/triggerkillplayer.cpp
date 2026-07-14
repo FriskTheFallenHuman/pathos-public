@@ -35,7 +35,7 @@ CTriggerKillPlayer::~CTriggerKillPlayer( void )
 // @brief
 //
 //=============================================
-void CTriggerKillPlayer::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerKillPlayer::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	CBaseEntity* pPlayer = Util::GetHostPlayer();
 	if(!pPlayer)

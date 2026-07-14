@@ -32,15 +32,15 @@ All Rights Reserved.
 //
 
 // Scanline texture width
-const Uint32 CMonitorManager::SCANLINE_TEXTURE_WIDTH = 256;
+const UInt32 CMonitorManager::SCANLINE_TEXTURE_WIDTH = 256;
 // Scanline texture height
-const Uint32 CMonitorManager::SCANLINE_TEXTURE_HEIGHT = 256;
+const UInt32 CMonitorManager::SCANLINE_TEXTURE_HEIGHT = 256;
 
 // Class definition
 CMonitorManager gMonitorManager;
 
 // Array of monitor resolutions
-Uint32 g_monitorResolutions[NB_MONITOR_RESOLUTIONS][2] = 
+UInt32 g_monitorResolutions[NB_MONITOR_RESOLUTIONS][2] = 
 {
 	{ 128, 128 },
 	{ 256, 256 },
@@ -107,7 +107,7 @@ void CMonitorManager::ClearGame( void )
 {
 	if(!m_monitorsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_monitorsArray.size(); i++)
+		for(UInt32 i = 0; i < m_monitorsArray.size(); i++)
 		{
 			if(m_monitorsArray[i]->pfbo)
 			{
@@ -207,7 +207,7 @@ void CMonitorManager::ClearGL( void )
 {
 	if(!m_monitorsArray.empty())
 	{
-		for(Uint32 i = 0; i < m_monitorsArray.size(); i++)
+		for(UInt32 i = 0; i < m_monitorsArray.size(); i++)
 		{
 			if(m_monitorsArray[i]->pfbo)
 			{
@@ -240,16 +240,16 @@ void CMonitorManager::ClearGL( void )
 //====================================
 void CMonitorManager::CreateScanlineTexture( void ) 
 {
-	Uint32 texturesize = sizeof(byte)*SCANLINE_TEXTURE_WIDTH*SCANLINE_TEXTURE_HEIGHT*4;
-	byte* pscanlinetexture = new byte [texturesize];
+	UInt32 texturesize = sizeof(Byte)*SCANLINE_TEXTURE_WIDTH*SCANLINE_TEXTURE_HEIGHT*4;
+	Byte* pscanlinetexture = new Byte [texturesize];
 
-	for(Uint32 i = 0; i < SCANLINE_TEXTURE_WIDTH; i++)
+	for(UInt32 i = 0; i < SCANLINE_TEXTURE_WIDTH; i++)
 	{
-		for(Uint32 j = 0; j < SCANLINE_TEXTURE_HEIGHT; j++)
+		for(UInt32 j = 0; j < SCANLINE_TEXTURE_HEIGHT; j++)
 		{
-			byte* pdata = pscanlinetexture + SCANLINE_TEXTURE_WIDTH*i*4 + j*4;
+			Byte* pdata = pscanlinetexture + SCANLINE_TEXTURE_WIDTH*i*4 + j*4;
 
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 				pdata[k] = 0;
 
 			pdata[3] = ((i % 2) == 1) * 64;
@@ -351,7 +351,7 @@ void CMonitorManager::AllocNewMonitor( cl_entity_t* pentity )
 	
 	// Collect the drawing surfaces we'll use
 	const brushmodel_t* pbrushmodel = pentity->pmodel->getBrushmodel();
-	for(Uint32 i = 0; i < pbrushmodel->nummodelsurfaces; i++)
+	for(UInt32 i = 0; i < pbrushmodel->nummodelsurfaces; i++)
 	{
 		msurface_t* psurf = &pbrushmodel->psurfaces[pbrushmodel->firstmodelsurface + i];
 		mtexinfo_t *ptexinfo = psurf->ptexinfo;
@@ -366,11 +366,11 @@ void CMonitorManager::AllocNewMonitor( cl_entity_t* pentity )
 	pmonitor->mins = NULL_MINS;
 	pmonitor->maxs = NULL_MAXS;
 
-	for(Uint32 k = 0; k < pmonitor->surfaces.size(); k++)
+	for(UInt32 k = 0; k < pmonitor->surfaces.size(); k++)
 	{
 		msurface_t* psurf = pmonitor->surfaces[k];
 
-		for(Uint32 i = 0; i < psurf->numedges; i++)
+		for(UInt32 i = 0; i < psurf->numedges; i++)
 		{
 			Vector vertexpos;
 			Int32 e_index = ens.pworld->psurfedges[psurf->firstedge+i];
@@ -379,7 +379,7 @@ void CMonitorManager::AllocNewMonitor( cl_entity_t* pentity )
 			else
 				Math::VectorCopy(ens.pworld->pvertexes[ens.pworld->pedges[-e_index].vertexes[1]].origin, vertexpos);
 
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 			{
 				// mins
 				if(pmonitor->mins[j] > vertexpos[j])
@@ -393,7 +393,7 @@ void CMonitorManager::AllocNewMonitor( cl_entity_t* pentity )
 	}
 
 	// Pad it out by one unit
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		pmonitor->mins[i] -= 1;
 		pmonitor->maxs[i] += 1;
@@ -414,8 +414,8 @@ void CMonitorManager::AllocNewMonitor( cl_entity_t* pentity )
 	pmonitor->origin[2] = (pmonitor->mins[2] + pmonitor->maxs[2]) * 0.5f;
 
 	// Set up VBO data
-	Uint32 numverts = 0;
-	for(Uint32 i = 0; i < pmonitor->surfaces.size(); i++)
+	UInt32 numverts = 0;
+	for(UInt32 i = 0; i < pmonitor->surfaces.size(); i++)
 	{
 		msurface_t* psurf = pmonitor->surfaces[i];
 		numverts += 3+(psurf->numedges-3)*3;
@@ -425,17 +425,17 @@ void CMonitorManager::AllocNewMonitor( cl_entity_t* pentity )
 
 	// Set the vertex data
 	Vector vertexes[3];
-	Float texcoords[3][2];
+	float texcoords[3][2];
 
-	Uint32 dstvertindex = 0;
+	UInt32 dstvertindex = 0;
 	
-	for(Uint32 i = 0; i < pmonitor->surfaces.size(); i++)
+	for(UInt32 i = 0; i < pmonitor->surfaces.size(); i++)
 	{
 		msurface_t* psurf = pmonitor->surfaces[i];
 		mtexinfo_t* ptexinfo = psurf->ptexinfo;
 
-		Uint32 srcvertindex = 0;
-		for(Uint32 j = 0; j < 3; j++, dstvertindex++, srcvertindex++)
+		UInt32 srcvertindex = 0;
+		for(UInt32 j = 0; j < 3; j++, dstvertindex++, srcvertindex++)
 		{
 			Vector vertexpos;
 			Int32 e_index = ens.pworld->psurfedges[psurf->firstedge+srcvertindex];
@@ -445,17 +445,17 @@ void CMonitorManager::AllocNewMonitor( cl_entity_t* pentity )
 				Math::VectorCopy(ens.pworld->pvertexes[ens.pworld->pedges[-e_index].vertexes[1]].origin, vertexpos);
 
 			// Set texcoords
-			Float scoord = Math::DotProduct(vertexpos, ptexinfo->vecs[0])+ptexinfo->vecs[0][3];
-			scoord /= static_cast<Float>(psurf->ptexinfo->ptexture->width);
+			float scoord = Math::DotProduct(vertexpos, ptexinfo->vecs[0])+ptexinfo->vecs[0][3];
+			scoord /= static_cast<float>(psurf->ptexinfo->ptexture->width);
 
-			Float tcoord = Math::DotProduct(vertexpos, ptexinfo->vecs[1])+ptexinfo->vecs[1][3];
-			tcoord /= static_cast<Float>(psurf->ptexinfo->ptexture->height);
+			float tcoord = Math::DotProduct(vertexpos, ptexinfo->vecs[1])+ptexinfo->vecs[1][3];
+			tcoord /= static_cast<float>(psurf->ptexinfo->ptexture->height);
 
 			Math::VectorCopy(vertexpos, vertexes[j]);
 			texcoords[j][0] = scoord;
 			texcoords[j][1] = (1.0 - tcoord);
 
-			for(Uint32 k = 0; k < 3; k++)
+			for(UInt32 k = 0; k < 3; k++)
 				pvertexes[dstvertindex].origin[k] = vertexes[j][k];
 
 			pvertexes[dstvertindex].origin[3] = 1.0; 
@@ -463,7 +463,7 @@ void CMonitorManager::AllocNewMonitor( cl_entity_t* pentity )
 			pvertexes[dstvertindex].texcoord[1] = texcoords[j][1];
 		}
 
-		for(Uint32 j = 0; j < (psurf->numedges-3); j++, srcvertindex++)
+		for(UInt32 j = 0; j < (psurf->numedges-3); j++, srcvertindex++)
 		{
 			Vector vertexpos;
 			Int32 e_index = ens.pworld->psurfedges[psurf->firstedge+srcvertindex];
@@ -477,19 +477,19 @@ void CMonitorManager::AllocNewMonitor( cl_entity_t* pentity )
 			texcoords[1][1] = texcoords[2][1];
 
 			// Set texcoords
-			Float scoord = Math::DotProduct(vertexpos, ptexinfo->vecs[0])+ptexinfo->vecs[0][3];
-			scoord /= static_cast<Float>(psurf->ptexinfo->ptexture->width);
+			float scoord = Math::DotProduct(vertexpos, ptexinfo->vecs[0])+ptexinfo->vecs[0][3];
+			scoord /= static_cast<float>(psurf->ptexinfo->ptexture->width);
 
-			Float tcoord = Math::DotProduct(vertexpos, ptexinfo->vecs[1])+ptexinfo->vecs[1][3];
-			tcoord /= static_cast<Float>(psurf->ptexinfo->ptexture->height);
+			float tcoord = Math::DotProduct(vertexpos, ptexinfo->vecs[1])+ptexinfo->vecs[1][3];
+			tcoord /= static_cast<float>(psurf->ptexinfo->ptexture->height);
 
 			Math::VectorCopy(vertexpos, vertexes[2]);
 			texcoords[2][0] = scoord;
 			texcoords[2][1] = (1.0 - tcoord);
 
-			for(Uint32 k = 0; k < 3; k++, dstvertindex++)
+			for(UInt32 k = 0; k < 3; k++, dstvertindex++)
 			{
-				for(Uint32 l = 0; l < 3; l++)
+				for(UInt32 l = 0; l < 3; l++)
 					pvertexes[dstvertindex].origin[l] = vertexes[k][l];
 
 				pvertexes[dstvertindex].origin[3] = 1.0; 
@@ -537,7 +537,7 @@ bool CMonitorManager::DrawMonitorPasses( void )
 
 	// number of rendered monitor passes
 	m_numMonitorsDrawn = 0;
-	Uint32 numoptimized = 0;
+	UInt32 numoptimized = 0;
 
 	CFrustum mainFrustum;
 	R_SetFrustum(mainFrustum, rns.view.params.v_origin, rns.view.params.v_angles, rns.view.fov, rns.view.viewsize_x, rns.view.viewsize_y, true);
@@ -545,7 +545,7 @@ bool CMonitorManager::DrawMonitorPasses( void )
 	// error tracking
 	bool result = true;
 
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t *pentity = rns.objects.pvisents_unsorted[i];
 
@@ -601,9 +601,9 @@ bool CMonitorManager::DrawMonitorPasses( void )
 //====================================
 //
 //====================================
-cl_monitor_t* CMonitorManager::GetMatchingMonitor( Uint32 currentindex )
+cl_monitor_t* CMonitorManager::GetMatchingMonitor( UInt32 currentindex )
 {
-	for(Uint32 i = 0; i < currentindex; i++)
+	for(UInt32 i = 0; i < currentindex; i++)
 	{
 		cl_entity_t *pentity = rns.objects.pvisents_unsorted[i];
 
@@ -676,7 +676,7 @@ bool CMonitorManager::SetupMonitorPass( void )
 	if(pCameraEntity->curstate.renderamt > 0)
 	{
 		Vector vmins, vmaxs;
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			vmins[i] = pCameraEntity->curstate.origin[i] - pCameraEntity->curstate.renderamt;
 			vmaxs[i] = pCameraEntity->curstate.origin[i] + pCameraEntity->curstate.renderamt;
@@ -740,7 +740,7 @@ bool CMonitorManager::DrawMonitors( void )
 	{
 		result = m_pShader->SetDeterminator(m_attribs.d_fog, 1);
 		m_pShader->SetUniform3f(m_attribs.u_fogcolor, rns.fog.settings.color[0], rns.fog.settings.color[1], rns.fog.settings.color[2]);
-		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f / (static_cast<Float>(rns.fog.settings.end) - static_cast<Float>(rns.fog.settings.start)));
+		m_pShader->SetUniform2f(m_attribs.u_fogparams, rns.fog.settings.end, 1.0f / (static_cast<float>(rns.fog.settings.end) - static_cast<float>(rns.fog.settings.start)));
 	}
 	else
 	{
@@ -762,7 +762,7 @@ bool CMonitorManager::DrawMonitors( void )
 
 	R_Bind2DTexture(GL_TEXTURE1, m_pScanlineTexture->gl_index);
 
-	for(Uint32 i = 0; i < rns.objects.numvisents; i++)
+	for(UInt32 i = 0; i < rns.objects.numvisents; i++)
 	{
 		cl_entity_t *pentity = rns.objects.pvisents_unsorted[i];
 
@@ -794,7 +794,7 @@ bool CMonitorManager::DrawMonitors( void )
 		m_pShader->DrawArrays(GL_TRIANGLES, m_pCurrentMonitor->start_vertex, m_pCurrentMonitor->num_vertexes);
 
 		// Set framecount for decals
-		for(Uint32 j = 0; j < m_pCurrentMonitor->surfaces.size(); j++)
+		for(UInt32 j = 0; j < m_pCurrentMonitor->surfaces.size(); j++)
 			m_pCurrentMonitor->surfaces[j]->visframe = cls.framecount;
 	}
 

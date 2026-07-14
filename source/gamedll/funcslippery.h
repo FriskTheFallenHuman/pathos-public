@@ -29,6 +29,6 @@ public:
 	virtual Int32 GetEntityFlags( void ) override { return CBaseEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION; }
 
 private:
-	Float m_planeZCap;
+	float m_planeZCap;
 };
 #endif //FUNCSLIPPERY_H

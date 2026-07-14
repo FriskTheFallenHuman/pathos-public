@@ -178,10 +178,10 @@ void CScriptedSentence::Precache( void )
 {
 	if(g_pSentencesFile)
 	{
-		const Char* pstrSentence = gd_engfuncs.pfnGetString(m_sentenceName);
+		const char* pstrSentence = gd_engfuncs.pfnGetString(m_sentenceName);
 		if(pstrSentence)
 		{
-			const Char* pstrEntryName = g_pSentencesFile->GetSentence(pstrSentence, nullptr);
+			const char* pstrEntryName = g_pSentencesFile->GetSentence(pstrSentence, nullptr);
 			if(pstrEntryName && qstrlen(pstrEntryName) > 0)
 				gd_engfuncs.pfnPrecacheSound(pstrEntryName);
 		}
@@ -195,7 +195,7 @@ void CScriptedSentence::Precache( void )
 // @brief
 //
 //=============================================
-void CScriptedSentence::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CScriptedSentence::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(!m_isActive)
 		return;
@@ -223,8 +223,8 @@ void CScriptedSentence::SendInitMessage( const CBaseEntity* pPlayer )
 
 	bool subOnlyRadius = HasSpawnFlag(FL_SUB_ONLY_IN_RADIUS) ? true : false;
 	bool isConcurrent = (!HasSpawnFlag(FL_CONCURRENT)) ? false : true;
-	const Char* pstrSentenceName = gd_engfuncs.pfnGetString(m_sentenceName);
-	Double timeOffset = g_pGameVars->time - m_beginTime;
+	const char* pstrSentenceName = gd_engfuncs.pfnGetString(m_sentenceName);
+	double timeOffset = g_pGameVars->time - m_beginTime;
 
 	m_targetEntity->PlayScriptedSentence(pstrSentenceName, m_duration, m_volume / 10.0f, m_attenuation, timeOffset, subOnlyRadius, isConcurrent, m_listenerEntity);
 }
@@ -341,7 +341,7 @@ bool CScriptedSentence::StartSentence( CBaseEntity* pTarget )
 	
 	if(m_listenerName != NO_STRING_VALUE)
 	{
-		const Char* pstrListenerName = gd_engfuncs.pfnGetString(m_listenerName);
+		const char* pstrListenerName = gd_engfuncs.pfnGetString(m_listenerName);
 		if(!qstrcmp(pstrListenerName, "player"))
 		{
 			// Listener is host player always

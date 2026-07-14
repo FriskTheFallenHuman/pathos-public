@@ -11,6 +11,7 @@ All Rights Reserved.
 #define SCRIPTED_SEQUENCE_H
 
 #include "delayentity.h"
+#include "entity_enums.h"
 
 class CBaseNPC;
 
@@ -33,13 +34,6 @@ enum script_loop_t
 	SCRIPT_LOOP_PLAYING_EXIT
 };
 
-enum scripted_sequence_anim_t
-{
-	SCRIPT_SEQ_PLAY = 0,
-	SCRIPT_SEQ_LOOP,
-	SCRIPT_SEQ_LOOP_EXIT
-};
-
 //=============================================
 //
 //=============================================
@@ -47,7 +41,7 @@ class CScriptedSequence : public CDelayEntity
 {
 public:
 	// Script default break conditions
-	static const Uint32 SCRIPT_BREAK_CONDITIONS_BITS[];
+	static const UInt32 SCRIPT_BREAK_CONDITIONS_BITS[];
 	// Script default break conditions bitset
 	static const CBitSet SCRIPT_BREAK_CONDITIONS;
 
@@ -77,14 +71,14 @@ public:
 	virtual void DeclareSaveFields( void ) override;
 	virtual Int32 GetEntityFlags( void ) override { return (CBaseEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION); }
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void InitEntity( void ) override;
 	virtual bool IsScriptedSequenceEntity( void ) const override { return true; }
 	virtual CBaseEntity* GetTargetEntity( void ) override { return m_targetEntity; }
 	virtual void OnScriptedAnimationStart( scripted_sequence_anim_t scriptanim ) override;
 
 public:
-	bool StartSequence( CBaseEntity* pNPC, const Char* pstrSequenceName, bool completeOnEmpty );
+	bool StartSequence( CBaseEntity* pNPC, const char* pstrSequenceName, bool completeOnEmpty );
 	void CancelScript( void );
 
 	Int32 GetMoveToSetting( void ) const;
@@ -112,15 +106,15 @@ public:
 
 public:
 	bool HasPlaySequence( void ) const;
-	const Char* GetPlaySequenceName( void );
+	const char* GetPlaySequenceName( void );
 	bool HasIdleAnimation( void ) const;
-	const Char* GetIdleSequenceName( void );
-	const Char* GetLoopSequenceName( void );
-	const Char* GetExitSequenceName( void );
+	const char* GetIdleSequenceName( void );
+	const char* GetLoopSequenceName( void );
+	const char* GetExitSequenceName( void );
 
 	CBitSet GetIgnoreConditions( void );
 	CBitSet GetScriptBreakingAIConditions( void );
-	Uint64 GetInterruptSoundMask( void );
+	UInt64 GetInterruptSoundMask( void );
 	script_loop_t GetLoopState( void );
 
 private:
@@ -138,8 +132,8 @@ private:
 	Int32 m_lastSequence;
 	Int32 m_moveToSetting;
 
-	Float m_radius;
-	Float m_repeatRange;
+	float m_radius;
+	float m_repeatRange;
 	Int32 m_customSoundMask;
 
 	Int32 m_scriptDelay;

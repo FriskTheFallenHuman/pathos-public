@@ -20,22 +20,22 @@ class CUIDownloadWindow : public CUIWindow
 {
 public:
 	// Window description file
-	static const Char WINDOW_DESC_FILE[];
+	static const char WINDOW_DESC_FILE[];
 	// Window object name
-	static const Char WINDOW_OBJ_NAME[];
+	static const char WINDOW_OBJ_NAME[];
 	// Cancel button object name
-	static const Char CANCEL_BUTTON_OBJ_NAME[];
+	static const char CANCEL_BUTTON_OBJ_NAME[];
 	// Save and Quit button object name
-	static const Char FILE_DOWNLOAD_LABEL_OBJ_NAME[];
+	static const char FILE_DOWNLOAD_LABEL_OBJ_NAME[];
 	// Quit button object name
-	static const Char FILE_DOWNLOAD_PROGRESSBAR_OBJ_NAME[];
+	static const char FILE_DOWNLOAD_PROGRESSBAR_OBJ_NAME[];
 	// Save and Quit button object name
-	static const Char TOTAL_PROGRESS_LABEL_OBJ_NAME[];
+	static const char TOTAL_PROGRESS_LABEL_OBJ_NAME[];
 	// Quit button object name
-	static const Char TOTAL_PROGRESS_PROGRESSBAR_OBJ_NAME[];
+	static const char TOTAL_PROGRESS_PROGRESSBAR_OBJ_NAME[];
 
 private:
-	CUIDownloadWindow( Int32 flags, Uint32 width, Uint32 height, Int32 originx, Int32 originy );
+	CUIDownloadWindow( Int32 flags, UInt32 width, UInt32 height, Int32 originx, Int32 originy );
 public:
 	~CUIDownloadWindow( void );
 
@@ -57,11 +57,11 @@ public:
 	// Manages a button press event
 	void CancelDownload( void );
 	// Sets file progress meter
-	void SetFileProgressBar( Float value );
+	void SetFileProgressBar( float value );
 	// Sets total progress bar
-	void SetTotalProgressBar( Float value );
+	void SetTotalProgressBar( float value );
 	// Sets the downloaded file name
-	void SetDownloadFileName( const Char* pstr );
+	void SetDownloadFileName( const char* pstr );
 
 private:
 	// Base text for download bar
@@ -94,7 +94,7 @@ public:
 
 public:
 	// Performs the action
-	virtual void PerformAction( Float param ) override { m_pWindow->CancelDownload(); }
+	virtual void PerformAction( float param ) override { m_pWindow->CancelDownload(); }
 
 protected:
 	// Window that created this

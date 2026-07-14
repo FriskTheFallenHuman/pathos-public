@@ -135,7 +135,7 @@ CODE
    - Mouse wheel:                   Scroll vertically.
    - Shift+Mouse wheel:             Scroll horizontally.
    - Click [X]:                     Close a window, available when 'bool* p_open' is passed to ImGui::Begin().
-   - Click ^, Double-Click title:   Collapse window.
+   - Click ^, double-Click title:   Collapse window.
    - Drag on corner/border:         Resize window (double-click to auto fit window to its contents).
    - Drag on any empty space:       Move window (unless io.ConfigWindowsMoveFromTitleBarOnly = true).
    - Left-click outside popup:      Close popup stack (right-click over underlying popup: Partially close popup stack).
@@ -144,7 +144,7 @@ CODE
    - Hold Shift or Drag Mouse:      Select text.
    - Ctrl+Left/Right:               Word jump.
    - Ctrl+Shift+Left/Right:         Select words.
-   - Ctrl+A or Double-Click:        Select All.
+   - Ctrl+A or double-Click:        Select All.
    - Ctrl+X, Ctrl+C, Ctrl+V:        Use OS clipboard.
    - Ctrl+Z                         Undo.
    - Ctrl+Y or Ctrl+Shift+Z:        Redo.
@@ -7342,7 +7342,7 @@ static int ImGui::UpdateWindowManualResize(ImGuiWindow* window, int* border_hove
             SetMouseCursor((axis == ImGuiAxis_X) ? ImGuiMouseCursor_ResizeEW : ImGuiMouseCursor_ResizeNS);
         if (held && g.IO.MouseDoubleClicked[0])
         {
-            // Double-clicking bottom or right border auto-fit on this axis
+            // double-clicking bottom or right border auto-fit on this axis
             // FIXME: Support top and right borders: rework CalcResizePosSizeFromAnyCorner() to be reusable in both cases.
             if (border_n == 1 || border_n == 3) // Right and bottom border
             {

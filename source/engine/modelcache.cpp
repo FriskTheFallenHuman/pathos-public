@@ -40,8 +40,8 @@ void Mod_DumpCacheModels( void )
 {
 	Con_Printf("Model cache contents:\n");
 
-	Uint32 nbCache = gModelCache.GetNbCachedModels();
-	for(Uint32 i = 0; i < nbCache; i++)
+	UInt32 nbCache = gModelCache.GetNbCachedModels();
+	for(UInt32 i = 0; i < nbCache; i++)
 	{
 		cache_model_t* pmodel = gModelCache.GetModelByIndex(i+1);
 		if(!pmodel)
@@ -83,7 +83,7 @@ void CModelCache::Init( void )
 //=============================================
 void CModelCache::ClearGL( void )
 {
-	for(Uint32 i = 0; i < m_modelCacheArray.size(); i++)
+	for(UInt32 i = 0; i < m_modelCacheArray.size(); i++)
 	{
 		cache_model_t* pmodel = m_modelCacheArray[i];
 		if(pmodel->type == MOD_VBM || pmodel->type == MOD_SPRITE)
@@ -100,7 +100,7 @@ void CModelCache::ClearCache( void )
 	if(m_modelCacheArray.empty())
 		return;
 
-	for(Uint32 i = 0; i < m_modelCacheArray.size(); i++)
+	for(UInt32 i = 0; i < m_modelCacheArray.size(); i++)
 	{
 		cache_model_t* pmodel = m_modelCacheArray[i];
 
@@ -143,15 +143,15 @@ void CModelCache::ClearCache( void )
 // @brief
 //
 //=============================================
-cache_model_t* CModelCache::LoadModel( const Char* pstrFilename )
+cache_model_t* CModelCache::LoadModel( const char* pstrFilename )
 {
 	// Try to find it in the cache first
 	cache_model_t* pmodel = FindModelByName(pstrFilename);
 	if(pmodel)
 		return pmodel;
 
-	Uint32 filesize = 0;
-	const byte* pfile = FL_LoadFile(pstrFilename, &filesize);
+	UInt32 filesize = 0;
+	const Byte* pfile = FL_LoadFile(pstrFilename, &filesize);
 	if(!pfile)
 		return nullptr;
 
@@ -176,7 +176,7 @@ cache_model_t* CModelCache::LoadModel( const Char* pstrFilename )
 
 	// Add to the map
 	if(pmodel)
-		m_modelNameMap.insert(std::pair<CString, Uint32>(pstrFilename, pmodel->cacheindex-1));
+		m_modelNameMap.insert(std::pair<CString, UInt32>(pstrFilename, pmodel->cacheindex-1));
 
 	return pmodel;
 }
@@ -184,7 +184,7 @@ cache_model_t* CModelCache::LoadModel( const Char* pstrFilename )
 // @brief
 //
 //=============================================
-cache_model_t* CModelCache::LoadSpriteModel( const Char* pstrFilename, const byte* pfile, Uint32 filesize )
+cache_model_t* CModelCache::LoadSpriteModel( const char* pstrFilename, const Byte* pfile, UInt32 filesize )
 {
 	msprite_t* psprite = Sprite_Load(pfile, filesize);
 	if(!psprite)
@@ -194,7 +194,7 @@ cache_model_t* CModelCache::LoadSpriteModel( const Char* pstrFilename, const byt
 	}
 
 	// Create a new model entry
-	Uint32 modelindex = m_modelCacheArray.size();
+	UInt32 modelindex = m_modelCacheArray.size();
 	cache_model_t* pnew = new cache_model_t;
 	m_modelCacheArray.push_back(pnew);
 
@@ -217,7 +217,7 @@ cache_model_t* CModelCache::LoadSpriteModel( const Char* pstrFilename, const byt
 // @brief
 //
 //=============================================
-cache_model_t* CModelCache::LoadVBMModel( const Char* pstrFilename, const byte* pfile, Uint32 filesize )
+cache_model_t* CModelCache::LoadVBMModel( const char* pstrFilename, const Byte* pfile, UInt32 filesize )
 {
 	// Get studio header
 	const studiohdr_t* pstudiohdr = reinterpret_cast<const studiohdr_t*>(pfile);
@@ -235,13 +235,13 @@ cache_model_t* CModelCache::LoadVBMModel( const Char* pstrFilename, const byte* 
 
 	// Now load the VBM file
 	CString vbmfilepath = pstrFilename;
-	Uint32 begin = vbmfilepath.find(0, ".mdl");
+	UInt32 begin = vbmfilepath.find(0, ".mdl");
 	if(begin != CString::CSTRING_NO_POSITION)
 		vbmfilepath.erase(begin, 4);
 	vbmfilepath << ".vbm";
 
-	Uint32 vbmfilesize = 0;
-	const byte* pvbmfile = FL_LoadFile(vbmfilepath.c_str(), &vbmfilesize);
+	UInt32 vbmfilesize = 0;
+	const Byte* pvbmfile = FL_LoadFile(vbmfilepath.c_str(), &vbmfilesize);
 	if(!pvbmfile)
 	{
 		Con_EPrintf("%s - Failed to load file '%s'.\n", __FUNCTION__, vbmfilepath.c_str());
@@ -258,18 +258,18 @@ cache_model_t* CModelCache::LoadVBMModel( const Char* pstrFilename, const byte* 
 	}
 
 	// Copy the data
-	Uint32 studiodatasize = 0;
+	UInt32 studiodatasize = 0;
 	if(pstudiohdr->texturedataindex)
 		studiodatasize = pstudiohdr->texturedataindex;
 	else
 		studiodatasize = filesize;
 
-	byte* pstudiodata = new byte[studiodatasize];
-	memcpy(pstudiodata, pfile, sizeof(byte)*studiodatasize);
+	Byte* pstudiodata = new Byte[studiodatasize];
+	memcpy(pstudiodata, pfile, sizeof(Byte)*studiodatasize);
 
 	// Copy VBM data
-	byte* pvbmdata = new byte[vbmfilesize];
-	memcpy(pvbmdata, pvbmfile, sizeof(byte)*vbmfilesize);
+	Byte* pvbmdata = new Byte[vbmfilesize];
+	memcpy(pvbmdata, pvbmfile, sizeof(Byte)*vbmfilesize);
 	FL_FreeFile(pvbmfile);
 
 	// Now load the MCD file if present
@@ -279,9 +279,9 @@ cache_model_t* CModelCache::LoadVBMModel( const Char* pstrFilename, const byte* 
 		mcdfilepath.erase(begin, 4);
 	mcdfilepath << ".mcd";
 
-	Uint32 mcdfilesize = 0;
-	byte* pmcddata = nullptr;
-	const byte* pmcdfile = FL_LoadFile(mcdfilepath.c_str(), &mcdfilesize);
+	UInt32 mcdfilesize = 0;
+	Byte* pmcddata = nullptr;
+	const Byte* pmcdfile = FL_LoadFile(mcdfilepath.c_str(), &mcdfilesize);
 	if(pmcdfile)
 	{
 		// Check header
@@ -311,7 +311,7 @@ cache_model_t* CModelCache::LoadVBMModel( const Char* pstrFilename, const byte* 
 			return nullptr;
 		}
 
-		for(Uint32 i = 0; i < pmcdheader->numbodyparts; i++)
+		for(UInt32 i = 0; i < pmcdheader->numbodyparts; i++)
 		{
 			const vbmbodypart_t* pvbmbodypart = pvbmheader->getBodyPart(i);
 			const mcdbodypart_t* pmcdbodypart = pmcdheader->getBodyPart(i);
@@ -325,8 +325,8 @@ cache_model_t* CModelCache::LoadVBMModel( const Char* pstrFilename, const byte* 
 			}
 		}
 
-		pmcddata = new byte[mcdfilesize];
-		memcpy(pmcddata, pmcdfile, sizeof(byte)*mcdfilesize);
+		pmcddata = new Byte[mcdfilesize];
+		memcpy(pmcddata, pmcdfile, sizeof(Byte)*mcdfilesize);
 		FL_FreeFile(pmcdfile);
 	}
 
@@ -340,7 +340,7 @@ cache_model_t* CModelCache::LoadVBMModel( const Char* pstrFilename, const byte* 
 		pcache->pmcdheader = reinterpret_cast<mcdheader_t*>(pmcddata);
 
 	// Create a new model entry
-	Uint32 modelindex = m_modelCacheArray.size();
+	UInt32 modelindex = m_modelCacheArray.size();
 	cache_model_t* pnew = new cache_model_t;
 	m_modelCacheArray.push_back(pnew);
 
@@ -350,7 +350,7 @@ cache_model_t* CModelCache::LoadVBMModel( const Char* pstrFilename, const byte* 
 	for(Int32 i = 0; i < pcache->pstudiohdr->numseq; i++)
 	{
 		const mstudioseqdesc_t* psequence = pstudiohdr->getSequence(i);
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			if(psequence->bbmax[j] > maxs[j])
 				maxs[j] = psequence->bbmax[j];
@@ -378,7 +378,7 @@ cache_model_t* CModelCache::LoadVBMModel( const Char* pstrFilename, const byte* 
 
 	// Determine radius
 	pnew->radius = 0;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(SDL_fabs(pstudiohdr->bbmin[i]) > pnew->radius)
 			pnew->radius = pstudiohdr->bbmin[i];
@@ -389,8 +389,8 @@ cache_model_t* CModelCache::LoadVBMModel( const Char* pstrFilename, const byte* 
 
 	// Create hash of vertex data
 	const vbmvertex_t* pvertexdata = pcache->pvbmhdr->getVertexes();
-	Uint32 vertexdatasize = pcache->pvbmhdr->numverts*sizeof(vbmvertex_t);
-	CMD5 hash(reinterpret_cast<const byte*>(pvertexdata),  vertexdatasize);
+	UInt32 vertexdatasize = pcache->pvbmhdr->numverts*sizeof(vbmvertex_t);
+	CMD5 hash(reinterpret_cast<const Byte*>(pvertexdata),  vertexdatasize);
 	pcache->vertexhash = hash.HexDigest();
 
 	return pnew;
@@ -400,7 +400,7 @@ cache_model_t* CModelCache::LoadVBMModel( const Char* pstrFilename, const byte* 
 // @brief
 //
 //=============================================
-cache_model_t* CModelCache::LoadBSPModel( const Char* pstrFilename, const byte* pfile )
+cache_model_t* CModelCache::LoadBSPModel( const char* pstrFilename, const Byte* pfile )
 {
 	brushmodel_t* pmodel = nullptr;
 
@@ -460,7 +460,7 @@ cache_model_t* CModelCache::LoadBSPModel( const Char* pstrFilename, const byte* 
 	BSP_SetupPAS((*pmodel));
 
 	pmodel->lightmaplayercount = 0;
-	for(Uint32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
+	for(UInt32 i = 0; i < NB_SURF_LIGHTMAP_LAYERS; i++)
 	{
 		if(!pmodel->plightdata[i])
 			break;
@@ -469,7 +469,7 @@ cache_model_t* CModelCache::LoadBSPModel( const Char* pstrFilename, const byte* 
 	}
 
 	pmodel->vertexlightlayercount = 0;
-	for(Uint32 i = 0; i < NB_BAKED_VERTEXLIGHT_LAYERS; i++)
+	for(UInt32 i = 0; i < NB_BAKED_VERTEXLIGHT_LAYERS; i++)
 	{
 		if(!pmodel->pvertexlightdata[i])
 			break;
@@ -487,10 +487,10 @@ cache_model_t* CModelCache::LoadBSPModel( const Char* pstrFilename, const byte* 
 // @brief
 //
 //=============================================
-void CModelCache::SetupBSPSubmodels( brushmodel_t& model, const Char* loadName )
+void CModelCache::SetupBSPSubmodels( brushmodel_t& model, const char* loadName )
 {
 	// Skip first model because it's the world
-	for(Uint32 i = 0; i < model.numsubmodels; i++)
+	for(UInt32 i = 0; i < model.numsubmodels; i++)
 	{
 		mmodel_t* psubmodel = &model.psubmodels[i];
 
@@ -535,7 +535,7 @@ void CModelCache::SetupBSPSubmodels( brushmodel_t& model, const Char* loadName )
 		memcpy(pnewmodel->hulls, model.hulls, sizeof(hull_t)*MAX_MAP_HULLS);
 		pnewmodel->freedata = (i == 0) ? true : false;
 
-		for(Uint32 j = 0 ; j < NB_SURF_LIGHTMAP_LAYERS; j++)
+		for(UInt32 j = 0 ; j < NB_SURF_LIGHTMAP_LAYERS; j++)
 		{
 			pnewmodel->plightdata[j] = model.plightdata[j];
 			pnewmodel->plightdata_original[j] = model.plightdata_original[j];
@@ -544,7 +544,7 @@ void CModelCache::SetupBSPSubmodels( brushmodel_t& model, const Char* loadName )
 			pnewmodel->original_compressionlevel[j] = model.original_compressionlevel[j];
 		}
 
-		for(Uint32 j = 0 ; j < NB_BAKED_VERTEXLIGHT_LAYERS; j++)
+		for(UInt32 j = 0 ; j < NB_BAKED_VERTEXLIGHT_LAYERS; j++)
 		{
 			pnewmodel->pvertexlightdata[j] = model.pvertexlightdata[j];
 			pnewmodel->pvertexlightdata_original[j] = model.pvertexlightdata_original[j];
@@ -554,7 +554,7 @@ void CModelCache::SetupBSPSubmodels( brushmodel_t& model, const Char* loadName )
 		}
 
 		pnewmodel->hulls[0].firstclipnode = psubmodel->headnode[0];
-		for(Uint32 j = 1; j < MAX_MAP_HULLS; j++)
+		for(UInt32 j = 1; j < MAX_MAP_HULLS; j++)
 		{
 			pnewmodel->hulls[j].firstclipnode = psubmodel->headnode[j];
 			pnewmodel->hulls[j].lastclipnode = model.numclipnodes-1;
@@ -568,7 +568,7 @@ void CModelCache::SetupBSPSubmodels( brushmodel_t& model, const Char* loadName )
 
 		// Calculate radius
 		pnewmodel->radius = 0;
-		for(Uint32 j = 0; j < 3; j++)
+		for(UInt32 j = 0; j < 3; j++)
 		{
 			if(SDL_fabs(pnewmodel->mins[j]) > pnewmodel->radius)
 				pnewmodel->radius = SDL_fabs(pnewmodel->mins[j]);
@@ -590,7 +590,7 @@ void CModelCache::SetupBSPSubmodels( brushmodel_t& model, const Char* loadName )
 		pnewmodel->name = modelname;
 
 		// Load was successful, so add it to the cache
-		Uint32 modelindex = m_modelCacheArray.size();
+		UInt32 modelindex = m_modelCacheArray.size();
 		cache_model_t* pnew = new cache_model_t;
 		m_modelCacheArray.push_back(pnew);
 
@@ -609,7 +609,7 @@ void CModelCache::SetupBSPSubmodels( brushmodel_t& model, const Char* loadName )
 // @brief
 //
 //=============================================
-cache_model_t* CModelCache::FindModelByName( const Char* pstrFilename )
+cache_model_t* CModelCache::FindModelByName( const char* pstrFilename )
 {
 	ModelNameMapType_t::iterator it = m_modelNameMap.find(pstrFilename);
 	if(it != m_modelNameMap.end())
@@ -622,7 +622,7 @@ cache_model_t* CModelCache::FindModelByName( const Char* pstrFilename )
 // @brief
 //
 //=============================================
-cache_model_t* CModelCache::GetModelByIndex( Uint32 index )
+cache_model_t* CModelCache::GetModelByIndex( UInt32 index )
 {
 	// Verify if the index is correct
 	Int32 realIndex = static_cast<Int32>(index - 1);
@@ -639,7 +639,7 @@ cache_model_t* CModelCache::GetModelByIndex( Uint32 index )
 // @brief
 //
 //=============================================
-cmodel_type_t CModelCache::GetType( Uint32 index )
+cmodel_type_t CModelCache::GetType( UInt32 index )
 {
 	cache_model_t* pmodel = GetModelByIndex(index);
 	if(!pmodel)
@@ -652,7 +652,7 @@ cmodel_type_t CModelCache::GetType( Uint32 index )
 // @brief
 //
 //=============================================
-void CModelCache::GatherModelResources( const Char* pstrFilename, CArray<maptexturematerial_t>& mapTextureLinks, CArray<CString>& outMaterialsArray, CArray<CString>& outTexturesArray )
+void CModelCache::GatherModelResources( const char* pstrFilename, CArray<maptexturematerial_t>& mapTextureLinks, CArray<CString>& outMaterialsArray, CArray<CString>& outTexturesArray )
 {
 	// Try to find it in the cache first
 	cache_model_t* pcache = FindModelByName(pstrFilename);
@@ -667,13 +667,13 @@ void CModelCache::GatherModelResources( const Char* pstrFilename, CArray<maptext
 	if(pcache->type == MOD_BRUSH)
 	{
 		brushmodel_t* pmodel = pcache->getBrushmodel();
-		for(Uint32 i = 0; i < pmodel->numtextures; i++)
+		for(UInt32 i = 0; i < pmodel->numtextures; i++)
 		{
 			mtexture_t* ptexture = &pmodel->ptextures[i];
 			
 			// Find the material file linked to this map texture
 			CString materialfilepath;
-			for(Uint32 j = 0; j < mapTextureLinks.size(); j++)
+			for(UInt32 j = 0; j < mapTextureLinks.size(); j++)
 			{
 				if(!qstrcmp(ptexture->name, mapTextureLinks[j].maptexturename))
 				{
@@ -727,7 +727,7 @@ void CModelCache::GatherMaterialResources( en_material_t* pmaterialscript, CArra
 {
 	if(!outMaterialsArray.empty())
 	{
-		Uint32 j = 0;
+		UInt32 j = 0;
 		for(; j < outMaterialsArray.size(); j++)
 		{
 			if(!qstrcmp(outMaterialsArray[j], pmaterialscript->filepath))
@@ -743,7 +743,7 @@ void CModelCache::GatherMaterialResources( en_material_t* pmaterialscript, CArra
 	outMaterialsArray.push_back(pmaterialscript->filepath);
 
 	// Now add each texture
-	for(Uint32 j = 0; j < NB_MT_TX; j++)
+	for(UInt32 j = 0; j < NB_MT_TX; j++)
 	{
 		if(!pmaterialscript->containername.empty() && j == MT_TX_DIFFUSE)
 			continue;
@@ -754,7 +754,7 @@ void CModelCache::GatherMaterialResources( en_material_t* pmaterialscript, CArra
 
 		if(!outTexturesArray.empty())
 		{
-			Uint32 k = 0;
+			UInt32 k = 0;
 			for(; k < outTexturesArray.size(); k++)
 			{
 				if(!qstrcmp(outTexturesArray[k], ptexture->filepath))
@@ -812,9 +812,9 @@ const cache_model_t* Cache_GetModel( Int32 modelindex )
 //=============================================
 //
 //=============================================
-Uint64 Cache_GetModelFrameCount( const cache_model_t& model )
+UInt64 Cache_GetModelFrameCount( const cache_model_t& model )
 {
-	Uint64 count = 0;
+	UInt64 count = 0;
 	switch(model.type)
 	{
 	case MOD_SPRITE:
@@ -848,7 +848,7 @@ Uint64 Cache_GetModelFrameCount( const cache_model_t& model )
 //=============================================
 //
 //=============================================
-Uint32 Cache_GetNbModels( void )
+UInt32 Cache_GetNbModels( void )
 {
 	return gModelCache.GetNbCachedModels();
 }
@@ -856,7 +856,7 @@ Uint32 Cache_GetNbModels( void )
 //=============================================
 //
 //=============================================
-const cache_model_t* Cache_GetModelByName( const Char* pstrModelName )
+const cache_model_t* Cache_GetModelByName( const char* pstrModelName )
 {
 	return gModelCache.FindModelByName(pstrModelName);
 }

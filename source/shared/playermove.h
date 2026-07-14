@@ -14,44 +14,46 @@ All Rights Reserved.
 #include "pm_shared.h"
 #include "textures_shared.h"
 
+#include "cache_model.h"
+
 struct cache_model_t;
 struct en_material_t;
 enum cmodel_type_t;
 
 // Waterjump height
-static const Float WATERJUMP_HEIGHT = 8.0f;
+static const float WATERJUMP_HEIGHT = 8.0f;
 // Waterjump wait time
-static const Float WATERJUMP_WAIT_TIME = 2000; // two seconds
+static const float WATERJUMP_WAIT_TIME = 2000; // two seconds
 // Waterjump wait time
-static const Float PLAYER_DUCK_WAIT_TIME = 1000; // Time until we can duck again
+static const float PLAYER_DUCK_WAIT_TIME = 1000; // Time until we can duck again
 // Waterjump wait time
-static const Float PLAYER_DUCK_TIME = 400; // Time until we can duck again
+static const float PLAYER_DUCK_TIME = 400; // Time until we can duck again
 // Waterjump wait time
-static const Float SWIM_SOUND_DELAY = 1000; // two seconds
+static const float SWIM_SOUND_DELAY = 1000; // two seconds
 // Number of bumps with flymove
-static const Uint32 NUM_FLYMOVE_BUMPS = 4;
+static const UInt32 NUM_FLYMOVE_BUMPS = 4;
 // Max planes we can collide against
-static const Uint32 MAX_CLIP_PLANES = 5;
+static const UInt32 MAX_CLIP_PLANES = 5;
 // Player fall treshold
-static const Float PLAYER_FALL_TRESHOLD = 350.0f;
+static const float PLAYER_FALL_TRESHOLD = 350.0f;
 // Player's safe falling speed
-static const Float PLAYER_SAFE_FALL_SPEED = 580.0f;
+static const float PLAYER_SAFE_FALL_SPEED = 580.0f;
 // Player's climbing speed
-static const Float PLAYER_CLIMB_SPEED = 100.0f;
+static const float PLAYER_CLIMB_SPEED = 100.0f;
 // Player downward drift speed in water
-static const Float PLAYER_DOWNWARD_DRIFT_SPEED = 10.0f;
+static const float PLAYER_DOWNWARD_DRIFT_SPEED = 10.0f;
 // Default plane normal treshold for being onground
-static const Float DEFAULT_ONGROUND_LOWER_CAP = 0.7;
+static const float DEFAULT_ONGROUND_LOWER_CAP = 0.7;
 
 struct pm_interface_t
 {
-	void					(*pfnCon_Printf)( const Char *fmt, ... );
-	void					(*pfnCon_DPrintf)( const Char *fmt, ... );
-	void					(*pfnCon_VPrintf)( const Char *fmt, ... );
-	void					(*pfnCon_WPrintf)( const Char *fmt, ... );
-	void					(*pfnCon_EPrintf)( const Char *fmt, ... );
+	void					(*pfnCon_Printf)( const char *fmt, ... );
+	void					(*pfnCon_DPrintf)( const char *fmt, ... );
+	void					(*pfnCon_VPrintf)( const char *fmt, ... );
+	void					(*pfnCon_WPrintf)( const char *fmt, ... );
+	void					(*pfnCon_EPrintf)( const char *fmt, ... );
 
-	Double					(*pfnGetTime)( void );
+	double					(*pfnGetTime)( void );
 
 	cmodel_type_t			(*pfnGetModelType)( const cache_model_t& model );
 	void					(*pfnGetModelBounds)( const cache_model_t& model, Vector& mins, Vector& maxs );
@@ -60,10 +62,10 @@ struct pm_interface_t
 	Int32					(*pfnGetNumEntities)( void );
 	const entity_state_t*	(*pfnGetEntityState)( entindex_t entindex );
 
-	const en_material_t*	(*pfnGetMapTextureMaterialScript)( const Char* pstrTextureName );
+	const en_material_t*	(*pfnGetMapTextureMaterialScript)( const char* pstrTextureName );
 
-	void					(*pfnPlaySound)( entindex_t entindex, Int32 channel, const Char* psample, Float volume, Float attenuation, Int32 pitch, Int32 flags );
-	void					(*pfnPlayStepSound)( entindex_t entindex, const Char* pstrMaterialName, bool stepleft, Float volume, const Vector& origin );
+	void					(*pfnPlaySound)( entindex_t entindex, Int32 channel, const char* psample, float volume, float attenuation, Int32 pitch, Int32 flags );
+	void					(*pfnPlayStepSound)( entindex_t entindex, const char* pstrMaterialName, bool stepleft, float volume, const Vector& origin );
 	void					(*pfnAddToTouched)( entindex_t hitent, trace_t& trace, const Vector& velocity );
 };
 
@@ -102,9 +104,9 @@ private:
 	// Checks if the player is stuck
 	bool CheckStuck( void );
 	// Sets entities in traceline class
-	void AddGravity( Float multiplier = 1.0 );
+	void AddGravity( float multiplier = 1.0 );
 	// Sets blocked flags
-	static Int32 ClipVelocity( const Vector& in, const Vector& normal, Vector& out, Float overbounce );
+	static Int32 ClipVelocity( const Vector& in, const Vector& normal, Vector& out, float overbounce );
 
 	// Checks water levels
 	bool CheckWater( void );
@@ -133,9 +135,9 @@ private:
 	void FixCrouchStuck( const Vector& direction );
 
 	// Calculates ground acceleration
-	void Accelerate( const Vector& wishdir, Float wishspeed, Float acceleration );
+	void Accelerate( const Vector& wishdir, float wishspeed, float acceleration );
 	// Calculates air acceleration
-	void AirAccelerate( const Vector& wishdir, Float wishspeed, Float acceleration );
+	void AirAccelerate( const Vector& wishdir, float wishspeed, float acceleration );
 
 	// Drops punch angle
 	void DropPunchAngle( void );
@@ -178,7 +180,7 @@ private:
 
 private:
 	// Current frametime
-	Float m_frameTime;
+	float m_frameTime;
 	// Playermove info structure
 	pm_info_t* m_pPMInfo;
 
@@ -195,24 +197,24 @@ private:
 	// Current hull index
 	hull_types_t m_hullIndex;
 	// Max speed
-	Float m_maxSpeed;
+	float m_maxSpeed;
 	// Max forward speed
-	Float m_maxForwardSpeed;
+	float m_maxForwardSpeed;
 	// Previous water level
 	Int32 m_oldWaterLevel;
 
 	// Plane Z cap
-	Float m_planeZCap;
+	float m_planeZCap;
 
-	// TRUE if we're on a ladder
+	// true if we're on a ladder
 	bool m_isOnLadder;
 	// Ladder entity
 	const entity_state_t* m_pLadder;
-	// TRUE if running on server side
+	// true if running on server side
 	bool m_isServer;
 	// Tells if sounds should be played
 	bool m_playSounds;
-	// TRUE if multiplayer
+	// true if multiplayer
 	bool m_isMultiplayer;
 
 	// Material name for the texture

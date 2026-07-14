@@ -36,7 +36,7 @@ CPriorityNodeQueue::~CPriorityNodeQueue( void )
 // @brief
 //
 //=============================================
-void CPriorityNodeQueue::Insert( Int32 value, Float priority )
+void CPriorityNodeQueue::Insert( Int32 value, float priority )
 {
 	if(IsFull())
 	{
@@ -57,7 +57,7 @@ void CPriorityNodeQueue::Insert( Int32 value, Float priority )
 // @brief
 //
 //=============================================
-Int32 CPriorityNodeQueue::Remove( Float& priority )
+Int32 CPriorityNodeQueue::Remove( float& priority )
 {
 	Int32 returnvalue = m_heap[0].id;
 	priority = m_heap[0].priority;
@@ -91,7 +91,7 @@ bool CPriorityNodeQueue::IsEmpty( void ) const
 // @brief
 //
 //=============================================
-Uint32 CPriorityNodeQueue::GetSize( void ) const
+UInt32 CPriorityNodeQueue::GetSize( void ) const
 {
 	return m_size;
 }

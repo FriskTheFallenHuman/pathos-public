@@ -68,7 +68,7 @@ cl_entity_t* CL_GetLocalPlayer( void )
 //=============================================
 //
 //=============================================
-Double CL_GetClientTime( void )
+double CL_GetClientTime( void )
 {
 	return cls.cl_time;
 }
@@ -116,7 +116,7 @@ Int32 CL_GetNumEntities( void )
 //=============================================
 //
 //=============================================
-void CL_PlayEntitySound( entindex_t entindex, Int32 channel, const CString& sample, Float volume, Float attenuation, Int32 pitch, Int32 flags, Float timeoffset )
+void CL_PlayEntitySound( entindex_t entindex, Int32 channel, const CString& sample, float volume, float attenuation, Int32 pitch, Int32 flags, float timeoffset )
 {
 	cl_entity_t* pentity = CL_GetEntityByIndex(entindex);
 	if(!pentity || !pentity->pmodel)
@@ -128,7 +128,7 @@ void CL_PlayEntitySound( entindex_t entindex, Int32 channel, const CString& samp
 //=============================================
 //
 //=============================================
-void CL_PlayMusic( const CString& sample, Int32 channel, Float timeOffset, Float fadeInTime, Int32 flags )
+void CL_PlayMusic( const CString& sample, Int32 channel, float timeOffset, float fadeInTime, Int32 flags )
 {
 	gSoundEngine.PlayOgg(sample.c_str(), channel, timeOffset, flags, fadeInTime);
 }
@@ -144,7 +144,7 @@ void CL_StopMusic( Int32 channel )
 //=============================================
 //
 //=============================================
-void CL_PlayAmbientSound( entindex_t entindex, const Vector& vecOrigin, Int32 channel, const CString& sample, Float volume, Float attenuation, Int32 pitch, Int32 flags, Float timeoffset )
+void CL_PlayAmbientSound( entindex_t entindex, const Vector& vecOrigin, Int32 channel, const CString& sample, float volume, float attenuation, Int32 pitch, Int32 flags, float timeoffset )
 {
 	gSoundEngine.PlaySound(sample.c_str(), &vecOrigin, flags, SND_CHAN_AUTO, volume, pitch, attenuation);
 }
@@ -152,7 +152,7 @@ void CL_PlayAmbientSound( entindex_t entindex, const Vector& vecOrigin, Int32 ch
 //=============================================
 //
 //=============================================
-void CL_ApplySoundEffect( entindex_t entindex, const Char *sample,  Int32 channel, snd_effects_t effect, Float duration, Float targetvalue )
+void CL_ApplySoundEffect( entindex_t entindex, const char *sample,  Int32 channel, snd_effects_t effect, float duration, float targetvalue )
 {
 	gSoundEngine.ApplySoundEffect(entindex, sample, channel, effect, duration, targetvalue);
 }
@@ -160,7 +160,7 @@ void CL_ApplySoundEffect( entindex_t entindex, const Char *sample,  Int32 channe
 //=============================================
 //
 //=============================================
-const Char*	CL_GetSoundFileForServerIndex( Int32 serverindex )
+const char*	CL_GetSoundFileForServerIndex( Int32 serverindex )
 {
 	return gSoundEngine.GetSoundFileForServerIndex(serverindex);
 }
@@ -168,9 +168,9 @@ const Char*	CL_GetSoundFileForServerIndex( Int32 serverindex )
 //=============================================
 //
 //=============================================
-void CL_PrecacheDecal( const Char* pstrDecalName )
+void CL_PrecacheDecal( const char* pstrDecalName )
 {
-	for(Uint32 i = 0; i < cls.netinfo.decalcache.size(); i++)
+	for(UInt32 i = 0; i < cls.netinfo.decalcache.size(); i++)
 	{
 		const decalcache_t& cache = cls.netinfo.decalcache[i];
 		if(!qstrcmp(cache.name, pstrDecalName) && cache.type == DECAL_CACHE_SINGLE)
@@ -187,9 +187,9 @@ void CL_PrecacheDecal( const Char* pstrDecalName )
 //=============================================
 //
 //=============================================
-void CL_PrecacheDecalGroup( const Char* pstrDecalName )
+void CL_PrecacheDecalGroup( const char* pstrDecalName )
 {
-	for(Uint32 i = 0; i < cls.netinfo.decalcache.size(); i++)
+	for(UInt32 i = 0; i < cls.netinfo.decalcache.size(); i++)
 	{
 		const decalcache_t& cache = cls.netinfo.decalcache[i];
 		if(!qstrcmp(cache.name, pstrDecalName) && cache.type == DECAL_CACHE_GROUP)
@@ -206,7 +206,7 @@ void CL_PrecacheDecalGroup( const Char* pstrDecalName )
 //=============================================
 //
 //=============================================
-Int32 CL_PrecacheSound( const Char* pstrSample, rs_level_t level )
+Int32 CL_PrecacheSound( const char* pstrSample, rs_level_t level )
 {
 	CSoundEngine::snd_cache_t* pcache = gSoundEngine.PrecacheSound(pstrSample, NO_SERVER_PRECACHE, level, false);
 	if(!pcache)
@@ -221,7 +221,7 @@ Int32 CL_PrecacheSound( const Char* pstrSample, rs_level_t level )
 //=============================================
 //
 //=============================================
-Vector CL_GetAttachment( entindex_t entindex, Uint32 attachment )
+Vector CL_GetAttachment( entindex_t entindex, UInt32 attachment )
 {
 	cl_entity_t* pentity = CL_GetEntityByIndex(entindex);
 	if(!pentity || !pentity->pmodel)
@@ -240,7 +240,7 @@ Vector CL_GetAttachment( entindex_t entindex, Uint32 attachment )
 //=============================================
 //
 //=============================================
-Vector CL_GetBonePosition( entindex_t entindex, const Char* pstrbonename )
+Vector CL_GetBonePosition( entindex_t entindex, const char* pstrbonename )
 {
 	cl_entity_t* pentity = CL_GetEntityByIndex(entindex);
 	if(!pentity || !pentity->pmodel)
@@ -259,7 +259,7 @@ Vector CL_GetBonePosition( entindex_t entindex, const Char* pstrbonename )
 //=============================================
 //
 //=============================================
-ui_schemeinfo_t* CL_UILoadSchemaFile( const Char* pstrFilename )
+ui_schemeinfo_t* CL_UILoadSchemaFile( const char* pstrFilename )
 {
 	return gUIManager.LoadSchemaFile(pstrFilename);
 }
@@ -267,9 +267,9 @@ ui_schemeinfo_t* CL_UILoadSchemaFile( const Char* pstrFilename )
 //=============================================
 //
 //=============================================
-const en_material_t* CL_GetMapTextureMaterial( const Char* pstrtexturename )
+const en_material_t* CL_GetMapTextureMaterial( const char* pstrtexturename )
 {
-	unordered_map<CString, Uint32>::iterator it = cls.mapmaterialfilesnamemap.find(pstrtexturename);
+	unordered_map<CString, UInt32>::iterator it = cls.mapmaterialfilesnamemap.find(pstrtexturename);
 	if(it != cls.mapmaterialfilesnamemap.end())
 	{
 		CTextureManager* pTextureManager = CTextureManager::GetInstance();
@@ -282,14 +282,14 @@ const en_material_t* CL_GetMapTextureMaterial( const Char* pstrtexturename )
 //=============================================
 //
 //=============================================
-const en_material_t* CL_GetModelTextureMaterial( Int32 modelindex, const Char* pstrtexturename )
+const en_material_t* CL_GetModelTextureMaterial( Int32 modelindex, const char* pstrtexturename )
 {
 	Int32 realindex = (modelindex - 1);
 	if(realindex < 0 || cls.modelmaterialfilesnamemaparray.size() <= realindex)
 		return nullptr;
 
 	const CacheNameIndexMap_t& modelTextureMap = cls.modelmaterialfilesnamemaparray[realindex];
-	unordered_map<CString, Uint32>::const_iterator it = modelTextureMap.find(pstrtexturename);
+	unordered_map<CString, UInt32>::const_iterator it = modelTextureMap.find(pstrtexturename);
 	if(it != modelTextureMap.end())
 	{
 		CTextureManager* pTextureManager = CTextureManager::GetInstance();
@@ -302,7 +302,7 @@ const en_material_t* CL_GetModelTextureMaterial( Int32 modelindex, const Char* p
 //=============================================
 //
 //=============================================
-Double CL_GetFrameTime( void )
+double CL_GetFrameTime( void )
 {
 	return cls.frametime;
 }
@@ -310,7 +310,7 @@ Double CL_GetFrameTime( void )
 //=============================================
 //
 //=============================================
-void CL_ResetInputCommand( const Char* name )
+void CL_ResetInputCommand( const char* name )
 {
 	gInput.ResetInputCommand(name);
 }
@@ -366,7 +366,7 @@ void CL_SetShouldHideMouse( bool shouldhide )
 //=============================================
 //
 //=============================================
-const byte* CL_LeafPVS( const mleaf_t& leaf )
+const Byte* CL_LeafPVS( const mleaf_t& leaf )
 {
 	return Mod_LeafPVS(rns.psecondaryvisbuffer, ens.visbuffersize, leaf, *ens.pworld);
 }
@@ -374,7 +374,7 @@ const byte* CL_LeafPVS( const mleaf_t& leaf )
 //=============================================
 //
 //=============================================
-const font_set_t* CL_GetSchemaFontSet( const Char* schemaFileName )
+const font_set_t* CL_GetSchemaFontSet( const char* schemaFileName )
 {
 	return gTextSchemas.GetSchemaFontSet(schemaFileName);
 }
@@ -382,7 +382,7 @@ const font_set_t* CL_GetSchemaFontSet( const Char* schemaFileName )
 //=============================================
 //
 //=============================================
-const font_set_t* CL_GetResolutionSchemaFontSet( const Char* schemaFileName, Uint32 resolution )
+const font_set_t* CL_GetResolutionSchemaFontSet( const char* schemaFileName, UInt32 resolution )
 {
 	return gTextSchemas.GetResolutionSchemaFontSet(schemaFileName, resolution);
 }
@@ -390,15 +390,15 @@ const font_set_t* CL_GetResolutionSchemaFontSet( const Char* schemaFileName, Uin
 //=============================================
 //
 //=============================================
-bool CL_RecursiveLightPoint( const brushmodel_t* pworld, mnode_t *pnode, const Vector &start, const Vector &end, Vector* poutcolors, byte* poutstyles, Float* poutstylevalues )
+bool CL_RecursiveLightPoint( const brushmodel_t* pworld, mnode_t *pnode, const Vector &start, const Vector &end, Vector* poutcolors, Byte* poutstyles, float* poutstylevalues )
 {
 	bool result = Mod_RecursiveLightPoint(pworld, pnode, start, end, poutcolors, poutstyles);
 
 	if(result && poutstyles && poutstylevalues)
 	{
-		CArray<Float>* pStyleValuesArray = gLightStyles.GetLightStyleValuesArray();
+		CArray<float>* pStyleValuesArray = gLightStyles.GetLightStyleValuesArray();
 
-		for(Uint32 i = 0; i < MAX_SURFACE_STYLES; i++)
+		for(UInt32 i = 0; i < MAX_SURFACE_STYLES; i++)
 		{
 			if(i == BASE_LIGHTMAP_INDEX)
 				poutstylevalues[i] = 1.0f;
@@ -415,15 +415,15 @@ bool CL_RecursiveLightPoint( const brushmodel_t* pworld, mnode_t *pnode, const V
 //=============================================
 //
 //=============================================
-extern bool CL_RecursiveLightPointBumpData( const brushmodel_t* pworld, mnode_t *pnode, const Vector &start, const Vector &end, Vector* poutambientcolors, Vector* poutdiffusecolors, Vector* poutlightdirs, Vector* poutsurfnormal, byte* poutstyles, Float* poutstylevalues )
+extern bool CL_RecursiveLightPointBumpData( const brushmodel_t* pworld, mnode_t *pnode, const Vector &start, const Vector &end, Vector* poutambientcolors, Vector* poutdiffusecolors, Vector* poutlightdirs, Vector* poutsurfnormal, Byte* poutstyles, float* poutstylevalues )
 {
 	bool result = Mod_RecursiveLightPoint_BumpData(pworld, pnode, start, end, poutambientcolors, poutdiffusecolors, poutlightdirs, poutsurfnormal, poutstyles);
 
 	if(result && poutstyles && poutstylevalues)
 	{
-		CArray<Float>* pStyleValuesArray = gLightStyles.GetLightStyleValuesArray();
+		CArray<float>* pStyleValuesArray = gLightStyles.GetLightStyleValuesArray();
 
-		for(Uint32 i = 0; i < MAX_SURFACE_STYLES; i++)
+		for(UInt32 i = 0; i < MAX_SURFACE_STYLES; i++)
 		{
 			if(i == BASE_LIGHTMAP_INDEX)
 				poutstylevalues[i] = 1.0f;

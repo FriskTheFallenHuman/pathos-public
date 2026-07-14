@@ -54,7 +54,7 @@ bool CEnvHudPickupMsg::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvHudPickupMsg::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvHudPickupMsg::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	CBaseEntity* pPlayer;
 	if(pActivator && pActivator->IsPlayer())

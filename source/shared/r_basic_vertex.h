@@ -22,8 +22,8 @@ struct basic_vertex_t
 
 	vec4_t origin;
 	vec4_t color;
-	Float texcoords[2];
+	float texcoords[2];
 
-	byte padding[24];
+	Byte padding[24];
 };
 #endif //R_BASIC_VERTEX_H

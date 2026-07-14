@@ -123,7 +123,7 @@ void CEnvModel::InitEntity( void )
 {
 	if(m_sequence != NO_STRING_VALUE)
 	{
-		const Char* pstrsequencename = gd_engfuncs.pfnGetString(m_sequence);
+		const char* pstrsequencename = gd_engfuncs.pfnGetString(m_sequence);
 		m_pState->sequence = FindSequence(pstrsequencename);
 		if(m_pState->sequence == -1)
 		{
@@ -150,7 +150,7 @@ void CEnvModel::InitEntity( void )
 // @brief
 //
 //=============================================
-void CEnvModel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvModel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(HasSpawnFlag(FL_START_INVISIBLE))
 	{
@@ -166,7 +166,7 @@ void CEnvModel::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_
 	}
 	else
 	{
-		if((Uint32)(m_pState->sequence+1) < GetSequenceNumber())
+		if((UInt32)(m_pState->sequence+1) < GetSequenceNumber())
 		{
 			m_pState->sequence++;
 			m_pState->frame = 0;

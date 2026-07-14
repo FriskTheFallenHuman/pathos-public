@@ -183,7 +183,7 @@ void CBeam::RelinkBeam( void )
 	const Vector& startPosition = GetBeamStartPosition();
 	const Vector& endPosition = GetBeamEndPosition();
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		m_pState->mins[i] = _max(startPosition[i], endPosition[i]) - 1;
 		m_pState->maxs[i] = _min(startPosition[i], endPosition[i]) + 1;
@@ -219,9 +219,9 @@ void CBeam::BeamSparks( const Vector& start, const Vector& end )
 // @brief Picks a random entity with the targetname
 //
 //=============================================
-CBaseEntity* CBeam::GetRandomTargetName( const Char* pstrName )
+CBaseEntity* CBeam::GetRandomTargetName( const char* pstrName )
 {
-	Uint32 total = 0;
+	UInt32 total = 0;
 
 	edict_t* pEntity = nullptr;
 	edict_t* pNewEntity = nullptr;
@@ -264,7 +264,7 @@ void CBeam::BeamDamage( trace_t& tr )
 	Vector attackDirection = (tr.endpos - m_pState->origin).Normalize();
 	gMultiDamage.Prepare(BULLET_NONE, m_pState->origin, attackDirection);
 
-	Float damage = m_beamDamage * (g_pGameVars->time - m_dmgTime);
+	float damage = m_beamDamage * (g_pGameVars->time - m_dmgTime);
 	pEntity->TraceAttack(this, damage, attackDirection, tr, DMG_ELECTRICITY);
 	gMultiDamage.ApplyDamage(this, this);
 
@@ -288,7 +288,7 @@ void CBeam::BeamDamage( trace_t& tr )
 // @brief Initializes a beam
 //
 //=============================================
-bool CBeam::BeamInit( const Char* pstrSpriteName, Float width )
+bool CBeam::BeamInit( const char* pstrSpriteName, float width )
 {
 	m_pState->rendertype = RT_BEAM;
 
@@ -356,7 +356,7 @@ void CBeam::BeamInitPointEntity( CBaseEntity* pStartEntity, const Vector& end )
 // @brief Creates a beam object
 //
 //=============================================
-CBeam* CBeam::CreateBeam( const Char* pstrSpriteName, Float width )
+CBeam* CBeam::CreateBeam( const char* pstrSpriteName, float width )
 {
 	CBeam* pBeam = reinterpret_cast<CBeam*>(CBaseEntity::CreateEntity("beam", nullptr));
 	if(!pBeam)

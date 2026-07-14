@@ -19,13 +19,13 @@ class CPlatTrainEntity : public CToggleEntity
 {
 public:
 	// Number of legacy move sounds
-	static const Uint32 NB_LEGACY_MOVE_SOUNDS;
+	static const UInt32 NB_LEGACY_MOVE_SOUNDS;
 	// Legacy move sounds
-	static const Char* LEGACY_MOVE_SOUNDS[];
+	static const char* LEGACY_MOVE_SOUNDS[];
 	// Number of legacy stop sounds
-	static const Uint32 NB_LEGACY_STOP_SOUNDS;
+	static const UInt32 NB_LEGACY_STOP_SOUNDS;
 	// Legacy stop sounds
-	static const Char* LEGACY_STOP_SOUNDS[];
+	static const char* LEGACY_STOP_SOUNDS[];
 
 public:
 	enum
@@ -52,6 +52,6 @@ protected:
 	Int32 m_moveSound;
 	Int32 m_stopSound;
 
-	Float m_volume;
+	float m_volume;
 };
 #endif //PLATTRAINENTITY_H

@@ -16,19 +16,19 @@ All Rights Reserved.
 LINK_ENTITY_TO_CLASS(item_diary, CItemDiary);
 
 // Blend time for diary
-const Float CItemDiary::DIARY_BLEND_TIME = 1.0;
+const float CItemDiary::DIARY_BLEND_TIME = 1.0;
 // Diary model for benefactor
-const Char CItemDiary::DIARY_MODEL_BENEFACTOR[] = "models/props/diary_benefactor.mdl";
+const char CItemDiary::DIARY_MODEL_BENEFACTOR[] = "models/props/diary_benefactor.mdl";
 // Diary model for benefactor
-const Char CItemDiary::DIARY_MODEL_RADFORD[] = "models/props/diary_emanations.mdl";
+const char CItemDiary::DIARY_MODEL_RADFORD[] = "models/props/diary_emanations.mdl";
 // Diary entry sequence name
-const Char CItemDiary::DIARY_ENTRY_SEQ_NAME[] = "book_enter";
+const char CItemDiary::DIARY_ENTRY_SEQ_NAME[] = "book_enter";
 // Diary loop sequence name
-const Char CItemDiary::DIARY_LOOP_SEQ_NAME[] = "book_loop";
+const char CItemDiary::DIARY_LOOP_SEQ_NAME[] = "book_loop";
 // Diary exit sequence name
-const Char CItemDiary::DIARY_EXIT_SEQ_NAME[] = "book_exit";
+const char CItemDiary::DIARY_EXIT_SEQ_NAME[] = "book_exit";
 // Diary rest sequence name
-const Char CItemDiary::DIARY_REST_SEQ_NAME[] = "idle";
+const char CItemDiary::DIARY_REST_SEQ_NAME[] = "idle";
 
 //=============================================
 // @brief
@@ -210,7 +210,7 @@ bool CItemDiary::Spawn( void )
 // @brief
 //
 //=============================================
-void CItemDiary::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CItemDiary::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	if(m_isDisabled)
 	{

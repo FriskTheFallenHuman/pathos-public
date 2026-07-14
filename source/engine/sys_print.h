@@ -10,13 +10,10 @@ All Rights Reserved.
 #ifndef SYS_PRINT_H
 #define SYS_PRINT_H
 
-#include <mutex>
-#include <set>
-
 #include "md5.h"
 
 // Size of buffer for message prints
-static constexpr Uint32 PRINT_MSG_BUFFER_SIZE = 16384;
+static constexpr UInt32 PRINT_MSG_BUFFER_SIZE = 16384;
 
 /*
 ====================
@@ -47,21 +44,21 @@ public:
 
 public:
 	// Standard print to console
-	void Printf( const Char *pstring );
+	void Printf( const char *pstring );
 	// Print to debug
-	void DPrintf( const Char *pstring );
+	void DPrintf( const char *pstring );
 	// Print verbose
-	void VPrintf( const Char *pstring );
+	void VPrintf( const char *pstring );
 	// Print warning
-	void WPrintf( const Char *pstring );
+	void WPrintf( const char *pstring );
 	// Print error
-	void EPrintf( const Char *pstring );
+	void EPrintf( const char *pstring );
 
 private:
 	// Processes any flags inside strings
 	void CheckForFlags( CString& inputstring, Int32& outflags );
 	// Tells if the message should be printed
-	bool ShouldPrintMessage( const Char* pstrMessage, Int32 flags );
+	bool ShouldPrintMessage( const char* pstrMessage, Int32 flags );
 
 private:
 	// Set of only once an instance prints
@@ -74,13 +71,13 @@ private:
 extern CSysPrintInterface gPrintInterface;
 
 // Standard print to console
-extern void Con_Printf( const Char *fmt, ... );
+extern void Con_Printf( const char *fmt, ... );
 // Print to debug
-extern void Con_DPrintf( const Char *fmt, ... );
+extern void Con_DPrintf( const char *fmt, ... );
 // Print verbose
-extern void Con_VPrintf( const Char *fmt, ... );
+extern void Con_VPrintf( const char *fmt, ... );
 // Print warning
-extern void Con_WPrintf( const Char *fmt, ... );
+extern void Con_WPrintf( const char *fmt, ... );
 // Print error
-extern void Con_EPrintf( const Char *fmt, ... );
+extern void Con_EPrintf( const char *fmt, ... );
 #endif //SYS_PRINT_H

@@ -20,7 +20,7 @@ class CPriorityNodeQueue
 {
 public:
 	// Max nodes in the queue
-	static const Uint32 MAX_QUEUE_NODES = 128;
+	static const UInt32 MAX_QUEUE_NODES = 128;
 
 public:
 	struct heapnode_t
@@ -31,7 +31,7 @@ public:
 			{}
 
 		Int32 id;
-		Float priority;
+		float priority;
 	};
 
 public:
@@ -39,12 +39,12 @@ public:
 	~CPriorityNodeQueue( void );
 
 public:
-	void Insert( Int32 value, Float priority );
-	Int32 Remove( Float& priority );
+	void Insert( Int32 value, float priority );
+	Int32 Remove( float& priority );
 
 	bool IsFull( void ) const;
 	bool IsEmpty( void ) const;
-	Uint32 GetSize( void ) const;
+	UInt32 GetSize( void ) const;
 
 private:
 	void ShiftDown( Int32 subRoot );
@@ -52,6 +52,6 @@ private:
 
 private:
 	heapnode_t m_heap[MAX_QUEUE_NODES];
-	Uint32 m_size;
+	UInt32 m_size;
 };
 #endif //PRIORITYNODEQUEUE_H

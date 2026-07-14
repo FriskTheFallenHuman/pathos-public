@@ -27,7 +27,7 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void InitEntity( void ) override;
 
 public:
@@ -41,13 +41,13 @@ protected:
 	CNPCTestHull* m_pTestHullNPC;
 
 	// Time when we started pulling
-	Double m_beginTime;
+	double m_beginTime;
 	// Time until we shut down
-	Double m_shutdownTime;
+	double m_shutdownTime;
 
 	// Amount of time until full pull force is reached
-	Float m_fullForceTime;
+	float m_fullForceTime;
 	// Time over wich pull force fades out
-	Float m_forceFadeOutTime;
+	float m_forceFadeOutTime;
 };
 #endif //TRIGGERVACUUM_H

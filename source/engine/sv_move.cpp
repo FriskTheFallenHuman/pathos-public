@@ -109,7 +109,7 @@ bool SV_NPC_MoveStep( edict_t* pedict, const Vector& move, bool relink, bool non
 	// Flying npcs don't step up
 	if(pedict->state.flags & (FL_FLY|FL_SWIM))
 	{
-		for(Uint32 i = 0; i < 2; i++)
+		for(UInt32 i = 0; i < 2; i++)
 		{
 			neworigin = pedict->state.origin + move;
 
@@ -118,7 +118,7 @@ bool SV_NPC_MoveStep( edict_t* pedict, const Vector& move, bool relink, bool non
 				edict_t* penemy = gEdicts.GetEdict(pedict->state.enemy);
 				if(penemy)
 				{
-					Float dz = pedict->state.origin[2] - penemy->state.origin[2];
+					float dz = pedict->state.origin[2] - penemy->state.origin[2];
 					if(dz > 40)
 						neworigin[2] -= 8.0f;
 					else
@@ -198,7 +198,7 @@ bool SV_NPC_MoveStep( edict_t* pedict, const Vector& move, bool relink, bool non
 			if(!move.IsZero())
 			{
 				// If we're on the same plane
-				Float zdiff = SDL_fabs(oldorigin.z - tr.endpos.z);
+				float zdiff = SDL_fabs(oldorigin.z - tr.endpos.z);
 				if(zdiff < 0.1f)
 				{
 					trace_t trmove;
@@ -225,8 +225,8 @@ bool SV_NPC_MoveStep( edict_t* pedict, const Vector& move, bool relink, bool non
 					moveDirection.Normalize();
 
 					Vector goalPosition = tr.endpos;
-					Float stepSize = g_psv_stepsize->GetValue();
-					Float distanceToGoal = (goalPosition - oldorigin).Length2D();
+					float stepSize = g_psv_stepsize->GetValue();
+					float distanceToGoal = (goalPosition - oldorigin).Length2D();
 
 					Vector verticalDirection = (oldorigin.z < goalPosition.z) ? Vector(0, 0, 1) : Vector(0, 0, -1);
 					Vector currentPosition = oldorigin;
@@ -236,7 +236,7 @@ bool SV_NPC_MoveStep( edict_t* pedict, const Vector& move, bool relink, bool non
 						trace_t trmove;
 						Vector testPosition;
 
-						Float testDistance = distanceToGoal > stepSize ? stepSize : distanceToGoal;
+						float testDistance = distanceToGoal > stepSize ? stepSize : distanceToGoal;
 						if(verticalDirection.z > 0)
 						{
 							Vector offsetPosition = currentPosition + verticalDirection * stepSize;
@@ -318,9 +318,9 @@ bool SV_NPC_MoveStep( edict_t* pedict, const Vector& move, bool relink, bool non
 //=============================================
 //
 //=============================================
-bool SV_NPC_StepDirection( edict_t* pedict, Float yaw, Float dist )
+bool SV_NPC_StepDirection( edict_t* pedict, float yaw, float dist )
 {
-	const Float _yaw = yaw * (M_PI*2.0f)/360.0f;
+	const float _yaw = yaw * (M_PI*2.0f)/360.0f;
 
 	Vector move;
 	move[0] = SDL_cos(_yaw)*dist;
@@ -357,9 +357,9 @@ void SV_NPC_FixCheckBottom( edict_t* pedict )
 //=============================================
 //
 //=============================================
-bool SV_NPC_CloseEnough( edict_t* pedict, edict_t* pgoal, Float dist )
+bool SV_NPC_CloseEnough( edict_t* pedict, edict_t* pgoal, float dist )
 {
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(pgoal->state.absmin[i] > (pedict->state.absmax[i] + dist))
 			return false;
@@ -374,9 +374,9 @@ bool SV_NPC_CloseEnough( edict_t* pedict, edict_t* pgoal, Float dist )
 //=============================================
 //
 //=============================================
-bool SV_NPC_ReachedGoal( edict_t* pedict, const Vector& goalPosition, Float dist )
+bool SV_NPC_ReachedGoal( edict_t* pedict, const Vector& goalPosition, float dist )
 {
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(goalPosition[i] > (pedict->state.absmax[i] + dist))
 			return false;
@@ -391,16 +391,16 @@ bool SV_NPC_ReachedGoal( edict_t* pedict, const Vector& goalPosition, Float dist
 //=============================================
 //
 //=============================================
-void SV_NPC_NewChaseDir( edict_t* pedict, const Vector& goalPosition, Float dist )
+void SV_NPC_NewChaseDir( edict_t* pedict, const Vector& goalPosition, float dist )
 {
-	Float olddir = (45.0f*SDL_floor(pedict->state.idealyaw/45.0f));
-	Float turnaround = Math::AngleMod(olddir - 180.0f);
+	float olddir = (45.0f*SDL_floor(pedict->state.idealyaw/45.0f));
+	float turnaround = Math::AngleMod(olddir - 180.0f);
 
-	Float deltax = goalPosition[0] - pedict->state.origin[0];
-	Float deltay = goalPosition[1] - pedict->state.origin[1];
+	float deltax = goalPosition[0] - pedict->state.origin[0];
+	float deltay = goalPosition[1] - pedict->state.origin[1];
 
 	Vector dir;
-	Float tempdir;
+	float tempdir;
 
 	if(deltax > 10.0f)
 		dir[1] = 0;
@@ -471,7 +471,7 @@ void SV_NPC_NewChaseDir( edict_t* pedict, const Vector& goalPosition, Float dist
 //=============================================
 //
 //=============================================
-void SV_NPC_MoveToOrigin( edict_t* pedict, const Vector& goalPosition, Float moveyaw, Float dist, npc_movetype_t movetype )
+void SV_NPC_MoveToOrigin( edict_t* pedict, const Vector& goalPosition, float moveyaw, float dist, npc_movetype_t movetype )
 {
 	if(pedict->state.flags & (FL_FLY|FL_SWIM|FL_ONGROUND))
 	{

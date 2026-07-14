@@ -118,7 +118,7 @@ bool CViewController::IsActive( void ) const
 // @brief
 //
 //=============================================
-Float CViewController::GetSequenceTime( const cache_model_t *pmodel, Int32 sequence )
+float CViewController::GetSequenceTime( const cache_model_t *pmodel, Int32 sequence )
 {
 	if(!pmodel || !pmodel->pcachedata)
 	{
@@ -136,7 +136,7 @@ Float CViewController::GetSequenceTime( const cache_model_t *pmodel, Int32 seque
 // @brief
 //
 //=============================================
-Float CViewController::EstimateFrame( cl_entity_t *pentity, Int32 sequence, Float flTime ) const
+float CViewController::EstimateFrame( cl_entity_t *pentity, Int32 sequence, float flTime ) const
 {
 	if(!pentity->pmodel || !pentity->pmodel->pcachedata)
 	{
@@ -286,8 +286,8 @@ void CViewController::CalcView_CameraModel( ref_params_t& params )
 	// Calculate blend-to
 	if(m_blend)
 	{
-		Float time = clamp((params.time - m_blendTime), 0, m_blendDelta);
-		Float flfrac = Common::SplineFraction( time, (1.0/m_blendDelta) );
+		float time = Clamp((params.time - m_blendTime), 0, m_blendDelta);
+		float flfrac = Common::SplineFraction( time, (1.0/m_blendDelta) );
 
 		Vector diff;
 		Math::VectorSubtract(vorigin, m_blendOrigin, diff);
@@ -295,7 +295,7 @@ void CViewController::CalcView_CameraModel( ref_params_t& params )
 
 		for(Int32 i = 0; i < 3; i++)
 		{
-			Float fldiff = Math::AngleDiff(vangles[i], m_blendAngles[i]);
+			float fldiff = Math::AngleDiff(vangles[i], m_blendAngles[i]);
 			vangles[i] = m_blendAngles[i]+fldiff*(flfrac);
 		}
 	}
@@ -308,7 +308,7 @@ void CViewController::CalcView_CameraModel( ref_params_t& params )
 // @brief
 //
 //=============================================
-Int32 CViewController::LookupSequence( const cache_model_t *pmodel, const Char *szname )
+Int32 CViewController::LookupSequence( const cache_model_t *pmodel, const char *szname )
 {
 	if(!pmodel || !pmodel->pcachedata)
 	{
@@ -326,7 +326,7 @@ Int32 CViewController::LookupSequence( const cache_model_t *pmodel, const Char *
 // @brief
 //
 //=============================================
-void CViewController::ProcessMessage( const byte* pdata, Uint32 msgsize )
+void CViewController::ProcessMessage( const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 
@@ -351,12 +351,12 @@ void CViewController::ProcessMessage( const byte* pdata, Uint32 msgsize )
 		return;
 	}
 
-	Uint32 fovOverride = reader.ReadByte();
+	UInt32 fovOverride = reader.ReadByte();
 	if(fovOverride)
 		gDefaultView.SetFOVOverride(fovOverride);
 
 	m_blend = (reader.ReadByte() == 1) ? true : false;
-	Float blendDelta = reader.ReadSmallFloat();
+	float blendDelta = reader.ReadSmallFloat();
 	if(m_blend)
 	{
 		m_blendDelta = blendDelta;

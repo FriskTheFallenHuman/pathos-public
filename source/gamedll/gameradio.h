@@ -33,10 +33,10 @@ public:
 	virtual void Precache( void ) override;
 	virtual bool Restore( void ) override;
 	virtual void DeclareSaveFields( void ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	
 public:
-	Double m_beginTime;
+	double m_beginTime;
 	CBaseEntity* m_pPlayer;
 };
 #endif //GAMERADIO_H

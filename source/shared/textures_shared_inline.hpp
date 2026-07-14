@@ -17,7 +17,7 @@ All Rights Reserved.
 // @param pstrTextureName Name of texture
 // @return Path to map texture material script
 //====================================
-inline CString GetMapTexturePath( const Char* pstrFolderName, const Char* pstrTextureName )
+DO_INLINE CString GetMapTexturePath( const char* pstrFolderName, const char* pstrTextureName )
 {
 	// First look in the BSP folder
 	CString folderbasename;
@@ -38,7 +38,7 @@ inline CString GetMapTexturePath( const Char* pstrFolderName, const Char* pstrTe
 // @param pstrTextureName Name of texture
 // @return Path to model texture material script
 //====================================
-inline CString GetModelTexturePath( const Char* pstrModelName, const Char* pstrTextureName )
+DO_INLINE CString GetModelTexturePath( const char* pstrModelName, const char* pstrTextureName )
 {
 	CString textureName;
 	Common::Basename(pstrTextureName, textureName); 

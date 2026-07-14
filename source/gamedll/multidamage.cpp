@@ -91,7 +91,7 @@ void CMultiDamage::ApplyDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker 
 // @brief
 //
 //=============================================
-void CMultiDamage::AddDamage( CBaseEntity* pentity, Float damage, Int32 dmgtype, hitgroups_t hitgroup )
+void CMultiDamage::AddDamage( CBaseEntity* pentity, float damage, Int32 dmgtype, hitgroups_t hitgroup )
 {
 	if(!pentity)
 		return;
@@ -167,7 +167,7 @@ const Vector& CMultiDamage::GetAttackOrigin( void ) const
 // @brief
 //
 //=============================================
-Uint32 CMultiDamage::GetShotCount( void ) const
+UInt32 CMultiDamage::GetShotCount( void ) const
 {
 	return m_nbTotalShots;
 }
@@ -203,7 +203,7 @@ const Vector& CMultiDamage::GetDamageDirection( void ) const
 // @brief
 //
 //=============================================
-Uint32 CMultiDamage::GetEntityHitCount( const CBaseEntity* pEntity )
+UInt32 CMultiDamage::GetEntityHitCount( const CBaseEntity* pEntity )
 {
 	m_damagedEntities.begin();
 	while(!m_damagedEntities.end())
@@ -222,7 +222,7 @@ Uint32 CMultiDamage::GetEntityHitCount( const CBaseEntity* pEntity )
 // @brief
 //
 //=============================================
-Uint32 CMultiDamage::GetHitGroupHitCountForEntity( const CBaseEntity* pEntity, hitgroups_t hitgroup )
+UInt32 CMultiDamage::GetHitGroupHitCountForEntity( const CBaseEntity* pEntity, hitgroups_t hitgroup )
 {
 	if(hitgroup < 0 || hitgroup > NB_HITGROUPS)
 	{
@@ -256,9 +256,9 @@ hitgroups_t CMultiDamage::GetHitHighestCountGroupForEntity( const CBaseEntity* p
 		if(check.pentity == pEntity)
 		{
 			hitgroups_t highestGrp = HITGROUP_NONE;
-			Uint32 highestCount = 0;
+			UInt32 highestCount = 0;
 
-			for(Uint32 i = 0; i < NB_HITGROUPS; i++)
+			for(UInt32 i = 0; i < NB_HITGROUPS; i++)
 			{
 				if(check.grouphitcounts[i] > highestCount)
 				{

@@ -20,38 +20,38 @@ All Rights Reserved.
 #include "r_common.h"
 
 // Width of the keypad window tab
-const Uint32 CGameUIKeypadWindow::KEYPADWINDOW_TAB_WIDTH = 400;
+const UInt32 CGameUIKeypadWindow::KEYPADWINDOW_TAB_WIDTH = 400;
 // Height of the keypad window tab
-const Uint32 CGameUIKeypadWindow::KEYPADWINDOW_TAB_HEIGHT = 500;
+const UInt32 CGameUIKeypadWindow::KEYPADWINDOW_TAB_HEIGHT = 500;
 // Width of the keypad window tab
-const Uint32 CGameUIKeypadWindow::KEYPADWINDOW_TAB_DISPLAY_HEIGHT = 60;
+const UInt32 CGameUIKeypadWindow::KEYPADWINDOW_TAB_DISPLAY_HEIGHT = 60;
 // Spacing between the buttons and digits of the keypad window
-const Uint32 CGameUIKeypadWindow::KEYPADWINDOW_ELEMENT_SPACING = 10;
+const UInt32 CGameUIKeypadWindow::KEYPADWINDOW_ELEMENT_SPACING = 10;
 // Height of the keypad window notes tab
-const Uint32 CGameUIKeypadWindow::KEYPADWINDOW_NOTES_TAB_HEIGHT = 100;
+const UInt32 CGameUIKeypadWindow::KEYPADWINDOW_NOTES_TAB_HEIGHT = 100;
 // Default text color
 const color32_t CGameUIKeypadWindow::KEYPADWINDOW_TEXT_COLOR = color32_t(255, 255, 255, 255);
 // Default text color
 const color32_t CGameUIKeypadWindow::KEYPADWINDOW_NOTES_INFO_TEXT_COLOR = color32_t(30, 30, 255, 255);
 // Button y spacing for login window
-const Uint32 CGameUIKeypadWindow::KEYPADWINDOW_BUTTON_Y_SPACING = 20;
+const UInt32 CGameUIKeypadWindow::KEYPADWINDOW_BUTTON_Y_SPACING = 20;
 // Prompt text lifetime
-const Double CGameUIKeypadWindow::KEYPADWINDOW_PROMPT_LIFETIME = 1;
+const double CGameUIKeypadWindow::KEYPADWINDOW_PROMPT_LIFETIME = 1;
 // Default text color
 const color32_t CGameUIKeypadWindow::KEYPADWINDOW_PROMPT_FAIL_TEXT_COLOR = color32_t(255, 30, 30, 255);
 // Default text color
 const color32_t CGameUIKeypadWindow::KEYPADWINDOW_PROMPT_SUCCESS_TEXT_COLOR = color32_t(30, 255, 30, 255);
 // Keypad window button height
-const Uint32 CGameUIKeypadWindow::KEYPADWINDOW_BUTTON_HEIGHT = 100;
+const UInt32 CGameUIKeypadWindow::KEYPADWINDOW_BUTTON_HEIGHT = 100;
 // Title text default schema set name
-const Char CGameUIKeypadWindow::KEYPADWINDOW_TITLE_TEXTSCHEMA_NAME[] = "keypadtitle";
+const char CGameUIKeypadWindow::KEYPADWINDOW_TITLE_TEXTSCHEMA_NAME[] = "keypadtitle";
 // Text default font schema name
-const Char CGameUIKeypadWindow::KEYPADWINDOW_TEXTSCHEMA_NAME[] = "keypadtext";
+const char CGameUIKeypadWindow::KEYPADWINDOW_TEXTSCHEMA_NAME[] = "keypadtext";
 
 //====================================
 //
 //====================================
-CGameUIKeypadWindow::CGameUIKeypadWindow( Int32 flags, Int32 originX, Int32 originY, Uint32 width, Uint32 height ):
+CGameUIKeypadWindow::CGameUIKeypadWindow( Int32 flags, Int32 originX, Int32 originY, UInt32 width, UInt32 height ):
 	CGameUIWindow(flags, originX, originY, width, height),
 	m_pKeypadDisplayText(nullptr),
 	m_pNotesPasscodeLabel(nullptr),
@@ -78,31 +78,31 @@ CGameUIKeypadWindow::~CGameUIKeypadWindow( void )
 void CGameUIKeypadWindow::init( void )
 {
 	// Init basic window elements
-	Uint32 verticalbarheight, middlebarwidth, barThickness;
+	UInt32 verticalbarheight, middlebarwidth, barThickness;
 	CGameUIWindow::initBackground(verticalbarheight, middlebarwidth, barThickness);
 
 	// Scale elements by relative sizes
-	Uint32 tabTopInset = gHUDDraw.ScaleY(GAMEUIWINDOW_TAB_TOP_INSET);
-	Uint32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
-	Uint32 keypadTabWidth = gHUDDraw.ScaleX(KEYPADWINDOW_TAB_WIDTH);
-	Uint32 keypadTabHeight = gHUDDraw.ScaleY(KEYPADWINDOW_TAB_HEIGHT);
-	Uint32 edgeThickness = gHUDDraw.ScaleX(GAMEUIWINDOW_EDGE_THICKNESS);
-	Uint32 notesTabHeight = gHUDDraw.ScaleY(KEYPADWINDOW_NOTES_TAB_HEIGHT);
-	Uint32 elementSpacing = gHUDDraw.ScaleX(KEYPADWINDOW_ELEMENT_SPACING);
-	Uint32 displayTabHeight = gHUDDraw.ScaleX(KEYPADWINDOW_TAB_DISPLAY_HEIGHT);
-	Uint32 keypadButtonHeight = gHUDDraw.ScaleY(KEYPADWINDOW_BUTTON_HEIGHT);
+	UInt32 tabTopInset = gHUDDraw.ScaleY(GAMEUIWINDOW_TAB_TOP_INSET);
+	UInt32 hBarYOrigin = gHUDDraw.ScaleY(GAMEUIWINDOW_H_BAR_Y_ORIGIN);
+	UInt32 keypadTabWidth = gHUDDraw.ScaleX(KEYPADWINDOW_TAB_WIDTH);
+	UInt32 keypadTabHeight = gHUDDraw.ScaleY(KEYPADWINDOW_TAB_HEIGHT);
+	UInt32 edgeThickness = gHUDDraw.ScaleX(GAMEUIWINDOW_EDGE_THICKNESS);
+	UInt32 notesTabHeight = gHUDDraw.ScaleY(KEYPADWINDOW_NOTES_TAB_HEIGHT);
+	UInt32 elementSpacing = gHUDDraw.ScaleX(KEYPADWINDOW_ELEMENT_SPACING);
+	UInt32 displayTabHeight = gHUDDraw.ScaleX(KEYPADWINDOW_TAB_DISPLAY_HEIGHT);
+	UInt32 keypadButtonHeight = gHUDDraw.ScaleY(KEYPADWINDOW_BUTTON_HEIGHT);
 
 	//
 	// Create the title text object
 	//
-	Uint32 screenWidth, screenHeight;
+	UInt32 screenWidth, screenHeight;
 	cl_renderfuncs.pfnGetScreenSize(screenWidth, screenHeight);
 
 	const font_set_t* pTitleFont = cl_engfuncs.pfnGetResolutionSchemaFontSet(KEYPADWINDOW_TITLE_TEXTSCHEMA_NAME, screenHeight);
 	if(!pTitleFont)
 		pTitleFont = gGameUIManager.GetDefaultFontSet();
 
-	Uint32 textYOrigin = hBarYOrigin + tabTopInset/2.0f;
+	UInt32 textYOrigin = hBarYOrigin + tabTopInset/2.0f;
 	CGameUIText *pTitleText = new CGameUIText(CGameUIObject::FL_ALIGN_CH, GAMEUIWINDOW_DEFAULT_TEXT_COLOR, pTitleFont, 0, textYOrigin);
 	pTitleText->setParent(this);
 
@@ -137,7 +137,7 @@ void CGameUIKeypadWindow::init( void )
 	pNotesTab->setParent(this);
 
 	// Create the display tab surface
-	Uint32 displayWidth = keypadTabWidth - elementSpacing*2;
+	UInt32 displayWidth = keypadTabWidth - elementSpacing*2;
 	CGameUISurface* pDisplaySurface = new CGameUISurface(CGameUIObject::FL_NONE,
 		edgeThickness, 
 		GAMEUIWINDOW_MAIN_TAB_COLOR,
@@ -161,11 +161,11 @@ void CGameUIKeypadWindow::init( void )
 	m_pKeypadDisplayText->setParent(pDisplaySurface);
 
 	// Button size is a third of the space available for buttons
-	Uint32 buttonWidth = (keypadTabWidth - elementSpacing * 4) / 3;
-	Uint32 buttonHeight = (keypadTabHeight - displayTabHeight - elementSpacing * 7 - keypadButtonHeight)/4;
+	UInt32 buttonWidth = (keypadTabWidth - elementSpacing * 4) / 3;
+	UInt32 buttonHeight = (keypadTabHeight - displayTabHeight - elementSpacing * 7 - keypadButtonHeight)/4;
 
 	// Create buttons 1 to 9
-	for(Uint32 i = 0; i < 9; i++)
+	for(UInt32 i = 0; i < 9; i++)
 	{
 		Int32 buttonXPos = elementSpacing + (i%3) * (buttonWidth+elementSpacing);
 		Int32 buttonYPos = elementSpacing + displayTabHeight + elementSpacing + (i/3)*(buttonHeight+elementSpacing);
@@ -338,7 +338,7 @@ void CGameUIKeypadWindow::init( void )
 //====================================
 //
 //====================================
-bool CGameUIKeypadWindow::initData( const Char* pstrPasscode, const Char* pstrInput, bool stayTillNext )
+bool CGameUIKeypadWindow::initData( const char* pstrPasscode, const char* pstrInput, bool stayTillNext )
 {
 	if(pstrPasscode && qstrlen(pstrPasscode) > 0)
 	{
@@ -445,7 +445,7 @@ void CGameUIKeypadWindow::ManageButtonEvent( keypadbutton_t event )
 //====================================
 //
 //====================================
-void CGameUIKeypadWindow::ManageDigitButtonEvent( Char digit )
+void CGameUIKeypadWindow::ManageDigitButtonEvent( char digit )
 {
 	// Reset text color
 	if(m_promptTextTime)
@@ -487,7 +487,7 @@ void CGameUIKeypadWindow::think( void )
 //====================================
 //
 //====================================
-void CGameUIKeypadWindow::setDelayedRemoval( Double delay )
+void CGameUIKeypadWindow::setDelayedRemoval( double delay )
 {
 	if(m_windowFlags & FL_WINDOW_WAIT_TILL_NEXT)
 		m_messageSendTime = cl_engfuncs.pfnGetClientTime() + delay;
@@ -504,7 +504,7 @@ void CGameUIKeypadWindow::onRemove( void )
 		return;
 
 	// Send message to server
-	Uint32 msgid = g_pGUIManager->GetServerUIMessageId();
+	UInt32 msgid = g_pGUIManager->GetServerUIMessageId();
 	if(!msgid)
 	{
 		cl_engfuncs.pfnCon_Printf("%s - Message 'GameUIMessage' not registered on client.\n", __FUNCTION__);
@@ -521,7 +521,7 @@ void CGameUIKeypadWindow::onRemove( void )
 //====================================
 //
 //====================================
-void CGameUIKeypadWindowButtonCallbackEvent::PerformAction( Float param )
+void CGameUIKeypadWindowButtonCallbackEvent::PerformAction( float param )
 {
 	if(!m_pKeypadWindow)
 		return;
@@ -532,7 +532,7 @@ void CGameUIKeypadWindowButtonCallbackEvent::PerformAction( Float param )
 //====================================
 //
 //====================================
-void CGameUIKeypadWindowDigitCallbackEvent::PerformAction( Float param )
+void CGameUIKeypadWindowDigitCallbackEvent::PerformAction( float param )
 {
 	if(!m_pKeypadWindow)
 		return;

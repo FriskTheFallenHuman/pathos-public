@@ -22,15 +22,15 @@ struct screenshake_t
 		angle(0)
 		{}
 
-	Double endtime;
-	Double duration;
-	Float amplitude;
-	Float frequency;
-	Double nextshake;
-	Double shakebegin;
+	double endtime;
+	double duration;
+	float amplitude;
+	float frequency;
+	double nextshake;
+	double shakebegin;
 
 	Vector offset;
-	Float angle;
+	float angle;
 };
 
 /*
@@ -57,9 +57,9 @@ public:
 	// Calculates the shake
 	void CalcShake( void );
 	// Applies the shake
-	void ApplyShake( Vector& origin, Vector& angles, Float factor );
+	void ApplyShake( Vector& origin, Vector& angles, float factor );
 	// Read a shake message
-	void AddScreenShake( Float amplitude, Float duration, Float frequency );
+	void AddScreenShake( float amplitude, float duration, float frequency );
 
 private:
 	// Allocates a new shake object
@@ -69,7 +69,7 @@ private:
 	// View shake offset
 	Vector m_shakeOffset;
 	// View shake angle
-	Float m_shakeAngle;
+	float m_shakeAngle;
 
 	// Array of shakes
 	CLinkedList<screenshake_t> m_shakesList;

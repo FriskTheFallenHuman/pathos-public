@@ -130,12 +130,12 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 			vecBlockedMonsterDir = vecBlockedMonsterDir.Normalize();
 			Vector vecAngles = Math::VectorToAngles( vecBlockedMonsterDir );
 
-			Float bestDist = 0;
+			float bestDist = 0;
 			Vector bestLocation;
 
-			for(Uint32 i = 0; i < 2; i++)
+			for(UInt32 i = 0; i < 2; i++)
 			{
-				for(Float j = 0; j <= 90; j += 10)
+				for(float j = 0; j <= 90; j += 10)
 				{
 					Vector testangles = vecAngles;
 					testangles[YAW] += (i == 0) ? (j) : (-j);
@@ -145,7 +145,7 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 					Math::AngleVectors( testangles, &forward );
 
 					// Try to find an optimal distance
-					Float travelDist;
+					float travelDist;
 					if( !m_blockedNPC->IsPlayer() )
 					{
 						travelDist = (m_blockedNPCDestination - m_blockedNPC->GetOrigin()).Length() + 40;
@@ -157,7 +157,7 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 
 					// Try to trace to it
 					Vector vecFinalDist;
-					Float movedDistance = 0;
+					float movedDistance = 0;
 					WalkMoveTrace( m_pState->origin, forward, vecFinalDist, travelDist, movedDistance );
 
 					// Make sure the distance is big enough
@@ -194,7 +194,7 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 		break;
 	case AI_TASK_TURN_RIGHT:
 		{
-			Float currentYaw = Math::AngleMod(m_pState->angles[YAW]);
+			float currentYaw = Math::AngleMod(m_pState->angles[YAW]);
 			m_pState->idealyaw = Math::AngleMod(currentYaw - pTask->param);
 			m_updateYaw = true;
 			SetTurnActivity();
@@ -202,7 +202,7 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 		break;
 	case AI_TASK_TURN_LEFT:
 		{
-			Float currentYaw = Math::AngleMod(m_pState->angles[YAW]);
+			float currentYaw = Math::AngleMod(m_pState->angles[YAW]);
 			m_pState->idealyaw = Math::AngleMod(currentYaw + pTask->param);
 			m_updateYaw = true;
 			SetTurnActivity();
@@ -210,13 +210,13 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 		break;
 	case AI_TASK_REMEMBER:
 		{
-			SetMemory((Uint64)pTask->param);
+			SetMemory((UInt64)pTask->param);
 			SetTaskCompleted();
 		}
 		break;
 	case AI_TASK_FORGET:
 		{
-			ClearMemory((Uint64)pTask->param);
+			ClearMemory((UInt64)pTask->param);
 			SetTaskCompleted();
 		}
 		break;
@@ -530,7 +530,7 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 			}
 
 			Vector targetPosition = m_targetEntity->GetNavigablePosition();
-			Float targetDistance = (targetPosition - m_pState->origin).Length();
+			float targetDistance = (targetPosition - m_pState->origin).Length();
 			if(targetDistance < pTask->param)
 			{
 				ClearCondition(AI_COND_FOLLOW_TARGET_TOO_FAR);
@@ -553,7 +553,7 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 				return;
 			}
 
-			Float targetDistance = (m_targetEntity->GetOrigin() - m_pState->origin).Length();
+			float targetDistance = (m_targetEntity->GetOrigin() - m_pState->origin).Length();
 			if(targetDistance < 1.0f)
 			{
 				SetTaskCompleted();
@@ -649,7 +649,7 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 				return;
 			}
 
-			Float minimumDistance = 0;
+			float minimumDistance = 0;
 			bool disableMinDistance = (pTask->param == 1) ? true : false;
 			if(!disableMinDistance)
 				minimumDistance = GetMinimumRangeAttackDistance();
@@ -660,7 +660,7 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 			}
 			else
 			{
-				Float enemyLKPDistance = (m_enemyLastKnownPosition - m_pState->origin).Length();
+				float enemyLKPDistance = (m_enemyLastKnownPosition - m_pState->origin).Length();
 				Vector enemyCenterOffset = (m_enemy->GetCenter()* 0.75 + m_enemy->GetEyePosition()*0.25) - m_enemy->GetOrigin();
 				if(BuildNearestVisibleRoute(m_enemyLastKnownPosition, enemyCenterOffset, minimumDistance, enemyLKPDistance))
 				{
@@ -783,7 +783,7 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 				break;
 			}
 
-			const Float maxSoundDistance = 2048;
+			const float maxSoundDistance = 2048;
 			if(BuildRoute(m_currentCheckSound.position, MF_TO_LOCATION, m_currentCheckSound.emitter)
 				|| BuildNearestVisibleRoute(m_currentCheckSound.position, m_pState->view_offset, 0, maxSoundDistance)
 				|| BuildNearestRoute(m_currentCheckSound.position, 0, maxSoundDistance))
@@ -936,8 +936,8 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 				m_pScriptedSequence->StartSequence(this, m_pScriptedSequence->GetIdleSequenceName(), false);
 
 				// If play and idle anim names match, freeze animation
-				const Char* pstrPlaySequenceName = m_pScriptedSequence->GetPlaySequenceName();
-				const Char* pstrIdleSequenceName = m_pScriptedSequence->GetIdleSequenceName();
+				const char* pstrPlaySequenceName = m_pScriptedSequence->GetPlaySequenceName();
+				const char* pstrIdleSequenceName = m_pScriptedSequence->GetIdleSequenceName();
 				if(pstrPlaySequenceName && pstrIdleSequenceName && 
 					!qstrcmp(pstrPlaySequenceName, pstrIdleSequenceName))
 					m_pState->framerate = 0;
@@ -1067,7 +1067,7 @@ void CBaseNPC::StartTask( const ai_task_t* pTask )
 
 			// Try to trace to it
 			Vector finalPosition;
-			Float movedDistance = 0;
+			float movedDistance = 0;
 			WalkMoveTrace( m_pState->origin, targetDirection, finalPosition, 1024, movedDistance );
 			if(movedDistance < 64)
 			{
@@ -1255,8 +1255,8 @@ void CBaseNPC::RunTask( const ai_task_t* pTask )
 			}
 
 			// Re-evaluate chase target
-			Float targetDistance = GetRouteLength();
-			Float targetGoalDistance = (m_movementGoalPosition - m_targetEntity->GetOrigin()).Length();
+			float targetDistance = GetRouteLength();
+			float targetGoalDistance = (m_movementGoalPosition - m_targetEntity->GetOrigin()).Length();
 			if(targetDistance < pTask->param || targetGoalDistance > pTask->param*0.5)
 			{
 				Vector targetNavigableOrigin = m_targetEntity->GetNavigablePosition();
@@ -1375,7 +1375,7 @@ void CBaseNPC::RunTask( const ai_task_t* pTask )
 				script_loop_t loopState = m_pScriptedSequence->GetLoopState();
 				scripted_sequence_anim_t scriptAnim;
 
-				const Char* pstrSequenceName = nullptr;
+				const char* pstrSequenceName = nullptr;
 				switch(loopState)
 				{
 				case SCRIPT_LOOP_PLAYING_LOOP:

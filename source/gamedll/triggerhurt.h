@@ -19,7 +19,7 @@ class CTriggerHurt : public CTriggerEntity
 {
 public:
 	// Damage delay time
-	static const Float DEFAULT_DMG_DELAY;
+	static const float DEFAULT_DMG_DELAY;
 
 public:
 	enum
@@ -39,17 +39,17 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 
 public:
 	void EXPORTFN HurtTouch( CBaseEntity* pOther );
 
 private:
 	bool m_isActive;
-	Double m_nextDamageTime;
-	Double m_damageTime;
-	Float m_dmgAmount;
-	Float m_dmgDelay;
+	double m_nextDamageTime;
+	double m_damageTime;
+	float m_dmgAmount;
+	float m_dmgDelay;
 	Int32 m_bitsDamageInflict;
 	Int32 m_playerDamageBits;
 };

@@ -37,7 +37,7 @@ CFrustum::~CFrustum()
 // @brief
 //
 //=============================================
-void CFrustum::SetFrustum( const Vector& angles, const Vector& origin, Float fov, Float farplanedist )
+void CFrustum::SetFrustum( const Vector& angles, const Vector& origin, float fov, float farplanedist )
 {
 	Vector forward, right, up;
 	Math::AngleVectors(angles, &forward, &right, &up);
@@ -49,7 +49,7 @@ void CFrustum::SetFrustum( const Vector& angles, const Vector& origin, Float fov
 	RotatePointAroundVector(right, forward, -(90 - (fov * 0.5)), m_frustumPlanes[3].normal);
 
 	// Set other params
-	for(Uint32 i = 0; i < NUM_FRUSTUM_PLANES; i++)
+	for(UInt32 i = 0; i < NUM_FRUSTUM_PLANES; i++)
 	{
 		plane_t& plane = m_frustumPlanes[i];
 
@@ -61,7 +61,7 @@ void CFrustum::SetFrustum( const Vector& angles, const Vector& origin, Float fov
 	// Set bounding box if needed
 	if(farplanedist > 0)
 	{
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			m_cullBoxMins[i] = origin[i] - farplanedist;
 			m_cullBoxMaxs[i] = origin[i] + farplanedist;
@@ -80,7 +80,7 @@ void CFrustum::SetFrustum( const Vector& angles, const Vector& origin, Float fov
 // @brief
 //
 //=============================================
-void CFrustum::SetFrustum( const Vector& angles, const Vector& origin, Float fovx, Float fovy, Float farplanedist )
+void CFrustum::SetFrustum( const Vector& angles, const Vector& origin, float fovx, float fovy, float farplanedist )
 {
 	Vector forward, right, up;
 	Math::AngleVectors(angles, &forward, &right, &up);
@@ -92,7 +92,7 @@ void CFrustum::SetFrustum( const Vector& angles, const Vector& origin, Float fov
 	RotatePointAroundVector(right, forward, -(90 - (fovy * 0.5)), m_frustumPlanes[3].normal);
 
 	// Set other params
-	for(Uint32 i = 0; i < NUM_FRUSTUM_PLANES; i++)
+	for(UInt32 i = 0; i < NUM_FRUSTUM_PLANES; i++)
 	{
 		plane_t& plane = m_frustumPlanes[i];
 
@@ -104,7 +104,7 @@ void CFrustum::SetFrustum( const Vector& angles, const Vector& origin, Float fov
 	// Set bounding box if needed
 	if(farplanedist > 0)
 	{
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			m_cullBoxMins[i] = origin[i] - farplanedist;
 			m_cullBoxMaxs[i] = origin[i] + farplanedist;
@@ -137,7 +137,7 @@ bool CFrustum::CullBBox( const Vector& mins, const Vector& maxs ) const
 			return true;
 	}
 
-	for(Uint32 i = 0; i < NUM_FRUSTUM_PLANES; i++)
+	for(UInt32 i = 0; i < NUM_FRUSTUM_PLANES; i++)
 	{
 		if(BoxOnPlaneSide(mins, maxs, &m_frustumPlanes[i]) == 2)
 			return true;
@@ -152,7 +152,7 @@ bool CFrustum::CullBBox( const Vector& mins, const Vector& maxs ) const
 //=============================================
 bool CFrustum::CheckCullBox( const Vector& mins, const Vector& maxs ) const
 {
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(m_cullBoxMins[i] > maxs[i])
 			return true;
@@ -170,10 +170,10 @@ bool CFrustum::CheckCullBox( const Vector& mins, const Vector& maxs ) const
 //=============================================
 void CFrustum::SetExtraCullBox( const Vector& vMins, const Vector& vMaxs )
 {
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		m_extraCullBoxMins[i] = vMins[i];
 
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 		m_extraCullBoxMaxs[i] = vMaxs[i];
 
 	m_useExtraCullBox = true;
@@ -185,7 +185,7 @@ void CFrustum::SetExtraCullBox( const Vector& vMins, const Vector& vMaxs )
 //=============================================
 bool CFrustum::CheckExtraCullBox( const Vector& mins, const Vector& maxs ) const
 {
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		if(m_extraCullBoxMins[i] > maxs[i])
 			return true;

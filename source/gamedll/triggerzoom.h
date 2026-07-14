@@ -38,7 +38,7 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void SendInitMessage( const CBaseEntity* pPlayer ) override;
 
 private:
@@ -46,8 +46,8 @@ private:
 	Int32 m_startFOV;
 	Int32 m_state;
 
-	Float m_duration;
-	Double m_beginTime;
+	float m_duration;
+	double m_beginTime;
 
 private:
 	CBaseEntity* m_pPlayer;

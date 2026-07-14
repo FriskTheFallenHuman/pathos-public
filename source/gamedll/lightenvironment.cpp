@@ -11,7 +11,7 @@ All Rights Reserved.
 #include "gd_includes.h"
 #include "lightenvironment.h"
 
-// TRUE if we have an ALD file present for the map
+// true if we have an ALD file present for the map
 bool CLightEnvironment::g_isALDFilePresent = false;
 
 // Link the entity to it's class
@@ -68,20 +68,20 @@ bool CLightEnvironment::KeyValue( const keyvalue_t& kv )
 		Int32 colorb = 0;
 		Int32 intensity = 0;
 
-		Uint32 num = SDL_sscanf(kv.value, "%d %d %d %d", &colorr, &colorg, &colorb, &intensity);
+		UInt32 num = SDL_sscanf(kv.value, "%d %d %d %d", &colorr, &colorg, &colorb, &intensity);
 		if(num == 1)
 		{
-			m_sunlightColor.x = clamp(colorr, 0, 255);
+			m_sunlightColor.x = Clamp(colorr, 0, 255);
 			m_sunlightColor.y = m_sunlightColor.x;
 			m_sunlightColor.z = m_sunlightColor.y;
 			m_sunlightIntensity = 0;
 		}
 		else
 		{
-			m_sunlightColor.x = clamp(colorr, 0, 255);
-			m_sunlightColor.y = clamp(colorg, 0, 255);
-			m_sunlightColor.z = clamp(colorb, 0, 255);
-			m_sunlightIntensity = clamp(intensity, 0, 255);
+			m_sunlightColor.x = Clamp(colorr, 0, 255);
+			m_sunlightColor.y = Clamp(colorg, 0, 255);
+			m_sunlightColor.z = Clamp(colorb, 0, 255);
+			m_sunlightIntensity = Clamp(intensity, 0, 255);
 		}
 		return true;
 	}
@@ -123,9 +123,9 @@ bool CLightEnvironment::Spawn( void )
 	// Calculate final light values
 	if(m_sunlightIntensity)
 	{
-		m_sunlightColor.x = ((Float)m_sunlightIntensity/255.0f) * m_sunlightColor.x;
-		m_sunlightColor.y = ((Float)m_sunlightIntensity/255.0f) * m_sunlightColor.y;
-		m_sunlightColor.z = ((Float)m_sunlightIntensity/255.0f) * m_sunlightColor.z;
+		m_sunlightColor.x = ((float)m_sunlightIntensity/255.0f) * m_sunlightColor.x;
+		m_sunlightColor.y = ((float)m_sunlightIntensity/255.0f) * m_sunlightColor.y;
+		m_sunlightColor.z = ((float)m_sunlightIntensity/255.0f) * m_sunlightColor.z;
 	}
 
 	// Flag entity for removal
@@ -195,13 +195,13 @@ bool CLightEnvironment::SetLightEnvValues( daystage_t daystage )
 	}
 
 	// Modulate the color like RAD does with gamma adjustments
-	Uint32 color_r = pow((Float)m_sunlightColor.x / 114.0, 0.6) * 264;
-	Uint32 color_g = pow((Float)m_sunlightColor.y / 114.0, 0.6) * 264;
-	Uint32 color_b = pow((Float)m_sunlightColor.z / 114.0, 0.6) * 264;
+	UInt32 color_r = pow((float)m_sunlightColor.x / 114.0, 0.6) * 264;
+	UInt32 color_g = pow((float)m_sunlightColor.y / 114.0, 0.6) * 264;
+	UInt32 color_b = pow((float)m_sunlightColor.z / 114.0, 0.6) * 264;
 
-	gd_engfuncs.pfnSetCVarFloat("sv_skycolor_r", (Float)color_r);
-	gd_engfuncs.pfnSetCVarFloat("sv_skycolor_g", (Float)color_g);
-	gd_engfuncs.pfnSetCVarFloat("sv_skycolor_b", (Float)color_b);
+	gd_engfuncs.pfnSetCVarFloat("sv_skycolor_r", (float)color_r);
+	gd_engfuncs.pfnSetCVarFloat("sv_skycolor_g", (float)color_g);
+	gd_engfuncs.pfnSetCVarFloat("sv_skycolor_b", (float)color_b);
 
 	Vector forward;
 	Math::AngleVectors(m_pState->angles, &forward, nullptr, nullptr);
@@ -227,11 +227,11 @@ void CLightEnvironment::CheckALDFile( void )
 		return;
 
 	CString aldPath = pWorld->name;
-	Uint32 dotPos = aldPath.find(0, ".");
+	UInt32 dotPos = aldPath.find(0, ".");
 	if (dotPos == CString::CSTRING_NO_POSITION)
 		return;
 
-	Uint32 eraseCnt = aldPath.length() - dotPos;
+	UInt32 eraseCnt = aldPath.length() - dotPos;
 	aldPath.erase(dotPos, eraseCnt);
 	aldPath << ".ald";
 

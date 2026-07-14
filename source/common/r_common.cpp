@@ -19,7 +19,7 @@ All Rights Reserved.
 #include "r_glsl.h"
 #include "textures_shared.h"
 
-const Char* SCREEN_RATIO_STRINGS[NB_SCREENRATIO_STRINGS] = {
+const char* SCREEN_RATIO_STRINGS[NB_SCREENRATIO_STRINGS] = {
 	"4_3",		// SCR_RATIO_NORMAL
 	"16_9",		// SCR_RATIO_WIDESCREEN
 	"21_9"		// SCR_RATIO_ULTRAWIDE
@@ -29,10 +29,10 @@ const Char* SCREEN_RATIO_STRINGS[NB_SCREENRATIO_STRINGS] = {
 // @brief
 //
 //=============================================
-void R_AllocBlock ( Uint32 w, Uint32 h, Uint32 &x, Uint32 &y, Uint32& width, Uint32 &height, Uint32*& pallocations, Uint32 padamount )
+void R_AllocBlock ( UInt32 w, UInt32 h, UInt32 &x, UInt32 &y, UInt32& width, UInt32 &height, UInt32*& pallocations, UInt32 padamount )
 {
-	Uint32 padwidth = w + (padamount * 2);
-	Uint32 padheight = h + (padamount * 2);
+	UInt32 padwidth = w + (padamount * 2);
+	UInt32 padheight = h + (padamount * 2);
 
 	if(padwidth > width || padheight > height)
 	{
@@ -43,12 +43,12 @@ void R_AllocBlock ( Uint32 w, Uint32 h, Uint32 &x, Uint32 &y, Uint32& width, Uin
 			height *= 2;
 	}
 
-	Uint32 ibest1 = height;
-	for(Uint32 i = 0; i < width-padwidth; i++)
+	UInt32 ibest1 = height;
+	for(UInt32 i = 0; i < width-padwidth; i++)
 	{
-		Uint32 ibest2 = 0;
+		UInt32 ibest2 = 0;
 
-		Uint32 j = 0;
+		UInt32 j = 0;
 		for(; j < padwidth; j++)
 		{
 			if(pallocations[i+j] >= ibest1)
@@ -75,13 +75,13 @@ void R_AllocBlock ( Uint32 w, Uint32 h, Uint32 &x, Uint32 &y, Uint32& width, Uin
 		else
 		{
 			// If sizes don't match, then the next to be increased is width
-			Uint32 newwidth = width*2;
-			Uint32* pnewalloc = new Uint32[newwidth];
+			UInt32 newwidth = width*2;
+			UInt32* pnewalloc = new UInt32[newwidth];
 
-			for(Uint32 i = 0; i < width; i++)
+			for(UInt32 i = 0; i < width; i++)
 				pnewalloc[i] = pallocations[i];
 
-			for(Uint32 i = width; i < newwidth; i++)
+			for(UInt32 i = width; i < newwidth; i++)
 				pnewalloc[i] = 0;
 
 			// Delete original and set ptr
@@ -95,7 +95,7 @@ void R_AllocBlock ( Uint32 w, Uint32 h, Uint32 &x, Uint32 &y, Uint32& width, Uin
 		return;
 	}
 
-	for(Uint32 i = 0; i < padwidth; i++)
+	for(UInt32 i = 0; i < padwidth; i++)
 		pallocations[x+i] = ibest1+padheight;
 
 	// Offset by pad amount
@@ -107,18 +107,18 @@ void R_AllocBlock ( Uint32 w, Uint32 h, Uint32 &x, Uint32 &y, Uint32& width, Uin
 // @brief
 //
 //=============================================
-void R_BuildLightmap( Uint16 light_s, Uint16 light_t, const color24_t *psamples, const msurface_t *psurface, color32_t *pout, Int32 index, Uint32 sizex, Float overdarken, Uint32 padamount, bool isvectormap, bool fullbright )
+void R_BuildLightmap( UInt16 light_s, UInt16 light_t, const color24_t *psamples, const msurface_t *psurface, color32_t *pout, Int32 index, UInt32 sizex, float overdarken, UInt32 padamount, bool isvectormap, bool fullbright )
 {
-	const Uint32 smax = (psurface->extents[0] / psurface->lightmapdivider) + 1;
-	const Uint32 tmax = (psurface->extents[1] / psurface->lightmapdivider) + 1;
-	const Uint32 size = smax*tmax;
+	const UInt32 smax = (psurface->extents[0] / psurface->lightmapdivider) + 1;
+	const UInt32 tmax = (psurface->extents[1] / psurface->lightmapdivider) + 1;
+	const UInt32 size = smax*tmax;
 	
 	color24_t *blocklights = new color24_t[size];
 	color24_t *pblock = blocklights;
 
 	if(!psamples || fullbright)
 	{
-		for (Uint32 j = 0; j < size; j++)
+		for (UInt32 j = 0; j < size; j++)
 		{
 			pblock[j].r = 128;
 			pblock[j].g = 128;
@@ -129,7 +129,7 @@ void R_BuildLightmap( Uint16 light_s, Uint16 light_t, const color24_t *psamples,
 	{
 		const color24_t *psrc = psamples + size * index;
 
-		for (Uint32 j = 0; j < size; j++)
+		for (UInt32 j = 0; j < size; j++)
 		{
 			color24_t lightcolor;
 			if(isvectormap)
@@ -157,14 +157,14 @@ void R_BuildLightmap( Uint16 light_s, Uint16 light_t, const color24_t *psamples,
 		if(overdarken > 0 && !isvectormap && index == 0)
 		{
 			const color24_t* prefsrc = psamples;
-			for (Uint32 i = 0; i < size; i++)
+			for (UInt32 i = 0; i < size; i++)
 			{
 				Vector color = Vector(prefsrc[i].r, prefsrc[i].g, prefsrc[i].b);
 				Math::VectorScale(color, 1.0f / 255.0f, color);
 
 				// Darken pixels with low values, helps make maps darker despite overbright
-				Float dot = Math::DotProduct(color, Vector(0.2126, 0.7152, 0.0722));
-				Float flintensity = _max((dot * 255)/overdarken, 1);
+				float dot = Math::DotProduct(color, Vector(0.2126, 0.7152, 0.0722));
+				float flintensity = _max((dot * 255)/overdarken, 1);
 
 				pblock[i].r = pblock[i].r*flintensity;
 				pblock[i].g = pblock[i].g*flintensity;
@@ -178,9 +178,9 @@ void R_BuildLightmap( Uint16 light_s, Uint16 light_t, const color24_t *psamples,
 		// Copy colors to destination
 		color32_t *pdest = pout + light_t * sizex + light_s;
 		color24_t *psrc = pblock;
-		for (Uint32 i = 0; i < tmax; i++, pdest += sizex)
+		for (UInt32 i = 0; i < tmax; i++, pdest += sizex)
 		{
-			for (Uint32 j = 0; j < smax; j++)
+			for (UInt32 j = 0; j < smax; j++)
 			{
 				pdest[j].r = psrc->r;
 				pdest[j].g = psrc->g;
@@ -194,12 +194,12 @@ void R_BuildLightmap( Uint16 light_s, Uint16 light_t, const color24_t *psamples,
 		if(padamount)
 		{
 			// Add horizontal padding
-			for(Uint32 i = 0; i < tmax; i++)
+			for(UInt32 i = 0; i < tmax; i++)
 			{
 				// Add top padding
-				for(Uint32 k = 0; k < smax; k++)
+				for(UInt32 k = 0; k < smax; k++)
 				{
-					for(Uint32 j = 0; j < padamount; j++)
+					for(UInt32 j = 0; j < padamount; j++)
 					{
 						pdest = pout + (light_t - (j+1)) * sizex + light_s + k;
 						psrc = pblock + k;
@@ -218,11 +218,11 @@ void R_BuildLightmap( Uint16 light_s, Uint16 light_t, const color24_t *psamples,
 			}
 
 			// Add add vertical padding
-			for(Uint32 i = 0; i < smax; i++)
+			for(UInt32 i = 0; i < smax; i++)
 			{
-				for(Uint32 k = 0; k < tmax; k++)
+				for(UInt32 k = 0; k < tmax; k++)
 				{
-					for(Uint32 j = 0; j < padamount; j++)
+					for(UInt32 j = 0; j < padamount; j++)
 					{
 						// Add left side padding
 						pdest = pout + (light_t * sizex) + k * sizex + light_s - (j+1);
@@ -242,9 +242,9 @@ void R_BuildLightmap( Uint16 light_s, Uint16 light_t, const color24_t *psamples,
 			}
 
 			// Manage corner pixels
-			for(Uint32 i = 0; i < padamount; i++)
+			for(UInt32 i = 0; i < padamount; i++)
 			{
-				for(Uint32 j = 0; j < padamount; j++)
+				for(UInt32 j = 0; j < padamount; j++)
 				{
 					// Top left
 					pdest = pout + (light_t - (i+1)) * sizex + light_s - (j+1);
@@ -349,13 +349,13 @@ void R_RotateForEntity( CMatrix& matrix, const cl_entity_t& entity )
 // @brief
 //
 //=============================================
-bool R_CheckShaderVertexAttribute( Int32 attribindex, const Char* pstrattribname, const CGLSLShader* pshader, void (*pfnErrorPopup)( const Char *fmt, ... ) )
+bool R_CheckShaderVertexAttribute( Int32 attribindex, const char* pstrattribname, const CGLSLShader* pshader, void (*pfnErrorPopup)( const char *fmt, ... ) )
 {
 	if(attribindex == CGLSLShader::PROPERTY_UNAVAILABLE)
 	{
 		CString errorPopup;
 		errorPopup << __FUNCTION__ << " - ";
-		const Char* pstrError = pshader->GetError();
+		const char* pstrError = pshader->GetError();
 		if(pstrError)
 			errorPopup << pstrError;
 
@@ -371,13 +371,13 @@ bool R_CheckShaderVertexAttribute( Int32 attribindex, const Char* pstrattribname
 // @brief
 //
 //=============================================
-bool R_CheckShaderDeterminator( Int32 attribindex, const Char* pstrattribname, const CGLSLShader* pshader, void (*pfnErrorPopup)( const Char *fmt, ... ) )
+bool R_CheckShaderDeterminator( Int32 attribindex, const char* pstrattribname, const CGLSLShader* pshader, void (*pfnErrorPopup)( const char *fmt, ... ) )
 {
 	if(attribindex == CGLSLShader::DETERMINATOR_UNDEFINED)
 	{
 		CString errorPopup;
 		errorPopup << __FUNCTION__ << " - ";
-		const Char* pstrError = pshader->GetError();
+		const char* pstrError = pshader->GetError();
 		if(pstrError)
 			errorPopup << pstrError;
 
@@ -393,13 +393,13 @@ bool R_CheckShaderDeterminator( Int32 attribindex, const Char* pstrattribname, c
 // @brief
 //
 //=============================================
-bool R_CheckShaderUniform( Int32 attribindex, const Char* pstrattribname, const CGLSLShader* pshader, void (*pfnErrorPopup)( const Char *fmt, ... ) )
+bool R_CheckShaderUniform( Int32 attribindex, const char* pstrattribname, const CGLSLShader* pshader, void (*pfnErrorPopup)( const char *fmt, ... ) )
 {
 	if(attribindex == CGLSLShader::PROPERTY_UNAVAILABLE)
 	{
 		CString errorPopup;
 		errorPopup << __FUNCTION__ << " - ";
-		const Char* pstrError = pshader->GetError();
+		const char* pstrError = pshader->GetError();
 		if(pstrError)
 			errorPopup << pstrError;
 
@@ -417,7 +417,7 @@ bool R_CheckShaderUniform( Int32 attribindex, const Char* pstrattribname, const 
 //=============================================
 Int32 R_GetRelativeX( Int32 xPos, Int32 baseWidth, Int32 windowWidth )
 {
-	Float outPos = (static_cast<Float>(xPos)/ static_cast<Float>(baseWidth));
+	float outPos = (static_cast<float>(xPos)/ static_cast<float>(baseWidth));
 	outPos = outPos*windowWidth;
 	return static_cast<Int32>(outPos);
 }
@@ -428,7 +428,7 @@ Int32 R_GetRelativeX( Int32 xPos, Int32 baseWidth, Int32 windowWidth )
 //=============================================
 Int32 R_GetRelativeY( Int32 yPos, Int32 baseHeight, Int32 windowHeight )
 {
-	Float outPos = (static_cast<Float>(yPos)/ static_cast<Float>(baseHeight));
+	float outPos = (static_cast<float>(yPos)/ static_cast<float>(baseHeight));
 	outPos = outPos*windowHeight;
 	return static_cast<Int32>(outPos);
 }
@@ -440,7 +440,7 @@ bool R_WorldToScreenTransform( CMatrix& matrix, const Vector& src, Vector& scree
 {
 	Vector scrcoords;
 
-	const Float *pWorldToScreenMatrix = matrix.GetMatrix();
+	const float *pWorldToScreenMatrix = matrix.GetMatrix();
 	scrcoords[0] = pWorldToScreenMatrix[0] * src[0] 
 		+ pWorldToScreenMatrix[4] * src[1] 
 		+ pWorldToScreenMatrix[8] * src[2] 
@@ -459,7 +459,7 @@ bool R_WorldToScreenTransform( CMatrix& matrix, const Vector& src, Vector& scree
 	screenstart[0] = scrcoords[0];
 	screenstart[1] = scrcoords[1];
 
-	Float zclipped;
+	float zclipped;
 	if(!scrcoords[2])
 	{
 		zclipped = scrcoords[2];
@@ -477,7 +477,7 @@ bool R_WorldToScreenTransform( CMatrix& matrix, const Vector& src, Vector& scree
 //====================================
 //
 //====================================
-void R_SetMatrixData( const Float *pin, Float* pout, bool transpose )
+void R_SetMatrixData( const float *pin, float* pout, bool transpose )
 {
 	if(transpose)
 	{
@@ -498,9 +498,9 @@ void R_SetMatrixData( const Float *pin, Float* pout, bool transpose )
 //====================================
 //
 //====================================
-CString R_GetAspectRatio( Uint32 width, Uint32 height )
+CString R_GetAspectRatio( UInt32 width, UInt32 height )
 {
-	Float ratio = static_cast<Float>(width) / static_cast<Float>(height);
+	float ratio = static_cast<float>(width) / static_cast<float>(height);
 	if(ratio < 1.5)
 		return "4_3";
 	else if(ratio > 1.5 && ratio <= 1.8)

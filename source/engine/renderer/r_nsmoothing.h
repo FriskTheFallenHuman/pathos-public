@@ -21,8 +21,8 @@ CNormalSmoothing
 class CNormalSmoothing
 {
 public:
-	static const Float CNM_ALLOCSIZE;
-	static const Uint32 MAX_NODE_DEPTH;
+	static const float CNM_ALLOCSIZE;
+	static const UInt32 MAX_NODE_DEPTH;
 
 public:
 	struct vertex_t
@@ -38,7 +38,7 @@ public:
 			{}
 
 		CArray<vertex_t> vertexes;
-		Uint32 numvertexes;
+		UInt32 numvertexes;
 	};
 
 	struct vertexnode_t
@@ -60,13 +60,13 @@ public:
 			maxs(src.maxs),
 			pgroup(src.pgroup)
 		{
-			for(Uint32 i = 0; i < 2; i++)
+			for(UInt32 i = 0; i < 2; i++)
 				pchildren[i] = src.pchildren[i];
 		}
 
 		Int32 axis;
 		Int32 index;
-		Float dist;
+		float dist;
 
 		Vector mins;
 		Vector maxs;
@@ -77,12 +77,12 @@ public:
 	};
 
 public:
-	CNormalSmoothing( const Vector& worldMins, const Vector& worldMaxs, Uint32 numvertexes, Float blendangle );
+	CNormalSmoothing( const Vector& worldMins, const Vector& worldMaxs, UInt32 numvertexes, float blendangle );
 	~CNormalSmoothing();
 
 public:
-	void ManageVertex( const Vector& origin, const Vector& normal, Uint32 index );
-	const Vector* GetVertexNormal( Uint32 index );
+	void ManageVertex( const Vector& origin, const Vector& normal, UInt32 index );
+	const Vector* GetVertexNormal( UInt32 index );
 
 private:
 	vertexnode_t* CreateVertexNode( const Vector& mins, const Vector& maxs, Int32 depth );
@@ -91,12 +91,12 @@ private:
 private:
 	CArray<vertexgroup_t*> m_vertexGroupPtrsArray;
 
-	Uint32* m_pVertexIdxMapping;
+	UInt32* m_pVertexIdxMapping;
 	vertexgroup_t** m_pVertexGrpMapping;
-	Uint32 m_numVertexes;
+	UInt32 m_numVertexes;
 
 	CArray<vertexnode_t*> m_vertexNodesArray;
 
-	Float m_normalBlend;
+	float m_normalBlend;
 };
 #endif //R_NSMOOTHING

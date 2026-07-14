@@ -65,7 +65,7 @@ bool CEnvELight::Spawn( void )
 
 	// Set mins/maxs
 	Vector mins, maxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		mins[i] = -m_pState->renderamt*ENV_ELIGHT_RADIUS_MULTIPLIER;
 		maxs[i] = m_pState->renderamt*ENV_ELIGHT_RADIUS_MULTIPLIER;
@@ -89,7 +89,7 @@ void CEnvELight::Precache( void )
 // @brief
 //
 //=============================================
-void CEnvELight::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvELight::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{

@@ -16,11 +16,11 @@ All Rights Reserved.
 // @param str Reference to CString to copy
 // @return Reference to CString object
 //=============================================
-inline CString& CString::operator=(const CString& str)
+DO_INLINE CString& CString::operator=(const CString& str)
 {
 	if(this != &str)
 	{
-		const Char* psrc = str.c_str();
+		const char* psrc = str.c_str();
 		if(psrc && m_pString && !qstrcmp(psrc, m_pString))
 			return *this;
 
@@ -58,9 +58,9 @@ inline CString& CString::operator=(const CString& str)
 // @brief Equals operator
 //
 // @param pstr Pointer to string to compare
-// @return TRUE if strings match, FALSE otherwise
+// @return true if strings match, false otherwise
 //=============================================
-inline bool CString::operator==(const Char* pstr) const
+DO_INLINE bool CString::operator==(const char* pstr) const
 {
 	if(!pstr)
 	{
@@ -77,9 +77,9 @@ inline bool CString::operator==(const Char* pstr) const
 // @brief Equals operator
 //
 // @param str Reference to CString to compare
-// @return TRUE if strings match, FALSE otherwise
+// @return true if strings match, false otherwise
 //=============================================
-inline bool CString::operator==(const CString& str) const
+DO_INLINE bool CString::operator==(const CString& str) const
 {
 	if(str.empty())
 	{
@@ -97,9 +97,9 @@ inline bool CString::operator==(const CString& str) const
 // @brief Less than operator
 //
 // @param pstr Pointer to string to compare
-// @return TRUE if string is lower in order, FALSE otherwise
+// @return true if string is lower in order, false otherwise
 //=============================================
-inline bool CString::operator<(const Char* pstr) const
+DO_INLINE bool CString::operator<(const char* pstr) const
 {
 	return qstrcmp(pstr, m_pString) < 0 ? true : false;
 }
@@ -108,9 +108,9 @@ inline bool CString::operator<(const Char* pstr) const
 // @brief Less than operator
 //
 // @param str Reference to CString to compare
-// @return TRUE if string is lower in order, FALSE otherwise
+// @return true if string is lower in order, false otherwise
 //=============================================
-inline bool CString::operator<(const CString& str) const
+DO_INLINE bool CString::operator<(const CString& str) const
 {
 	return qstrcmp(str, m_pString) < 0 ? true : false;
 }
@@ -119,9 +119,9 @@ inline bool CString::operator<(const CString& str) const
 // @brief Greater than operator
 //
 // @param pstr Pointer to string to compare
-// @return TRUE if string is greater in order, FALSE otherwise
+// @return true if string is greater in order, false otherwise
 //=============================================
-inline bool CString::operator>(const Char* pstr) const
+DO_INLINE bool CString::operator>(const char* pstr) const
 {
 	return qstrcmp(pstr, m_pString) > 0 ? true : false;
 }
@@ -130,9 +130,9 @@ inline bool CString::operator>(const Char* pstr) const
 // @brief Greater than operator
 //
 // @param str Reference to CString to compare
-// @return TRUE if string is greater in order, FALSE otherwise
+// @return true if string is greater in order, false otherwise
 //=============================================
-inline bool CString::operator>(const CString& str) const
+DO_INLINE bool CString::operator>(const CString& str) const
 {
 	return qstrcmp(str, m_pString) > 0 ? true : false;
 }
@@ -143,7 +143,7 @@ inline bool CString::operator>(const CString& str) const
 // @param pstr Pointer string
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator<<(const Char* pstr)
+DO_INLINE CString& CString::operator<<(const char* pstr)
 {
 	Append(pstr);
 	return *this;
@@ -155,7 +155,7 @@ inline CString& CString::operator<<(const Char* pstr)
 // @param str Reference to CString string
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator<<(const CString& str)
+DO_INLINE CString& CString::operator<<(const CString& str)
 {
 	assert(&str != this);
 	Append(str.c_str());
@@ -168,7 +168,7 @@ inline CString& CString::operator<<(const CString& str)
 // @param c Character to append
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator<<(Char c)
+DO_INLINE CString& CString::operator<<(char c)
 {
 	Append(c);
 	return *this;
@@ -180,7 +180,7 @@ inline CString& CString::operator<<(Char c)
 // @param i Integer value to append
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator<<(Int32 i)
+DO_INLINE CString& CString::operator<<(Int32 i)
 {
 	Append(i);
 	return *this;
@@ -192,7 +192,7 @@ inline CString& CString::operator<<(Int32 i)
 // @param i Integer value to append
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator<<(Uint32 i)
+DO_INLINE CString& CString::operator<<(Uint32 i)
 {
 	Append(i);
 	return *this;
@@ -201,22 +201,22 @@ inline CString& CString::operator<<(Uint32 i)
 //=============================================
 // @brief Byte shift operator, appends a float to this string
 //
-// @param f Float value to append as string
+// @param f float value to append as string
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator<<(Float f)
+DO_INLINE CString& CString::operator<<(float f)
 {
 	Append(f);
 	return *this;
 }
 
 //=============================================
-// @brief Byte shift operator, appends a Double value to this string
+// @brief Byte shift operator, appends a double value to this string
 //
-// @param d Double value to append
+// @param d double value to append
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator<<(Double d)
+DO_INLINE CString& CString::operator<<(double d)
 {
 	Append(d);
 	return *this;
@@ -228,7 +228,7 @@ inline CString& CString::operator<<(Double d)
 // @param pstr Pointer to string to append
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator+=(const Char* pstr)
+DO_INLINE CString& CString::operator+=(const char* pstr)
 {
 	Append(pstr);
 	return *this;
@@ -240,7 +240,7 @@ inline CString& CString::operator+=(const Char* pstr)
 // @param str Reference to other string
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator+=(const CString& str)
+DO_INLINE CString& CString::operator+=(const CString& str)
 {
 	Append(str.c_str());
 	return *this;
@@ -252,7 +252,7 @@ inline CString& CString::operator+=(const CString& str)
 // @param c Character to append to the string
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator+=(Char c)
+DO_INLINE CString& CString::operator+=(char c)
 {
 	Append(c);
 	return *this;
@@ -264,7 +264,7 @@ inline CString& CString::operator+=(Char c)
 // @param i Integer value to append
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator+=(Int32 i)
+DO_INLINE CString& CString::operator+=(Int32 i)
 {
 	Append(i);
 	return *this;
@@ -276,7 +276,7 @@ inline CString& CString::operator+=(Int32 i)
 // @param i Integer value to append
 // @return Reference to this CString object
 //=============================================
-inline CString& CString::operator+=(Uint32 i)
+DO_INLINE CString& CString::operator+=(Uint32 i)
 {
 	Append(i);
 	return *this;
@@ -288,7 +288,7 @@ inline CString& CString::operator+=(Uint32 i)
 // @param pstr Pointer string
 // @return Resulting string object
 //=============================================
-inline CString CString::operator+(const Char* pstr)
+DO_INLINE CString CString::operator+(const char* pstr)
 {
 	CString temp(*this);
 	temp << pstr;
@@ -301,7 +301,7 @@ inline CString CString::operator+(const Char* pstr)
 // @param str Reference to CString object
 // @return Resulting string object
 //=============================================
-inline CString CString::operator+(const CString& str)
+DO_INLINE CString CString::operator+(const CString& str)
 {
 	assert(&str != this);
 
@@ -316,7 +316,7 @@ inline CString CString::operator+(const CString& str)
 // @param c Character to append
 // @return Resulting string object
 //=============================================
-inline CString CString::operator+(Char c)
+DO_INLINE CString CString::operator+(char c)
 {
 	CString temp(*this);
 	temp << c;
@@ -329,7 +329,7 @@ inline CString CString::operator+(Char c)
 // @param i Integer value to append
 // @return Resulting string object
 //=============================================
-inline CString CString::operator+(Int32 i)
+DO_INLINE CString CString::operator+(Int32 i)
 {
 	CString temp(*this);
 	temp << i;
@@ -342,7 +342,7 @@ inline CString CString::operator+(Int32 i)
 // @param i Integer value to append
 // @return Resulting string object
 //=============================================
-inline CString CString::operator+(Uint32 i)
+DO_INLINE CString CString::operator+(Uint32 i)
 {
 	CString temp(*this);
 	temp << i;
@@ -352,10 +352,10 @@ inline CString CString::operator+(Uint32 i)
 //=============================================
 // @brief Plus operator, appends a single float value to this string
 //
-// @param f Float value to append
+// @param f float value to append
 // @return Resulting string object
 //=============================================
-inline CString CString::operator+(Float f)
+DO_INLINE CString CString::operator+(float f)
 {
 	CString temp(*this);
 	temp << f;
@@ -365,10 +365,10 @@ inline CString CString::operator+(Float f)
 //=============================================
 // @brief Plus operator, appends a single double value to this string
 //
-// @param d Double value to append
+// @param d double value to append
 // @return Resulting string object
 //=============================================
-inline CString CString::operator+(Double d)
+DO_INLINE CString CString::operator+(double d)
 {
 	CString temp(*this);
 	temp << d;
@@ -381,7 +381,7 @@ inline CString CString::operator+(Double d)
 // @param n Index in string
 // @return String character at n position
 //=============================================
-inline Char CString::operator[] (Uint32 n) const
+DO_INLINE char CString::operator[] (Uint32 n) const
 {
 	assert(m_pString != nullptr);
 	assert(n < m_stringLength);
@@ -397,7 +397,7 @@ inline Char CString::operator[] (Uint32 n) const
 //
 // @return Length of the string
 //=============================================
-inline Uint32 CString::length( void ) const
+DO_INLINE Uint32 CString::length( void ) const
 {
 	return m_stringLength;
 }
@@ -405,9 +405,9 @@ inline Uint32 CString::length( void ) const
 //=============================================
 // @brief Tells if the string is empty
 //
-// @return TRUE if string is empty, FALSE otherwise
+// @return true if string is empty, false otherwise
 //=============================================
-inline bool CString::empty( void ) const
+DO_INLINE bool CString::empty( void ) const
 {
 	return (!m_stringLength || !m_pString || m_pString == EMPTY_STRING);
 }
@@ -417,7 +417,7 @@ inline bool CString::empty( void ) const
 //
 // @return Pointer to raw string data
 //=============================================
-inline const Char* CString::c_str( void ) const
+DO_INLINE const char* CString::c_str( void ) const
 {
 	return m_pString;
 }
@@ -426,7 +426,7 @@ inline const Char* CString::c_str( void ) const
 // @brief Clears the string
 //
 //=============================================
-inline void CString::clear( void )
+DO_INLINE void CString::clear( void )
 {
 	if(m_stringLength == 0 && m_pString && m_pString == EMPTY_STRING)
 		return;
@@ -448,7 +448,7 @@ inline void CString::clear( void )
 // @brief Assigns the contents of this string
 //
 //=============================================
-inline void CString::assign( const Char* pstr, Uint32 num )
+DO_INLINE void CString::assign( const char* pstr, Uint32 num )
 {
 	g_workBufferMutex.lock();
 	CheckBuffer(num);
@@ -468,7 +468,7 @@ inline void CString::assign( const Char* pstr, Uint32 num )
 // @param rhs Right hand string
 // @return End result string object
 //=============================================
-inline CString operator + ( const CString& lhs, const CString& rhs )
+DO_INLINE CString operator + ( const CString& lhs, const CString& rhs )
 {
 	assert(&lhs != &rhs);
 
@@ -485,16 +485,16 @@ inline CString operator + ( const CString& lhs, const CString& rhs )
 // @param psubstr Substring to find in this string
 // @return Position at which the substring was located
 //=============================================
-inline Int32 CString::find( Uint32 offset, const Char* psubstr, bool caseinsensitive )
+DO_INLINE Int32 CString::find( Uint32 offset, const char* psubstr, bool caseinsensitive )
 {
 	if(empty())
 		return CSTRING_NO_POSITION;
 
 	assert(offset < m_stringLength);
-	const Char* pstrbegin = m_pString + offset;
+	const char* pstrbegin = m_pString + offset;
 
 	const Uint32 substrlength = qstrlen(psubstr);
-	const Char* pstr = pstrbegin;
+	const char* pstr = pstrbegin;
 	while(*pstr != '\0')
 	{
 		if(pstr[0] == psubstr[0])
@@ -523,7 +523,7 @@ inline Int32 CString::find( Uint32 offset, const Char* psubstr, bool caseinsensi
 // @param begin Index of starting character to erase
 // @param numremove Number of characters to erase
 //=============================================
-inline void CString::erase( Uint32 begin, Uint32 numremove )
+DO_INLINE void CString::erase( Uint32 begin, Uint32 numremove )
 {
 	assert(begin < m_stringLength && (begin+numremove) <= m_stringLength);
 
@@ -563,7 +563,7 @@ inline void CString::erase( Uint32 begin, Uint32 numremove )
 // @param begin Index of starting character to start at
 // @param pstrsubstr Substring to insert into this string
 //=============================================
-inline void CString::insert( Uint32 begin, const Char* pstrsubstr )
+DO_INLINE void CString::insert( Uint32 begin, const char* pstrsubstr )
 {
 	assert(begin <= m_stringLength);
 
@@ -590,7 +590,7 @@ inline void CString::insert( Uint32 begin, const Char* pstrsubstr )
 // @brief Converts the string to lowercase chars
 //
 //=============================================
-inline void CString::tolower( void )
+DO_INLINE void CString::tolower( void )
 {
 	if(m_pString == EMPTY_STRING)
 		return;
@@ -608,8 +608,8 @@ inline void CString::tolower( void )
 	g_workBufferMutex.lock();
 	CheckBuffer(m_stringLength);
 
-	Char* pInsert = g_pWorkBuffer;
-	for(const Char* pTemp = m_pString; *pTemp; pTemp++, pInsert++) 
+	char* pInsert = g_pWorkBuffer;
+	for(const char* pTemp = m_pString; *pTemp; pTemp++, pInsert++) 
 		(*pInsert) = ::tolower(*pTemp);
 
 	g_pWorkBuffer[m_stringLength] = '\0';
@@ -621,7 +621,7 @@ inline void CString::tolower( void )
 // @brief Replaces slashes with PATH_SLASH_CHAR
 //
 //=============================================
-inline void CString::replaceslashes( void )
+DO_INLINE void CString::replaceslashes( void )
 {
 	if(m_pString == EMPTY_STRING)
 		return;
@@ -639,8 +639,8 @@ inline void CString::replaceslashes( void )
 	g_workBufferMutex.lock();
 	CheckBuffer(m_stringLength);
 
-	Char* pInsert = g_pWorkBuffer;
-	for(const Char* pTemp = m_pString; *pTemp; pTemp++, pInsert++)
+	char* pInsert = g_pWorkBuffer;
+	for(const char* pTemp = m_pString; *pTemp; pTemp++, pInsert++)
 	{
 		if(*pTemp == '\\')
 			(*pInsert) = PATH_SLASH_CHAR;

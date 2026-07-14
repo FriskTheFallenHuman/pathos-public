@@ -19,21 +19,21 @@ class CFuncDoor : public CToggleEntity
 {
 public:
 	// Maximum slave doors
-	static const Uint32 MAX_SLAVE_DOORS = 64;
+	static const UInt32 MAX_SLAVE_DOORS = 64;
 	// Maximum related doors
-	static const Uint32 MAX_RELATED_DOORS = 64;
+	static const UInt32 MAX_RELATED_DOORS = 64;
 	// Default speed for doors
-	static const Float DEFAULT_SPEED;
+	static const float DEFAULT_SPEED;
 	// Number of legacy door sounds
-	static const Uint32 NUM_LEGACY_MOVE_SOUNDS;
+	static const UInt32 NUM_LEGACY_MOVE_SOUNDS;
 	// Legacy move sounds
-	static const Char* LEGACY_MOVE_SOUNDS[];
+	static const char* LEGACY_MOVE_SOUNDS[];
 	// Number of legacy door sounds
-	static const Uint32 NUM_LEGACY_STOP_SOUNDS;
+	static const UInt32 NUM_LEGACY_STOP_SOUNDS;
 	// Legacy move sounds
-	static const Char* LEGACY_STOP_SOUNDS[];
+	static const char* LEGACY_STOP_SOUNDS[];
 	// Wait time between locked sounds
-	static const Float LOCKED_SOUND_DELAY;
+	static const float LOCKED_SOUND_DELAY;
 
 public:
 	enum
@@ -61,7 +61,7 @@ public:
 	virtual void InitEntity( void ) override;
 	virtual void SendInitMessage( const CBaseEntity* pPlayer ) override;
 
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void CallBlocked( CBaseEntity* pOther ) override;
 
 	virtual bool IsFuncDoorEntity( void ) const override { return true; }
@@ -102,12 +102,12 @@ protected:
 	bool m_isSilent;
 
 	Vector m_activatorOrigin;
-	Double m_nextLockedSoundTime;
+	double m_nextLockedSoundTime;
 
 	CFuncDoor* m_pSlaveDoors[MAX_SLAVE_DOORS];
-	Uint32 m_numSlaveDoors;
+	UInt32 m_numSlaveDoors;
 
 	CFuncDoor* m_pRelatedDoors[MAX_RELATED_DOORS];
-	Uint32 m_numRelatedDoors;
+	UInt32 m_numRelatedDoors;
 };
 #endif //DOORENTITY_H

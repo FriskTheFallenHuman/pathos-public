@@ -14,17 +14,17 @@ All Rights Reserved.
 #include "player.h"
 
 // Subway destination id for Bergen st.
-const Char CTriggerSubwayController::BERGEN_ST_DEST_ID[] = "bergen";
+const char CTriggerSubwayController::BERGEN_ST_DEST_ID[] = "bergen";
 // Subway destination id for I B Mann st.
-const Char CTriggerSubwayController::IBMANN_ST_DEST_ID[] = "ibmann";
+const char CTriggerSubwayController::IBMANN_ST_DEST_ID[] = "ibmann";
 // Subway destination id for Marshall
-const Char CTriggerSubwayController::MARSHALL_ST_DEST_ID[] = "marshall";
+const char CTriggerSubwayController::MARSHALL_ST_DEST_ID[] = "marshall";
 // Subway destination id for Eckhart st.
-const Char CTriggerSubwayController::ECKHART_ST_DEST_ID[] = "eckhart";
+const char CTriggerSubwayController::ECKHART_ST_DEST_ID[] = "eckhart";
 // Subway destination id for Kassarr st
-const Char CTriggerSubwayController::KASSAR_ST_DEST_ID[] = "kassar";
+const char CTriggerSubwayController::KASSAR_ST_DEST_ID[] = "kassar";
 // Subway destination id for Aiello St.
-const Char CTriggerSubwayController::AIELLO_ST_DEST_ID[] = "aiello";
+const char CTriggerSubwayController::AIELLO_ST_DEST_ID[] = "aiello";
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(trigger_subway_controller, CTriggerSubwayController);
@@ -125,7 +125,7 @@ bool CTriggerSubwayController::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CTriggerSubwayController::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTriggerSubwayController::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// Either use activator, or assume it's local player
 	CBaseEntity* pEntity;
@@ -147,7 +147,7 @@ void CTriggerSubwayController::CallUse( CBaseEntity* pActivator, CBaseEntity* pC
 // @brief
 //
 //=============================================
-void CTriggerSubwayController::FireTarget( CBaseEntity* pPlayer, const Char* pstrdestinationid )
+void CTriggerSubwayController::FireTarget( CBaseEntity* pPlayer, const char* pstrdestinationid )
 {
 	if(!pstrdestinationid)
 		return;

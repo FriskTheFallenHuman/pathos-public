@@ -21,9 +21,9 @@ All Rights Reserved.
 #include "lightstyles.h"
 
 // Number of glass debris sounds
-static const Uint32 NB_GLASS_DEBRIS_SOUNDS = 3;
+static const UInt32 NB_GLASS_DEBRIS_SOUNDS = 3;
 // Glass debris sounds
-static const Char* GLASS_DEBRIS_SOUNDS[NB_GLASS_DEBRIS_SOUNDS] =
+static const char* GLASS_DEBRIS_SOUNDS[NB_GLASS_DEBRIS_SOUNDS] =
 {
 	"debris/glass_clatter1.wav",
 	"debris/glass_clatter2.wav",
@@ -31,9 +31,9 @@ static const Char* GLASS_DEBRIS_SOUNDS[NB_GLASS_DEBRIS_SOUNDS] =
 };
 
 // Number of wood debris sounds
-static const Uint32 NB_WOOD_DEBRIS_SOUNDS = 3;
+static const UInt32 NB_WOOD_DEBRIS_SOUNDS = 3;
 // Wood debris sounds
-static const Char* WOOD_DEBRIS_SOUNDS[NB_WOOD_DEBRIS_SOUNDS] =
+static const char* WOOD_DEBRIS_SOUNDS[NB_WOOD_DEBRIS_SOUNDS] =
 {
 	"debris/wood_clatter1.wav",
 	"debris/wood_clatter2.wav",
@@ -41,9 +41,9 @@ static const Char* WOOD_DEBRIS_SOUNDS[NB_WOOD_DEBRIS_SOUNDS] =
 };
 
 // Number of metal debris sounds
-static const Uint32 NB_METAL_DEBRIS_SOUNDS = 3;
+static const UInt32 NB_METAL_DEBRIS_SOUNDS = 3;
 // Metal debris sounds
-static const Char* METAL_DEBRIS_SOUNDS[NB_METAL_DEBRIS_SOUNDS] =
+static const char* METAL_DEBRIS_SOUNDS[NB_METAL_DEBRIS_SOUNDS] =
 {
 	"debris/metal_clatter1.wav",
 	"debris/metal_clatter2.wav",
@@ -51,9 +51,9 @@ static const Char* METAL_DEBRIS_SOUNDS[NB_METAL_DEBRIS_SOUNDS] =
 };
 
 // Number of flesh debris sounds
-static const Uint32 NB_FLESH_DEBRIS_SOUNDS = 7;
+static const UInt32 NB_FLESH_DEBRIS_SOUNDS = 7;
 // Flesh debris sounds
-static const Char* FLESH_DEBRIS_SOUNDS[NB_FLESH_DEBRIS_SOUNDS] =
+static const char* FLESH_DEBRIS_SOUNDS[NB_FLESH_DEBRIS_SOUNDS] =
 {
 	"debris/flesh_splatter1.wav",
 	"debris/flesh_splatter2.wav",
@@ -65,9 +65,9 @@ static const Char* FLESH_DEBRIS_SOUNDS[NB_FLESH_DEBRIS_SOUNDS] =
 };
 
 // Number of concrete debris sounds
-static const Uint32 NB_CONCRETE_DEBRIS_SOUNDS = 3;
+static const UInt32 NB_CONCRETE_DEBRIS_SOUNDS = 3;
 // Concrete debris sounds
-static const Char* CONCRETE_DEBRIS_SOUNDS[NB_CONCRETE_DEBRIS_SOUNDS] =
+static const char* CONCRETE_DEBRIS_SOUNDS[NB_CONCRETE_DEBRIS_SOUNDS] =
 {
 	"debris/concrete_clatter1.wav",
 	"debris/concrete_clatter2.wav",
@@ -103,7 +103,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	edict_t* FindEntityByString( edict_t* pStartEntity, const Char* pstrFieldName, const Char* pstrValue )
+	edict_t* FindEntityByString( edict_t* pStartEntity, const char* pstrFieldName, const char* pstrValue )
 	{
 		return ::FindEntityByString(pStartEntity, pstrFieldName, pstrValue);
 	}
@@ -111,7 +111,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	edict_t* FindEntityByClassname( edict_t* pStartEntity, const Char* pstrValue )
+	edict_t* FindEntityByClassname( edict_t* pStartEntity, const char* pstrValue )
 	{
 		return Util::FindEntityByString(pStartEntity, "classname", pstrValue);
 	}
@@ -119,7 +119,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	edict_t* FindEntityByTargetName( edict_t* pStartEntity, const Char* pstrValue )
+	edict_t* FindEntityByTargetName( edict_t* pStartEntity, const char* pstrValue )
 	{
 		return Util::FindEntityByString(pStartEntity, "targetname", pstrValue);
 	}
@@ -127,7 +127,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	edict_t* FindEntityByTarget( edict_t* pStartEntity, const Char* pstrValue )
+	edict_t* FindEntityByTarget( edict_t* pStartEntity, const char* pstrValue )
 	{
 		return Util::FindEntityByString(pStartEntity, "target", pstrValue);
 	}
@@ -187,7 +187,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	Float GetAxisValue( Int32 flags, const Vector& angles, Int32 flagz, Int32 flagx )
+	float GetAxisValue( Int32 flags, const Vector& angles, Int32 flagz, Int32 flagx )
 	{
 		if(flags & flagz)
 			return angles.z;
@@ -200,7 +200,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	Float GetAxisDelta( Int32 flags, const Vector& angle1, const Vector& angle2, Int32 flagz, Int32 flagx )
+	float GetAxisDelta( Int32 flags, const Vector& angle1, const Vector& angle2, Int32 flagz, Int32 flagx )
 	{
 		if(flags & flagz)
 			return angle1.z - angle2.z;
@@ -303,7 +303,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	const Char* TraceTexture( entindex_t hitentity, const Vector& position, const Vector& planeNormal )
+	const char* TraceTexture( entindex_t hitentity, const Vector& position, const Vector& planeNormal )
 	{
 		if(hitentity == NO_ENTITY_INDEX)
 			return nullptr;
@@ -316,7 +316,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void FireTargets( const Char* pstrtargetname, CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+	void FireTargets( const char* pstrtargetname, CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 	{
 		if(!pstrtargetname || !qstrlen(pstrtargetname))
 			return;
@@ -342,7 +342,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	bool IsMasterTriggered( const Char* pstrtargetname, const CBaseEntity* pentity, const CBaseEntity* pslave )
+	bool IsMasterTriggered( const char* pstrtargetname, const CBaseEntity* pentity, const CBaseEntity* pslave )
 	{
 		if(!pstrtargetname || !qstrlen(pstrtargetname))
 			return true;
@@ -437,7 +437,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	CBaseEntity* GetPlayerByIndex( Uint32 index )
+	CBaseEntity* GetPlayerByIndex( UInt32 index )
 	{
 		edict_t* pedict = gd_engfuncs.pfnGetEdictByIndex(HOST_CLIENT_ENTITY_INDEX+index);
 		if(Util::IsNullEntity(pedict))
@@ -454,12 +454,12 @@ namespace Util
 	//=============================================
 	void WarnEmptyEntity( const edict_t* pentity )
 	{
-		const Char* pstrclassname = gd_engfuncs.pfnGetString(pentity->fields.classname);
+		const char* pstrclassname = gd_engfuncs.pfnGetString(pentity->fields.classname);
 		const Vector& origin = pentity->state.origin;
 
 		if(pentity->fields.targetname != NO_STRING_VALUE)
 		{
-			const Char* pstrtargetname = gd_engfuncs.pfnGetString(pentity->fields.targetname);
+			const char* pstrtargetname = gd_engfuncs.pfnGetString(pentity->fields.targetname);
 			gd_engfuncs.pfnCon_WPrintf("Empty %s(%s) at %.0f %.0f %.0f.\n", pstrclassname, pstrtargetname, origin.x, origin.y, origin.z);
 		}
 		else
@@ -469,13 +469,13 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void EntityConPrintf( const edict_t* pentity, const Char *fmt, ... )
+	void EntityConPrintf( const edict_t* pentity, const char *fmt, ... )
 	{
 		va_list	vArgPtr;
-		Char cMsg[MAX_PATH];
+		char cMsg[MAX_PATH];
 	
 		va_start(vArgPtr, fmt);
-		vsprintf_s(cMsg, fmt, vArgPtr);
+		ENGINE_VSPRINTF_S(cMsg, sizeof(cMsg), fmt, vArgPtr);
 		va_end(vArgPtr);
 
 		if(pentity->fields.targetname != NO_STRING_VALUE)
@@ -487,13 +487,13 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void EntityConDPrintf( const edict_t* pentity, const Char *fmt, ... )
+	void EntityConDPrintf( const edict_t* pentity, const char *fmt, ... )
 	{
 		va_list	vArgPtr;
-		Char cMsg[MAX_PATH];
+		char cMsg[MAX_PATH];
 	
 		va_start(vArgPtr, fmt);
-		vsprintf_s(cMsg, fmt, vArgPtr);
+		ENGINE_VSPRINTF_S(cMsg, sizeof(cMsg), fmt, vArgPtr);
 		va_end(vArgPtr);
 
 		if(pentity->fields.targetname != NO_STRING_VALUE)
@@ -505,17 +505,17 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateParticles( const Char* pstrscriptname, const Vector& origin, const Vector& direction, part_script_type_t type )
+	void CreateParticles( const char* pstrscriptname, const Vector& origin, const Vector& direction, part_script_type_t type )
 	{
 		if(!pstrscriptname || !qstrlen(pstrscriptname))
 			return;
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createparticlesystem, nullptr, nullptr);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteSmallFloat(direction[i]*360.0f);
 
 		gd_engfuncs.pfnMsgWriteByte(type);
@@ -531,7 +531,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateParticles( const Char* pstrscriptname, const Vector& origin, const Vector& direction, part_script_type_t type, const edict_t* pentity, Uint32 attachment, Int32 id, Int32 boneindex, Int32 attachflags )
+	void CreateParticles( const char* pstrscriptname, const Vector& origin, const Vector& direction, part_script_type_t type, const edict_t* pentity, UInt32 attachment, Int32 id, Int32 boneindex, Int32 attachflags )
 	{
 		if(!pstrscriptname || !qstrlen(pstrscriptname))
 			return;
@@ -541,10 +541,10 @@ namespace Util
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createparticlesystem, nullptr, nullptr);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteSmallFloat(direction[i]*360.0f);
 
 		gd_engfuncs.pfnMsgWriteByte(type);
@@ -560,18 +560,18 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateTracer( const Vector& origin, const Vector& velocity, const Vector& color, Float alpha, Float width, Float length, Float life, enum tracer_type_t type )
+	void CreateTracer( const Vector& origin, const Vector& velocity, const Vector& color, float alpha, float width, float length, float life, enum tracer_type_t type )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 		gd_engfuncs.pfnMsgWriteByte(TE_TRACER);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteFloat(velocity[i]);
 
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteByte(color[i]);
 
 		gd_engfuncs.pfnMsgWriteByte(alpha);
@@ -585,7 +585,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void PrecacheEntity( const Char* pstrClassname )
+	void PrecacheEntity( const char* pstrClassname )
 	{
 		edict_t* pedict = gd_engfuncs.pfnCreateEntity(pstrClassname);
 		if(!pedict)
@@ -604,7 +604,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void ShowMessage( const Char* pmsgname, CBaseEntity* pPlayer )
+	void ShowMessage( const char* pmsgname, CBaseEntity* pPlayer )
 	{
 		if(!pPlayer || !pPlayer->IsPlayer())
 			return;
@@ -617,7 +617,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void ShowMessageAllPlayers( const Char* pmsgname )
+	void ShowMessageAllPlayers( const char* pmsgname )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.showmessage, nullptr, nullptr);
 		gd_engfuncs.pfnMsgWriteString(pmsgname);
@@ -627,7 +627,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void EmitEntitySound( const CBaseEntity* pEntity, const Char* pstrfilename, snd_channels_t channel, Float volume, Float attenuation, Int32 pitch, Int32 flags, const CBaseEntity* pPlayer, Float timeoffset )
+	void EmitEntitySound( const CBaseEntity* pEntity, const char* pstrfilename, snd_channels_t channel, float volume, float attenuation, Int32 pitch, Int32 flags, const CBaseEntity* pPlayer, float timeoffset )
 	{
 		if(!pEntity)
 			return;
@@ -638,7 +638,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void EmitEntitySound( const CBaseEntity* pEntity, string_t filename, snd_channels_t channel, Float volume, Float attenuation, Int32 pitch, Int32 flags, const CBaseEntity* pPlayer, Float timeoffset )
+	void EmitEntitySound( const CBaseEntity* pEntity, string_t filename, snd_channels_t channel, float volume, float attenuation, Int32 pitch, Int32 flags, const CBaseEntity* pPlayer, float timeoffset )
 	{
 		if(!pEntity)
 			return;
@@ -646,7 +646,7 @@ namespace Util
 		if(filename == NO_STRING_VALUE)
 			return;
 
-		const Char* pstrfilename = gd_engfuncs.pfnGetString(filename);
+		const char* pstrfilename = gd_engfuncs.pfnGetString(filename);
 		if(!pstrfilename || !qstrlen(pstrfilename))
 			return;
 
@@ -656,7 +656,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void EmitAmbientSound( const Vector& origin, const Char* pstrfilename, Float volume, Float attenuation, Int32 pitch, Int32 flags, const CBaseEntity* pEntity, const CBaseEntity* pPlayer, Float timeoffset )
+	void EmitAmbientSound( const Vector& origin, const char* pstrfilename, float volume, float attenuation, Int32 pitch, Int32 flags, const CBaseEntity* pEntity, const CBaseEntity* pPlayer, float timeoffset )
 	{
 		entindex_t entityindex;
 		if(pEntity)
@@ -670,12 +670,12 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void EmitAmbientSound( const Vector& origin, string_t filename, Float volume, Float attenuation, Int32 pitch, Int32 flags, const CBaseEntity* pEntity, const CBaseEntity* pPlayer, Float timeoffset )
+	void EmitAmbientSound( const Vector& origin, string_t filename, float volume, float attenuation, Int32 pitch, Int32 flags, const CBaseEntity* pEntity, const CBaseEntity* pPlayer, float timeoffset )
 	{
 		if(filename == NO_STRING_VALUE)
 			return;
 
-		const Char* pstrfilename = gd_engfuncs.pfnGetString(filename);
+		const char* pstrfilename = gd_engfuncs.pfnGetString(filename);
 		if(!pstrfilename || !qstrlen(pstrfilename))
 			return;
 
@@ -726,7 +726,7 @@ namespace Util
 		{
 			// Use same value as Half-Life
 			// Only red for now
-			Uint32 colorIndex = 70;
+			UInt32 colorIndex = 70;
 			Util::CreateBloodParticles(tr.endpos, tr.plane.normal, colorIndex, Common::RandomFloat(10, 30));
 
 			// Randomly spawn streams too
@@ -803,9 +803,9 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateGenericDecal( const Vector& origin, const Vector* pnormal, const Char* pstrname, Int32 decalflags, entindex_t entindex, Float life, Float fadetime, Float growthtime, const edict_t* pplayer )
+	void CreateGenericDecal( const Vector& origin, const Vector* pnormal, const char* pstrname, Int32 decalflags, entindex_t entindex, float life, float fadetime, float growthtime, const edict_t* pplayer )
 	{
-		Uint16 flags = decalflags | FL_DECAL_SERVER;
+		UInt16 flags = decalflags | FL_DECAL_SERVER;
 		if(pnormal)
 			flags |= FL_DECAL_HAS_NORMAL;
 		if(entindex != NO_ENTITY_INDEX)
@@ -829,12 +829,12 @@ namespace Util
 			gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.creategenericdecal, nullptr, nullptr);
 
 		gd_engfuncs.pfnMsgWriteUint16(flags);
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 		gd_engfuncs.pfnMsgWriteString(pstrname);
 		if(pnormal)
 		{
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteSmallFloat((*pnormal)[i]*360.0f);
 		}
 			
@@ -856,16 +856,16 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateVBMDecal( const Vector& origin, const Vector& normal, const Char* pstrname, const edict_t* pentity, Int32 decalflags )
+	void CreateVBMDecal( const Vector& origin, const Vector& normal, const char* pstrname, const edict_t* pentity, Int32 decalflags )
 	{
 		if(Util::IsNullEntity(pentity))
 			return;
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createvbmdecal, nullptr, nullptr);
 		gd_engfuncs.pfnMsgWriteInt16(pentity->entindex);
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteFloat(origin[i]);
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteSmallFloat(normal[i]*360.0f);
 		gd_engfuncs.pfnMsgWriteString(pstrname);
 		gd_engfuncs.pfnMsgWriteByte(decalflags);
@@ -875,9 +875,9 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	Float GetDamageForce( const edict_t& entity, Float damage )
+	float GetDamageForce( const edict_t& entity, float damage )
 	{
-		Float force = damage*((32*32*72)/(entity.state.size.x * entity.state.size.y * entity.state.size.z))*5;
+		float force = damage*((32*32*72)/(entity.state.size.x * entity.state.size.y * entity.state.size.z))*5;
 		if(force > 1000.0f)
 			force = 1000.0f;
 
@@ -887,7 +887,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void ScreenFadePlayer( const edict_t* pplayer, const Vector& color, Float fadetime, Float fadeholdtime, Int32 alpha, Int32 flags, Int32 layer, Float timeoffset )
+	void ScreenFadePlayer( const edict_t* pplayer, const Vector& color, float fadetime, float fadeholdtime, Int32 alpha, Int32 flags, Int32 layer, float timeoffset )
 	{
 		color24_t _color(color.x, color.y, color.z);
 		ScreenFadePlayer(pplayer, _color, fadetime, fadeholdtime, alpha, flags, layer, timeoffset);
@@ -896,7 +896,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void ScreenFadePlayer( const edict_t* pplayer, const color24_t& color, Float fadetime, Float fadeholdtime, Int32 alpha, Int32 flags, Int32 layer, Float timeoffset )
+	void ScreenFadePlayer( const edict_t* pplayer, const color24_t& color, float fadetime, float fadeholdtime, Int32 alpha, Int32 flags, Int32 layer, float timeoffset )
 	{
 		if(!pplayer || !(pplayer->state.flags & FL_CLIENT))
 			return;
@@ -917,7 +917,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void ScreenFadeAllPlayers( const Vector& color, Float fadetime, Float fadeholdtime, Int32 alpha, Int32 flags, Int32 layer, Float timeoffset )
+	void ScreenFadeAllPlayers( const Vector& color, float fadetime, float fadeholdtime, Int32 alpha, Int32 flags, Int32 layer, float timeoffset )
 	{
 		color24_t _color(color.x, color.y, color.z);
 		ScreenFadeAllPlayers(_color, fadetime, fadeholdtime, alpha, flags, layer, timeoffset);
@@ -926,7 +926,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void ScreenFadeAllPlayers( const color24_t& color, Float fadetime, Float fadeholdtime, Int32 alpha, Int32 flags, Int32 layer, Float timeoffset )
+	void ScreenFadeAllPlayers( const color24_t& color, float fadetime, float fadeholdtime, Int32 alpha, Int32 flags, Int32 layer, float timeoffset )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.screenfade, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteSmallFloat(fadetime*100);
@@ -960,7 +960,7 @@ namespace Util
 	Vector ClampVectorToBox( const Vector& vectoadj, const Vector& boxsize )
 	{
 		Vector vecadj = vectoadj;
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 		{
 			if(vecadj[i] > boxsize[i])
 				vecadj[i] -= boxsize[i];
@@ -999,7 +999,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	Int32 CalculateLightIllumination( const Vector& origin, const Vector& lightorigin, const Vector& lightcolor, Float lightradius )
+	Int32 CalculateLightIllumination( const Vector& origin, const Vector& lightorigin, const Vector& lightcolor, float lightradius )
 	{
 		trace_t tr;
 		Util::TraceLine(origin, lightorigin, true, false, nullptr, tr);
@@ -1007,12 +1007,12 @@ namespace Util
 		if(tr.noHit() || tr.allSolid() || tr.startSolid())
 			return 0;
 
-		Float rsquared = lightradius*lightradius;
+		float rsquared = lightradius*lightradius;
 		Vector lightdir = origin-lightorigin;
-		Float dist = Math::DotProduct(lightdir, lightdir);
+		float dist = Math::DotProduct(lightdir, lightdir);
 
-		Float attn = (dist/rsquared-1)*-1;
-		attn = clamp(attn, 0, 1.0);
+		float attn = (dist/rsquared-1)*-1;
+		attn = Clamp(attn, 0, 1.0);
 
 		return attn*((lightcolor[0]+lightcolor[1]+lightcolor[2])/3.0f);
 	}
@@ -1034,21 +1034,21 @@ namespace Util
 		Vector endPos = position - Vector(0, 0, 8192);
 
 		Vector lightcolors[MAX_SURFACE_STYLES];
-		byte lightstyles[MAX_SURFACE_STYLES];
+		Byte lightstyles[MAX_SURFACE_STYLES];
 		if(!gd_engfuncs.pfnRecursiveLightPoint(pbrushmodel, pbrushmodel->pnodes, startPos, endPos, lightcolors, lightstyles))
 			return 0;
 
-		CArray<Float>* plightstylesarray = gSVLightStyles.GetLightStyleValuesArray();
+		CArray<float>* plightstylesarray = gSVLightStyles.GetLightStyleValuesArray();
 
 		// Calculate illumination
 		Vector lightcolor;
 		Math::VectorScale(lightcolors[BASE_LIGHTMAP_INDEX], 255, lightcolor);
-		for(Uint32 i = 1; i < MAX_SURFACE_STYLES; i++)
+		for(UInt32 i = 1; i < MAX_SURFACE_STYLES; i++)
 		{
 			if(lightstyles[i] == NULL_LIGHTSTYLE_INDEX)
 				break;
 
-			Float scale = 255 * (*plightstylesarray)[lightstyles[i]];
+			float scale = 255 * (*plightstylesarray)[lightstyles[i]];
 			Math::VectorScale(lightcolors[i], scale, lightcolor);
 		}
 
@@ -1101,7 +1101,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateImpactEffects( const trace_t& tr, const Vector& traceBegin, bool createDecal, bool vbmDecal, bool playSounds, const Char* pstrDecalGroupName )
+	void CreateImpactEffects( const trace_t& tr, const Vector& traceBegin, bool createDecal, bool vbmDecal, bool playSounds, const char* pstrDecalGroupName )
 	{
 		if(tr.noHit() || tr.allSolid() || tr.startSolid())
 			return;
@@ -1117,7 +1117,7 @@ namespace Util
 		Vector traceStart = tr.endpos + tr.plane.normal*4;
 		Vector traceEnd = tr.endpos - tr.plane.normal*4;
 	
-		const Char* pstrTextureName = gd_tracefuncs.pfnTraceTexture(tr.hitentity, traceStart, traceEnd);
+		const char* pstrTextureName = gd_tracefuncs.pfnTraceTexture(tr.hitentity, traceStart, traceEnd);
 		if(!pstrTextureName || !qstrlen(pstrTextureName))
 			return;
 
@@ -1153,7 +1153,7 @@ namespace Util
 		// Play impact sound effect
 		if(playSounds && !(pmaterial->flags & TX_FL_NO_IMPACT_EFFECTS) && !pdefinition->sounds.empty())
 		{
-			Uint32 soundindex = Common::RandomLong(0, pdefinition->sounds.size()-1);
+			UInt32 soundindex = Common::RandomLong(0, pdefinition->sounds.size()-1);
 			Util::EmitAmbientSound(tr.endpos, pdefinition->sounds[soundindex].c_str());
 		}
 
@@ -1170,7 +1170,7 @@ namespace Util
 				flags |= FL_DECAL_ALLOWOVERLAP;
 
 			// Choose group based on override param
-			const Char* pstrGroupName = (pstrDecalGroupName && qstrlen(pstrDecalGroupName)) ? pstrDecalGroupName : pdefinition->decalgroup.c_str();
+			const char* pstrGroupName = (pstrDecalGroupName && qstrlen(pstrDecalGroupName)) ? pstrDecalGroupName : pdefinition->decalgroup.c_str();
 
 			// Get the texture name
 			decalgroupentry_t* pentry = gDecalList.GetRandom(pstrGroupName);
@@ -1207,7 +1207,7 @@ namespace Util
 					Vector vDir = (traceBegin - tr.endpos).Normalize();
 					Vector vCur = tr.endpos;
 		
-					Float diff = 0.1;
+					float diff = 0.1;
 					while(true)
 					{
 						vCur = vCur + vDir*diff;
@@ -1240,7 +1240,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateTempModel( const Vector& origin, const Vector& angles, const Vector& velocity, Float life, Uint32 num, const Char* pstrModelname, Int32 sound, Float bouyancy, Float waterfriction, Int32 flags, Int32 body )
+	void CreateTempModel( const Vector& origin, const Vector& angles, const Vector& velocity, float life, UInt32 num, const char* pstrModelname, Int32 sound, float bouyancy, float waterfriction, Int32 flags, Int32 body )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrModelname);
 		if(modelindex == NO_PRECACHE)
@@ -1255,7 +1255,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateTempModel( const Vector& origin, const Vector& angles, const Vector& velocity, Float life, Uint32 num, Int32 modelindex, Int32 sound, Float bouyancy, Float waterfriction, Int32 flags, Int32 body )
+	void CreateTempModel( const Vector& origin, const Vector& angles, const Vector& velocity, float life, UInt32 num, Int32 modelindex, Int32 sound, float bouyancy, float waterfriction, Int32 flags, Int32 body )
 	{
 		if(modelindex == NO_PRECACHE)
 		{
@@ -1267,14 +1267,14 @@ namespace Util
 			gd_engfuncs.pfnMsgWriteByte(TE_TEMPMODEL);
 
 			// Write origin
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 
 			// Write angles
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteSmallFloat(angles[i]);
 
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteSmallFloat(velocity[i]);
 
 			gd_engfuncs.pfnMsgWriteSmallFloat(life);
@@ -1291,7 +1291,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateBreakModel( const Vector& origin, const Vector& size, bm_velocity_t velocitymode, const Vector& velvector, Uint32 randomvelmin, Uint32 randomvelmax, Float life, Uint32 num, const Char* pstrModelname, Int32 sound, Float bouyancy, Float waterfriction, Int32 flags )
+	void CreateBreakModel( const Vector& origin, const Vector& size, bm_velocity_t velocitymode, const Vector& velvector, UInt32 randomvelmin, UInt32 randomvelmax, float life, UInt32 num, const char* pstrModelname, Int32 sound, float bouyancy, float waterfriction, Int32 flags )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrModelname);
 		if(modelindex == NO_PRECACHE)
@@ -1306,7 +1306,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateBreakModel( const Vector& origin, const Vector& size, bm_velocity_t velocitymode, const Vector& velvector, Uint32 randomvelmin, Uint32 randomvelmax, Float life, Uint32 num, Int32 modelindex, Int32 sound, Float bouyancy, Float waterfriction, Int32 flags )
+	void CreateBreakModel( const Vector& origin, const Vector& size, bm_velocity_t velocitymode, const Vector& velvector, UInt32 randomvelmin, UInt32 randomvelmax, float life, UInt32 num, Int32 modelindex, Int32 sound, float bouyancy, float waterfriction, Int32 flags )
 	{
 		if(modelindex == NO_PRECACHE)
 		{
@@ -1317,14 +1317,14 @@ namespace Util
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_BREAKMODEL);
 			// Write origin
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 			// Write size
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteSmallFloat(size[i]);
 			gd_engfuncs.pfnMsgWriteByte(velocitymode);
 			// Write velocity relevant vector
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(velvector[i]);
 			gd_engfuncs.pfnMsgWriteUint16(randomvelmin);
 			gd_engfuncs.pfnMsgWriteUint16(randomvelmax);
@@ -1341,7 +1341,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateBubbles( const Vector& mins, const Vector& maxs, const Float height, const Char* pstrSpritename, Uint32 num, Float speed )
+	void CreateBubbles( const Vector& mins, const Vector& maxs, const float height, const char* pstrSpritename, UInt32 num, float speed )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpritename);
 		if(modelindex == NO_PRECACHE)
@@ -1356,7 +1356,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateBubbles( const Vector& mins, const Vector& maxs, const Float height, Int32 modelindex, Uint32 num, Float speed )
+	void CreateBubbles( const Vector& mins, const Vector& maxs, const float height, Int32 modelindex, UInt32 num, float speed )
 	{
 		if(modelindex == NO_PRECACHE)
 		{
@@ -1367,10 +1367,10 @@ namespace Util
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_BUBBLES);
 			// mins
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(mins[i]);
 			// maxs
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(maxs[i]);
 			gd_engfuncs.pfnMsgWriteSmallFloat(height);
 			gd_engfuncs.pfnMsgWriteUint16(modelindex);
@@ -1382,7 +1382,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateBubbleTrail( const Vector& start, const Vector& end, const Float height, const Char* pstrSpritename, Uint32 num, Float speed )
+	void CreateBubbleTrail( const Vector& start, const Vector& end, const float height, const char* pstrSpritename, UInt32 num, float speed )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpritename);
 		if(modelindex == NO_PRECACHE)
@@ -1397,7 +1397,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateBubbleTrail( const Vector& start, const Vector& end, const Float height, Int32 modelindex, Uint32 num, Float speed )
+	void CreateBubbleTrail( const Vector& start, const Vector& end, const float height, Int32 modelindex, UInt32 num, float speed )
 	{
 		if(modelindex == NO_PRECACHE)
 		{
@@ -1408,10 +1408,10 @@ namespace Util
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_BUBBLETRAIL);
 			// mins
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(start[i]);
 			// maxs
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(end[i]);
 			gd_engfuncs.pfnMsgWriteSmallFloat(height);
 			gd_engfuncs.pfnMsgWriteUint16(modelindex);
@@ -1423,7 +1423,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateFunnelSprite( const Vector& origin, const Vector& color, Float alpha, const Char* pstrSpritename, bool reverse )
+	void CreateFunnelSprite( const Vector& origin, const Vector& color, float alpha, const char* pstrSpritename, bool reverse )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpritename);
 		if(modelindex == NO_PRECACHE)
@@ -1438,7 +1438,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateFunnelSprite( const Vector& origin, const Vector& color, Float alpha, Int32 modelindex, bool reverse )
+	void CreateFunnelSprite( const Vector& origin, const Vector& color, float alpha, Int32 modelindex, bool reverse )
 	{
 		if(modelindex == NO_PRECACHE)
 		{
@@ -1448,9 +1448,9 @@ namespace Util
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_FUNNELSPRITE);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteByte(color[i]);
 
 			gd_engfuncs.pfnMsgWriteByte(alpha);
@@ -1462,7 +1462,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateSphereModel( const Vector& origin, Float speed, Float life, Uint32 num, const Char* pstrModelname, Int32 sound, Float bouyancy, Float waterfriction )
+	void CreateSphereModel( const Vector& origin, float speed, float life, UInt32 num, const char* pstrModelname, Int32 sound, float bouyancy, float waterfriction )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrModelname);
 		if(modelindex == NO_PRECACHE)
@@ -1477,7 +1477,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateSphereModel( const Vector& origin, Float speed, Float life, Uint32 num, Int32 modelindex, Int32 sound, Float bouyancy, Float waterfriction )
+	void CreateSphereModel( const Vector& origin, float speed, float life, UInt32 num, Int32 modelindex, Int32 sound, float bouyancy, float waterfriction )
 	{
 		if(modelindex == NO_PRECACHE)
 		{
@@ -1487,7 +1487,7 @@ namespace Util
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_SPHEREMODEL);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 
 			gd_engfuncs.pfnMsgWriteSmallFloat(speed);
@@ -1502,7 +1502,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateTempSprite( const Vector& origin, const Vector& velocity, Float life, Float scale, const Char* pstrSpritename, rendermode_t rendermode, Int32 renderfx, Float alpha, Int32 sound, Int32 flags )
+	void CreateTempSprite( const Vector& origin, const Vector& velocity, float life, float scale, const char* pstrSpritename, rendermode_t rendermode, Int32 renderfx, float alpha, Int32 sound, Int32 flags )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpritename);
 		if(modelindex == NO_PRECACHE)
@@ -1517,7 +1517,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateTempSprite( const Vector& origin, const Vector& velocity, Float life, Float scale, Int32 modelindex, rendermode_t rendermode, Int32 renderfx, Float alpha, Int32 sound, Int32 flags )
+	void CreateTempSprite( const Vector& origin, const Vector& velocity, float life, float scale, Int32 modelindex, rendermode_t rendermode, Int32 renderfx, float alpha, Int32 sound, Int32 flags )
 	{
 		if(modelindex == NO_PRECACHE)
 		{
@@ -1527,15 +1527,15 @@ namespace Util
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_TEMPSPRITE);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteSmallFloat(velocity[i]);
 
 			gd_engfuncs.pfnMsgWriteSmallFloat(life);
 			gd_engfuncs.pfnMsgWriteSmallFloat(scale);
 			gd_engfuncs.pfnMsgWriteUint16(modelindex);
-			gd_engfuncs.pfnMsgWriteUint16((Uint16)rendermode);
+			gd_engfuncs.pfnMsgWriteUint16((UInt16)rendermode);
 			gd_engfuncs.pfnMsgWriteUint16(renderfx);
 			gd_engfuncs.pfnMsgWriteSmallFloat(alpha);
 			gd_engfuncs.pfnMsgWriteByte(sound);
@@ -1550,7 +1550,7 @@ namespace Util
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_PARTICLEEXPLOSION1);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 		gd_engfuncs.pfnUserMessageEnd();
 	}
@@ -1562,7 +1562,7 @@ namespace Util
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_PARTICLEEXPLOSION2);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 			gd_engfuncs.pfnMsgWriteByte(colorstart);
 			gd_engfuncs.pfnMsgWriteByte(colorlength);
@@ -1576,7 +1576,7 @@ namespace Util
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_BLOBEXPLOSION);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 		gd_engfuncs.pfnUserMessageEnd();
 	}
@@ -1588,7 +1588,7 @@ namespace Util
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_ROCKETEXPLOSION);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 			gd_engfuncs.pfnMsgWriteByte(color);
 		gd_engfuncs.pfnUserMessageEnd();
@@ -1597,13 +1597,13 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateParticleEffect( const Vector& origin, const Vector& velocity, Int32 color, Uint32 count )
+	void CreateParticleEffect( const Vector& origin, const Vector& velocity, Int32 color, UInt32 count )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_PARTICLEEFFECT);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteSmallFloat(velocity[i]);
 			gd_engfuncs.pfnMsgWriteByte(color);
 			gd_engfuncs.pfnMsgWriteUint16(count);
@@ -1617,7 +1617,7 @@ namespace Util
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_LAVASPLASH);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 		gd_engfuncs.pfnUserMessageEnd();
 	}
@@ -1629,7 +1629,7 @@ namespace Util
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_TELEPORTSPLASH);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 		gd_engfuncs.pfnUserMessageEnd();
 	}
@@ -1637,13 +1637,13 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateRocketTrail( const Vector& start, const Vector& end, Uint32 type )
+	void CreateRocketTrail( const Vector& start, const Vector& end, UInt32 type )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_ROCKETTRAIL);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(start[i]);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(end[i]);
 			gd_engfuncs.pfnMsgWriteByte(type);
 		gd_engfuncs.pfnUserMessageEnd();
@@ -1652,14 +1652,14 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateSparkStreak( const Vector& origin, Uint32 count, const Vector& color, Float alpha, Float width, Float length, Float minLifetime, Float maxLifetime, Float minVelocity, Float maxVelocity )
+	void CreateSparkStreak( const Vector& origin, UInt32 count, const Vector& color, float alpha, float width, float length, float minLifetime, float maxLifetime, float minVelocity, float maxVelocity )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_SPARKSTREAK);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 			gd_engfuncs.pfnMsgWriteUint16(count);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteByte(color[i]);
 			gd_engfuncs.pfnMsgWriteByte(alpha);
 			gd_engfuncs.pfnMsgWriteFloat(minLifetime);
@@ -1674,15 +1674,15 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateStreakSplash( const Vector& origin, const Vector& direction, const Vector& color, Float alpha, Float width, Float length, Uint32 count, Float speed, Float minLifetime, Float maxLifetime, Float minVelocity, Float maxVelocity )
+	void CreateStreakSplash( const Vector& origin, const Vector& direction, const Vector& color, float alpha, float width, float length, UInt32 count, float speed, float minLifetime, float maxLifetime, float minVelocity, float maxVelocity )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_STREAKSPLASH);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(direction[i]);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteByte(color[i]);
 			gd_engfuncs.pfnMsgWriteByte(alpha);
 			gd_engfuncs.pfnMsgWriteUint16(count);
@@ -1703,7 +1703,7 @@ namespace Util
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_LARGEFUNNEL);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 			gd_engfuncs.pfnMsgWriteByte(reverse);
 		gd_engfuncs.pfnUserMessageEnd();
@@ -1712,13 +1712,13 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateBloodStream( const Vector& origin, const Vector& direction, Uint32 color, Float speed )
+	void CreateBloodStream( const Vector& origin, const Vector& direction, UInt32 color, float speed )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_BLOODSTREAM);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(direction[i]);
 			gd_engfuncs.pfnMsgWriteByte(color);
 			gd_engfuncs.pfnMsgWriteFloat(speed);
@@ -1728,13 +1728,13 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateBloodParticles( const Vector& origin, const Vector& direction, Uint32 color, Float speed )
+	void CreateBloodParticles( const Vector& origin, const Vector& direction, UInt32 color, float speed )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_BLOODPARTICLES);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(origin[i]);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(direction[i]);
 			gd_engfuncs.pfnMsgWriteByte(color);
 			gd_engfuncs.pfnMsgWriteFloat(speed);
@@ -1744,19 +1744,19 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void CreateTracerImplosion( const Vector& destination, Float radius, Uint32 count, Float life, const Vector& color, Float alpha, Float width, Float length, bool reverse )
+	void CreateTracerImplosion( const Vector& destination, float radius, UInt32 count, float life, const Vector& color, float alpha, float width, float length, bool reverse )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.createtempentity, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(TE_TRACERIMPLOSION);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(destination[i]);
 			gd_engfuncs.pfnMsgWriteSmallFloat(radius);
 			gd_engfuncs.pfnMsgWriteUint32(count);
 			gd_engfuncs.pfnMsgWriteSmallFloat(life);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteByte(color[i]);
 			gd_engfuncs.pfnMsgWriteByte(alpha);
-			gd_engfuncs.pfnMsgWriteByte(reverse ? TRUE : FALSE);
+			gd_engfuncs.pfnMsgWriteByte(reverse ? true : false);
 			gd_engfuncs.pfnMsgWriteSmallFloat(width);
 			gd_engfuncs.pfnMsgWriteSmallFloat(length);
 		gd_engfuncs.pfnUserMessageEnd();
@@ -1765,7 +1765,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void PrecacheFixedNbSounds( const Char* pstrPattern, Uint32 count )
+	void PrecacheFixedNbSounds( const char* pstrPattern, UInt32 count )
 	{
 		CString filepath(pstrPattern);
 		Int32 tokenpos = filepath.find(0, "%d");
@@ -1775,7 +1775,7 @@ namespace Util
 			return;
 		}
 
-		for(Uint32 i = 0; i < count; i++)
+		for(UInt32 i = 0; i < count; i++)
 		{
 			CString replacestring(filepath);
 			replacestring.erase(tokenpos, 2);
@@ -1791,7 +1791,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void PrecacheVariableNbSounds( const Char* pstrPattern, Uint32& outcount )
+	void PrecacheVariableNbSounds( const char* pstrPattern, UInt32& outcount )
 	{
 		CString filepath(pstrPattern);
 		Int32 tokenpos = filepath.find(0, "%d");
@@ -1801,7 +1801,7 @@ namespace Util
 			return;
 		}
 
-		Uint32 number = 1;
+		UInt32 number = 1;
 		while(true)
 		{
 			CString replacestring(filepath);
@@ -1833,7 +1833,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	void PrecacheSounds( const Char* pstrPattern, Int32 count )
+	void PrecacheSounds( const char* pstrPattern, Int32 count )
 	{
 		CString filepath(pstrPattern);
 		Int32 tokenpos = filepath.find(0, "%d");
@@ -1859,7 +1859,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	CString PlayRandomAmbientSound( const Vector& origin, const Char* pstrPattern, Int32 count, Float volume, Float attenuation, Int32 pitch, Int32 flags )
+	CString PlayRandomAmbientSound( const Vector& origin, const char* pstrPattern, Int32 count, float volume, float attenuation, Int32 pitch, Int32 flags )
 	{
 		if(count <= 0)
 		{
@@ -1890,7 +1890,7 @@ namespace Util
 	//=============================================
 	//
 	//=============================================
-	CString PlayRandomEntitySound( CBaseEntity* pEntity, const Char* pstrPattern, Int32 count, snd_channels_t channel, Float volume, Float attenuation, Int32 pitch, Int32 flags )
+	CString PlayRandomEntitySound( CBaseEntity* pEntity, const char* pstrPattern, Int32 count, snd_channels_t channel, float volume, float attenuation, Int32 pitch, Int32 flags )
 	{
 		if(count <= 0)
 		{
@@ -1975,7 +1975,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void ScreenShake( const Vector& origin, Float amplitude, Float frequency, Float duration, Float radius, bool inair, bool disruptcontrols )
+	void ScreenShake( const Vector& origin, float amplitude, float frequency, float duration, float radius, bool inair, bool disruptcontrols )
 	{
 		for(Int32 i = 0; i < g_pGameVars->maxclients; i++)
 		{
@@ -1983,10 +1983,10 @@ namespace Util
 			if(!pPlayer || (!inair && !(pPlayer->GetFlags() & FL_ONGROUND)))
 				continue;
 
-			Float playeramplitude = 0;
+			float playeramplitude = 0;
 			if(radius > 0)
 			{
-				Float dist = (origin - pPlayer->GetOrigin()).Length();
+				float dist = (origin - pPlayer->GetOrigin()).Length();
 				if(dist < radius)
 					playeramplitude = amplitude;
 			}
@@ -2008,7 +2008,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void ScreenShakeAll( const Vector& origin, Float amplitude, Float frequency, Float duration )
+	void ScreenShakeAll( const Vector& origin, float amplitude, float frequency, float duration )
 	{
 		Util::ScreenShake(origin, amplitude, frequency, duration, 0, true, false);
 	}
@@ -2027,15 +2027,15 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateDynamicLight( const Vector& origin, Float radius, Int32 r, Int32 g, Int32 b, Float life, Int32 decay, Float decaydelay, byte flags, Int32 entindex, Int32 attachment, Int32 lightstyle )
+	void CreateDynamicLight( const Vector& origin, float radius, Int32 r, Int32 g, Int32 b, float life, Int32 decay, float decaydelay, Byte flags, Int32 entindex, Int32 attachment, Int32 lightstyle )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.dynamiclight, nullptr, nullptr);
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 			gd_engfuncs.pfnMsgWriteSmallFloat(radius);
-			gd_engfuncs.pfnMsgWriteByte(clamp(r, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(g, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(b, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(r, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(g, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(b, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(life);
 			gd_engfuncs.pfnMsgWriteSmallFloat(decay);
 			gd_engfuncs.pfnMsgWriteSmallFloat(decaydelay);
@@ -2057,19 +2057,19 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateDynamicLightWithSubkey( const Vector& origin, Float radius, Int32 r, Int32 g, Int32 b, Float life, Int32 decay, Float decaydelay, byte flags, Int32 entindex, Int32 subkey, Int32 attachment, Int32 lightstyle )
+	void CreateDynamicLightWithSubkey( const Vector& origin, float radius, Int32 r, Int32 g, Int32 b, float life, Int32 decay, float decaydelay, Byte flags, Int32 entindex, Int32 subkey, Int32 attachment, Int32 lightstyle )
 	{
-		byte _flags = flags;
+		Byte _flags = flags;
 		if(subkey)
 			_flags |= FL_DLIGHT_USE_SUBKEY;
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.dynamiclight, nullptr, nullptr);
-		for(Uint32 i = 0; i < 3; i++)
+		for(UInt32 i = 0; i < 3; i++)
 			gd_engfuncs.pfnMsgWriteFloat(origin[i]);
 			gd_engfuncs.pfnMsgWriteSmallFloat(radius);
-			gd_engfuncs.pfnMsgWriteByte(clamp(r, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(g, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(b, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(r, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(g, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(b, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(life);
 			gd_engfuncs.pfnMsgWriteSmallFloat(decay);
 			gd_engfuncs.pfnMsgWriteSmallFloat(decaydelay);
@@ -2104,12 +2104,12 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	extern void ReadColor24FromString( const Char* pstrString, color24_t& outcolor )
+	extern void ReadColor24FromString( const char* pstrString, color24_t& outcolor )
 	{
 		CString token;
-		Uint32 readindex = 0;
+		UInt32 readindex = 0;
 
-		const Char* pstr = pstrString;
+		const char* pstr = pstrString;
 		while(pstr && readindex < 2)
 		{
 			pstr = Common::Parse(pstr, token);
@@ -2125,7 +2125,7 @@ namespace Util
 
 		if(readindex < 2)
 		{
-			for(Uint32 i = 0; i < 2; i++)
+			for(UInt32 i = 0; i < 2; i++)
 				outcolor[i] = 0;
 		}
 	}
@@ -2134,12 +2134,12 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	extern void ReadColor32FromString( const Char* pstrString, color32_t& outcolor )
+	extern void ReadColor32FromString( const char* pstrString, color32_t& outcolor )
 	{
 		CString token;
-		Uint32 readindex = 0;
+		UInt32 readindex = 0;
 
-		const Char* pstr = pstrString;
+		const char* pstr = pstrString;
 		while(pstr && readindex < 3)
 		{
 			pstr = Common::Parse(pstr, token);
@@ -2155,7 +2155,7 @@ namespace Util
 
 		if(readindex < 3)
 		{
-			for(Uint32 i = 0; i < 2; i++)
+			for(UInt32 i = 0; i < 2; i++)
 				outcolor[i] = 0;
 		}
 	}
@@ -2164,7 +2164,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	Float AngleMod( Float angle )
+	float AngleMod( float angle )
 	{
 		if(angle < 0)
 			return angle + 360*((Int32)(angle/360)+1);
@@ -2176,11 +2176,11 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	Float ApproachAngle( Float targetvalue, Float curvalue, Float speed )
+	float ApproachAngle( float targetvalue, float curvalue, float speed )
 	{
-		Float target = Util::AngleMod(targetvalue);
-		Float value = target - Util::AngleMod(curvalue);
-		Float delta = target - value;
+		float target = Util::AngleMod(targetvalue);
+		float value = target - Util::AngleMod(curvalue);
+		float delta = target - value;
 
 		if(speed < 0)
 			speed = -speed;
@@ -2204,9 +2204,9 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	Float AngleDistance( Float next, Float cur )
+	float AngleDistance( float next, float cur )
 	{
-		Float delta = next-cur;
+		float delta = next-cur;
 		if(delta < -180)
 			delta += 360;
 		else if(delta > 180)
@@ -2219,10 +2219,10 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	Float Approach( Float target, Float value, Float speed )
+	float Approach( float target, float value, float speed )
 	{
-		Float outvalue = value;
-		Float delta = target - value;
+		float outvalue = value;
+		float delta = target - value;
 		if(delta > speed)
 			outvalue += speed;
 		else if(delta < -speed)
@@ -2271,7 +2271,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	const Char* GetDebrisSound( breakmaterials_t material )
+	const char* GetDebrisSound( breakmaterials_t material )
 	{
 		switch(material)
 		{
@@ -2307,8 +2307,8 @@ namespace Util
 	//=============================================
 	void PrecacheDebrisSounds( breakmaterials_t material )
 	{
-		Uint32 numsounds = 0;
-		const Char** pstrSounds = nullptr;
+		UInt32 numsounds = 0;
+		const char** pstrSounds = nullptr;
 
 		switch(material)
 		{
@@ -2344,9 +2344,9 @@ namespace Util
 		if(!numsounds || !pstrSounds)
 			return;
 
-		for(Uint32 i = 0; i < numsounds; i++)
+		for(UInt32 i = 0; i < numsounds; i++)
 		{
-			const Char* pstrSound = pstrSounds[i];
+			const char* pstrSound = pstrSounds[i];
 			gd_engfuncs.pfnPrecacheSound(pstrSound);
 		}
 	}
@@ -2355,9 +2355,9 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	bool IsDataEmpty( const byte* pdata, Uint32 size )
+	bool IsDataEmpty( const Byte* pdata, UInt32 size )
 	{
-		for(Uint16 i = 0; i < size; i++)
+		for(UInt16 i = 0; i < size; i++)
 		{
 			if(pdata[i] != 0)
 				return false;
@@ -2369,7 +2369,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void PrecacheFlexScript( flextypes_t npctype, const Char* pstrscriptname )
+	void PrecacheFlexScript( flextypes_t npctype, const char* pstrscriptname )
 	{
 		if(!g_pFlexManager)
 			return;
@@ -2381,7 +2381,7 @@ namespace Util
 		}
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.precacheflexscript, nullptr, nullptr);
-			gd_engfuncs.pfnMsgWriteByte((byte)npctype);
+			gd_engfuncs.pfnMsgWriteByte((Byte)npctype);
 			gd_engfuncs.pfnMsgWriteString(pstrscriptname);
 		gd_engfuncs.pfnUserMessageEnd();
 	}
@@ -2390,7 +2390,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	bool IsInViewCone( const Vector& origin, const Vector& angles, Float fieldOfView, const Vector& position )
+	bool IsInViewCone( const Vector& origin, const Vector& angles, float fieldOfView, const Vector& position )
 	{
 		// Get 2D vector to position
 		Vector _2dDir = (position-origin);
@@ -2403,7 +2403,7 @@ namespace Util
 		_2dAngles[PITCH] = _2dAngles[ROLL] = 0;
 		Math::AngleVectors(_2dAngles, &_2dForward);
 
-		Float dp = Math::DotProduct(_2dDir, _2dForward);
+		float dp = Math::DotProduct(_2dDir, _2dForward);
 		if(dp > fieldOfView)
 			return true;
 
@@ -2442,12 +2442,12 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	Float VectorToYaw( const Vector& inVector )
+	float VectorToYaw( const Vector& inVector )
 	{
 		if(!inVector[YAW] && !inVector[PITCH])
 			return 0;
 
-		Float yaw = (Float)(SDL_atan2(inVector[YAW], inVector[PITCH]) * 180.0 / M_PI);
+		float yaw = (float)(SDL_atan2(inVector[YAW], inVector[PITCH]) * 180.0 / M_PI);
 		yaw = Math::AngleMod(yaw);
 
 		return yaw;
@@ -2457,7 +2457,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	Float VectorToPitch( const Vector& inVector )
+	float VectorToPitch( const Vector& inVector )
 	{
 		if(inVector[YAW] == 0 && inVector[PITCH] == 0)
 		{
@@ -2467,8 +2467,8 @@ namespace Util
 				return -180.0f;
 		}
 
-		Float length = inVector.Length2D();
-		Float pitch = SDL_atan2(-inVector[ROLL], length);
+		float length = inVector.Length2D();
+		float pitch = SDL_atan2(-inVector[ROLL], length);
 		return RAD2DEG(pitch);
 	}
 
@@ -2496,7 +2496,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	Uint64 GetNodeTypeForNPC( const CBaseEntity* pEntity )
+	UInt64 GetNodeTypeForNPC( const CBaseEntity* pEntity )
 	{
 		if(pEntity->GetMoveType() == MOVETYPE_FLY)
 		{
@@ -2534,7 +2534,7 @@ namespace Util
 		// If triggered by a trigger_multiple, tell it to wait
 		if(pLinkEntity->HasTargetName())
 		{
-			const Char* pstrTargetName = pLinkEntity->GetTargetName();
+			const char* pstrTargetName = pLinkEntity->GetTargetName();
 
 			if(pNPC)
 			{
@@ -2570,7 +2570,7 @@ namespace Util
 		{
 			Vector mins, maxs;
 			Vector doorOrigin = pLinkEntity->GetOrigin();
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 			{
 				mins[i] = doorOrigin[i] - CBaseNPC::NPC_DOOR_SEARCH_RADIUS;
 				maxs[i] = doorOrigin[i] + CBaseNPC::NPC_DOOR_SEARCH_RADIUS;
@@ -2612,13 +2612,13 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void PrintScreenText( Int32 xcoord, Int32 ycoord, Float lifetime, const Char *fmt, ... )
+	void PrintScreenText( Int32 xcoord, Int32 ycoord, float lifetime, const char *fmt, ... )
 	{
 		va_list	vArgPtr;
-		Char cMsg[MAX_PATH];
+		char cMsg[MAX_PATH];
 	
 		va_start(vArgPtr, fmt);
-		vsprintf_s(cMsg, fmt, vArgPtr);
+		ENGINE_VSPRINTF_S(cMsg, sizeof(cMsg), fmt, vArgPtr);
 		va_end(vArgPtr);
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.screentext, nullptr, nullptr);
@@ -2633,7 +2633,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	Float DotPoints( const Vector& src, const Vector& check, const Vector& direction )
+	float DotPoints( const Vector& src, const Vector& check, const Vector& direction )
 	{
 		Vector lineOfSight;
 		lineOfSight = (check - src);
@@ -2651,7 +2651,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	bool CheckToss( CBaseEntity* pEntity, const Vector& spot1, const Vector& spot2, Float gravityAdjust, Vector& outVelocity )
+	bool CheckToss( CBaseEntity* pEntity, const Vector& spot1, const Vector& spot2, float gravityAdjust, Vector& outVelocity )
 	{
 		if(spot2.z - spot1.z > 500)
 			return false;
@@ -2675,15 +2675,15 @@ namespace Util
 		if(midPoint.z < spot1.z || midPoint.z < _spot2.z)
 			return false;
 
-		Float dist1 = (midPoint.z - spot1.z);
-		Float dist2 = (midPoint.z - _spot2.z);
+		float dist1 = (midPoint.z - spot1.z);
+		float dist2 = (midPoint.z - _spot2.z);
 
-		Float gravity = gd_engfuncs.pfnGetCvarFloatValue(GRAVITY_CVAR_NAME) * gravityAdjust;
-		Float time1 = SDL_sqrt(dist1/(0.5*gravity));
+		float gravity = gd_engfuncs.pfnGetCvarFloatValue(GRAVITY_CVAR_NAME) * gravityAdjust;
+		float time1 = SDL_sqrt(dist1/(0.5*gravity));
 		if(time1 < 0.1)
 			return false;
 
-		Float time2 = SDL_sqrt(dist2/(0.5*gravity));
+		float time2 = SDL_sqrt(dist2/(0.5*gravity));
 
 		Vector grenadeVelocity = (_spot2 - spot1)/(time1+time2);
 		grenadeVelocity.z = gravity * time1;
@@ -2709,13 +2709,13 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	bool CheckThrow( CBaseEntity* pEntity, const Vector& spot1, const Vector& spot2, Float speed, Float gravityAdjust, Vector& outVelocity )
+	bool CheckThrow( CBaseEntity* pEntity, const Vector& spot1, const Vector& spot2, float speed, float gravityAdjust, Vector& outVelocity )
 	{
 		Vector throwVelocity = (spot2 - spot1);
-		Float time = throwVelocity.Length()/speed;
+		float time = throwVelocity.Length()/speed;
 		throwVelocity = throwVelocity * (1.0f/time);
 
-		Float gravity = gd_engfuncs.pfnGetCvarFloatValue(GRAVITY_CVAR_NAME) * gravityAdjust;
+		float gravity = gd_engfuncs.pfnGetCvarFloatValue(GRAVITY_CVAR_NAME) * gravityAdjust;
 		throwVelocity.z += gravity * time * 0.5;
 
 		Vector apex = spot1 + (spot2 - spot1) * 0.5;
@@ -2738,7 +2738,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	bool IsBoxVisible( CBaseEntity* pLooker, CBaseEntity* pTarget, Vector& targetOrigin, Float size )
+	bool IsBoxVisible( CBaseEntity* pLooker, CBaseEntity* pTarget, Vector& targetOrigin, float size )
 	{
 		// Don't see through water boundaries
 		if(pLooker->GetWaterLevel() != WATERLEVEL_FULL && pTarget->GetWaterLevel() == WATERLEVEL_FULL
@@ -2749,10 +2749,10 @@ namespace Util
 		const Vector& targetMaxs = pTarget->GetMaxs();
 
 		Vector lookerOrigin = pLooker->GetOrigin() + pLooker->GetViewOffset();
-		for(Uint32 i = 0; i < 5; i++)
+		for(UInt32 i = 0; i < 5; i++)
 		{
 			Vector testPosition = pTarget->GetOrigin();
-			for(Uint32 j = 0; j < 3; j++)
+			for(UInt32 j = 0; j < 3; j++)
 				testPosition[j] += Common::RandomFloat(targetMins[j] + size, targetMaxs[j] - size);
 
 			trace_t tr;
@@ -2771,7 +2771,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamPoints( const Vector& startpos, const Vector& endpos, const Char* pstrSpriteName, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamPoints( const Vector& startpos, const Vector& endpos, const char* pstrSpriteName, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpriteName);
 		if(modelindex == NO_PRECACHE)
@@ -2787,24 +2787,24 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamPoints( const Vector& startpos, const Vector& endpos, Int32 modelindex, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamPoints( const Vector& startpos, const Vector& endpos, Int32 modelindex, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.tempbeam, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(BEAM_MSG_BEAMPOINTS);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(startpos[i]);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(endpos[i]);
 			gd_engfuncs.pfnMsgWriteInt16(modelindex);
-			gd_engfuncs.pfnMsgWriteByte(clamp(startframe, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(startframe, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(framerate);
 			gd_engfuncs.pfnMsgWriteSmallFloat(life*10);
 			gd_engfuncs.pfnMsgWriteSmallFloat(width);
 			gd_engfuncs.pfnMsgWriteByte(amplitude);
-			gd_engfuncs.pfnMsgWriteByte(clamp(r, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(g, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(b, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(brightness*255, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(r, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(g, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(b, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(brightness*255, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(speed);
 			gd_engfuncs.pfnMsgWriteSmallFloat(noisespeed);
 			gd_engfuncs.pfnMsgWriteInt32(flags);
@@ -2815,7 +2815,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamEntities( const CBaseEntity* pstartentity, const CBaseEntity* pendentity, Int32 attachment1, Int32 attachment2, const Char* pstrSpriteName, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamEntities( const CBaseEntity* pstartentity, const CBaseEntity* pendentity, Int32 attachment1, Int32 attachment2, const char* pstrSpriteName, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpriteName);
 		if(modelindex == NO_PRECACHE)
@@ -2831,7 +2831,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamEntities( const CBaseEntity* pstartentity, const CBaseEntity* pendentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamEntities( const CBaseEntity* pstartentity, const CBaseEntity* pendentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		if(!pstartentity)
 		{
@@ -2852,15 +2852,15 @@ namespace Util
 			gd_engfuncs.pfnMsgWriteInt16(pendentity->GetEntityIndex());
 			gd_engfuncs.pfnMsgWriteChar(attachment2);
 			gd_engfuncs.pfnMsgWriteInt16(modelindex);
-			gd_engfuncs.pfnMsgWriteByte(clamp(startframe, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(startframe, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(framerate);
 			gd_engfuncs.pfnMsgWriteSmallFloat(life*10);
 			gd_engfuncs.pfnMsgWriteSmallFloat(width);
 			gd_engfuncs.pfnMsgWriteByte(amplitude);
-			gd_engfuncs.pfnMsgWriteByte(clamp(r, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(g, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(b, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(brightness*255, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(r, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(g, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(b, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(brightness*255, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(speed);
 			gd_engfuncs.pfnMsgWriteSmallFloat(noisespeed);
 			gd_engfuncs.pfnMsgWriteInt32(flags);
@@ -2871,7 +2871,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamEntityPoint( const CBaseEntity* pentity, const Vector& endpos, Int32 attachment, const Char* pstrSpriteName, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamEntityPoint( const CBaseEntity* pentity, const Vector& endpos, Int32 attachment, const char* pstrSpriteName, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpriteName);
 		if(modelindex == NO_PRECACHE)
@@ -2887,7 +2887,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamEntityPoint( const CBaseEntity* pentity, const Vector& endpos, Int32 attachment, Int32 modelindex, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamEntityPoint( const CBaseEntity* pentity, const Vector& endpos, Int32 attachment, Int32 modelindex, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		if(!pentity)
 		{
@@ -2899,18 +2899,18 @@ namespace Util
 			gd_engfuncs.pfnMsgWriteByte(BEAM_MSG_BEAMENTPOINT);
 			gd_engfuncs.pfnMsgWriteInt16(pentity->GetEntityIndex());
 			gd_engfuncs.pfnMsgWriteChar(attachment);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(endpos[i]);
 			gd_engfuncs.pfnMsgWriteInt16(modelindex);
-			gd_engfuncs.pfnMsgWriteByte(clamp(startframe, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(startframe, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(framerate);
 			gd_engfuncs.pfnMsgWriteSmallFloat(life*10);
 			gd_engfuncs.pfnMsgWriteSmallFloat(width);
 			gd_engfuncs.pfnMsgWriteByte(amplitude);
-			gd_engfuncs.pfnMsgWriteByte(clamp(r, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(g, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(b, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(brightness*255, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(r, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(g, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(b, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(brightness*255, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(speed);
 			gd_engfuncs.pfnMsgWriteSmallFloat(noisespeed);
 			gd_engfuncs.pfnMsgWriteInt32(flags);
@@ -2921,7 +2921,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamSprite( const Vector& startpos, const Vector& endpos, const Char* pstrBeamSpriteName, const Char* pstrSpriteName, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags, Float sprscale, rendermode_t sprrendermode, Float spralpha )
+	void CreateBeamSprite( const Vector& startpos, const Vector& endpos, const char* pstrBeamSpriteName, const char* pstrSpriteName, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags, float sprscale, rendermode_t sprrendermode, float spralpha )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrBeamSpriteName);
 		if(modelindex == NO_PRECACHE)
@@ -2944,31 +2944,31 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamSprite( const Vector& startpos, const Vector& endpos, Int32 modelindex, Int32 sprmodelindex, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags, Float sprscale, rendermode_t sprrendermode, Float spralpha )
+	void CreateBeamSprite( const Vector& startpos, const Vector& endpos, Int32 modelindex, Int32 sprmodelindex, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags, float sprscale, rendermode_t sprrendermode, float spralpha )
 	{
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.tempbeam, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(BEAM_MSG_BEAMSPRITE);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(startpos[i]);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(endpos[i]);
 			gd_engfuncs.pfnMsgWriteInt16(modelindex);
-			gd_engfuncs.pfnMsgWriteByte(clamp(startframe, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(startframe, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(framerate);
 			gd_engfuncs.pfnMsgWriteSmallFloat(life*10);
 			gd_engfuncs.pfnMsgWriteSmallFloat(width);
 			gd_engfuncs.pfnMsgWriteByte(amplitude);
-			gd_engfuncs.pfnMsgWriteByte(clamp(r, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(g, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(b, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(brightness*255, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(r, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(g, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(b, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(brightness*255, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(speed);
 			gd_engfuncs.pfnMsgWriteSmallFloat(noisespeed);
 			gd_engfuncs.pfnMsgWriteInt32(flags);
 			gd_engfuncs.pfnMsgWriteInt16(sprmodelindex);
 			gd_engfuncs.pfnMsgWriteSmallFloat(sprscale);
 			gd_engfuncs.pfnMsgWriteByte(sprrendermode);
-			gd_engfuncs.pfnMsgWriteSmallFloat(clamp(spralpha*255, 0, 255));
+			gd_engfuncs.pfnMsgWriteSmallFloat(Clamp(spralpha*255, 0, 255));
 		gd_engfuncs.pfnUserMessageEnd();
 	}
 
@@ -2976,7 +2976,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamTorus( const Vector& startpos, const Vector& endpos, const Char* pstrSpriteName, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamTorus( const Vector& startpos, const Vector& endpos, const char* pstrSpriteName, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpriteName);
 		if(modelindex == NO_PRECACHE)
@@ -2992,7 +2992,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamTorus( const Vector& startpos, const Vector& endpos, Int32 modelindex, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamTorus( const Vector& startpos, const Vector& endpos, Int32 modelindex, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		CreateBeamOfType(BEAM_TORUS, startpos, endpos, modelindex, startframe, framerate, life, width, amplitude, brightness, speed, noisespeed, r, g, b, flags);
 	}
@@ -3001,7 +3001,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamDisk( const Vector& startpos, const Vector& endpos, const Char* pstrSpriteName, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamDisk( const Vector& startpos, const Vector& endpos, const char* pstrSpriteName, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpriteName);
 		if(modelindex == NO_PRECACHE)
@@ -3017,7 +3017,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamDisk( const Vector& startpos, const Vector& endpos, Int32 modelindex, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamDisk( const Vector& startpos, const Vector& endpos, Int32 modelindex, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		CreateBeamOfType(BEAM_DISK, startpos, endpos, modelindex, startframe, framerate, life, width, amplitude, brightness, speed, noisespeed, r, g, b, flags);
 	}
@@ -3026,7 +3026,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamCylinder( const Vector& startpos, const Vector& endpos, const Char* pstrSpriteName, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamCylinder( const Vector& startpos, const Vector& endpos, const char* pstrSpriteName, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpriteName);
 		if(modelindex == NO_PRECACHE)
@@ -3042,7 +3042,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamCylinder( const Vector& startpos, const Vector& endpos, Int32 modelindex, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamCylinder( const Vector& startpos, const Vector& endpos, Int32 modelindex, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		CreateBeamOfType(BEAM_CYLINDER, startpos, endpos, modelindex, startframe, framerate, life, width, amplitude, brightness, speed, noisespeed, r, g, b, flags);
 	}
@@ -3051,7 +3051,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamOfType( beam_types_t type, const Vector& startpos, const Vector& endpos, Int32 modelindex, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamOfType( beam_types_t type, const Vector& startpos, const Vector& endpos, Int32 modelindex, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		beam_msgtype_t msgtype;
 		switch(type)
@@ -3075,20 +3075,20 @@ namespace Util
 
 		gd_engfuncs.pfnUserMessageBegin(MSG_ALL, g_usermsgs.tempbeam, nullptr, nullptr);
 			gd_engfuncs.pfnMsgWriteByte(msgtype);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(startpos[i]);
-			for(Uint32 i = 0; i < 3; i++)
+			for(UInt32 i = 0; i < 3; i++)
 				gd_engfuncs.pfnMsgWriteFloat(endpos[i]);
 			gd_engfuncs.pfnMsgWriteInt16(modelindex);
-			gd_engfuncs.pfnMsgWriteByte(clamp(startframe, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(startframe, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(framerate);
 			gd_engfuncs.pfnMsgWriteSmallFloat(life);
 			gd_engfuncs.pfnMsgWriteSmallFloat(width);
 			gd_engfuncs.pfnMsgWriteByte(amplitude);
-			gd_engfuncs.pfnMsgWriteByte(clamp(r, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(g, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(b, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(brightness*255, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(r, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(g, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(b, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(brightness*255, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(speed);
 			gd_engfuncs.pfnMsgWriteSmallFloat(noisespeed);
 			gd_engfuncs.pfnMsgWriteInt32(flags);
@@ -3099,7 +3099,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamFollow( const CBaseEntity* pentity, Int32 attachment, const Char* pstrSpriteName, Float life, Float width, Float brightness, Float r, Float g, Float b )
+	void CreateBeamFollow( const CBaseEntity* pentity, Int32 attachment, const char* pstrSpriteName, float life, float width, float brightness, float r, float g, float b )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpriteName);
 		if(modelindex == NO_PRECACHE)
@@ -3115,7 +3115,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamFollow( const CBaseEntity* pentity, Int32 attachment, Int32 modelindex, Float life, Float width, Float brightness, Float r, Float g, Float b )
+	void CreateBeamFollow( const CBaseEntity* pentity, Int32 attachment, Int32 modelindex, float life, float width, float brightness, float r, float g, float b )
 	{
 		if(!pentity)
 		{
@@ -3130,10 +3130,10 @@ namespace Util
 			gd_engfuncs.pfnMsgWriteInt16(modelindex);
 			gd_engfuncs.pfnMsgWriteSmallFloat(life*10);
 			gd_engfuncs.pfnMsgWriteSmallFloat(width);
-			gd_engfuncs.pfnMsgWriteByte(clamp(r, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(g, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(b, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(brightness*255, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(r, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(g, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(b, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(brightness*255, 0, 255));
 		gd_engfuncs.pfnUserMessageEnd();
 	}
 
@@ -3141,7 +3141,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamRing( const CBaseEntity* pstartentity, const CBaseEntity* pendentity, Int32 attachment1, Int32 attachment2, const Char* pstrSpriteName, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamRing( const CBaseEntity* pstartentity, const CBaseEntity* pendentity, Int32 attachment1, Int32 attachment2, const char* pstrSpriteName, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		Int32 modelindex = gd_engfuncs.pfnPrecacheModel(pstrSpriteName);
 		if(modelindex == NO_PRECACHE)
@@ -3157,7 +3157,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	void CreateBeamRing( const CBaseEntity* pstartentity, const CBaseEntity* pendentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, Uint32 startframe, Float framerate, Float life, Float width, Float amplitude, Float brightness, Float speed, Float noisespeed, Float r, Float g, Float b, Int32 flags )
+	void CreateBeamRing( const CBaseEntity* pstartentity, const CBaseEntity* pendentity, Int32 attachment1, Int32 attachment2, Int32 modelindex, UInt32 startframe, float framerate, float life, float width, float amplitude, float brightness, float speed, float noisespeed, float r, float g, float b, Int32 flags )
 	{
 		if(!pstartentity)
 		{
@@ -3178,15 +3178,15 @@ namespace Util
 			gd_engfuncs.pfnMsgWriteInt16(pendentity->GetEntityIndex());
 			gd_engfuncs.pfnMsgWriteChar(attachment2);
 			gd_engfuncs.pfnMsgWriteInt16(modelindex);
-			gd_engfuncs.pfnMsgWriteByte(clamp(startframe, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(startframe, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(framerate);
 			gd_engfuncs.pfnMsgWriteSmallFloat(life*10);
 			gd_engfuncs.pfnMsgWriteSmallFloat(width);
 			gd_engfuncs.pfnMsgWriteByte(amplitude);
-			gd_engfuncs.pfnMsgWriteByte(clamp(r, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(g, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(b, 0, 255));
-			gd_engfuncs.pfnMsgWriteByte(clamp(brightness*255, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(r, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(g, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(b, 0, 255));
+			gd_engfuncs.pfnMsgWriteByte(Clamp(brightness*255, 0, 255));
 			gd_engfuncs.pfnMsgWriteSmallFloat(speed);
 			gd_engfuncs.pfnMsgWriteSmallFloat(noisespeed);
 			gd_engfuncs.pfnMsgWriteInt32(flags);
@@ -3240,7 +3240,7 @@ namespace Util
 	// @brief
 	//
 	//=============================================
-	Int64 GetBodyValueForSubmodel( const Char* pstrModelName, const Char* pstrSubmodelName )
+	Int64 GetBodyValueForSubmodel( const char* pstrModelName, const char* pstrSubmodelName )
 	{
 		const cache_model_t* pmodel = gd_engfuncs.pfnGetModelByName(pstrModelName);
 		if(!pmodel)
@@ -3265,11 +3265,11 @@ namespace Util
 		}
 
 		Int64 bodyvalue = NO_POSITION;
-		for(Uint32 i = 0; i < pvbmheader->numbodyparts; i++)
+		for(UInt32 i = 0; i < pvbmheader->numbodyparts; i++)
 		{
 			const vbmbodypart_t* pbodypart = pvbmheader->getBodyPart(i);
 
-			Uint32 j = 0;
+			UInt32 j = 0;
 			for(; j < pbodypart->numsubmodels; j++)
 			{
 				const vbmsubmodel_t* psubmodel = pbodypart->getSubmodel(pvbmheader, j);
@@ -3280,7 +3280,7 @@ namespace Util
 				}
 			}
 
-			if(j != (Uint32)pbodypart->numsubmodels)
+			if(j != (UInt32)pbodypart->numsubmodels)
 				break;
 		}
 

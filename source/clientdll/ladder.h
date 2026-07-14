@@ -58,21 +58,21 @@ class CLadder
 {
 public:
 	// Max angle deviation
-	static const Float LADDER_V_MAX_ADD;
+	static const float LADDER_V_MAX_ADD;
 	// Max add on X
-	static const Float LADDER_MAX_ADD_X;
+	static const float LADDER_MAX_ADD_X;
 	// Max add on Y
-	static const Float LADDER_MAX_ADD_Y;
+	static const float LADDER_MAX_ADD_Y;
 	// Min add on Y
-	static const Float LADDER_MIN_ADD_Y;
+	static const float LADDER_MIN_ADD_Y;
 	// Mouse move timeout
-	static const Double LADDER_MOUSEMOVE_TIMEOUT;
+	static const double LADDER_MOUSEMOVE_TIMEOUT;
 	// Mouse move timeout blend time
-	static const Double LADDER_MOUSEMOVE_TIMEOUT_BLEND;
+	static const double LADDER_MOUSEMOVE_TIMEOUT_BLEND;
 	// Model name for view entity
-	static const Char LADDER_VIEWMODEL_NAME[];
+	static const char LADDER_VIEWMODEL_NAME[];
 	// Sequence names for ladder
-	static const Char* LADDER_SEQUENCE_NAMES[];
+	static const char* LADDER_SEQUENCE_NAMES[];
 
 public:
 	CLadder( void );
@@ -96,14 +96,14 @@ public:
 	void CalcRefDef( ref_params_t& params );
 	
 	// Processes a ladder message
-	void ProcessMessage( const byte* pdata, Uint32 msgsize );
+	void ProcessMessage( const Byte* pdata, UInt32 msgsize );
 
 	// Tells if the ladder is active
 	bool IsActive( void ) const;
 	// Plays a step sound
 	static void PlayStepSound( void );
 	// Manages mouse movement
-	void MouseMove( Float mousex, Float mousey );
+	void MouseMove( float mousex, float mousey );
 
 	// Draws ladders
 	bool Draw( void );
@@ -119,7 +119,7 @@ private:
 	// Draws a single ladder for vsm
 	static bool DrawLadderVSM( cl_entity_t *pLadder, cl_dlight_t *dl );
 	// Sets a sequence
-	void SetSequence( const Char *psequence );
+	void SetSequence( const char *psequence );
 
 private:
 	// Pointer to ladder entity
@@ -131,7 +131,7 @@ private:
 	const cache_model_t *m_pViewModel;
 
 	// Current time
-	Float m_time;
+	float m_time;
 
 private:
 	// Current ladder state
@@ -139,7 +139,7 @@ private:
 	// Ideal ladder state
 	ladder_state_t m_idealLadderState;
 	// Time when we need to update
-	Double m_updateTime;
+	double m_updateTime;
 
 	// Current animation state
 	ladder_animstate_t m_activeAnimState;
@@ -181,9 +181,9 @@ private:
 	Vector m_viewBlendAngles;
 
 	// View blend begin time
-	Double m_viewBlendBeginTime;
+	double m_viewBlendBeginTime;
 	// View blend time delta
-	Double m_viewBlendDelta;
+	double m_viewBlendDelta;
 
 	// Tells if view blending is active
 	bool m_viewBlend;
@@ -193,11 +193,11 @@ private:
 	Vector m_viewEntBlendOrigin;
 
 	// View entity blend begin time
-	Double m_viewEntBlendBeginTime;
+	double m_viewEntBlendBeginTime;
 	// View entity blend delta
-	Double m_viewEntBlendDelta;
+	double m_viewEntBlendDelta;
 	// View exit blend time
-	Float m_exitBlend;
+	float m_exitBlend;
 
 	// Tells if view entity is being blended
 	bool m_viewEntBlend;
@@ -208,7 +208,7 @@ private:
 	// Add deviation angles
 	Vector	m_addDeviationAngles;
 	// Last mouse move time
-	Double	m_lastMouseMove;
+	double	m_lastMouseMove;
 
 private:
 	// Draw entities cvar

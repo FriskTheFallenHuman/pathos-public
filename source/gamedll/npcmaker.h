@@ -62,9 +62,9 @@ public:
 
 public:
 	// Called when npcmaker is toggled
-	void EXPORTFN ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	void EXPORTFN ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 	// Called when npcmaker is cyclic
-	void EXPORTFN CyclicUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	void EXPORTFN CyclicUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 	// Think function for spawning npcs
 	void EXPORTFN MakerThink( void );
 	// Called to fire(duh)(I need better comments)
@@ -83,7 +83,7 @@ private:
 	Int32 m_maxLiveChildren;
 
 	// Number of live children
-	Uint32 m_numLiveChildren;
+	UInt32 m_numLiveChildren;
 	// Ground coords under this entity
 	Vector m_groundPosition;
 
@@ -92,16 +92,16 @@ private:
 
 	// Head setting value
 	Int32 m_classHeadSetting;
-	// TRUE if had setting was actually set
+	// true if had setting was actually set
 	bool m_classHeadWasSet;
 	// Weapon setting value
 	Int32 m_classWeaponSetting;
-	// TRUE if had setting was actually set
+	// true if had setting was actually set
 	bool m_classWeaponWasSet;
 
-	// TRUE if active
+	// true if active
 	bool m_isActive;
-	// TRUE if children should fade
+	// true if children should fade
 	bool m_fadeChildren;
 
 protected:

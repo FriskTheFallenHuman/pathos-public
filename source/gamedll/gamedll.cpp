@@ -7,10 +7,6 @@ All Rights Reserved.
 ===============================================
 */
 
-#ifdef USE_VLD
-#include <vld.h>
-#endif
-
 #include "includes.h"
 
 #include "vector.h"
@@ -57,13 +53,13 @@ gamevars_t* g_pGameVars = nullptr;
 CPlayerMovement gMovement;
 
 // VIS buffer for server
-byte* g_pVISBuffer = nullptr;
+Byte* g_pVISBuffer = nullptr;
 // VIS buffer size
 Uint32 g_visBufferSize = 0;
 
 // Node graph generation time
-static Double g_nodeGraphGenerationTime = 0;
-// TRUE if game initialization has occurred
+static double g_nodeGraphGenerationTime = 0;
+// true if game initialization has occurred
 bool g_gameInitializationDone = false;
 
 //
@@ -163,8 +159,8 @@ bool GameDLLInit( void )
 	if(!g_pVISBuffer)
 	{
 		g_visBufferSize = gd_engfuncs.pfnGetVISBufferSize();
-		g_pVISBuffer = new byte[g_visBufferSize];
-		memset(g_pVISBuffer, 0, sizeof(byte)*g_visBufferSize);
+		g_pVISBuffer = new Byte[g_visBufferSize];
+		memset(g_pVISBuffer, 0, sizeof(Byte)*g_visBufferSize);
 	}
 
 	return true;
@@ -348,7 +344,7 @@ void ServerFrame( void )
 // @brief
 //
 //=============================================
-Double GetTime( void )
+double GetTime( void )
 {
 	return g_pGameVars->time;
 }
@@ -505,9 +501,9 @@ bool ShouldSaveEntity( edict_t* pedict )
 // @brief
 //
 //=============================================
-void GetSaveGameTitle( Char* pstrBuffer, Int32 maxlength )
+void GetSaveGameTitle( char* pstrBuffer, Int32 maxlength )
 {
-	const Char* pstrchaptertitle = nullptr;
+	const char* pstrchaptertitle = nullptr;
 
 	CBaseEntity* pEntity = Util::GetHostPlayer();
 	if(pEntity)
@@ -535,7 +531,7 @@ void GetSaveGameTitle( Char* pstrBuffer, Int32 maxlength )
 // @brief
 //
 //=============================================
-bool InconsistentFile( const Char* pstrFilename )
+bool InconsistentFile( const char* pstrFilename )
 {
 	return true;
 }
@@ -581,7 +577,7 @@ bool CanSaveGame( savefile_type_t type )
 // @brief
 //
 //=============================================
-void FormatKeyValue( const Char* pstrKeyValueName, Char* pstrValue, Uint32 maxLength )
+void FormatKeyValue( const char* pstrKeyValueName, char* pstrValue, Uint32 maxLength )
 {
 	// Check for old "monster_" prefixes and change them
 	if(!qstrcmp(pstrKeyValueName, "classname"))
@@ -647,7 +643,7 @@ void ShowSaveGameBlockedMessage( void )
 // @brief
 //
 //=============================================
-void RestoreDecal( const Vector& origin, const Vector& normal, edict_t* pedict, const Char* pstrDecalTexture, Int32 decalflags )
+void RestoreDecal( const Vector& origin, const Vector& normal, edict_t* pedict, const char* pstrDecalTexture, Int32 decalflags )
 {
 	entindex_t entityindex = pedict ? pedict->entindex : NO_ENTITY_INDEX;
 
@@ -659,7 +655,7 @@ void RestoreDecal( const Vector& origin, const Vector& normal, edict_t* pedict, 
 // @brief
 //
 //=============================================
-void AdjustLandmarkPVSData( edict_t* pLandmarkEdict, byte* pPVS, Uint32 pvsBufferSize )
+void AdjustLandmarkPVSData( edict_t* pLandmarkEdict, Byte* pPVS, Uint32 pvsBufferSize )
 {
 	if (!pLandmarkEdict)
 		return;
@@ -667,7 +663,7 @@ void AdjustLandmarkPVSData( edict_t* pLandmarkEdict, byte* pPVS, Uint32 pvsBuffe
 	if (!pPVS)
 		return;
 
-	const Char* pstrLandmarkName = gd_engfuncs.pfnGetString(pLandmarkEdict->fields.targetname);
+	const char* pstrLandmarkName = gd_engfuncs.pfnGetString(pLandmarkEdict->fields.targetname);
 	if (!pstrLandmarkName || !qstrlen(pstrLandmarkName))
 		return;
 
@@ -679,7 +675,7 @@ void AdjustLandmarkPVSData( edict_t* pLandmarkEdict, byte* pPVS, Uint32 pvsBuffe
 	if (!pworldmodel)
 		return;
 
-	byte* ppvsdata = nullptr;
+	Byte* ppvsdata = nullptr;
 
 	edict_t* pedict = nullptr;
 	while (true)
@@ -688,7 +684,7 @@ void AdjustLandmarkPVSData( edict_t* pLandmarkEdict, byte* pPVS, Uint32 pvsBuffe
 		if (!pedict)
 			break;
 
-		const Char* pstrEntityClassname = gd_engfuncs.pfnGetString(pedict->fields.classname);
+		const char* pstrEntityClassname = gd_engfuncs.pfnGetString(pedict->fields.classname);
 		if (!pstrEntityClassname)
 			continue;
 
@@ -697,7 +693,7 @@ void AdjustLandmarkPVSData( edict_t* pLandmarkEdict, byte* pPVS, Uint32 pvsBuffe
 			const mleaf_t* pleaf = nullptr;
 			for (Uint32 i = 0; i < 4; i++)
 			{
-				Vector testPosition = pedict->state.origin + Vector(0, 0, static_cast<Float>(i));
+				Vector testPosition = pedict->state.origin + Vector(0, 0, static_cast<float>(i));
 				pleaf = gd_engfuncs.pfnPointInLeaf(testPosition, (*pworldmodel));
 				if (!pleaf || pleaf->contents != CONTENTS_SOLID)
 					break;
@@ -709,8 +705,8 @@ void AdjustLandmarkPVSData( edict_t* pLandmarkEdict, byte* pPVS, Uint32 pvsBuffe
 
 			if (!ppvsdata)
 			{
-				ppvsdata = new byte[pvsBufferSize];
-				memset(ppvsdata, 0, sizeof(byte) * pvsBufferSize);
+				ppvsdata = new Byte[pvsBufferSize];
+				memset(ppvsdata, 0, sizeof(Byte) * pvsBufferSize);
 			}
 
 			// Get PVS for this vismark entity

@@ -15,7 +15,7 @@ All Rights Reserved.
 //
 // @param index Bit to set
 //=============================================
-inline void CBitSet::set( Uint32 index )
+DO_INLINE void CBitSet::set( Uint32 index )
 {
 	assert(index < m_numBits);
 	m_pDataArray[index/NB_BITS_IN_BYTE] |= (1U << (index%NB_BITS_IN_BYTE));
@@ -26,7 +26,7 @@ inline void CBitSet::set( Uint32 index )
 //
 // @param index Bit to reset
 //=============================================
-inline void CBitSet::reset( Uint32 index )
+DO_INLINE void CBitSet::reset( Uint32 index )
 {
 	assert(index < m_numBits);
 	m_pDataArray[index/NB_BITS_IN_BYTE] &= ~(1U << (index%NB_BITS_IN_BYTE));
@@ -37,7 +37,7 @@ inline void CBitSet::reset( Uint32 index )
 //
 // @param index Bit to flip
 //=============================================
-inline void CBitSet::flip( Uint32 index )
+DO_INLINE void CBitSet::flip( Uint32 index )
 {
 	assert(index < m_numBits);
 	m_pDataArray[index/NB_BITS_IN_BYTE] ^= (1U << (index%NB_BITS_IN_BYTE));
@@ -47,9 +47,9 @@ inline void CBitSet::flip( Uint32 index )
 // @brief Tells if a bit is set
 //
 // @param index Bit to check for
-// @return TRUE if bit is set, FALSE otherwise
+// @return true if bit is set, false otherwise
 //=============================================
-inline bool CBitSet::test( Uint32 index ) const
+DO_INLINE bool CBitSet::test( Uint32 index ) const
 {
 	assert(index < m_numBits);
 	return ((m_pDataArray[index/NB_BITS_IN_BYTE] & (1U<<(index%NB_BITS_IN_BYTE))) != 0);
@@ -58,9 +58,9 @@ inline bool CBitSet::test( Uint32 index ) const
 //=============================================
 // @brief Tells if all bits are set
 //
-// @return TRUE if all bits are set, FALSE otherwise
+// @return true if all bits are set, false otherwise
 //=============================================
-inline bool CBitSet::all( void ) const
+DO_INLINE bool CBitSet::all( void ) const
 {
 	if(!m_pDataArray)
 		return false;
@@ -85,9 +85,9 @@ inline bool CBitSet::all( void ) const
 //=============================================
 // @brief Tells if any of the bits are set
 //
-// @return TRUE if all bits are set, FALSE otherwise
+// @return true if all bits are set, false otherwise
 //=============================================
-inline bool CBitSet::any( void ) const
+DO_INLINE bool CBitSet::any( void ) const
 {
 	if(!m_pDataArray)
 		return false;
@@ -106,19 +106,19 @@ inline bool CBitSet::any( void ) const
 //
 // @param size New size to set
 //=============================================
-inline void CBitSet::resize( Uint32 size )
+DO_INLINE void CBitSet::resize( Uint32 size )
 {
 	// Remember these for porting values over
 	Uint32 originalBitCount = m_numBits;
-	byte* pOriginalArray = m_pDataArray;
+	Byte* pOriginalArray = m_pDataArray;
 
 	// Create new data
 	m_numBytes = size/NB_BITS_IN_BYTE;
 	if(m_numBytes*NB_BITS_IN_BYTE < size)
 		m_numBytes++;
 
-	m_pDataArray = new byte[m_numBytes];
-	memset(m_pDataArray, 0, sizeof(byte)*m_numBytes);
+	m_pDataArray = new Byte[m_numBytes];
+	memset(m_pDataArray, 0, sizeof(Byte)*m_numBytes);
 
 	if(pOriginalArray)
 	{
@@ -141,7 +141,7 @@ inline void CBitSet::resize( Uint32 size )
 // @brief Sets all bits in the bitset
 //
 //=============================================
-inline void CBitSet::setall( void )
+DO_INLINE void CBitSet::setall( void )
 {
 	if(!m_pDataArray)
 		return;
@@ -159,7 +159,7 @@ inline void CBitSet::setall( void )
 // @brief Clears all bits in the bitset
 //
 //=============================================
-inline void CBitSet::reset( void )
+DO_INLINE void CBitSet::reset( void )
 {
 	if(!m_pDataArray)
 		return;
@@ -172,7 +172,7 @@ inline void CBitSet::reset( void )
 // @brief Clears the object
 //
 //=============================================
-inline void CBitSet::clear( void )
+DO_INLINE void CBitSet::clear( void )
 {
 	if(m_pDataArray)
 	{
@@ -188,7 +188,7 @@ inline void CBitSet::clear( void )
 //
 // @return Number of bits that are set
 //=============================================
-inline Uint32 CBitSet::count( void ) const
+DO_INLINE Uint32 CBitSet::count( void ) const
 {
 	assert(m_pDataArray != nullptr && m_numBits > 0);
 
@@ -207,7 +207,7 @@ inline Uint32 CBitSet::count( void ) const
 //
 // @return Number of bits in the bitset
 //=============================================
-inline Uint32 CBitSet::size( void ) const
+DO_INLINE Uint32 CBitSet::size( void ) const
 {
 	return m_numBits;
 }
@@ -217,7 +217,7 @@ inline Uint32 CBitSet::size( void ) const
 //
 // @return Number of bytes allocated by the bitset
 //=============================================
-inline Uint32 CBitSet::numbytes( void ) const
+DO_INLINE Uint32 CBitSet::numbytes( void ) const
 {
 	return m_numBytes;
 }
@@ -227,7 +227,7 @@ inline Uint32 CBitSet::numbytes( void ) const
 //
 // @return Pointer to bitset data
 //=============================================
-inline byte* CBitSet::getData( void )
+DO_INLINE Byte* CBitSet::getData( void )
 {
 	return m_pDataArray;
 }
@@ -237,7 +237,7 @@ inline byte* CBitSet::getData( void )
 //
 // @return Const pointer to bitset data
 //=============================================
-inline const byte* CBitSet::getDataConst( void ) const
+DO_INLINE const Byte* CBitSet::getDataConst( void ) const
 {
 	return m_pDataArray;
 }
@@ -248,7 +248,7 @@ inline const byte* CBitSet::getDataConst( void ) const
 // @param other Pointer to the bitset to be assigned
 // @return Reference to the bitset
 //=============================================
-inline CBitSet& CBitSet::operator = ( const CBitSet& other )
+DO_INLINE CBitSet& CBitSet::operator = ( const CBitSet& other )
 {
 	if(m_pDataArray)
 		delete[] m_pDataArray;
@@ -256,8 +256,8 @@ inline CBitSet& CBitSet::operator = ( const CBitSet& other )
 	m_numBytes = other.m_numBytes;
 	m_numBits = other.m_numBits;
 
-	m_pDataArray = new byte[m_numBytes];
-	memcpy(m_pDataArray, other.m_pDataArray, sizeof(byte)*m_numBytes);
+	m_pDataArray = new Byte[m_numBytes];
+	memcpy(m_pDataArray, other.m_pDataArray, sizeof(Byte)*m_numBytes);
 	return *this;
 }
 
@@ -267,7 +267,7 @@ inline CBitSet& CBitSet::operator = ( const CBitSet& other )
 // @param other Pointer to other bitset
 // @return Reference to result bitset
 //=============================================
-inline CBitSet CBitSet::operator | ( const CBitSet& other ) const
+DO_INLINE CBitSet CBitSet::operator | ( const CBitSet& other ) const
 {
 	CBitSet resultSet(*this);
 	resultSet |= other;
@@ -280,7 +280,7 @@ inline CBitSet CBitSet::operator | ( const CBitSet& other ) const
 // @param other Bitset to merge with
 // @return Reference to the result bitset
 //=============================================
-inline CBitSet& CBitSet::operator |= ( const CBitSet& other )
+DO_INLINE CBitSet& CBitSet::operator |= ( const CBitSet& other )
 {
 	Uint32 srcSize = other.size();
 	Uint32 myOriginalSize = size();
@@ -288,10 +288,10 @@ inline CBitSet& CBitSet::operator |= ( const CBitSet& other )
 		resize(srcSize);
 
 	// Copy only the smaller scope
-	const byte* pOtherBytes = other.getDataConst();
+	const Byte* pOtherBytes = other.getDataConst();
 	Uint32 mergeSize = (myOriginalSize > srcSize) ? srcSize : myOriginalSize;
 	Uint32 mergeCopyBytes = (mergeSize / NB_BITS_IN_BYTE);
-	Uint32 mergeFullByteCount = SDL_ceil(static_cast<Float>(mergeSize) / static_cast<Float>(NB_BITS_IN_BYTE));
+	Uint32 mergeFullByteCount = SDL_ceil(static_cast<float>(mergeSize) / static_cast<float>(NB_BITS_IN_BYTE));
 
 	// Directly merge with the full byte range
 	for(Uint32 i = 0; i < mergeCopyBytes; i++)
@@ -319,7 +319,7 @@ inline CBitSet& CBitSet::operator |= ( const CBitSet& other )
 // @param other Reference to other bitset
 // @return Reference to the result bitset
 //=============================================
-inline CBitSet CBitSet::operator & ( const CBitSet& other ) const
+DO_INLINE CBitSet CBitSet::operator & ( const CBitSet& other ) const
 {
 	CBitSet resultSet(*this);
 	resultSet &= other;
@@ -332,7 +332,7 @@ inline CBitSet CBitSet::operator & ( const CBitSet& other ) const
 // @param other Bitset to merge with
 // @return Reference to the result bitset
 //=============================================
-inline CBitSet& CBitSet::operator &= ( const CBitSet& other )
+DO_INLINE CBitSet& CBitSet::operator &= ( const CBitSet& other )
 {
 	Uint32 srcSize = other.size();
 	Uint32 myOriginalSize = size();
@@ -341,10 +341,10 @@ inline CBitSet& CBitSet::operator &= ( const CBitSet& other )
 
 	// Only check till the smallest size, since the
 	// OR will not be valid past the minimum size
-	const byte* pOtherBytes = other.getDataConst();
+	const Byte* pOtherBytes = other.getDataConst();
 	Uint32 mergeSize = (myOriginalSize > srcSize) ? srcSize : myOriginalSize;
 	Uint32 mergeCopyBytes = (mergeSize / NB_BITS_IN_BYTE);
-	Uint32 mergeFullByteCount = SDL_ceil(static_cast<Float>(mergeSize) / static_cast<Float>(NB_BITS_IN_BYTE));
+	Uint32 mergeFullByteCount = SDL_ceil(static_cast<float>(mergeSize) / static_cast<float>(NB_BITS_IN_BYTE));
 
 	// Directly merge with the full byte range
 	for(Uint32 i = 0; i < mergeCopyBytes; i++)
@@ -385,7 +385,7 @@ inline CBitSet& CBitSet::operator &= ( const CBitSet& other )
 //
 // @return Resulting inverted bitset
 //=============================================
-inline CBitSet CBitSet::operator ~ ( void ) const
+DO_INLINE CBitSet CBitSet::operator ~ ( void ) const
 {
 	// Create a new bitset and reverse it's bits
 	CBitSet resultSet(*this);
@@ -411,9 +411,9 @@ inline CBitSet CBitSet::operator ~ ( void ) const
 // @brief Implements equality check operator
 //
 // @param other The bitset to compare with
-// @return TRUE if the two are equal, FALSE otherwise
+// @return true if the two are equal, false otherwise
 //=============================================
-inline bool CBitSet::operator == ( const CBitSet& other )
+DO_INLINE bool CBitSet::operator == ( const CBitSet& other )
 {
 	assert(other.size() == size());
 	if(other.size() != size())
@@ -441,9 +441,9 @@ inline bool CBitSet::operator == ( const CBitSet& other )
 // @brief Implements non-equality check operator
 //
 // @param other Bitset to compare with
-// @result TRUE if not matching, FALSE otherwise
+// @result true if not matching, false otherwise
 //=============================================
-inline bool CBitSet::operator != ( const CBitSet& other )
+DO_INLINE bool CBitSet::operator != ( const CBitSet& other )
 {
 	assert(other.size() == size());
 	if(other.size() != size())

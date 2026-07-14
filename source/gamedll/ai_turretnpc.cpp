@@ -21,7 +21,7 @@ All Rights Reserved.
 #include "envsprite.h"
 
 // Array of turret sounds
-const Char* CTurretNPC::TURRET_SOUNDS[NB_TURRET_SOUNDS] = 
+const char* CTurretNPC::TURRET_SOUNDS[NB_TURRET_SOUNDS] = 
 {
 	"turret/tu_fire1.wav",
 	"turret/tu_ping.wav",
@@ -37,21 +37,21 @@ const Char* CTurretNPC::TURRET_SOUNDS[NB_TURRET_SOUNDS] =
 };
 
 // Turret glow sprite name
-const Char CTurretNPC::TURRET_GLOW_SPRITE_NAME[] = "sprites/flare3.spr";
+const char CTurretNPC::TURRET_GLOW_SPRITE_NAME[] = "sprites/flare3.spr";
 // Metal impact sound pattern
-const Char CTurretNPC::TURRET_METAL_IMPACT_SOUND_PATTERN[] = "impact/metal_impact_bullet%d.wav";
+const char CTurretNPC::TURRET_METAL_IMPACT_SOUND_PATTERN[] = "impact/metal_impact_bullet%d.wav";
 // Number of Metal impact sounds
-const Uint32 CTurretNPC::TURRET_NB_METAL_IMPACT_SOUNDS = 4;
+const UInt32 CTurretNPC::TURRET_NB_METAL_IMPACT_SOUNDS = 4;
 // Metal impact particle script
-const Char CTurretNPC::TURRET_METAL_IMPACT_PARTICLE_SCRIPT[] = "cluster_impact_metal.json";
+const char CTurretNPC::TURRET_METAL_IMPACT_PARTICLE_SCRIPT[] = "cluster_impact_metal.json";
 // Impact decal name
-const Char CTurretNPC::TURRET_IMPACT_DECAL_NAME[] = "shot_metal";
+const char CTurretNPC::TURRET_IMPACT_DECAL_NAME[] = "shot_metal";
 // Maximum firing range of turret
-const Float CTurretNPC::TURRET_MAX_RANGE = 1200;
+const float CTurretNPC::TURRET_MAX_RANGE = 1200;
 // Default turn rate
-const Float CTurretNPC::TURRET_DEFAULT_TURN_RATE = 30;
+const float CTurretNPC::TURRET_DEFAULT_TURN_RATE = 30;
 // Default max wait time
-const Float CTurretNPC::TURRET_DEFAULT_MAX_WAIT_TIME = 15;
+const float CTurretNPC::TURRET_DEFAULT_MAX_WAIT_TIME = 15;
 
 //=============================================
 // @brief Constructor
@@ -153,7 +153,7 @@ bool CTurretNPC::Spawn( void )
 //=============================================
 void CTurretNPC::Precache( void )
 {
-	for(Uint32 i = 0; i < NB_TURRET_SOUNDS; i++)
+	for(UInt32 i = 0; i < NB_TURRET_SOUNDS; i++)
 		gd_engfuncs.pfnPrecacheSound(TURRET_SOUNDS[i]);
 
 	Util::PrecacheFixedNbSounds(TURRET_METAL_IMPACT_SOUND_PATTERN, TURRET_NB_METAL_IMPACT_SOUNDS);
@@ -206,12 +206,12 @@ bool CTurretNPC::KeyValue( const keyvalue_t& kv )
 // @brief Makes the entity take on damage
 //
 //=============================================
-bool CTurretNPC::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, Float amount, Int32 damageFlags )
+bool CTurretNPC::TakeDamage( CBaseEntity* pInflictor, CBaseEntity* pAttacker, float amount, Int32 damageFlags )
 {
 	if(m_pState->takedamage == TAKEDAMAGE_NO)
 		return false;
 
-	Float _amount = amount;
+	float _amount = amount;
 	if(!m_isOn)
 		_amount = 0;
 
@@ -261,9 +261,9 @@ void CTurretNPC::Die( void )
 // @brief Handles damage calculation for a hitscan
 //
 //=============================================
-void CTurretNPC::TraceAttack( CBaseEntity* pAttacker, Float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
+void CTurretNPC::TraceAttack( CBaseEntity* pAttacker, float damage, const Vector& direction, trace_t& tr, Int32 damageFlags )
 {
-	Float _damage = damage;
+	float _damage = damage;
 
 	if(tr.hitgroup == HITGROUP_HELMET)
 	{
@@ -302,7 +302,7 @@ Int32 CTurretNPC::GetClassification( void ) const
 // @brief Calls use function
 //
 //=============================================
-void CTurretNPC::TurretUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CTurretNPC::TurretUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	bool prevState = m_isOn;
 	switch(useMode)
@@ -388,7 +388,7 @@ void CTurretNPC::ActiveThink( void )
 
 	bool isEnemyVisible = Util::IsBoxVisible(this, m_enemy, enemyShootTarget, 0);
 	Vector directionToEnemy = (enemyShootTarget - shootOrigin);
-	Float distanceToEnemy = directionToEnemy.Length();
+	float distanceToEnemy = directionToEnemy.Length();
 	directionToEnemy.Normalize();
 
 	if(!isEnemyVisible || distanceToEnemy > TURRET_MAX_RANGE)
@@ -894,7 +894,7 @@ bool CTurretNPC::MoveTurret( void )
 	// Move on X axis
 	if(m_currentAngles.x != m_goalAngles.x)
 	{
-		Float direction = (m_goalAngles.x > m_currentAngles.x) ? 1 : -1;
+		float direction = (m_goalAngles.x > m_currentAngles.x) ? 1 : -1;
 		m_currentAngles.x += 0.1 * m_turnRate * direction;
 
 		if(direction == 1)
@@ -915,8 +915,8 @@ bool CTurretNPC::MoveTurret( void )
 	// Move on y axis
 	if(m_currentAngles.y != m_goalAngles.y)
 	{
-		Float direction = (m_goalAngles.y > m_currentAngles.y) ? 1 : -1;
-		Float distance = SDL_fabs(m_goalAngles.y - m_currentAngles.y);
+		float direction = (m_goalAngles.y > m_currentAngles.y) ? 1 : -1;
+		float distance = SDL_fabs(m_goalAngles.y - m_currentAngles.y);
 
 		if(distance > 180.0f)
 		{

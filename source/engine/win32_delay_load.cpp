@@ -21,8 +21,6 @@ Other libraries (like OpenAL) are handled by SDL itself so it's unnecessary to a
 ===============================================
 */
 
-#include <delayimp.h>
-
 // Base path for libraries based on the architecture
 #ifdef _64BUILD
 #define ARCH_LIBRARY_PATH "x64"
@@ -39,9 +37,9 @@ Other libraries (like OpenAL) are handled by SDL itself so it's unnecessary to a
 //
 // @param szProcedure Name of the procedure
 //=============================================
-static void ShowLibraryError( const Char *szProcedure )
+static void ShowLibraryError( const char *szProcedure )
 {
-	Char szBuffer[512];
+	char szBuffer[512];
 	if (szProcedure)
 		wsprintfA(szBuffer, "The procedure \"%s\" is missing from the \"SDL2.dll\" library.\n\nThe library itself could be obsolete, corrupted or too new.", szProcedure);
 	else
@@ -58,7 +56,7 @@ static void ShowLibraryError( const Char *szProcedure )
 // @param dliNotify 
 // @param pdli
 //=============================================
-static FARPROC WINAPI DelayLoadNotifyHook( Uint32 dliNotify, PDelayLoadInfo pdli )
+static FARPROC WINAPI DelayLoadNotifyHook( UInt32 dliNotify, PDelayLoadInfo pdli )
 {
 	if (dliNotify != dliNotePreLoadLibrary || _stricmp(pdli->szDll, "SDL2.dll") != 0)
 		return nullptr;
@@ -76,7 +74,7 @@ static FARPROC WINAPI DelayLoadNotifyHook( Uint32 dliNotify, PDelayLoadInfo pdli
 // @param dliNotify 
 // @param pdli
 //=============================================
-static FARPROC WINAPI DelayLoadFailureHook( Uint32 dliNotify, PDelayLoadInfo pdli )
+static FARPROC WINAPI DelayLoadFailureHook( UInt32 dliNotify, PDelayLoadInfo pdli )
 {
 	if (_stricmp(pdli->szDll, "SDL2.dll") != 0)
 		return nullptr;

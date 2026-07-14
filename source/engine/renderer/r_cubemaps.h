@@ -11,7 +11,7 @@ All Rights Reserved.
 #define R_CUBEMAPS_H
 
 // Number of cubemap resolutions
-static constexpr Uint32 NUM_CUBEMAP_SIZES = 7;
+static constexpr UInt32 NUM_CUBEMAP_SIZES = 7;
 
 // Encoded cubemap header
 #define ECD_HEADER_ENCODED (('2'<<24)+('D'<<16)+('C'<<8)+'E')
@@ -137,7 +137,7 @@ struct cubemapinfo_t
 	Vector origin;
 
 	// Only used during compile
-	byte* pimagedata;
+	Byte* pimagedata;
 };
 
 /*
@@ -150,7 +150,7 @@ class CCubemapManager
 {
 public:
 	// Cubemap interpolation time
-	static const Float CUBEMAP_INTERP_TIME;
+	static const float CUBEMAP_INTERP_TIME;
 
 public:
 	CCubemapManager( void );
@@ -182,21 +182,21 @@ public:
 	// Gets the previous cubemap
 	cubemapinfo_t* GetPrevCubemap( void );
 	// Gets the interpoland value
-	Float GetInterpolant( void ) const;
+	float GetInterpolant( void ) const;
 	// Adds a new cubemap
-	void AddCubemap( entindex_t entindex, const Vector& origin, Uint32 resolution );
+	void AddCubemap( entindex_t entindex, const Vector& origin, UInt32 resolution );
 
 private:
 	// Clears the class
 	void Cleanup( bool iscleargame );
 	// Builds the cubemap list
-	void BuildCubemapList( const struct entitydata_t* pEntities, Uint32 numEntities );
+	void BuildCubemapList( const struct entitydata_t* pEntities, UInt32 numEntities );
 	// Builds the entity list
-	void BuildEntityList( cl_entity_t** pRenderEntities, Uint32 *pNumRenderEntities, const struct entitydata_t* pEntities, Uint32 numEntities );
+	void BuildEntityList( cl_entity_t** pRenderEntities, UInt32 *pNumRenderEntities, const struct entitydata_t* pEntities, UInt32 numEntities );
 	// Saves cubemaps to a file
 	void SaveCubemapFile( void );
 	// Reads the cubemap file
-	bool RenderCubemaps( cl_entity_t* pRenderEntities, Uint32 numRenderEntities, bool dumpTGAs );
+	bool RenderCubemaps( cl_entity_t* pRenderEntities, UInt32 numRenderEntities, bool dumpTGAs );
 	// Verifies if an ECD file is valid
 	bool VerifyECDFile( const ecdheader_t* pheader );
 
@@ -210,13 +210,13 @@ private:
 	cubemapinfo_t *m_pPrevCubemap;
 
 	// Interpolant for blending cubemaps
-	Float m_flInterpolant;
+	float m_flInterpolant;
 	// Last time the ideal cubemap changed
-	Float m_flLastChangeTime;
+	float m_flLastChangeTime;
 
 private:
 	// Cubemap resolutions arrays
-	static Uint32 g_cubemapResolutions[NUM_CUBEMAP_SIZES][2];
+	static UInt32 g_cubemapResolutions[NUM_CUBEMAP_SIZES][2];
 };
 extern CCubemapManager gCubemaps;
 #endif

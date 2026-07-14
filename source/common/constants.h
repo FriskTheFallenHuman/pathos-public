@@ -33,27 +33,27 @@ static const Vector VEC_DUCK_VIEW = Vector( 0, 0, 12 );
 static const Vector VEC_VIEW = Vector( 0, 0, 32 );
 
 // Use this definition globally
-static const Float ON_EPSILON = 0.01;
-static const Float EQUAL_EPSILON = 0.001;
+static const float ON_EPSILON = 0.01;
+static const float EQUAL_EPSILON = 0.001;
 
 // View punch damping related
-static constexpr Float VIEW_PUNCH_DAMPING = 9.0f;
-static constexpr Float VIEW_PUNCH_SPRING_CONSTANT = 60.0f;
+static constexpr float VIEW_PUNCH_DAMPING = 9.0f;
+static constexpr float VIEW_PUNCH_SPRING_CONSTANT = 60.0f;
 
 // Dead view height
-static constexpr Float DEAD_VIEWHEIGHT = 8.0f;
+static constexpr float DEAD_VIEWHEIGHT = 8.0f;
 
 // Distance between light updates
-static constexpr Float LIGHT_UPDATE_DISTANCE = 8.0f;
+static constexpr float LIGHT_UPDATE_DISTANCE = 8.0f;
 
 // Minimum velocity value in any direction
-static constexpr Float STOP_EPSILON = 0.1f;
+static constexpr float STOP_EPSILON = 0.1f;
 
 // Fade speed
-static constexpr Float ENTITY_FADE_SPEED = 70;
+static constexpr float ENTITY_FADE_SPEED = 70;
 
 // Minimum stamina to jump/sprint
-static constexpr Float PLAYER_MIN_STAMINA = 0.1f;
+static constexpr float PLAYER_MIN_STAMINA = 0.1f;
 
 // Pickup-able item hull size
 static const Vector ITEM_HULL_MIN = Vector(-24, -24, 0);
@@ -65,21 +65,21 @@ static const Vector WEAPON_GLOW_COLOR = Vector(255, 100, 25);
 static const color24_t BLACK_COLOR = color24_t(0, 0, 0);
 
 // Maximum speed value for motorbike
-static constexpr Float MOTORBIKE_MAX_SPEED = 500.0f;
+static constexpr float MOTORBIKE_MAX_SPEED = 500.0f;
 // Exhausted player speed
-static constexpr Float PLAYER_EXHAUST_SPEED = 150.0f;
+static constexpr float PLAYER_EXHAUST_SPEED = 150.0f;
 // Sprinting player speed
-static constexpr Float PLAYER_SPRINT_SPEED = 280.0f;
+static constexpr float PLAYER_SPRINT_SPEED = 280.0f;
 // Normal player speed
-static constexpr Float PLAYER_NORMAL_SPEED = 210.0f;
+static constexpr float PLAYER_NORMAL_SPEED = 210.0f;
 // Sneaking/ducking player speed
-static constexpr Float PLAYER_SNEAK_SPEED = 100.0f;
+static constexpr float PLAYER_SNEAK_SPEED = 100.0f;
 // Swimming player speed
-static constexpr Float PLAYER_SWIM_SPEED = 115.0f;
+static constexpr float PLAYER_SWIM_SPEED = 115.0f;
 // Ducking multiplier for speed
-static constexpr Float DUCKING_SPEED_MULTIPLIER = 0.4;
+static constexpr float DUCKING_SPEED_MULTIPLIER = 0.4;
 // Noclip movement speed
-static constexpr Float PLAYER_NOCLIP_SPEED = 600;
+static constexpr float PLAYER_NOCLIP_SPEED = 600;
 
 // Lean awareness bar color
 static color24_t LEAN_AWARENESS_BAR_COLOR(255, 160, 0);
@@ -87,33 +87,33 @@ static color24_t LEAN_AWARENESS_BAR_COLOR(255, 160, 0);
 static color24_t FULL_AWARENESS_BAR_COLOR(255, 0, 0);
 
 // Maximum noise amount
-static constexpr Float PLAYER_MAX_NOISE_LEVEL = 950;
+static constexpr float PLAYER_MAX_NOISE_LEVEL = 950;
 
 // Step sound delay when on ladder
-static constexpr Float STEPTIME_LADDER = 700.0f;
+static constexpr float STEPTIME_LADDER = 700.0f;
 // Step sound delay when in water
-static constexpr Float STEPTIME_WATER = 600.0f;
+static constexpr float STEPTIME_WATER = 600.0f;
 // Normal step time
-static constexpr Float STEPTIME_NORMAL = 520.0f;
+static constexpr float STEPTIME_NORMAL = 520.0f;
 // Slow walking step time
-static constexpr Float STEPTIME_SLOW = 700.0f;
+static constexpr float STEPTIME_SLOW = 700.0f;
 // Step time when moving slowly via flag
-static constexpr Float STEPTIME_SLOWMOVE = 720.0f;
+static constexpr float STEPTIME_SLOWMOVE = 720.0f;
 // Step time when sprinting
-static constexpr Float STEPTIME_SPRINT = 475.0f;
+static constexpr float STEPTIME_SPRINT = 475.0f;
 
 // Allocation size for leafnums
 static constexpr Int32 LEAFNUM_ALLOC_COUNT = 256;
 
 // Max entities on server side(client ones start after this index)
-static constexpr Uint32 MAX_SERVER_ENTITIES = 65535;
+static constexpr UInt32 MAX_SERVER_ENTITIES = 65535;
 // Reserved space mins for client-side identifiers
-static constexpr Uint32 ENTITY_IDENTIFIER_RESERVED_MIN = MAX_SERVER_ENTITIES+1;
+static constexpr UInt32 ENTITY_IDENTIFIER_RESERVED_MIN = MAX_SERVER_ENTITIES+1;
 // Reserved space mins for client-side identifiers
-static constexpr Uint32 ENTITY_IDENTIFIER_RESERVED_MAX = (MAX_SERVER_ENTITIES*2);
+static constexpr UInt32 ENTITY_IDENTIFIER_RESERVED_MAX = (MAX_SERVER_ENTITIES*2);
 
 // Maximum path size
-static constexpr Uint32 MAX_ROUTE_POINTS = 128;
+static constexpr UInt32 MAX_ROUTE_POINTS = 128;
 
 // No precache result
 static constexpr Int32 NO_PRECACHE = -1;
@@ -140,113 +140,113 @@ static constexpr Int32 NO_SKIN_VALUE = -1;
 static constexpr Int32 NO_POSITION = -1;
 
 // Max floating point value
-static constexpr Float MAX_FLOAT_VALUE = 1e30f;
+static constexpr float MAX_FLOAT_VALUE = 1e30f;
 // Maximum textures bound at once
-static constexpr Uint32 MAX_BOUND_TEXTURES = 16;
+static constexpr UInt32 MAX_BOUND_TEXTURES = 16;
 
 // Path to default footstep file for player
-static const Char FOOTSTEP_SCRIPT_FILE[] = "scripts/footsteps.txt";
+static const char FOOTSTEP_SCRIPT_FILE[] = "scripts/footsteps.txt";
 
 // Decal list file path
-static const Char DECAL_LIST_FILE_PATH[] = "scripts/decal_list.txt";
+static const char DECAL_LIST_FILE_PATH[] = "scripts/decal_list.txt";
 
 // Sentences file path
-static const Char SENTENCES_FILE_PATH[] = "scripts/sentences.txt";
+static const char SENTENCES_FILE_PATH[] = "scripts/sentences.txt";
 
 // Sound folder base path
-static const Char SOUND_FOLDER_BASE_PATH[] = "sound/";
+static const char SOUND_FOLDER_BASE_PATH[] = "sound/";
 
 // Bone name for head, shared across NPCs
-static const Char HEAD_BONE_NAME[] = "Bip01 Head";
+static const char HEAD_BONE_NAME[] = "Bip01 Head";
 // Bone name for root bone, shared across NPCs
-static const Char ROOT_BONE_NAME[] = "Bip01";
+static const char ROOT_BONE_NAME[] = "Bip01";
 // Bone name for eye center, shared across NPCs
-static const Char EYE_CENTER_BONE_NAME[] = "Bip01 Eye Center";
+static const char EYE_CENTER_BONE_NAME[] = "Bip01 Eye Center";
 
 // Null sound filepath
-static const Char NULL_SOUND_FILENAME[] = "common/null.wav";
+static const char NULL_SOUND_FILENAME[] = "common/null.wav";
 // Null sprite filepath
-static const Char NULL_SPRITE_FILENAME[] = "sprites/null.spr";
+static const char NULL_SPRITE_FILENAME[] = "sprites/null.spr";
 // Error model filepath
-static const Char ERROR_MODEL_FILENAME[] = "models/error.mdl";
+static const char ERROR_MODEL_FILENAME[] = "models/error.mdl";
 // Error model filepath
-static const Char ERROR_SPRITE_FILENAME[] = "sprites/error.spr";
+static const char ERROR_SPRITE_FILENAME[] = "sprites/error.spr";
 // Weapon world model
-static const Char W_OBJECTS_MODEL_FILENAME[] = "models/w_objects.mdl";
+static const char W_OBJECTS_MODEL_FILENAME[] = "models/w_objects.mdl";
 // Human gibs model
-static const Char HUMAN_GIBS_MODEL_FILENAME[] = "models/humangibs.mdl";
+static const char HUMAN_GIBS_MODEL_FILENAME[] = "models/humangibs.mdl";
 // View hands model path
-const Char V_SEQUENCES_MODEL_NAME[] = "models/v_sequences.mdl";
+const char V_SEQUENCES_MODEL_NAME[] = "models/v_sequences.mdl";
 // Default skybox name
-static const Char DEFAULT_SKYBOX_NAME[] = "mountain_";
+static const char DEFAULT_SKYBOX_NAME[] = "mountain_";
 // Glass material type name
-static const Char GLASS_MATERIAL_TYPE_NAME[] = "glass";
+static const char GLASS_MATERIAL_TYPE_NAME[] = "glass";
 // Organic material type name
-static const Char ORGANIC_MATERIAL_TYPE_NAME[] = "organic";
+static const char ORGANIC_MATERIAL_TYPE_NAME[] = "organic";
 // Metal material type name
-static const Char METAL_MATERIAL_TYPE_NAME[] = "metal";
+static const char METAL_MATERIAL_TYPE_NAME[] = "metal";
 // Bullets model name
-static const Char BULLETS_MODEL_FILENAME[] = "models/bullets.mdl";
+static const char BULLETS_MODEL_FILENAME[] = "models/bullets.mdl";
 // Bullets model name
-static const Char SHELLCASINGS_MODEL_FILENAME[] = "models/shellcasings.mdl";
+static const char SHELLCASINGS_MODEL_FILENAME[] = "models/shellcasings.mdl";
 
 // Particle script base path
-static const Char PARTICLE_SCRIPT_PATH[] = "particles/";
+static const char PARTICLE_SCRIPT_PATH[] = "particles/";
 
 // Simple muzzleflash script name
-static const Char MUZZLEFLASH_PARTICLE_SCRIPT_SIMPLE[] = "engine_muzzleflash_cluster_simple.json";
+static const char MUZZLEFLASH_PARTICLE_SCRIPT_SIMPLE[] = "engine_muzzleflash_cluster_simple.json";
 // Regular muzzleflash particle effect for handguns
-static const Char MUZZLEFLASH_PARTICLE_SCRIPT_BASENAME[] = "engine_muzzleflash_cluster_%s.json";
+static const char MUZZLEFLASH_PARTICLE_SCRIPT_BASENAME[] = "engine_muzzleflash_cluster_%s.json";
 // Muzzleflash smoke particle effect
-static const Char MUZZLE_PARTICLE_SMOKE[] = "engine_muzzle_smoke.json";
+static const char MUZZLE_PARTICLE_SMOKE[] = "engine_muzzle_smoke.json";
 
 // Debris sound file path
-static const Char DEBRIS_SOUND_BASE_DIR[] = "debris";
+static const char DEBRIS_SOUND_BASE_DIR[] = "debris";
 
 // Default FOV cvar name
-const Char DEFAULT_FOV_CVAR_NAME[] = "default_fov";
+const char DEFAULT_FOV_CVAR_NAME[] = "default_fov";
 // Reference FOV cvar name
-const Char REFERENCE_FOV_CVAR_NAME[] = "reference_fov";
+const char REFERENCE_FOV_CVAR_NAME[] = "reference_fov";
 // Node debug cvar name
-const Char NODE_DEBUG_CVAR_NAME[] = "r_nodes_debug";
+const char NODE_DEBUG_CVAR_NAME[] = "r_nodes_debug";
 
 // Anisotropy cvar name
-const Char ANISOTROPY_CVAR_NAME[] = "r_anisotropy";
+const char ANISOTROPY_CVAR_NAME[] = "r_anisotropy";
 // Gamma cvar name
-const Char GAMMA_CVAR_NAME[] = "r_gamma";
+const char GAMMA_CVAR_NAME[] = "r_gamma";
 // Master volume cvar name
-const Char VOLUME_CVAR_NAME[] = "s_volume";
+const char VOLUME_CVAR_NAME[] = "s_volume";
 // Game volume cvar name
-const Char GAME_VOLUME_CVAR_NAME[] = "s_gamevolume";
+const char GAME_VOLUME_CVAR_NAME[] = "s_gamevolume";
 // Music volume cvar name
-const Char MUSIC_VOLUME_CVAR_NAME[] = "s_musicvolume";
+const char MUSIC_VOLUME_CVAR_NAME[] = "s_musicvolume";
 // Mouse sensitivity cvar
-const Char MOUSE_SENSITIVITY_CVAR_NAME[] = "m_sensitivity";
+const char MOUSE_SENSITIVITY_CVAR_NAME[] = "m_sensitivity";
 // Mouse filter cvar
-const Char MOUSE_FILTER_CVAR_NAME[] = "m_filter";
+const char MOUSE_FILTER_CVAR_NAME[] = "m_filter";
 // Mouse filter frames cvar name
-const Char MOUSE_FILTER_FRAMES_CVAR_NAME[] = "m_filter_frames";
+const char MOUSE_FILTER_FRAMES_CVAR_NAME[] = "m_filter_frames";
 // Mouse reverse cvar
-const Char MOUSE_REVERSE_CVAR_NAME[] = "m_reverse";
+const char MOUSE_REVERSE_CVAR_NAME[] = "m_reverse";
 // Mouse raw input cvar
-const Char MOUSE_RAWINPUT_CVAR_NAME[] = "m_rawinput";
+const char MOUSE_RAWINPUT_CVAR_NAME[] = "m_rawinput";
 // Stop music command name
-const Char STOP_MUSIC_CMD_NAME[] = "stopmusic";
+const char STOP_MUSIC_CMD_NAME[] = "stopmusic";
 // Set HRTF setting command name
-const Char SET_HRTF_CMD_NAME[] = "_set_hrtf";
+const char SET_HRTF_CMD_NAME[] = "_set_hrtf";
 // Gravity cvar name
-const Char GRAVITY_CVAR_NAME[] = "sv_gravity";
+const char GRAVITY_CVAR_NAME[] = "sv_gravity";
 // View roll cvar name
-const Char VIEW_ROLL_CVAR_NAME[] = "v_rollangle";
+const char VIEW_ROLL_CVAR_NAME[] = "v_rollangle";
 // View bob cvar name
-const Char VIEW_BOB_CVAR_NAME[] = "v_viewbob";
+const char VIEW_BOB_CVAR_NAME[] = "v_viewbob";
 // Autoaim cvar name
-const Char AUTOAIM_CVAR_NAME[] = "sv_autoaim";
+const char AUTOAIM_CVAR_NAME[] = "sv_autoaim";
 
 // Minimum filter frames for mouse filtering
-static constexpr Uint32 MOUSE_FILTER_MIN_FRAMES = 2;
+static constexpr UInt32 MOUSE_FILTER_MIN_FRAMES = 2;
 // Maximum filter frames for mouse filtering
-static constexpr Uint32 MOUSE_FILTER_MAX_FRAMES = 8;
+static constexpr UInt32 MOUSE_FILTER_MAX_FRAMES = 8;
 
 // Null mins value
 static const Vector NULL_MINS(MAX_FLOAT_VALUE, MAX_FLOAT_VALUE, MAX_FLOAT_VALUE);
@@ -254,16 +254,16 @@ static const Vector NULL_MINS(MAX_FLOAT_VALUE, MAX_FLOAT_VALUE, MAX_FLOAT_VALUE)
 static const Vector NULL_MAXS(-MAX_FLOAT_VALUE, -MAX_FLOAT_VALUE, -MAX_FLOAT_VALUE);
 
 // env_elight radius multiplier
-static constexpr Float ENV_ELIGHT_RADIUS_MULTIPLIER = 9.5;
+static constexpr float ENV_ELIGHT_RADIUS_MULTIPLIER = 9.5;
 // Max entities on client side(reserved entities start after this + MAX_SERVER_ENTITIES
-static constexpr Uint32 MAX_CLIENTSIDE_ENTITIES = 65535;
+static constexpr UInt32 MAX_CLIENTSIDE_ENTITIES = 65535;
 // Entity index offset for client-side entities
-static constexpr Uint32 CL_ENTITY_INDEX_BASE = MAX_SERVER_ENTITIES;
+static constexpr UInt32 CL_ENTITY_INDEX_BASE = MAX_SERVER_ENTITIES;
 
 // Default field of view value
-static constexpr Uint32 DEFAULT_FOV_VALUE = 70;
+static constexpr UInt32 DEFAULT_FOV_VALUE = 70;
 // Reference field of view value
-static constexpr Uint32 REFERENCE_FOV_VALUE = 90;
+static constexpr UInt32 REFERENCE_FOV_VALUE = 90;
 
 // No direction value
 static constexpr Int32 DIRECTION_NODIR = -1;
@@ -272,29 +272,29 @@ static constexpr Int32 DIRECTION_NODIR = -1;
 static constexpr Int32 MAX_RENDER_ENTITIES = 4096;
 
 // Type for print functions
-typedef void (*pfnPrintf_t)( const Char *fmt, ... );
+typedef void (*pfnPrintf_t)( const char *fmt, ... );
 // Type for error popup functions
-typedef void (*pfnErrorPopup_t)( const Char *fmt, ... );
+typedef void (*pfnErrorPopup_t)( const char *fmt, ... );
 
 // Newline definition for Windows
-static const Char NEWLINE[] = "\r\n";
+static const char NEWLINE[] = "\r\n";
 // World textures base path
-static const Char WORLD_TEXTURES_BASE_PATH[] = "textures/world/";
+static const char WORLD_TEXTURES_BASE_PATH[] = "textures/world/";
 // Common game directory
-static const Char COMMON_GAMEDIR[] = "common";
+static const char COMMON_GAMEDIR[] = "common";
 
 // The common Id for all Pathos BSP file formats
 static const Int32 PBSP_HEADER = (('P'<<24)+('S'<<16)+('B'<<8)+'P');
 // Base lightmap style index
-static constexpr Uint32 BASE_LIGHTMAP_INDEX = 0;
+static constexpr UInt32 BASE_LIGHTMAP_INDEX = 0;
 // Null lightstyle index
-static constexpr Uint32 NULL_LIGHTSTYLE_INDEX = 255;
+static constexpr UInt32 NULL_LIGHTSTYLE_INDEX = 255;
 
 // Export function macro
-#define EXPORTFN _declspec( dllexport )
+#define EXPORTFN DLLEXPORT
 
 // Macro for usermsg exports
-#define MSGFN extern "C" bool _declspec( dllexport )
+#define MSGFN extern "C" bool DLLEXPORT
 
 // For legacy support
 enum entitysteptypes_t
@@ -308,7 +308,7 @@ enum entitysteptypes_t
 };
 
 // Type names of footsteps for legacy support
-static const Char* NPC_LEGACY_STEPTYPE_NAMES[NB_NPC_LEGACY_STEPTYPES] = 
+static const char* NPC_LEGACY_STEPTYPE_NAMES[NB_NPC_LEGACY_STEPTYPES] = 
 {
 	"shoes",
 	"default",
@@ -498,9 +498,9 @@ enum dmg_types_t
 };
 
 // Duration of acid damage
-static constexpr Float ACID_DMG_DURATION = 4.0f;
+static constexpr float ACID_DMG_DURATION = 4.0f;
 // Acid damage amount
-static constexpr Float ACID_DMG_AMOUNT = 1.0F;
+static constexpr float ACID_DMG_AMOUNT = 1.0F;
 
 enum skill_level_t
 {
@@ -656,27 +656,27 @@ enum force_skillcvar_t
 };
 
 // View field value of 180 degrees or so
-static constexpr Float VIEW_FIELD_FULL = -1.0;
+static constexpr float VIEW_FIELD_FULL = -1.0;
 // View field of 135 degrees
-static constexpr Float VIEW_FIELD_WIDE = -0.7;
+static constexpr float VIEW_FIELD_WIDE = -0.7;
 // View field of 45 degrees
-static constexpr Float VIEW_FIELD_MEDIUM = -0.4;
+static constexpr float VIEW_FIELD_MEDIUM = -0.4;
 // View field of 20 degrees maybe
-static constexpr Float VIEW_FIELD_NARROW = 0.7;
+static constexpr float VIEW_FIELD_NARROW = 0.7;
 
 // Max clients in a server
-static constexpr Uint32 MAX_PLAYERS = 32;
+static constexpr UInt32 MAX_PLAYERS = 32;
 
 // Blend time between sequence changes
-static constexpr Float VBM_SEQ_BLEND_TIME = 0.3f;
+static constexpr float VBM_SEQ_BLEND_TIME = 0.3f;
 
 // Zero vector
 static const Vector ZERO_VECTOR = Vector(0, 0, 0);
 
 // Values for lean calculations
-static constexpr Float LEAN_DISTANCE_UP = 15;
-static constexpr Float LEAN_DISTANCE_SIDE = 20;
-static constexpr Double LEAN_TIME = 0.4;
+static constexpr float LEAN_DISTANCE_UP = 15;
+static constexpr float LEAN_DISTANCE_SIDE = 20;
+static constexpr double LEAN_TIME = 0.4;
 
 enum part_msg_types_t
 {
@@ -902,8 +902,8 @@ struct decalcache_t
 };
 
 // This needs to match with studio.h
-static constexpr Uint32 MAX_CONTROLLERS = 4;
-static constexpr Uint32 MAX_BLENDING	= 9;
+static constexpr UInt32 MAX_CONTROLLERS = 4;
+static constexpr UInt32 MAX_BLENDING	= 9;
 
 // NULL entity index
 static constexpr entindex_t NO_ENTITY_INDEX = -1;
@@ -911,7 +911,7 @@ static constexpr entindex_t NO_ENTITY_INDEX = -1;
 static constexpr Int32 NO_ATTACHMENT_INDEX = -1;
 
 // Spawnflag for env_model not being solid
-static const Uint32 ENVMODEL_SF_NOT_SOLID = (1<<4);
+static const UInt32 ENVMODEL_SF_NOT_SOLID = (1<<4);
 
 // Lightstyles matching what Half-Life 1 has
 enum lightstyles_t

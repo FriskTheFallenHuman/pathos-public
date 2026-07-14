@@ -48,7 +48,7 @@ public:
 
 public:
 	// Weapon view model
-	static const Char WEAPON_VIEWMODEL[];
+	static const char WEAPON_VIEWMODEL[];
 	// Weapon weight
 	static const Int32 WEAPON_WEIGHT;
 	// Weapon slot
@@ -78,14 +78,14 @@ private:
 	void Swing( void );
 
 private:
-	Double m_impactTime;
-	Double m_timeNext;
+	double m_impactTime;
+	double m_timeNext;
 	
 	knife_swingstate_t m_attackState;
 	bool m_knifeHit;
 
 private:
 	// Sequence names for weapon
-	static const Char* m_sequenceNames[NUM_WEAPON_ANIMATIONS];
+	static const char* m_sequenceNames[NUM_WEAPON_ANIMATIONS];
 };
 #endif //WEAPONKNIFE_H

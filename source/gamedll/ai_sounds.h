@@ -34,11 +34,11 @@ struct ai_sound_t
 	Vector position;
 	CEntityHandle emitter;
 
-	Float radius;
-	Float volume;
-	Double life;
+	float radius;
+	float volume;
+	double life;
 	Int32 typeflags;
-	Uint32 identifier;
+	UInt32 identifier;
 };
 
 /*
@@ -55,9 +55,9 @@ public:
 
 public:
 	ai_sound_t* GetSoundForEmitter( CBaseEntity* pEmitterEntity );
-	ai_sound_t* AddSound( CBaseEntity* pEmitterEntity, Int32 typebits, Float radius, Float volume, Float duration );
-	ai_sound_t* AddSound( Int32 typebits, const Vector& origin, Float radius, Float volume, Float duration );
-	void GetSoundList( const Vector& position, CLinkedList<ai_sound_t>& destList, Uint32 soundMask, Float sensitivity );
+	ai_sound_t* AddSound( CBaseEntity* pEmitterEntity, Int32 typebits, float radius, float volume, float duration );
+	ai_sound_t* AddSound( Int32 typebits, const Vector& origin, float radius, float volume, float duration );
+	void GetSoundList( const Vector& position, CLinkedList<ai_sound_t>& destList, UInt32 soundMask, float sensitivity );
 	void ClearEmitterSounds( CBaseEntity* pEmitterEntity );
 
 public:
@@ -68,7 +68,7 @@ private:
 	// Linked list of active sounds
 	CLinkedList<ai_sound_t> m_soundsList;
 	// Next free identifier
-	Uint32 m_currentIdentifier;
+	UInt32 m_currentIdentifier;
 };
 extern CAISounds gAISounds;
 #endif //AI_SOUNDS_H

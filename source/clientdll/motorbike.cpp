@@ -33,25 +33,25 @@ All Rights Reserved.
 CMotorBike gMotorBike;
 
 // Max wheel turn angle
-const Float CMotorBike::MOTORBIKE_TURN_ANGLE = 25;
+const float CMotorBike::MOTORBIKE_TURN_ANGLE = 25;
 // Max view deviation
-const Float CMotorBike::MOTORBIKE_MAX_ADD = 45;
+const float CMotorBike::MOTORBIKE_MAX_ADD = 45;
 // Mouse move timeout
-const Float CMotorBike::MOUSEMOVE_TIMEOUT = 8;
+const float CMotorBike::MOUSEMOVE_TIMEOUT = 8;
 // Mouse timeout blend time
-const Float CMotorBike::MOUSEMOVE_TIMEOUT_BLEND	= 1;
+const float CMotorBike::MOUSEMOVE_TIMEOUT_BLEND	= 1;
 // Surface align time
-const Double CMotorBike::ANGLE_ALIGN_TIME_ON_GROUND = 0.5;
+const double CMotorBike::ANGLE_ALIGN_TIME_ON_GROUND = 0.5;
 // Surface align time
-const Double CMotorBike::ANGLE_ALIGN_TIME_IN_AIR = 2.0;
+const double CMotorBike::ANGLE_ALIGN_TIME_IN_AIR = 2.0;
 // Wheel blend time
-const Double CMotorBike::WHEEL_BLEND_TIME = 1.0;
+const double CMotorBike::WHEEL_BLEND_TIME = 1.0;
 // Motorbike volume
-const Float CMotorBike::MOTORBIKE_VOLUME = 0.25;
+const float CMotorBike::MOTORBIKE_VOLUME = 0.25;
 // Motorbike model name
-const Char CMotorBike::MOTORBIKE_MODEL_NAME[] = "models/motorbike.mdl";
+const char CMotorBike::MOTORBIKE_MODEL_NAME[] = "models/motorbike.mdl";
 // Motorbike sequence names(this needs to line up with bike_anims_t
-const Char* CMotorBike::MOTORBIKE_ANIM_NAMES[NB_BIKE_ANIMS] =
+const char* CMotorBike::MOTORBIKE_ANIM_NAMES[NB_BIKE_ANIMS] =
 {
 	"standby",
 	"enter",
@@ -246,19 +246,19 @@ cl_entity_t *CMotorBike::GetBikeEntity ( void )
 // @brief
 //
 //=============================================
-Float CMotorBike::GetTurnAmount( void )
+float CMotorBike::GetTurnAmount( void )
 {
 	cl_entity_t* pplayer = cl_engfuncs.pfnGetLocalPlayer();
 	if(!pplayer)
 		return 0;
 
-	Double fltime = cl_engfuncs.pfnGetClientTime();
+	double fltime = cl_engfuncs.pfnGetClientTime();
 
 	switch(m_animState)
 	{
 	case BIKE_STATE_TURNLEFT:
 		{
-			Double prevFrac = 1.0 - ((fltime-m_lastInputTime)/SequenceTime(BIKE_ANIM_TURNLEFT));
+			double prevFrac = 1.0 - ((fltime-m_lastInputTime)/SequenceTime(BIKE_ANIM_TURNLEFT));
 			m_wheelAngle = m_prevWheelAngle*prevFrac + (fltime-m_lastInputTime)/SequenceTime(BIKE_ANIM_TURNLEFT);
 		}
 		break;
@@ -270,7 +270,7 @@ Float CMotorBike::GetTurnAmount( void )
 		break;
 	case BIKE_STATE_TURNRIGHT:
 		{
-			Float prevFrac = 1.0 - ((fltime-m_lastInputTime)/SequenceTime(BIKE_ANIM_TURNRIGHT));
+			float prevFrac = 1.0 - ((fltime-m_lastInputTime)/SequenceTime(BIKE_ANIM_TURNRIGHT));
 			m_wheelAngle = m_prevWheelAngle*prevFrac + (fltime-m_lastInputTime)/SequenceTime(BIKE_ANIM_TURNRIGHT) * -1.0;
 		}
 		break;
@@ -286,8 +286,8 @@ Float CMotorBike::GetTurnAmount( void )
 		break;
 	}
 
-	Double frametime = cl_engfuncs.pfnGetFrameTime();
-	Float wheelangle = ((m_wheelAngle*MOTORBIKE_TURN_ANGLE*pplayer->curstate.velocity.Length())/90.0f)*m_direction*frametime;
+	double frametime = cl_engfuncs.pfnGetFrameTime();
+	float wheelangle = ((m_wheelAngle*MOTORBIKE_TURN_ANGLE*pplayer->curstate.velocity.Length())/90.0f)*m_direction*frametime;
 
 	return wheelangle;
 }
@@ -296,7 +296,7 @@ Float CMotorBike::GetTurnAmount( void )
 // @brief
 //
 //=============================================
-Float CMotorBike::GetAcceleration( void ) const
+float CMotorBike::GetAcceleration( void ) const
 {
 	return m_acceleration;
 }
@@ -330,7 +330,7 @@ void CMotorBike::SetSequence( Int32 sequence )
 		return;
 	}
 
-	for(Uint32 i = 0; i < MAX_BLENDING; i++)
+	for(UInt32 i = 0; i < MAX_BLENDING; i++)
 		m_clientBikeEntity.latched.prevseqblending[i] = m_clientBikeEntity.curstate.blending[i];
 
 	m_clientBikeEntity.latched.sequence = m_clientBikeEntity.curstate.sequence;
@@ -349,7 +349,7 @@ void CMotorBike::SetSequence( Int32 sequence )
 // @brief
 //
 //=============================================
-Float CMotorBike::SequenceTime( Int32 sequence ) const
+float CMotorBike::SequenceTime( Int32 sequence ) const
 {
 	if(!m_pBikeModel || !m_pBikeModel->pcachedata)
 	{
@@ -375,7 +375,7 @@ Float CMotorBike::SequenceTime( Int32 sequence ) const
 	}
 
 	const mstudioseqdesc_t* pseqdesc = pstudiohdr->getSequence(sequenceindex);
-	return ((Float)pseqdesc->numframes/(Float)pseqdesc->fps);
+	return ((float)pseqdesc->numframes/(float)pseqdesc->fps);
 }
 
 //=============================================
@@ -496,7 +496,7 @@ void CMotorBike::HandleInput( void )
 // @brief
 //
 //=============================================
-void CMotorBike::MouseMove( Float mousex, Float mousey )
+void CMotorBike::MouseMove( float mousex, float mousey )
 {
 	if(m_activeServerStatus == BIKE_SV_LEAVING || m_activeServerStatus == BIKE_SV_LEAVING_LERP)
 		return;
@@ -504,7 +504,7 @@ void CMotorBike::MouseMove( Float mousex, Float mousey )
 	if(!mousex && !mousey)
 		return;
 
-	Double time = cl_engfuncs.pfnGetClientTime();
+	double time = cl_engfuncs.pfnGetClientTime();
 	if(m_lastMouseMove+MOUSEMOVE_TIMEOUT < time)
 		Math::VectorCopy(m_addDeviationAngles, m_deviationAngles);
 
@@ -625,12 +625,12 @@ void CMotorBike::UpdateSequenceStates( void )
 //=============================================
 void CMotorBike::ActiveThink( void )
 {
-	Float flLastVelocity = m_savedVelocity.Length();
-	Float flVelocity = m_pPlayer->curstate.velocity.Length();
-	Float flDiff = SDL_fabs(flLastVelocity - flVelocity);
+	float flLastVelocity = m_savedVelocity.Length();
+	float flVelocity = m_pPlayer->curstate.velocity.Length();
+	float flDiff = SDL_fabs(flLastVelocity - flVelocity);
 
 	// Get engine stuff
-	Double frametime = cl_engfuncs.pfnGetFrameTime();
+	double frametime = cl_engfuncs.pfnGetFrameTime();
 	const movevars_t* pmovevars = cl_engfuncs.pfnGetMoveVars();
 
 	// Play appropriate sounds, and disable acceleration
@@ -650,7 +650,7 @@ void CMotorBike::ActiveThink( void )
 		if(Math::DotProduct(velDir, tr.plane.normal) < 0.6 && tr.fraction != 1.0)
 		{
 			// Save previous fraction
-			Double groundFraction = tr.fraction;
+			double groundFraction = tr.fraction;
 			Vector raisedOrigin = m_pPlayer->curstate.origin + Vector(0, 0, pmovevars->stepsize);
 			testOrigin = raisedOrigin + m_savedVelocity * frametime;
 
@@ -660,14 +660,14 @@ void CMotorBike::ActiveThink( void )
 			{
 				if(flDiff >= MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED)
 				{
-					Float impactDamage = (flDiff-MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED)/(MOTORBIKE_FATAL_COLLISON_SPEED-MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED)*100;
+					float impactDamage = (flDiff-MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED)/(MOTORBIKE_FATAL_COLLISON_SPEED-MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED)*100;
 
 					// Reset the sound to idle
 					m_soundState = BIKE_SOUND_IDLE;
 					
 					// Remove acceleration and add punch
 					m_acceleration = m_acceleration * -0.01;
-					m_punchAmount[0] -= 300*clamp(impactDamage/100, 0, 1);
+					m_punchAmount[0] -= 300*Clamp(impactDamage/100, 0, 1);
 
 					CString soundfile;
 					switch(Common::RandomLong(0, 3))
@@ -683,7 +683,7 @@ void CMotorBike::ActiveThink( void )
 				// Add in a little punch
 				if(flDiff > MOTORBIKE_MINIMUM_KNOCK_SPEED)
 				{
-					Float amount = flDiff/MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED;
+					float amount = flDiff/MOTORBIKE_MINIMUM_DAMAGE_COLLISON_SPEED;
 					if(amount < 0.1)
 						amount = 0.1;
 
@@ -779,7 +779,7 @@ void CMotorBike::ActiveThink( void )
 
 	if(m_pPlayer->curstate.groundent != NO_ENTITY_INDEX)
 	{
-		Float zdiff = m_clientBikeEntity.curstate.origin.z-m_clientBikeEntity.prevstate.origin.z;
+		float zdiff = m_clientBikeEntity.curstate.origin.z-m_clientBikeEntity.prevstate.origin.z;
 
 		trace_t tr1, tr2;
 		cl_tracefuncs.pfnPlayerTrace(m_clientBikeEntity.prevstate.origin+Vector(0, 0, 4), m_clientBikeEntity.prevstate.origin - Vector(0, 0, 32), FL_TRACE_NO_MODELS, HULL_POINT, -1, tr1);
@@ -991,7 +991,7 @@ void CMotorBike::HandleStates( void )
 void CMotorBike::UpdateAngles( void )
 {
 	// Get ideal angles
-	Double blendtime = 0;
+	double blendtime = 0;
 	Vector idealUpVector;
 	GetIdealUpVector(idealUpVector, &blendtime);
 
@@ -1015,7 +1015,7 @@ void CMotorBike::UpdateAngles( void )
 		}
 		else
 		{
-			Double flfrac = (m_time-m_angleBlendTime)/m_angleBlendDuration;
+			double flfrac = (m_time-m_angleBlendTime)/m_angleBlendDuration;
 			Math::VectorScale(m_prevBikeUpVector, (1.0 - flfrac), m_currentBikeUpVector);
 			Math::VectorMA(m_currentBikeUpVector, flfrac, m_idealBikeUpVector, m_currentBikeUpVector);
 		}
@@ -1024,7 +1024,7 @@ void CMotorBike::UpdateAngles( void )
 	// Check if the angle differs
 	if(m_angleBlendTime && !Math::VectorCompare(m_idealBikeUpVector, idealUpVector))
 	{
-		Float deltaleft = (m_angleBlendTime+m_angleBlendDuration)-m_time;
+		float deltaleft = (m_angleBlendTime+m_angleBlendDuration)-m_time;
 		m_angleBlendDuration = deltaleft;
 		m_angleBlendTime = m_time;
 
@@ -1040,7 +1040,7 @@ void CMotorBike::UpdateAngles( void )
 // @brief
 //
 //=============================================
-void CMotorBike::GetIdealUpVector( Vector& outup, Double* pblendtime )
+void CMotorBike::GetIdealUpVector( Vector& outup, double* pblendtime )
 {
 	// If not onground, use 
 	if(m_pPlayer->curstate.groundent == NO_ENTITY_INDEX)
@@ -1181,8 +1181,8 @@ void CMotorBike::UpdateTurnAngles ( void )
 	// degrate the view add value
 	if((m_lastMouseMove+MOUSEMOVE_TIMEOUT) <= m_time)
 	{
-		Double time = clamp((m_time-(m_lastMouseMove+MOUSEMOVE_TIMEOUT)), 0, MOUSEMOVE_TIMEOUT_BLEND);
-		Double flfrac = Common::SplineFraction( time, (1.0/MOUSEMOVE_TIMEOUT_BLEND) );
+		double time = Clamp((m_time-(m_lastMouseMove+MOUSEMOVE_TIMEOUT)), 0, MOUSEMOVE_TIMEOUT_BLEND);
+		double flfrac = Common::SplineFraction( time, (1.0/MOUSEMOVE_TIMEOUT_BLEND) );
 
 		if(flfrac >= 1.0)
 		{
@@ -1278,9 +1278,9 @@ void CMotorBike::CalcRefDef( ref_params_t& params )
 			}
 		}
 
-		Double lerptime = (m_animState == BIKE_STATE_ENTER_LERP) ? BIKE_ENTER_TIME : BIKE_LEAVE_TIME;
-		Double time = clamp((params.time - m_lerpBeginTime), 0, lerptime);
-		Double flfrac = Common::SplineFraction( time, (1.0/lerptime) );
+		double lerptime = (m_animState == BIKE_STATE_ENTER_LERP) ? BIKE_ENTER_TIME : BIKE_LEAVE_TIME;
+		double time = Clamp((params.time - m_lerpBeginTime), 0, lerptime);
+		double flfrac = Common::SplineFraction( time, (1.0/lerptime) );
 
 		Vector vdiff, vangles;
 		Math::VectorSubtract(m_lerpEndOrigin, m_lerpBeginOrigin, vdiff);
@@ -1288,7 +1288,7 @@ void CMotorBike::CalcRefDef( ref_params_t& params )
 
 		for(Int32 i = 0; i < 3; i++)
 		{
-			Float diff = Math::AngleDiff(m_lerpEndAngles[i], m_lerpBeginAngles[i]);
+			float diff = Math::AngleDiff(m_lerpEndAngles[i], m_lerpBeginAngles[i]);
 			m_viewAngles[i] = m_lerpBeginAngles[i]+diff*(flfrac);
 		}
 	}
@@ -1319,7 +1319,7 @@ void CMotorBike::CalcRefDef( ref_params_t& params )
 	// Add in a bit of roll from turning
 	if(m_pCvarTurnRoll->GetValue() >= 1)
 	{
-		Float roll = clamp(m_pPlayer->curstate.velocity.Length()/MOTORBIKE_MAX_SPEED, 0.2, 1.0);
+		float roll = Clamp(m_pPlayer->curstate.velocity.Length()/MOTORBIKE_MAX_SPEED, 0.2, 1.0);
 		params.v_angles[2] -= m_wheelAngle*MOTORBIKE_TURN_ANGLE*roll;
 	}
 
@@ -1347,30 +1347,30 @@ void CMotorBike::DropPunchAngle ( void )
 	if( m_punchAngle.Length() <= 0.001 && m_punchAmount.Length() < 0.001)
 		return;
 
-	Double frametime = cl_engfuncs.pfnGetFrameTime();
+	double frametime = cl_engfuncs.pfnGetFrameTime();
 	Math::VectorMA(m_punchAngle, frametime, m_punchAmount, m_punchAngle);
-	Double damping = 1.0 - (VIEW_PUNCH_DAMPING * frametime);
+	double damping = 1.0 - (VIEW_PUNCH_DAMPING * frametime);
 	if(damping < 0)
 		damping = 0;
 
 	Math::VectorScale(m_punchAmount, damping, m_punchAmount);
 
 	// Toroidal spring
-	Float springmagnitude = VIEW_PUNCH_SPRING_CONSTANT * frametime;
-	springmagnitude = clamp(springmagnitude, 0, 2);
+	float springmagnitude = VIEW_PUNCH_SPRING_CONSTANT * frametime;
+	springmagnitude = Clamp(springmagnitude, 0, 2);
 
 	Math::VectorMA(m_punchAmount, -springmagnitude, m_punchAngle, m_punchAmount);
 
-	m_punchAngle[0] = clamp(m_punchAngle[0], -89, 89);
-	m_punchAngle[1] = clamp(m_punchAngle[1], -179, 179);
-	m_punchAngle[2] = clamp(m_punchAngle[2], -89, 89);
+	m_punchAngle[0] = Clamp(m_punchAngle[0], -89, 89);
+	m_punchAngle[1] = Clamp(m_punchAngle[1], -179, 179);
+	m_punchAngle[2] = Clamp(m_punchAngle[2], -89, 89);
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-void CMotorBike::ProcessMessage( const byte* pdata, Uint32 msgsize )
+void CMotorBike::ProcessMessage( const Byte* pdata, UInt32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
 

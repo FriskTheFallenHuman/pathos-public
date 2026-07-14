@@ -26,7 +26,7 @@ public:
 
 public:
 	// Adds a data hash to the list, returns true if new, false otherwise
-	bool addhash( const byte* pdata, Uint32 size );
+	bool addhash( const Byte* pdata, UInt32 size );
 	// Clears the hash list
 	void clear( void );
 

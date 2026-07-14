@@ -31,7 +31,7 @@ public:
 	virtual bool Spawn( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual Int32 GetEntityFlags( void ) override { return CBaseEntity::GetEntityFlags() & ~FL_ENTITY_TRANSITION; }	
 
 public:
@@ -44,6 +44,6 @@ public:
 	// Landmark name
 	string_t m_landmarkName;
 	// Last time this entity was fired
-	Double m_lastFiredtime;
+	double m_lastFiredtime;
 };
 #endif //TRIGGERCHANGELEVEL_H

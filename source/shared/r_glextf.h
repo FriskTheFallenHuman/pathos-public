@@ -25,10 +25,10 @@ public:
 	// Retrieves all function pointers
 	bool GetFunctions( void );
 	// Retrieves a single function's pointer
-	void* GetFunction( const Char* pstrName, bool setFailureCode = true );
+	void* GetFunction( const char* pstrName, bool setFailureCode = true );
 
 	// Returns the error string
-	const Char* GetError( void ) const { return m_errorString.c_str(); }
+	const char* GetError( void ) const { return m_errorString.c_str(); }
 
 public:
 	// OpenGL function declarations

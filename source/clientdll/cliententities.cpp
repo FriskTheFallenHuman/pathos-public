@@ -20,7 +20,7 @@ All Rights Reserved.
 #include "viewmodel.h"
 
 // Spark effect particle script
-static const Char SPARK_EFFECT_SCRIPT_FILE[] = "spark_cluster.json";
+static const char SPARK_EFFECT_SCRIPT_FILE[] = "spark_cluster.json";
 
 //=============================================
 // @brief
@@ -45,7 +45,7 @@ void CL_ParseEntityList( void )
 // @brief
 //
 //=============================================
-void CL_GetClientEntityList( const struct entitydata_t*& pEntitiesPtr, Uint32& numEntities )
+void CL_GetClientEntityList( const struct entitydata_t*& pEntitiesPtr, UInt32& numEntities )
 {
 	const CArray<entitydata_t>& entityList = gEntityManager.GetEntityList();
 
@@ -66,7 +66,7 @@ void CL_FreeEntityData( void )
 // @brief
 //
 //=============================================
-void CL_AdjustEntityTimers( entity_state_t* pstate, Double jointime )
+void CL_AdjustEntityTimers( entity_state_t* pstate, double jointime )
 {
 	if(!pstate)
 		return;

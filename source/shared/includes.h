@@ -10,19 +10,32 @@ All Rights Reserved.
 #ifndef INCLUDES_H
 #define INCLUDES_H
 
+#include <cstdint>
 #include <ctime>
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
 #include <cstring>
 #include <exception>
+#include <cmath>
+#include <cstdarg>
 #include <tchar.h>
+#include <map>
+#include <vector>
+#include <unordered_map>
+#include <mutex>
+#include <set>
+#include <functional>
+#include <string>
 
-#ifdef WIN32
+#if defined(_WIN32) || defined(__CYGWIN__)
 #define WIN32_LEAN_AND_MEAN
 #define NOGDI
 #define NOMINMAX
-#include <Windows.h>
+#include <windows.h>
+#ifdef _MSC_VER
+#include <delayimp.h>
+#endif
 #endif
 
 #ifndef NO_SDL
@@ -42,6 +55,7 @@ All Rights Reserved.
 #endif
 #include "imgui_impl_opengl3.h"
 
+#include "platforms.h"
 #include "datatypes.h"
 #include "common.h"
 
@@ -52,6 +66,7 @@ All Rights Reserved.
 #include "vector.h"
 #include "cbuffer.h"
 #include "hashlist.h"
+
 #include "TinyJSON.h"
 
 using namespace std;

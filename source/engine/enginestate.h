@@ -16,9 +16,9 @@ All Rights Reserved.
 class CWADTextureResource;
 
 // Default is MAX_MAP_LEAFS/8
-static constexpr Uint32 DEFAULT_VISBUFFER_SIZE = 16384;
+static constexpr UInt32 DEFAULT_VISBUFFER_SIZE = 16384;
 // Default game directory
-static const Char DEFAULT_GAMEDIR[] = "pathos";
+static const char DEFAULT_GAMEDIR[] = "pathos";
 
 enum dev_mode_t
 {
@@ -89,15 +89,15 @@ struct engine_state_t
 
 	// indicates the main loop can be terminated
 	bool exit;
-	// TRUE if the next frame should have it's frametime reset to zero
+	// true if the next frame should have it's frametime reset to zero
 	bool skipframe;
-	// TRUE if console should be spawned on menu load
+	// true if console should be spawned on menu load
 	bool spawnconsole;
-	// TRUE if we're processing commands from SV_ProcessStringCommand
+	// true if we're processing commands from SV_ProcessStringCommand
 	bool isinprocesstringcommand;
 	// true if we're in the middle of a load
 	bool isloading;
-	// TRUE if engine is initialized
+	// true if engine is initialized
 	bool isinitialized;
 
 	// Game state
@@ -112,9 +112,9 @@ struct engine_state_t
 	// Requesting windowed mode
 	window_mode_t requestWMode;
 	// Requested screen width
-	Uint32 requestedScrWidth;
+	UInt32 requestedScrWidth;
 	// Requested screen height
-	Uint32 requestedScrHeight;
+	UInt32 requestedScrHeight;
 	// Requested display device
 	Int32 requestedDisplayDevice;
 	// Requested vsync setting
@@ -127,21 +127,21 @@ struct engine_state_t
 	Int32 requestedHDRSetting;
 
 	// max_edicts specified via launch args
-	Uint32 arg_max_edicts;
+	UInt32 arg_max_edicts;
 
 	// Amount to shift lowpart by
-	Uint32 lowshift;
+	UInt32 lowshift;
 	// Performance freqency
-	Double perffreq;
+	double perffreq;
 	// Current time
-	Double curtime;
+	double curtime;
 	// Previous time
-	Double prevtime;
+	double prevtime;
 
 	// Time since application start
-	Double time;
+	double time;
 	// Frametime on main thread
-	Double frametime;
+	double frametime;
 
 	// Game title
 	CString gametitle;
@@ -172,7 +172,7 @@ struct engine_state_t
 	Int32 tr_groupop;
 
 	// VIS buffer size
-	Uint32 visbuffersize;
+	UInt32 visbuffersize;
 
 	// List of cvars overwritten by launch args
 	CArray<CString> overwrittencvars;

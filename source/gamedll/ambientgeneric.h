@@ -45,7 +45,7 @@ public:
 	virtual void Precache( void ) override;
 	virtual void DeclareSaveFields( void ) override;
 	virtual bool KeyValue( const keyvalue_t& kv ) override;
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void InitEntity( void ) override;
 	virtual void SendInitMessage( const CBaseEntity* pPlayer ) override;
 
@@ -62,24 +62,24 @@ private:
 	bool m_isLooping;
 
 	Int32 m_sndFlags;
-	Float m_soundRadius;
-	Float m_attenuation;
+	float m_soundRadius;
+	float m_attenuation;
 
-	Float m_volume;
-	Float m_startVolume;
+	float m_volume;
+	float m_startVolume;
 	Int32 m_pitch;
 	Int32 m_startPitch;
 
-	Float m_volumeFadeInTime;
-	Float m_volumeFadeOutTime;
+	float m_volumeFadeInTime;
+	float m_volumeFadeOutTime;
 
-	Float m_pitchFadeInTime;
-	Float m_pitchFadeOutTime;
-	Float m_soundDuration;
+	float m_pitchFadeInTime;
+	float m_pitchFadeOutTime;
+	float m_soundDuration;
 
-	Double m_beginTime;
-	Double m_turnoffBeginTime;
-	Double m_turnoffEndTime;
+	double m_beginTime;
+	double m_turnoffBeginTime;
+	double m_turnoffEndTime;
 
 	string_t m_emitterEntityName;
 	CEntityHandle m_emitterEntity;

@@ -12,7 +12,7 @@ All Rights Reserved.
 #include "envrotlight.h"
 
 // Rotating light model
-const Char CEnvRotLight::ENV_ROTLIGHT_MODEL_FILENAME[] = "models/props/emergency_light.mdl";
+const char CEnvRotLight::ENV_ROTLIGHT_MODEL_FILENAME[] = "models/props/emergency_light.mdl";
 // Non-textured flashlight texture index
 const Int32 CEnvRotLight::NON_TEXTURED_PROJ_TEXTURE_INDEX = 3;
 
@@ -103,7 +103,7 @@ bool CEnvRotLight::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvRotLight::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvRotLight::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	switch(useMode)
 	{

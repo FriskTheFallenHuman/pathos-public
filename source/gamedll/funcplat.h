@@ -19,15 +19,15 @@ class CFuncPlat : public CPlatTrainEntity
 {
 public:
 	// Default T length
-	static const Float DEFAULT_T_LENGTH;
+	static const float DEFAULT_T_LENGTH;
 	// Default T width
-	static const Float DEFAULT_T_WIDTH;
+	static const float DEFAULT_T_WIDTH;
 	// Default speed
-	static const Float DEFAULT_SPEED;
+	static const float DEFAULT_SPEED;
 	// Default volume
-	static const Float DEFAULT_VOLUME;
+	static const float DEFAULT_VOLUME;
 	// Return delay time
-	static const Float RETURN_DELAY_TIME;
+	static const float RETURN_DELAY_TIME;
 
 public:
 	explicit CFuncPlat( edict_t* pedict );
@@ -40,7 +40,7 @@ public:
 public:
 	bool Setup( void );
 
-	void EXPORTFN PlatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value );
+	void EXPORTFN PlatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value );
 	void EXPORTFN CallGoDown( void );
 	void EXPORTFN CallHitTop( void );
 	void EXPORTFN CallHitBottom( void );

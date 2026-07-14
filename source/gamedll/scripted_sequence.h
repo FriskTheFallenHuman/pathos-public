@@ -62,20 +62,20 @@ public:
 public:
 	void DelayedStart( bool state );
 	void SetAllowInterrupt( bool allowInterrupt );
-	bool StartSequence( CBaseNPC* pNPC, const Char* pstrSequenceName, bool completeOnEmpty );
+	bool StartSequence( CBaseNPC* pNPC, const char* pstrSequenceName, bool completeOnEmpty );
 	void CancelScript( void );
 
 	Int32 GetMoveToSetting( void );
 	Int32 GetScriptDelay( void );
-	Double GetStartTime( void );
+	double GetStartTime( void );
 	void SetSequenceDone( CBaseNPC* pNPC );
 	void ClearTargetEntity( void );
 
 	bool HasPlaySequence( void );
-	const Char* GetPlaySequenceName( void );
+	const char* GetPlaySequenceName( void );
 	bool HasIdleAnimation( void );
-	const Char* GetIdleSequenceName( void );
+	const char* GetIdleSequenceName( void );
 
-	Uint64 GetIgnoreConditions( void );
+	UInt64 GetIgnoreConditions( void );
 };
 #endif //SCRIPTED_SEQUENCE_H

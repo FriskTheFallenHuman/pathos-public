@@ -89,19 +89,19 @@ enum music_channels_t
 };
 
 // No attenuation
-static constexpr Float ATTN_NONE = 0.0;
+static constexpr float ATTN_NONE = 0.0;
 // Normal attenuation
-static constexpr Float ATTN_NORM = 1.0;
+static constexpr float ATTN_NORM = 1.0;
 // Idle attenuation
-static constexpr Float ATTN_IDLE = 2.0;
+static constexpr float ATTN_IDLE = 2.0;
 // Static attenuation
-static constexpr Float ATTN_STATIC = 1.25;
+static constexpr float ATTN_STATIC = 1.25;
 // Gunfire attenuation
-static constexpr Float ATTN_GUNFIRE = 0.5;
+static constexpr float ATTN_GUNFIRE = 0.5;
 // Medium attenuation
-static constexpr Float ATTN_MEDIUM = 0.4;
+static constexpr float ATTN_MEDIUM = 0.4;
 // Large attenuation
-static constexpr Float ATTN_LARGE = 0.25;
+static constexpr float ATTN_LARGE = 0.25;
 
 // Normal pitch value
 static constexpr Int32 PITCH_NORM = 100;
@@ -111,5 +111,5 @@ static constexpr Int32 MIN_PITCH = 50;
 static constexpr Int32 MAX_PITCH = 255;
 
 // Normal sound volume
-static constexpr Float VOL_NORM = 1.0;
+static constexpr float VOL_NORM = 1.0;
 #endif//SND_SHARED_H

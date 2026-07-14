@@ -19,14 +19,14 @@ class CFuncTrackAutoChangeRC : public CFuncTrackAutoChange
 {
 public:
 	// Default damage dealt by this entity
-	static const Float DEFAULT_DAMAGE_DEALT;
+	static const float DEFAULT_DAMAGE_DEALT;
 
 public:
 	explicit CFuncTrackAutoChangeRC( edict_t* pedict );
 	virtual ~CFuncTrackAutoChangeRC( void );
 
 public:
-	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value ) override;
+	virtual void CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value ) override;
 	virtual void CallBlocked( CBaseEntity* pBlocker ) override;
 	virtual void HitBottom( void ) override;
 	virtual void HitTop (void ) override;

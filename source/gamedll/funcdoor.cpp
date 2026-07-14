@@ -13,12 +13,12 @@ All Rights Reserved.
 #include "funcbutton.h"
 
 // Default speed for doors
-const Float CFuncDoor::DEFAULT_SPEED = 100;
+const float CFuncDoor::DEFAULT_SPEED = 100;
 
 // Number of legacy door sounds
-const Uint32 CFuncDoor::NUM_LEGACY_MOVE_SOUNDS = 12;
+const UInt32 CFuncDoor::NUM_LEGACY_MOVE_SOUNDS = 12;
 // Legacy door sounds
-const Char* CFuncDoor::LEGACY_MOVE_SOUNDS[NUM_LEGACY_MOVE_SOUNDS] = 
+const char* CFuncDoor::LEGACY_MOVE_SOUNDS[NUM_LEGACY_MOVE_SOUNDS] = 
 {
 	"common/null.wav",
 	"doors/doormove1.wav",
@@ -35,9 +35,9 @@ const Char* CFuncDoor::LEGACY_MOVE_SOUNDS[NUM_LEGACY_MOVE_SOUNDS] =
 };
 
 // Number of legacy door sounds
-const Uint32 CFuncDoor::NUM_LEGACY_STOP_SOUNDS = 10;
+const UInt32 CFuncDoor::NUM_LEGACY_STOP_SOUNDS = 10;
 // Legacy move sounds
-const Char* CFuncDoor::LEGACY_STOP_SOUNDS[NUM_LEGACY_STOP_SOUNDS] = 
+const char* CFuncDoor::LEGACY_STOP_SOUNDS[NUM_LEGACY_STOP_SOUNDS] = 
 {
 	"common/null.wav",
 	"doors/doorstop1.wav",
@@ -52,7 +52,7 @@ const Char* CFuncDoor::LEGACY_STOP_SOUNDS[NUM_LEGACY_STOP_SOUNDS] =
 };
 
 // Wait time between locked sounds
-const Float CFuncDoor::LOCKED_SOUND_DELAY = 4;
+const float CFuncDoor::LOCKED_SOUND_DELAY = 4;
 
 // Link the entity to it's class
 LINK_ENTITY_TO_CLASS(func_door, CFuncDoor);
@@ -74,10 +74,10 @@ CFuncDoor::CFuncDoor( edict_t* pedict ):
 	m_numSlaveDoors(0),
 	m_numRelatedDoors(0)
 {
-	for(Uint32 i = 0; i < MAX_SLAVE_DOORS; i++)
+	for(UInt32 i = 0; i < MAX_SLAVE_DOORS; i++)
 		m_pSlaveDoors[i] = nullptr;
 	
-	for(Uint32 i = 0; i < MAX_RELATED_DOORS; i++)
+	for(UInt32 i = 0; i < MAX_RELATED_DOORS; i++)
 		m_pRelatedDoors[i] = nullptr;
 }
 
@@ -251,7 +251,7 @@ void CFuncDoor::SetMovementVectors( void )
 	m_position1 = m_pState->origin;
 
 	// -2 is because the mins/maxs is padded by 1 on both sides
-	static const Float correction = 0;
+	static const float correction = 0;
 	Vector offset;
 	offset = (m_pState->movedir 
 		* (fabs( m_pState->movedir.x * (m_pState->size.x-correction) ) 
@@ -289,8 +289,8 @@ void CFuncDoor::SetSpawnProperties( void )
 //=============================================
 void CFuncDoor::InitEntity( void )
 {
-	const Char* pstrClassName = gd_engfuncs.pfnGetString(m_pFields->classname);
-	const Char* pstrTargetName = gd_engfuncs.pfnGetString(m_pFields->targetname);
+	const char* pstrClassName = gd_engfuncs.pfnGetString(m_pFields->classname);
+	const char* pstrTargetName = gd_engfuncs.pfnGetString(m_pFields->targetname);
 	if(!pstrTargetName || !qstrlen(pstrTargetName))
 		return;
 
@@ -349,7 +349,7 @@ void CFuncDoor::InitEntity( void )
 			continue;
 
 		// Check that it's not a slave door
-		Uint32 j = 0;
+		UInt32 j = 0;
 		for(; j < m_numSlaveDoors; j++)
 		{
 			if(m_pSlaveDoors[j] == pOther)
@@ -434,7 +434,7 @@ void CFuncDoor::CallBlocked( CBaseEntity* pOther )
 	}
 
 	// Reset related pieces
-	for(Uint32 i = 0; i < m_numRelatedDoors; i++)
+	for(UInt32 i = 0; i < m_numRelatedDoors; i++)
 	{
 		CFuncDoor* pRelatedDoor = m_pRelatedDoors[i];
 		if(!pRelatedDoor)
@@ -579,11 +579,11 @@ bool CFuncDoor::ShouldAutoCloseDoor( void )
 	if(m_isBlocked || m_forcedToClose || HasSpawnFlag(FL_NO_PROXIMITY_CHECKS))
 		return true;
 
-	Float size = m_pState->size.x > m_pState->size.y ? m_pState->size.x : m_pState->size.y;
+	float size = m_pState->size.x > m_pState->size.y ? m_pState->size.x : m_pState->size.y;
 	Vector center = (m_pState->absmin + m_pState->absmax)*0.5;
 
 	Vector mins, maxs;
-	for(Uint32 i = 0; i < 3; i++)
+	for(UInt32 i = 0; i < 3; i++)
 	{
 		mins[i] = center[i] - size;
 		maxs[i] = center[i] + size;
@@ -747,7 +747,7 @@ void CFuncDoor::HitBottom( void )
 // @brief
 //
 //=============================================
-void CFuncDoor::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CFuncDoor::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, float value )
 {
 	// If we're parented, don't react to use function
 	if(m_pState->parent != NO_ENTITY_INDEX)
@@ -788,7 +788,7 @@ void CFuncDoor::DoorTouch( CBaseEntity* pOther )
 	if(DoorActivate())
 	{
 		// Trigger slave doors
-		for(Uint32 i = 0; i < m_numSlaveDoors; i++)
+		for(UInt32 i = 0; i < m_numSlaveDoors; i++)
 			m_pSlaveDoors[i]->CallUse(m_activator, m_activator, USE_TOGGLE, 0);
 
 		// Disable touch function util done
@@ -812,11 +812,11 @@ void CFuncDoor::SendInitMessage( const CBaseEntity* pPlayer )
 //=============================================
 void CFuncDoor::ChildEntityRemoved( CBaseEntity* pEntity )
 {
-	for(Uint32 i = 0; i < m_numSlaveDoors; i++)
+	for(UInt32 i = 0; i < m_numSlaveDoors; i++)
 	{
 		if(m_pSlaveDoors[i] == pEntity)
 		{
-			for(Uint32 j = i; j < (m_numSlaveDoors-1); j++)
+			for(UInt32 j = i; j < (m_numSlaveDoors-1); j++)
 				m_pSlaveDoors[j] = m_pSlaveDoors[j+1];
 
 			m_numSlaveDoors--;
@@ -824,11 +824,11 @@ void CFuncDoor::ChildEntityRemoved( CBaseEntity* pEntity )
 		}
 	}
 
-	for(Uint32 i = 0; i < m_numRelatedDoors; i++)
+	for(UInt32 i = 0; i < m_numRelatedDoors; i++)
 	{
 		if(m_pRelatedDoors[i] == pEntity)
 		{
-			for(Uint32 j = i; j < (m_numRelatedDoors-1); j++)
+			for(UInt32 j = i; j < (m_numRelatedDoors-1); j++)
 				m_pRelatedDoors[j] = m_pRelatedDoors[j+1];
 
 			m_numRelatedDoors--;

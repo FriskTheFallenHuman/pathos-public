@@ -26,17 +26,17 @@ struct sectionheader_t
 			memset(Name, 0, sizeof(Name));
 		}
 
-	byte Name[8];
-	Uint32 VirtualSize;
-	Uint32 VirtualAddress;
-	Uint32 SizeOfRawData;
-	Uint32 PointerToRawData;
-	Uint32 PointerToRelocations;
-	Uint32 PointerToLineNumbers;
-	Uint16 NumberOfRelocations;
-	Uint16 NumberOfLineNumbers;
-	Uint32 Characteristics;
+	Byte Name[8];
+	UInt32 VirtualSize;
+	UInt32 VirtualAddress;
+	UInt32 SizeOfRawData;
+	UInt32 PointerToRawData;
+	UInt32 PointerToRelocations;
+	UInt32 PointerToLineNumbers;
+	UInt16 NumberOfRelocations;
+	UInt16 NumberOfLineNumbers;
+	UInt32 Characteristics;
 };
 
-bool EnumExportedFunctions ( const Char *szFilename, void (*pfnCallBack)(Char*) );
+bool EnumExportedFunctions ( const char *szFilename, void (*pfnCallBack)(char*) );
 #endif //DLLEXPORTS_H

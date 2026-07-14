@@ -37,7 +37,7 @@ struct entity_data_desc_t
 		flags(0)
 		{}
 
-	entity_data_desc_t(entfieldtype_t type, const Char* name, Uint64 offset, Uint16 size, Int16 flags):
+	entity_data_desc_t(entfieldtype_t type, const char* name, UInt64 offset, UInt16 size, Int16 flags):
 		type(type),
 		fieldname(name),
 		offset(offset),
@@ -50,9 +50,9 @@ struct entity_data_desc_t
 	// Name of the variable
 	CString fieldname;
 	// Offset into data
-	Uint64 offset;
+	UInt64 offset;
 	// Size of data
-	Uint16 size;
+	UInt16 size;
 	// flags
 	Int16 flags;
 };
@@ -95,24 +95,24 @@ extern void AdjustEntityPositions( edict_t* pedict, Vector prevmins );
 extern bool KeyValue( edict_t* pedict, const keyvalue_t& keyvalue );
 extern void FreeEntity( edict_t* pedict, edict_removed_t freeMode );
 extern void OnAimentFreed( edict_t* pedict );
-extern void SetupVisiblity( edict_t* pclient, byte*& ppvs, byte*& ppas );
-extern bool AddPacketEntity( entity_state_t& state, entindex_t entindex, edict_t& entity, const edict_t& client, const byte* pset );
-extern bool GetTransitioningEntities( const byte* pPVS, const Vector* pTransitionMins, const Vector* pTransitionMaxs, const Char* pstrLandmarkName, const Vector& landmarkPosition, Int32 *pTransitionList, Uint32& numEntities, Uint32 maxEntities );
+extern void SetupVisiblity( edict_t* pclient, Byte*& ppvs, Byte*& ppas );
+extern bool AddPacketEntity( entity_state_t& state, entindex_t entindex, edict_t& entity, const edict_t& client, const Byte* pset );
+extern bool GetTransitioningEntities( const Byte* pPVS, const Vector* pTransitionMins, const Vector* pTransitionMaxs, const char* pstrLandmarkName, const Vector& landmarkPosition, Int32 *pTransitionList, UInt32& numEntities, UInt32 maxEntities );
 
 extern void InitializeEntities( void );
 extern void SendEntityInitMessages( edict_t* pPlayer );
 
 extern void	BeginLoadSave( bool isLoadSave, bool isTransitionSave, bool isTransitionLoad, const Vector* pLandmarkOffset, const CArray<entindex_t>& entityIndexArray );
-extern bool ReadEntityStateData( edict_t* pedict, const Char* fieldname, const byte* pdata, Uint32 datasize, Uint32 blockindex, bool istransferglobalentity );
-extern bool ReadEntityFieldData( edict_t* pedict, const Char* fieldname, const byte* pdata, Uint32 datasize, Uint32 blockindex, bool istransferglobalentity );
-extern bool PrepareEntityClassData( edict_t* pedict, const Char* fieldname, Uint32 numblocks, bool istransferglobalentity );
-extern bool ReadEntityClassData( edict_t* pedict, const Char* fieldname, const byte* pdata, Uint32 datasize, Uint32 blockindex, bool istransferglobalentity );
+extern bool ReadEntityStateData( edict_t* pedict, const char* fieldname, const Byte* pdata, UInt32 datasize, UInt32 blockindex, bool istransferglobalentity );
+extern bool ReadEntityFieldData( edict_t* pedict, const char* fieldname, const Byte* pdata, UInt32 datasize, UInt32 blockindex, bool istransferglobalentity );
+extern bool PrepareEntityClassData( edict_t* pedict, const char* fieldname, UInt32 numblocks, bool istransferglobalentity );
+extern bool ReadEntityClassData( edict_t* pedict, const char* fieldname, const Byte* pdata, UInt32 datasize, UInt32 blockindex, bool istransferglobalentity );
 #ifdef _DEBUG
-extern entity_data_desc_t CheckSaveField( entity_data_desc_t desc, Uint64 typesize, Int32 count, const Char* pstrObjectName, const Char* pstrVariableName );
+extern entity_data_desc_t CheckSaveField( entity_data_desc_t desc, UInt64 typesize, Int32 count, const char* pstrObjectName, const char* pstrVariableName );
 #endif
 
-extern edict_t* FindEntityByString( edict_t* pStartEntity, const Char* pstrFieldName, const Char* pstrValue );
-extern edict_t* FindGlobalEntity( const Char* pstrClassname, const Char* pstrGlobalName );
+extern edict_t* FindEntityByString( edict_t* pStartEntity, const char* pstrFieldName, const char* pstrValue );
+extern edict_t* FindGlobalEntity( const char* pstrClassname, const char* pstrGlobalName );
 
 // Global entity fields
 #define EFIELD_GLOBAL			(1<<0)
