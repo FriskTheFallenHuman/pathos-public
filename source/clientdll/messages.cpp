@@ -20,7 +20,7 @@ CScreenMessages gMessages;
 static const Int32 MSG_BORDER_INSET = 10;
 
 // Filename of titles file
-const char CScreenMessages::TITLES_FILENAME[] = "titles.txt";
+const char CScreenMessages::TITLES_FILENAME[] = "scripts/titles.txt";
 // Font set schema name for this clas
 const char CScreenMessages::MESSAGES_FONT_SCHEMA_FILENAME[] = "titles";
 

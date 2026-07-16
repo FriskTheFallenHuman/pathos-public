@@ -148,7 +148,7 @@ static constexpr UInt32 MAX_BOUND_TEXTURES = 16;
 static const char FOOTSTEP_SCRIPT_FILE[] = "scripts/footsteps.txt";
 
 // Decal list file path
-static const char DECAL_LIST_FILE_PATH[] = "scripts/decal_list.txt";
+static const char DECAL_LIST_FILE_PATH[] = "scripts/decal_list.toml";
 
 // Sentences file path
 static const char SENTENCES_FILE_PATH[] = "scripts/sentences.txt";

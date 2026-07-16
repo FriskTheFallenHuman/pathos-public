@@ -281,6 +281,8 @@ public:
 	static const char WATER_DEFAULT_NORMALMAP_PATH[];
 	// Script base path
 	static const char WATER_SCRIPT_BASEPATH[];
+	// Default Script path 
+	static const char DEFAULT_WATER_SCRIPT_BASEPATH[];
 	// Default water script name
 	static const char DEFAULT_WATER_SCRIPT_FILENAME[];
 

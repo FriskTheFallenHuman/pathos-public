@@ -1,0 +1,175 @@
+[scorch]
+entries = [
+	{ name = "scorch1", width = 96, height = 96 },
+	{ name = "scorch2", width = 88, height = 88 },
+	{ name = "scorch3", width = 84, height = 84 }
+]
+
+[shot]
+entries = [
+	{ name = "shot1", width = 10, height = 10 },
+	{ name = "shot2", width = 10, height = 10 },
+	{ name = "shot3", width = 10, height = 10 },
+	{ name = "shot4", width = 10, height = 10 },
+	{ name = "shot5", width = 10, height = 10 }
+]
+
+[shot_metal]
+entries = [
+	{ name = "metal_shot1", width = 10, height = 10 },
+	{ name = "metal_shot2", width = 10, height = 10 },
+	{ name = "metal_shot3", width = 10, height = 10 },
+	{ name = "metal_shot4", width = 10, height = 10 },
+	{ name = "metal_shot5", width = 10, height = 10 }
+]
+
+[shot_wood]
+entries = [
+	{ name = "wood_shot1", width = 10, height = 10 },
+	{ name = "wood_shot2", width = 10, height = 10 },
+	{ name = "wood_shot3", width = 10, height = 10 },
+	{ name = "wood_shot4", width = 10, height = 10 },
+	{ name = "wood_shot5", width = 10, height = 10 }
+]
+
+[shot_glass]
+entries = [
+	{ name = "glass_shot1", width = 12, height = 12 },
+	{ name = "glass_shot2", width = 12, height = 12 },
+	{ name = "glass_shot3", width = 12, height = 12 },
+	{ name = "glass_shot4", width = 12, height = 12 },
+	{ name = "glass_shot5", width = 12, height = 12 }
+]
+
+[shot_alien]
+entries = [
+	{ name = "alienshot1", width = 10, height = 10 },
+	{ name = "alienshot2", width = 10, height = 10 },
+	{ name = "alienshot3", width = 10, height = 10 },
+	{ name = "alienshot4", width = 10, height = 10 },
+	{ name = "alienshot5", width = 10, height = 10 },
+	{ name = "alienshot6", width = 10, height = 10 }
+]
+
+[shot_human]
+entries = [
+	{ name = "hblood1", width = 10, height = 10 },
+	{ name = "hblood2", width = 10, height = 10 },
+	{ name = "hblood3", width = 10, height = 10 },
+	{ name = "hblood4", width = 10, height = 10 },
+	{ name = "hblood5", width = 10, height = 10 }
+]
+
+[blood_drops]
+entries = [
+	{ name = "bloodsplat1", width = 4, height = 4 },
+	{ name = "bloodsplat2", width = 6, height = 6 },
+	{ name = "bloodsplat1", width = 8, height = 8 },
+	{ name = "bloodsplat2", width = 2, height = 2 },
+	{ name = "bloodsplat1", width = 10, height = 10 }
+]
+
+[brains]
+entries = [
+	{ name = "brains", width = 100, height = 80 }
+]
+
+[yellowblood]
+entries = [
+	{ name = "yblood1", width = 40, height = 40 },
+	{ name = "yblood2", width = 40, height = 40 },
+	{ name = "yblood3", width = 40, height = 40 },
+	{ name = "yblood4", width = 40, height = 40 },
+	{ name = "yblood6", width = 40, height = 40 },
+
+	{ name = "yblood1", width = 28, height = 28 },
+	{ name = "yblood2", width = 28, height = 28 },
+	{ name = "yblood3", width = 28, height = 28 },
+	{ name = "yblood4", width = 28, height = 28 },
+	{ name = "yblood6", width = 28, height = 28 }
+]
+
+[redblood]
+entries = [
+	{ name = "blood1", width = 40, height = 40 },
+	{ name = "blood2", width = 40, height = 40 },
+	{ name = "blood3", width = 40, height = 40 },
+	{ name = "blood4", width = 40, height = 40 },
+	{ name = "blood5", width = 40, height = 40 },
+	{ name = "blood6", width = 40, height = 40 },
+	{ name = "blood7", width = 40, height = 40 },
+
+	{ name = "blood1", width = 28, height = 28 },
+	{ name = "blood2", width = 28, height = 28 },
+	{ name = "blood3", width = 28, height = 28 },
+	{ name = "blood4", width = 28, height = 28 },
+	{ name = "blood5", width = 28, height = 28 },
+	{ name = "blood6", width = 28, height = 28 },
+	{ name = "blood7", width = 28, height = 28 }
+]
+
+[redblood_sm]
+entries = [
+	{ name = "hblood1", width = 10, height = 10 },
+	{ name = "hblood2", width = 10, height = 10 },
+	{ name = "hblood3", width = 10, height = 10 },
+	{ name = "hblood4", width = 10, height = 10 },
+	{ name = "hblood5", width = 10, height = 10 }
+]
+
+# ENVIRONMENT DECALS
+[env_decals]
+entries = [
+	{ name = "bigcup", width = 64, height = 91 },
+	{ name = "pingas", width = 100, height = 80 },
+	{ name = "dt05acode", width = 32, height = 32 },
+
+	{ name = "scorch1", width = 100, height = 100 },
+	{ name = "scorch2", width = 100, height = 100 },
+	{ name = "shot", width = 10, height = 10 },
+
+	{ name = "graffitidecal1", width = 220, height = 120 },
+	{ name = "graffitidecal2", width = 180, height = 80 },
+	{ name = "graffitidecal3", width = 230, height = 130 },
+	{ name = "graffitidecal4", width = 100, height = 50 },
+	{ name = "graffitidecal5", width = 100, height = 50 },
+	{ name = "graffitidecal6", width = 200, height = 100 },
+	{ name = "graffitidecal7", width = 200, height = 100 },
+	{ name = "graffitidecal8", width = 200, height = 100 },
+	{ name = "graffitidecal9", width = 200, height = 100 },
+	{ name = "graffitidecal10", width = 220, height = 110 },
+	{ name = "graffitidecal11", width = 150, height = 75 },
+	{ name = "graffitidecal12", width = 125, height = 56 },
+
+	{ name = "graffitidecal13", width = 100, height = 100 },
+	{ name = "graffitidecal14", width = 150, height = 150 },
+	{ name = "graffitidecal15", width = 120, height = 120 },
+	{ name = "graffitidecal16", width = 90, height = 90 },
+	{ name = "graffitidecal17", width = 50, height = 50 },
+	{ name = "graffitidecal18", width = 130, height = 130 },
+
+	{ name = "graffitidecal19", width = 100, height = 50 },
+	{ name = "graffitidecal20", width = 120, height = 35 },
+	{ name = "graffitidecal21", width = 100, height = 25 },
+	{ name = "graffitidecal22", width = 110, height = 25 },
+	{ name = "graffitidecal23", width = 140, height = 35 },
+	{ name = "graffitidecal24", width = 100, height = 25 },
+
+	{ name = "podtek", width = 40, height = 40 },
+	{ name = "num4", width = 128, height = 128 },
+	{ name = "num3", width = 128, height = 128 },
+	{ name = "num2", width = 128, height = 128 },
+	{ name = "num1", width = 128, height = 128 },
+
+	{ name = "bloodbigsplat", width = 128, height = 128 },
+	{ name = "bloodbigsplat2", width = 164, height = 164 },
+	{ name = "bloodbigsplatold", width = 128, height = 128 },
+	{ name = "bloodbigsplat2old", width = 164, height = 164 },
+
+	{ name = "hands", width = 24, height = 24 },
+	{ name = "bloodhands", width = 24, height = 24 },
+	{ name = "bloodstains", width = 76, height = 76 },
+
+	{ name = "theking", width = 40, height = 30 },
+	{ name = "tylerdurden", width = 50, height = 70 }
+]

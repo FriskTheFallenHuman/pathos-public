@@ -15,6 +15,9 @@ All Rights Reserved.
 #include "includes.h"
 #include "decallist.h"
 
+#undef clamp
+#include "toml.hpp"
+
 //====================================
 //
 //====================================
@@ -38,81 +41,120 @@ bool CDecalList::LoadDecalList( const char* pfile, UInt32 isize )
 	if(!m_errorString.empty())
 		m_errorString.clear();
 
-	char token[MAX_PARSE_LENGTH];
-	const char* pscan = pfile;
-	while( pscan && (pscan - pfile) < isize )
+	// Also clear this
+	if (!m_decalGroupsArray.empty())
+		m_decalGroupsArray.clear();
+
+	try
 	{
-		pscan = Common::Parse(pscan, token);
-		if(!pscan)
-			break;
+		// Turn pfile into a std::string
+		const toml::value data = toml::parse_str(pfile);
 
-		m_decalGroupsArray.resize(m_decalGroupsArray.size()+1);
-		decalgroup_t *pgroup = &m_decalGroupsArray[m_decalGroupsArray.size()-1];
-
-		// Set name
-		pgroup->name = token;
-
-		// Read in the bracket
-		pscan = Common::Parse(pscan, token);
-		if(!pscan)
+		// data must be a table
+		if(!data.is_table())
 		{
-			m_errorString << __FUNCTION__ << " - Unexpected EOF in decal list file.";
+			m_errorString = "Root TOML element is not a table.";
 			return false;
 		}
 
-		if(qstrcmp(token, "{"))
+		// Iterate over all top‑level tables (each is a decal group)
+		const auto& rootTable = data.as_table();
+		for(auto it = rootTable.begin(); it != rootTable.end(); ++it)
 		{
-			m_errorString << __FUNCTION__ << " - Expected a {, got " << token << " instead.";
-			return false;
-		}
+			const std::string& groupName = it->first;
+			const toml::value& groupValue = it->second;
 
-		pscan = Common::Parse(pscan, token);
-		if(!pscan)
-		{
-			m_errorString << __FUNCTION__ << " - Unexpected EOF in decal list file.";
-			return false;
-		}
-
-		while(true)
-		{
-			if(!qstrcmp(token, "}"))
-				break;
-
-			pgroup->entries.resize(pgroup->entries.size()+1);
-			decalgroupentry_t *pentry = &pgroup->entries[pgroup->entries.size()-1];
-
-			pentry->name = token;
-			pentry->pgroup = nullptr;
-
-			pscan = Common::Parse(pscan, token);
-			if(!pscan)
+			// groupValue must be a table
+			if(!groupValue.is_table())
 			{
-				m_errorString << __FUNCTION__ << " - Unexpected EOF in decal list file.";
-				return false;
+				m_errorString << "Entry '" << groupName.c_str() << "' is not a table; skipping.";
+				continue;
 			}
 
-			pentry->xsize = SDL_atoi(token)/2;
-
-			pscan = Common::Parse(pscan, token);
-			if(!pscan)
+			// Check for "entries" array
+			if(!groupValue.contains("entries") || !groupValue.at("entries").is_array())
 			{
-				m_errorString << __FUNCTION__ << " - Unexpected EOF in decal list file.";
-				return false;
+				m_errorString << "Group '" << groupName.c_str() << "' has no 'entries' array; skipping.";
+				continue;
 			}
 
-			pentry->ysize = SDL_atoi(token)/2;
+			const auto& entriesArray = groupValue.at("entries").as_array();
+			if(entriesArray.empty())
+				continue;
 
-			// parse for next
-			pscan = Common::Parse(pscan, token);
+			// Create a new group
+			const Uint32 newGroupIndex = m_decalGroupsArray.size();
+			m_decalGroupsArray.resize(newGroupIndex + 1);
+			decalgroup_t& group = m_decalGroupsArray[newGroupIndex];
+			group.name = groupName.c_str();
+
+			// Reserve space
+			group.entries.resize(entriesArray.size());
+
+			// Process each entry
+			for(std::size_t i = 0; i < entriesArray.size(); ++i)
+			{
+				const toml::value& entryVal = entriesArray[i];
+
+				if(!entryVal.is_table())
+				{
+					m_errorString << "Entry in group '" << groupName.c_str() << "' is not a table; skipping.";
+					continue;
+				}
+
+				if(!entryVal.contains("name") || !entryVal.at("name").is_string())
+				{
+					m_errorString << "Entry missing 'name' in group '" << groupName.c_str() << "'; skipping.";
+					continue;
+				}
+				if(!entryVal.contains("width") || !entryVal.at("width").is_integer())
+				{
+					m_errorString << "Entry missing 'width' in group '" << groupName.c_str() << "'; skipping.";
+					continue;
+				}
+				if(!entryVal.contains("height") || !entryVal.at("height").is_integer())
+				{
+					m_errorString << "Entry missing 'height' in group '" << groupName.c_str() << "'; skipping.";
+					continue;
+				}
+
+				// Extract values
+				std::string name = toml::find<std::string>(entryVal, "name");
+				Int32 width = toml::find<Int32>(entryVal, "width");
+				Int32 height = toml::find<Int32>(entryVal, "height");
+
+				// Fill the entry
+				decalgroupentry_t& entry = group.entries[i];
+				entry.name = name.c_str();
+				entry.xsize = width / 2;
+				entry.ysize = height / 2;
+				entry.ptexture = nullptr;
+				entry.pgroup = &group;
+			}
 		}
+
+		if(m_decalGroupsArray.empty())
+		{
+			m_errorString = "No decal groups loaded from TOML file.";
+			return false;
+		}
+
+		return true;
 	}
-
-	// Set group pts for the entries
-	for(UInt32 i = 0; i < m_decalGroupsArray.size(); i++)
+	catch(const toml::syntax_error& e)
 	{
-		decalgroup_t *pgroup = &m_decalGroupsArray[i];
-		for(UInt32 j = 0; j < pgroup->entries.size(); j++)
-			pgroup->entries[j].pgroup = pgroup;
+		m_errorString << "TOML syntax error in %s:\n%s\n" << pfile << e.what();
+		return false;
+	}
+	catch(const toml::type_error& e)
+	{
+		m_errorString << "Type error in %s:\n%s\n" << pfile << e.what();
+		return false;
+	}
+	catch(const std::exception& e)
+	{
+		m_errorString << "Unexpected error reading %s:\n%s\n" << pfile << e.what();
+		return false;
 	}
 
 	return true;

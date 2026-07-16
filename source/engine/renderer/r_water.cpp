@@ -43,9 +43,11 @@ const float CWaterShader::DEFAULT_SPECULAR_FACTOR = 2.0;
 // Water shader default normalmap texture path
 const char CWaterShader::WATER_DEFAULT_NORMALMAP_PATH[] = "general/watershader.tga";
 // Script base path
-const char CWaterShader::WATER_SCRIPT_BASEPATH[] = "scripts/water/";
+const char CWaterShader::WATER_SCRIPT_BASEPATH[] = "maps/";
+// Default Script path 
+const char CWaterShader::DEFAULT_WATER_SCRIPT_BASEPATH[] = "scripts/";
 // Default water script name
-const char CWaterShader::DEFAULT_WATER_SCRIPT_FILENAME[] = "water_default.txt";
+const char CWaterShader::DEFAULT_WATER_SCRIPT_FILENAME[] = "water_default.liquid";
 
 // Lightmap X resolution
 const UInt32 CWaterShader::WATER_LIGHTMAP_DEFAULT_WIDTH = 128;
@@ -825,18 +827,19 @@ void CWaterShader::LoadScripts( void )
 		if(rns.daystage == DAYSTAGE_NIGHTSTAGE)
 		{
 			filename.clear();
-			filename << WATER_SCRIPT_BASEPATH << "water_" << mapname << "_" << static_cast<Int32>(m_waterSettingsArray.size()) << "_n.txt";
+			filename << WATER_SCRIPT_BASEPATH << mapname << "_" << static_cast<Int32>(m_waterSettingsArray.size()) << "_n.liquid";
 			pFile = reinterpret_cast<const char *>(FL_LoadFile(filename.c_str(), nullptr));
 		}
 		
 		if(!pFile)
 		{
 			filename.clear();
-			filename << WATER_SCRIPT_BASEPATH << "water_" << mapname << "_" << static_cast<Int32>(m_waterSettingsArray.size()) << ".txt";
+			filename << WATER_SCRIPT_BASEPATH << mapname << "_" << static_cast<Int32>(m_waterSettingsArray.size()) << ".liquid";
 			pFile = reinterpret_cast<const char *>(FL_LoadFile(filename.c_str(), nullptr));
 		}
 
 		if(!pFile)
+			Con_WPrintf("Could not load water definition file '%s'!\n", filename.c_str());
 			break;
 
 		m_waterSettingsArray.resize(m_waterSettingsArray.size()+1);
@@ -849,7 +852,7 @@ void CWaterShader::LoadScripts( void )
 	if(m_waterSettingsArray.empty())
 	{
 		CString filepath;
-		filepath << WATER_SCRIPT_BASEPATH << DEFAULT_WATER_SCRIPT_FILENAME;
+		filepath << DEFAULT_WATER_SCRIPT_BASEPATH << DEFAULT_WATER_SCRIPT_FILENAME;
 
 		const char *pFile = reinterpret_cast<const char *>(FL_LoadFile(filepath.c_str(), nullptr));
 
@@ -874,7 +877,7 @@ void CWaterShader::LoadScripts( void )
 			pSettings->wavefresnelstrength = 1.0;
 			pSettings->flowmapspeed = 1.0;
 
-			Con_Printf("Could not load default water definition file '%s'!\n", filepath.c_str());
+			Con_WPrintf("Could not load default water definition file '%s'!\n", filepath.c_str());
 			return;
 		}
 
